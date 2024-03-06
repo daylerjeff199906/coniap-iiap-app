@@ -1,0 +1,1 @@
+export { BannerHome } from './bannerHome'

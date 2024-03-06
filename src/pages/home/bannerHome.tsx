@@ -1,0 +1,3 @@
+export const BannerHome = () => {
+  return <></>
+}
