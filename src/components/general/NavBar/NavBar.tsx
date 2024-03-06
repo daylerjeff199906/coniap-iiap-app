@@ -1,7 +1,8 @@
-export const NavBar = () => {
-  return (
-    <div className="bg-gray-800 text-white p-4">
-      <h1 className="text-2xl font-bold">NavBar</h1>
-    </div>
-  )
+import { NavBarAdmin, NavBarUser } from './variants'
+interface IProps {
+  variant?: 'user' | 'admin'
+}
+export const NavBar = (props: IProps) => {
+  const { variant } = props
+  return <>{variant === 'admin' ? <NavBarAdmin /> : <NavBarUser />}</>
 }
