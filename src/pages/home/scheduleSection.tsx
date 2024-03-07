@@ -1,6 +1,6 @@
 export const ScheduleSection = () => {
   return (
-    <section className="container py-4 md:py-6 lg:py-8">
+    <section className="container py-4 md:py-6 lg:py-8 bg-white">
       <h2>Schedule</h2>
       <p>We are open Monday to Friday from 9am to 5pm.</p>
     </section>
