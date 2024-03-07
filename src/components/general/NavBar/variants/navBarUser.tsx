@@ -11,7 +11,7 @@ export const NavBarUser = () => {
       <Navbar
         maxWidth="full"
         classNames={{
-            base: 'bg-gray-800 text-white py-4',
+          base: 'bg-gray-800 text-white py-4',
           //   content: 'flex justify-between',
           item: 'text-sm',
         }}
