@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.section {
+  @apply bg-white;
+}
+
+.section-home {
+  @apply py-4 sm:py-6 lg:py-8;
+}
+
+.title-section-home {
+  @apply text-xl sm:text-2xl lg:text-3xl font-bold;
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
