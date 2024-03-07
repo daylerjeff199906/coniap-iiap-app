@@ -3,6 +3,7 @@ import {
   BannerHome,
   ScheduleSection,
   TimeSection,
+  TopicsSection,
 } from '@/components'
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <BannerHome />
       <TimeSection />
       <AboutUsSection />
+      <TopicsSection />
       <ScheduleSection />
     </main>
   )
