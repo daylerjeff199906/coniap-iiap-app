@@ -3,7 +3,7 @@ import {
   BannerHome,
   ScheduleSection,
   TimeSection,
-} from '@/pages'
+} from '@/components'
 
 export default function Home() {
   return (
