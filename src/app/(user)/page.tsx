@@ -4,6 +4,7 @@ import {
   ScheduleSection,
   TimeSection,
   TopicsSection,
+  WorkTeamSection,
 } from '@/components'
 import { SpeakersSection } from '@/components/sections/home/speakersSection'
 
@@ -16,6 +17,7 @@ export default function Home() {
       <SpeakersSection />
       <TopicsSection />
       <ScheduleSection />
+      <WorkTeamSection />
     </main>
   )
 }
