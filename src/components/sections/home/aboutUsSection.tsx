@@ -1,11 +1,40 @@
-import { Divider } from '@nextui-org/react'
+'use client'
+import { Card, CardBody, Divider } from '@nextui-org/react'
+import { motion } from 'framer-motion'
+import { IconFlag, IconDirections, IconCompass } from '@tabler/icons-react'
+
+const indicator = [
+  {
+    title: 'Propósito',
+    description:
+      'Facilitar el intercambio de conocimientos y experiencias entre investigadores y gestores de desarrollo para promover el desarrollo socioeconómico sostenible en la Amazonia peruana',
+    icon: <IconFlag size={30} />,
+  },
+  {
+    title: 'Misión',
+    description:
+      'Impulsar la colaboración multidisciplinaria y el diálogo entre sectores público, privado y académico para abordar los desafíos de conservación y desarrollo en la región amazónica.  ',
+    icon: <IconDirections size={30} />,
+  },
+  {
+    title: 'Visión',
+    description:
+      'Ser un espacio de referencia para la difusión de conocimientos y la generación de consensos sobre temas de desarrollo sostenible en la Amazonia peruana.',
+    icon: <IconCompass size={30} />,
+  },
+]
 
 export const AboutUsSection = () => {
   return (
     <section className=" bg-white">
       <div className="container section-home ">
-        <div className="space-y-6">
-          <div className="flex">
+        <div className="space-y-8">
+          <motion.div
+            className="flex"
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="mr-4">
               <Divider
                 orientation="vertical"
@@ -13,42 +42,35 @@ export const AboutUsSection = () => {
               />
             </div>
             <div className="">
-              <h4>CONIAP</h4>
+              <h4 className="text-gray-500">CONIAP</h4>
               <h2 className="title-section-home">Acerca del congreso</h2>
             </div>
-          </div>
+          </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className='space-y-3 p-4 border rounded-xl text-center'>
-              <h1 className="text-xl font-bold">Objetivos</h1>
-              <p className='text-sm'>
-                El Congreso Internacional sobre Amazonia peruana: investigación
-                para el desarrollo, perspectivas y retos, que se realizará
-                anualmente, se constituye en un espacio de diálogo abierto de
-                investigadores nacionales y extranjeros de distintas
-                disciplinas, gestores de desarrollo, sectores públicos peruanos
-                y organismos no gubernamentales.
-              </p>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold">Misión</h1>
-              <p>
-                Su propósito es propiciar la difusión y el intercambio de
-                conocimientos y experiencias, favoreciendo la comunicación entre
-                investigadores y decisores de política para definir lineamientos
-                y buscar consensos en temas de cultura, desarrollo social y
-                humano, uso sostenible y conservación de los ecosistemas y
-                recursos, tecnologías alternativas y desarrollo económico,
-                ordenamiento del territorio y gestión de riesgos.
-              </p>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold">Visión</h1>
-              <p>
-                El congreso busca contribuir al desarrollo socioeconómico de la
-                región amazónica peruana en el contexto de cambio climático y el
-                marco de los Objetivos del Desarrollo Sostenible — ODS.
-              </p>
-            </div>
+            {indicator.map((item, index) => (
+              <motion.div
+                key={index}
+                className="flex flex-col items-center space-y-4"
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+              >
+                <Card
+                  className="space-y-3 p-3 lg:p-4 rounded-xl text-center"
+                  shadow="sm"
+                >
+                  <CardBody className="flex flex-col items-center space-y-3">
+                    <div className="flex flex-col items-center w-full text-gray-500">
+                      {item.icon}
+                    </div>
+                    <h1 className="text-xl font-bold text-center">
+                      {item.title}
+                    </h1>
+                    <p className="text-xs lg:text-sm text-center">{item.description}</p>
+                  </CardBody>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
