@@ -1,14 +1,8 @@
+import { IEvent } from './IEvent'
 export interface IProgram {
   id: number
-  hourStart: string
-  hourEnd: string
   date: string
-  name: string
-  description: string
-  location: string
+  title?: string
   banner?: string
-  image: string
-  linkZoom?: string
-  linkYoutube?: string
-  linkFacebook?: string
+  events: IEvent[]
 }
