@@ -30,20 +30,15 @@ export const AboutUsSection = () => {
       <div className="container section-home ">
         <div className="space-y-8">
           <motion.div
-            className="flex"
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 1 }}
+            className="flex flex-col items-center"
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="mr-4">
-              <Divider
-                orientation="vertical"
-                className=" bg-orange-500 h-full w-1 rounded-full"
-              />
-            </div>
-            <div className="">
+            <div className="text-center flex flex-col items-center">
               <h4 className="text-gray-500">CONIAP</h4>
               <h2 className="title-section-home">Acerca del congreso</h2>
+              <Divider className="bg-orange-500 pt-1 rounded-full mt-4 w-36 " />
             </div>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
@@ -66,7 +61,9 @@ export const AboutUsSection = () => {
                     <h1 className="text-xl font-bold text-center">
                       {item.title}
                     </h1>
-                    <p className="text-xs lg:text-sm text-center">{item.description}</p>
+                    <p className="text-xs lg:text-sm text-center">
+                      {item.description}
+                    </p>
                   </CardBody>
                 </Card>
               </motion.div>
