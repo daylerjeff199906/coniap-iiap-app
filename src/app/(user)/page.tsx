@@ -13,9 +13,9 @@ export default function Home() {
       <BannerHome />
       <TimeSection />
       <AboutUsSection />
+      <SpeakersSection />
       <TopicsSection />
       <ScheduleSection />
-      <SpeakersSection />
     </main>
   )
 }

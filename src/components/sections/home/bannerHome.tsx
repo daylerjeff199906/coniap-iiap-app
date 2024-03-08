@@ -44,7 +44,6 @@ export const BannerHome = () => {
             >
               Inscríbete
             </Button>
-            d
           </div>
         </div>
         <div className="hidden lg:flex gap-3">
