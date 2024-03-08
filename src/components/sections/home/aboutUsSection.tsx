@@ -36,7 +36,7 @@ export const AboutUsSection = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="text-center flex flex-col items-center">
-              <h4 className="text-gray-500">CONIAP</h4>
+              <h4 className="subtitle-section-home">CONIAP</h4>
               <h2 className="title-section-home">Acerca del congreso</h2>
               <Divider className="bg-orange-500 pt-1 rounded-full mt-4 w-36 " />
             </div>

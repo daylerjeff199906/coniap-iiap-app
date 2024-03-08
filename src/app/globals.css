@@ -11,7 +11,11 @@
 }
 
 .title-section-home {
-  @apply text-xl sm:text-2xl lg:text-4xl font-extrabold text-success-700;
+  @apply text-2xl sm:text-3xl lg:text-4xl font-extrabold text-success-700;
+}
+
+.subtitle-section-home {
+  @apply text-xs sm:text-base lg:text-lg text-gray-500;
 }
 
 /* :root {

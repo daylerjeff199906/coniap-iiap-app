@@ -81,20 +81,20 @@ export const SpeakersSection = () => {
               />
             </div>
             <div className="">
-              <h4 className="text-gray-500">
-                Invitados especiales
-              </h4>
+              <h4 className="subtitle-section-home">Invitados especiales</h4>
               <h2 className="title-section-home">Ponentes</h2>
             </div>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
-            {speakers.slice(0, 7).map((speaker) => (
-              // <div key={speaker.id}>
-              <CardSpeaker
-                speaker={speaker}
+            {speakers.slice(0, 7).map((speaker, index) => (
+              <motion.div
                 key={speaker.id}
-              />
-              // </div>
+                className="w-full"
+                // animate={{ x: 100 }}
+                // transition={{ delay: 1 }}
+              >
+                <CardSpeaker speaker={speaker} />
+              </motion.div>
             ))}
           </div>
         </div>
