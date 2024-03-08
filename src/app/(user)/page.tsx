@@ -5,6 +5,7 @@ import {
   TimeSection,
   TopicsSection,
 } from '@/components'
+import { SpeakersSection } from '@/components/sections/home/speakersSection'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <AboutUsSection />
       <TopicsSection />
       <ScheduleSection />
+      <SpeakersSection />
     </main>
   )
 }

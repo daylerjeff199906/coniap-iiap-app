@@ -11,7 +11,7 @@
 }
 
 .title-section-home {
-  @apply text-xl sm:text-2xl lg:text-3xl font-bold;
+  @apply text-xl sm:text-2xl lg:text-3xl font-black;
 }
 
 /* :root {
