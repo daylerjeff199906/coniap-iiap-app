@@ -7,11 +7,19 @@
 }
 
 .section-home {
-  @apply py-4 sm:py-6 lg:py-8;
+  @apply py-4 sm:py-6 lg:py-14;
 }
 
 .title-section-home {
-  @apply text-xl sm:text-2xl lg:text-3xl font-bold;
+  @apply text-2xl sm:text-3xl lg:text-4xl font-extrabold text-success-700;
+}
+
+.subtitle-section-home {
+  @apply text-xs sm:text-base lg:text-lg text-gray-500;
+}
+
+.section-page {
+  @apply py-4 sm:py-6 lg:py-14;
 }
 
 /* :root {

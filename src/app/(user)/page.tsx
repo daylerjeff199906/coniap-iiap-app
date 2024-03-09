@@ -3,7 +3,10 @@ import {
   BannerHome,
   ScheduleSection,
   TimeSection,
+  SpeakersSection,
   TopicsSection,
+  WorkTeamSection,
+  SponsorSection,
 } from '@/components'
 
 export default function Home() {
@@ -12,8 +15,11 @@ export default function Home() {
       <BannerHome />
       <TimeSection />
       <AboutUsSection />
+      <SpeakersSection />
       <TopicsSection />
       <ScheduleSection />
+      <WorkTeamSection />
+      <SponsorSection />
     </main>
   )
 }

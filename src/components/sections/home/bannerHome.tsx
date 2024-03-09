@@ -1,4 +1,5 @@
 import { Button, Image } from '@nextui-org/react'
+import { IconCalendarEvent } from '@tabler/icons-react'
 import bgImage from '@/assets/images/bgBanner.webp'
 
 export const BannerHome = () => {
@@ -13,10 +14,20 @@ export const BannerHome = () => {
             Bienvenidos al III Congreso Internacional de la{' '}
             <span className="text-green-500 ">Amazonía</span> Peruana
           </h1>
-          <p className="text-sm lg:text-lg animate-appearance-in text-white">
+          {/* <p className="text-sm lg:text-lg animate-appearance-in text-white">
             Del 15 al 18 de noviembre de 2022, ven y participa de este gran
             evento.
-          </p>
+          </p> */}
+          <div className="flex items-center gap-2">
+            <IconCalendarEvent
+              size={56}
+              stroke={1.5}
+              color="#fff"
+            />
+            <h3 className="text-white sm:text-lg max-w-48">
+              Del 15 al 18 de noviembre de 2022
+            </h3>
+          </div>
           <div className="w-full flex items-center gap-3">
             <Button
               className="animate-appearance-in text-white bg-green-700"
