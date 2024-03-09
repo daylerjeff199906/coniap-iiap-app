@@ -3,9 +3,10 @@
     "id": 1,
     "date": "2024-03-08",
     "title": "Cronograma del 8 de marzo",
-    "programs": [
+    "events": [
       {
         "id": 1,
+        "date": "2024-03-08",
         "hourStart": "09:00",
         "hourEnd": "10:30",
         "name": "Programa 1 del 8 de marzo",
@@ -19,6 +20,7 @@
       },
       {
         "id": 2,
+        "date": "2024-03-08",
         "hourStart": "11:00",
         "hourEnd": "12:30",
         "name": "Programa 2 del 8 de marzo",
@@ -36,9 +38,10 @@
     "id": 2,
     "date": "2024-03-09",
     "title": "Cronograma del 9 de marzo",
-    "programs": [
+    "events": [
       {
         "id": 1,
+        "date": "2024-03-09",
         "hourStart": "10:00",
         "hourEnd": "11:30",
         "name": "Programa 1 del 9 de marzo",
@@ -56,9 +59,10 @@
     "id": 3,
     "date": "2024-03-10",
     "title": "Cronograma del 10 de marzo",
-    "programs": [
+    "events": [
       {
         "id": 1,
+        "date": "2024-03-10",
         "hourStart": "09:30",
         "hourEnd": "11:00",
         "name": "Programa 1 del 10 de marzo",
@@ -72,6 +76,21 @@
       },
       {
         "id": 2,
+        "date": "2024-03-10",
+        "hourStart": "14:00",
+        "hourEnd": "15:30",
+        "name": "Programa 2 del 10 de marzo",
+        "description": "Descripción del programa 2 del 10 de marzo",
+        "location": "Ubicación del programa 2 del 10 de marzo",
+        "banner": "https://ejemplo.com/banner5.jpg",
+        "image": "https://ejemplo.com/imagen5.jpg",
+        "linkZoom": "https://zoom.com/programa5",
+        "linkYoutube": "https://youtube.com/programa5",
+        "linkFacebook": "https://facebook.com/programa5"
+      },
+      {
+        "id": 3,
+        "date": "2024-03-10",
         "hourStart": "14:00",
         "hourEnd": "15:30",
         "name": "Programa 2 del 10 de marzo",
