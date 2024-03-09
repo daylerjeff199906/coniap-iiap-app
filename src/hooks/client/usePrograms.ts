@@ -9,28 +9,27 @@ import {
   getDoc,
   query,
   where,
+  orderBy,
 } from 'firebase/firestore'
 import { IProgram } from '@/types'
 
-// const convertDataToISliders = (data: DocumentData[]) => {
-//   return data?.map((slider) => {
-//     const { image, name, tag, isActive, createdAt } = slider
-//     const id = slider?.id
+const convertDataToIProgram = (data: DocumentData[]) => {
+  return data?.map((program) => {
+    const { banner, events, date, title } = program
+    const id = program?.id
 
-//     const fModificacion = slider?.updatedAt?.toDate().toString().slice(0, 15)
-//     // acortar la fecha de modificacion
+    const FDate = program?.date.toDate()
+    // acortar la fecha de modificacion
 
-//     return {
-//       id: id,
-//       image,
-//       name,
-//       tag,
-//       isActive,
-//       createdAt,
-//       updatedAt: fModificacion,
-//     }
-//   })
-// }
+    return {
+      id: id,
+      banner,
+      events,
+      date: FDate,
+      title,
+    }
+  })
+}
 
 // const convertDataToISlidersById = (data: DocumentData) => {
 //   const { image, name, tag, isActive, createdAt, updatedAt } = data
@@ -49,6 +48,11 @@ import { IProgram } from '@/types'
 //   }
 // }
 
+function convertTimestampToDate(timestamp: any) {
+  const date = new Date(timestamp * 1000) // Multiplicamos por 1000 para convertir segundos a milisegundos
+  return date.toLocaleDateString() // Utilizamos toLocaleDateString para obtener la fecha en formato local
+}
+
 export function usePrograms() {
   const [loading, setLoading] = useState<boolean>(true)
   const [programs, setPrograms] = useState<IProgram[] | null>(null)
@@ -59,13 +63,16 @@ export function usePrograms() {
   const getPrograms = async () => {
     setLoading(true)
     try {
-      const querySnapshot = await getDocs(collection(db, 'programs'))
+      const querySnapshot = await getDocs(
+        query(collection(db, 'programs'), orderBy('date', 'asc'))
+      )
       const program = querySnapshot.docs.map((doc) => ({
         id: doc.id.toString(),
+        date: convertTimestampToDate(doc.data().date.seconds),
         ...doc.data(),
       }))
       //   setSliders(convertDataToISliders(sliders))
-      setPrograms(program as IProgram[])
+      setPrograms(convertDataToIProgram(program))
       setLoading(false)
     } catch (error) {
       console.log(error)

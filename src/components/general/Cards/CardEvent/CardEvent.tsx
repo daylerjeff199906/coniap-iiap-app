@@ -1,5 +1,6 @@
 import { Chip, Card, CardBody } from '@nextui-org/react'
 import { IconCalendarEvent, IconMapPin, IconClock } from '@tabler/icons-react'
+import { IEvent } from '@/types'
 
 function formatDateToDDMMM(date: Date): string {
   const months = [
@@ -24,16 +25,13 @@ function formatDateToDDMMM(date: Date): string {
   return `${day.toString().padStart(2, '0')} ${month}`
 }
 
-export const CardEvent = ({
-  title,
-  description,
-  date,
-}: {
-  title: string
-  description: string
-  date: string
-}) => {
-  const dateFormatted = formatDateToDDMMM(new Date(date))
+interface IProps {
+  event: IEvent
+}
+
+export const CardEvent = (props: IProps) => {
+  const { event } = props
+  const dateFormatted = formatDateToDDMMM(new Date(event.date as string))
   return (
     <div className="relative shadow-md">
       <div className="bg-transparent pt-5">
@@ -52,15 +50,17 @@ export const CardEvent = ({
               Tag
             </Chip>
             <div className="pt-4 space-y-2">
-              <h2 className="text-xl font-bold leading-tight">{title}</h2>
+              <h2 className="text-xl font-bold leading-tight">{event.name}</h2>
               {/* <p>{date}</p> */}
               <div className="flex items-center space-x-2">
                 <IconCalendarEvent size={16} />
-                <span className="text-sm">{date}</span>
+                <span className="text-sm">{event.date}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <IconClock size={16} />
-                <span className="text-sm">10:00 - 12:00</span>
+                <span className="text-sm">
+                  {event?.hourStart} a {event?.hourEnd}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <IconMapPin size={16} />
