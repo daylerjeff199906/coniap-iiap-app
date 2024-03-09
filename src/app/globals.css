@@ -18,6 +18,10 @@
   @apply text-xs sm:text-base lg:text-lg text-gray-500;
 }
 
+.section-page {
+  @apply py-4 sm:py-6 lg:py-14;
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
