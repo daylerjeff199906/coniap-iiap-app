@@ -1,4 +1,5 @@
-import { Card } from '@nextui-org/react'
+'use client'
+import { Card, Divider } from '@nextui-org/react'
 import {
   IconFish,
   IconTrees,
@@ -6,6 +7,7 @@ import {
   IconSettings,
   IconBrain,
 } from '@tabler/icons-react'
+import { motion } from 'framer-motion'
 
 const topicsExample = [
   {
@@ -62,9 +64,25 @@ export const TopicsSection = () => {
   return (
     <section className=" bg-black/70">
       <div className="container section-home space-y-2">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-          Líneas temáticas
-        </h2>
+        <motion.div
+          className="flex"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="mr-4">
+            <Divider
+              orientation="vertical"
+              className=" bg-orange-500 h-full w-1 rounded-full"
+            />
+          </div>
+          <div className="">
+            <h4 className="subtitle-section-home">CONIAP</h4>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+              Líneas temáticas
+            </h2>
+          </div>
+        </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-3  py-4">
           {topicsExample.map((topic, i) => (
             <CardTopics
@@ -84,6 +102,7 @@ const CardTopics = ({ title, icon }: { title: string; icon: JSX.Element }) => {
     <Card
       className={`bg-transparent text-white p-6 text-center flex flex-col justify-center items-center gap-2 animate-appearance-in `}
       radius="none"
+      shadow="none"
     >
       <div className="flex justify-center items-center  rounded-full p-4">
         {icon}

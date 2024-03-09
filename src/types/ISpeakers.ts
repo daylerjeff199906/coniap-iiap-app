@@ -1,7 +1,9 @@
 export interface ISpeaker {
-  id: number
+  id: string
   fullName: string
   surName: string
-  job: string
+  job: string   
   image: string
+  institution?: string
+  levelStudy?: string
 }
