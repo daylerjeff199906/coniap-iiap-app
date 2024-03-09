@@ -1,3 +1,4 @@
 import { useSpeaker } from './useSpeaker'
+import { useSponsors } from './useSponsors'
 
-export { useSpeaker }
+export { useSpeaker, useSponsors }
