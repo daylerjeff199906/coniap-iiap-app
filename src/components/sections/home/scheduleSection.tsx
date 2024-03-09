@@ -56,8 +56,8 @@ function formatDateNameDDMM(date: Date): string {
   ]
   const nombreDia = diasSemana[date.getDay()]
   const diaMes = date.getDate()
-  const mes = date.getMonth() + 1 // Los meses en JavaScript son base 0, por lo que necesitas sumar 1
-  const anno = date.getFullYear()
+  // const mes = date.getMonth() + 1 // Los meses en JavaScript son base 0, por lo que necesitas sumar 1
+  // const anno = date.getFullYear()
 
   return `${nombreDia} ${diaMes < 10 ? '0' + diaMes : diaMes}`
 }
@@ -77,8 +77,13 @@ export const ScheduleSection = () => {
           </div>
           <Tabs
             variant="underlined"
-            size="lg"
             className="text-center flex flex-col items-center"
+            // color='success'
+            classNames={{
+              tabList: 'sm:max-w-3xl w-full rounded-lg overflow-auto',
+              // cursor: "w-full bg-suceess-600",
+              // tabContent: "group-data-[selected=true]:text-success-600" 
+            }}
             // fullWidth
           >
             {data?.map((item, index) => (
@@ -100,8 +105,8 @@ export const ScheduleSection = () => {
                         removeWrapper
                         className="w-full h-[420px] lg:h-[500px] object-cover"
                       />
-                      <div className="absolute top-0 z-10 p-4 sm:p-8 lg:px-16 lg:py-32 space-y-4 ">
-                        <h1 className="text-lg sm:text-2xl lg:text-4xl text-white font-bold">
+                      <div className="absolute top-0 z-10 px-4 py-16 sm:px-8 sm:py-20 lg:px-16 lg:py-32 space-y-4 ">
+                        <h1 className="text-xl sm:text-2xl lg:text-4xl text-white font-bold">
                           {item?.title}
                         </h1>
                         <Button
@@ -131,7 +136,7 @@ export const ScheduleSection = () => {
                           spaceBetween: 10,
                         },
                         768: {
-                          slidesPerView: 4,
+                          slidesPerView: 3,
                           spaceBetween: 16,
                         },
                         1024: {
@@ -143,7 +148,9 @@ export const ScheduleSection = () => {
                       className="mySwiper"
                     >
                       {item?.events?.map((event, index) => (
-                        <SwiperSlide key={index}>
+                        <SwiperSlide key={index}
+                        className='shadow-md'
+                        >
                           <CardTimeline
                             title={event?.name}
                             description={event?.description}
@@ -175,10 +182,10 @@ const CardTimeline = ({
 }) => {
   const dateFormatted = formatDateToDDMMM(new Date(date))
   return (
-    <div className="relative">
+    <div className="relative shadow-md">
       <div className="bg-transparent pt-5">
         <Card
-          className="border   p-3 sm:p-4 lg:px-4 lg:py-8"
+          className="border px-3 py-4 sm:p-4 lg:px-4 lg:py-9"
           radius="sm"
           shadow="sm"
         >
@@ -210,7 +217,7 @@ const CardTimeline = ({
           </CardBody>
         </Card>
       </div>
-      <div className="bg-white px-4 py-1 absolute top-0 left-8 border-t-4 border-success-600 shadow-md">
+      <div className="bg-white px-4 py-2 absolute top-0 left-8 border-t-4 border-success-600 shadow-md">
         <div className="font-bold text-lg sm:text-xl lg:text-2xl">
           {dateFormatted}
         </div>
