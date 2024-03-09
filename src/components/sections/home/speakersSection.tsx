@@ -111,7 +111,7 @@ export const SpeakersSection = () => {
               <Card
                 shadow="none"
                 radius="none"
-                className="bg-black/20 w-full h-full animate-pulse"
+                className="bg-black/20 w-full h-64 lg:h-full animate-pulse"
                 isPressable
                 as={Link}
                 href="/ponentes"

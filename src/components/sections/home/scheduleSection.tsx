@@ -133,7 +133,7 @@ export const ScheduleSection = () => {
                     orientation="vertical"
                     className="w-full"
                   >
-                    <div className="mt-6 absolute z-20 bottom-0 right-0 grid grid-cols-3 gap-4 w-full max-w-3xl lg:max-w-5xl px-6">
+                    <div className="mt-6 absolute z-20 bottom-0 right-0 grid grid-cols-4 gap-4 w-full max-w-3xl lg:max-w-6xl px-6">
                       {item?.events?.map((event, index) => (
                         <CardTimeline
                           key={index}
@@ -168,7 +168,11 @@ const CardTimeline = ({
   return (
     <div className="relative">
       <div className="bg-transparent pt-5">
-        <Card className="border   p-3 sm:p-4 lg:p-5">
+        <Card
+          className="border   p-3 sm:p-4 lg:px-4 lg:py-8"
+          radius="sm"
+          shadow="sm"
+        >
           <CardBody>
             <Chip
               color="success"
@@ -178,8 +182,8 @@ const CardTimeline = ({
             >
               Tag
             </Chip>
-            <div className="pt-4 space-y-1">
-              <h2 className="text-xl font-bold ">{title}</h2>
+            <div className="pt-4 space-y-2">
+              <h2 className="text-xl font-bold leading-tight">{title}</h2>
               {/* <p>{date}</p> */}
               <div className="flex items-center space-x-2">
                 <IconCalendarEvent size={16} />
@@ -197,7 +201,7 @@ const CardTimeline = ({
           </CardBody>
         </Card>
       </div>
-      <div className="bg-white px-4 py-1 absolute top-0 left-8 border-b-3 border-success-600">
+      <div className="bg-white px-4 py-1 absolute top-0 left-8 border-t-4 border-success-600 shadow-md">
         <div className="font-bold text-lg sm:text-xl lg:text-2xl">
           {dateFormatted}
         </div>
