@@ -6,4 +6,5 @@ export interface ISpeaker {
   image: string
   institution?: string
   levelStudy?: string
+  isActive?: boolean
 }

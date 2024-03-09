@@ -49,7 +49,7 @@ import { ISpeaker } from '@/types'
 //   }
 // }
 
-export function useSpeker() {
+export function useSpeaker() {
   const [loading, setLoading] = useState<boolean>(true)
   //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
   const [speakersActive, setSpeakersActive] = useState<ISpeaker[] | null>(null)
