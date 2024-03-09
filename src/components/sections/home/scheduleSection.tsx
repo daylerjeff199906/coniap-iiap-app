@@ -14,24 +14,12 @@ import { IconCalendarEvent, IconMapPin, IconClock } from '@tabler/icons-react'
 import data from '@/utils/shedule.json'
 import Link from 'next/link'
 
-// create array data for timeline
-// const data = [
-//   {
-//     title: 'Title 1',
-//     description: 'Description 1',
-//     date: 'Date 1',
-//   },
-//   {
-//     title: 'Title 2',
-//     description: 'Description 2',
-//     date: 'Date 2',
-//   },
-//   {
-//     title: 'Title 3',
-//     description: 'Description 3',
-//     date: 'Date 3',
-//   },
-// ]
+import { Swiper, SwiperSlide } from 'swiper/react'
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination'
+// import required modules
+import { Pagination } from 'swiper/modules'
 
 function formatDateToDDMMM(date: Date): string {
   const months = [
@@ -129,21 +117,42 @@ export const ScheduleSection = () => {
                       </div>
                     </section>
                   </div>
-                  <ScrollShadow
-                    orientation="vertical"
-                    className="w-full"
-                  >
-                    <div className="mt-6 absolute z-20 bottom-0 right-0 grid grid-cols-4 gap-4 w-full max-w-3xl lg:max-w-6xl px-6">
+
+                  <div className="mt-6 absolute z-20 bottom-0 right-0 w-full max-w-3xl lg:max-w-6xl px-6">
+                    <Swiper
+                      slidesPerView={1}
+                      spaceBetween={8}
+                      pagination={{
+                        clickable: true,
+                      }}
+                      breakpoints={{
+                        640: {
+                          slidesPerView: 2,
+                          spaceBetween: 10,
+                        },
+                        768: {
+                          slidesPerView: 4,
+                          spaceBetween: 16,
+                        },
+                        1024: {
+                          slidesPerView: 4,
+                          spaceBetween: 20,
+                        },
+                      }}
+                      modules={[Pagination]}
+                      className="mySwiper"
+                    >
                       {item?.events?.map((event, index) => (
-                        <CardTimeline
-                          key={index}
-                          title={event?.name}
-                          description={event?.description}
-                          date={event?.date}
-                        />
+                        <SwiperSlide key={index}>
+                          <CardTimeline
+                            title={event?.name}
+                            description={event?.description}
+                            date={event?.date}
+                          />
+                        </SwiperSlide>
                       ))}
-                    </div>
-                  </ScrollShadow>
+                    </Swiper>
+                  </div>
                 </div>
               </Tab>
             ))}
