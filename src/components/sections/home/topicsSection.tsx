@@ -44,7 +44,9 @@ export const TopicsSection = () => {
   return (
     <section className=" bg-black/70">
       <div className="container section-home space-y-2">
-        <h2 className="title-section-home text-white">Líneas temáticas</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+          Líneas temáticas
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3  py-4">
           {topicsExample.map((topic, i) => (
             <CardTopics

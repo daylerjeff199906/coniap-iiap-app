@@ -12,6 +12,7 @@ import {
 } from '@nextui-org/react'
 import { IconCalendarEvent, IconMapPin, IconClock } from '@tabler/icons-react'
 import data from '@/utils/shedule.json'
+import Link from 'next/link'
 
 // create array data for timeline
 // const data = [
@@ -120,6 +121,8 @@ export const ScheduleSection = () => {
                           color="success"
                           className="text-white"
                           radius="full"
+                          as={Link}
+                          href="/agenda"
                         >
                           Ver agenda
                         </Button>
