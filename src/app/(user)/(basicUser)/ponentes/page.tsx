@@ -1,11 +1,12 @@
 'use client'
+import { ListSpeakers } from '@/components'
 import { Divider } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 
 export default function Page() {
   return (
     <>
-      <section className="section-page">
+      <section className="section-page space-y-8">
         <motion.div
           className="flex flex-col items-center"
           initial={{ opacity: 0, y: -100 }}
@@ -18,6 +19,7 @@ export default function Page() {
             <Divider className="bg-orange-500 pt-1 rounded-full mt-4 w-36 " />
           </div>
         </motion.div>
+        <ListSpeakers />
       </section>
     </>
   )
