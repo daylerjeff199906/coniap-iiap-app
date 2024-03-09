@@ -3,10 +3,11 @@ import {
   BannerHome,
   ScheduleSection,
   TimeSection,
+  SpeakersSection,
   TopicsSection,
   WorkTeamSection,
+  SponsorSection,
 } from '@/components'
-import { SpeakersSection } from '@/components/sections/home/speakersSection'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <TopicsSection />
       <ScheduleSection />
       <WorkTeamSection />
+      <SponsorSection />
     </main>
   )
 }

@@ -37,7 +37,7 @@ export const SpeakersSection = () => {
             </div>
             <div className="">
               <h4 className="subtitle-section-home">Invitados especiales</h4>
-              <h2 className="title-section-home">Ponentes</h2>
+              <h2 className="title-section-home">Conferencistas</h2>
             </div>
           </motion.div>
 
