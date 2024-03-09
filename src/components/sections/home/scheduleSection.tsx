@@ -8,6 +8,7 @@ import {
   Card,
   CardBody,
   Divider,
+  ScrollShadow,
 } from '@nextui-org/react'
 import { IconCalendarEvent, IconMapPin, IconClock } from '@tabler/icons-react'
 import data from '@/utils/shedule.json'
@@ -88,7 +89,7 @@ export const ScheduleSection = () => {
           <Tabs
             variant="underlined"
             size="lg"
-            className='text-center flex flex-col items-center'
+            className="text-center flex flex-col items-center"
             // fullWidth
           >
             {data?.map((item, index) => (
@@ -125,16 +126,21 @@ export const ScheduleSection = () => {
                       </div>
                     </section>
                   </div>
-                  <div className="mt-6 absolute z-20 bottom-0 right-0 grid grid-cols-3 gap-4 w-full max-w-3xl lg:max-w-5xl px-6">
-                    {item?.events?.map((event, index) => (
-                      <CardTimeline
-                        key={index}
-                        title={event?.name}
-                        description={event?.description}
-                        date={event?.date}
-                      />
-                    ))}
-                  </div>
+                  <ScrollShadow
+                    orientation="vertical"
+                    className="w-full"
+                  >
+                    <div className="mt-6 absolute z-20 bottom-0 right-0 grid grid-cols-3 gap-4 w-full max-w-3xl lg:max-w-5xl px-6">
+                      {item?.events?.map((event, index) => (
+                        <CardTimeline
+                          key={index}
+                          title={event?.name}
+                          description={event?.description}
+                          date={event?.date}
+                        />
+                      ))}
+                    </div>
+                  </ScrollShadow>
                 </div>
               </Tab>
             ))}
