@@ -1,3 +1,4 @@
 import { CardSpeaker } from './CardSpeaker/CardSpeaker'
+import { CardEvent } from './CardEvent/CardEvent'
 
-export { CardSpeaker }
+export { CardSpeaker, CardEvent }
