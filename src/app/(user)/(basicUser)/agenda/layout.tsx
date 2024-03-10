@@ -3,7 +3,7 @@ export default function Layout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <main className="container">{children}</main>
+      <main className="">{children}</main>
     </>
   )
 }
