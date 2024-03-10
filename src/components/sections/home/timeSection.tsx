@@ -48,33 +48,32 @@ export const TimeSection = () => {
   )
 
   return (
-    <section className="bg-green-700">
+    <section className="bg-success-700">
       <div className="container section-home">
         {isCurrent && (
           <h2 className="text-white">The event is happening now</h2>
         )}
         {isFuture && (
-          <div className="w-full flex flex-col justify-center text-center">
-            <div className="w-full justify-around">
-              <div className="grid grid-cols-4 text-white w-full">
-                <TimeDisplay
-                  label="Days"
-                  value={days}
-                />
-                <TimeDisplay
-                  label="Hours"
-                  value={hours}
-                />
-                <TimeDisplay
-                  label="Minutes"
-                  value={minutes}
-                />
-                <TimeDisplay
-                  label="Seconds"
-                  value={seconds}
-                />
-              </div>
-            </div>
+          <div className="flex text-white w-full items-center px-0 sm:px-28 lg:px-36 xl:px-72">
+            <TimeDisplay
+              label="Días"
+              value={days}
+            />
+            <h1 className="text-sm :sm:text-lg lg:text-2xl font-bold">:</h1>
+            <TimeDisplay
+              label="Horas"
+              value={hours}
+            />
+            <h1 className="text-sm :sm:text-lg lg:text-2xl font-bold">:</h1>
+            <TimeDisplay
+              label="Minutos"
+              value={minutes}
+            />
+            <h1 className="text-sm :sm:text-lg lg:text-2xl font-bold">:</h1>
+            <TimeDisplay
+              label="Segundos"
+              value={seconds}
+            />
           </div>
         )}
         {!isCurrent && !isFuture && (
@@ -87,7 +86,7 @@ export const TimeSection = () => {
 
 const TimeDisplay = ({ label, value }: { label: string; value: number }) => (
   <div className="w-full text-center">
-    <h2 className="text-white">{label}</h2>
-    <h1 className="lg:text-5xl font-bold">{value}</h1>
+    <h2 className="text-white lg:pb-3 font-medium text-tiny lg:text-base">{label}</h2>
+    <h1 className="text-2xl lg:text-5xl font-bold">{value}</h1>
   </div>
 )
