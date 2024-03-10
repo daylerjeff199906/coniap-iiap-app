@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'CONIAP | Congreso Internacional de la Amazonía Peruana',
-  icons: 'iconWeb.webp',
+  icons: 'coniap.ico',
   description:
     'III Congreso Internacional de la Amazonía Peruana realizado por el Instituto de Investigaciones de la Amazonía Peruana',
 }

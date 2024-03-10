@@ -25,7 +25,7 @@ export const BannerHome = () => {
               color="#fff"
             />
             <h3 className="text-white sm:text-lg max-w-48">
-              Del 15 al 18 de noviembre de 2022
+              Del 13 al 15 de noviembre de 2022
             </h3>
           </div>
           <div className="w-full flex items-center gap-3">
