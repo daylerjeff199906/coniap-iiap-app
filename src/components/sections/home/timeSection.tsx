@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-const dateStart = new Date('2024-10-01').getTime()
-const dateEnd = new Date('2024-10-31').getTime()
+const dateStart = new Date('2024-11-13').getTime()
+const dateEnd = new Date('2024-11-15').getTime()
 const dateNext = new Date('2026-11-01').getTime()
 
 export const TimeSection = () => {

@@ -8,19 +8,34 @@ const indicator = [
     title: 'Propósito',
     description:
       'Facilitar el intercambio de conocimientos y experiencias entre investigadores y gestores de desarrollo para promover el desarrollo socioeconómico sostenible en la Amazonia peruana',
-    icon: <IconFlag size={30} />,
+    icon: (
+      <IconFlag
+        size={56}
+        stroke={1}
+      />
+    ),
   },
   {
     title: 'Misión',
     description:
       'Impulsar la colaboración multidisciplinaria y el diálogo entre sectores público, privado y académico para abordar los desafíos de conservación y desarrollo en la región amazónica.  ',
-    icon: <IconDirections size={30} />,
+    icon: (
+      <IconDirections
+        size={56}
+        stroke={1}
+      />
+    ),
   },
   {
     title: 'Visión',
     description:
       'Ser un espacio de referencia para la difusión de conocimientos y la generación de consensos sobre temas de desarrollo sostenible en la Amazonia peruana.',
-    icon: <IconCompass size={30} />,
+    icon: (
+      <IconCompass
+        size={56}
+        stroke={1}
+      />
+    ),
   },
 ]
 

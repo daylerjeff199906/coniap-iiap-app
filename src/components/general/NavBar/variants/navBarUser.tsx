@@ -28,8 +28,6 @@ export const NavBarUser = () => {
         maxWidth="full"
         classNames={{
           base: 'bg-gray-800 text-white py-3',
-          //   content: 'flex justify-between',
-          item: 'text-sm',
         }}
         height={72}
       >
@@ -68,12 +66,12 @@ export const NavBarUser = () => {
           <NavbarItem>
             <Button
               as={Link}
-              color="success"
+              color="danger"
               href="#"
-              variant="bordered"
+              variant="solid"
               radius="full"
             >
-              Inscribirme
+              ¡Inscríbete ya!
             </Button>
           </NavbarItem>
         </NavbarContent>
