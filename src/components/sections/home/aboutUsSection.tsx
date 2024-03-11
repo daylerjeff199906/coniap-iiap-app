@@ -1,6 +1,6 @@
 'use client'
 import { Card, CardBody, Divider } from '@nextui-org/react'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { IconFlag, IconDirections, IconCompass } from '@tabler/icons-react'
 
 const indicator = [
@@ -42,7 +42,12 @@ const indicator = [
 export const AboutUsSection = () => {
   return (
     <section className=" bg-white">
-      <div className="container section-home ">
+      <motion.div
+        className="container section-home "
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true, amount: 0.8 }}
+      >
         <div className="space-y-8">
           <motion.div
             className="flex flex-col items-center"
@@ -85,7 +90,7 @@ export const AboutUsSection = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

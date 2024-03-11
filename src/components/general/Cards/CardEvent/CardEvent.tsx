@@ -42,7 +42,7 @@ export const CardEvent = (props: IProps) => {
         >
           <CardBody>
             <Chip
-              color="success"
+              color="primary"
               size="sm"
               radius="sm"
               className="text-white font-bold"
@@ -70,7 +70,7 @@ export const CardEvent = (props: IProps) => {
           </CardBody>
         </Card>
       </div>
-      <div className="bg-white px-4 py-2 absolute top-0 left-8 border-t-4 border-success-600 shadow-md">
+      <div className="bg-white px-4 py-2 absolute top-0 left-8 border-t-4 border-primary-400 shadow-md">
         <div className="font-bold text-lg sm:text-xl lg:text-2xl">
           {dateFormatted}
         </div>
