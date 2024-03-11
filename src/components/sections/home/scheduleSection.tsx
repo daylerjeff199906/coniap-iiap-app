@@ -100,13 +100,13 @@ export const ScheduleSection = () => {
                           className="w-full h-[420px] lg:h-[500px] object-cover"
                           isBlurred
                         />
-                        <div className="absolute top-0 bottom-0 right-0 left-0 z-10 px-4 py-16 sm:px-8 sm:py-20 lg:px-16 lg:py-32 space-y-4 bg-black/30 rounded-xl">
+                        <div className="absolute top-0 bottom-0 right-0 left-0 z-10 px-4 py-16 sm:px-8 sm:py-20 lg:px-16 lg:py-32 space-y-4 bg-black/50 rounded-xl">
                           <h1 className="text-xl sm:text-2xl lg:text-4xl text-white font-bold">
                             {item?.title}
                           </h1>
                           <Button
                             size="lg"
-                            color="success"
+                            color="primary"
                             className="text-white"
                             radius="full"
                             as={Link}
