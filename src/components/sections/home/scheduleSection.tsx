@@ -11,9 +11,9 @@ import {
   Divider,
   ScrollShadow,
 } from '@nextui-org/react'
-import { IconCalendarEvent, IconMapPin, IconClock } from '@tabler/icons-react'
-import data from '@/utils/shedule.json'
+import { IconCalendarEvent } from '@tabler/icons-react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 import { CardEvent } from '@/components'
 
