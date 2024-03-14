@@ -24,11 +24,11 @@ const bannerData = [
   {
     id: 2,
     includePathname: '/agenda',
-    title: 'Titulo principal',
-    subtitle: 'Subtitulo',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    urlImage: '',
+    title: 'Agenda',
+    subtitle: 'Conoce las actividades',
+    description: 'Descubre las actividades que tenemos preparadas para ti.',
+    urlImage:
+      'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fauditorio.webp?alt=media&token=2cd62ce6-816a-4af4-974d-e0962d449911',
   },
   {
     id: 3,
@@ -62,24 +62,25 @@ export const Banner = () => {
     <>
       <section className="w-full h-80 lg:h-[26rem] bg-black/60 relative">
         <div className="container text-white flex items-center gap-2 lg:gap-4 h-full">
-          <div className="flex items-center  gap-2 pb-28">
-            <div className="w-7 sm:w-10 lg:w-16 border border-white" />
+          <div className="flex items-center gap-1 sm:gap-2 pb-36 sm:pb-28">
+            <div className="w-3 sm:w-10 lg:w-16 border border-white" />
             <div className="rounded-full border-2 h-4 w-4 flex items-center justify-center ">
               <div className="rounded-full bg-white h-2 w-2"></div>
             </div>
           </div>
           <div>
-            <h1 className="text-6xl font-bold pb-5 text-warning-400">
+            <h1 className="text-[2.6rem] sm:text-6xl font-bold pb-1 sm:pb-5 text-warning-400">
               {banner.title}
             </h1>
-            <h2 className="text-5xl font-bold">{banner.subtitle}</h2>
-            <p className="max-w-lg pt-2">{banner.description}</p>
+            <h2 className="text-[2.1rem] sm:text-5xl font-bold leading-tight sm:leading-normal">{banner.subtitle}</h2>
+            <p className="max-w-lg pt-1 sm:pt-2">{banner.description}</p>
           </div>
         </div>
         <Image
           alt={banner.title}
           src={banner.urlImage}
           removeWrapper
+          isBlurred
           radius="none"
           className="absolute top-0 -z-20 object-cover left-0 right-0 w-full h-full"
         />
