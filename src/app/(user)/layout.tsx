@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="h-screen">
         <div className="flex flex-col justify-center items-center h-full w-full">
           <motion.div
-            className="h-1/3 w-1/3"
+            className="w-1/3"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
