@@ -7,6 +7,7 @@ import {
   TopicsSection,
   WorkTeamSection,
   SponsorSection,
+  EventsSection,
 } from '@/components'
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <SpeakersSection />
       <TopicsSection />
       <ScheduleSection />
+      <EventsSection />
       <WorkTeamSection />
       <SponsorSection />
     </main>
