@@ -1,7 +1,59 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { NavBar } from '@/components'
+import {
+  IconLayoutDashboard,
+  IconCalendarEvent,
+  IconCalendarMonth,
+  IconUsers,
+} from '@tabler/icons-react'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
+
+import { NavBar, AsideMenu } from '@/components'
+
+import { IMenuAside } from '@/types'
+
+export const menuAside: IMenuAside[] = [
+  {
+    id: '1',
+    nameOption: 'Dashboard',
+    titleOption: null,
+    hrefLink: '/admin',
+    icon: <IconLayoutDashboard />,
+    subItems: null,
+  },
+  {
+    id: '5',
+    nameOption: 'Program',
+    titleOption: null,
+    hrefLink: '/admin/programas',
+    icon: <IconCalendarMonth />,
+    subItems: null,
+  },
+  {
+    id: '2',
+    nameOption: 'Events',
+    titleOption: null,
+    hrefLink: '/admin/eventos',
+    icon: <IconCalendarEvent />,
+    subItems: null,
+  },
+  {
+    id: '3',
+    nameOption: 'Speakers',
+    titleOption: null,
+    hrefLink: '/admin/ponentes',
+    icon: <IconUsers />,
+    subItems: null,
+  },
+  //   {
+  //     id: '4',
+  //     nameOption: 'Sponsors',
+  //     titleOption: null,
+  //     hrefLink: '/admin/sponsors',
+  //     icon: <SponsorIcon />,
+  //     subItems: null,
+  //   },
+]
 
 const generateBreadcrumbItems = (pathname: string) => {
   const pathParts = pathname?.split('/').filter(Boolean)
@@ -33,7 +85,9 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname()
   return (
     <div className="flex gap-4">
-      <aside className="w-80"></aside>
+      <aside className="w-80 bg-gray-100 h-screen sticky top-0 overflow-y-auto">
+        <AsideMenu menuAside={menuAside} />
+      </aside>
       <main className="w-full">
         <NavBar variant="admin" />
         <section className="px-6 py-4 sticky top-16 bg-white container z-30">
