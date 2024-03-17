@@ -15,6 +15,7 @@ import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { IEvent } from '@/types'
+import { useEvents } from '@/hooks/admin'
 
 interface IProps {
   isOpen: boolean
@@ -22,6 +23,7 @@ interface IProps {
 }
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
+import { ModalAction } from '@/components'
 export const FrmEditEvent = (props: IProps) => {
   const { isOpen, event } = props
   const router = useRouter()
@@ -30,13 +32,21 @@ export const FrmEditEvent = (props: IProps) => {
   const defaultValuesEdit = isEdit ? true : false
 
   const [isEditables, setIsEditables] = useState(defaultValuesEdit)
+  const [openConfirm, setOpenConfirm] = useState(false)
+
+  const { updateEvent } = useEvents()
 
   const methods = useForm<IEvent>({
     defaultValues: event,
   })
 
-  const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
-    console.log(data)
+  const onSubmit = () => {
+    setOpenConfirm(true)
+  }
+
+  const handleFormSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
+    updateEvent(event.id, data)
+    router.push('/admin/eventos')
   }
 
   return (
@@ -194,6 +204,13 @@ export const FrmEditEvent = (props: IProps) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <ModalAction
+        isOpen={openConfirm}
+        message="¿Estás seguro de guardar los cambios?"
+        title="Guardar cambios"
+        setOpen={setOpenConfirm}
+        onPress={methods.handleSubmit(handleFormSubmit)}
+      />
     </>
   )
 }

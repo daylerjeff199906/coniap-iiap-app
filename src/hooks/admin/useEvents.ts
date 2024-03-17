@@ -8,8 +8,9 @@ import {
   DocumentReference,
   getDoc,
   query,
-  where,
-  orderBy,
+  // where,
+  // orderBy,
+  updateDoc,
   addDoc,
 } from 'firebase/firestore'
 import { IEvent } from '@/types'
@@ -108,41 +109,18 @@ export function useEvents() {
     }
   }
 
-  //   const getPrograms = async () => {
-  //     setLoading(true)
-  //     try {
-  //       const querySnapshot = await getDocs(
-  //         query(collection(db, 'programs'), orderBy('date', 'asc'))
-  //       )
-  //       const program = querySnapshot.docs.map((doc) => ({
-  //         id: doc.id.toString(),
-  //         date: convertTimestampToDate(doc.data().date.seconds),
-  //         ...doc.data(),
-  //       }))
-  //       //   setSliders(convertDataToISliders(sliders))
-  //       setPrograms(convertDataToIProgram(program))
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   const getSliderById = async (id: string) => {
-  //     setLoading(true)
-  //     try {
-  //       const categoryRef: DocumentReference<DocumentData> = doc(db, 'slider', id)
-  //       const docSnap = await getDoc(categoryRef)
-  //       if (docSnap.exists()) {
-  //         setSlider(convertDataToISlidersById(docSnap.data()))
-  //       } else {
-  //         console.log('No such document!')
-  //       }
-
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+  const updateEvent = async (id: string, data: IEvent) => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const eventRef: DocumentReference<DocumentData> = doc(db, 'events', id)
+      await updateDoc(eventRef, data as any)
+      toast.success('Evento actualizado con exito')
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return {
     loading,
@@ -151,6 +129,7 @@ export function useEvents() {
     events,
     getEventById,
     event,
+    updateEvent
     // getPrograms,
     // programs,
     // getSlider,
