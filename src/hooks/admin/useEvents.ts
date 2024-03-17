@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { db } from '@/firebase/firebase'
+import { db, storage } from '@/firebase/firebase'
 import {
   collection,
   getDocs,
@@ -13,6 +13,14 @@ import {
   updateDoc,
   addDoc,
 } from 'firebase/firestore'
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage'
+
 import { IEvent } from '@/types'
 import { toast } from 'sonner'
 
@@ -125,6 +133,43 @@ export function useEvents() {
     }
   }
 
+  const editEventField = async (
+    productId: string,
+    fieldToUpdate: string,
+    value: any
+  ) => {
+    setLoading(true)
+    try {
+      const productDocRef = doc(db, 'events', productId)
+      await updateDoc(productDocRef, {
+        [fieldToUpdate]: value,
+      })
+      toast.success(
+        `Campo ${fieldToUpdate} actualizado con exito en el evento ${productId}`
+      )
+      setLoading(false)
+    } catch (e) {
+      console.error('Error adding document: ', e)
+      setLoading(false)
+    }
+  }
+
+  const uploadImage = async (file: File): Promise<string> => {
+    setLoading(true)
+    try {
+      const storageRef = ref(storage, `events/${file.name}`)
+      await uploadBytes(storageRef, file)
+
+      const url = await getDownloadURL(storageRef)
+      setLoading(false)
+      return url
+    } catch (e) {
+      console.error('Error uploading image: ', e)
+      setLoading(false)
+      return ''
+    }
+  }
+
   return {
     loading,
     createEvent,
@@ -133,8 +178,7 @@ export function useEvents() {
     getEventById,
     event,
     updateEvent,
-    // getPrograms,
-    // programs,
-    // getSlider,
+    editEventField,
+    uploadImage,
   }
 }

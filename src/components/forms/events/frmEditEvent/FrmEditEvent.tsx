@@ -163,7 +163,7 @@ export const FrmEditEvent = (props: IProps) => {
               </div>
             </section>
           </main>
-          <footer>
+          <footer className='pt-4'>
             {isEditables && (
               <div className="flex items-center gap-3 justify-end">
                 <Button
