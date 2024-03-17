@@ -1,5 +1,6 @@
 export interface IEvent {
   id: string
+  isActived: boolean
   name: string
   timeStart: string
   timeEnd: string

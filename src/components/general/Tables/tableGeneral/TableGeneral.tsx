@@ -8,6 +8,7 @@ import {
   getKeyValue,
 } from '@nextui-org/react'
 import { useCallback } from 'react'
+import { IColumns } from '@/types'
 
 interface IRows {
   key: string | number
@@ -15,12 +16,7 @@ interface IRows {
 }
 
 interface IProps {
-  columns: Array<{
-    key: string
-    label: string
-    align?: 'center' | 'start' | 'end'
-    // sortable?: boolean
-  }>
+  columns: Array<IColumns>
   rows: Array<IRows>
   loading?: boolean
 }

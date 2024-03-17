@@ -16,7 +16,7 @@ export default function Page() {
           Añadir evento
         </Button>
       </section>
-      <section>
+      <section className="py-6">
         <ListEventsSection />
       </section>
     </>

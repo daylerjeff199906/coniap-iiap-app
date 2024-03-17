@@ -57,10 +57,7 @@ function convertTimestampToDate(timestamp: any) {
 
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(false)
-  //   const [programs, setPrograms] = useState<IProgram[] | null>(null)
-  //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
-
-  //   const [slider, setSlider] = useState<ISliders | null>(null)
+  const [events, setEvents] = useState<IEvent[] | null>(null)
 
   const createEvent = async (data: IEvent) => {
     setLoading(true)
@@ -70,6 +67,22 @@ export function useEvents() {
       // console.log('Document written with ID: ', docRef.id)
       toast.success(`Evento creado con exito, ID: ${docRef.id}`)
 
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getEvents = async () => {
+    setLoading(true)
+    try {
+      const querySnapshot = await getDocs(query(collection(db, 'events')))
+
+      const speakers = querySnapshot.docs.map((doc) => ({
+        id: doc.id.toString(),
+        ...doc.data(),
+      }))
+      setEvents(speakers as IEvent[])
       setLoading(false)
     } catch (error) {
       console.log(error)
@@ -89,24 +102,6 @@ export function useEvents() {
   //       }))
   //       //   setSliders(convertDataToISliders(sliders))
   //       setPrograms(convertDataToIProgram(program))
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   const getSpekersActive = async () => {
-  //     setLoading(true)
-  //     try {
-  //       const querySnapshot = await getDocs(
-  //         query(collection(db, 'speakers'), where('isActive', '==', true))
-  //       )
-
-  //       const speakers = querySnapshot.docs.map((doc) => ({
-  //         id: doc.id.toString(),
-  //         ...doc.data(),
-  //       }))
-  //       setSpeakersActive(speakers as ISpeaker[])
   //       setLoading(false)
   //     } catch (error) {
   //       console.log(error)
@@ -133,6 +128,8 @@ export function useEvents() {
   return {
     loading,
     createEvent,
+    getEvents,
+    events,
     // getPrograms,
     // programs,
     // getSlider,
