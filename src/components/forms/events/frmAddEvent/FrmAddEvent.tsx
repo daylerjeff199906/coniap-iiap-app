@@ -50,7 +50,7 @@ export const FrmAddEvent = () => {
       inProgram: data.idProgram ? true : false,
       idTypeEvent: '',
     }
-    createEvent(data)
+    createEvent(newData)
       .then(() => {
         toast.success('Evento creado')
       })
