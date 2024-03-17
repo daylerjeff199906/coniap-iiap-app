@@ -6,7 +6,7 @@ export const MoreInfo = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <h1 className="text-lg">Más información</h1>
+        <h1 className="text-sm text-gray-400">Màs información</h1>
         {/* <Controller
           control={control}
           name="place"
