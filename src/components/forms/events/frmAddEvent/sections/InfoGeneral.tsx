@@ -60,7 +60,7 @@ export const InfoGeneral = () => {
             name="endTime"
             render={({ field: { onChange, value } }) => (
               <Input
-                label="Hora de finalización"
+                label="Hora de fin"
                 labelPlacement="outside"
                 radius="sm"
                 type="time"
@@ -72,7 +72,7 @@ export const InfoGeneral = () => {
         </div>
         <Controller
           control={control}
-          name="description"
+          name="shortDescription"
           render={({ field: { onChange, value } }) => (
             <Textarea
               aria-label="Descripción del evento"

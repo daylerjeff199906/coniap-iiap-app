@@ -18,8 +18,39 @@ export const FrmAddEvent = () => {
     setOpen(true)
   }
 
-  const handleOnSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
-    createEvent(data)
+  // id: string
+  // name: string
+  // timeStart: string
+  // timeEnd: string
+  // date?: string
+  // shortDescription?: string
+  // place: string
+  // banner?: string
+  // image: string[]
+  // salas: string
+  // linkZoom?: string
+  // linkYoutube?: string
+  // linkFacebook?: string
+  // customContent?: string
+  // body?: string
+  // idProgram?: string
+  // inProgram?: boolean
+  // idTypeEvent?: string
+
+  const handleFormSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
+    setOpen(false)
+    const newData = {
+      ...data,
+      place: '',
+      banner: '',
+      images: [],
+      salaId: '',
+      customContent: data.customContent || '',
+      idProgram: '',
+      inProgram: data.idProgram ? true : false,
+      idTypeEvent: '',
+    }
+    // createEvent(data)
   }
 
   return (
@@ -51,7 +82,7 @@ export const FrmAddEvent = () => {
         setOpen={setOpen}
         title="Agregar evento"
         message="¿Estás seguro de agregar este evento?"
-        onPress={() => {}}
+        onPress={methods.handleSubmit(handleFormSubmit)}
       />
     </>
   )

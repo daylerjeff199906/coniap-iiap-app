@@ -7,13 +7,12 @@ export interface IEvent {
   shortDescription?: string
   place: string
   banner?: string
-  image: string[]
+  images: string[]
   sala: string
   linkZoom?: string
   linkYoutube?: string
   linkFacebook?: string
   customContent?: string
-  body?: string
   idProgram?: string
   inProgram?: boolean
   idTypeEvent?: string
