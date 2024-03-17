@@ -2,10 +2,11 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
 import { FrmEditEvent, TableGeneral } from '@/components'
-import { IColumns, IEvent } from '@/types'
+import { IColumns } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { useEffect, useState } from 'react'
+import { IEvent } from '@/types'
 
 const columns: Array<IColumns> = [
   {
@@ -40,7 +41,7 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
-  // const [eventData, setEventData] = useState<IEvent | null>(null)
+  const [eventData, setEventData] = useState<IEvent | null>(null)
   const [openModal, setOpenModal] = useState(false)
   const { getEvents, events, getEventById, event } = useEvents()
 
@@ -55,16 +56,19 @@ export const ListEventsSection = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (isEdit) {
+        // Agregar verificación para event !== null
         const id = searchParams.get('edit')
         if (id) {
           await getEventById(id)
-          if (event) {
+          if (event !== null) {
+            setEventData(event)
             setOpenModal(true)
           }
         }
       } else {
-        await getEvents()
+        getEvents()
         setOpenModal(false)
+        setEventData(null)
       }
     }
 
@@ -91,11 +95,10 @@ export const ListEventsSection = () => {
             : []
         }
       />
-
-      {event && (
+      {eventData && (
         <FrmEditEvent
           isOpen={openModal}
-          event={event}
+          event={eventData}
         />
       )}
     </>
