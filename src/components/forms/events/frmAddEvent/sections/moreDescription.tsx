@@ -2,10 +2,11 @@ import useQuill from './useQuill'
 import { useFormContext } from 'react-hook-form'
 
 export const MoreDescription = () => {
-  const { control } = useFormContext()
+  const { setValue } = useFormContext()
 
   const handleDescriptionChange = (content: string) => {
     // Manejar cambios en la descripción aquí
+    setValue('customContent', content)
   }
 
   return (
