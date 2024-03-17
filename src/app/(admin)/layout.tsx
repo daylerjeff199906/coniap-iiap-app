@@ -1,3 +1,10 @@
+'use client'
+import { AdminLayout } from '@/components'
+
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <main className="container">{children}</main>
+  return (
+    <>
+      <AdminLayout>{children}</AdminLayout>
+    </>
+  )
 }
