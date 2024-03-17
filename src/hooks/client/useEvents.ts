@@ -119,6 +119,7 @@ export function useEvents() {
   return {
     loading,
     getEventById,
+    event,
     // getSlider,
   }
 }
