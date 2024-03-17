@@ -50,7 +50,14 @@ export const FrmAddEvent = () => {
       inProgram: data.idProgram ? true : false,
       idTypeEvent: '',
     }
-    // createEvent(data)
+    createEvent(data)
+      .then(() => {
+        toast.success('Evento creado')
+      })
+      .catch(() => {
+        toast.error('Error al crear evento')
+      })
+    methods.reset()
   }
 
   return (
