@@ -57,7 +57,26 @@ export const FrmAddEvent = () => {
       .catch(() => {
         toast.error('Error al crear evento')
       })
-    methods.reset()
+    resetForm()
+  }
+
+  const resetForm = () => {
+    methods.setValue('name', '')
+    methods.setValue('timeStart', '')
+    methods.setValue('timeEnd', '')
+    methods.setValue('date', '')
+    methods.setValue('shortDescription', '')
+    // methods.setValue('place', '')
+    // methods.setValue('banner', '')
+    // methods.setValue('images', [])
+    // methods.setValue('sala', '')
+    methods.setValue('linkZoom', '')
+    methods.setValue('linkYoutube', '')
+    methods.setValue('linkFacebook', '')
+    methods.setValue('customContent', '')
+    // methods.setValue('idProgram', '')
+    // methods.setValue('inProgram', false)
+    // methods.setValue('idTypeEvent', '')
   }
 
   return (
