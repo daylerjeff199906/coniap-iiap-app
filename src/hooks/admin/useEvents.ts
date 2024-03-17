@@ -58,6 +58,7 @@ function convertTimestampToDate(timestamp: any) {
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(false)
   const [events, setEvents] = useState<IEvent[] | null>(null)
+  const [event, setEvent] = useState<IEvent | null>(null)
 
   const createEvent = async (data: IEvent) => {
     setLoading(true)
@@ -83,6 +84,24 @@ export function useEvents() {
         ...doc.data(),
       }))
       setEvents(speakers as IEvent[])
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getEventById = async (id: string) => {
+    setLoading(true)
+    try {
+      const categoryRef: DocumentReference<DocumentData> = doc(db, 'events', id)
+      const docSnap = await getDoc(categoryRef)
+      if (docSnap.exists()) {
+        // setEvent(convertDataToISlidersById(docSnap.data()))
+        setEvent(docSnap.data() as IEvent)
+      } else {
+        console.log('No such document!')
+      }
+
       setLoading(false)
     } catch (error) {
       console.log(error)
@@ -130,6 +149,8 @@ export function useEvents() {
     createEvent,
     getEvents,
     events,
+    getEventById,
+    event,
     // getPrograms,
     // programs,
     // getSlider,

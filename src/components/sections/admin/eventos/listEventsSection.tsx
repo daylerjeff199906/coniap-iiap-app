@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { TableGeneral } from '@/components'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { FrmEditEvent, TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { useEffect } from 'react'
+import { Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react'
 
 const columns: Array<IColumns> = [
   {
@@ -39,11 +41,27 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
-  const { getEvents, events, loading } = useEvents()
+  const { getEvents, events, loading, getEventById, event } = useEvents()
+
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const isEdit = searchParams.get('edit') !== null
 
   useEffect(() => {
     getEvents()
   }, [])
+
+  useEffect(() => {
+    if (isEdit) {
+      const id = searchParams.get('edit')
+      if (id) {
+        getEventById(id)
+      }
+    }
+  }, [isEdit])
+
+  console.log('event', event)
 
   return (
     <>
@@ -65,6 +83,20 @@ export const ListEventsSection = () => {
             : []
         }
       />
+      <Modal
+        isOpen={isEdit}
+        onOpenChange={() => {
+          router.push('/admin/eventos')
+        }}
+        size="full"
+      >
+        <ModalContent>
+          <ModalHeader>
+            {isEdit ? 'Editar evento' : 'Detalle de evento'}
+          </ModalHeader>
+          <ModalBody>{event && <FrmEditEvent {...event} />}</ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   )
 }
