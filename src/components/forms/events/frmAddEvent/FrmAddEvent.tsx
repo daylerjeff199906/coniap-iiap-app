@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
 import { IEvent } from '@/types'
@@ -12,8 +13,12 @@ import { ModalAction } from '@/components'
 
 export const FrmAddEvent = () => {
   const [isOpen, setOpen] = useState(false)
-  const { createEvent } = useEvents()
+
+  const router = useRouter()
+  const { createEvent, loading } = useEvents()
+
   const methods = useForm<IEvent>()
+
   const onSubmit = () => {
     setOpen(true)
   }
@@ -53,6 +58,7 @@ export const FrmAddEvent = () => {
     createEvent(newData)
       .then(() => {
         toast.success('Evento creado')
+        router.push('/admin/eventos')
       })
       .catch(() => {
         toast.error('Error al crear evento')
@@ -96,6 +102,8 @@ export const FrmAddEvent = () => {
             <Button
               color="primary"
               type="submit"
+              isLoading={loading}
+              isDisabled={loading}
             >
               Agregar evento
             </Button>

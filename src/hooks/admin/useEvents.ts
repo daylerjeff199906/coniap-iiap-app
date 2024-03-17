@@ -65,6 +65,7 @@ export function useEvents() {
   const createEvent = async (data: IEvent) => {
     setLoading(true)
     try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
       const docRef = await addDoc(collection(db, 'events'), data)
       // console.log('Document written with ID: ', docRef.id)
       toast.success(`Evento creado con exito, ID: ${docRef.id}`)
