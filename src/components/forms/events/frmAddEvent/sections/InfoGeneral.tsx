@@ -2,7 +2,7 @@ import { Input, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 
 export const InfoGeneral = () => {
-  const { register, control } = useFormContext()
+  const { control } = useFormContext()
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
