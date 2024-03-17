@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Button,
   Image,
@@ -19,7 +19,7 @@ import { useEvents } from '@/hooks/admin'
 
 interface IProps {
   isOpen: boolean
-  event: IEvent | null
+  event: IEvent
 }
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
@@ -32,13 +32,12 @@ export const FrmEditEvent = (props: IProps) => {
 
   const id = searchParams.get('edit') || ''
 
-  const [defaultValues, setDefaultValues] = useState<IEvent>()
   const [isEditables, setIsEditables] = useState(defaultValuesEdit)
 
   const { updateEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>({
-    defaultValues: defaultValues,
+    defaultValues: event,
   })
 
   const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
@@ -67,12 +66,6 @@ export const FrmEditEvent = (props: IProps) => {
     methods.setValue('linkFacebook', '')
     methods.setValue('customContent', '')
   }
-
-  useEffect(() => {
-    if (event) {
-      setDefaultValues(event)
-    }
-  }, [event])
 
   return (
     <>

@@ -2,7 +2,7 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
 import { FrmEditEvent, TableGeneral } from '@/components'
-import { IColumns } from '@/types'
+import { IColumns, IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { useEffect, useState } from 'react'
@@ -40,6 +40,7 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
+  // const [eventData, setEventData] = useState<IEvent | null>(null)
   const [openModal, setOpenModal] = useState(false)
   const { getEvents, events, getEventById, event } = useEvents()
 
@@ -52,21 +53,22 @@ export const ListEventsSection = () => {
   }, [])
 
   useEffect(() => {
-    if (isEdit) {
-      const id = searchParams.get('edit')
-      if (id) {
-        getEventById(id)
+    const fetchData = async () => {
+      if (isEdit) {
+        const id = searchParams.get('edit')
+        if (id) {
+          await getEventById(id)
+          if (event) {
+            setOpenModal(true)
+          }
+        }
+      } else {
+        await getEvents()
+        setOpenModal(false)
       }
     }
-  }, [isEdit, event])
 
-  useEffect(() => {
-    if (isEdit) {
-      setOpenModal(true)
-    } else {
-      getEvents()
-      setOpenModal(false)
-    }
+    fetchData()
   }, [event, isEdit])
 
   return (
@@ -89,11 +91,12 @@ export const ListEventsSection = () => {
             : []
         }
       />
-
-      <FrmEditEvent
-        isOpen={openModal}
-        event={event}
-      />
+      {event && (
+        <FrmEditEvent
+          isOpen={openModal}
+          event={event}
+        />
+      )}
     </>
   )
 }
