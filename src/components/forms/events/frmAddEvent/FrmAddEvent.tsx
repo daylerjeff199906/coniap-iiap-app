@@ -25,7 +25,12 @@ export const FrmAddEvent = () => {
           </div>
           <MoreDescription />
           <div className="flex items-center gap-4">
-            <Button color="primary">Agregar evento</Button>
+            <Button
+              color="primary"
+              type="submit"
+            >
+              Agregar evento
+            </Button>
             <Button>Cancelar</Button>
           </div>
         </form>
