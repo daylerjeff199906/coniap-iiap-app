@@ -20,7 +20,7 @@ import { useEvents } from '@/hooks/admin'
 
 interface IProps {
   isOpen: boolean
-  event: IEvent | null
+  event: IEvent
 }
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
@@ -36,7 +36,9 @@ export const FrmEditEvent = (props: IProps) => {
 
   const { updateEvent, loading } = useEvents()
 
-  const methods = useForm<IEvent>()
+  const methods = useForm<IEvent>({
+    defaultValues: event,
+  })
 
   const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
     updateEvent(id, data)
@@ -65,24 +67,6 @@ export const FrmEditEvent = (props: IProps) => {
     methods.setValue('customContent', '')
   }
 
-  useEffect(() => {
-    if (event) {
-      methods.setValue('name', event.name)
-      methods.setValue('timeStart', event.timeStart)
-      methods.setValue('timeEnd', event.timeEnd)
-      methods.setValue('date', event.date)
-      methods.setValue('shortDescription', event.shortDescription)
-      // methods.setValue('place', event.place)
-      // methods.setValue('banner', event.banner)
-      // methods.setValue('images', event.images)
-      // methods.setValue('sala', event.sala)
-      methods.setValue('linkZoom', event.linkZoom)
-      methods.setValue('linkYoutube', event.linkYoutube)
-      methods.setValue('linkFacebook', event.linkFacebook)
-      methods.setValue('customContent', event.customContent)
-    }
-  }, [event])
-
   return (
     <>
       <Modal
@@ -90,6 +74,7 @@ export const FrmEditEvent = (props: IProps) => {
         onOpenChange={() => {
           router.push('/admin/eventos')
           setIsEditables(true)
+          clearForm()
         }}
         size="full"
         scrollBehavior="inside"

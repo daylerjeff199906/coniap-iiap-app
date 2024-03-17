@@ -100,6 +100,7 @@ export function useEvents() {
         // setEvent(convertDataToISlidersById(docSnap.data()))
         // add id to the object
         setEvent(docSnap.data() as IEvent)
+        return docSnap.data()
       } else {
         console.log('No such document!')
       }
