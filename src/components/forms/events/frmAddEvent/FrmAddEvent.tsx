@@ -45,32 +45,31 @@ export const FrmAddEvent = () => {
 
   const handleFormSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
     setOpen(false)
-    console.log(data)
-    // const newData = {
-    //   ...data,
-    //   place: '',
-    //   banner: '',
-    //   images: [],
-    //   salaId: '',
-    //   shortDescription: data.shortDescription || '',
-    //   customContent: data.customContent || '',
-    //   linkZoom: data.linkZoom || '',
-    //   linkYoutube: data.linkYoutube || '',
-    //   linkFacebook: data.linkFacebook || '',
-    //   idProgram: '',
-    //   inProgram: data.idProgram ? true : false,
-    //   isActived: false,
-    //   idTypeEvent: '',
-    // }
-    // createEvent(newData)
-      // .then(() => {
-      //   toast.success('Evento creado')
-      //   router.push('/admin/eventos')
-      // })
-      // .catch(() => {
-      //   toast.error('Error al crear evento')
-      // })
-    // resetForm()
+    const newData = {
+      ...data,
+      place: '',
+      banner: '',
+      images: [],
+      salaId: '',
+      shortDescription: data.shortDescription || '',
+      customContent: data.customContent || '',
+      linkZoom: data.linkZoom || '',
+      linkYoutube: data.linkYoutube || '',
+      linkFacebook: data.linkFacebook || '',
+      idProgram: '',
+      inProgram: data.idProgram ? true : false,
+      isActived: false,
+      idTypeEvent: '',
+    }
+    createEvent(newData)
+      .then(() => {
+        toast.success('Evento creado')
+        router.push('/admin/eventos')
+      })
+      .catch(() => {
+        toast.error('Error al crear evento')
+      })
+    resetForm()
   }
 
   const resetForm = () => {
