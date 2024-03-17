@@ -22,7 +22,7 @@ export const AsideMenu = (props: IProps) => {
   return (
     <div className="w-full">
       <header className="w-full">
-        <div className="flex items-center justify-center w-full h-16 bg-gray-400">
+        <div className="flex items-center justify-center w-full h-16 bg-gray-200">
           <h1 className="text-2xl font-bold">Admin</h1>
         </div>
       </header>

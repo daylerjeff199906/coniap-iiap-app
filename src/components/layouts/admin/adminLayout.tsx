@@ -108,6 +108,12 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           )}
         </section>
         <section className="w-full container">{children}</section>
+        <footer className="w-full  p-4 text-center">
+          <h3 className="text-sm">
+            Realizado con ❤️ por el equipo de desarrollo de GESCON | Todos los
+            derechos reservados © {new Date().getFullYear()}
+          </h3>
+        </footer>
       </main>
     </div>
   )

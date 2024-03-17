@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 
@@ -7,20 +8,17 @@ import { IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { toast } from 'sonner'
+import { ModalAction } from '@/components'
 
 export const FrmAddEvent = () => {
+  const [isOpen, setOpen] = useState(false)
   const { createEvent } = useEvents()
   const methods = useForm<IEvent>()
-  const onSubmit: SubmitHandler<IEvent> = (data) => {
-    // toast('¿Estás seguro de agregar este evento?', {
-    //   action: {
-    //     label: 'Agregar',
-    //     onClick: () => {
-    //       createEvent(data)
-    //       methods.reset()
-    //     },
-    //   },
-    // })
+  const onSubmit = () => {
+    setOpen(true)
+  }
+
+  const handleOnSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
     createEvent(data)
   }
 
@@ -37,7 +35,7 @@ export const FrmAddEvent = () => {
             <MoreInfo />
           </div>
           <MoreDescription />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 justify-end">
             <Button
               color="primary"
               type="submit"
@@ -48,6 +46,13 @@ export const FrmAddEvent = () => {
           </div>
         </form>
       </FormProvider>
+      <ModalAction
+        isOpen={isOpen}
+        setOpen={setOpen}
+        title="Agregar evento"
+        message="¿Estás seguro de agregar este evento?"
+        onPress={() => {}}
+      />
     </>
   )
 }
