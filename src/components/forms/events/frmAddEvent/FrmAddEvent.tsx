@@ -53,6 +53,7 @@ export const FrmAddEvent = () => {
       customContent: data.customContent || '',
       idProgram: '',
       inProgram: data.idProgram ? true : false,
+      isActived: false,
       idTypeEvent: '',
     }
     createEvent(newData)

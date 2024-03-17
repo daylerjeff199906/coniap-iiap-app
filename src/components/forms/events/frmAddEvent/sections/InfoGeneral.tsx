@@ -2,13 +2,19 @@ import { Input, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 
 export const InfoGeneral = () => {
-  const { control } = useFormContext()
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext()
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
         <h1 className="text-lg">Información general</h1>
         <Controller
           control={control}
+          rules={{
+            required: 'Este campo es requerido',
+          }}
           name="name"
           render={({ field: { onChange, value } }) => (
             <Input
@@ -19,6 +25,8 @@ export const InfoGeneral = () => {
               placeholder="Nombre del evento"
               value={value}
               onValueChange={onChange}
+              isInvalid={errors.name !== undefined}
+              errorMessage={errors.name?.message as string}
             />
           )}
         />
@@ -26,6 +34,9 @@ export const InfoGeneral = () => {
         <div className="flex gap-3">
           <Controller
             control={control}
+            rules={{
+              required: 'Este campo es requerido',
+            }}
             name="date"
             render={({ field: { onChange, value } }) => (
               <Input
@@ -36,12 +47,17 @@ export const InfoGeneral = () => {
                 type="date"
                 value={value}
                 onValueChange={onChange}
+                isInvalid={errors.date !== undefined}
+                errorMessage={errors.date?.message as string}
               />
             )}
           />
           <Controller
             control={control}
             name="startTime"
+            rules={{
+              required: 'Este campo es requerido',
+            }}
             render={({ field: { onChange, value } }) => (
               <Input
                 aria-label="Hora de inicio"
@@ -51,6 +67,8 @@ export const InfoGeneral = () => {
                 type="time"
                 value={value}
                 onValueChange={onChange}
+                isInvalid={errors.startTime !== undefined}
+                errorMessage={errors.startTime?.message as string}
               />
             )}
           />
@@ -58,6 +76,9 @@ export const InfoGeneral = () => {
             aria-label="Hora de finalización"
             control={control}
             name="endTime"
+            rules={{
+              required: 'Este campo es requerido',
+            }}
             render={({ field: { onChange, value } }) => (
               <Input
                 label="Hora de fin"
@@ -66,6 +87,8 @@ export const InfoGeneral = () => {
                 type="time"
                 value={value}
                 onValueChange={onChange}
+                isInvalid={errors.endTime !== undefined}
+                errorMessage={errors.endTime?.message as string}
               />
             )}
           />
@@ -73,6 +96,9 @@ export const InfoGeneral = () => {
         <Controller
           control={control}
           name="shortDescription"
+          rules={{
+            required: 'Este campo es requerido',
+          }}
           render={({ field: { onChange, value } }) => (
             <Textarea
               aria-label="Descripción del evento"
@@ -82,6 +108,8 @@ export const InfoGeneral = () => {
               placeholder="Descripción del evento"
               value={value}
               onValueChange={onChange}
+              isInvalid={errors.shortDescription !== undefined}
+              errorMessage={errors.shortDescription?.message as string}
             />
           )}
         />
