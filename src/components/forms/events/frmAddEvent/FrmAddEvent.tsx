@@ -12,15 +12,16 @@ export const FrmAddEvent = () => {
   const { createEvent } = useEvents()
   const methods = useForm<IEvent>()
   const onSubmit: SubmitHandler<IEvent> = (data) => {
-    toast('¿Estás seguro de agregar este evento?', {
-      action: {
-        label: 'Agregar',
-        onClick: () => {
-          createEvent(data)
-          methods.reset()
-        },
-      },
-    })
+    // toast('¿Estás seguro de agregar este evento?', {
+    //   action: {
+    //     label: 'Agregar',
+    //     onClick: () => {
+    //       createEvent(data)
+    //       methods.reset()
+    //     },
+    //   },
+    // })
+    createEvent(data)
   }
 
   return (
