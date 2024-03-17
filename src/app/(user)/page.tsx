@@ -10,8 +10,8 @@ import {
   WorkTeamSection,
   SponsorSection,
   EventsSection,
+  InscriptionsSection,
 } from '@/components'
-import Image from 'next/image'
 
 export default function Page() {
   return (
@@ -22,14 +22,8 @@ export default function Page() {
       <SpeakersSection />
       <TopicsSection />
       <ScheduleSection />
- 
-        <Image
-          className="w-full  bg-white object-cover h-4"
-          src={dividerCustom}
-          alt="divider"
-        />
-   
       <EventsSection />
+      <InscriptionsSection />
       <WorkTeamSection />
       <SponsorSection />
     </main>
