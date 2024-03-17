@@ -52,7 +52,19 @@ export const FrmEditEvent = (props: IProps) => {
   }
 
   const clearForm = () => {
-    methods.reset()
+    methods.setValue('name', '')
+    methods.setValue('timeStart', '')
+    methods.setValue('timeEnd', '')
+    methods.setValue('date', '')
+    methods.setValue('shortDescription', '')
+    // methods.setValue('place', '')
+    // methods.setValue('banner', '')
+    // methods.setValue('images', [])
+    // methods.setValue('sala', '')
+    methods.setValue('linkZoom', '')
+    methods.setValue('linkYoutube', '')
+    methods.setValue('linkFacebook', '')
+    methods.setValue('customContent', '')   
   }
 
   return (

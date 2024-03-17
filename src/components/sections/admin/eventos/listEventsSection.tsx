@@ -58,7 +58,7 @@ export const ListEventsSection = () => {
         getEventById(id)
       }
     }
-  }, [isEdit])
+  }, [isEdit, event])
 
   useEffect(() => {
     if (isEdit) {
