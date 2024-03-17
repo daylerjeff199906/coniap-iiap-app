@@ -47,9 +47,14 @@ export const FrmEditEvent = (event: IEvent) => {
                     </h1>
                     <div className="flex gap-2">
                       <p className="text-sm text-gray-300">
-                        {event?.date} - {event?.timeStart} - {event?.timeEnd}
+                        {methods.watch('date')} - {methods.watch('timeStart')} -
+                        {methods.watch('timeEnd')}
                       </p>
                     </div>
+                    <p className='text-white'>
+                      {methods.watch('shortDescription') ||
+                        'No tiene descripción corta'}
+                    </p>
                   </div>
                 </div>
               </header>
@@ -68,21 +73,21 @@ export const FrmEditEvent = (event: IEvent) => {
                       <h3>Links de acceso al evento</h3>
                       <div className="flex gap-4">
                         <Link
-                          href={methods.watch('linkZoom')}
+                          href={event.linkZoom}
                           target="_blank"
                           showAnchorIcon
                         >
                           Zoom
                         </Link>
                         <Link
-                          href={methods.watch('linkYoutube')}
+                          href={event?.linkYoutube}
                           target="_blank"
                           showAnchorIcon
                         >
                           Youtube
                         </Link>
                         <Link
-                          href={methods.watch('linkFacebook')}
+                          href={event.linkFacebook}
                           target="_blank"
                           showAnchorIcon
                         >

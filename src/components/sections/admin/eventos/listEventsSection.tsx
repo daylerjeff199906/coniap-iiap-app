@@ -89,7 +89,7 @@ export const ListEventsSection = () => {
           router.push('/admin/eventos')
         }}
         size="full"
-        // scrollBehavior="inside"
+        scrollBehavior="inside"
       >
         <ModalContent>
           <ModalHeader>
