@@ -1,3 +1,5 @@
+'use client'
+import dividerCustom from '@/assets/svg/patron-fino.svg'
 import {
   AboutUsSection,
   BannerHome,
@@ -9,8 +11,9 @@ import {
   SponsorSection,
   EventsSection,
 } from '@/components'
+import Image from 'next/image'
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
       <BannerHome />
@@ -19,6 +22,13 @@ export default function Home() {
       <SpeakersSection />
       <TopicsSection />
       <ScheduleSection />
+ 
+        <Image
+          className="w-full  bg-white object-cover h-4"
+          src={dividerCustom}
+          alt="divider"
+        />
+   
       <EventsSection />
       <WorkTeamSection />
       <SponsorSection />

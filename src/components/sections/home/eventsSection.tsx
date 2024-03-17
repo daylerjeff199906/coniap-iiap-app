@@ -54,8 +54,13 @@ const EventCard = () => {
         <h3 className="text-sm sm:text-lg xl:text-xl font-bold">Evento</h3>
         <p className="text-sm line-clamp-3">Descripción del evento</p>
       </CardBody>
-      <CardFooter>
-        <Button>Ver más</Button>
+      <CardFooter className="flex justify-end">
+        <Button
+          radius="full"
+          variant="flat"
+        >
+          Ver más
+        </Button>
       </CardFooter>
     </Card>
   )
