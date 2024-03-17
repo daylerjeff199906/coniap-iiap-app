@@ -51,7 +51,7 @@ export const TimeSection = () => {
 
   return (
     <section className="bg-success-700/70 relative">
-      <div className="container section-home">
+      <div className="container py-4 sm:py-6 lg:py-10">
         {isCurrent && (
           <h2 className="text-white">The event is happening now</h2>
         )}

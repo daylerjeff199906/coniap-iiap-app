@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Button, Image as UiImage } from '@nextui-org/react'
+import Link from 'next/link'
 
 export const InscriptionsSection = () => {
   return (
@@ -28,6 +29,8 @@ export const InscriptionsSection = () => {
                 radius="full"
                 size="lg"
                 color="danger"
+                as={Link}
+                href="/inscripciones"
               >
                 Inscríbete ahora
               </Button>
