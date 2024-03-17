@@ -1,11 +1,12 @@
 'use client'
+import { ListEventsSection } from '@/components'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 
 export default function Page() {
   return (
     <>
-      <div className="flex gap-4 justify-between items-center">
+      <section className="flex gap-4 justify-between items-center">
         <h1 className="text-2xl font-bold">Eventos</h1>
         <Button
           color="primary"
@@ -14,7 +15,10 @@ export default function Page() {
         >
           Añadir evento
         </Button>
-      </div>
+      </section>
+      <section>
+        <ListEventsSection />
+      </section>
     </>
   )
 }

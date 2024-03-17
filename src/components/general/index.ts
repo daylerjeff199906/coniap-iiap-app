@@ -4,5 +4,6 @@ import { Banner } from './Banner/Banner'
 
 export * from './Cards'
 export * from './Modals'
+export * from './Tables'
 
 export { NavBar, Footer, Banner }
