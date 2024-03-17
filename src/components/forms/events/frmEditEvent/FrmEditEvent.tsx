@@ -7,6 +7,7 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   Switch,
 } from '@nextui-org/react'
@@ -18,7 +19,6 @@ import { IEvent } from '@/types'
 interface IProps {
   isOpen: boolean
   event: IEvent
-  onSubmit: (data: IEvent) => void
 }
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
@@ -157,46 +157,32 @@ export const FrmEditEvent = (props: IProps) => {
                     </div>
                   </section>
                 </main>
-                <footer className="py-4">
-                  {isEditables && (
-                    <div className="flex items-center gap-4 justify-end">
-                      <Button color="primary">Guardar cambios</Button>
-                      <Button
-                        onPress={() => {
-                          setIsEditables(false)
-                        }}
-                      >
-                        Cancelar
-                      </Button>
-                    </div>
-                  )}
-                </footer>
               </form>
             </FormProvider>
           </ModalBody>
+          <ModalFooter>
+            {isEditables && (
+              <div className="flex items-center gap-4 justify-end">
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    methods.handleSubmit(onSubmit)
+                  }}
+                >
+                  Guardar cambios
+                </Button>
+                <Button
+                  onPress={() => {
+                    router.push('/admin/eventos')
+                  }}
+                >
+                  Cancelar
+                </Button>
+              </div>
+            )}
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
   )
-}
-
-{
-  /* <Modal
-isOpen={isEdit}
-onOpenChange={() => {
-  router.push('/admin/eventos')
-}}
-size="full"
-scrollBehavior="inside"
->
-<ModalContent>
-  <ModalHeader>
-    {isEdit ? 'Editar evento' : 'Detalle de evento'}
-  </ModalHeader>
-  <ModalBody>{event && <FrmEditEvent {...event} />}</ModalBody>
-  <ModalFooter>
-    
-  </ModalFooter>
-</ModalContent>
-</Modal> */
 }

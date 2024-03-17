@@ -6,7 +6,13 @@ import { IColumns } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { useEffect } from 'react'
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from '@nextui-org/react'
 
 const columns: Array<IColumns> = [
   {
@@ -61,8 +67,6 @@ export const ListEventsSection = () => {
     }
   }, [isEdit])
 
-  console.log('event', event)
-
   return (
     <>
       <TableGeneral
@@ -83,24 +87,12 @@ export const ListEventsSection = () => {
             : []
         }
       />
-      {/* <Modal
-        isOpen={isEdit}
-        onOpenChange={() => {
-          router.push('/admin/eventos')
-        }}
-        size="full"
-        scrollBehavior="inside"
-      >
-        <ModalContent>
-          <ModalHeader>
-            {isEdit ? 'Editar evento' : 'Detalle de evento'}
-          </ModalHeader>
-          <ModalBody>{event && <FrmEditEvent {...event} />}</ModalBody>
-          <ModalFooter>
-            
-          </ModalFooter>
-        </ModalContent>
-      </Modal> */}
+      {event && (
+        <FrmEditEvent
+          isOpen={isEdit}
+          event={event}
+        />
+      )}
     </>
   )
 }
