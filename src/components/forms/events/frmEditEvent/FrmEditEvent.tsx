@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   Button,
   Image,
@@ -19,7 +20,7 @@ import { useEvents } from '@/hooks/admin'
 
 interface IProps {
   isOpen: boolean
-  event: IEvent
+  event: IEvent | null
 }
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
@@ -27,18 +28,15 @@ export const FrmEditEvent = (props: IProps) => {
   const { isOpen, event } = props
   const router = useRouter()
   const searchParams = useSearchParams()
-  const isEdit = searchParams.get('edit') !== null
-  const defaultValuesEdit = isEdit ? true : false
+  //   const isEdit = searchParams.get('edit') !== null
 
   const id = searchParams.get('edit') || ''
 
-  const [isEditables, setIsEditables] = useState(defaultValuesEdit)
+  const [isEditables, setIsEditables] = useState(true)
 
   const { updateEvent, loading } = useEvents()
 
-  const methods = useForm<IEvent>({
-    defaultValues: event,
-  })
+  const methods = useForm<IEvent>()
 
   const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
     updateEvent(id, data)
@@ -67,12 +65,31 @@ export const FrmEditEvent = (props: IProps) => {
     methods.setValue('customContent', '')
   }
 
+  useEffect(() => {
+    if (event) {
+      methods.setValue('name', event.name)
+      methods.setValue('timeStart', event.timeStart)
+      methods.setValue('timeEnd', event.timeEnd)
+      methods.setValue('date', event.date)
+      methods.setValue('shortDescription', event.shortDescription)
+      // methods.setValue('place', event.place)
+      // methods.setValue('banner', event.banner)
+      // methods.setValue('images', event.images)
+      // methods.setValue('sala', event.sala)
+      methods.setValue('linkZoom', event.linkZoom)
+      methods.setValue('linkYoutube', event.linkYoutube)
+      methods.setValue('linkFacebook', event.linkFacebook)
+      methods.setValue('customContent', event.customContent)
+    }
+  }, [event])
+
   return (
     <>
       <Modal
         isOpen={isOpen}
         onOpenChange={() => {
           router.push('/admin/eventos')
+          setIsEditables(true)
         }}
         size="full"
         scrollBehavior="inside"
@@ -91,7 +108,8 @@ export const FrmEditEvent = (props: IProps) => {
                     <header className="w-full">
                       <div className="w-full p-2 relative">
                         <Switch
-                          checked={isEditables}
+                          defaultChecked={isEditables}
+                          //   checked={isEditables}
                           onValueChange={() => setIsEditables(!isEditables)}
                           className="absolute top-8 right-6 z-30 "
                         >
@@ -214,6 +232,7 @@ export const FrmEditEvent = (props: IProps) => {
                   <Button
                     onPress={() => {
                       router.push('/admin/eventos')
+                      setIsEditables(true)
                     }}
                   >
                     Cancelar
