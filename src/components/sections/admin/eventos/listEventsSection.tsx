@@ -1,18 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { FrmEditEvent, TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { useEffect } from 'react'
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react'
 
 const columns: Array<IColumns> = [
   {
@@ -50,7 +43,6 @@ export const ListEventsSection = () => {
   const { getEvents, events, loading, getEventById, event } = useEvents()
 
   const searchParams = useSearchParams()
-  const router = useRouter()
 
   const isEdit = searchParams.get('edit') !== null
 

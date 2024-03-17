@@ -12,7 +12,7 @@ import {
   Switch,
 } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { IEvent } from '@/types'
 
@@ -25,8 +25,12 @@ import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
 export const FrmEditEvent = (props: IProps) => {
   const { isOpen, event } = props
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const isEdit = searchParams.get('edit') !== null
+  const defaultValuesEdit = isEdit ? true : false
 
-  const [isEditables, setIsEditables] = useState(false)
+  const [isEditables, setIsEditables] = useState(defaultValuesEdit)
+
   const methods = useForm<IEvent>({
     defaultValues: event,
   })
@@ -46,21 +50,28 @@ export const FrmEditEvent = (props: IProps) => {
         scrollBehavior="inside"
       >
         <ModalContent>
-          <ModalHeader></ModalHeader>
+          <ModalHeader>
+            <h2 className="text-2xl font-bold">
+              {isEditables ? 'Editar evento' : 'Detalles de evento'}
+            </h2>
+          </ModalHeader>
           <ModalBody>
-            <div className="w-full p-2">
-              <Switch
-                checked={isEditables}
-                onValueChange={() => setIsEditables(!isEditables)}
-              >
-                Editar
-              </Switch>
-            </div>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
                 <main className="grid grid-cols-1 gap-6">
                   <section className="space-y-2">
                     <header className="w-full">
+                      <div className="w-full p-2 relative">
+                        <Switch
+                          checked={isEditables}
+                          onValueChange={() => setIsEditables(!isEditables)}
+                          className="absolute top-8 right-6 z-30 "
+                        >
+                          <p className="text-white">
+                            {isEditables ? 'Vizualizar' : 'Editar'}
+                          </p>
+                        </Switch>
+                      </div>
                       <div className="w-full relative">
                         <Image
                           src={
@@ -162,7 +173,7 @@ export const FrmEditEvent = (props: IProps) => {
           </ModalBody>
           <ModalFooter>
             {isEditables && (
-              <div className="flex items-center gap-4 justify-end">
+              <div className="flex items-center gap-3 justify-end">
                 <Button
                   color="primary"
                   onPress={() => {
