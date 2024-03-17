@@ -1,5 +1,5 @@
 export interface IEvent {
-  id: number
+  id: string
   hourStart: string
   hourEnd: string
   date?: string
@@ -11,4 +11,7 @@ export interface IEvent {
   linkZoom?: string
   linkYoutube?: string
   linkFacebook?: string
+  body?: string
+  inProgram?: boolean
+  sala: string
 }
