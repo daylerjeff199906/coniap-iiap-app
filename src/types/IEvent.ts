@@ -1,18 +1,18 @@
 export interface IEvent {
   id: string
   name: string
-  hourStart: string
-  hourEnd: string
+  timeStart: string
+  timeEnd: string
   date?: string
   shortDescription?: string
-  location: string
+  place: string
   banner?: string
   image: string[]
   sala: string
   linkZoom?: string
   linkYoutube?: string
   linkFacebook?: string
-  description: string
+  customContent?: string
   body?: string
   idProgram?: string
   inProgram?: boolean

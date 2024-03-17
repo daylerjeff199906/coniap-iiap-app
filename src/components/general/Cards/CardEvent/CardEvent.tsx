@@ -59,7 +59,7 @@ export const CardEvent = (props: IProps) => {
               <div className="flex items-center space-x-2">
                 <IconClock size={16} />
                 <span className="text-sm">
-                  {event?.hourStart} a {event?.hourEnd}
+                  {event?.timeStart} a {event?.timeEnd}
                 </span>
               </div>
               <div className="flex items-center space-x-2">
