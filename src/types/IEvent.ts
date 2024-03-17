@@ -8,7 +8,7 @@ export interface IEvent {
   place: string
   banner?: string
   images: string[]
-  sala: string
+  salaId: string
   linkZoom?: string
   linkYoutube?: string
   linkFacebook?: string
