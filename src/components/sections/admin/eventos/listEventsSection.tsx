@@ -6,7 +6,7 @@ import { IColumns } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { useEffect } from 'react'
-import { Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react'
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
 
 const columns: Array<IColumns> = [
   {
@@ -83,7 +83,7 @@ export const ListEventsSection = () => {
             : []
         }
       />
-      <Modal
+      {/* <Modal
         isOpen={isEdit}
         onOpenChange={() => {
           router.push('/admin/eventos')
@@ -96,8 +96,11 @@ export const ListEventsSection = () => {
             {isEdit ? 'Editar evento' : 'Detalle de evento'}
           </ModalHeader>
           <ModalBody>{event && <FrmEditEvent {...event} />}</ModalBody>
+          <ModalFooter>
+            
+          </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </>
   )
 }

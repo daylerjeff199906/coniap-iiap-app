@@ -31,7 +31,7 @@ export const MoreDescription = ({
     if (defaultContent && quill) {
       quill.clipboard.dangerouslyPasteHTML(defaultContent)
     }
-  }, [defaultContent])
+  }, [defaultContent, quill])
 
   return (
     <section className="grid grid-cols-1 gap-4">
