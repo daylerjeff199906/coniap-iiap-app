@@ -98,6 +98,7 @@ export function useEvents() {
       const docSnap = await getDoc(categoryRef)
       if (docSnap.exists()) {
         // setEvent(convertDataToISlidersById(docSnap.data()))
+        // add id to the object
         setEvent(docSnap.data() as IEvent)
       } else {
         console.log('No such document!')
@@ -129,7 +130,7 @@ export function useEvents() {
     events,
     getEventById,
     event,
-    updateEvent
+    updateEvent,
     // getPrograms,
     // programs,
     // getSlider,

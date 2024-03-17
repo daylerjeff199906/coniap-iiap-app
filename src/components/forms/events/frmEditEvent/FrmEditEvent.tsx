@@ -23,7 +23,6 @@ interface IProps {
 }
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
-import { ModalAction } from '@/components'
 export const FrmEditEvent = (props: IProps) => {
   const { isOpen, event } = props
   const router = useRouter()
@@ -31,22 +30,29 @@ export const FrmEditEvent = (props: IProps) => {
   const isEdit = searchParams.get('edit') !== null
   const defaultValuesEdit = isEdit ? true : false
 
-  const [isEditables, setIsEditables] = useState(defaultValuesEdit)
-  const [openConfirm, setOpenConfirm] = useState(false)
+  const id = searchParams.get('edit') || ''
 
-  const { updateEvent } = useEvents()
+  const [isEditables, setIsEditables] = useState(defaultValuesEdit)
+
+  const { updateEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>({
     defaultValues: event,
   })
 
-  const onSubmit = () => {
-    setOpenConfirm(true)
+  const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
+    updateEvent(id, data)
+      .then(() => {
+        clearForm()
+        router.push('/admin/eventos')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
-  const handleFormSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
-    updateEvent(event.id, data)
-    router.push('/admin/eventos')
+  const clearForm = () => {
+    methods.reset()
   }
 
   return (
@@ -60,13 +66,13 @@ export const FrmEditEvent = (props: IProps) => {
         scrollBehavior="inside"
       >
         <ModalContent>
-          <ModalHeader>
-            <h2 className="text-2xl font-bold">
-              {isEditables ? 'Editar evento' : 'Detalles de evento'}
-            </h2>
-          </ModalHeader>
-          <ModalBody>
-            <FormProvider {...methods}>
+          <FormProvider {...methods}>
+            <ModalHeader>
+              <h2 className="text-2xl font-bold">
+                {isEditables ? 'Editar evento' : 'Detalles de evento'}
+              </h2>
+            </ModalHeader>
+            <ModalBody>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
                 <main className="grid grid-cols-1 gap-6">
                   <section className="space-y-2">
@@ -179,38 +185,33 @@ export const FrmEditEvent = (props: IProps) => {
                   </section>
                 </main>
               </form>
-            </FormProvider>
-          </ModalBody>
-          <ModalFooter>
-            {isEditables && (
-              <div className="flex items-center gap-3 justify-end">
-                <Button
-                  color="primary"
-                  onPress={() => {
-                    methods.handleSubmit(onSubmit)
-                  }}
-                >
-                  Guardar cambios
-                </Button>
-                <Button
-                  onPress={() => {
-                    router.push('/admin/eventos')
-                  }}
-                >
-                  Cancelar
-                </Button>
-              </div>
-            )}
-          </ModalFooter>
+            </ModalBody>
+            <ModalFooter>
+              {isEditables && (
+                <div className="flex items-center gap-3 justify-end">
+                  <Button
+                    color="primary"
+                    isDisabled={loading}
+                    isLoading={loading}
+                    onPress={() => {
+                      methods.handleSubmit(onSubmit)()
+                    }}
+                  >
+                    Guardar cambios
+                  </Button>
+                  <Button
+                    onPress={() => {
+                      router.push('/admin/eventos')
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                </div>
+              )}
+            </ModalFooter>
+          </FormProvider>
         </ModalContent>
       </Modal>
-      <ModalAction
-        isOpen={openConfirm}
-        message="¿Estás seguro de guardar los cambios?"
-        title="Guardar cambios"
-        setOpen={setOpenConfirm}
-        onPress={methods.handleSubmit(handleFormSubmit)}
-      />
     </>
   )
 }

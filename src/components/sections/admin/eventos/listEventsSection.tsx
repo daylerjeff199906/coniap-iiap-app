@@ -5,7 +5,7 @@ import { FrmEditEvent, TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const columns: Array<IColumns> = [
   {
