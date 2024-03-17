@@ -10,6 +10,7 @@ import { IEvent } from '@/types'
 import { useEvents } from '@/hooks/admin'
 import { toast } from 'sonner'
 import { ModalAction } from '@/components'
+import Link from 'next/link'
 
 export const FrmAddEvent = () => {
   const [isOpen, setOpen] = useState(false)
@@ -112,7 +113,12 @@ export const FrmAddEvent = () => {
             >
               Agregar evento
             </Button>
-            <Button>Cancelar</Button>
+            <Button
+              as={Link}
+              href="/admin/eventos"
+            >
+              Cancelar
+            </Button>
           </div>
         </form>
       </FormProvider>
