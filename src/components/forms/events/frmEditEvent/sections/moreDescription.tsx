@@ -28,7 +28,7 @@ export const MoreDescription = ({
   }, [quill])
 
   useEffect(() => {
-    if (defaultContent) {
+    if (defaultContent && quill) {
       quill.clipboard.dangerouslyPasteHTML(defaultContent)
     }
   }, [defaultContent])
