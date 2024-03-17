@@ -40,7 +40,8 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
-  const { getEvents, events, loading, getEventById, event } = useEvents()
+  const [openModal, setOpenModal] = useState(false)
+  const { getEvents, events, getEventById, event } = useEvents()
 
   const searchParams = useSearchParams()
 
@@ -58,6 +59,15 @@ export const ListEventsSection = () => {
       }
     }
   }, [isEdit])
+
+  useEffect(() => {
+    if (isEdit) {
+      setOpenModal(true)
+    } else {
+      getEvents()
+      setOpenModal(false)
+    }
+  }, [event, isEdit])
 
   return (
     <>
@@ -81,7 +91,7 @@ export const ListEventsSection = () => {
       />
       {event && (
         <FrmEditEvent
-          isOpen={isEdit}
+          isOpen={openModal}
           event={event}
         />
       )}
