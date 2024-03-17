@@ -25,8 +25,6 @@ export const MoreDescription = () => {
 
   return (
     <section className="grid grid-cols-1 gap-4">
-      <h1 className="text-lg">Personalizar contenido</h1>
-      {/* {useQuill({ onChange: handleDescriptionChange })} */}
       <div
         style={{ height: '260px' }}
         ref={quillRef}

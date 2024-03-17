@@ -9,7 +9,6 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <h1 className="text-sm text-gray-400">Información general</h1>
         <Controller
           control={control}
           rules={{
@@ -102,7 +101,7 @@ export const InfoGeneral = () => {
           render={({ field: { onChange, value } }) => (
             <Textarea
               aria-label="Descripción del evento"
-              label="Descripción"
+              label="Descripción corta"
               labelPlacement="outside"
               radius="sm"
               placeholder="Descripción del evento"
