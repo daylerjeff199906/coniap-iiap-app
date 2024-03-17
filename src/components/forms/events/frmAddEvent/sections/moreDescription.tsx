@@ -1,3 +1,4 @@
+'use client'
 import useQuill from './useQuill'
 import { useFormContext } from 'react-hook-form'
 
