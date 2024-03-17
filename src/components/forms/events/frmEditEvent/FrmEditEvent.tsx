@@ -27,7 +27,7 @@ export const FrmEditEvent = (event: IEvent) => {
       </div>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <main className="grid grid-cols-1 gap-4">
+          <main className="grid grid-cols-1 gap-6">
             <section className="space-y-2">
               <header className="w-full">
                 <div className="w-full relative">
@@ -42,7 +42,7 @@ export const FrmEditEvent = (event: IEvent) => {
                     className="w-full h-72 object-cover"
                   />
                   <div className="absolute top-0 bottom-0 z-10 flex flex-col justify-center p-4 sm:p-8 lg:p-14 bg-black/45">
-                    <h1 className="text-2xl font-bold text-white">
+                    <h1 className="text-4xl font-bold text-white">
                       {methods.watch('name')}
                     </h1>
                     <div className="flex gap-2">
@@ -51,7 +51,7 @@ export const FrmEditEvent = (event: IEvent) => {
                         {methods.watch('timeEnd')}
                       </p>
                     </div>
-                    <p className='text-white'>
+                    <p className="text-white">
                       {methods.watch('shortDescription') ||
                         'No tiene descripción corta'}
                     </p>
@@ -59,7 +59,7 @@ export const FrmEditEvent = (event: IEvent) => {
                 </div>
               </header>
               <div className="space-y-3">
-                <h1 className="text-xl font-semibold">Información general</h1>
+                <h1 className="text-sm font-semibold">Información general</h1>
                 {isEditables ? (
                   <>
                     <div className="grid grid-cols-2 gap-5">
@@ -99,12 +99,14 @@ export const FrmEditEvent = (event: IEvent) => {
                 )}
               </div>
               <div className="space-y-3">
-                <h1 className="text-xl font-semibold">
+                <h1 className="text-sm font-semibold">
                   Contenido Personalizado
                 </h1>
                 {isEditables ? (
                   <>
-                    <MoreDescription />
+                    <MoreDescription
+                      defaultContent={event?.customContent ?? ''}
+                    />
                   </>
                 ) : (
                   <div className="w-full">

@@ -6,7 +6,11 @@ import { useQuill } from 'react-quilljs'
 import 'quill/dist/quill.snow.css' // Add css for snow theme
 import { useEffect } from 'react'
 
-export const MoreDescription = () => {
+export const MoreDescription = ({
+  defaultContent,
+}: {
+  defaultContent: string
+}) => {
   const { setValue } = useFormContext()
   const { quill, quillRef } = useQuill()
 
@@ -22,6 +26,12 @@ export const MoreDescription = () => {
       })
     }
   }, [quill])
+
+  useEffect(() => {
+    if (defaultContent) {
+      quill.clipboard.dangerouslyPasteHTML(defaultContent)
+    }
+  }, [defaultContent])
 
   return (
     <section className="grid grid-cols-1 gap-4">
