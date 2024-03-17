@@ -74,164 +74,121 @@ export const FrmEditEvent = (props: IProps) => {
 
   return (
     <>
-      {/* <Modal
-        isOpen={isOpen}
-        onOpenChange={() => {
-          router.push('/admin/eventos')
-          setIsEditables(true)
-          clearForm()
-        }}
-        size="full"
-        scrollBehavior="inside"
-      >
-        <ModalContent>
-          <FormProvider {...methods}>
-            <ModalHeader>
-              <h2 className="text-2xl font-bold">
-                {isEditables ? 'Editar evento' : 'Detalles de evento'}
-              </h2>
-            </ModalHeader>
-            <ModalBody>
-             
-            </ModalBody>
-            <ModalFooter>
-              {isEditables && (
-                <div className="flex items-center gap-3 justify-end">
-                  <Button
-                    color="primary"
-                    isDisabled={loading}
-                    isLoading={loading}
-                    onPress={() => {
-                      methods.handleSubmit(onSubmit)()
-                    }}
+      <FormProvider {...methods}>
+        <header>
+          <h2 className="text-2xl font-bold">
+            {isEditables ? 'Editar evento' : 'Detalles de evento'}
+          </h2>
+        </header>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <main className="grid grid-cols-1 gap-6">
+            <section className="space-y-2">
+              <header className="w-full">
+                <div className="w-full p-2 relative">
+                  <Switch
+                    defaultChecked={isEditables}
+                    //   checked={isEditables}
+                    onValueChange={() => setIsEditables(!isEditables)}
+                    className="absolute top-8 right-6 z-30 "
                   >
-                    Guardar cambios
-                  </Button>
-                  <Button
-                    onPress={() => {
-                      router.push('/admin/eventos')
-                      setIsEditables(true)
-                    }}
-                  >
-                    Cancelar
-                  </Button>
+                    <p className="text-white">
+                      {isEditables ? 'Vizualizar' : 'Editar'}
+                    </p>
+                  </Switch>
                 </div>
-              )}
-            </ModalFooter>
-          </FormProvider>
-        </ModalContent>
-      </Modal> */}
-      <header>
-        <h2 className="text-2xl font-bold">
-          {isEditables ? 'Editar evento' : 'Detalles de evento'}
-        </h2>
-      </header>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <main className="grid grid-cols-1 gap-6">
-          <section className="space-y-2">
-            <header className="w-full">
-              <div className="w-full p-2 relative">
-                <Switch
-                  defaultChecked={isEditables}
-                  //   checked={isEditables}
-                  onValueChange={() => setIsEditables(!isEditables)}
-                  className="absolute top-8 right-6 z-30 "
-                >
-                  <p className="text-white">
-                    {isEditables ? 'Vizualizar' : 'Editar'}
-                  </p>
-                </Switch>
-              </div>
-              {/* <HeaderSection /> */}
-            </header>
-            <div className="space-y-3">
-              <h1 className="text-sm font-semibold">Información general</h1>
-              {isEditables ? (
-                <>
-                  <div className="grid grid-cols-2 gap-5">
-                    <InfoGeneral />
-                    <MoreInfo />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div>
-                    <h3>Links de acceso al evento</h3>
-                    <div className="flex gap-4">
-                      <Link
-                        href={event?.linkZoom}
-                        target="_blank"
-                        showAnchorIcon
-                      >
-                        Zoom
-                      </Link>
-                      <Link
-                        href={event?.linkYoutube}
-                        target="_blank"
-                        showAnchorIcon
-                      >
-                        Youtube
-                      </Link>
-                      <Link
-                        href={event?.linkFacebook}
-                        target="_blank"
-                        showAnchorIcon
-                      >
-                        Facebook
-                      </Link>
+                <HeaderSection />
+              </header>
+              <div className="space-y-3">
+                <h1 className="text-sm font-semibold">Información general</h1>
+                {isEditables ? (
+                  <>
+                    <div className="grid grid-cols-2 gap-5">
+                      <InfoGeneral />
+                      <MoreInfo />
                     </div>
-                  </div>
-                </>
-              )}
-            </div>
-            <div className="space-y-3">
-              <h1 className="text-sm font-semibold">Contenido Personalizado</h1>
-              {isEditables ? (
-                <>
-                  <MoreDescription
-                    defaultContent={event?.customContent ?? ''}
-                  />
-                </>
-              ) : (
-                <div className="w-full">
-                  {event?.customContent && (
-                    <div
-                      className="w-full"
-                      dangerouslySetInnerHTML={{
-                        __html: event?.customContent,
-                      }}
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <h3>Links de acceso al evento</h3>
+                      <div className="flex gap-4">
+                        <Link
+                          href={event?.linkZoom}
+                          target="_blank"
+                          showAnchorIcon
+                        >
+                          Zoom
+                        </Link>
+                        <Link
+                          href={event?.linkYoutube}
+                          target="_blank"
+                          showAnchorIcon
+                        >
+                          Youtube
+                        </Link>
+                        <Link
+                          href={event?.linkFacebook}
+                          target="_blank"
+                          showAnchorIcon
+                        >
+                          Facebook
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="space-y-3">
+                <h1 className="text-sm font-semibold">
+                  Contenido Personalizado
+                </h1>
+                {isEditables ? (
+                  <>
+                    <MoreDescription
+                      defaultContent={event?.customContent ?? ''}
                     />
-                  )}
-                </div>
-              )}
-            </div>
-          </section>
-        </main>
-        <footer>
-          {isEditables && (
-            <div className="flex items-center gap-3 justify-end">
-              <Button
-                color="primary"
-                isDisabled={loading}
-                isLoading={loading}
-                onPress={() => {
-                  methods.handleSubmit(onSubmit)()
-                }}
-              >
-                Guardar cambios
-              </Button>
-              <Button
-                onPress={() => {
-                  router.push('/admin/eventos')
-                  setIsEditables(true)
-                }}
-              >
-                Cancelar
-              </Button>
-            </div>
-          )}
-        </footer>
-      </form>
+                  </>
+                ) : (
+                  <div className="w-full">
+                    {event?.customContent && (
+                      <div
+                        className="w-full"
+                        dangerouslySetInnerHTML={{
+                          __html: event?.customContent,
+                        }}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            </section>
+          </main>
+          <footer>
+            {isEditables && (
+              <div className="flex items-center gap-3 justify-end">
+                <Button
+                  color="primary"
+                  isDisabled={loading}
+                  isLoading={loading}
+                  onPress={() => {
+                    methods.handleSubmit(onSubmit)()
+                  }}
+                >
+                  Guardar cambios
+                </Button>
+                <Button
+                  onPress={() => {
+                    router.push('/admin/eventos')
+                    setIsEditables(true)
+                  }}
+                >
+                  Cancelar
+                </Button>
+              </div>
+            )}
+          </footer>
+        </form>
+      </FormProvider>
     </>
   )
 }

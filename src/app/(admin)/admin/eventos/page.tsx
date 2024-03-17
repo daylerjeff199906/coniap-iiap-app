@@ -10,11 +10,9 @@ export default function Page() {
   const isEdit = searchParams.get('edit') !== null
   return (
     <>
-      <section className="flex gap-4 justify-between items-center">
-        <h1 className="text-2xl font-bold">
-          {isEdit ? 'Editar evento' : 'Eventos'}
-        </h1>
-        {!isEdit && (
+      {!isEdit && (
+        <section className="flex gap-4 justify-between items-center">
+          <h1 className="text-2xl font-bold">Eventos</h1>
           <Button
             color="primary"
             as={Link}
@@ -22,8 +20,8 @@ export default function Page() {
           >
             Añadir evento
           </Button>
-        )}
-      </section>
+        </section>
+      )}
       {isEdit ? (
         <>
           <UpdateEvento
