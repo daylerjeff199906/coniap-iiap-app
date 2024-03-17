@@ -1,5 +1,12 @@
+'use client'
 import { Image } from '@nextui-org/react'
 import { useFormContext } from 'react-hook-form'
+
+// Import React FilePond
+import { FilePond, registerPlugin } from 'react-filepond'
+
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css'
 
 export const HeaderSection = () => {
   const { watch } = useFormContext()
@@ -27,6 +34,11 @@ export const HeaderSection = () => {
             {watch('shortDescription') || 'No tiene descripción corta'}
           </p>
         </div>
+        <FilePond
+          allowMultiple={false}
+          acceptedFileTypes={['image/*']}
+          stylePanelLayout={'compact circle'}
+        />
       </div>
     </>
   )
