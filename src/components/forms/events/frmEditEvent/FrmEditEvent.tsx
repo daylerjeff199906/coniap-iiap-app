@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Button,
   Image,
@@ -19,7 +19,7 @@ import { useEvents } from '@/hooks/admin'
 
 interface IProps {
   isOpen: boolean
-  event: IEvent
+  event: IEvent | null
 }
 
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
@@ -32,12 +32,13 @@ export const FrmEditEvent = (props: IProps) => {
 
   const id = searchParams.get('edit') || ''
 
+  const [defaultValues, setDefaultValues] = useState<IEvent>()
   const [isEditables, setIsEditables] = useState(defaultValuesEdit)
 
   const { updateEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>({
-    defaultValues: event,
+    defaultValues: defaultValues,
   })
 
   const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
@@ -64,8 +65,14 @@ export const FrmEditEvent = (props: IProps) => {
     methods.setValue('linkZoom', '')
     methods.setValue('linkYoutube', '')
     methods.setValue('linkFacebook', '')
-    methods.setValue('customContent', '')   
+    methods.setValue('customContent', '')
   }
+
+  useEffect(() => {
+    if (event) {
+      setDefaultValues(event)
+    }
+  }, [event])
 
   return (
     <>
@@ -146,7 +153,7 @@ export const FrmEditEvent = (props: IProps) => {
                             <h3>Links de acceso al evento</h3>
                             <div className="flex gap-4">
                               <Link
-                                href={event.linkZoom}
+                                href={event?.linkZoom}
                                 target="_blank"
                                 showAnchorIcon
                               >
@@ -160,7 +167,7 @@ export const FrmEditEvent = (props: IProps) => {
                                 Youtube
                               </Link>
                               <Link
-                                href={event.linkFacebook}
+                                href={event?.linkFacebook}
                                 target="_blank"
                                 showAnchorIcon
                               >

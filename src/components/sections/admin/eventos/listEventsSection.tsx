@@ -89,12 +89,11 @@ export const ListEventsSection = () => {
             : []
         }
       />
-      {event && (
-        <FrmEditEvent
-          isOpen={openModal}
-          event={event}
-        />
-      )}
+
+      <FrmEditEvent
+        isOpen={openModal}
+        event={event}
+      />
     </>
   )
 }
