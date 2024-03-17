@@ -142,7 +142,7 @@ export const FrmEditEvent = (props: IProps) => {
                   </p>
                 </Switch>
               </div>
-              <HeaderSection />
+              {/* <HeaderSection /> */}
             </header>
             <div className="space-y-3">
               <h1 className="text-sm font-semibold">Información general</h1>

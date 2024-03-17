@@ -1,3 +1,4 @@
+// 'use client'
 import { Input } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 

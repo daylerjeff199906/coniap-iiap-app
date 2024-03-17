@@ -26,7 +26,10 @@ export default function Page() {
       </section>
       {isEdit ? (
         <>
-          <UpdateEvento />
+          <UpdateEvento
+            id={searchParams.get('edit') ?? ''}
+            isEdit={isEdit}
+          />
         </>
       ) : (
         <section className="py-6">
