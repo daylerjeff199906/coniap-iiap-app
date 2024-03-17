@@ -36,7 +36,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <aside className="w-80"></aside>
       <main className="w-full">
         <NavBar variant="admin" />
-        <section className="px-6 py-1 sticky top-16 bg-white container z-30">
+        <section className="px-6 py-4 sticky top-16 bg-white container z-30">
           {pathname !== null && (
             <Breadcrumbs
               className="text-sm"
@@ -53,7 +53,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </Breadcrumbs>
           )}
         </section>
-        <section className="w-full container py-6">{children}</section>
+        <section className="w-full container">{children}</section>
       </main>
     </div>
   )
