@@ -1,4 +1,4 @@
-import { DatesEvent } from './datesEvent'
 import { InfoGeneral } from './InfoGeneral'
+import { MoreInfo } from './moreInfo'
 
-export { InfoGeneral, DatesEvent }
+export { InfoGeneral, MoreInfo }

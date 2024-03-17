@@ -1,14 +1,19 @@
 'use client'
-import { DatesEvent, InfoGeneral } from './sections'
+import { Button } from '@nextui-org/react'
+import { InfoGeneral, MoreInfo } from './sections'
 
 export const FrmAddEvent = () => {
   return (
     <>
-      <div className="space-y-3">
+      <form className="space-y-3">
         <h1 className="text-2xl font-bold">Agregar Evento</h1>
         <InfoGeneral />
-        <DatesEvent />
-      </div>
+        <MoreInfo />
+        <div className="flex items-center gap-4">
+          <Button color="primary">Agregar evento</Button>
+          <Button>Cancelar</Button>
+        </div>
+      </form>
     </>
   )
 }
