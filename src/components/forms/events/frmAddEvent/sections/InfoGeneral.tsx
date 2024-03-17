@@ -54,7 +54,7 @@ export const InfoGeneral = () => {
           />
           <Controller
             control={control}
-            name="startTime"
+            name="timeStart"
             rules={{
               required: 'Este campo es requerido',
             }}
@@ -75,7 +75,7 @@ export const InfoGeneral = () => {
           <Controller
             aria-label="Hora de finalización"
             control={control}
-            name="endTime"
+            name="timeEnd"
             rules={{
               required: 'Este campo es requerido',
             }}
