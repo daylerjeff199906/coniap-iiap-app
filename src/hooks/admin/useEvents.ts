@@ -131,6 +131,7 @@ export function useEvents() {
 
   return {
     loading,
+    createEvent,
     // getPrograms,
     // programs,
     // getSlider,

@@ -5,10 +5,22 @@ import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
 import { IEvent } from '@/types'
 
+import { useEvents } from '@/hooks/admin'
+import { toast } from 'sonner'
+
 export const FrmAddEvent = () => {
+  const { createEvent } = useEvents()
   const methods = useForm<IEvent>()
   const onSubmit: SubmitHandler<IEvent> = (data) => {
-    console.log(data)
+    toast('¿Estás seguro de agregar este evento?', {
+      action: {
+        label: 'Agregar',
+        onClick: () => {
+          createEvent(data)
+          methods.reset()
+        },
+      },
+    })
   }
 
   return (
