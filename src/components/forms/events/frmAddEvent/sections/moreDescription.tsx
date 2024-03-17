@@ -12,7 +12,7 @@ export const MoreDescription = () => {
 
   return (
     <section className="grid grid-cols-1 gap-4">
-      <h1 className="text-lg">Personalizar descripción</h1>
+      <h1 className="text-lg">Personalizar contenido</h1>
       {useQuill({ onChange: handleDescriptionChange })}
     </section>
   )
