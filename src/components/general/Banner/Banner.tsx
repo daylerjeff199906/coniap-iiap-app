@@ -62,9 +62,9 @@ const bannerData = [
   },
 ]
 
-function findIncludePathname(pathname: string, includePathname: string) {
-  return pathname.includes(includePathname)
-}
+// function findIncludePathname(pathname: string, includePathname: string) {
+//   return pathname.includes(includePathname)
+// }
 
 export const Banner = () => {
   const pathname = usePathname()
