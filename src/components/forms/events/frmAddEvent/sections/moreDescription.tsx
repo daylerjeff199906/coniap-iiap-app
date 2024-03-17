@@ -1,19 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useFormContext } from 'react-hook-form'
 
 import { useQuill } from 'react-quilljs'
 import 'quill/dist/quill.snow.css' // Add css for snow theme
+import { useEffect } from 'react'
 
 export const MoreDescription = () => {
   const { setValue } = useFormContext()
+  const { quill, quillRef } = useQuill()
 
   const handleDescriptionChange = (content: string) => {
     // Manejar cambios en la descripción aquí
     setValue('customContent', content)
   }
-  const { quillRef } = useQuill({
-    onchange: handleDescriptionChange,
-  })
+
+  useEffect(() => {
+    if (quill) {
+      quill.on('text-change', () => {
+        handleDescriptionChange(quill.root.innerHTML)
+      })
+    }
+  }, [quill])
 
   return (
     <section className="grid grid-cols-1 gap-4">
