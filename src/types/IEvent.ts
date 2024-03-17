@@ -4,6 +4,7 @@ export interface IEvent {
   hourEnd: string
   date?: string
   name: string
+  shortDescription?: string
   description: string
   location: string
   banner?: string

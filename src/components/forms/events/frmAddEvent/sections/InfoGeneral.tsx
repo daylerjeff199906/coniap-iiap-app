@@ -33,10 +33,10 @@ export const InfoGeneral = () => {
           />
         </div>
         <Textarea
-          label="Descripción"
+          label="Descripción corta"
           labelPlacement="outside"
           radius="sm"
-          placeholder="Descripción del evento"
+          placeholder="Ingrese una descripción corta del evento"
         />
       </section>
     </>
