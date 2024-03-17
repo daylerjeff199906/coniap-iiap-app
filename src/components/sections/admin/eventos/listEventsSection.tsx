@@ -43,6 +43,7 @@ const columns: Array<IColumns> = [
 export const ListEventsSection = () => {
   const [eventData, setEventData] = useState<IEvent | null>(null)
   const [openModal, setOpenModal] = useState(false)
+
   const { getEvents, events, getEventById, event } = useEvents()
 
   const searchParams = useSearchParams()
@@ -57,23 +58,29 @@ export const ListEventsSection = () => {
     const fetchData = async () => {
       if (isEdit) {
         // Agregar verificación para event !== null
-        const id = searchParams.get('edit')
+        const id = await searchParams.get('edit')
         if (id) {
           await getEventById(id)
-          if (event !== null) {
-            setEventData(event)
+          if (event) {
             setOpenModal(true)
           }
         }
       } else {
         getEvents()
         setOpenModal(false)
-        setEventData(null)
       }
     }
 
     fetchData()
   }, [event, isEdit])
+
+  useEffect(() => {
+    if (event && openModal) {
+      setEventData(event)
+    } else {
+      setEventData(null)
+    }
+  }, [openModal])
 
   return (
     <>
