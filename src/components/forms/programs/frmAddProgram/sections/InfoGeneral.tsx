@@ -15,7 +15,7 @@ export const InfoGeneral = () => {
           rules={{
             required: 'Este campo es requerido',
           }}
-          name="name"
+          name="title"
           render={({ field: { onChange, value } }) => (
             <Input
               aria-label="titulo del programa"

@@ -38,7 +38,7 @@ function convertTimestampToDate(timestamp: any) {
 }
 
 export function usePrograms() {
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
   const [programs, setPrograms] = useState<IProgram[] | null>(null)
   //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
 

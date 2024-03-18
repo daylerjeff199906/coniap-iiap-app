@@ -24,25 +24,6 @@ export const FrmAddProgram = () => {
     setOpen(true)
   }
 
-  // id: string
-  // name: string
-  // timeStart: string
-  // timeEnd: string
-  // date?: string
-  // shortDescription?: string
-  // place: string
-  // banner?: string
-  // image: string[]
-  // salas: string
-  // linkZoom?: string
-  // linkYoutube?: string
-  // linkFacebook?: string
-  // customContent?: string
-  // body?: string
-  // idProgram?: string
-  // inProgram?: boolean
-  // idTypeEvent?: string
-
   const handleFormSubmit: SubmitHandler<IProgram> = (data: IProgram) => {
     setOpen(false)
     const newData = {
@@ -53,8 +34,7 @@ export const FrmAddProgram = () => {
     }
     createProgram(newData)
       .then(() => {
-        toast.success('Evento creado')
-        router.push('/admin/eventos')
+        router.push('/admin/programas')
       })
       .catch(() => {
         toast.error('Error al crear evento')
