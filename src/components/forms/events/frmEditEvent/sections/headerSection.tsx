@@ -13,11 +13,11 @@ import 'filepond/dist/filepond.min.css'
 import { useEvents } from '@/hooks/admin'
 
 export const HeaderSection = () => {
-  const { watch } = useFormContext()
+  const { watch, setValue } = useFormContext()
   const { uploadImage, editEventField } = useEvents()
 
   const searchParams = useSearchParams()
-  const id = searchParams.get('id') as string
+  const id = searchParams.get('edit') as string
 
   const [files, setFiles] = useState([])
 
@@ -71,8 +71,9 @@ export const HeaderSection = () => {
             try {
               const data = file as File
               const url = await uploadImage(data)
-              if (url) {
+              if (url !== '') {
                 await editEventField(id, 'banner', url)
+                setValue('banner', url)
               }
               load(url)
             } catch (error) {
