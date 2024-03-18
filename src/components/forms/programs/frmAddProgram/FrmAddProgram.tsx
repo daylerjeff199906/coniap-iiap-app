@@ -5,7 +5,7 @@ import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
 import { InfoGeneral } from './sections'
-import { IEvent } from '@/types'
+import { IProgram } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { toast } from 'sonner'
@@ -18,7 +18,7 @@ export const FrmAddProgram = () => {
   const router = useRouter()
   const { createEvent, loading } = useEvents()
 
-  const methods = useForm<IEvent>()
+  const methods = useForm<IProgram>()
 
   const onSubmit = () => {
     setOpen(true)
@@ -43,7 +43,7 @@ export const FrmAddProgram = () => {
   // inProgram?: boolean
   // idTypeEvent?: string
 
-  const handleFormSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
+  const handleFormSubmit: SubmitHandler<IProgram> = (data: IProgram) => {
     setOpen(false)
     const newData = {
       ...data,
@@ -51,45 +51,22 @@ export const FrmAddProgram = () => {
       banner: '',
       images: [],
       salaId: '',
-      shortDescription: data.shortDescription || '',
-      customContent: data.customContent || '',
-      linkZoom: data.linkZoom || '',
-      linkYoutube: data.linkYoutube || '',
-      linkFacebook: data.linkFacebook || '',
       idProgram: '',
-      inProgram: data.idProgram ? true : false,
       isActived: false,
       idTypeEvent: '',
     }
-    createEvent(newData)
-      .then(() => {
-        toast.success('Evento creado')
-        router.push('/admin/eventos')
-      })
-      .catch(() => {
-        toast.error('Error al crear evento')
-      })
-    resetForm()
+    // createEvent(newData)
+    //   .then(() => {
+    //     toast.success('Evento creado')
+    //     router.push('/admin/eventos')
+    //   })
+    //   .catch(() => {
+    //     toast.error('Error al crear evento')
+    //   })
+    // resetForm()
   }
 
-  const resetForm = () => {
-    methods.setValue('name', '')
-    methods.setValue('timeStart', '')
-    methods.setValue('timeEnd', '')
-    methods.setValue('date', '')
-    methods.setValue('shortDescription', '')
-    // methods.setValue('place', '')
-    // methods.setValue('banner', '')
-    // methods.setValue('images', [])
-    // methods.setValue('sala', '')
-    methods.setValue('linkZoom', '')
-    methods.setValue('linkYoutube', '')
-    methods.setValue('linkFacebook', '')
-    methods.setValue('customContent', '')
-    // methods.setValue('idProgram', '')
-    // methods.setValue('inProgram', false)
-    // methods.setValue('idTypeEvent', '')
-  }
+  const resetForm = () => {}
 
   return (
     <>
@@ -99,10 +76,8 @@ export const FrmAddProgram = () => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <h1 className="text-2xl font-bold">Agregar Programa</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <InfoGeneral />
-            {/* <MoreInfo /> */}
-          </div>
+          <InfoGeneral />
+          {/* <MoreInfo /> */}
           {/* <MoreDescription /> */}
           <div className="flex items-center gap-4 justify-end">
             <Button
@@ -125,8 +100,8 @@ export const FrmAddProgram = () => {
       <ModalAction
         isOpen={isOpen}
         setOpen={setOpen}
-        title="Agregar evento"
-        message="¿Estás seguro de agregar este evento?"
+        title="Crear programa"
+        message="¿Estás seguro de crear este programa?"
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
     </>

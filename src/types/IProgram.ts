@@ -3,7 +3,7 @@ export interface IProgram {
   id: string
   date: string
   title?: string
-  subtitle?: string
+  shortDescription?: string
   banner?: string
   isActived?: boolean
   events: IEvent[]

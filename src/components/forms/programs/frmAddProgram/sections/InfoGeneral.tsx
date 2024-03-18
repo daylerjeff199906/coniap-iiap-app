@@ -52,46 +52,6 @@ export const InfoGeneral = () => {
               />
             )}
           />
-          <Controller
-            control={control}
-            name="timeStart"
-            rules={{
-              required: 'Este campo es requerido',
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                aria-label="Hora de inicio"
-                label="Hora de inicio"
-                labelPlacement="outside"
-                radius="sm"
-                type="time"
-                value={value}
-                onValueChange={onChange}
-                isInvalid={errors.startTime !== undefined}
-                errorMessage={errors.startTime?.message as string}
-              />
-            )}
-          />
-          <Controller
-            aria-label="Hora de finalización"
-            control={control}
-            name="timeEnd"
-            rules={{
-              required: 'Este campo es requerido',
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                label="Hora de fin"
-                labelPlacement="outside"
-                radius="sm"
-                type="time"
-                value={value}
-                onValueChange={onChange}
-                isInvalid={errors.endTime !== undefined}
-                errorMessage={errors.endTime?.message as string}
-              />
-            )}
-          />
         </div>
         <Controller
           control={control}
@@ -102,7 +62,7 @@ export const InfoGeneral = () => {
           render={({ field: { onChange, value } }) => (
             <Textarea
               aria-label="Descripción del evento"
-              label="Descripción"
+              label="Descripción del programa"
               labelPlacement="outside"
               radius="sm"
               placeholder="Descripción del evento"
