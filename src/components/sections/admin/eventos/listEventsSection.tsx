@@ -44,7 +44,7 @@ export const ListEventsSection = () => {
   const [eventData, setEventData] = useState<IEvent | null>(null)
   const [openModal, setOpenModal] = useState(false)
 
-  const { getEvents, events, getEventById, event } = useEvents()
+  const { getEvents, events, getEventById, event, editEventField } = useEvents()
 
   const searchParams = useSearchParams()
 
@@ -82,10 +82,18 @@ export const ListEventsSection = () => {
     }
   }, [openModal])
 
+  const handleStatusChange = async (key: string, value: boolean) => {
+    await editEventField(key, 'status', value)
+    getEvents()
+  }
+
   return (
     <>
       <TableGeneral
         columns={columns}
+        onValueStatusChange={(key: string | number, value: boolean) => {
+          handleStatusChange(String(key), value)
+        }}
         rows={
           events
             ? events.map((event) => {
@@ -95,7 +103,7 @@ export const ListEventsSection = () => {
                   date: event.date,
                   timeStart: event.timeStart,
                   timeEnd: event.timeEnd,
-                  status: event.isActived ? 'Activo' : 'Inactivo',
+                  status: event.isActived,
                   actions: 'actions',
                 }
               })

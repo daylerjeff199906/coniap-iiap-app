@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Table,
   TableBody,
@@ -7,6 +8,7 @@ import {
   TableCell,
   getKeyValue,
   Button,
+  Switch,
 } from '@nextui-org/react'
 import { useCallback } from 'react'
 import { IColumns } from '@/types'
@@ -21,10 +23,11 @@ interface IProps {
   columns: Array<IColumns>
   rows: Array<IRows>
   loading?: boolean
+  onValueStatusChange?: (key: string | number, value: boolean) => void
 }
 
 export const TableGeneral = (props: IProps) => {
-  const { columns, rows } = props
+  const { columns, rows, onValueStatusChange } = props
 
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
     const value = getKeyValue(item, columnKey)
@@ -51,6 +54,21 @@ export const TableGeneral = (props: IProps) => {
               <IconEye stroke={1.5} />
             </Button>
           </div>
+        )
+      case 'status':
+        return (
+          <>
+            <Switch
+              isSelected={value as boolean}
+              onValueChange={
+                onValueStatusChange &&
+                (() => onValueStatusChange(item.key, !value))
+              }
+              size="sm"
+            >
+              {value ? 'Activo' : 'Inactivo'}
+            </Switch>
+          </>
         )
       default:
         return value
