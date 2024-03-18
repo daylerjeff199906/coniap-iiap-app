@@ -8,9 +8,12 @@ import { UpdateEvento } from '@/components'
 export default function Page() {
   const searchParams = useSearchParams()
   const isEdit = searchParams.get('edit') !== null
+  const isView = searchParams.get('view') !== null
+  const isEditOrView = isEdit || isView
+
   return (
     <>
-      {!isEdit && (
+      {!isEditOrView && (
         <section className="flex gap-4 justify-between items-center">
           <h1 className="text-2xl font-bold">Eventos</h1>
           <Button
@@ -22,11 +25,19 @@ export default function Page() {
           </Button>
         </section>
       )}
+
       {isEdit ? (
         <>
           <UpdateEvento
             id={searchParams.get('edit') ?? ''}
             isEdit={isEdit}
+          />
+        </>
+      ) : isView ? (
+        <>
+          <UpdateEvento
+            id={searchParams.get('view') ?? ''}
+            isEdit={true}
           />
         </>
       ) : (
