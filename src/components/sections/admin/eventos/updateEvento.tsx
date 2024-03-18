@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useSearchParams } from 'next/navigation'
 import { FrmEditEvent } from '@/components'
 
 import { useEvents } from '@/hooks/admin'
-import { useEffect, useState } from 'react'
-import { IEvent } from '@/types'
+import { useEffect } from 'react'
 
 interface IProps {
   id: string

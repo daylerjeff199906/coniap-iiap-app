@@ -1,3 +1,4 @@
 import { ListEventsSection } from './listEventsSection'
+import { UpdateEvento } from './updateEvento'
 
-export { ListEventsSection }
+export { ListEventsSection, UpdateEvento }
