@@ -41,11 +41,11 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListSpeakersSection = () => {
-  const { getSpekers, speakers } = useSpeakers()
+  const { getSpekers, speakers, editSpeakerField } = useSpeakers()
 
-  const searchParams = useSearchParams()
+  // const searchParams = useSearchParams()
 
-  const isEdit = searchParams.get('edit') !== null
+  // const isEdit = searchParams.get('edit') !== null
 
   useEffect(() => {
     getSpekers()
@@ -67,18 +67,18 @@ export const ListSpeakersSection = () => {
   //   fetchData()
   // }, [event, isEdit])
 
-  // const handleStatusChange = async (key: string, value: boolean) => {
-  //   await editEventField(key, 'isActived', value)
-  //   getEvents()
-  // }
+  const handleStatusChange = async (key: string, value: boolean) => {
+    await editSpeakerField(key, 'isActived', value)
+    getSpekers()
+  }
 
   return (
     <>
       <TableGeneral
         columns={columns}
-        // onValueStatusChange={(key: string | number, value: boolean) => {
-        //   handleStatusChange(String(key), value)
-        // }}
+        onValueStatusChange={(key: string | number, value: boolean) => {
+          handleStatusChange(String(key), value)
+        }}
         rows={
           speakers
             ? speakers?.map((speaker) => {

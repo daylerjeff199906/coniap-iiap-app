@@ -8,9 +8,11 @@ import {
   DocumentReference,
   getDoc,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore'
 import { ISpeaker } from '@/types'
+import { toast } from 'sonner'
 
 // const convertDataToISliders = (data: DocumentData[]) => {
 //   return data?.map((slider) => {
@@ -86,27 +88,32 @@ export function useSpeakers() {
     }
   }
 
-  //   const getSliderById = async (id: string) => {
-  //     setLoading(true)
-  //     try {
-  //       const categoryRef: DocumentReference<DocumentData> = doc(db, 'slider', id)
-  //       const docSnap = await getDoc(categoryRef)
-  //       if (docSnap.exists()) {
-  //         setSlider(convertDataToISlidersById(docSnap.data()))
-  //       } else {
-  //         console.log('No such document!')
-  //       }
-
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+  const editSpeakerField = async (
+    id: string,
+    fieldToUpdate: string,
+    value: any
+  ) => {
+    setLoading(true)
+    try {
+      const productDocRef = doc(db, 'speakers', id)
+      await updateDoc(productDocRef, {
+        [fieldToUpdate]: value,
+      })
+      toast.success(
+        `Campo ${fieldToUpdate} actualizado con exito en el evento ${id}`
+      )
+      setLoading(false)
+    } catch (e) {
+      console.error('Error adding document: ', e)
+      setLoading(false)
+    }
+  }
 
   return {
     loading,
     speakers,
     getSpekers,
+    editSpeakerField,
     // getSlider,
   }
 }
