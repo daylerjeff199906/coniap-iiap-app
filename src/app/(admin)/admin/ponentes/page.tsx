@@ -9,10 +9,12 @@ import { useSearchParams } from 'next/navigation'
 export default function Page() {
   const searchParams = useSearchParams()
   const isEdit = searchParams.get('edit') !== null
+  const isView = searchParams.get('view') !== null
+  const isEditOrView = isEdit || isView
 
   return (
     <>
-      {!isEdit && (
+      {!isEditOrView && (
         <section className="flex gap-4 justify-between items-center">
           <h1 className="text-2xl font-bold">Ponentes</h1>
           <Button
@@ -31,6 +33,8 @@ export default function Page() {
             isEdit={isEdit}
           /> */}
         </>
+      ) : isView ? (
+        <></>
       ) : (
         <section className="py-6">
           <ListSpeakersSection />
