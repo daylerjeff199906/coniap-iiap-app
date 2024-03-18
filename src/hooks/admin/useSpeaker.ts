@@ -52,7 +52,7 @@ import { ISpeaker } from '@/types'
 export function useSpeakers() {
   const [loading, setLoading] = useState<boolean>(true)
   //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
-  const [speakersActive, setSpeakersActive] = useState<ISpeaker[] | null>(null)
+  const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
   //   const [slider, setSlider] = useState<ISliders | null>(null)
 
   //   const getSlider = async () => {
@@ -70,7 +70,7 @@ export function useSpeakers() {
   //     }
   //   }
 
-  const getSpekersActive = async () => {
+  const getSpekers = async () => {
     setLoading(true)
     try {
       const querySnapshot = await getDocs(query(collection(db, 'speakers')))
@@ -79,7 +79,7 @@ export function useSpeakers() {
         id: doc.id.toString(),
         ...doc.data(),
       }))
-      setSpeakersActive(speakers as ISpeaker[])
+      setSpeakers(speakers as ISpeaker[])
       setLoading(false)
     } catch (error) {
       console.log(error)
@@ -105,8 +105,8 @@ export function useSpeakers() {
 
   return {
     loading,
-    speakersActive,
-    getSpekersActive,
+    speakers,
+    getSpekers,
     // getSlider,
   }
 }

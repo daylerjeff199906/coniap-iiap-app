@@ -4,29 +4,29 @@ import { useSearchParams } from 'next/navigation'
 import { FrmEditEvent, TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
-import { useEvents } from '@/hooks/admin'
+import { useEvents, useSpeakers } from '@/hooks/admin'
 import { useEffect, useState } from 'react'
 import { IEvent } from '@/types'
 
 const columns: Array<IColumns> = [
   {
     key: 'name',
-    label: 'Nombre',
+    label: 'Ponente',
     align: 'start',
   },
   {
-    key: 'date',
-    label: 'Fecha',
+    key: 'job',
+    label: 'Puesto de trabajo',
     align: 'start',
   },
   {
-    key: 'timeStart',
-    label: 'Hora de inicio',
+    key: 'institution',
+    label: 'Institución',
     align: 'start',
   },
   {
-    key: 'timeEnd',
-    label: 'Hora de fin',
+    key: 'level',
+    label: 'Nivel de estudio',
     align: 'start',
   },
   {
@@ -41,69 +41,54 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListSpeakersSection = () => {
-  const [eventData, setEventData] = useState<IEvent | null>(null)
-  const [openModal, setOpenModal] = useState(false)
-
-  const { getEvents, events, getEventById, event, editEventField } = useEvents()
+  const { getSpekers, speakers } = useSpeakers()
 
   const searchParams = useSearchParams()
 
   const isEdit = searchParams.get('edit') !== null
 
   useEffect(() => {
-    getEvents()
+    getSpekers()
   }, [])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isEdit) {
-        // Agregar verificación para event !== null
-        const id = await searchParams.get('edit')
-        if (id) {
-          await getEventById(id)
-          if (event) {
-            setOpenModal(true)
-          }
-        }
-      } else {
-        getEvents()
-        setOpenModal(false)
-      }
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (isEdit) {
+  //       // Agregar verificación para event !== null
+  //       const id = await searchParams.get('edit')
+  //       if (id) {
+  //         await getEventById(id)
+  //       }
+  //     } else {
+  //       getEvents()
+  //     }
+  //   }
 
-    fetchData()
-  }, [event, isEdit])
+  //   fetchData()
+  // }, [event, isEdit])
 
-  useEffect(() => {
-    if (event && openModal) {
-      setEventData(event)
-    } else {
-      setEventData(null)
-    }
-  }, [openModal])
-
-  const handleStatusChange = async (key: string, value: boolean) => {
-    await editEventField(key, 'isActived', value)
-    getEvents()
-  }
+  // const handleStatusChange = async (key: string, value: boolean) => {
+  //   await editEventField(key, 'isActived', value)
+  //   getEvents()
+  // }
 
   return (
     <>
       <TableGeneral
         columns={columns}
-        onValueStatusChange={(key: string | number, value: boolean) => {
-          handleStatusChange(String(key), value)
-        }}
+        // onValueStatusChange={(key: string | number, value: boolean) => {
+        //   handleStatusChange(String(key), value)
+        // }}
         rows={
-          events
-            ? events.map((event) => {
+          speakers
+            ? speakers?.map((speaker) => {
                 return {
-                  key: event.id,
-                  name: event.name,
-                  date: event.date,
-                  timeStart: event.timeStart,
-                  timeEnd: event.timeEnd,
-                  status: event.isActived,
+                  key: speaker.id,
+                  name: RenderColumnName(speaker.fullName, speaker.surName),
+                  job: speaker.job,
+                  institution: speaker.institution,
+                  level: speaker.levelStudy,
+                  status: speaker.isActive,
                   actions: 'actions',
                 }
               })
@@ -117,5 +102,14 @@ export const ListSpeakersSection = () => {
         />
       )} */}
     </>
+  )
+}
+
+const RenderColumnName = (fullname: string, surname: string) => {
+  return (
+    <div className="flex flex-col">
+      <p className="text-base font-bold">{fullname}</p>
+      <p className="text-xs font-medium text-slate-500">{surname}</p>
+    </div>
   )
 }

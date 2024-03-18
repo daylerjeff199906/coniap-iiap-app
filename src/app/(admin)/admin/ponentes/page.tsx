@@ -1,4 +1,5 @@
 'use client'
+import { ListSpeakersSection } from '@/components'
 // import { ListProgramsSection } from '@/components'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
@@ -31,7 +32,9 @@ export default function Page() {
           /> */}
         </>
       ) : (
-        <section className="py-6">{/* <ListProgramsSection /> */}</section>
+        <section className="py-6">
+          <ListSpeakersSection />
+        </section>
       )}
     </>
   )
