@@ -83,7 +83,7 @@ export const ListEventsSection = () => {
   }, [openModal])
 
   const handleStatusChange = async (key: string, value: boolean) => {
-    await editEventField(key, 'status', value)
+    await editEventField(key, 'isActived', value)
     getEvents()
   }
 
