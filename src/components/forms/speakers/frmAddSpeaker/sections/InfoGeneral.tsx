@@ -36,7 +36,7 @@ export const InfoGeneral = () => {
             rules={{
               required: 'Este campo es requerido',
             }}
-            name="surname"
+            name="surName"
             render={({ field: { onChange, value } }) => (
               <Input
                 aria-label="Apellidos del ponente"
@@ -116,21 +116,16 @@ export const InfoGeneral = () => {
         </div>
         <Controller
           control={control}
-          name="shortDescription"
-          rules={{
-            required: 'Este campo es requerido',
-          }}
+          name="presentation"
           render={({ field: { onChange, value } }) => (
             <Textarea
-              aria-label="Descripción del evento"
-              label="Descripción"
+              aria-label="Presentación"
+              label="Presentación"
               labelPlacement="outside"
               radius="sm"
-              placeholder="Descripción del evento"
+              placeholder="Presentación del ponente"
               value={value}
               onValueChange={onChange}
-              isInvalid={errors.shortDescription !== undefined}
-              errorMessage={errors.shortDescription?.message as string}
             />
           )}
         />

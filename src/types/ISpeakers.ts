@@ -4,6 +4,7 @@ export interface ISpeaker {
   surName: string
   job: string   
   image: string
+  presentation?: string
   institution?: string
   levelStudy?: string
   isActive?: boolean

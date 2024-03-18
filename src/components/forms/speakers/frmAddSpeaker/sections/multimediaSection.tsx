@@ -1,3 +1,7 @@
 export const MultimediaSection = () => {
-  return <div>MultimediaSection</div>
+  return (
+    <section>
+      <h3>Multimedia</h3>
+    </section>
+  )
 }
