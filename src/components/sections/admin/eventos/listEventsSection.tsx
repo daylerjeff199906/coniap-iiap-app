@@ -41,9 +41,6 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
-  const [eventData, setEventData] = useState<IEvent | null>(null)
-  const [openModal, setOpenModal] = useState(false)
-
   const { getEvents, events, getEventById, event, editEventField } = useEvents()
 
   const searchParams = useSearchParams()
@@ -61,26 +58,14 @@ export const ListEventsSection = () => {
         const id = await searchParams.get('edit')
         if (id) {
           await getEventById(id)
-          if (event) {
-            setOpenModal(true)
-          }
         }
       } else {
         getEvents()
-        setOpenModal(false)
       }
     }
 
     fetchData()
   }, [event, isEdit])
-
-  useEffect(() => {
-    if (event && openModal) {
-      setEventData(event)
-    } else {
-      setEventData(null)
-    }
-  }, [openModal])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editEventField(key, 'isActived', value)

@@ -10,6 +10,11 @@ import { IEvent } from '@/types'
 
 const columns: Array<IColumns> = [
   {
+    key: 'level',
+    label: 'Nivel de estudio',
+    align: 'start',
+  },
+  {
     key: 'name',
     label: 'Ponente',
     align: 'start',
@@ -22,11 +27,6 @@ const columns: Array<IColumns> = [
   {
     key: 'institution',
     label: 'Institución',
-    align: 'start',
-  },
-  {
-    key: 'level',
-    label: 'Nivel de estudio',
     align: 'start',
   },
   {
@@ -95,12 +95,6 @@ export const ListSpeakersSection = () => {
             : []
         }
       />
-      {/* {eventData && (
-        <FrmEditEvent
-          isOpen={openModal}
-          event={eventData}
-        />
-      )} */}
     </>
   )
 }
