@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { InfoGeneral } from './sections'
 import { IProgram } from '@/types'
 
-import { useEvents } from '@/hooks/admin'
+import { usePrograms } from '@/hooks/admin'
 import { toast } from 'sonner'
 import { ModalAction } from '@/components'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ export const FrmAddProgram = () => {
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()
-  const { createEvent, loading } = useEvents()
+  const { createProgram, loading } = usePrograms()
 
   const methods = useForm<IProgram>()
 
@@ -47,23 +47,19 @@ export const FrmAddProgram = () => {
     setOpen(false)
     const newData = {
       ...data,
-      place: '',
       banner: '',
-      images: [],
-      salaId: '',
-      idProgram: '',
       isActived: false,
-      idTypeEvent: '',
+      events: [],
     }
-    // createEvent(newData)
-    //   .then(() => {
-    //     toast.success('Evento creado')
-    //     router.push('/admin/eventos')
-    //   })
-    //   .catch(() => {
-    //     toast.error('Error al crear evento')
-    //   })
-    // resetForm()
+    createProgram(newData)
+      .then(() => {
+        toast.success('Evento creado')
+        router.push('/admin/eventos')
+      })
+      .catch(() => {
+        toast.error('Error al crear evento')
+      })
+    resetForm()
   }
 
   const resetForm = () => {}
@@ -90,7 +86,7 @@ export const FrmAddProgram = () => {
             </Button>
             <Button
               as={Link}
-              href="/admin/eventos"
+              href="/admin/programas"
             >
               Cancelar
             </Button>

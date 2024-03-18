@@ -10,26 +10,10 @@ import {
   query,
   where,
   orderBy,
+  addDoc,
 } from 'firebase/firestore'
 import { IProgram } from '@/types'
-
-// const convertDataToIProgram = (data: DocumentData[]) => {
-//   return data?.map((program) => {
-//     const { banner, events, date, title } = program
-//     const id = program?.id
-
-//     const FDate = program?.date.toDate()
-//     // acortar la fecha de modificacion
-
-//     return {
-//       id: id,
-//       banner,
-//       events,
-//       date: FDate,
-//       title,
-//     }
-//   })
-// }
+import { toast } from 'sonner'
 
 // const convertDataToISlidersById = (data: DocumentData) => {
 //   const { image, name, tag, isActive, createdAt, updatedAt } = data
@@ -78,6 +62,20 @@ export function usePrograms() {
     }
   }
 
+  const createProgram = async (data: IProgram) => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const docRef = await addDoc(collection(db, 'programs'), data)
+      // console.log('Document written with ID: ', docRef.id)
+      toast.success(`Programa creado con exito, ID: ${docRef.id}`)
+
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   //   const getSpekersActive = async () => {
   //     setLoading(true)
   //     try {
@@ -117,6 +115,7 @@ export function usePrograms() {
     loading,
     getPrograms,
     programs,
+    createProgram,
     // getSlider,
   }
 }
