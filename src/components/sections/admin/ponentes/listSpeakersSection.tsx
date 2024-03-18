@@ -68,7 +68,7 @@ export const ListSpeakersSection = () => {
   // }, [event, isEdit])
 
   const handleStatusChange = async (key: string, value: boolean) => {
-    await editSpeakerField(key, 'isActived', value)
+    await editSpeakerField(key, 'isActive', value)
     getSpekers()
   }
 
