@@ -27,7 +27,7 @@ export const InfoGeneral = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={errors.fullName !== undefined}
-                errorMessage={errors.fullname?.message as string}
+                errorMessage={errors.fullName?.message as string}
               />
             )}
           />

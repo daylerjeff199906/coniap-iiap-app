@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import { useSearchParams } from 'next/navigation'
 
 // Import React FilePond
-import { FilePond, registerPlugin } from 'react-filepond'
+import { FilePond } from 'react-filepond'
 
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css'
