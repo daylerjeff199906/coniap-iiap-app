@@ -4,7 +4,7 @@ import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
-// import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
+import { InfoGeneral } from './sections'
 import { IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
@@ -100,8 +100,8 @@ export const FrmAddProgram = () => {
         >
           <h1 className="text-2xl font-bold">Agregar Programa</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* <InfoGeneral />
-            <MoreInfo /> */}
+            <InfoGeneral />
+            {/* <MoreInfo /> */}
           </div>
           {/* <MoreDescription /> */}
           <div className="flex items-center gap-4 justify-end">
