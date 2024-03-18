@@ -1,5 +1,4 @@
 import { InfoGeneral } from './InfoGeneral'
-import { MoreInfo } from './moreInfo'
-import { MoreDescription } from './moreDescription'
+import { MultimediaSection } from './multimediaSection'
 
-export { InfoGeneral, MoreInfo, MoreDescription }
+export { InfoGeneral, MultimediaSection }

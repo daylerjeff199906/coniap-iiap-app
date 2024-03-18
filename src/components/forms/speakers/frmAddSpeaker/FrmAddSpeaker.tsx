@@ -18,7 +18,9 @@ export const FrmAddSpeaker = () => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <h1 className="text-2xl font-bold">Agregar Ponente</h1>
-          <InfoGeneral />
+          <div>
+            <InfoGeneral />
+          </div>
         </form>
       </FormProvider>
     </>

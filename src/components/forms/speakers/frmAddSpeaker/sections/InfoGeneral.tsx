@@ -65,6 +65,7 @@ export const InfoGeneral = () => {
                 aria-label="Grado académico"
                 label="Grado académico"
                 labelPlacement="outside"
+                placeholder="Dr. MSc. Ing. Lic. etc."
                 radius="sm"
                 value={value}
                 onValueChange={onChange}
@@ -84,6 +85,7 @@ export const InfoGeneral = () => {
                 aria-label="Institución"
                 label="Institución"
                 labelPlacement="outside"
+                placeholder="Institución a la que pertenece"
                 radius="sm"
                 value={value}
                 onValueChange={onChange}
@@ -102,6 +104,7 @@ export const InfoGeneral = () => {
               <Input
                 label="Puesto"
                 labelPlacement="outside"
+                placeholder="Puesto que desempeña"
                 radius="sm"
                 value={value}
                 onValueChange={onChange}
