@@ -64,7 +64,11 @@ export function usePrograms() {
     setLoading(true)
     try {
       const querySnapshot = await getDocs(
-        query(collection(db, 'programs'), orderBy('date', 'asc'))
+        query(
+          collection(db, 'programs'),
+          orderBy('date', 'asc'),
+          where('isActive', '==', true)
+        )
       )
       const program = querySnapshot.docs.map((doc) => ({
         id: doc.id.toString(),

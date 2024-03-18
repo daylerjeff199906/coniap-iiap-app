@@ -23,7 +23,7 @@ export const menuAside: IMenuAside[] = [
   },
   {
     id: '5',
-    nameOption: 'Program',
+    nameOption: 'Programas',
     titleOption: null,
     hrefLink: '/admin/programas',
     icon: <IconCalendarMonth />,
@@ -31,7 +31,7 @@ export const menuAside: IMenuAside[] = [
   },
   {
     id: '2',
-    nameOption: 'Events',
+    nameOption: 'Eventos',
     titleOption: null,
     hrefLink: '/admin/eventos',
     icon: <IconCalendarEvent />,
@@ -39,7 +39,7 @@ export const menuAside: IMenuAside[] = [
   },
   {
     id: '3',
-    nameOption: 'Speakers',
+    nameOption: 'Ponentes',
     titleOption: null,
     hrefLink: '/admin/ponentes',
     icon: <IconUsers />,
