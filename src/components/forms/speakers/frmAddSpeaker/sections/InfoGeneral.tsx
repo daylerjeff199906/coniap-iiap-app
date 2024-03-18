@@ -9,7 +9,7 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <h1 className="text-lg">Información general</h1>
+        <h1 className="">Información general</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Controller
             control={control}
@@ -26,8 +26,8 @@ export const InfoGeneral = () => {
                 placeholder="Nombre del ponente"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.name !== undefined}
-                errorMessage={errors.name?.message as string}
+                isInvalid={errors.fullName !== undefined}
+                errorMessage={errors.fullname?.message as string}
               />
             )}
           />
@@ -46,8 +46,8 @@ export const InfoGeneral = () => {
                 placeholder="Apellidos del ponente"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.name !== undefined}
-                errorMessage={errors.name?.message as string}
+                isInvalid={errors.surName !== undefined}
+                errorMessage={errors.surName?.message as string}
               />
             )}
           />
@@ -59,58 +59,54 @@ export const InfoGeneral = () => {
             rules={{
               required: 'Este campo es requerido',
             }}
-            name="date"
+            name="levelStudy"
             render={({ field: { onChange, value } }) => (
               <Input
-                aria-label="Fecha del evento"
-                label="Fecha"
+                aria-label="Grado académico"
+                label="Grado académico"
                 labelPlacement="outside"
                 radius="sm"
-                type="date"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.date !== undefined}
-                errorMessage={errors.date?.message as string}
+                isInvalid={errors.levelStudy !== undefined}
+                errorMessage={errors.levelStudy?.message as string}
               />
             )}
           />
           <Controller
             control={control}
-            name="timeStart"
+            name="institution"
             rules={{
               required: 'Este campo es requerido',
             }}
             render={({ field: { onChange, value } }) => (
               <Input
-                aria-label="Hora de inicio"
-                label="Hora de inicio"
+                aria-label="Institución"
+                label="Institución"
                 labelPlacement="outside"
                 radius="sm"
-                type="time"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.startTime !== undefined}
-                errorMessage={errors.startTime?.message as string}
+                isInvalid={errors.institution !== undefined}
+                errorMessage={errors.institution?.message as string}
               />
             )}
           />
           <Controller
-            aria-label="Hora de finalización"
             control={control}
-            name="timeEnd"
+            name="job"
             rules={{
               required: 'Este campo es requerido',
             }}
             render={({ field: { onChange, value } }) => (
               <Input
-                label="Hora de fin"
+                label="Puesto"
                 labelPlacement="outside"
                 radius="sm"
-                type="time"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.endTime !== undefined}
-                errorMessage={errors.endTime?.message as string}
+                isInvalid={errors.job !== undefined}
+                errorMessage={errors.job?.message as string}
               />
             )}
           />
