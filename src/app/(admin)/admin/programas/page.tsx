@@ -17,7 +17,7 @@ export default function Page() {
           <Button
             color="primary"
             as={Link}
-            href="/admin/programa/nuevo"
+            href="/admin/programas/nuevo"
           >
             Añadir programa
           </Button>
