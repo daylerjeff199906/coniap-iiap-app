@@ -1,7 +1,11 @@
+import { FrmAddSpeaker } from '@/components'
+
 export default function Page() {
   return (
     <>
-      <section></section>
+      <section>
+        <FrmAddSpeaker />
+      </section>
     </>
   )
 }

@@ -10,26 +10,48 @@ export const InfoGeneral = () => {
     <>
       <section className="grid grid-cols-1 gap-4">
         <h1 className="text-lg">Información general</h1>
-        <Controller
-          control={control}
-          rules={{
-            required: 'Este campo es requerido',
-          }}
-          name="name"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              aria-label="Nombre del evento"
-              label="Nombre"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Nombre del evento"
-              value={value}
-              onValueChange={onChange}
-              isInvalid={errors.name !== undefined}
-              errorMessage={errors.name?.message as string}
-            />
-          )}
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Controller
+            control={control}
+            rules={{
+              required: 'Este campo es requerido',
+            }}
+            name="fullName"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                aria-label="Nombre del ponente"
+                label="Nombres"
+                labelPlacement="outside"
+                radius="sm"
+                placeholder="Nombre del ponente"
+                value={value}
+                onValueChange={onChange}
+                isInvalid={errors.name !== undefined}
+                errorMessage={errors.name?.message as string}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            rules={{
+              required: 'Este campo es requerido',
+            }}
+            name="surname"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                aria-label="Apellidos del ponente"
+                label="Apellidos"
+                labelPlacement="outside"
+                radius="sm"
+                placeholder="Apellidos del ponente"
+                value={value}
+                onValueChange={onChange}
+                isInvalid={errors.name !== undefined}
+                errorMessage={errors.name?.message as string}
+              />
+            )}
+          />
+        </div>
 
         <div className="flex gap-3">
           <Controller
