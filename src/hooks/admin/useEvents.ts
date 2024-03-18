@@ -134,18 +134,18 @@ export function useEvents() {
   }
 
   const editEventField = async (
-    productId: string,
+    id: string,
     fieldToUpdate: string,
     value: any
   ) => {
     setLoading(true)
     try {
-      const productDocRef = doc(db, 'events', productId)
+      const productDocRef = doc(db, 'events', id)
       await updateDoc(productDocRef, {
         [fieldToUpdate]: value,
       })
       toast.success(
-        `Campo ${fieldToUpdate} actualizado con exito en el evento ${productId}`
+        `Campo ${fieldToUpdate} actualizado con exito en el evento ${id}`
       )
       setLoading(false)
     } catch (e) {

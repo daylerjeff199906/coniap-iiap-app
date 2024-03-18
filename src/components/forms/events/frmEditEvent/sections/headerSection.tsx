@@ -1,6 +1,8 @@
 'use client'
+import { useState } from 'react'
 import { Image } from '@nextui-org/react'
 import { useFormContext } from 'react-hook-form'
+import { useSearchParams } from 'next/navigation'
 
 // Import React FilePond
 import { FilePond, registerPlugin } from 'react-filepond'
@@ -8,8 +10,22 @@ import { FilePond, registerPlugin } from 'react-filepond'
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css'
 
+import { useEvents } from '@/hooks/admin'
+
 export const HeaderSection = () => {
   const { watch } = useFormContext()
+  const { uploadImage, editEventField } = useEvents()
+
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id') as string
+
+  const [files, setFiles] = useState([])
+
+  const handleUpdateFiles = (fileItems: any) => {
+    // Set current file objects to this.state
+    setFiles(fileItems.map((fileItem: any) => fileItem.file))
+  }
+
   return (
     <>
       <div className="w-full relative mb-4">
@@ -42,7 +58,31 @@ export const HeaderSection = () => {
         allowMultiple={false}
         acceptedFileTypes={['image/*']}
         labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-        // stylePanelLayout={'compact circle'}
+        server={{
+          process: async (
+            fieldName,
+            file,
+            metadata,
+            load,
+            error,
+            progress,
+            abort
+          ) => {
+            try {
+              const data = file as File
+              const url = await uploadImage(data)
+              if (url) {
+                await editEventField(id, 'banner', url)
+              }
+              load(url)
+            } catch (error) {
+              console.error('Upload error', error)
+            }
+          },
+        }}
+        files={files}
+        onupdatefiles={handleUpdateFiles}
+        instantUpload={false}
       />
     </>
   )
