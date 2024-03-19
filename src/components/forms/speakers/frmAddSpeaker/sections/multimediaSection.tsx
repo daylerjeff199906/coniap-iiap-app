@@ -1,19 +1,18 @@
 'use client'
-import { useState } from 'react'
+// import { useState } from 'react'
 import { FilePond } from 'react-filepond'
-import { Controller, useFormContext } from 'react-hook-form'
+// import { useFormContext } from 'react-hook-form'
 
-export const MultimediaSection = () => {
-  const [files, setFiles] = useState([])
+interface IProps {
+  files: any[]
+  setFiles: (files: any) => void
+}
 
-  const { setValue } = useFormContext()
+export const MultimediaSection = (props: IProps) => {
+  const { files, setFiles } = props
 
   const handleUpdateFiles = (fileItems: any) => {
     setFiles(fileItems.map((fileItem: any) => fileItem.file))
-    setValue(
-      'image',
-      fileItems.map((fileItem: any) => fileItem.file)
-    )
   }
 
   return (

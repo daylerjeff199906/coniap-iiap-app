@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { db } from '@/firebase/firebase'
+import { db, storage } from '@/firebase/firebase'
 import {
   collection,
   getDocs,
@@ -7,10 +7,17 @@ import {
   doc,
   DocumentReference,
   getDoc,
+  addDoc,
   query,
   updateDoc,
   where,
 } from 'firebase/firestore'
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage'
 import { ISpeaker } from '@/types'
 import { toast } from 'sonner'
 
@@ -88,6 +95,21 @@ export function useSpeakers() {
     }
   }
 
+  const createSpeaker = async (data: ISpeaker) => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const docRef = await addDoc(collection(db, 'speakers'), data)
+      // console.log('Document written with ID: ', docRef.id)
+      toast.success(`Ponente creado con exito, ID: ${docRef.id}`)
+      setLoading(false)
+      return docRef.id
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+  }
+
   const editSpeakerField = async (
     id: string,
     fieldToUpdate: string,
@@ -109,11 +131,29 @@ export function useSpeakers() {
     }
   }
 
+  const uploadImage = async (file: File): Promise<string> => {
+    setLoading(true)
+    try {
+      const storageRef = ref(storage, `speakers/${file.name}`)
+      await uploadBytes(storageRef, file)
+
+      const url = await getDownloadURL(storageRef)
+      setLoading(false)
+      return url
+    } catch (e) {
+      console.error('Error uploading image: ', e)
+      setLoading(false)
+      return ''
+    }
+  }
+
   return {
     loading,
     speakers,
     getSpekers,
     editSpeakerField,
+    createSpeaker,
+    uploadImage,
     // getSlider,
   }
 }
