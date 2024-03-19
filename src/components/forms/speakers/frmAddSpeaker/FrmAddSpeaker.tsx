@@ -25,6 +25,7 @@ export const FrmAddSpeaker = () => {
     const newData = {
       ...data,
       image: '',
+      isActive: false,
     }
     const idSpeaker = await createSpeaker(newData)
     if (idSpeaker !== null && file.length > 0) {
