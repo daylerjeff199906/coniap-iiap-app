@@ -59,7 +59,7 @@ import { toast } from 'sonner'
 // }
 
 export function useSpeakers() {
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
   const [speaker, setSpeaker] = useState<ISpeaker | null>(null)
   //   const [slider, setSlider] = useState<ISliders | null>(null)
@@ -141,7 +141,7 @@ export function useSpeakers() {
       await new Promise((resolve) => setTimeout(resolve, 2000))
       const eventRef: DocumentReference<DocumentData> = doc(db, 'speakers', id)
       await updateDoc(eventRef, data as any)
-      toast.success('Evento actualizado con exito')
+      toast.success('Ponente actualizado con exito')
       setLoading(false)
     } catch (error) {
       console.log(error)
