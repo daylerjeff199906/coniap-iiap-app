@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 import { InfoGeneralSection, MultimediasSection } from './sections'
 
-import { ModalAction } from '@/components'
+import { LoadingPages, ModalAction } from '@/components'
 import { useSpeakers } from '@/hooks/admin'
 interface IProps {
   speaker: ISpeaker
@@ -99,6 +99,7 @@ export const FrmEditSpeaker = (props: IProps) => {
         setOpen={setOpenConfirm}
         title="Guardar cambios"
       />
+      <LoadingPages isOpen={loading} />
     </>
   )
 }

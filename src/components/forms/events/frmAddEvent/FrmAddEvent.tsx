@@ -9,7 +9,7 @@ import { IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { toast } from 'sonner'
-import { ModalAction } from '@/components'
+import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
 export const FrmAddEvent = () => {
@@ -129,6 +129,7 @@ export const FrmAddEvent = () => {
         message="¿Estás seguro de agregar este evento?"
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
+      <LoadingPages isOpen={loading} />
     </>
   )
 }
