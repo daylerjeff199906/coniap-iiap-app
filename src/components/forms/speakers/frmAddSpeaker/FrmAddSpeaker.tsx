@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 import { ISpeaker } from '@/types'
 import { InfoGeneral, MultimediaSection } from './sections'
-import { ModalAction } from '@/components'
+import { LoadingPages, ModalAction } from '@/components'
 
 import { useSpeakers } from '@/hooks/admin'
 
@@ -15,7 +15,8 @@ export const FrmAddSpeaker = () => {
   const [file, setFile] = useState([])
   const methods = useForm<ISpeaker>()
 
-  const { createSpeaker, uploadImage, editSpeakerField } = useSpeakers()
+  const { createSpeaker, uploadImage, editSpeakerField, loading } =
+    useSpeakers()
 
   const onSubmit = () => {
     setOpen(true)
@@ -76,6 +77,7 @@ export const FrmAddSpeaker = () => {
         message="¿Estás seguro de agregar este ponente?"
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
+      <LoadingPages isOpen={loading} />
     </>
   )
 }

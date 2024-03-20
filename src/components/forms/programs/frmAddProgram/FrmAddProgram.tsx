@@ -9,7 +9,7 @@ import { IProgram } from '@/types'
 
 import { usePrograms } from '@/hooks/admin'
 import { toast } from 'sonner'
-import { ModalAction } from '@/components'
+import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
 export const FrmAddProgram = () => {
@@ -80,6 +80,7 @@ export const FrmAddProgram = () => {
         message="¿Estás seguro de crear este programa?"
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
+      <LoadingPages isOpen={loading} />
     </>
   )
 }

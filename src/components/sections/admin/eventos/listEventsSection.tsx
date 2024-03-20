@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useSearchParams } from 'next/navigation'
-import { FrmEditEvent, TableGeneral } from '@/components'
+import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
 import { useEffect, useState } from 'react'
-import { IEvent } from '@/types'
 
 const columns: Array<IColumns> = [
   {
@@ -41,7 +40,8 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
-  const { getEvents, events, getEventById, event, editEventField } = useEvents()
+  const { getEvents, events, getEventById, event, editEventField, loading } =
+    useEvents()
 
   const searchParams = useSearchParams()
 
@@ -75,6 +75,7 @@ export const ListEventsSection = () => {
   return (
     <>
       <TableGeneral
+        loading={loading}
         columns={columns}
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)

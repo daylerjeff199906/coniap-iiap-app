@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useSearchParams } from 'next/navigation'
-import { FrmEditEvent, LoadingPages, TableGeneral } from '@/components'
+import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
-import { useEvents, useSpeakers } from '@/hooks/admin'
-import { useEffect, useState } from 'react'
-import { IEvent } from '@/types'
+import { useSpeakers } from '@/hooks/admin'
+import { useEffect } from 'react'
 
 const columns: Array<IColumns> = [
   {
@@ -75,6 +73,7 @@ export const ListSpeakersSection = () => {
   return (
     <>
       <TableGeneral
+        loading={loading}
         columns={columns}
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
@@ -95,7 +94,6 @@ export const ListSpeakersSection = () => {
             : []
         }
       />
-      <LoadingPages isOpen={loading} />
     </>
   )
 }

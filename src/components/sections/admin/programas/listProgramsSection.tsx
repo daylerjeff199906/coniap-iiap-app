@@ -35,11 +35,7 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListProgramsSection = () => {
-  const { getPrograms, programs } = usePrograms()
-
-  const searchParams = useSearchParams()
-
-  // const isEdit = searchParams.get('edit') !== null
+  const { getPrograms, programs, loading } = usePrograms()
 
   useEffect(() => {
     getPrograms()
@@ -48,6 +44,7 @@ export const ListProgramsSection = () => {
   return (
     <>
       <TableGeneral
+        loading={loading}
         columns={columns}
         // onValueStatusChange={(key: string | number, value: boolean) => {
         //   handleStatusChange(String(key), value)

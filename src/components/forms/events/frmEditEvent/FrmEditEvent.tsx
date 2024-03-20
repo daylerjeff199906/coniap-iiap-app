@@ -19,6 +19,7 @@ import {
   MoreDescription,
   MoreInfo,
 } from './sections'
+import { LoadingPages } from '@/components'
 export const FrmEditEvent = (props: IProps) => {
   const { event } = props
   const router = useRouter()
@@ -179,6 +180,7 @@ export const FrmEditEvent = (props: IProps) => {
           </footer>
         </form>
       </FormProvider>
+      <LoadingPages isOpen={loading} />
     </>
   )
 }

@@ -14,6 +14,7 @@ import { useCallback } from 'react'
 import { IColumns } from '@/types'
 import { IconEdit, IconEye } from '@tabler/icons-react'
 import Link from 'next/link'
+import { LoadingPages } from '../..'
 interface IRows {
   key: string | number
   [key: string]: string | React.ReactNode
@@ -107,6 +108,7 @@ export const TableGeneral = (props: IProps) => {
           )}
         </TableBody>
       </Table>
+      <LoadingPages isOpen={props.loading ?? false} />
     </>
   )
 }
