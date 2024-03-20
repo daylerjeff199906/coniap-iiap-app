@@ -1,17 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import {
-  Button,
-  Image,
-  Link,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  Switch,
-} from '@nextui-org/react'
+import { Button, Link, Switch } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -163,7 +153,7 @@ export const FrmEditEvent = (props: IProps) => {
               </div>
             </section>
           </main>
-          <footer className='pt-4'>
+          <footer className="pt-4">
             {isEditables && (
               <div className="flex items-center gap-3 justify-end">
                 <Button

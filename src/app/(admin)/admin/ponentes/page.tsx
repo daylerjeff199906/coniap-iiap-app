@@ -1,5 +1,5 @@
 'use client'
-import { ListSpeakersSection } from '@/components'
+import { ListSpeakersSection, UpdateSpeaker } from '@/components'
 // import { ListProgramsSection } from '@/components'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
@@ -28,10 +28,10 @@ export default function Page() {
       )}
       {isEdit ? (
         <>
-          {/* <UpdateEvento
+          <UpdateSpeaker
             id={searchParams.get('edit') ?? ''}
-            isEdit={isEdit}
-          /> */}
+            isEdit
+          />
         </>
       ) : isView ? (
         <></>
