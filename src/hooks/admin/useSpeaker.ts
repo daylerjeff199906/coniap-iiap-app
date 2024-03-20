@@ -135,6 +135,19 @@ export function useSpeakers() {
     }
   }
 
+  const updateSpeaker = async (id: string, data: ISpeaker) => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const eventRef: DocumentReference<DocumentData> = doc(db, 'speakers', id)
+      await updateDoc(eventRef, data as any)
+      toast.success('Evento actualizado con exito')
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const editSpeakerField = async (
     id: string,
     fieldToUpdate: string,
@@ -181,6 +194,7 @@ export function useSpeakers() {
     uploadImage,
     geSpeakerById,
     speaker,
+    updateSpeaker,
     // getSlider,
   }
 }
