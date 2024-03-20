@@ -2,16 +2,16 @@
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 
-interface IUser {
-  user_id: string
-  email: string
-  name: string
-  picture: string
-}
-interface ICurrentUser {
-  claims: IUser
-  token: string
-}
+// interface IUser {
+//   user_id: string
+//   email: string
+//   name: string
+//   picture: string
+// }
+// interface ICurrentUser {
+//   claims: IUser
+//   token: string
+// }
 
 export default function LoginPage() {
   const signInWithGoogle = async () => {
@@ -24,7 +24,9 @@ export default function LoginPage() {
       if (user) {
         const tokenResult = await user.getIdTokenResult()
         // console.log(tokenResult)
+        //add to cookie
         const isAdmin = tokenResult.claims.role === 'admin'
+
         // console.log(isAdmin)
         if (isAdmin) {
           // El usuario es un administrador, redirigir al panel de administración
