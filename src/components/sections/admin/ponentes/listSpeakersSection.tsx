@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useSearchParams } from 'next/navigation'
-import { FrmEditEvent, TableGeneral } from '@/components'
+import { FrmEditEvent, LoadingPages, TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { useEvents, useSpeakers } from '@/hooks/admin'
@@ -41,7 +41,7 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListSpeakersSection = () => {
-  const { getSpekers, speakers, editSpeakerField } = useSpeakers()
+  const { getSpekers, speakers, editSpeakerField, loading } = useSpeakers()
 
   // const searchParams = useSearchParams()
 
@@ -95,6 +95,7 @@ export const ListSpeakersSection = () => {
             : []
         }
       />
+      <LoadingPages isOpen={loading} />
     </>
   )
 }

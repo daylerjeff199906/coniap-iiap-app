@@ -92,6 +92,7 @@ export function useSpeakers() {
       setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
 
@@ -117,6 +118,7 @@ export function useSpeakers() {
       setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
 
@@ -130,6 +132,7 @@ export function useSpeakers() {
       setLoading(false)
       return docRef.id
     } catch (error) {
+      setLoading(false)
       console.log(error)
       return null
     }
@@ -145,6 +148,7 @@ export function useSpeakers() {
       setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
 
