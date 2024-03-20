@@ -8,7 +8,7 @@ export const InfoGeneralSection = () => {
   } = useFormContext()
   return (
     <>
-      <section className="grid grid-cols-1 gap-4">
+      <section className="w-full grid grid-cols-1 gap-4">
         <h1 className="">Información general</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Controller

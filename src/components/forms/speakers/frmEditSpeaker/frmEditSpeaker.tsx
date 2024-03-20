@@ -17,17 +17,21 @@ export const FrmEditSpeaker = (props: IProps) => {
 
   return (
     <>
-      <header>
+      <header className='pb-4'>
         <h2 className="text-2xl font-bold">
-          {isEditables ? 'Editar evento' : 'Detalles de evento'}
+          {isEditables ? 'Editar ponente' : 'Detalles del ponente'}
         </h2>
-        <FormProvider {...methods}>
-          <form className="grid grid-cols-1 lg:grid-cols-2">
-            <MultimediasSection />
-            <InfoGeneralSection />
-          </form>
-        </FormProvider>
       </header>
+      <FormProvider {...methods}>
+        <form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="w-full col-span-1">
+            <MultimediasSection />
+          </div>
+          <div className="w-full col-span-1 lg:col-span-2">
+            <InfoGeneralSection />
+          </div>
+        </form>
+      </FormProvider>
     </>
   )
 }
