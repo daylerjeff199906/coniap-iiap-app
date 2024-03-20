@@ -60,8 +60,8 @@ import { toast } from 'sonner'
 
 export function useSpeakers() {
   const [loading, setLoading] = useState<boolean>(true)
-  //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
+  const [speaker, setSpeaker] = useState<ISpeaker | null>(null)
   //   const [slider, setSlider] = useState<ISliders | null>(null)
 
   //   const getSlider = async () => {
@@ -89,6 +89,31 @@ export function useSpeakers() {
         ...doc.data(),
       }))
       setSpeakers(speakers as ISpeaker[])
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const geSpeakerById = async (id: string) => {
+    setLoading(true)
+    try {
+      const categoryRef: DocumentReference<DocumentData> = doc(
+        db,
+        'speakers',
+        id
+      )
+      const docSnap = await getDoc(categoryRef)
+      if (docSnap.exists()) {
+        // setEvent(convertDataToISlidersById(docSnap.data()))
+        // add id to the object
+        setSpeaker(docSnap.data() as ISpeaker)
+        // return docSnap.data()
+      } else {
+        console.log('No such document!')
+        setSpeaker(null)
+      }
+
       setLoading(false)
     } catch (error) {
       console.log(error)
@@ -154,6 +179,8 @@ export function useSpeakers() {
     editSpeakerField,
     createSpeaker,
     uploadImage,
+    geSpeakerById,
+    speaker,
     // getSlider,
   }
 }

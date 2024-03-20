@@ -22,7 +22,7 @@ export default function Page() {
             as={Link}
             href="/admin/ponentes/nuevo"
           >
-            Añadir programa
+            Añadir ponente
           </Button>
         </section>
       )}

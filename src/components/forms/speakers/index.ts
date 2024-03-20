@@ -1,3 +1,4 @@
 import { FrmAddSpeaker } from './frmAddSpeaker/FrmAddSpeaker'
+import { FrmEditSpeaker } from './frmEditSpeaker/frmEditSpeaker'
 
-export { FrmAddSpeaker }
+export { FrmAddSpeaker, FrmEditSpeaker }

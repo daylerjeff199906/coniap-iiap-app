@@ -2,6 +2,8 @@
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 
+import { createCookie } from '@/lib'
+
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider()
   try {
@@ -11,6 +13,9 @@ export const signInWithGoogle = async () => {
     // Suponiendo que tengas un campo de rol en la información del usuario
     if (user) {
       const tokenResult = await user.getIdTokenResult()
+      console.log(tokenResult)
+      createCookie('token', tokenResult.token)
+      createCookie('currentUser', tokenResult.claims)
       // console.log(tokenResult)
       //add to cookie
       const isAdmin = tokenResult.claims.role === 'admin'

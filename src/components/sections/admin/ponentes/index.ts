@@ -1,3 +1,4 @@
 import { ListSpeakersSection } from './listSpeakersSection'
+import { UpdateSpeaker } from './updateSpeaker'
 
-export { ListSpeakersSection }
+export { ListSpeakersSection, UpdateSpeaker }

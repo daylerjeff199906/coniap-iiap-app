@@ -59,10 +59,10 @@ import { toast } from 'sonner'
 //   }
 // }
 
-function convertTimestampToDate(timestamp: any) {
-  const date = new Date(timestamp * 1000) // Multiplicamos por 1000 para convertir segundos a milisegundos
-  return date.toLocaleDateString() // Utilizamos toLocaleDateString para obtener la fecha en formato local
-}
+// function convertTimestampToDate(timestamp: any) {
+//   const date = new Date(timestamp * 1000) // Multiplicamos por 1000 para convertir segundos a milisegundos
+//   return date.toLocaleDateString() // Utilizamos toLocaleDateString para obtener la fecha en formato local
+// }
 
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(false)
