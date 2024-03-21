@@ -13,9 +13,10 @@ export const FrmLogin = () => {
   //   const { signInWithGoogle } = useAuth()
   const methods = useForm<ILogin>()
 
-  const onSubmit: SubmitHandler<ILogin> = (data: ILogin) => {
+  const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     // console.log(data)
-    signInWithCredentials(data)
+    const res = await signInWithCredentials(data)
+    console.log(res)
   }
 
   return (
