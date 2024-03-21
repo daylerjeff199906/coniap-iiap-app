@@ -82,6 +82,9 @@ export const TableGeneral = (props: IProps) => {
         aria-label="TableGeneral"
         aria-labelledby="TableGeneral"
         removeWrapper
+        classNames={{
+          th: ['font-bold', 'bg-black', 'text-white'],
+        }}
       >
         <TableHeader columns={columns}>
           {(column) => (

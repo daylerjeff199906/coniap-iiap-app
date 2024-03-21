@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore'
 
 import { IUser } from '@/types'
-import { createCookie } from '@/lib'
+import { createCookie, createLocalStorage } from '@/lib'
 
 interface ILogin {
   email: string
@@ -41,7 +41,10 @@ export const signInWithCredentials = async (props: ILogin) => {
         const data = doc.data() as IUser
         // console.log('Document data:', data)
         const newData = JSON.stringify(data)
+        console.log(newData)
         createCookie('user', newData)
+        createLocalStorage('user', data)
+
         if (data.role === 'admin') {
           window.location.href = '/admin'
         } else {
