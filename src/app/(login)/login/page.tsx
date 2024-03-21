@@ -1,9 +1,9 @@
-import { signInWithGoogle } from '@/auth'
+import { FrmLogin } from '@/components'
 
 export default function LoginPage() {
   return (
     <>
-      <button onClick={signInWithGoogle}>Login with Google</button>
+      <FrmLogin />
     </>
   )
 }
