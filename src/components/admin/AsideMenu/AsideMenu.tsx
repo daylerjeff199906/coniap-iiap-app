@@ -26,7 +26,7 @@ export const AsideMenu = (props: IProps) => {
           <h1 className="text-2xl font-bold">Admin</h1>
         </div>
       </header>
-      <div className="w-full py-4">
+      <div className="w-full py-4 px-4">
         {menuAside?.map((item) =>
           item?.subItems !== null ? (
             <Accordion

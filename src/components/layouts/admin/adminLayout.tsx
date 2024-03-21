@@ -5,6 +5,8 @@ import {
   IconCalendarEvent,
   IconCalendarMonth,
   IconUsers,
+  IconFlag3,
+  IconCategory2,
 } from '@tabler/icons-react'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 
@@ -12,13 +14,15 @@ import { NavBar, AsideMenu } from '@/components'
 
 import { IMenuAside } from '@/types'
 
+const stroke = 1.5
+
 export const menuAside: IMenuAside[] = [
   {
     id: '1',
     nameOption: 'Dashboard',
     titleOption: null,
     hrefLink: '/admin',
-    icon: <IconLayoutDashboard />,
+    icon: <IconLayoutDashboard stroke={stroke} />,
     subItems: null,
   },
   {
@@ -26,7 +30,7 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Programas',
     titleOption: null,
     hrefLink: '/admin/programas',
-    icon: <IconCalendarMonth />,
+    icon: <IconCalendarMonth stroke={stroke} />,
     subItems: null,
   },
   {
@@ -34,7 +38,7 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Eventos',
     titleOption: null,
     hrefLink: '/admin/eventos',
-    icon: <IconCalendarEvent />,
+    icon: <IconCalendarEvent stroke={stroke} />,
     subItems: null,
   },
   {
@@ -42,17 +46,25 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Ponentes',
     titleOption: null,
     hrefLink: '/admin/ponentes',
-    icon: <IconUsers />,
+    icon: <IconUsers stroke={stroke} />,
     subItems: null,
   },
-  //   {
-  //     id: '4',
-  //     nameOption: 'Sponsors',
-  //     titleOption: null,
-  //     hrefLink: '/admin/sponsors',
-  //     icon: <SponsorIcon />,
-  //     subItems: null,
-  //   },
+  {
+    id: '4',
+    nameOption: 'Sponsors',
+    titleOption: null,
+    hrefLink: '/admin/sponsors',
+    icon: <IconFlag3 stroke={stroke} />,
+    subItems: null,
+  },
+  {
+    id: '5',
+    nameOption: 'Temáticas',
+    titleOption: null,
+    hrefLink: '/admin/tematicas',
+    icon: <IconCategory2 stroke={stroke} />,
+    subItems: null,
+  },
 ]
 
 const generateBreadcrumbItems = (pathname: string) => {
