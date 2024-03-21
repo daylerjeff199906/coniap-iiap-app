@@ -1,4 +1,5 @@
 'use client'
+import { ListSponsorsSections } from '@/components'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -29,7 +30,9 @@ export default function SponsorPage() {
           /> */}
         </>
       ) : (
-        <section className="py-6">{/* <ListProgramsSection /> */}</section>
+        <section className="py-6">
+          <ListSponsorsSections />
+        </section>
       )}
     </>
   )

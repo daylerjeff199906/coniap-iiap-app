@@ -1,20 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { useEffect } from 'react'
+
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { useSponsors } from '@/hooks/admin'
-import { useEffect } from 'react'
+import { useFiles } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
   {
-    key: 'name',
-    label: 'Ponente',
-    align: 'start',
+    key: 'image',
+    label: 'Imagen',
+    align: 'center',
   },
   {
-    key: 'institution',
-    label: 'Institución',
+    key: 'name',
+    label: 'Colaborador',
     align: 'start',
   },
   {
@@ -30,6 +32,7 @@ const columns: Array<IColumns> = [
 ]
 export const ListSponsorsSections = () => {
   const { getSponsors, sponsors, loading } = useSponsors()
+  const { editField, loading: loadingFile } = useFiles()
 
   // const searchParams = useSearchParams()
 
@@ -55,19 +58,19 @@ export const ListSponsorsSections = () => {
   //   fetchData()
   // }, [event, isEdit])
 
-  // const handleStatusChange = async (key: string, value: boolean) => {
-  //   await editSpeakerField(key, 'isActive', value)
-  //   getSpekers()
-  // }
+  const handleStatusChange = async (key: string, value: boolean) => {
+    await editField(key, 'sponsors', 'isActive', value)
+    getSponsors()
+  }
 
   return (
     <>
       <TableGeneral
         loading={loading}
         columns={columns}
-        // onValueStatusChange={(key: string | number, value: boolean) => {
-        //   handleStatusChange(String(key), value)
-        // }}
+        onValueStatusChange={(key: string | number, value: boolean) => {
+          handleStatusChange(String(key), value)
+        }}
         rows={
           sponsors
             ? sponsors?.map((sponsor) => {
