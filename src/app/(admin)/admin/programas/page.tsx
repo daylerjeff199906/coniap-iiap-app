@@ -18,6 +18,7 @@ export default function Page() {
             color="primary"
             as={Link}
             href="/admin/programas/nuevo"
+            size="sm"
           >
             Añadir programa
           </Button>

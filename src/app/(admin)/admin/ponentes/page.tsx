@@ -21,6 +21,7 @@ export default function Page() {
             color="primary"
             as={Link}
             href="/admin/ponentes/nuevo"
+            size="sm"
           >
             Añadir ponente
           </Button>

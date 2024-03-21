@@ -1,10 +1,11 @@
 'use client'
-import { ListSponsorsSections } from '@/components'
+import { useState } from 'react'
+import { FrmAddSponsor, ListSponsorsSections } from '@/components'
 import { Button } from '@nextui-org/react'
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
 export default function SponsorPage() {
+  const [openAddSponsor, setOpenAddSponsor] = useState(false)
   const searchParams = useSearchParams()
   const isEdit = searchParams.get('edit') !== null
 
@@ -15,8 +16,8 @@ export default function SponsorPage() {
           <h1 className="text-2xl font-bold">Colaboradores</h1>
           <Button
             color="primary"
-            // as={Link}
-            // href="/admin/programas/nuevo"
+            onPress={() => setOpenAddSponsor(true)}
+            size="sm"
           >
             Añadir colaborador
           </Button>
@@ -34,6 +35,10 @@ export default function SponsorPage() {
           <ListSponsorsSections />
         </section>
       )}
+      <FrmAddSponsor
+        isOpen={openAddSponsor}
+        onOpenChange={setOpenAddSponsor}
+      />
     </>
   )
 }
