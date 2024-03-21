@@ -1,3 +1,5 @@
+'use client'
+import dividerCustom from '@/assets/svg/patron-fino.svg'
 import {
   AboutUsSection,
   BannerHome,
@@ -8,9 +10,10 @@ import {
   WorkTeamSection,
   SponsorSection,
   EventsSection,
+  InscriptionsSection,
 } from '@/components'
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
       <BannerHome />
@@ -20,6 +23,7 @@ export default function Home() {
       <TopicsSection />
       <ScheduleSection />
       <EventsSection />
+      <InscriptionsSection />
       <WorkTeamSection />
       <SponsorSection />
     </main>

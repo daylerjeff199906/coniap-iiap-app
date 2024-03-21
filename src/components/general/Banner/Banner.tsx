@@ -40,11 +40,31 @@ const bannerData = [
     urlImage:
       'https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2',
   },
+  {
+    id: 4,
+    includePathname: '/inscripciones',
+    title: 'Inscripciones',
+    subtitle: 'Participa en el congreso',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    urlImage:
+      'https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2',
+  },
+  {
+    id: 5,
+    includePathname: '/contactános',
+    title: 'Contactános',
+    subtitle: 'Estamos para ayudarte',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    urlImage:
+      'https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2',
+  },
 ]
 
-function findIncludePathname(pathname: string, includePathname: string) {
-  return pathname.includes(includePathname)
-}
+// function findIncludePathname(pathname: string, includePathname: string) {
+//   return pathname.includes(includePathname)
+// }
 
 export const Banner = () => {
   const pathname = usePathname()
@@ -72,7 +92,9 @@ export const Banner = () => {
             <h1 className="text-[2.6rem] sm:text-6xl font-bold pb-1 sm:pb-5 text-warning-400">
               {banner.title}
             </h1>
-            <h2 className="text-[2.1rem] sm:text-5xl font-bold leading-tight sm:leading-normal">{banner.subtitle}</h2>
+            <h2 className="text-[2.1rem] sm:text-5xl font-bold leading-tight sm:leading-normal">
+              {banner.subtitle}
+            </h2>
             <p className="max-w-lg pt-1 sm:pt-2">{banner.description}</p>
           </div>
         </div>

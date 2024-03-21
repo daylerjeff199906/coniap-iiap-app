@@ -7,7 +7,7 @@
 }
 
 .section-home {
-  @apply py-4 sm:py-6 lg:py-14;
+  @apply py-10 sm:py-14 lg:py-20;
 }
 
 .title-section-home {
