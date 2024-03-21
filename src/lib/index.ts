@@ -1,3 +1,3 @@
-import { createCookie } from './actions'
+import { createCookie, deleteCookie, getCookie } from './actions'
 
-export { createCookie }
+export { createCookie, deleteCookie, getCookie }

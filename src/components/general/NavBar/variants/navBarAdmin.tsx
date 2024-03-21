@@ -12,7 +12,14 @@ import {
   ListboxItem,
 } from '@nextui-org/react'
 
+// import { getCookie } from '@/lib/actions'
+// import { IUser } from '@/types'
+
 export const NavBarAdmin = () => {
+  // const user = getCookie('user')
+  // console.log(user)
+  // const dataUser: IUser = user ? JSON.parse(user) : null
+
   return (
     <Navbar maxWidth="full">
       {/* <NavbarBrand>Admin</NavbarBrand> */}
