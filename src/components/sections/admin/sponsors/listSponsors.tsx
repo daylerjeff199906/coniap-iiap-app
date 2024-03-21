@@ -66,7 +66,7 @@ export const ListSponsorsSections = () => {
   return (
     <>
       <TableGeneral
-        loading={loading}
+        loading={loading || loadingFile}
         columns={columns}
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)

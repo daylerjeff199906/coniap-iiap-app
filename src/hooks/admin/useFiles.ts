@@ -21,7 +21,6 @@ import {
   deleteObject,
 } from 'firebase/storage'
 
-import { IEvent } from '@/types'
 import { toast } from 'sonner'
 
 export function useFiles() {
