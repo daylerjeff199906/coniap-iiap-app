@@ -1,3 +1,4 @@
 import { signInWithGoogle } from './signInWithGoogle'
+import { signInWithCredentials } from './signIn'
 
-export { signInWithGoogle }
+export { signInWithGoogle, signInWithCredentials }
