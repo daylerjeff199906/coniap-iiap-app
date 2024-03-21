@@ -1,6 +1,8 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { Button, Accordion, AccordionItem } from '@nextui-org/react'
+import { Button, Accordion, AccordionItem, Divider } from '@nextui-org/react'
+import { IconTriangleInvertedFilled } from '@tabler/icons-react'
+
 import { IMenuAside } from '@/types'
 import Link from 'next/link'
 
@@ -22,9 +24,11 @@ export const AsideMenu = (props: IProps) => {
   return (
     <div className="w-full">
       <header className="w-full">
-        <div className="flex items-center justify-center w-full h-16 bg-gray-200">
+        <div className="flex items-center justify-start w-full h-16 px-9">
+          <IconTriangleInvertedFilled size={20} />
           <h1 className="text-2xl font-bold">Admin</h1>
         </div>
+        <Divider />
       </header>
       <div className="w-full py-4 px-4">
         {menuAside?.map((item) =>

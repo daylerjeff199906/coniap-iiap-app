@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect } from 'react'
+import { Image } from '@nextui-org/react'
 
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
@@ -76,6 +77,7 @@ export const ListSponsorsSections = () => {
             ? sponsors?.map((sponsor) => {
                 return {
                   key: sponsor.id,
+                  image: RenderImage(sponsor.image),
                   name: sponsor.name,
                   status: sponsor.isActive,
                   actions: 'actions',
@@ -96,3 +98,17 @@ export const ListSponsorsSections = () => {
 //     </div>
 //   )
 // }
+
+const RenderImage = (image: string) => {
+  return (
+    <div className="flex flex-col justify-center items-center">
+      <Image
+        src={image}
+        alt="sponsor"
+        width={50}
+        height={50}
+        radius="none"
+      />
+    </div>
+  )
+}
