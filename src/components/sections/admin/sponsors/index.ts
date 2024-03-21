@@ -1,0 +1,1 @@
+export { ListSponsorsSections } from './listSponsors'
