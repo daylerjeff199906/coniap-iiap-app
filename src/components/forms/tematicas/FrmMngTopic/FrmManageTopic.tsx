@@ -169,6 +169,7 @@ export const FrmManageTopic = (props: IProps) => {
                     color="primary"
                     type="submit"
                     isDisabled={loading}
+                    isLoading={loading}
                   >
                     {id ? 'Actualizar' : 'Guardar'}
                   </Button>
