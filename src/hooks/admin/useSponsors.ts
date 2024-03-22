@@ -8,9 +8,11 @@ import {
   DocumentReference,
   getDoc,
   query,
+  addDoc,
   where,
 } from 'firebase/firestore'
 import { ISponsor } from '@/types'
+import { toast } from 'sonner'
 
 // const convertDataToISliders = (data: DocumentData[]) => {
 //   return data?.map((slider) => {
@@ -87,6 +89,22 @@ export function useSponsors() {
     }
   }
 
+  const createSponsor = async (data: ISponsor) => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const docRef = await addDoc(collection(db, 'sponsors'), data)
+      // console.log('Document written with ID: ', docRef.id)
+      toast.success(`Colaborador añadido con éxito, ID: ${docRef.id}`)
+      setLoading(false)
+      return docRef.id
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+      return null
+    }
+  }
+
   //   const getSliderById = async (id: string) => {
   //     setLoading(true)
   //     try {
@@ -108,6 +126,7 @@ export function useSponsors() {
     loading,
     sponsors,
     getSponsors,
+    createSponsor,
     // getSlider,
   }
 }
