@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 
 export default function SponsorPage() {
   const [openAddSponsor, setOpenAddSponsor] = useState(false)
+  const [loadData, setLoadData] = useState(false)
 
   const searchParams = useSearchParams()
   const isEdit = searchParams.get('edit') !== null
@@ -29,12 +30,13 @@ export default function SponsorPage() {
         </Button>
       </section>
       <section className="py-6">
-        <ListSponsorsSections loadData={isEdit} />
+        <ListSponsorsSections loadData={loadData} />
       </section>
       <FrmAddSponsor
         isOpen={openAddSponsor}
         onOpenChange={setOpenAddSponsor}
         id={searchParams.get('edit')}
+        loadData={setLoadData}
       />
     </>
   )

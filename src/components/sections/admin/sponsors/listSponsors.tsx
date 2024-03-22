@@ -44,24 +44,10 @@ export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
   }, [])
 
   useEffect(() => {
-    getSponsors()
+    if (loadData) {
+      getSponsors()
+    }
   }, [loadData])
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (isEdit) {
-  //       // Agregar verificación para event !== null
-  //       const id = await searchParams.get('edit')
-  //       if (id) {
-  //         await getEventById(id)
-  //       }
-  //     } else {
-  //       getEvents()
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [event, isEdit])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'sponsors', 'isActive', value)

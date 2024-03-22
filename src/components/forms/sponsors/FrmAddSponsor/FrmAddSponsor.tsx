@@ -27,10 +27,11 @@ interface IProps {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
   id?: string | null
+  loadData?: (value: boolean) => void
 }
 
 export const FrmAddSponsor = (props: IProps) => {
-  const { isOpen, onOpenChange, id } = props
+  const { isOpen, onOpenChange, id, loadData } = props
 
   const { createSponsor, updateSponsor, getSponsorById, sponsor, loading } =
     useSponsors()
@@ -65,6 +66,9 @@ export const FrmAddSponsor = (props: IProps) => {
       }
     }
     handleOpenChange(false)
+    loadData && loadData(true)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    loadData && loadData(false)
   }
 
   const handleOpenChange = (open: boolean) => {
@@ -96,7 +100,9 @@ export const FrmAddSponsor = (props: IProps) => {
         size="3xl"
       >
         <ModalContent>
-          <ModalHeader>Añadir colaborador</ModalHeader>
+          <ModalHeader>
+            {id ? 'Editar Colaborador' : 'Agregar Colaborador'}
+          </ModalHeader>
           <ModalBody>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
