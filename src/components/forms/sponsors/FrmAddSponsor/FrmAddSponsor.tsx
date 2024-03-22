@@ -32,7 +32,8 @@ interface IProps {
 export const FrmAddSponsor = (props: IProps) => {
   const { isOpen, onOpenChange, id } = props
 
-  const { createSponsor, getSponsorById, loading } = useSponsors()
+  const { createSponsor, updateSponsor, getSponsorById, sponsor, loading } =
+    useSponsors()
   const { uploadImage, editField } = useFiles()
   const router = useRouter()
 
@@ -45,15 +46,23 @@ export const FrmAddSponsor = (props: IProps) => {
   }
 
   const onSubmit: SubmitHandler<ISponsor> = async (data: ISponsor) => {
-    const newData = {
-      ...data,
-      image: '',
-      isActive: false,
-    }
-    const idSpeaker = await createSponsor(newData)
-    if (idSpeaker !== null && files.length > 0) {
-      const url = await uploadImage('sponsors', files[0])
-      await editField(idSpeaker, 'sponsors', 'image', url)
+    if (id) {
+      await updateSponsor(id, data)
+      if (files.length > 0) {
+        const url = await uploadImage('sponsors', files[0])
+        await editField(id, 'sponsors', 'image', url)
+      }
+    } else {
+      const newData = {
+        ...data,
+        image: '',
+        isActive: false,
+      }
+      const idSpeaker = await createSponsor(newData)
+      if (idSpeaker !== null && files.length > 0) {
+        const url = await uploadImage('sponsors', files[0])
+        await editField(idSpeaker, 'sponsors', 'image', url)
+      }
     }
   }
 
@@ -71,6 +80,12 @@ export const FrmAddSponsor = (props: IProps) => {
       getSponsorById(id)
     }
   }, [id])
+
+  useEffect(() => {
+    if (sponsor) {
+      methods.reset(sponsor)
+    }
+  }, [sponsor])
 
   return (
     <>
@@ -127,7 +142,7 @@ export const FrmAddSponsor = (props: IProps) => {
                     type="submit"
                     isDisabled={loading}
                   >
-                    Guardar
+                    {id ? 'Actualizar' : 'Guardar'}
                   </Button>
                   <Button onPress={() => handleOpenChange(false)}>
                     Cancelar

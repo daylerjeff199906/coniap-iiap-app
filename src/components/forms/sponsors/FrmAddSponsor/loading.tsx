@@ -5,11 +5,11 @@ export const Loading = () => {
     <>
       <div className="space-y-4 w-full">
         <div className="w-full space-y-3">
-          <Skeleton className="w-1/2 h-4 rounded-md" />
+          <Skeleton className="w-1/4 h-4 rounded-md" />
           <Skeleton className="w-full h-6 rounded-md" />
         </div>
         <div className="w-full space-y-3">
-          <Skeleton className="w-1/2 h-6 rounded-md" />
+          <Skeleton className="w-1/4 h-4 rounded-md" />
           <Skeleton className="w-full h-12 rounded-md" />
         </div>
       </div>

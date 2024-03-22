@@ -9,47 +9,11 @@ import {
   getDoc,
   query,
   addDoc,
-  where,
+  updateDoc,
+  // where,
 } from 'firebase/firestore'
 import { ISponsor } from '@/types'
 import { toast } from 'sonner'
-
-// const convertDataToISliders = (data: DocumentData[]) => {
-//   return data?.map((slider) => {
-//     const { image, name, tag, isActive, createdAt } = slider
-//     const id = slider?.id
-
-//     const fModificacion = slider?.updatedAt?.toDate().toString().slice(0, 15)
-//     // acortar la fecha de modificacion
-
-//     return {
-//       id: id,
-//       image,
-//       name,
-//       tag,
-//       isActive,
-//       createdAt,
-//       updatedAt: fModificacion,
-//     }
-//   })
-// }
-
-// const convertDataToISlidersById = (data: DocumentData) => {
-//   const { image, name, tag, isActive, createdAt, updatedAt } = data
-//   const id = data?.id
-
-//   // acortar la fecha de modificacion
-
-//   return {
-//     id: id,
-//     image,
-//     name,
-//     tag,
-//     isActive,
-//     createdAt,
-//     updatedAt,
-//   }
-// }
 
 export function useSponsors() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -90,6 +54,20 @@ export function useSponsors() {
     }
   }
 
+  const updateSponsor = async (id: string, data: ISponsor) => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const eventRef: DocumentReference<DocumentData> = doc(db, 'sponsors', id)
+      await updateDoc(eventRef, data as any)
+      toast.success('Colaborador actualizado con exito')
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+
   const getSponsorById = async (id: string) => {
     setLoading(true)
     try {
@@ -101,6 +79,7 @@ export function useSponsors() {
       const docSnap = await getDoc(categoryRef)
       if (docSnap.exists()) {
         setSponsor(docSnap.data() as ISponsor)
+        // return docSnap.data()
       } else {
         console.log('No such document!')
       }
@@ -117,5 +96,7 @@ export function useSponsors() {
     getSponsors,
     createSponsor,
     getSponsorById,
+    sponsor,
+    updateSponsor,
   }
 }
