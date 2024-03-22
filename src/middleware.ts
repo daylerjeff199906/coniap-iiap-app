@@ -6,16 +6,25 @@ export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get('user')?.value
   const dataUser: IUser = currentUser ? JSON.parse(currentUser) : null
 
-  if (!currentUser && dataUser && dataUser?.role !== 'admin') {
+  if (dataUser === null) {
     return NextResponse.redirect(new URL('/login', request.url))
+  } else {
+    if (
+      dataUser &&
+      dataUser?.role === 'admin' &&
+      request.nextUrl.pathname === '/admin'
+    ) {
+      return NextResponse.next()
+    }
+    if (
+      dataUser &&
+      dataUser?.role === 'admin' &&
+      request.nextUrl.pathname === '/admin'
+    ) {
+      return NextResponse.next()
+    }
   }
-  if (
-    dataUser &&
-    dataUser?.role === 'admin' &&
-    request.nextUrl.pathname === '/admin'
-  ) {
-    return NextResponse.next()
-  }
+
   // return NextResponse.redirect(new URL('/login', request.url))
   return NextResponse.next()
 }
