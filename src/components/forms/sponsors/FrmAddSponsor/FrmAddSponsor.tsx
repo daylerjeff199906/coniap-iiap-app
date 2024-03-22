@@ -64,6 +64,7 @@ export const FrmAddSponsor = (props: IProps) => {
         await editField(idSpeaker, 'sponsors', 'image', url)
       }
     }
+    handleOpenChange(false)
   }
 
   const handleOpenChange = (open: boolean) => {
@@ -132,7 +133,7 @@ export const FrmAddSponsor = (props: IProps) => {
                       files={files}
                       onupdatefiles={handleUpdateFiles}
                       labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-                      required
+                      required={id ? false : true}
                     />
                   </>
                 )}

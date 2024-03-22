@@ -29,7 +29,7 @@ export default function SponsorPage() {
         </Button>
       </section>
       <section className="py-6">
-        <ListSponsorsSections />
+        <ListSponsorsSections loadData={isEdit} />
       </section>
       <FrmAddSponsor
         isOpen={openAddSponsor}

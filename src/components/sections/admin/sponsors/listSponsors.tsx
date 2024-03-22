@@ -31,7 +31,7 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
-export const ListSponsorsSections = () => {
+export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
   const { getSponsors, sponsors, loading } = useSponsors()
   const { editField, loading: loadingFile } = useFiles()
 
@@ -42,6 +42,10 @@ export const ListSponsorsSections = () => {
   useEffect(() => {
     getSponsors()
   }, [])
+
+  useEffect(() => {
+    getSponsors()
+  }, [loadData])
 
   // useEffect(() => {
   //   const fetchData = async () => {
