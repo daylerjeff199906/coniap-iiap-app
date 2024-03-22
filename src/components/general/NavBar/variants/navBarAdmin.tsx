@@ -56,8 +56,12 @@ export const NavBarAdmin = () => {
                 />
               </PopoverTrigger>
               <PopoverContent>
-                <Listbox variant="faded">
+                <Listbox
+                  variant="faded"
+                  aria-label="Menu"
+                >
                   <ListboxItem
+                    aria-label="Cerrar Sesión"
                     key="out"
                     onPress={handleLogout}
                   >

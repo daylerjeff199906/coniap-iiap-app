@@ -29,20 +29,20 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
       toast.error('No tiene acceso a la plataforma. Contacte al administrador.')
       return null
     } else {
-      const res = await querySnapshot.forEach((doc) => {
+      let userData: IUser | null = null
+      for (const doc of querySnapshot.docs) {
         const data = doc.data()
-        // const newData = JSON.stringify(data)
-        const dataGoogle = {
-          email: user.email,
-          userName: user.displayName,
-          photo: user.photoURL,
-          role: data.role,
+        userData = {
+          id: doc.id,
+          email: user.email || '',
+          userName: user.displayName || '',
+          photo: user.photoURL || '',
+          role: data.role || '',
         }
-        createCookie('user', JSON.stringify(dataGoogle))
-
-        return dataGoogle as IUser
-      })
-      return res as unknown as IUser
+        break // Solo necesitamos el primer documento
+      }
+      new Promise((resolve) => setTimeout(resolve, 1000))
+      return userData
     }
   } catch (error) {
     console.error(error)

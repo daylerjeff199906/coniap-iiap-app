@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 import { IUser } from '@/types'
+import { createCookie, createLocalStorage } from '@/lib'
 
 interface ILogin {
   email: string
@@ -29,9 +30,14 @@ export const FrmLogin = () => {
   const handleGoogle = async () => {
     setLoading(true)
     const data = await SignInWithGoogle()
-    console.log(data)
+
+    createCookie('user', JSON.stringify(data))
+    createLocalStorage('user', data)
+
+    new Promise((resolve) => setTimeout(resolve, 2000))
     if (data !== null) {
-      if (data.role === 'admin') {
+      if (data?.role === 'admin') {
+        console.log('admin', data)
         router.push('/admin')
       } else {
         router.push('/')
