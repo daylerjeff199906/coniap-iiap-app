@@ -29,7 +29,7 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
       toast.error('No tiene acceso a la plataforma. Contacte al administrador.')
       return null
     } else {
-      querySnapshot.forEach((doc) => {
+      const res = await querySnapshot.forEach((doc) => {
         const data = doc.data()
         // const newData = JSON.stringify(data)
         const dataGoogle = {
@@ -42,10 +42,10 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
 
         return dataGoogle as IUser
       })
+      return res as unknown as IUser
     }
   } catch (error) {
     console.error(error)
     return null
   }
-  return null
 }

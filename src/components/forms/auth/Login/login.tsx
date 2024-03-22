@@ -29,6 +29,7 @@ export const FrmLogin = () => {
   const handleGoogle = async () => {
     setLoading(true)
     const data = await SignInWithGoogle()
+    console.log(data)
     if (data !== null) {
       if (data.role === 'admin') {
         router.push('/admin')
