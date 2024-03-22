@@ -23,7 +23,18 @@ export const FrmLogin = () => {
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
     const res = await signInWithCredentials(data)
-    console.log(res)
+    createCookie('user', JSON.stringify(res))
+    createLocalStorage('user', res)
+    new Promise((resolve) => setTimeout(resolve, 2000))
+
+    if (res !== null) {
+      if (res?.role === 'admin') {
+        console.log('admin', data)
+        router.push('/admin')
+      } else {
+        router.push('/')
+      }
+    }
     setLoading(false)
   }
 
