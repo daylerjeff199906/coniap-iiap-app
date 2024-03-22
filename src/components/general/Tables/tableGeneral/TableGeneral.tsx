@@ -82,8 +82,10 @@ export const TableGeneral = (props: IProps) => {
         aria-label="TableGeneral"
         aria-labelledby="TableGeneral"
         removeWrapper
+        isHeaderSticky
         classNames={{
           th: ['font-bold', 'bg-black', 'text-white'],
+          base: 'max-h-[calc(100vh-16rem)] overflow-y-auto bg-white',
         }}
       >
         <TableHeader columns={columns}>

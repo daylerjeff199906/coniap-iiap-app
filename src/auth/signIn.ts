@@ -10,13 +10,16 @@ import {
 
 import { IUser } from '@/types'
 import { createCookie, createLocalStorage } from '@/lib'
+import { toast } from 'sonner'
 
 interface ILogin {
   email: string
   password: string
 }
 
-export const signInWithCredentials = async (props: ILogin) => {
+export const signInWithCredentials = async (
+  props: ILogin
+): Promise<IUser | null> => {
   const auth = getAuth()
   const firestore = getFirestore()
   const { email, password } = props
@@ -34,25 +37,26 @@ export const signInWithCredentials = async (props: ILogin) => {
     const querySnapshot = await getDocs(q)
 
     if (querySnapshot.empty) {
-      console.log('No matching documents.')
-      return
+      toast.error('No tiene acceso a la plataforma. Contacte al administrador.')
+      return null
     } else {
-      querySnapshot.forEach((doc) => {
-        const data = doc.data() as IUser
-        // console.log('Document data:', data)
-        const newData = JSON.stringify(data)
-        console.log(newData)
-        createCookie('user', newData)
-        createLocalStorage('user', data)
-
-        if (data.role === 'admin') {
-          window.location.href = '/admin'
-        } else {
-          window.location.href = '/'
+      let userData: IUser | null = null
+      for (const doc of querySnapshot.docs) {
+        const data = doc.data()
+        userData = {
+          id: doc.id,
+          email: user.email || '',
+          userName: user.displayName || '',
+          photo: user.photoURL || '',
+          role: data.role || '',
         }
-      })
+        break // Solo necesitamos el primer documento
+      }
+      new Promise((resolve) => setTimeout(resolve, 1000))
+      return userData
     }
   } catch (error) {
     console.error(error)
+    return null
   }
 }

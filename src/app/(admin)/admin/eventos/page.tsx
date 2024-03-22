@@ -20,6 +20,7 @@ export default function Page() {
             color="primary"
             as={Link}
             href="/admin/eventos/nuevo"
+            size="sm"
           >
             Añadir evento
           </Button>
