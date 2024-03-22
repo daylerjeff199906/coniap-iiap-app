@@ -68,7 +68,7 @@ export function useTopics() {
     }
   }
 
-  const geTopicById = async (id: string) => {
+  const getTopicById = async (id: string) => {
     setLoading(true)
     try {
       const categoryRef: DocumentReference<DocumentData> = doc(db, 'topics', id)
@@ -90,7 +90,7 @@ export function useTopics() {
     loading,
     topics,
     getTopics,
-    geTopicById,
+    getTopicById,
     creatTopic,
     updateTopic,
     topic,

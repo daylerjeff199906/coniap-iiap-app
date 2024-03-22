@@ -23,8 +23,8 @@ export const FrmLogin = () => {
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
     const res = await signInWithCredentials(data)
-    createCookie('user', JSON.stringify(res))
-    createLocalStorage('user', res)
+    await createCookie('user', JSON.stringify(res))
+    await createLocalStorage('user', res)
     new Promise((resolve) => setTimeout(resolve, 2000))
 
     if (res !== null) {
@@ -42,8 +42,8 @@ export const FrmLogin = () => {
     setLoading(true)
     const data = await SignInWithGoogle()
 
-    createCookie('user', JSON.stringify(data))
-    createLocalStorage('user', data)
+    await createCookie('user', JSON.stringify(data))
+    await createLocalStorage('user', data)
 
     new Promise((resolve) => setTimeout(resolve, 2000))
     if (data !== null) {

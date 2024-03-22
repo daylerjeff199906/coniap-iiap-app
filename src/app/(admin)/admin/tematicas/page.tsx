@@ -1,12 +1,16 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { FrmAddSponsor, ListSponsorsSections } from '@/components'
+import {
+  FrmAddSponsor,
+  FrmManageTopic,
+  ListSponsorsSections,
+} from '@/components'
 import { Button } from '@nextui-org/react'
 import { useSearchParams } from 'next/navigation'
 import { ListTopicsSections } from '@/components/sections/admin/tematicas'
 
 export default function Page() {
-  const [openAddSponsor, setOpenAddSponsor] = useState(false)
+  const [openAddTopic, setOpenAddTopic] = useState(false)
   const [loadData, setLoadData] = useState(false)
 
   const searchParams = useSearchParams()
@@ -14,7 +18,7 @@ export default function Page() {
 
   useEffect(() => {
     if (isEdit) {
-      setOpenAddSponsor(true)
+      setOpenAddTopic(true)
     }
   }, [isEdit])
 
@@ -24,7 +28,7 @@ export default function Page() {
         <h1 className="text-2xl font-bold">Temáticas</h1>
         <Button
           color="primary"
-          onPress={() => setOpenAddSponsor(true)}
+          onPress={() => setOpenAddTopic(true)}
           size="sm"
         >
           Añadir tema
@@ -39,6 +43,12 @@ export default function Page() {
         id={searchParams.get('edit')}
         loadData={setLoadData}
       /> */}
+      <FrmManageTopic
+        isOpen={openAddTopic}
+        onOpenChange={setOpenAddTopic}
+        id={searchParams.get('edit')}
+        loadData={setLoadData}
+      />
     </>
   )
 }

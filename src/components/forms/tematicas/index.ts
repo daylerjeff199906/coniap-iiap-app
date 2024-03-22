@@ -1,3 +1,3 @@
-import { FrmManageSponsor } from './FrmMngTopic/FrmManageTopic'
+import { FrmManageTopic } from './FrmMngTopic/FrmManageTopic'
 
-export { FrmManageSponsor }
+export { FrmManageTopic }
