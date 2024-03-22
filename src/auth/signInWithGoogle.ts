@@ -9,14 +9,12 @@ import {
   getDocs,
 } from 'firebase/firestore'
 
-import { useRouter } from 'next/navigation'
-
 import { createCookie } from '@/lib'
 import { toast } from 'sonner'
+import { IUser } from '@/types'
 
-export const SignInWithGoogle = async () => {
+export const SignInWithGoogle = async (): Promise<IUser | null> => {
   const provider = new GoogleAuthProvider()
-  const router = useRouter()
 
   try {
     const result = await signInWithPopup(auth, provider)
@@ -29,7 +27,7 @@ export const SignInWithGoogle = async () => {
 
     if (querySnapshot.empty) {
       toast.error('No tiene acceso a la plataforma. Contacte al administrador.')
-      return
+      return null
     } else {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
@@ -41,15 +39,13 @@ export const SignInWithGoogle = async () => {
           role: data.role,
         }
         createCookie('user', JSON.stringify(dataGoogle))
-        if (data.role === 'admin') {
-          router.push('/admin')
-        } else {
-          router.push('/')
-        }
-        // return dataGoogle
+
+        return dataGoogle as IUser
       })
     }
   } catch (error) {
     console.error(error)
+    return null
   }
+  return null
 }

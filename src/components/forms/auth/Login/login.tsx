@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
+import { IUser } from '@/types'
 
 interface ILogin {
   email: string
@@ -27,7 +28,14 @@ export const FrmLogin = () => {
 
   const handleGoogle = async () => {
     setLoading(true)
-    await SignInWithGoogle()
+    const data = await SignInWithGoogle()
+    if (data !== null) {
+      if (data.role === 'admin') {
+        router.push('/admin')
+      } else {
+        router.push('/')
+      }
+    }
     setLoading(false)
   }
 
