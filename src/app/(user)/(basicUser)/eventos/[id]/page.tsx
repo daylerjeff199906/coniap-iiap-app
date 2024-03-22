@@ -2,6 +2,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useEvents } from '@/hooks/client'
+import { DetailsEvent } from '@/components'
 interface IProps {
   params: {
     id: string
@@ -21,12 +22,13 @@ export default function Page(props: IProps) {
   }, [id])
 
   return (
-    <div>
-      <h1>Page</h1>
+    <>
+      {/* <h1>Page</h1>
       {event && event.customContent && (
         <DisplayHTMLContent htmlContent={event?.customContent} />
-      )}
-    </div>
+      )} */}
+      {event && <DetailsEvent event={event} />}
+    </>
   )
 }
 
