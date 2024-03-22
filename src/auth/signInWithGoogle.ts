@@ -9,11 +9,15 @@ import {
   getDocs,
 } from 'firebase/firestore'
 
+import { useRouter } from 'next/navigation'
+
 import { createCookie } from '@/lib'
 import { toast } from 'sonner'
 
-export const signInWithGoogle = async () => {
+export const SignInWithGoogle = async () => {
   const provider = new GoogleAuthProvider()
+  const router = useRouter()
+
   try {
     const result = await signInWithPopup(auth, provider)
     const user = result.user
@@ -36,36 +40,15 @@ export const signInWithGoogle = async () => {
           photo: user.photoURL,
           role: data.role,
         }
-        console.log(dataGoogle)
         createCookie('user', JSON.stringify(dataGoogle))
-        // createLocalStorage('user', data)
-
-        // if (data.role === 'admin') {
-        //   window.location.href = '/admin'
-        // } else {
-        //   window.location.href = '/'
-        // }
+        if (data.role === 'admin') {
+          router.push('/admin')
+        } else {
+          router.push('/')
+        }
+        // return dataGoogle
       })
     }
-    // Verificar el rol del usuario después de iniciar sesión
-    // Suponiendo que tengas un campo de rol en la información del usuario
-    // if (user) {
-    //   const tokenResult = await user.getIdTokenResult()
-    //   console.log(tokenResult)
-    //   createCookie('token', tokenResult.token)
-    //   createCookie('currentUser', tokenResult.claims)
-    //   // console.log(tokenResult)
-    //   //add to cookie
-    //   const isAdmin = tokenResult.claims.role === 'admin'
-
-    //   // console.log(isAdmin)
-    //   if (isAdmin) {
-    //     // El usuario es un administrador, redirigir al panel de administración
-    //     // Aquí puedes redirigir a la página de administración o realizar otras acciones adecuadas
-    //   } else {
-    //     // El usuario no es un administrador, mostrar un mensaje de error o redirigir a una página de acceso denegado
-    //   }
-    // }
   } catch (error) {
     console.error(error)
   }

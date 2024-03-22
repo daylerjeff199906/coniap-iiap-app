@@ -3,7 +3,9 @@ import { useState } from 'react'
 import { Button, Divider, Input } from '@nextui-org/react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 
-import { signInWithCredentials, signInWithGoogle } from '@/auth'
+import { useRouter } from 'next/navigation'
+
+import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 
 interface ILogin {
@@ -14,6 +16,7 @@ interface ILogin {
 export const FrmLogin = () => {
   const [loading, setLoading] = useState(false)
   const methods = useForm<ILogin>()
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
@@ -24,7 +27,7 @@ export const FrmLogin = () => {
 
   const handleGoogle = async () => {
     setLoading(true)
-    await signInWithGoogle()
+    await SignInWithGoogle()
     setLoading(false)
   }
 
