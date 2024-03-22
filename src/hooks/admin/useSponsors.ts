@@ -52,25 +52,10 @@ import { toast } from 'sonner'
 // }
 
 export function useSponsors() {
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
   //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
   const [sponsors, setSponsors] = useState<ISponsor[] | null>(null)
-  //   const [slider, setSlider] = useState<ISliders | null>(null)
-
-  //   const getSlider = async () => {
-  //     setLoading(true)
-  //     try {
-  //       const querySnapshot = await getDocs(collection(db, 'slider'))
-  //       const sliders = querySnapshot.docs.map((doc) => ({
-  //         id: doc.id.toString(),
-  //         ...doc.data(),
-  //       }))
-  //       setSliders(convertDataToISliders(sliders))
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+  const [sponsor, setSponsor] = useState<ISponsor | null>(null)
 
   const getSponsors = async () => {
     setLoading(true)
@@ -105,28 +90,32 @@ export function useSponsors() {
     }
   }
 
-  //   const getSliderById = async (id: string) => {
-  //     setLoading(true)
-  //     try {
-  //       const categoryRef: DocumentReference<DocumentData> = doc(db, 'slider', id)
-  //       const docSnap = await getDoc(categoryRef)
-  //       if (docSnap.exists()) {
-  //         setSlider(convertDataToISlidersById(docSnap.data()))
-  //       } else {
-  //         console.log('No such document!')
-  //       }
+  const getSponsorById = async (id: string) => {
+    setLoading(true)
+    try {
+      const categoryRef: DocumentReference<DocumentData> = doc(
+        db,
+        'sponsors',
+        id
+      )
+      const docSnap = await getDoc(categoryRef)
+      if (docSnap.exists()) {
+        setSponsor(docSnap.data() as ISponsor)
+      } else {
+        console.log('No such document!')
+      }
 
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return {
     loading,
     sponsors,
     getSponsors,
     createSponsor,
-    // getSlider,
+    getSponsorById,
   }
 }

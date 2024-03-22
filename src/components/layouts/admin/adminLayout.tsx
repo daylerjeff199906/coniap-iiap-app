@@ -26,7 +26,7 @@ export const menuAside: IMenuAside[] = [
     subItems: null,
   },
   {
-    id: '5',
+    id: '6',
     nameOption: 'Programas',
     titleOption: null,
     hrefLink: '/admin/programas',

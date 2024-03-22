@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Modal,
   ModalBody,
@@ -19,15 +20,21 @@ import { FilePond } from 'react-filepond'
 import { ISponsor } from '@/types'
 import { useSponsors } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
+import { Loading } from './loading'
+
+import { useRouter } from 'next/navigation'
 interface IProps {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
+  id?: string | null
 }
 
 export const FrmAddSponsor = (props: IProps) => {
-  const { isOpen, onOpenChange } = props
-  const { createSponsor } = useSponsors()
+  const { isOpen, onOpenChange, id } = props
+
+  const { createSponsor, getSponsorById, loading } = useSponsors()
   const { uploadImage, editField } = useFiles()
+  const router = useRouter()
 
   const [files, setFiles] = useState([])
 
@@ -54,7 +61,16 @@ export const FrmAddSponsor = (props: IProps) => {
     onOpenChange(open)
     methods.reset()
     setFiles([])
+    if (id) {
+      router.push('/admin/sponsors')
+    }
   }
+
+  useEffect(() => {
+    if (id) {
+      getSponsorById(id)
+    }
+  }, [id])
 
   return (
     <>
@@ -68,39 +84,53 @@ export const FrmAddSponsor = (props: IProps) => {
           <ModalBody>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
-                <Controller
-                  control={methods.control}
-                  name="name"
-                  rules={{ required: 'Este campo es requerido' }}
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      aria-label="Nombre del colaborador"
-                      label="Nombre"
-                      labelPlacement="outside"
-                      radius="sm"
-                      placeholder="Escribe el nombre del colaborador"
-                      value={value}
-                      onValueChange={onChange}
-                      isInvalid={methods.formState.errors.name !== undefined}
-                      errorMessage={methods.formState.errors.name?.message}
+                {loading ? (
+                  <>
+                    <Loading />
+                  </>
+                ) : (
+                  <>
+                    <Controller
+                      control={methods.control}
+                      name="name"
+                      rules={{ required: 'Este campo es requerido' }}
+                      render={({ field: { onChange, value } }) => (
+                        <Input
+                          aria-label="Nombre del colaborador"
+                          label="Nombre"
+                          labelPlacement="outside"
+                          radius="sm"
+                          placeholder="Escribe el nombre del colaborador"
+                          value={value}
+                          onValueChange={onChange}
+                          isInvalid={
+                            methods.formState.errors.name !== undefined
+                          }
+                          errorMessage={methods.formState.errors.name?.message}
+                        />
+                      )}
                     />
-                  )}
-                />
-                <p className="mt-4 mb-2 text-sm">Imagen</p>
-                <FilePond
-                  allowMultiple={false}
-                  acceptedFileTypes={['image/*']}
-                  files={files}
-                  onupdatefiles={handleUpdateFiles}
-                  labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-                  required
-                />
-                <footer className="flex justify-end pt-4 pb-4">
+                    <p className="mt-4 mb-2 text-sm">Imagen</p>
+                    <FilePond
+                      allowMultiple={false}
+                      acceptedFileTypes={['image/*']}
+                      files={files}
+                      onupdatefiles={handleUpdateFiles}
+                      labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
+                      required
+                    />
+                  </>
+                )}
+                <footer className="flex gap-3 justify-end pt-4 pb-4">
                   <Button
                     color="primary"
                     type="submit"
+                    isDisabled={loading}
                   >
                     Guardar
+                  </Button>
+                  <Button onPress={() => handleOpenChange(false)}>
+                    Cancelar
                   </Button>
                 </footer>
               </form>
