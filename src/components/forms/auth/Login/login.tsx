@@ -61,7 +61,7 @@ export const FrmLogin = () => {
     <>
       <section className="w-full flex items-center justify-center h-screen">
         {/* <button onClick={signInWithGoogle}>Login with Google</button> */}
-        <div className="w-full max-w-md  px-8 py-6 h-fit shadow-2xl rounded-lg">
+        <div className="w-full max-w-md  px-8 py-6 h-fit sm:shadow-2xl rounded-lg">
           <h1 className="text-2xl font-bold text-center pb-8">
             Iniciar Sesión
           </h1>
