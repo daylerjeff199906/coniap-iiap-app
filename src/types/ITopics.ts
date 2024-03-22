@@ -4,5 +4,4 @@ export interface ITopic {
   name: string
   description: string
   isActived: boolean
-  actions: string
 }

@@ -6,7 +6,7 @@ import { Image } from '@nextui-org/react'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
-import { useSponsors } from '@/hooks/admin'
+import { useTopics } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
@@ -37,7 +37,7 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
-  const { getSponsors, sponsors, loading } = useSponsors()
+  const { getTopics, topics, loading } = useTopics()
   const { editField, loading: loadingFile } = useFiles()
 
   // const searchParams = useSearchParams()
@@ -45,18 +45,18 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
   // const isEdit = searchParams.get('edit') !== null
 
   useEffect(() => {
-    getSponsors()
+    getTopics()
   }, [])
 
   useEffect(() => {
     if (loadData) {
-      getSponsors()
+      getTopics()
     }
   }, [loadData])
 
   const handleStatusChange = async (key: string, value: boolean) => {
-    await editField(key, 'sponsors', 'isActive', value)
-    getSponsors()
+    await editField(key, 'topics', 'isActived', value)
+    getTopics()
   }
 
   return (
@@ -68,13 +68,14 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
           handleStatusChange(String(key), value)
         }}
         rows={
-          sponsors
-            ? sponsors?.map((sponsor) => {
+          topics
+            ? topics?.map((topic) => {
                 return {
-                  key: sponsor.id,
-                  image: RenderImage(sponsor.image),
-                  name: sponsor.name,
-                  status: sponsor.isActive,
+                  key: topic.id,
+                  image: RenderImage(topic.image),
+                  name: topic.name,
+                  description: topic.description,
+                  status: topic.isActived,
                   actions: 'actions',
                 }
               })
