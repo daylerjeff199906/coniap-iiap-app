@@ -46,6 +46,26 @@ export function useFiles() {
     }
   }
 
+  // const editFieldTypeArray = async (
+  //   id: string,
+  //   namePath: string,
+  //   fieldToUpdate: string,
+  //   value: any
+  // ) => {
+  //   setLoading(true)
+  //   try {
+  //     const productDocRef = doc(db, namePath, id)
+  //     await updateDoc(productDocRef, {
+  //       [fieldToUpdate]: value,
+  //     })
+  //     toast.success(`Campo ${fieldToUpdate} actualizado con exito de id: ${id}`)
+  //     setLoading(false)
+  //   } catch (e) {
+  //     console.error('Error adding document: ', e)
+  //     setLoading(false)
+  //   }
+  // }
+
   const uploadImage = async (namePath: string, file: File): Promise<string> => {
     setLoading(true)
     try {

@@ -40,7 +40,7 @@ function convertTimestampToDate(timestamp: any) {
 export function usePrograms() {
   const [loading, setLoading] = useState<boolean>(false)
   const [programs, setPrograms] = useState<IProgram[] | null>(null)
-  //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
+  const [program, setProgram] = useState<IProgram | null>(null)
 
   //   const [slider, setSlider] = useState<ISliders | null>(null)
 
@@ -76,46 +76,34 @@ export function usePrograms() {
     }
   }
 
-  //   const getSpekersActive = async () => {
-  //     setLoading(true)
-  //     try {
-  //       const querySnapshot = await getDocs(
-  //         query(collection(db, 'speakers'), where('isActive', '==', true))
-  //       )
+  const getProgramById = async (id: string) => {
+    setLoading(true)
+    try {
+      const categoryRef: DocumentReference<DocumentData> = doc(
+        db,
+        'programs',
+        id
+      )
+      const docSnap = await getDoc(categoryRef)
+      if (docSnap.exists()) {
+        const data = docSnap.data()
+        setProgram(data as IProgram)
+      } else {
+        console.log('No such document!')
+      }
 
-  //       const speakers = querySnapshot.docs.map((doc) => ({
-  //         id: doc.id.toString(),
-  //         ...doc.data(),
-  //       }))
-  //       setSpeakersActive(speakers as ISpeaker[])
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   const getSliderById = async (id: string) => {
-  //     setLoading(true)
-  //     try {
-  //       const categoryRef: DocumentReference<DocumentData> = doc(db, 'slider', id)
-  //       const docSnap = await getDoc(categoryRef)
-  //       if (docSnap.exists()) {
-  //         setSlider(convertDataToISlidersById(docSnap.data()))
-  //       } else {
-  //         console.log('No such document!')
-  //       }
-
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return {
     loading,
     getPrograms,
     programs,
     createProgram,
-    // getSlider,
+    getProgramById,
+    program,
   }
 }
