@@ -55,6 +55,7 @@ function convertTimestampToDate(timestamp: any) {
 
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(true)
+  const [events, setEvents] = useState<IEvent[] | null>(null)
   const [event, setEvent] = useState<IEvent | null>(null)
   //   const [programs, setPrograms] = useState<IProgram[] | null>(null)
   //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
@@ -80,23 +81,23 @@ export function useEvents() {
   //     }
   //   }
 
-  //   const getSpekersActive = async () => {
-  //     setLoading(true)
-  //     try {
-  //       const querySnapshot = await getDocs(
-  //         query(collection(db, 'speakers'), where('isActive', '==', true))
-  //       )
+  const getEventsActive = async () => {
+    setLoading(true)
+    try {
+      const querySnapshot = await getDocs(
+        query(collection(db, 'events'), where('isActive', '==', true))
+      )
 
-  //       const speakers = querySnapshot.docs.map((doc) => ({
-  //         id: doc.id.toString(),
-  //         ...doc.data(),
-  //       }))
-  //       setSpeakersActive(speakers as ISpeaker[])
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+      const speakers = querySnapshot.docs.map((doc) => ({
+        id: doc.id.toString(),
+        ...doc.data(),
+      }))
+      setEvents(speakers as IEvent[])
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getEventById = async (id: string) => {
     setLoading(true)
@@ -120,6 +121,7 @@ export function useEvents() {
     loading,
     getEventById,
     event,
-    // getSlider,
+    events,
+    getEventsActive,
   }
 }
