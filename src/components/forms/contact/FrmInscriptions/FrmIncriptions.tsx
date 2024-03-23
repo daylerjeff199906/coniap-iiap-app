@@ -1,7 +1,8 @@
+'use client'
 import { useForm, Controller, FormProvider } from 'react-hook-form'
 import { ISpeaker } from '@/types'
 import { Button, Checkbox, Input } from '@nextui-org/react'
-import { use, useState } from 'react'
+import { useState } from 'react'
 import { FilePond } from 'react-filepond'
 import { ModalAction } from '@/components'
 
