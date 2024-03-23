@@ -1,16 +1,25 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { IUser } from './types'
 
 export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get('user')?.value
-    ? JSON.parse(request.cookies.get('user')?.value as string)
-    : null
+  const dataUser: IUser = currentUser ? JSON.parse(currentUser) : null
 
-  if (!currentUser && request.nextUrl.pathname.startsWith('/admin')) {
+  if (dataUser === null) {
     return NextResponse.redirect(new URL('/login', request.url))
   } else {
-    return NextResponse.next()
+    if (
+      dataUser &&
+      dataUser?.role === 'admin' &&
+      request.nextUrl.pathname === '/admin'
+    ) {
+      return NextResponse.next()
+    }
   }
+
+  // return NextResponse.redirect(new URL('/login', request.url))
+  return NextResponse.next()
 }
 
 export const config = {
