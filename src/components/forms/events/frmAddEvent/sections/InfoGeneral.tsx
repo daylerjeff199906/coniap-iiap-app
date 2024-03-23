@@ -1,5 +1,16 @@
-import { Input, Textarea } from '@nextui-org/react'
+import { Input, Select, SelectItem, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
+
+const typeSala = [
+  {
+    label: 'Sala 1',
+    value: '1',
+  },
+  {
+    label: 'Sala 2',
+    value: '2',
+  },
+]
 
 export const InfoGeneral = () => {
   const {
@@ -90,6 +101,32 @@ export const InfoGeneral = () => {
                 isInvalid={errors.endTime !== undefined}
                 errorMessage={errors.endTime?.message as string}
               />
+            )}
+          />
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name="salaId"
+            render={({ field: { onChange, value } }) => (
+              <Select
+                aria-label="Tipo de sala"
+                label="Tipo de sala"
+                labelPlacement="outside"
+                radius="sm"
+                placeholder="Tipo de sala"
+                value={value}
+                onSelectionChange={onChange}
+              >
+                {typeSala.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                  >
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </Select>
             )}
           />
         </div>
