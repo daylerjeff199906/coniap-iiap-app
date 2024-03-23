@@ -3,10 +3,13 @@ import { ISpeaker } from '@/types'
 import { Button, Checkbox, Input } from '@nextui-org/react'
 import { use, useState } from 'react'
 import { FilePond } from 'react-filepond'
+import { ModalAction } from '@/components'
 
 export const FrmInscriptions = () => {
   const [showFile, setShowFile] = useState<boolean>(false)
   const [files, setFiles] = useState<File[]>([])
+  const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
+
   const methods = useForm<ISpeaker>()
 
   const dateLimit = '2024-10-01'
@@ -17,19 +20,19 @@ export const FrmInscriptions = () => {
   }
 
   const onSubmit = () => {
-    console.log('Submit')
+    setIsOpenAction(true)
   }
 
   return (
     <>
       <FormProvider {...methods}>
         <form
-          className="w-full max-w-xl sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:p-4 sm:shadow-lg sm:rounded-lg"
+          className="w-full max-w-xl sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6 sm:py-8 sm:shadow-lg sm:rounded-lg"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div className="col-span-2">
             <h1 className="text-xl font-bold">Formulario de inscripción</h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-xs text-gray-500">
               Ingresa tus datos para inscribirte en el evento, puedes participar
               como asistente o expositor.
             </p>
@@ -169,6 +172,7 @@ export const FrmInscriptions = () => {
           <Checkbox
             className="col-span-2"
             size="sm"
+            required
           >
             Acepto los términos y condiciones
           </Checkbox>
@@ -183,6 +187,13 @@ export const FrmInscriptions = () => {
           </div>
         </form>
       </FormProvider>
+      <ModalAction
+        isOpen={isOpenAction}
+        setOpen={setIsOpenAction}
+        message="¿Estás seguro de enviar tu inscripción?"
+        title="Confirmar inscripción"
+        onPress={() => console.log('Enviar inscripción')}
+      />
     </>
   )
 }
