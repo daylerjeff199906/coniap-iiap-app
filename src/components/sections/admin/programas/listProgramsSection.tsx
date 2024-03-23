@@ -5,6 +5,7 @@ import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { usePrograms, useFiles } from '@/hooks/admin'
+import Link from 'next/link'
 
 const columns: Array<IColumns> = [
   {
@@ -28,11 +29,17 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
   {
+    key: 'addEvents',
+    label: 'Add eventos',
+    align: 'center',
+  },
+  {
     key: 'actions',
     label: 'Acciones',
     align: 'center',
   },
 ]
+
 export const ListProgramsSection = () => {
   const { getPrograms, programs, loading } = usePrograms()
   const { editField, loading: updateLoading } = useFiles()
@@ -63,12 +70,26 @@ export const ListProgramsSection = () => {
                   date: event.date,
                   events: event.events?.length,
                   status: event.isActived,
+                  addEvents: RenderColumAddEvents(event.id),
                   actions: 'actions',
                 }
               })
             : []
         }
       />
+    </>
+  )
+}
+
+const RenderColumAddEvents = (id: string) => {
+  return (
+    <>
+      <Link
+        href={`/admin/programas/${id}/eventos`}
+        className="text-primary-500 hover:text-primary-300"
+      >
+        Agregar eventos
+      </Link>
     </>
   )
 }
