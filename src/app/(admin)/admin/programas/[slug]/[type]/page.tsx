@@ -1,7 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { useEffect, useState } from 'react'
+import { CalendarSection, FrmAddEventInProgram } from '@/components'
 import { usePrograms } from '@/hooks/admin'
-import { useEffect } from 'react'
+import { Button } from '@nextui-org/react'
+import { EventToProgramProvider } from '@/providers'
 interface IProps {
   params: {
     slug: string
@@ -13,13 +16,15 @@ export default function Page(props: IProps) {
   const { slug, type } = props.params
   const { getProgramById, program, loading } = usePrograms()
 
+  const [isOpen, setOpen] = useState<boolean>(false)
+
   useEffect(() => {
     getProgramById(slug)
   }, [slug])
 
   return (
     <>
-      <section>
+      <section className="pb-4">
         <h1 className="uppercase text-2xl font-bold">
           {type} - {program?.title}
         </h1>
@@ -28,6 +33,12 @@ export default function Page(props: IProps) {
           Fecha: {program?.date} - {program?.events?.length} eventos
         </h3>
       </section>
+      <EventToProgramProvider>
+        <section className="grid grid-cols-2 gap-6">
+          <CalendarSection />
+          <FrmAddEventInProgram />
+        </section>
+      </EventToProgramProvider>
     </>
   )
 }
