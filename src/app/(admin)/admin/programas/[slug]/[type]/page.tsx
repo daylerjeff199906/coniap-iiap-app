@@ -36,7 +36,10 @@ export default function Page(props: IProps) {
       <EventToProgramProvider>
         <section className="grid grid-cols-2 gap-6">
           <CalendarSection />
-          <FrmAddEventInProgram program={program} />
+          <FrmAddEventInProgram
+            program={program}
+            idProgram={slug}
+          />
         </section>
       </EventToProgramProvider>
     </>

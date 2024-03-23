@@ -23,7 +23,10 @@ export const EventToProgramProvider = ({
   const { createEvent } = useEvents()
   const { editField } = useFiles()
 
-  const createEventInProgram = async (data: IEvent, program: IProgram) => {
+  const createEventInProgram = async (
+    data: IEvent,
+    programSelected: IProgram
+  ) => {
     const newData = {
       ...data,
       place: '',
@@ -34,13 +37,18 @@ export const EventToProgramProvider = ({
       linkZoom: data.linkZoom || '',
       linkYoutube: data.linkYoutube || '',
       linkFacebook: data.linkFacebook || '',
-      idProgram: program?.id || '',
-      date: data.date || '',
+      idProgram: programSelected?.id || '',
+      date: programSelected.date || '',
       inProgram: true,
       isActived: false,
       idTypeEvent: '',
     }
-    await createEvent(newData)
+    console.log(newData)
+    // const idEvent = await createEvent(newData)
+    // await editField('programs', programSelected.id, 'events', [
+    //   ...(programSelected.events || []),
+    //   idEvent,
+    // ])
   }
 
   return (

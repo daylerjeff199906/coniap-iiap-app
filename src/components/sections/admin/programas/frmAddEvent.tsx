@@ -25,18 +25,21 @@ const typeRoom = [
 ]
 
 interface IProps {
+  idProgram: string
   program: IProgram | null
 }
 
 export const FrmAddEventInProgram = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
+  const { program, idProgram } = props
+
   const methods = useForm<IEvent>({
     defaultValues: {
       salaId: '1',
+      idProgram: idProgram,
     },
   })
 
-  const { program } = props
   const { createEventInProgram } = useLogicEventToProgram()
 
   const onSubmit = () => {
