@@ -6,6 +6,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 const localizer = momentLocalizer(moment)
 
+import { useLogicEventToProgram } from '@/providers'
+import { IEvent } from '@/types'
+
 const resourcesMap = [
   { resourceId: '1', resourceTitle: 'Sala 1' },
   { resourceId: '2', resourceTitle: 'Sala 2' },
@@ -19,38 +22,30 @@ const events = [
     end: new Date(2024, 0, 23, 13, 0, 0),
     resourceId: 1,
   },
-  {
-    id: 1,
-    title: 'MS training',
-    allDay: true,
-    start: new Date(2024, 0, 23, 14, 0, 0),
-    end: new Date(2024, 0, 23, 16, 30, 0),
-    resourceId: 2,
-  },
-  {
-    id: 2,
-    title: 'Team lead meeting',
-    start: new Date(2024, 0, 23, 8, 30, 0),
-    end: new Date(2024, 0, 23, 12, 30, 0),
-    resourceId: [1, 2],
-  },
-  {
-    id: 11,
-    title: 'Birthday Party',
-    start: new Date(2024, 0, 23, 7, 0, 0),
-    end: new Date(2024, 0, 23, 10, 30, 0),
-    resourceId: 2,
-  },
 ]
+
+const transformEvent = (event: IEvent) => {
+  return {
+    id: event.id,
+    title: event.name,
+    start: new Date(event.timeStart),
+    end: new Date(event.timeEnd),
+    resourceId: event.salaId,
+  }
+}
 
 export const CalendarSection = () => {
   const [view, setView] = useState('day')
+
+  const { program } = useLogicEventToProgram()
+
+  console.log(program)
   return (
     <>
       <div className="">
         <Calendar
           localizer={localizer}
-          events={events}
+          events={program?.events?.map(transformEvent) || []}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}

@@ -54,6 +54,7 @@ export const EventToProgramProvider = ({
     // Agrega el nuevo evento a la lista existente de eventos del programa
     const updatedEvents = [...currentEvents, { ...newData, id: idEvent }]
     await editField(programSelected.id, 'programs', 'events', updatedEvents)
+    await getProgramById(programSelected.id)
     setLoading(false)
   }
 
