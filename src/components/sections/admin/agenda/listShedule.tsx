@@ -12,12 +12,18 @@ export const ListShedule = (props: IProps) => {
   return (
     <>
       <section className="py-12 flex flex-col items-center w-full">
-        <Tabs aria-label="Tabs agenda">
+        <Tabs
+          aria-label="Tabs agenda"
+          // classNames={{
+          //   tab: 'font-bold',
+          // }}
+          color="primary"
+        >
           {programs?.map((program, index) => (
             <Tab
               key={index}
               title={program.date}
-              className="w-full"
+              className="w-full "
             >
               <main className="p-4 w-full">
                 <header className="p-4 w-full flex flex-col items-center">
