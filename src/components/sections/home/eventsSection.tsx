@@ -42,7 +42,11 @@ export const EventsSection = () => {
 
 const EventCard = () => {
   return (
-    <Card className="bg-white max-w-sm">
+    <Card
+      className="bg-white max-w-sm"
+      radius="sm"
+      shadow="none"
+    >
       <Image
         src="https://via.placeholder.com/300x200"
         alt="Event"
@@ -50,11 +54,11 @@ const EventCard = () => {
         className=""
         radius="none"
       />
-      <CardBody>
+      <CardBody className="px-0">
         <h3 className="text-sm sm:text-lg xl:text-xl font-bold">Evento</h3>
         <p className="text-sm line-clamp-3">Descripción del evento</p>
       </CardBody>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="flex justify-end px-0">
         <Button
           radius="full"
           variant="flat"
