@@ -1,16 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useEvents } from '@/hooks/client'
 import { DetailsEvent } from '@/components'
 interface IProps {
   params: {
     id: string
   }
-}
-
-interface ISection {
-  htmlContent: string
 }
 
 export default function Page(props: IProps) {
@@ -21,17 +17,5 @@ export default function Page(props: IProps) {
     getEventById(id)
   }, [id])
 
-  return (
-    <>
-      {/* <h1>Page</h1>
-      {event && event.customContent && (
-        <DisplayHTMLContent htmlContent={event?.customContent} />
-      )} */}
-      {event && <DetailsEvent event={event} />}
-    </>
-  )
-}
-
-function DisplayHTMLContent({ htmlContent }: ISection) {
-  return <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+  return <>{event && <DetailsEvent event={event} />}</>
 }
