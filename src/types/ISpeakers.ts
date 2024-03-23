@@ -4,8 +4,11 @@ export interface ISpeaker {
   surName: string
   job: string
   image: string
+  email: string
+  location?: string
   presentation?: string
   institution?: string
   levelStudy?: string
   isActive?: boolean
+  file?: File
 }
