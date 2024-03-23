@@ -14,12 +14,13 @@ interface IBanner {
 const bannerData = [
   {
     id: 1,
-    includePathname: '/about',
+    includePathname: '/sobre-coniap',
     title: 'CONIAP',
     subtitle: 'Acerca del congreso',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    urlImage: '',
+      'Descubre todo sobre el CONIAP, propósito y discusiones clave sobre la conservación sostenible en la amazonía',
+    urlImage:
+      'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fave-america-sur-habitat-natural-scaled.webp?alt=media&token=9406c9f0-2c73-4b4a-8e5f-f13e9562239d',
   },
   {
     id: 2,
