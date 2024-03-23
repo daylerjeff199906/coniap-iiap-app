@@ -2,7 +2,7 @@
 
 import { CardEventLarge, DataNotFound } from '@/components'
 import { IProgram } from '@/types'
-import { Tab, Tabs } from '@nextui-org/react'
+import { Divider, Tab, Tabs } from '@nextui-org/react'
 
 interface IProps {
   programs: IProgram[]
@@ -13,7 +13,7 @@ export const ListShedule = (props: IProps) => {
     <>
       <section className="py-12 flex flex-col items-center w-full">
         <Tabs aria-label="Tabs agenda">
-          {programs.map((program, index) => (
+          {programs?.map((program, index) => (
             <Tab
               key={index}
               title={program.date}
@@ -26,7 +26,11 @@ export const ListShedule = (props: IProps) => {
                   </h1>
                   <p className="text-gray-500">{program.shortDescription}</p>
                 </header>
-                <section className="w-full">
+                <section className="w-full py-2 space-y-3">
+                  <div className="">
+                    <h1 className="font-semibold">Eventos del día</h1>
+                    <Divider />
+                  </div>
                   {program?.events.length > 0 ? (
                     <>
                       {program.events.map((event, index) => (

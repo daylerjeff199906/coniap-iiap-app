@@ -1,5 +1,6 @@
 import { IEvent } from '@/types'
-import { Card, CardBody, Image } from '@nextui-org/react'
+import { Button, Card, CardBody, Chip, Image } from '@nextui-org/react'
+import { IconCalendarEvent, IconClockHour12 } from '@tabler/icons-react'
 
 interface IProps {
   event: IEvent
@@ -11,30 +12,54 @@ export const CardEventLarge = (props: IProps) => {
     <>
       <Card
         shadow="none"
-        className="border-none w-full"
+        className="border-nonw w-full"
       >
         <CardBody>
-          <div className="grid grid-cols-12 w-full">
-            <div className="col-span-2"></div>
-            <div className="col-span-10 flex gap-4">
-              <section className="w-24 h-24">
-                <Image
-                  src={event?.banner}
-                  alt={event.name}
-                  removeWrapper
-                />
+          <div className="grid grid-cols-12 gap-4 w-full">
+            <div className="col-span-3">
+              <Image
+                src={event?.banner || '/images/placeholder.jpg'}
+                alt={event?.name}
+                removeWrapper
+                radius="none"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="col-span-9 flex flex-col gap-4 h-full">
+              <section className="w-full h-full">
+                <Chip
+                  size="sm"
+                  radius="sm"
+                  className="bg-stone-900 text-white mb-2"
+                >
+                  Sala {event.salaId}
+                </Chip>
+                <div className="pb-2">
+                  <h1 className="font-bold sm:text-lg">{event.name}</h1>
+                  <p className="text-xs">{event.shortDescription}</p>
+                </div>
+                <div className="text-xs font-bold">
+                  <div className="flex gap-2 items-center">
+                    <IconCalendarEvent size={14} />
+                    <h2>{event.date}</h2>
+                  </div>
+
+                  <div className="flex gap-2 items-center">
+                    <IconClockHour12 size={14} />
+                    <h3>
+                      Desde las {event.timeStart} a {event.timeEnd}
+                    </h3>
+                  </div>
+                </div>
               </section>
-              <section>
-                <div>
-                  <h1 className="font-bold">{event.name}</h1>
-                  <p>{event.shortDescription}</p>
-                </div>
-                <div>
-                  <h2>{event.date}</h2>
-                  <h3>
-                    {event.timeStart} - {event.timeEnd}
-                  </h3>
-                </div>
+              <section className="flex justify-end">
+                <Button
+                  color="primary"
+                  radius="full"
+                  size="sm"
+                >
+                  Ver más
+                </Button>
               </section>
             </div>
           </div>

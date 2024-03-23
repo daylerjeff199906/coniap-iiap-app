@@ -14,7 +14,7 @@ export default function Page() {
 
   return (
     <>
-      <main className="container">
+      <div>
         {programs !== null && programs.length > 0 ? (
           <>
             <ListShedule programs={programs} />
@@ -22,7 +22,7 @@ export default function Page() {
         ) : (
           <DataNotFound />
         )}
-      </main>
+      </div>
       <LoadingPages isOpen={loading} />
     </>
   )
