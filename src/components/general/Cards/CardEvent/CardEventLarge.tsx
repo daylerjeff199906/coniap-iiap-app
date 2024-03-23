@@ -1,6 +1,7 @@
 import { IEvent } from '@/types'
 import { Button, Card, CardBody, Chip, Image } from '@nextui-org/react'
 import { IconCalendarEvent, IconClockHour12 } from '@tabler/icons-react'
+import logo from '@/assets/images/logo_coniap_simple.webp'
 
 interface IProps {
   event: IEvent
@@ -18,11 +19,11 @@ export const CardEventLarge = (props: IProps) => {
           <div className="grid grid-cols-12 gap-4 w-full">
             <div className="col-span-3">
               <Image
-                src={event?.banner || '/logo_coniap_simeple.webp'}
+                src={event?.banner || logo.src}
                 alt={event?.name}
                 removeWrapper
                 radius="none"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover bg-gray-300"
               />
             </div>
             <div className="col-span-9 flex flex-col gap-4 h-full">
