@@ -18,7 +18,7 @@ export const CardEventLarge = (props: IProps) => {
           <div className="grid grid-cols-12 gap-4 w-full">
             <div className="col-span-3">
               <Image
-                src={event?.banner || '/images/placeholder.jpg'}
+                src={event?.banner || '/logo_coniap_simeple.webp'}
                 alt={event?.name}
                 removeWrapper
                 radius="none"
