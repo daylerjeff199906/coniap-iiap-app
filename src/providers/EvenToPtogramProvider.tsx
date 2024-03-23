@@ -8,10 +8,12 @@ export const EventToProgramContext = createContext<{
   program: IProgram | null
   getProgramById: (id: string) => void
   createEventInProgram: (data: IEvent, program: IProgram) => void
+  loading: boolean
 }>({
   program: null,
   getProgramById: () => {},
   createEventInProgram: () => {},
+  loading: false,
 })
 
 export const EventToProgramProvider = ({
@@ -23,10 +25,13 @@ export const EventToProgramProvider = ({
   const { createEvent } = useEvents()
   const { editField } = useFiles()
 
+  const [loading, setLoading] = useState(false)
+
   const createEventInProgram = async (
     data: IEvent,
     programSelected: IProgram
   ) => {
+    setLoading(true)
     const newData = {
       ...data,
       place: '',
@@ -44,11 +49,13 @@ export const EventToProgramProvider = ({
       idTypeEvent: '',
     }
     console.log(newData)
-    // const idEvent = await createEvent(newData)
-    // await editField('programs', programSelected.id, 'events', [
-    //   ...(programSelected.events || []),
-    //   idEvent,
-    // ])
+    const idEvent = await createEvent(newData)
+    await editField('programs', programSelected.id, 'events', [
+      ...(programSelected.events || []),
+      idEvent,
+      newData,
+    ])
+    setLoading(false)
   }
 
   return (
@@ -57,6 +64,7 @@ export const EventToProgramProvider = ({
         program,
         getProgramById,
         createEventInProgram,
+        loading,
       }}
     >
       {children}

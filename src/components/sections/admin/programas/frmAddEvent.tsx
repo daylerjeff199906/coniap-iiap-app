@@ -8,7 +8,7 @@ import {
   FormProvider,
   Controller,
 } from 'react-hook-form'
-import { ModalAction } from '@/components'
+import { LoadingPages, ModalAction } from '@/components'
 import { IEvent, IProgram } from '@/types'
 
 import { useLogicEventToProgram } from '@/providers'
@@ -39,7 +39,7 @@ export const FrmAddEventInProgram = (props: IProps) => {
     },
   })
 
-  const { createEventInProgram } = useLogicEventToProgram()
+  const { createEventInProgram, loading } = useLogicEventToProgram()
 
   const onSubmit = () => {
     setOpen(true)
@@ -178,6 +178,7 @@ export const FrmAddEventInProgram = (props: IProps) => {
         message="¿Estás seguro de agregar este evento?"
         onPress={methods.handleSubmit(handleSave)}
       />
+      <LoadingPages isOpen={loading} />
     </>
   )
 }
