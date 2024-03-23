@@ -45,13 +45,22 @@ export const FrmAddEventInProgram = (props: IProps) => {
     setOpen(true)
   }
 
-  const handleSave: SubmitHandler<IEvent> = (data) => {
+  const handleSave: SubmitHandler<IEvent> = async (data) => {
     setOpen(false)
     const programFixed = {
       ...program,
       id: idProgram,
     }
-    createEventInProgram(data, programFixed as IProgram)
+    await createEventInProgram(data, programFixed as IProgram)
+    clearForm()
+  }
+
+  const clearForm = () => {
+    methods.setValue('name', '')
+    methods.setValue('timeStart', '')
+    methods.setValue('timeEnd', '')
+    methods.setValue('salaId', '1')
+    methods.clearErrors()
   }
   return (
     <>
@@ -89,12 +98,12 @@ export const FrmAddEventInProgram = (props: IProps) => {
                 rules={{ required: 'Este campo es requerido' }}
                 render={({ field: { onChange, value } }) => (
                   <Input
-                    aria-label="Fecha de inicio"
-                    label="Fecha de inicio"
+                    aria-label="Hora de inicio"
+                    label="Hora de inicio"
                     placeholder="00:00"
                     labelPlacement="outside"
                     radius="sm"
-                    type="date"
+                    type="time"
                     value={value}
                     onValueChange={onChange}
                     isInvalid={methods.formState.errors.timeStart !== undefined}
@@ -110,12 +119,12 @@ export const FrmAddEventInProgram = (props: IProps) => {
                 rules={{ required: 'Este campo es requerido' }}
                 render={({ field: { onChange, value } }) => (
                   <Input
-                    aria-label="Fecha de fin"
-                    label="Fecha de fin"
+                    aria-label="Hora de fin"
+                    label="Hora de fin"
                     placeholder="00:00"
                     labelPlacement="outside"
                     radius="sm"
-                    type="date"
+                    type="time"
                     value={value}
                     onValueChange={onChange}
                     isInvalid={methods.formState.errors.timeEnd !== undefined}
@@ -163,7 +172,7 @@ export const FrmAddEventInProgram = (props: IProps) => {
               </Button>
               <Button
                 radius="sm"
-                type="reset"
+                onPress={() => clearForm()}
               >
                 Cancelar
               </Button>
