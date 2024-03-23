@@ -85,7 +85,7 @@ export function useEvents() {
     setLoading(true)
     try {
       const querySnapshot = await getDocs(
-        query(collection(db, 'events'), where('isActive', '==', true))
+        query(collection(db, 'events'), where('isActived', '==', true))
       )
 
       const speakers = querySnapshot.docs.map((doc) => ({
