@@ -25,10 +25,13 @@ const events = [
 ]
 
 const transformEvent = (event: IEvent) => {
+  const startTime = new Date(event?.date as unknown as string)
+  startTime.setHours(parseInt(event.timeStart, 10), 10, 0, 0)
+  console.log('startTime', startTime)
   return {
     id: event.id,
     title: event.name,
-    start: new Date(event.timeStart),
+    start: startTime,
     end: new Date(event.timeEnd),
     resourceId: event.salaId,
   }
@@ -39,7 +42,6 @@ export const CalendarSection = () => {
 
   const { program } = useLogicEventToProgram()
 
-  console.log(program)
   return (
     <>
       <div className="">
