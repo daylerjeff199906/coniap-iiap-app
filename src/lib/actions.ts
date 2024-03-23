@@ -7,6 +7,7 @@ async function createCookie(name: string, data: any) {
     name: name,
     value: data,
     httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7,
     path: '/',
   })
 }
