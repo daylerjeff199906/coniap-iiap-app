@@ -36,7 +36,6 @@ export const FrmAddEventInProgram = (props: IProps) => {
   const methods = useForm<IEvent>({
     defaultValues: {
       salaId: '1',
-      idProgram: idProgram,
     },
   })
 
@@ -48,7 +47,11 @@ export const FrmAddEventInProgram = (props: IProps) => {
 
   const handleSave: SubmitHandler<IEvent> = (data) => {
     setOpen(false)
-    createEventInProgram(data, program as IProgram)
+    const programFixed = {
+      ...program,
+      id: idProgram,
+    }
+    createEventInProgram(data, programFixed as IProgram)
   }
   return (
     <>
