@@ -76,8 +76,8 @@ export function useEvents() {
       const docRef = await addDoc(collection(db, 'events'), data)
       // console.log('Document written with ID: ', docRef.id)
       toast.success(`Evento creado con exito, ID: ${docRef.id}`)
-
       setLoading(false)
+      return docRef.id
     } catch (error) {
       console.log(error)
     }

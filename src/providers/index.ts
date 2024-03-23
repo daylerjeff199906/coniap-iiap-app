@@ -1,6 +1,6 @@
 import {
   EventToProgramProvider,
-  EventToProgramContext,
+  useLogicEventToProgram,
 } from './EvenToPtogramProvider'
 
-export { EventToProgramProvider, EventToProgramContext }
+export { EventToProgramProvider, useLogicEventToProgram }

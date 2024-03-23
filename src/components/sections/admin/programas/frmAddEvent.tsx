@@ -9,7 +9,9 @@ import {
   Controller,
 } from 'react-hook-form'
 import { ModalAction } from '@/components'
-import { IEvent } from '@/types'
+import { IEvent, IProgram } from '@/types'
+
+import { useLogicEventToProgram } from '@/providers'
 
 const typeRoom = [
   {
@@ -22,17 +24,28 @@ const typeRoom = [
   },
 ]
 
-export const FrmAddEventInProgram = () => {
-  const methods = useForm<IEvent>()
+interface IProps {
+  program: IProgram | null
+}
 
+export const FrmAddEventInProgram = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
+  const methods = useForm<IEvent>({
+    defaultValues: {
+      salaId: '1',
+    },
+  })
+
+  const { program } = props
+  const { createEventInProgram } = useLogicEventToProgram()
 
   const onSubmit = () => {
-    console.log()
+    setOpen(true)
   }
 
-  const handleSave: SubmitHandler<Record<string, any>> = (data) => {
-    console.log(data)
+  const handleSave: SubmitHandler<IEvent> = (data) => {
+    setOpen(false)
+    createEventInProgram(data, program as IProgram)
   }
   return (
     <>
@@ -56,54 +69,98 @@ export const FrmAddEventInProgram = () => {
                   placeholder="Nombre del evento"
                   value={value}
                   onValueChange={onChange}
+                  isInvalid={methods.formState.errors.name !== undefined}
+                  errorMessage={
+                    methods.formState.errors.name?.message as string
+                  }
                 />
               )}
             />
             <div className="flex flex-col sm:grid sm:grid-cols-2 gap-4">
-              <Input
-                aria-label="Hora de inicio"
-                label="Hora de inicio"
-                placeholder="00:00"
-                labelPlacement="outside"
-                radius="sm"
-                type="date"
+              <Controller
+                control={methods.control}
+                name="timeStart"
+                rules={{ required: 'Este campo es requerido' }}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    aria-label="Fecha de inicio"
+                    label="Fecha de inicio"
+                    placeholder="00:00"
+                    labelPlacement="outside"
+                    radius="sm"
+                    type="date"
+                    value={value}
+                    onValueChange={onChange}
+                    isInvalid={methods.formState.errors.timeStart !== undefined}
+                    errorMessage={
+                      methods.formState.errors.timeStart?.message as string
+                    }
+                  />
+                )}
               />
-              <Input
-                aria-label="Hora de fin"
-                label="Hora de fin"
-                placeholder="00:00"
-                labelPlacement="outside"
-                radius="sm"
-                type="date"
+              <Controller
+                control={methods.control}
+                name="timeEnd"
+                rules={{ required: 'Este campo es requerido' }}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    aria-label="Fecha de fin"
+                    label="Fecha de fin"
+                    placeholder="00:00"
+                    labelPlacement="outside"
+                    radius="sm"
+                    type="date"
+                    value={value}
+                    onValueChange={onChange}
+                    isInvalid={methods.formState.errors.timeEnd !== undefined}
+                    errorMessage={
+                      methods.formState.errors.timeEnd?.message as string
+                    }
+                  />
+                )}
               />
             </div>
-            <Select
-              aria-label="Sala"
-              placeholder="Selecciona una sala"
-              label="Sala"
-              labelPlacement="outside"
-              radius="sm"
-              defaultSelectedKeys={['1']}
-              disallowEmptySelection
-            >
-              {typeRoom.map((item) => (
-                <SelectItem
-                  aria-labelledby="Sala-items"
-                  key={item.value}
-                  value={item.value}
+            <Controller
+              control={methods.control}
+              name="salaId"
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  aria-label="Sala"
+                  placeholder="Selecciona una sala"
+                  label="Sala"
+                  labelPlacement="outside"
+                  radius="sm"
+                  defaultSelectedKeys={['1']}
+                  disallowEmptySelection
+                  value={value}
+                  onChange={onChange}
                 >
-                  {item.label}
-                </SelectItem>
-              ))}
-            </Select>
+                  {typeRoom.map((item) => (
+                    <SelectItem
+                      aria-labelledby="Sala-items"
+                      key={item.value}
+                      value={item.value}
+                    >
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </Select>
+              )}
+            />
             <header className="flex items-center justify-end gap-4">
               <Button
                 color="primary"
                 radius="sm"
+                type="submit"
               >
                 Agregar evento
               </Button>
-              <Button radius="sm">Cancelar</Button>
+              <Button
+                radius="sm"
+                type="reset"
+              >
+                Cancelar
+              </Button>
             </header>
           </form>
         </FormProvider>
