@@ -19,9 +19,15 @@ export default function Page(props: IProps) {
 
   return (
     <>
-      <h1>
-        Programa {slug} - {type}
-      </h1>
+      <section>
+        <h1 className="uppercase text-2xl font-bold">
+          {type} - {program?.title}
+        </h1>
+        <h2 className="pb-2">{program?.shortDescription}</h2>
+        <h3 className="text-gray-500 text-sm font-bold">
+          Fecha: {program?.date} - {program?.events?.length} eventos
+        </h3>
+      </section>
     </>
   )
 }
