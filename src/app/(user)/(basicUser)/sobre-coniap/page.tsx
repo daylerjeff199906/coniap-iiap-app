@@ -3,7 +3,9 @@ import { InfoAboutUs } from '@/components'
 export default function Page() {
   return (
     <>
-      <InfoAboutUs />
+      <article className="py-6">
+        <InfoAboutUs />
+      </article>
     </>
   )
 }
