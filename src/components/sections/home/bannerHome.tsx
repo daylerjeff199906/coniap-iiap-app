@@ -4,6 +4,7 @@ import { IconCalendarEvent } from '@tabler/icons-react'
 import bgImage from '@/assets/images/bgBanner.webp'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -57,6 +58,8 @@ export const BannerHome = () => {
               variant="solid"
               radius="full"
               size="lg"
+              as={Link}
+              href="/sobre-coniap"
             >
               Conoce más
             </Button>
