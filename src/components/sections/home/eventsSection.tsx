@@ -14,23 +14,21 @@ export const EventsSection = () => {
     <>
       <section className="bg-white section-home">
         <div className="container space-y-6">
-          <motion.div
-            className="flex"
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="mr-4">
-              <Divider
-                orientation="vertical"
-                className=" bg-orange-500 h-full w-1 rounded-full"
-              />
+          <header>
+            <div className="flex items-center gap-3 pb-3">
+              <div className="dot-custom" />
+              <p className="text-xs font-semibold">#eventos- 2024</p>
             </div>
-            <div className="">
-              <h4 className="subtitle-section-home">Eventos</h4>
-              <h2 className="title-section-home">Próximos eventos</h2>
+            <div className="w-full max-w-4xl">
+              <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
+                Próximos <b>eventos</b>
+              </h2>
+              {/* <h3 className="text-lg">
+                Fomentando un Diálogo Multidisciplinario para el Avance
+                Sostenible Globalmente.
+              </h3> */}
             </div>
-          </motion.div>
+          </header>
           <div>
             <EventCard />
           </div>

@@ -64,25 +64,21 @@ export const TopicsSection = () => {
   return (
     <section className=" bg-black/70">
       <div className="container section-home space-y-2">
-        <motion.div
-          className="flex"
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="mr-4">
-            <Divider
-              orientation="vertical"
-              className=" bg-orange-500 h-full w-1 rounded-full"
-            />
+        <header>
+          <div className="flex items-center gap-3 pb-3">
+            <div className="dot-custom" />
+            <p className="text-xs font-semibold text-white">#CONIAP- 2024</p>
           </div>
-          <div className="">
-            <h4 className="subtitle-section-home">CONIAP</h4>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-              Líneas temáticas
+          <div className="w-full max-w-4xl">
+            <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight text-white">
+              Líneas <b>temáticas</b>
             </h2>
+            {/* <h3 className="text-lg">
+                Fomentando un Diálogo Multidisciplinario para el Avance
+                Sostenible Globalmente.
+              </h3> */}
           </div>
-        </motion.div>
+        </header>
         <div className="grid grid-cols-1 sm:grid-cols-3  py-4">
           {topicsExample.map((topic, i) => (
             <CardTopics

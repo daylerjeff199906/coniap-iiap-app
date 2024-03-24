@@ -111,8 +111,8 @@ export const AboutUsSection = () => {
     //   </motion.div>
     // </section>
     <article className="section section-home">
-      <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
-        <div className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
+      <main className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
+        <section className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
           <Image
             src={imgAboutUs.src}
             alt="CONIAP 2024"
@@ -120,8 +120,8 @@ export const AboutUsSection = () => {
             removeWrapper
             className="w-full h-full max-h-[720px] object-cover rounded-xl"
           />
-        </div>
-        <div className="p-5 sm:p-10 flex flex-wrap">
+        </section>
+        <section className="p-5 sm:p-10 flex flex-wrap">
           <div className="flex items-center gap-3 pb-3">
             <div className="dot-custom" />
             <p className="text-xs font-semibold">#CONIAP - 2024</p>
@@ -151,8 +151,8 @@ export const AboutUsSection = () => {
               </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
     </article>
   )
 }
