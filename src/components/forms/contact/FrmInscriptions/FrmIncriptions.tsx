@@ -1,6 +1,10 @@
 'use client'
-import { useForm, Controller, FormProvider } from 'react-hook-form'
-import { ISpeaker } from '@/types'
+import {
+  useForm,
+  Controller,
+  FormProvider,
+  SubmitHandler,
+} from 'react-hook-form'
 import { Button, Checkbox, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { FilePond } from 'react-filepond'
@@ -23,6 +27,10 @@ export const FrmInscriptions = () => {
 
   const onSubmit = () => {
     setIsOpenAction(true)
+  }
+
+  const handleOnSubmit: SubmitHandler<IParticipants> = (data) => {
+    console.log(data)
   }
 
   return (
@@ -194,7 +202,7 @@ export const FrmInscriptions = () => {
         setOpen={setIsOpenAction}
         message="¿Estás seguro de enviar tu inscripción?"
         title="Confirmar inscripción"
-        onPress={() => console.log('Enviar inscripción')}
+        onPress={methods.handleSubmit(handleOnSubmit)}
       />
     </>
   )
