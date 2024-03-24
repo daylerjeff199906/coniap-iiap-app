@@ -18,11 +18,12 @@ import {
   getDownloadURL,
   deleteObject,
 } from 'firebase/storage'
-import { ISpeaker } from '@/types'
+import { IParticipants, ISpeaker } from '@/types'
 import { toast } from 'sonner'
 
 export function useSpeakers() {
   const [loading, setLoading] = useState<boolean>(false)
+  const [participant, setParticipant] = useState<IParticipants | null>(null)
   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
   const [speaker, setSpeaker] = useState<ISpeaker | null>(null)
 
@@ -69,13 +70,15 @@ export function useSpeakers() {
     }
   }
 
-  const createSpeaker = async (data: ISpeaker) => {
+  const createParticipant = async (data: IParticipants) => {
     setLoading(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000))
-      const docRef = await addDoc(collection(db, 'speakers'), data)
+      const docRef = await addDoc(collection(db, 'participants'), data)
       // console.log('Document written with ID: ', docRef.id)
-      toast.success(`Ponente creado con exito, ID: ${docRef.id}`)
+      toast.success(
+        `Su inscripción fue registrada creado con exito, ID: ${docRef.id}`
+      )
       setLoading(false)
       return docRef.id
     } catch (error) {
@@ -141,7 +144,7 @@ export function useSpeakers() {
     speakers,
     getSpekers,
     editSpeakerField,
-    createSpeaker,
+    createParticipant,
     uploadImage,
     geSpeakerById,
     speaker,
