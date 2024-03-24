@@ -1,70 +1,37 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Card, Divider } from '@nextui-org/react'
-import {
-  IconFish,
-  IconTrees,
-  IconPlant,
-  IconSettings,
-  IconBrain,
-} from '@tabler/icons-react'
+import { useEffect } from 'react'
+import { Card } from '@nextui-org/react'
+import { IconPlant } from '@tabler/icons-react'
+
 import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
-const topicsExample = [
-  {
-    title:
-      'EL AGUA Y SUS RECURSOS EN LA AMAZONIA: HIDROBIOLOGIA, ACUICULTURA Y PESCA',
-    icon: (
-      <IconFish
-        size={60}
-        stroke={1}
-      />
-    ),
-  },
-  {
-    title: 'ECOLOGiA Y USO SOSTENIBLE DE BOSQUES AMAZÓNICOS',
-    icon: (
-      <IconTrees
-        size={60}
-        stroke={1}
-      />
-    ),
-  },
-  {
-    title: 'BIODIVERSIDAD',
-    icon: (
-      <IconPlant
-        size={60}
-        stroke={1}
-      />
-    ),
-  },
-  {
-    title:
-      'CONOCIMIENTOS TRADICIONALES, CONSERVACIÓN Y BUEN VIVIR EN LA AMAZONIA PERUANA',
-
-    icon: (
-      <IconSettings
-        size={60}
-        stroke={1}
-      />
-    ),
-  },
-  {
-    title: 'GESTIÓN TERRITORIAL PARA EL DESARROLLO DE LA AMAZONÍA PERUANA',
-    icon: (
-      <IconBrain
-        size={60}
-        stroke={1}
-      />
-    ),
-  },
-]
+import { useTopics } from '@/hooks/client'
 
 export const TopicsSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: false, // La animación solo se activará una vez
+    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
+  })
+
+  const { topics, getTopics } = useTopics()
+
+  useEffect(() => {
+    getTopics()
+  }, [])
+
   return (
     <section className=" bg-black/70">
-      <div className="container section-home space-y-2">
-        <header>
+      <div
+        className="container section-home space-y-2"
+        ref={ref}
+      >
+        <motion.header
+          initial={{ opacity: 0, x: -100 }}
+          animate={inView ? { opacity: 1, x: 1 } : {}}
+          transition={{ duration: 0.5 }}
+        >
           <div className="flex items-center gap-3 pb-3">
             <div className="dot-custom" />
             <p className="text-xs font-semibold text-white">#CONIAP- 2024</p>
@@ -78,22 +45,29 @@ export const TopicsSection = () => {
                 Sostenible Globalmente.
               </h3> */}
           </div>
-        </header>
+        </motion.header>
         <div className="grid grid-cols-1 sm:grid-cols-3  py-4">
-          {topicsExample.map((topic, i) => (
-            <CardTopics
-              key={i}
-              title={topic.title}
-              icon={topic.icon}
-            />
-          ))}
+          {topics &&
+            topics?.map((topic, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 100 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <CardTopics
+                  title={topic.name}
+                  icon={topic.image}
+                />
+              </motion.div>
+            ))}
         </div>
       </div>
     </section>
   )
 }
 
-const CardTopics = ({ title, icon }: { title: string; icon: JSX.Element }) => {
+const CardTopics = ({ title, icon }: { title: string; icon: string }) => {
   return (
     <Card
       className={`bg-transparent text-white p-6 text-center flex flex-col justify-center items-center gap-2 animate-appearance-in `}
@@ -101,7 +75,10 @@ const CardTopics = ({ title, icon }: { title: string; icon: JSX.Element }) => {
       shadow="none"
     >
       <div className="flex justify-center items-center  rounded-full p-4">
-        {icon}
+        <IconPlant
+          size={42}
+          stroke={1}
+        />
       </div>
       <h3 className="font-bold">{title}</h3>
     </Card>

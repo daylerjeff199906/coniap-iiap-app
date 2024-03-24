@@ -1,6 +1,7 @@
 'use client'
-import { Card, CardBody, Divider, Image } from '@nextui-org/react'
-import { motion, Variants } from 'framer-motion'
+import { Card, CardBody, Image } from '@nextui-org/react'
+import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
 import {
   IconFlag,
@@ -58,10 +59,29 @@ const indicator = [
   },
 ]
 
+const container = {
+  hidden: { opacity: 1, scale: 0 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2,
+    },
+  },
+}
+
 export const AboutUsSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: false, // La animación solo se activará una vez
+    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
+  })
   return (
     <article className="section section-home">
-      <main className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
+      <main
+        className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container"
+        ref={ref}
+      >
         <section className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
           <Image
             src={imgAboutUs.src}
@@ -72,41 +92,62 @@ export const AboutUsSection = () => {
           />
         </section>
         <section className="p-5 sm:p-10 flex flex-wrap">
-          <div className="flex items-center gap-3 pb-3">
+          <motion.div
+            className="flex items-center gap-3 pb-3"
+            initial={{ opacity: 0, x: 20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+            transition={{ duration: 0.5 }}
+          >
             <div className="dot-custom" />
             <p className="text-xs font-semibold">#CONIAP - 2024</p>
-          </div>
+          </motion.div>
 
           <div className="">
             <motion.h2
               className="text-3xl sm:text-[40px] pb-6 leading-tight"
-              initial="offScreen"
-              whileInView="onScreen"
-              viewport={{ once: true, amount: 0.3 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              transition={{ duration: 0.5 }}
             >
               Por un Futuro Verde:
               <b>CONIAP</b> y la transformación de la <b>Amazonía</b>
             </motion.h2>
-            <h3 className="text-lg">
+            <motion.h3
+              className="text-lg"
+              initial={{ opacity: 0, x: 20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              transition={{ duration: 0.5 }}
+            >
               Fomentando un Diálogo Multidisciplinario para el Avance Sostenible
               Globalmente.
-            </h3>
+            </motion.h3>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 ">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 "
+            variants={container}
+            // initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+          >
             {indicator.map((item, index) => (
-              <Card
+              <motion.div
                 key={index}
-                className="space-y-3 lg:p-5 rounded-xl text-center border-none"
-                shadow="none"
+                initial={{ opacity: 0, y: 100 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: index * 0.2 }}
               >
-                <CardBody className="space-y-3">
-                  <div className="w-full text-gray-400">{item.icon}</div>
-                  {/* <h1 className="text-xl font-bold">{item.title}</h1> */}
-                  <p className="text-xs lg:text-sm">{item.description}</p>
-                </CardBody>
-              </Card>
+                <Card
+                  className="space-y-3 lg:p-5 rounded-xl text-center border-none"
+                  shadow="none"
+                >
+                  <CardBody className="space-y-3">
+                    <div className="w-full text-gray-400">{item.icon}</div>
+                    {/* <h1 className="text-xl font-bold">{item.title}</h1> */}
+                    <p className="text-xs lg:text-sm">{item.description}</p>
+                  </CardBody>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </section>
       </main>
     </article>
