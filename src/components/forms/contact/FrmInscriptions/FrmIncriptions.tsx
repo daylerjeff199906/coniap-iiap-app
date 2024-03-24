@@ -5,13 +5,14 @@ import { Button, Checkbox, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { FilePond } from 'react-filepond'
 import { ModalAction } from '@/components'
+import { IParticipants } from '@/types'
 
 export const FrmInscriptions = () => {
   const [showFile, setShowFile] = useState<boolean>(false)
   const [files, setFiles] = useState<File[]>([])
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const methods = useForm<ISpeaker>()
+  const methods = useForm<IParticipants>()
 
   const dateLimit = '2024-10-01'
   const inDate = new Date() < new Date(dateLimit)
@@ -40,7 +41,7 @@ export const FrmInscriptions = () => {
           </div>
           <Controller
             control={methods.control}
-            name="fullName"
+            name="name"
             rules={{ required: 'Este campo es requerido' }}
             render={({ field: { value, onChange } }) => (
               <Input
@@ -50,8 +51,8 @@ export const FrmInscriptions = () => {
                 placeholder="Nombres"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={methods.formState.errors.fullName !== undefined}
-                errorMessage={methods.formState.errors.fullName?.message}
+                isInvalid={methods.formState.errors.name !== undefined}
+                errorMessage={methods.formState.errors.name?.message}
               />
             )}
           />

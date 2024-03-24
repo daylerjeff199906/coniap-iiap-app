@@ -6,6 +6,7 @@ import { IMenuAside } from './IMenuAside'
 import { IColumns } from './table/IColumns'
 import { IUser } from './IUser'
 import { ITopic } from './ITopics'
+import { IParticipants } from './IParticipants'
 
 export type {
   ISpeaker,
@@ -16,4 +17,5 @@ export type {
   IColumns,
   IUser,
   ITopic,
+  IParticipants,
 }
