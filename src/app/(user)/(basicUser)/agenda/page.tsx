@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect } from 'react'
-import { LoadingPages } from '@/components'
+import { ListShedule, LoadingPages } from '@/components'
 import { usePrograms } from '@/hooks/client'
 import { DataNotFound } from '@/components'
 
@@ -14,17 +14,15 @@ export default function Page() {
 
   return (
     <>
-      <main className="container">
+      <div>
         {programs !== null && programs.length > 0 ? (
           <>
-            <section className="py-4">
-              <h1>Eventos</h1>
-            </section>
+            <ListShedule programs={programs} />
           </>
         ) : (
           <DataNotFound />
         )}
-      </main>
+      </div>
       <LoadingPages isOpen={loading} />
     </>
   )

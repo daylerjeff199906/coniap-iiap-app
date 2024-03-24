@@ -1,7 +1,11 @@
+import { InfoAboutUs } from '@/components'
+
 export default function Page() {
   return (
-    <div>
-      <h1>Page</h1>
-    </div>
+    <>
+      <article className="py-6">
+        <InfoAboutUs />
+      </article>
+    </>
   )
 }

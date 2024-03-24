@@ -11,7 +11,7 @@
 }
 
 .title-section-home {
-  @apply text-2xl sm:text-3xl lg:text-4xl font-extrabold text-success-700;
+  @apply text-2xl sm:text-3xl lg:text-4xl font-extrabold;
 }
 
 .subtitle-section-home {

@@ -69,7 +69,7 @@ export const NavBarUser = () => {
             <Button
               as={Link}
               color="danger"
-              href="#"
+              href="/inscripciones"
               variant="solid"
               radius="full"
             >

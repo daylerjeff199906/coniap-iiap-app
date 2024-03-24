@@ -1,6 +1,6 @@
 'use client'
 import { Card, CardBody, Divider } from '@nextui-org/react'
-import { motion, Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { IconFlag, IconDirections, IconCompass } from '@tabler/icons-react'
 
 const indicator = [
