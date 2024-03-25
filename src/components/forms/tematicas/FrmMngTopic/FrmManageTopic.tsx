@@ -57,7 +57,7 @@ export const FrmManageTopic = (props: IProps) => {
       const newData = {
         ...data,
         image: '',
-        isActive: false,
+        isActived: false,
       }
       const idSpeaker = await creatTopic(newData)
       if (idSpeaker !== null && files.length > 0) {
@@ -160,7 +160,7 @@ export const FrmManageTopic = (props: IProps) => {
                       files={files}
                       onupdatefiles={handleUpdateFiles}
                       labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-                      required={id ? false : true}
+                      // required={id ? false : true}
                     />
                   </>
                 )}

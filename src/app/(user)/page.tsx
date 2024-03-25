@@ -7,7 +7,6 @@ import {
   TimeSection,
   SpeakersSection,
   TopicsSection,
-  WorkTeamSection,
   SponsorSection,
   EventsSection,
   InscriptionsSection,
@@ -26,7 +25,6 @@ export default function Page() {
       <MoreEventsSection />
       <EventsSection />
       <InscriptionsSection />
-      <WorkTeamSection />
       <SponsorSection />
     </main>
   )
