@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
+import { use, useEffect } from 'react'
 import { Card } from '@nextui-org/react'
 import { IconPlant } from '@tabler/icons-react'
 
@@ -15,10 +15,14 @@ export const TopicsSection = () => {
     threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
   })
 
-  const { topics, getTopics } = useTopics()
+  const { topics, getTopics, getTopicsActive } = useTopics()
 
   useEffect(() => {
     getTopics()
+  }, [])
+
+  useEffect(() => {
+    getTopicsActive()
   }, [])
 
   return (

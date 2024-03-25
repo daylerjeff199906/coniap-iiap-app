@@ -1,3 +1,7 @@
+const API_URL = process.env.APP_URL_PROD
+const API_KEY = process.env.APP_API_KEY
+const API_AUTH = process.env.APP_API_AUTH
+
 import { useState } from 'react'
 import { db } from '@/firebase/firebase'
 import {
@@ -56,11 +60,29 @@ export function useTopics() {
     }
   }
 
+  async function getTopicsActive() {
+    const response = await fetch(`${API_URL}/topics`, {
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: `${API_KEY}`, // Reemplaza 'tu-api-key-de-supabase' con tu API key de Supabase
+        authorization: `Bearer ${API_AUTH}`,
+      },
+    })
+    if (response.ok) {
+      console.log(response)
+      return response.json()
+    } else {
+      console.log(response)
+      throw new Error('Error al obtener los datos')
+    }
+  }
+
   return {
     loading,
     topics,
     getTopics,
     getTopicById,
     topic,
+    getTopicsActive,
   }
 }
