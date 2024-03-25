@@ -7,10 +7,10 @@ import {
   TimeSection,
   SpeakersSection,
   TopicsSection,
-  WorkTeamSection,
   SponsorSection,
   EventsSection,
   InscriptionsSection,
+  MoreEventsSection,
 } from '@/components'
 
 export default function Page() {
@@ -22,9 +22,9 @@ export default function Page() {
       <SpeakersSection />
       <TopicsSection />
       <ScheduleSection />
+      <MoreEventsSection />
       <EventsSection />
       <InscriptionsSection />
-      <WorkTeamSection />
       <SponsorSection />
     </main>
   )

@@ -13,6 +13,8 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { usePathname } from 'next/navigation'
+
 const menuItems = [
   { name: 'Home', link: '/' },
   { name: 'Sobre nosotros', link: '/sobre-coniap' },
@@ -23,6 +25,8 @@ const menuItems = [
 
 export const NavBarUser = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const pathname = usePathname()
 
   return (
     <>
@@ -56,7 +60,10 @@ export const NavBarUser = () => {
           justify="center"
         >
           {menuItems.map((item, index) => (
-            <NavbarItem key={index}>
+            <NavbarItem
+              key={index}
+              isActive={pathname === item.link}
+            >
               <Link href={item.link}>{item.name}</Link>
             </NavbarItem>
           ))}
