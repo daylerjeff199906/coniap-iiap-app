@@ -16,17 +16,15 @@ import { ITopic } from '@/types'
 
 export default async function Page() {
   const supabase = createClient()
-  const { data: topics } = await supabase.from('topics').select()
-  // const dateTopics: ITopic[] = topics.map((topic: ITopic) => ({
-  //   ...topic,
-  //   date: new Date(topic.date),
-  // }))
+  const { data: topics } = await supabase
+    .from('topics')
+    .select()
+    .eq('isActived', true)
+
   const dateTopics: ITopic[] | undefined = topics?.map((topic: ITopic) => ({
     ...topic,
     date: new Date(topic?.created_at),
   }))
-
-  console.log(dateTopics)
 
   return (
     <main>
