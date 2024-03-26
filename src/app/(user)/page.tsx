@@ -58,6 +58,22 @@ export default async function Page() {
     ...event,
     date: event?.date,
   }))
+
+  // const { data: programAndEvent } = await supabase
+  //   .from('programs')
+  //   .select(
+  //     'event_id, (select id from events where events.id = programs.event_id) as event_id'
+  //   )
+
+  // // const { data: programAndEvent } = await supabase.from('programs').select('*')
+  // const { data: events } = await supabase
+  //   .from('events')
+  //   .select('events.*, program_id')
+  //   .eq('isActived', true)
+
+  // console.log('programas', programAndEvent)
+  // console.log('eventos', events)
+
   return (
     <main>
       <BannerHome />
