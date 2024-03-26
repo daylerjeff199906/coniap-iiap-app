@@ -37,7 +37,7 @@ export const FrmInscriptions = () => {
     <>
       <FormProvider {...methods}>
         <form
-          className="w-full max-w-xl sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6 sm:py-8 sm:shadow-lg sm:rounded-lg"
+          className="w-full max-w-xl sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6 sm:py-8"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div className="col-span-2">
