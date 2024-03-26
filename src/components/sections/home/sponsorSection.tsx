@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { motion } from 'framer-motion'
@@ -17,8 +16,6 @@ import 'swiper/css/pagination'
 import { Pagination } from 'swiper/modules'
 import { ISponsor } from '@/types'
 
-//import hook useSponsors
-// import { useSponsors } from '@/hooks/client'
 interface IProps {
   sponsors: ISponsor[] | undefined
 }
@@ -50,10 +47,6 @@ export const SponsorSection = (props: IProps) => {
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
                 Nuestros <b>colaboradores</b>
               </h2>
-              {/* <h3 className="text-lg">
-                Fomentando un Diálogo Multidisciplinario para el Avance
-                Sostenible Globalmente.
-              </h3> */}
             </div>
           </motion.header>
           <motion.div
