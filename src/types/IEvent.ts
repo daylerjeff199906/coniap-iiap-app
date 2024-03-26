@@ -1,6 +1,7 @@
 import { IPerson } from '.'
 export interface IEvent {
   id: string
+  program_id: string
   //observar
   person: IPerson | null
   isActived: boolean
