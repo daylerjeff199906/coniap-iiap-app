@@ -1,4 +1,3 @@
-// 'use client'
 import { createClient } from '@/utils/supabase/server'
 import {
   AboutUsSection,
@@ -12,8 +11,7 @@ import {
   InscriptionsSection,
   MoreEventsSection,
 } from '@/components'
-import { ITopic } from '@/types'
-import { IPerson } from '@/types/IPersons'
+import { ITopic, IPerson, ISponsor } from '@/types'
 
 export default async function Page() {
   const supabase = createClient()
@@ -28,6 +26,11 @@ export default async function Page() {
     .eq('isActived', true)
     .eq('typePerson', 'speaker_mg')
 
+  const { data: sponsors } = await supabase
+    .from('sponsors')
+    .select()
+    .eq('isActived', true)
+
   const dataTopics: ITopic[] | undefined = topics?.map((topic: ITopic) => ({
     ...topic,
     date: new Date(topic?.created_at),
@@ -37,6 +40,13 @@ export default async function Page() {
     ...person,
     date: new Date(person?.created_at),
   }))
+
+  const dataSponsors: ISponsor[] | undefined = sponsors?.map(
+    (sponsor: ISponsor) => ({
+      ...sponsor,
+      created_at: new Date(sponsor?.created_at),
+    })
+  )
 
   return (
     <main>
@@ -49,7 +59,7 @@ export default async function Page() {
       <MoreEventsSection />
       <EventsSection />
       <InscriptionsSection />
-      <SponsorSection />
+      <SponsorSection sponsors={dataSponsors} />
     </main>
   )
 }
