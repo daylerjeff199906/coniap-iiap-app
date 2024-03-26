@@ -11,7 +11,7 @@ import {
   InscriptionsSection,
   MoreEventsSection,
 } from '@/components'
-import { ITopic, IPerson, ISponsor } from '@/types'
+import { ITopic, IPerson, ISponsor, IEvent } from '@/types'
 
 export default async function Page() {
   const supabase = createClient()
@@ -31,6 +31,12 @@ export default async function Page() {
     .select()
     .eq('isActived', true)
 
+  const { data: event } = await supabase
+    .from('events')
+    .select()
+    .eq('isActived', true)
+    .is('sala', null)
+
   const dataTopics: ITopic[] | undefined = topics?.map((topic: ITopic) => ({
     ...topic,
     date: new Date(topic?.created_at),
@@ -48,6 +54,10 @@ export default async function Page() {
     })
   )
 
+  const dataEvents: IEvent[] | undefined = event?.map((event: IEvent) => ({
+    ...event,
+    date: event?.date,
+  }))
   return (
     <main>
       <BannerHome />
@@ -57,7 +67,7 @@ export default async function Page() {
       <TopicsSection topics={dataTopics} />
       <ScheduleSection />
       <MoreEventsSection />
-      <EventsSection />
+      <EventsSection events={dataEvents} />
       <InscriptionsSection />
       <SponsorSection sponsors={dataSponsors} />
     </main>
