@@ -5,11 +5,11 @@ export const AlbumSection = () => {
     <>
       <section className="py-10 sm:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-3 items-center">
-          <div>
+          <div className="w-full h-full">
             <iframe
               // width=""
               // height="315"
-              className="w-full h-96 sm:h-96"
+              className="w-full h-96 sm:h-full"
               src="https://www.youtube.com/embed/RPHdeC-QQOM?si=39FTowF9AL5RMSVS"
               title="YouTube video player"
               // frameborder="0"
