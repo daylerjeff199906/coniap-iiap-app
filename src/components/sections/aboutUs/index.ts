@@ -1,3 +1,4 @@
 import { InfoAboutUs } from './infoAboutUs'
 import { AlbumSection } from './albumSection'
-export { InfoAboutUs, AlbumSection }
+import { OrganizationSection } from './organizationSection'
+export { InfoAboutUs, AlbumSection, OrganizationSection }

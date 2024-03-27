@@ -1,4 +1,4 @@
-import { AlbumSection, InfoAboutUs } from '@/components'
+import { AlbumSection, InfoAboutUs, OrganizationSection } from '@/components'
 
 export default function Page() {
   return (
@@ -6,6 +6,7 @@ export default function Page() {
       <article className="py-6">
         <InfoAboutUs />
         <AlbumSection />
+        <OrganizationSection />
       </article>
     </>
   )

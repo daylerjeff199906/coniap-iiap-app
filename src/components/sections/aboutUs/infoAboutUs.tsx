@@ -6,7 +6,7 @@ import { Image } from '@nextui-org/react'
 
 export const InfoAboutUs = () => {
   const [ref, inView] = useInView({
-    triggerOnce: false, // La animación solo se activará una vez
+    triggerOnce: true, // La animación solo se activará una vez
     threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
   })
   return (
@@ -42,7 +42,12 @@ export const InfoAboutUs = () => {
             >
               Congreso <b>Internacional</b> de la <b>AMAZONÍA </b> Peruana
             </motion.h2>
-            <div className="w-full">
+            <motion.div
+              className="w-full"
+              initial={{ opacity: 0, x: 20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              transition={{ duration: 0.5 }}
+            >
               <p className="leading-relaxed">
                 El Congreso Internacional sobre Amazonia peruana: investigación
                 para el desarrollo, perspectivas y retos, que se realizará
@@ -61,7 +66,7 @@ export const InfoAboutUs = () => {
                 cambio climático y el marco de los Objetivos del Desarrollo
                 Sostenible - ODS.
               </p>
-            </div>
+            </motion.div>
           </section>
         </main>
       </section>
