@@ -9,7 +9,6 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
-import { useSpeaker } from '@/hooks/client'
 import { IPerson } from '@/types'
 
 interface IProps {
