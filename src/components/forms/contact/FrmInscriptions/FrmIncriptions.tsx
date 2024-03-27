@@ -37,15 +37,15 @@ export const FrmInscriptions = () => {
     <>
       <FormProvider {...methods}>
         <form
-          className="w-full max-w-xl sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6 sm:py-8 sm:shadow-lg sm:rounded-lg"
+          className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div className="col-span-2">
-            <h1 className="text-xl font-bold">Formulario de inscripción</h1>
-            <p className="text-xs text-gray-500">
-              Ingresa tus datos para inscribirte en el evento, puedes participar
-              como asistente o expositor.
-            </p>
+            <h3 className="text-sm sm:text-lg">
+              <b>¿Listo para aprovechar la oportunidad?</b> Déjanos tus datos
+              para descargar nuestra Carpeta de Eventos 2024 y explorar todas
+              nuestras fórmulas de participación.
+            </h3>
           </div>
           <Controller
             control={methods.control}
@@ -186,11 +186,12 @@ export const FrmInscriptions = () => {
           >
             Acepto los términos y condiciones
           </Checkbox>
-          <div className="col-span-2 flex justify-end">
+          <div className="col-span-2">
             <Button
-              radius="sm"
+              radius="full"
               color="primary"
               type="submit"
+              size="lg"
             >
               Enviar
             </Button>

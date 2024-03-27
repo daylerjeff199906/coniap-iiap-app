@@ -1,25 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
 import { Card } from '@nextui-org/react'
 import { IconPlant } from '@tabler/icons-react'
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
-import { useTopics } from '@/hooks/client'
+import { ITopic } from '@/types'
 
-export const TopicsSection = () => {
+interface IProps {
+  topics: ITopic[] | undefined
+}
+
+export const TopicsSection = (props: IProps) => {
+  const { topics } = props
   const [ref, inView] = useInView({
     triggerOnce: false, // La animación solo se activará una vez
     threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
   })
-
-  const { topics, getTopics } = useTopics()
-
-  useEffect(() => {
-    getTopics()
-  }, [])
 
   return (
     <section className=" bg-black/70">

@@ -69,7 +69,7 @@ export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
                   key: sponsor.id,
                   image: RenderImage(sponsor.image),
                   name: sponsor.name,
-                  status: sponsor.isActive,
+                  status: sponsor.isActived,
                   actions: 'actions',
                 }
               })

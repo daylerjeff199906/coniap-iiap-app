@@ -1,9 +1,9 @@
 'use client'
 import { Card, CardBody, CardFooter, Divider, Image } from '@nextui-org/react'
-import { ISpeaker } from '@/types'
+import { IPerson } from '@/types'
 
 interface IProps {
-  speaker: ISpeaker
+  speaker: IPerson
 }
 
 export const CardSpeaker = (props: IProps) => {
@@ -30,11 +30,9 @@ export const CardSpeaker = (props: IProps) => {
       <CardBody className="bg-white p-6">
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-lg sm:text-xl line-clamp-1">
-            {speaker.fullName + ' ' + speaker.surName}
+            {speaker.name + ' ' + speaker.surName}
           </h3>
-          <p className="text-tiny sm:text-medium ">
-            {speaker.institution}
-          </p>
+          <p className="text-tiny sm:text-medium ">{speaker.institution}</p>
         </div>
       </CardBody>
     </Card>

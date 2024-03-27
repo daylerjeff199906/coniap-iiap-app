@@ -52,6 +52,7 @@ export const MoreEventsSection = () => {
     triggerOnce: false, // La animación solo se activará una vez
     threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
   })
+
   return (
     <>
       <section className="w-full bg-gray-200 section-home">

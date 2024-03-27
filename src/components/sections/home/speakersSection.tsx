@@ -9,14 +9,14 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
-import { useSpeaker } from '@/hooks/client'
+import { IPerson } from '@/types'
 
-export const SpeakersSection = () => {
-  const { speakersActive, getSpekersActive } = useSpeaker()
+interface IProps {
+  persons: IPerson[] | undefined
+}
 
-  useEffect(() => {
-    getSpekersActive()
-  }, [])
+export const SpeakersSection = (props: IProps) => {
+  const { persons: speakersActive } = props
 
   const [ref, inView] = useInView({
     triggerOnce: false, // La animación solo se activará una vez

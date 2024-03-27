@@ -1,6 +1,7 @@
 export interface ISponsor {
   id: string
-  name?: string
+  name: string
   image: string
-  isActive?: boolean
+  isActived: boolean
+  created_at: Date
 }

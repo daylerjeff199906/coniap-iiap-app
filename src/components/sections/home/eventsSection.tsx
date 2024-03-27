@@ -1,15 +1,14 @@
 'use client'
-import { motion } from 'framer-motion'
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Divider,
-  Image,
-} from '@nextui-org/react'
+import { IEvent } from '@/types'
+// import { motion } from 'framer-motion'
+import { Button, Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 
-export const EventsSection = () => {
+interface IProps {
+  events: IEvent[] | undefined
+}
+
+export const EventsSection = (props: IProps) => {
+  const { events } = props
   return (
     <>
       <section className="bg-white section-home">
@@ -23,14 +22,16 @@ export const EventsSection = () => {
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
                 Próximos <b>eventos</b>
               </h2>
-              {/* <h3 className="text-lg">
-                Fomentando un Diálogo Multidisciplinario para el Avance
-                Sostenible Globalmente.
-              </h3> */}
             </div>
           </header>
           <div>
-            <EventCard />
+            {events &&
+              events.map((event, i) => (
+                <EventCard
+                  key={i}
+                  data={event}
+                />
+              ))}
           </div>
         </div>
       </section>
@@ -38,7 +39,7 @@ export const EventsSection = () => {
   )
 }
 
-const EventCard = () => {
+const EventCard = ({ data }: { data: IEvent }) => {
   return (
     <Card
       className="bg-white max-w-sm"
