@@ -1,28 +1,49 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Divider } from '@nextui-org/react'
+import { useInView } from 'react-intersection-observer'
+import img_logo from '@/assets/svg/IMAGOTIPO - CONIAP.svg'
+import { Image } from '@nextui-org/react'
 
 export const InfoAboutUs = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: false, // La animación solo se activará una vez
+    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
+  })
   return (
     <>
-      <section>
-        <motion.header
-          className="flex flex-col items-center"
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="text-center flex flex-col items-center">
-            <h4 className="subtitle-section-home">CONIAP</h4>
-            <h2 className="title-section-home">Nuestro propósito</h2>
-            <Divider className="bg-orange-500 pt-1 rounded-full mt-4 w-36 " />
+      <section
+        className=""
+        ref={ref}
+      >
+        <main className="p-4 grid grid-cols-1 sm:grid-cols-2 items-center">
+          <div className="">
+            <Image
+              src={img_logo.src}
+              alt="CONIAP 2024"
+              removeWrapper
+              className="w-full h-full max-h-[520px] rounded-xl"
+            />
           </div>
-        </motion.header>
-        <main className="p-4">
           <section>
-            <div></div>
-            <div>
-              <p>
+            <motion.div
+              className="flex items-center gap-3 pb-3"
+              initial={{ opacity: 0, x: 20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              transition={{ duration: 0.5 }}
+            >
+              <div className="dot-custom" />
+              <p className="text-xs font-semibold">#CONIAP - 2024</p>
+            </motion.div>
+            <motion.h2
+              className="text-3xl sm:text-[40px] pb-6 leading-tight"
+              initial={{ opacity: 0, x: 20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              transition={{ duration: 0.5 }}
+            >
+              Congreso <b>Internacional</b> de la <b>AMAZONÍA </b> Peruana
+            </motion.h2>
+            <div className="w-full">
+              <p className="leading-relaxed">
                 El Congreso Internacional sobre Amazonia peruana: investigación
                 para el desarrollo, perspectivas y retos, que se realizará
                 anualmente, se constituye en un espacio de diálogo abierto de
