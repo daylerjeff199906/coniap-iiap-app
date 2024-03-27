@@ -1,3 +1,3 @@
 import { InfoAboutUs } from './infoAboutUs'
-
-export { InfoAboutUs }
+import { AlbumSection } from './albumSection'
+export { InfoAboutUs, AlbumSection }
