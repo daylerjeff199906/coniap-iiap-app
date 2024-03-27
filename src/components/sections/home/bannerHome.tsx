@@ -85,7 +85,7 @@ export const BannerHome = () => {
               variants={item}
             >
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2Fiiap-expo.webp?alt=media&token=df476d80-88cd-40d0-ab86-2fd2a83ca39d"
+                src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
                 alt="Banner Home"
                 className="w-52 h-60 object-cover "
                 radius="sm"
@@ -104,7 +104,7 @@ export const BannerHome = () => {
           <div className="space-y-3 pt-14">
             <motion.div variants={item}>
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2Fiiap-colecta.webp?alt=media&token=f92e36ba-65ef-4935-b3e1-85d522047ec3"
+                src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
                 alt="expoIIAP"
                 radius="sm"
                 className="w-64 h-72 object-cover"
