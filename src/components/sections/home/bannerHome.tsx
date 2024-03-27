@@ -30,7 +30,7 @@ export const BannerHome = () => {
   return (
     <section
       id="banner-home"
-      className="h-screen flex items-center relative bg-gradient-to-r from-black/90 to-transparent"
+      className="h-screen flex items-center relative bg-gradient-to-r from-black/90 to-transparent w-full"
     >
       <div className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-4">
         <div className="w-full lg:max-w-2xl space-y-8">

@@ -63,8 +63,8 @@ export const MoreEventsSection = () => {
           <header className="pb-4">
             <motion.div
               className="flex items-center gap-3 pb-3"
-              initial={{ opacity: 0, x: -100 }}
-              animate={inView ? { opacity: 1, x: 1 } : {}}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5 }}
             >
               <div className="dot-custom" />

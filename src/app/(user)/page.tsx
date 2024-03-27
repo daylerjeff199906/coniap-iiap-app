@@ -60,7 +60,7 @@ export default async function Page() {
   }))
 
   return (
-    <main>
+    <main className=''>
       <BannerHome />
       <TimeSection />
       <AboutUsSection />

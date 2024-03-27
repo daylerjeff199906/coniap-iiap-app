@@ -21,8 +21,8 @@ export const InscriptionsSection = () => {
           >
             <motion.div
               className="w.full h-ful"
-              initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
               transition={{ duration: 0.5 }}
             >
               <Image
@@ -34,8 +34,8 @@ export const InscriptionsSection = () => {
             </motion.div>
             <motion.div
               className="space-y-4 sm:space-y-6 lg:space-y-8 sm:m-4 lg:m-6"
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
               transition={{ duration: 0.5 }}
             >
               <div className="space-y-2">
