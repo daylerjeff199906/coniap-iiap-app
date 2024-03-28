@@ -36,21 +36,6 @@ export const Footer = () => {
   return (
     <>
       <footer className="">
-        {/* <section>
-          <div className="space-y-4">
-            <Image
-              src="/logo_coniap.webp"
-              alt="logo"
-              width={160}
-              height={100}
-            />
-            <p className="text-white text-tiny">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              euismod bibendum laoreet.
-            </p>
-          </div>
-        </section> */}
-        {/* <section className="grid grid-cols-4 gap-6 "></section> */}
         <section className="py-4 bg-white">
           <div className="grid grid-cols-1 gap-3 container">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -64,7 +49,7 @@ export const Footer = () => {
                 />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                <div className='lg:col-span-2'>
+                <div className="lg:col-span-2">
                   <h1 className="text-5xl font-bold">CONIAP</h1>
                   <p className="font-bold uppercase">
                     Congreso Internacional sobre la Amazonía Peruana
