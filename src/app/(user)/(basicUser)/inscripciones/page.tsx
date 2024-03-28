@@ -1,6 +1,6 @@
 'use client'
 
-import { FrmInscriptions } from '@/components'
+import { FrmContactUs, FrmInscriptions } from '@/components'
 import img_logo from '@/assets/svg/ISOTIPO - CONIAP.svg'
 import { Image } from '@nextui-org/react'
 
@@ -27,6 +27,7 @@ export default function Page() {
             <FrmInscriptions />
           </div>
         </section>
+        <FrmContactUs />
       </main>
     </>
   )
