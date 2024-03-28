@@ -5,7 +5,7 @@ import { Input } from '@nextui-org/react'
 import { IconSearch } from '@tabler/icons-react'
 
 import { useEvents } from '@/hooks/client'
-import { CardEvent, DataNotFound } from '@/components'
+import { CardEvent, DataNotFound, LoadingPages } from '@/components'
 
 export const ListEventsPage = () => {
   const [query, setQuery] = useState<string>('')
@@ -36,7 +36,7 @@ export const ListEventsPage = () => {
               placeholder="Buscar eventos ..."
               variant="bordered"
               radius="sm"
-              color='primary'
+              color="primary"
               startContent={<IconSearch />}
               value={query}
               onValueChange={setQuery}
@@ -63,6 +63,7 @@ export const ListEventsPage = () => {
           )}
         </section>
       </article>
+      <LoadingPages isOpen={loading} />
     </>
   )
 }

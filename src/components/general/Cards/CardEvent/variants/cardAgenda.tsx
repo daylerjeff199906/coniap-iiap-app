@@ -81,7 +81,7 @@ export const CardAgendaEvent = (props: IProps) => {
                 </div>
               </div>
               <Link
-                href={`/agenda/${event?.id}`}
+                href={`/eventos/${event?.id}`}
                 className="hidden lg:block"
               >
                 <p className="font-medium text-base">Leer más</p>
