@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createClient } from '@/utils/supabase/server'
-import { ListShedule, LoadingPages } from '@/components'
+import { ListShedule } from '@/components'
 import { DataNotFound } from '@/components'
 import { IEvent, IProgram } from '@/types'
 
@@ -18,8 +18,6 @@ export default async function Page() {
     .eq('isActived', true)
     .not('program_id', 'is', null)) as { data: IEvent[] }
 
-  console.log(programs)
-
   return (
     <>
       <div>
@@ -34,7 +32,6 @@ export default async function Page() {
           <DataNotFound />
         )}
       </div>
-      {/* <LoadingPages isOpen={loading} /> */}
     </>
   )
 }
