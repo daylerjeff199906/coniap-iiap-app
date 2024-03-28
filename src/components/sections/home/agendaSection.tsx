@@ -1,4 +1,5 @@
 'use client'
+import { CardEvent } from '@/components'
 import { IEvent, IProgram } from '@/types'
 import { Button, Tab, Tabs } from '@nextui-org/react'
 import { motion } from 'framer-motion'
@@ -79,9 +80,9 @@ export const AgendaSection = (props: IProps) => {
                     {events
                       ?.filter((event) => event.program_id === program.id) // Filtrar eventos por program_id
                       .map((filteredEvent, eventIndex) => (
-                        <CardListEvent
+                        <CardEvent
                           key={eventIndex}
-                          events={filteredEvent}
+                          event={filteredEvent}
                         />
                       ))}
                   </div>
@@ -92,15 +93,5 @@ export const AgendaSection = (props: IProps) => {
         </div>
       </section>
     </>
-  )
-}
-
-const CardListEvent = ({ events }: { events: IEvent }) => {
-  return (
-    <div className="p-4">
-      <p>{events?.date}</p>
-      <p className="text-lg font-bold underline">{events?.name}</p>
-      <p>{events?.date}</p>
-    </div>
   )
 }

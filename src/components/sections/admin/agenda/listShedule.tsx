@@ -1,6 +1,6 @@
 'use client'
 
-import { CardEventLarge, DataNotFound } from '@/components'
+import { DataNotFound, CardEvent } from '@/components'
 import { IProgram } from '@/types'
 import { Divider, Tab, Tabs } from '@nextui-org/react'
 
@@ -40,7 +40,7 @@ export const ListShedule = (props: IProps) => {
                   {program?.events.length > 0 ? (
                     <>
                       {program.events.map((event, index) => (
-                        <CardEventLarge
+                        <CardEvent
                           key={index}
                           event={event}
                         />
