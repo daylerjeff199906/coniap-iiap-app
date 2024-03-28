@@ -105,7 +105,7 @@ export const MoreEventsSection = (props: IProps) => {
                 color="primary"
                 className="text-white"
                 as={Link}
-                href="/ponentes"
+                href="/agenda"
               >
                 Ver todo
               </Button>

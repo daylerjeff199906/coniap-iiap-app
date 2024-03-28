@@ -1,4 +1,9 @@
-import { AlbumSection, InfoAboutUs, OrganizationSection } from '@/components'
+import {
+  AlbumSection,
+  FrmContactUs,
+  InfoAboutUs,
+  OrganizationSection,
+} from '@/components'
 
 export default function Page() {
   return (
@@ -7,6 +12,7 @@ export default function Page() {
         <InfoAboutUs />
         <AlbumSection />
         <OrganizationSection />
+        <FrmContactUs />
       </article>
     </>
   )
