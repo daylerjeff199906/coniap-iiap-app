@@ -40,12 +40,16 @@ export const ListShedule = (props: IProps) => {
                   </div>
                   {events.length > 0 ? (
                     <>
-                      {events.map((event, index) => (
-                        <CardEvent
-                          key={index}
-                          event={event}
-                        />
-                      ))}
+                      {events
+                        ?.filter((event) => event.program_id === program.id) // Filtrar eventos por program_id
+                        .slice(0, 7)
+                        .map((filteredEvent, eventIndex) => (
+                          <CardEvent
+                            key={eventIndex}
+                            event={filteredEvent}
+                            variant="list"
+                          />
+                        ))}
                     </>
                   ) : (
                     <>

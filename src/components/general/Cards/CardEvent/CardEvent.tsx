@@ -1,9 +1,9 @@
 import { IEvent } from '@/types'
-import { CardGalleryEvent, CardListEvent } from './variants'
+import { CardAgendaEvent, CardGalleryEvent, CardListEvent } from './variants'
 
 interface IProps {
   event: IEvent
-  variant?: 'gallery' | 'list'
+  variant?: 'gallery' | 'list' | 'agenda'
   showImage?: boolean
 }
 
@@ -18,6 +18,10 @@ export const CardEvent = (props: IProps) => {
             event={event}
             showImage={showImage}
           />
+        </>
+      ) : variant === 'agenda' ? (
+        <>
+          <CardAgendaEvent event={event} />
         </>
       ) : (
         <>

@@ -29,6 +29,7 @@ export const CardListEvent = (props: IProps) => {
         shadow="none"
         className="border-nonw w-full"
         isPressable
+        isHoverable
         as={Link}
         href={`/eventos/${event.id}`}
       >
