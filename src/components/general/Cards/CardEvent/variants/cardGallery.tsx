@@ -27,10 +27,11 @@ function formatDateToDDMMM(date: Date): string {
 
 interface IProps {
   event: IEvent
+  showImage?: boolean
 }
 
 export const CardGalleryEvent = (props: IProps) => {
-  const { event } = props
+  const { event, showImage = true } = props
   const dateFormatted = formatDateToDDMMM(new Date(event.date as string))
   return (
     <div className="relative shadow-md">

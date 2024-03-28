@@ -5,10 +5,11 @@ import logo from '@/assets/images/logo_coniap_simple.webp'
 
 interface IProps {
   event: IEvent
+  showImage?: boolean
 }
 
 export const CardListEvent = (props: IProps) => {
-  const { event } = props
+  const { event, showImage } = props
   return (
     <>
       <Card
@@ -17,16 +18,22 @@ export const CardListEvent = (props: IProps) => {
       >
         <CardBody>
           <div className="grid grid-cols-12 gap-4 w-full">
-            <div className="col-span-3">
-              <Image
-                src={event?.banner || logo.src}
-                alt={event?.name}
-                removeWrapper
-                radius="none"
-                className="w-full h-full object-cover bg-gray-300"
-              />
-            </div>
-            <div className="col-span-9 flex flex-col gap-4 h-full">
+            {showImage && (
+              <div className="col-span-3">
+                <Image
+                  src={event?.banner || logo.src}
+                  alt={event?.name}
+                  removeWrapper
+                  radius="none"
+                  className="w-full h-full object-cover bg-gray-300"
+                />
+              </div>
+            )}
+            <div
+              className={`${
+                showImage ? 'col-span-9' : 'col-span-12'
+              } flex flex-col gap-4 h-full`}
+            >
               <section className="w-full h-full">
                 <Chip
                   size="sm"
