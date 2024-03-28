@@ -1,3 +1,4 @@
 import { fetchEvents } from './fetchEvents'
+import { fetchEventById } from './fetchEvents'
 
-export { fetchEvents }
+export { fetchEvents, fetchEventById }

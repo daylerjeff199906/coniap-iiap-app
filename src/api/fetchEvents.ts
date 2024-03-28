@@ -17,3 +17,20 @@ export async function fetchEvents(props: IProps) {
     .ilike('name', `%${query}%`)
   return event
 }
+
+export async function fetchEventById(id: string) {
+  const supabase = createClient()
+
+  const { data: event, error } = await supabase
+    .from('events')
+    .select('*, persons(*)')
+    .eq('isActived', true)
+    .eq('id', id)
+    .single()
+
+  if (error) {
+    console.error('error', error)
+  } else {
+    return event
+  }
+}
