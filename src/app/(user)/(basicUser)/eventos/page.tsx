@@ -1,4 +1,4 @@
-import { BannerStatic, ListEventsPage } from '@/components'
+import { BannerStatic, FrmContactUs, ListEventsPage } from '@/components'
 
 export default function Page() {
   return (
@@ -11,6 +11,7 @@ export default function Page() {
       />
       <main className="container">
         <ListEventsPage />
+        <FrmContactUs />
       </main>
     </>
   )

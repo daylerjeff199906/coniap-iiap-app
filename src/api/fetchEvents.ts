@@ -7,16 +7,13 @@ interface IProps {
 }
 
 export async function fetchEvents(props: IProps) {
-  console.log('query', props.query)
   const { query, date } = props
   const supabase = createClient()
 
   const { data: event } = await supabase
     .from('events')
-    .select()
+    .select('*, persons(*)')
     .eq('isActived', true)
-    .eq('date', date)
     .ilike('name', `%${query}%`)
-
   return event
 }

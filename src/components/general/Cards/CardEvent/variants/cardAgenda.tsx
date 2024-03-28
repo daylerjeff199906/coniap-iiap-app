@@ -45,12 +45,14 @@ export const CardAgendaEvent = (props: IProps) => {
             <div>
               <h2 className="text-lg pb-1">{formatTime(event?.timeStart)}</h2>
               <div>
-                <Chip
-                  className="bg-black text-white"
-                  size="sm"
-                >
-                  Sala {event?.sala}
-                </Chip>
+                {event?.sala && (
+                  <Chip
+                    className="bg-black text-white"
+                    size="sm"
+                  >
+                    {`Sala ${event?.sala}`}
+                  </Chip>
+                )}
               </div>
             </div>
             <div>

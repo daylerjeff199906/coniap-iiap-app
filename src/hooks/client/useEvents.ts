@@ -20,10 +20,10 @@ export function useEvents() {
   const getEventById = async (id: string) => {}
 
   return {
-    // loading,
+    loading,
     getEventById,
     // event,
-    // events,
+    events,
     getEventsActive,
   }
 }
