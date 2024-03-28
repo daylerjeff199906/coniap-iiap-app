@@ -3,7 +3,7 @@ export interface IEvent {
   id: string
   program_id: string
   //observar
-  person: IPerson | null
+  persons: IPerson | null
   sala: string
   isActived: boolean
   name: string

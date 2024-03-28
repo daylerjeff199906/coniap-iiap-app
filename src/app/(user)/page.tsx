@@ -2,7 +2,6 @@ import { createClient } from '@/utils/supabase/server'
 import {
   AboutUsSection,
   BannerHome,
-  ScheduleSection,
   TimeSection,
   SpeakersSection,
   TopicsSection,
@@ -12,6 +11,7 @@ import {
   MoreEventsSection,
   AgendaSection,
 } from '@/components'
+
 import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
 
 export default async function Page() {
@@ -45,7 +45,7 @@ export default async function Page() {
 
   const { data: eventSpeakers } = (await supabase
     .from('events')
-    .select()
+    .select('*, persons(*)')
     .eq('isActived', true)
     .not('program_id', 'is', null)) as { data: IEvent[] }
 
@@ -78,7 +78,6 @@ export default async function Page() {
       <AboutUsSection />
       <SpeakersSection persons={dataPersons} />
       <TopicsSection topics={dataTopics} />
-      {/* <ScheduleSection /> */}
       <AgendaSection
         events={eventSpeakers}
         programs={programs}
