@@ -29,6 +29,8 @@ export const CardListEvent = (props: IProps) => {
         shadow="none"
         className="border-nonw w-full"
         isPressable
+        as={Link}
+        href={`/eventos/${event.id}`}
       >
         <CardBody>
           <div className="grid grid-cols-12 gap-4 w-full">
