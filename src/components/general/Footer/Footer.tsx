@@ -36,7 +36,7 @@ export const Footer = () => {
   return (
     <>
       <footer className="">
-        <section className="py-4 bg-white">
+        <section className="py-4 sm:pt-8 lg:pt-16 bg-white">
           <div className="grid grid-cols-1 gap-3 container">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
