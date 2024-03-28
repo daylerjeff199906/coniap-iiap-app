@@ -20,7 +20,7 @@ export const InscriptionsSection = () => {
             ref={ref}
           >
             <motion.div
-              className="w.full h-ful"
+              className="w.full h-full sm:min-w-[300px] lg:min-w-[420px]"
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
               transition={{ duration: 0.5 }}
@@ -39,8 +39,8 @@ export const InscriptionsSection = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="space-y-2">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
-                  ¡ Sé parte de este gran congreso sobre la Amazonía peruana!
+                <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold">
+                  ¡Sé parte de este gran congreso sobre la Amazonía peruana!
                 </h1>
                 <h3 className="text-tiny sm:text-sm lg:text-base">
                   Inscríbete como asistente para disfrutar de todas las

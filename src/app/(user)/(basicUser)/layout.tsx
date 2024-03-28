@@ -5,7 +5,7 @@ import { Banner } from '@/components'
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
 
-  const isUser = pathname.includes('eventos')
+  const isUser = pathname.includes('eventos') || pathname.includes('agenda')
   const contaiterClass = !isUser && 'container'
 
   return (
