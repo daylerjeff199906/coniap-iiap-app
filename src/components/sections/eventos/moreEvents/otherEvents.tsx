@@ -1,8 +1,6 @@
 'use client'
 import { CardEvent } from '@/components'
 import { IEvent } from '@/types'
-// import { motion } from 'framer-motion'
-import { Button, Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 
 interface IProps {
   events: IEvent[] | undefined
