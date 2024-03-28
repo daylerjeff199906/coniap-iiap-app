@@ -9,14 +9,18 @@ import { Button, Checkbox, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { FilePond } from 'react-filepond'
 import { ModalAction } from '@/components'
-import { IParticipants } from '@/types'
+import { IPerson } from '@/types'
+import { usePersons } from '@/hooks/admin/usePersons'
+import { toast } from 'sonner'
 
 export const FrmInscriptions = () => {
   const [showFile, setShowFile] = useState<boolean>(false)
   const [files, setFiles] = useState<File[]>([])
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const methods = useForm<IParticipants>()
+  const { addPerson } = usePersons()
+
+  const methods = useForm<IPerson>()
 
   const dateLimit = '2024-10-01'
   const inDate = new Date() < new Date(dateLimit)
@@ -29,8 +33,25 @@ export const FrmInscriptions = () => {
     setIsOpenAction(true)
   }
 
-  const handleOnSubmit: SubmitHandler<IParticipants> = (data) => {
-    console.log(data)
+  const handleOnSubmit: SubmitHandler<IPerson> = async (data) => {
+    const newData: IPerson = {
+      ...data,
+      typePerson: showFile ? 'speaker' : 'participant',
+      file: showFile ? files[0] : null,
+      isActived: false,
+      image: '',
+    }
+
+    const res = await addPerson(newData)
+    if (res === null) {
+      methods.reset()
+      setFiles([])
+      toast.success('Datos registrados con éxito', {
+        description: 'Enviaremos un mensaje de confirmación a tu correo',
+      })
+    }
+
+    setIsOpenAction(false)
   }
 
   return (
@@ -60,7 +81,7 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.name !== undefined}
-                errorMessage={methods.formState.errors.name?.message}
+                errorMessage={methods.formState.errors.name?.message as string}
               />
             )}
           />
@@ -77,7 +98,9 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.surName !== undefined}
-                errorMessage={methods.formState.errors.surName?.message}
+                errorMessage={
+                  methods.formState.errors.surName?.message as string
+                }
               />
             )}
           />
@@ -94,7 +117,7 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.job !== undefined}
-                errorMessage={methods.formState.errors.job?.message}
+                errorMessage={methods.formState.errors.job?.message as string}
               />
             )}
           />
@@ -111,7 +134,9 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.institution !== undefined}
-                errorMessage={methods.formState.errors.institution?.message}
+                errorMessage={
+                  methods.formState.errors.institution?.message as string
+                }
               />
             )}
           />
@@ -129,7 +154,9 @@ export const FrmInscriptions = () => {
                   value={value}
                   onValueChange={onChange}
                   isInvalid={methods.formState.errors.location !== undefined}
-                  errorMessage={methods.formState.errors.location?.message}
+                  errorMessage={
+                    methods.formState.errors.location?.message as string
+                  }
                 />
               )}
             />
@@ -154,7 +181,9 @@ export const FrmInscriptions = () => {
                   value={value}
                   onValueChange={onChange}
                   isInvalid={methods.formState.errors.email !== undefined}
-                  errorMessage={methods.formState.errors.email?.message}
+                  errorMessage={
+                    methods.formState.errors.email?.message as string
+                  }
                 />
               )}
             />
