@@ -1,4 +1,5 @@
 'use client'
+import { CardEvent } from '@/components'
 import { IEvent } from '@/types'
 // import { motion } from 'framer-motion'
 import { Button, Card, CardBody, CardFooter, Image } from '@nextui-org/react'
@@ -11,7 +12,7 @@ export const EventsSection = (props: IProps) => {
   const { events } = props
   return (
     <>
-      <section className="bg-white section-home">
+      <section className="bg-white section-home w-full">
         <div className="container space-y-6">
           <header>
             <div className="flex items-center gap-3 pb-3">
@@ -27,44 +28,14 @@ export const EventsSection = (props: IProps) => {
           <div>
             {events &&
               events.map((event, i) => (
-                <EventCard
+                <CardEvent
                   key={i}
-                  data={event}
+                  event={event}
                 />
               ))}
           </div>
         </div>
       </section>
     </>
-  )
-}
-
-const EventCard = ({ data }: { data: IEvent }) => {
-  return (
-    <Card
-      className="bg-white max-w-sm"
-      radius="sm"
-      shadow="none"
-    >
-      <Image
-        src="https://via.placeholder.com/300x200"
-        alt="Event"
-        removeWrapper
-        className=""
-        radius="none"
-      />
-      <CardBody className="px-0">
-        <h3 className="text-sm sm:text-lg xl:text-xl font-bold">Evento</h3>
-        <p className="text-sm line-clamp-3">Descripción del evento</p>
-      </CardBody>
-      <CardFooter className="flex justify-end px-0">
-        <Button
-          radius="full"
-          variant="flat"
-        >
-          Ver más
-        </Button>
-      </CardFooter>
-    </Card>
   )
 }

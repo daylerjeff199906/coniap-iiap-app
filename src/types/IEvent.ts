@@ -3,7 +3,8 @@ export interface IEvent {
   id: string
   program_id: string
   //observar
-  person: IPerson | null
+  persons: IPerson | null
+  sala: string
   isActived: boolean
   name: string
   timeStart: string
@@ -14,7 +15,6 @@ export interface IEvent {
   linkZoom: string
   linkYoutube: string
   linkFacebook: string
-  salaId: string
   customContent: string
   //delete
   idProgram: string

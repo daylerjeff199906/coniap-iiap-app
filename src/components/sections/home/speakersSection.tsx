@@ -32,8 +32,8 @@ export const SpeakersSection = (props: IProps) => {
             ref={ref}
           >
             <motion.header
-              initial={{ opacity: 0, x: -100 }}
-              animate={inView ? { opacity: 1, x: 1 } : {}}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5 }}
             >
               <div className="flex items-center gap-3 pb-3">
@@ -69,8 +69,8 @@ export const SpeakersSection = (props: IProps) => {
                   <motion.div
                     key={speaker.id}
                     className="w-full"
-                    initial={{ opacity: 0, x: -100 }}
-                    animate={inView ? { opacity: 1, x: 1 } : {}}
+                    initial={{ opacity: 0 }}
+                    animate={inView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.5, delay: index * 0.2 }}
                   >
                     <CardSpeaker speaker={speaker} />

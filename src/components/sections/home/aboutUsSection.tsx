@@ -94,8 +94,8 @@ export const AboutUsSection = () => {
         <section className="p-5 sm:p-10 flex flex-wrap">
           <motion.div
             className="flex items-center gap-3 pb-3"
-            initial={{ opacity: 0, x: 20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
             transition={{ duration: 0.5 }}
           >
             <div className="dot-custom" />
@@ -105,8 +105,8 @@ export const AboutUsSection = () => {
           <div className="">
             <motion.h2
               className="text-3xl sm:text-[40px] pb-6 leading-tight"
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
               transition={{ duration: 0.5 }}
             >
               Por un Futuro Verde:
@@ -114,8 +114,8 @@ export const AboutUsSection = () => {
             </motion.h2>
             <motion.h3
               className="text-lg"
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
               transition={{ duration: 0.5 }}
             >
               Fomentando un Diálogo Multidisciplinario para el Avance Sostenible

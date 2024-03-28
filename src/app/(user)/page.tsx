@@ -2,7 +2,6 @@ import { createClient } from '@/utils/supabase/server'
 import {
   AboutUsSection,
   BannerHome,
-  ScheduleSection,
   TimeSection,
   SpeakersSection,
   TopicsSection,
@@ -10,7 +9,9 @@ import {
   EventsSection,
   InscriptionsSection,
   MoreEventsSection,
+  AgendaSection,
 } from '@/components'
+
 import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
 
 export default async function Page() {
@@ -37,6 +38,17 @@ export default async function Page() {
     .eq('isActived', true)
     .is('sala', null)
 
+  const { data: programs } = (await supabase
+    .from('programs')
+    .select()
+    .eq('isActived', true)) as { data: IProgram[] }
+
+  const { data: eventSpeakers } = (await supabase
+    .from('events')
+    .select('*, persons(*)')
+    .eq('isActived', true)
+    .not('program_id', 'is', null)) as { data: IEvent[] }
+
   const dataTopics: ITopic[] | undefined = topics?.map((topic: ITopic) => ({
     ...topic,
     date: new Date(topic?.created_at),
@@ -60,13 +72,16 @@ export default async function Page() {
   }))
 
   return (
-    <main>
+    <main className="">
       <BannerHome />
       <TimeSection />
       <AboutUsSection />
       <SpeakersSection persons={dataPersons} />
       <TopicsSection topics={dataTopics} />
-      <ScheduleSection />
+      <AgendaSection
+        events={eventSpeakers}
+        programs={programs}
+      />
       <MoreEventsSection />
       <EventsSection events={dataEvents} />
       <InscriptionsSection />

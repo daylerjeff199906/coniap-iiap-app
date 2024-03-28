@@ -26,8 +26,8 @@ export const TopicsSection = (props: IProps) => {
         ref={ref}
       >
         <motion.header
-          initial={{ opacity: 0, x: -100 }}
-          animate={inView ? { opacity: 1, x: 1 } : {}}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
         >
           <div className="flex items-center gap-3 pb-3">

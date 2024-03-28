@@ -35,7 +35,7 @@ export const FrmAddEventInProgram = (props: IProps) => {
 
   const methods = useForm<IEvent>({
     defaultValues: {
-      salaId: '1',
+      sala: '1',
     },
   })
 
@@ -59,7 +59,7 @@ export const FrmAddEventInProgram = (props: IProps) => {
     methods.setValue('name', '')
     methods.setValue('timeStart', '')
     methods.setValue('timeEnd', '')
-    methods.setValue('salaId', '1')
+    methods.setValue('sala', '1')
     methods.clearErrors()
   }
   return (
@@ -137,7 +137,7 @@ export const FrmAddEventInProgram = (props: IProps) => {
             </div>
             <Controller
               control={methods.control}
-              name="salaId"
+              name="sala"
               render={({ field: { onChange, value } }) => (
                 <Select
                   aria-label="Sala"
