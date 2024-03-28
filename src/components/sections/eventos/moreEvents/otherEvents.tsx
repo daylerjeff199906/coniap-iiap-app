@@ -10,7 +10,7 @@ export const OtherEventsSection = (props: IProps) => {
   const { events } = props
   return (
     <>
-      <section className="border-2 border-primary-500 rounded-lg section-home w-full">
+      <section className="bg-gray-50 rounded-lg section-home w-full">
         <div className="container space-y-6">
           <header>
             <div className="flex items-center gap-3 pb-3">

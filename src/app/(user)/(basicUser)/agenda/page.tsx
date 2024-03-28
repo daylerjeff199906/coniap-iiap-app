@@ -26,7 +26,7 @@ export default async function Page() {
 
   return (
     <>
-      <div>
+      <section className="container">
         {programs !== undefined && programs?.length > 0 ? (
           <>
             <ListShedule
@@ -37,8 +37,8 @@ export default async function Page() {
         ) : (
           <DataNotFound />
         )}
-        <OtherEventsSection events={otherEvents} />
-      </div>
+      </section>
+      <OtherEventsSection events={otherEvents} />
     </>
   )
 }

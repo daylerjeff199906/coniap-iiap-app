@@ -25,10 +25,7 @@ export const CardEvent = (props: IProps) => {
         </>
       ) : (
         <>
-          <CardGalleryEvent
-            event={event}
-            showImage={showImage}
-          />
+          <CardGalleryEvent event={event} />
         </>
       )}
     </>
