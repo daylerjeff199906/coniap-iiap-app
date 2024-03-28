@@ -1,14 +1,15 @@
 'use client'
 
 import { DataNotFound, CardEvent } from '@/components'
-import { IProgram } from '@/types'
+import { IEvent, IProgram } from '@/types'
 import { Divider, Tab, Tabs } from '@nextui-org/react'
 
 interface IProps {
   programs: IProgram[]
+  events: IEvent[]
 }
 export const ListShedule = (props: IProps) => {
-  const { programs } = props
+  const { programs, events } = props
   return (
     <>
       <section className="py-12 flex flex-col items-center w-full">
@@ -37,9 +38,9 @@ export const ListShedule = (props: IProps) => {
                     <h1 className="font-semibold">Eventos del día</h1>
                     <Divider />
                   </div>
-                  {program?.events.length > 0 ? (
+                  {events.length > 0 ? (
                     <>
-                      {program.events.map((event, index) => (
+                      {events.map((event, index) => (
                         <CardEvent
                           key={index}
                           event={event}
