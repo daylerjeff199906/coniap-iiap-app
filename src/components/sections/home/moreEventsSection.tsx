@@ -11,6 +11,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 // import required modules
 import { Pagination } from 'swiper/modules'
+import { IEvent } from '@/types'
 
 const data = [
   {
@@ -47,7 +48,13 @@ const data = [
   },
 ]
 
-export const MoreEventsSection = () => {
+interface IProps {
+  events: IEvent[]
+}
+
+export const MoreEventsSection = (props: IProps) => {
+  const { events } = props
+
   const [ref, inView] = useInView({
     triggerOnce: false, // La animación solo se activará una vez
     threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
@@ -128,39 +135,45 @@ export const MoreEventsSection = () => {
               modules={[Pagination]}
               className="mySwiper"
             >
-              {data?.map((event, index) => (
-                <SwiperSlide
-                  key={index}
-                  className="w-full"
-                >
-                  {/* <CardEvent event={event} /> */}
-                  <motion.div
-                    className="rounded-lg p-6 w-full space-y-6"
-                    initial={{ opacity: 0 }}
-                    animate={inView ? { opacity: 1 } : {}}
-                    transition={{ duration: 0.7, delay: index * 0.2 }}
+              {events
+                ?.filter(
+                  (event) =>
+                    event.persons && event.persons.typePerson === 'speaker_mg'
+                )
+                .map((event, index) => (
+                  <SwiperSlide
+                    key={index}
+                    className="w-full"
                   >
-                    <h3 className="text-xl sm:text-2xl line-clamp-3 leading-tight">
-                      {event.title}
-                    </h3>
-                    <p className="text-tiny sm:text-medium font-bold">
-                      {event.subtitle}
-                    </p>
-                    <p className="text-tiny sm:text-medium ">{event.speaker}</p>
-                    <Link
-                      href={event.href}
-                      className="underline font-bold leading-normal py-4"
+                    <motion.div
+                      className="rounded-lg p-6 w-full space-y-6"
+                      initial={{ opacity: 0 }}
+                      animate={inView ? { opacity: 1 } : {}}
+                      transition={{ duration: 0.7, delay: index * 0.2 }}
                     >
-                      <div className="font-bold py-4 inline-block relative">
-                        <div className="flex items-center gap-4">
-                          <h1>Más información</h1> <IconArrowRight />
+                      <h3 className="text-xl sm:text-2xl line-clamp-3 leading-tight">
+                        {event.name}
+                      </h3>
+                      <p className="text-tiny sm:text-medium font-bold">
+                        Conferencia Magistral
+                      </p>
+                      <p className="text-tiny sm:text-medium ">
+                        {event.persons?.name + ' ' + event?.persons?.surName}
+                      </p>
+                      <Link
+                        href={`/eventos/${event?.id}`}
+                        className="underline font-bold leading-normal py-4"
+                      >
+                        <div className="font-bold py-4 inline-block relative">
+                          <div className="flex items-center gap-4">
+                            <h1>Más información</h1> <IconArrowRight />
+                          </div>
+                          <span className="absolute bottom-2 left-0 w-full h-0.5 bg-black transition-all"></span>
                         </div>
-                        <span className="absolute bottom-2 left-0 w-full h-0.5 bg-black transition-all"></span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                </SwiperSlide>
-              ))}
+                      </Link>
+                    </motion.div>
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
         </div>

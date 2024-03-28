@@ -82,7 +82,7 @@ export default async function Page() {
         events={eventSpeakers}
         programs={programs}
       />
-      <MoreEventsSection />
+      <MoreEventsSection events={eventSpeakers} />
       <EventsSection events={dataEvents} />
       <InscriptionsSection />
       <SponsorSection sponsors={dataSponsors} />
