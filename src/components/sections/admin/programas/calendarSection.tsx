@@ -33,7 +33,7 @@ const transformEvent = (event: IEvent) => {
     title: event.name,
     start: startTime,
     end: new Date(event.timeEnd),
-    resourceId: event.salaId,
+    resourceId: event.sala,
   }
 }
 
