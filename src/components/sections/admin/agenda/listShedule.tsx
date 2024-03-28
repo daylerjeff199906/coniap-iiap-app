@@ -47,7 +47,7 @@ export const ListShedule = (props: IProps) => {
                           <CardEvent
                             key={eventIndex}
                             event={filteredEvent}
-                            variant="list"
+                            variant="agenda"
                           />
                         ))}
                     </>
