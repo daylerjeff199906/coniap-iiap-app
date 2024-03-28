@@ -15,8 +15,8 @@ const mapSite = [
     url: '/',
   },
   {
-    title: 'Programa',
-    url: '/programa',
+    title: 'Agenda',
+    url: '/agenda',
   },
   {
     title: 'Ponentes',
@@ -53,7 +53,7 @@ export const Footer = () => {
         {/* <section className="grid grid-cols-4 gap-6 "></section> */}
         <section className="py-4 bg-white">
           <div className="grid grid-cols-1 gap-3 container">
-            <div className="grid grid-cols-1 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <Image
                   src={isoTipo}
@@ -63,15 +63,15 @@ export const Footer = () => {
                   className="mx-auto"
                 />
               </div>
-              <div className="grid grid-cols-1 gap-5">
-                <div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div className='lg:col-span-2'>
                   <h1 className="text-5xl font-bold">CONIAP</h1>
                   <p className="font-bold uppercase">
                     Congreso Internacional sobre la Amazonía Peruana
                   </p>
                 </div>
                 <div>
-                  <p>7 - 8 - 9 de diciembre de 2024</p>
+                  <p>13 - 14 - 15 de noviembre de 2024</p>
                   <p className="font-bold text-zinc-400">Virtual</p>
                 </div>
                 <div className="space-y-3">
@@ -108,7 +108,7 @@ export const Footer = () => {
             <Divider />
             <div>
               {
-                <ul className="space-y-2">
+                <ul className="space-y-2 sm:space-y-0 sm:flex sm:gap-4 sm:items-center sm:justify-center">
                   {mapSite.map((item, index) => (
                     <li key={index}>
                       <Link
