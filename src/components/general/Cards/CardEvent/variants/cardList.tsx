@@ -14,6 +14,7 @@ import {
   IconArrowRight,
 } from '@tabler/icons-react'
 import logo from '@/assets/images/logo_coniap_simple.webp'
+import Link from 'next/link'
 
 interface IProps {
   event: IEvent
@@ -86,6 +87,8 @@ export const CardListEvent = (props: IProps) => {
                     size="sm"
                     endContent={<IconArrowRight size={16} />}
                     variant="light"
+                    as={Link}
+                    href={`/eventos/${event.id}`}
                   >
                     Ver más
                   </Button>

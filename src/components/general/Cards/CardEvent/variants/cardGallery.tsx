@@ -1,29 +1,7 @@
 import { Chip, Card, CardBody } from '@nextui-org/react'
 import { IconCalendarEvent, IconMapPin, IconClock } from '@tabler/icons-react'
 import { IEvent } from '@/types'
-
-function formatDateToDDMMM(date: Date): string {
-  const months = [
-    'ENE',
-    'FEB',
-    'MAR',
-    'ABR',
-    'MAY',
-    'JUN',
-    'JUL',
-    'AGO',
-    'SEP',
-    'OCT',
-    'NOV',
-    'DIC',
-  ]
-
-  const day = date.getDate()
-  const monthIndex = date.getMonth()
-  const month = months[monthIndex]
-
-  return `${day.toString().padStart(2, '0')} ${month}`
-}
+import { formatDateToDDMMM } from '@/utils/functions'
 
 interface IProps {
   event: IEvent
@@ -32,7 +10,7 @@ interface IProps {
 
 export const CardGalleryEvent = (props: IProps) => {
   const { event, showImage = true } = props
-  const dateFormatted = formatDateToDDMMM(new Date(event.date as string))
+  const dateFormatted = formatDateToDDMMM(event.date as string)
   return (
     <div className="relative shadow-md">
       <div className="bg-transparent pt-5">

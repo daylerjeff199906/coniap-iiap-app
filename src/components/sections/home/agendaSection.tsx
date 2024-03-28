@@ -4,6 +4,8 @@ import { IEvent, IProgram } from '@/types'
 import { Button, Tab, Tabs } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { formatDateToDDMMM } from '@/utils/functions'
+import Link from 'next/link'
 
 interface IProps {
   programs: IProgram[] | undefined
@@ -17,9 +19,6 @@ export const AgendaSection = (props: IProps) => {
     triggerOnce: false, // La animación solo se activará una vez
     threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
   })
-
-  console.log('programs', programs)
-  console.log('events', events)
 
   return (
     <>
@@ -62,6 +61,8 @@ export const AgendaSection = (props: IProps) => {
               size="lg"
               variant="ghost"
               color="danger"
+              as={Link}
+              href="/agenda"
             >
               Ver agenda
             </Button>
@@ -70,15 +71,22 @@ export const AgendaSection = (props: IProps) => {
             <Tabs
               aria-label="Options"
               variant="underlined"
+              classNames={{
+                panel: 'border-1',
+                tabContent: 'group-data-[selected=true]:font-bold text-xl',
+                tab: 'mb-2',
+              }}
+              size="lg"
             >
               {programs?.map((program, programIndex) => (
                 <Tab
                   key={programIndex}
-                  title={program?.date}
+                  title={formatDateToDDMMM(program.date as string)}
                 >
-                  <div>
+                  <div className="sm:p-4 lg:p-6">
                     {events
                       ?.filter((event) => event.program_id === program.id) // Filtrar eventos por program_id
+                      .slice(0, 7)
                       .map((filteredEvent, eventIndex) => (
                         <CardEvent
                           key={eventIndex}
