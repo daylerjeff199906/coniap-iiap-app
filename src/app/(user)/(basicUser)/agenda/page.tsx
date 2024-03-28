@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createClient } from '@/utils/supabase/server'
-import { ListShedule } from '@/components'
+import { ListShedule, OtherEventsSection } from '@/components'
 import { DataNotFound } from '@/components'
 import { IEvent, IProgram } from '@/types'
 
@@ -18,6 +18,12 @@ export default async function Page() {
     .eq('isActived', true)
     .not('program_id', 'is', null)) as { data: IEvent[] }
 
+  const { data: otherEvents } = (await supabase
+    .from('events')
+    .select()
+    .eq('isActived', true)
+    .is('sala', null)) as { data: IEvent[] }
+
   return (
     <>
       <div>
@@ -31,6 +37,7 @@ export default async function Page() {
         ) : (
           <DataNotFound />
         )}
+        <OtherEventsSection events={otherEvents} />
       </div>
     </>
   )

@@ -5,42 +5,93 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Chip,
   Divider,
+  Image,
   User,
 } from '@nextui-org/react'
 import Link from 'next/link'
+import { IconCalendarEvent, IconClockFilled } from '@tabler/icons-react'
+
+import logo from '@/assets/images/logo_coniap_simple.webp'
 
 interface IProps {
   event: IEvent
 }
 
+function formatTime(time: string) {
+  return time.split(':').slice(0, 2).join(':')
+}
+
 export const CardAgendaEvent = (props: IProps) => {
+  const { event } = props
   return (
     <>
-      <Card shadow="none">
-        <CardBody>
-          <h2>Hora</h2>
-          <h3>Sala</h3>
-          <h1>TITULO</h1>
-          <div>
-            <User
-              name="Nombre del ponente"
-              description="Descripción del ponente"
+      <Card
+        shadow="none"
+        className="border"
+      >
+        <CardBody className="px-0 sm:p-6 lg:p-8  grid grid-cols-1 sm:grid-cols-12 gap-6">
+          <div className="hidden sm:block sm:col-span-3">
+            <Image
+              src={event?.banner || logo.src}
+              alt={event?.name}
+              removeWrapper
+              radius="none"
+              className="w-full h-full object-cover bg-gray-300"
             />
           </div>
-          <Divider />
-          <p>Fecha con icono</p>
-          <p>Hora con icono</p>
+          <div className="sm:col-span-9 grid grid-cols-1 gap-4">
+            <div>
+              <h2 className="text-lg pb-1">{formatTime(event?.timeStart)}</h2>
+              <div>
+                <Chip
+                  className="bg-black text-white"
+                  size="sm"
+                >
+                  Sala {event?.sala}
+                </Chip>
+              </div>
+            </div>
+            <div>
+              <h1 className="text-2xl lg:text-3xl font-bold">{event?.name}</h1>
+              <p className="hidden">{event?.shortDescription}</p>
+            </div>
+            <div>
+              <User
+                name={event?.persons?.name + ' ' + event?.persons?.surName}
+                description={event?.persons?.institution}
+              />
+            </div>
+            <Divider />
+            <div className="lg:flex justify-between gap-4">
+              <div className="sm:flex items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <IconCalendarEvent size={20} />
+                  <span>{event?.date}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <IconClockFilled size={20} />
+                  <span>
+                    {formatTime(event?.timeStart)} -{' '}
+                    {formatTime(event?.timeEnd)}
+                  </span>
+                </div>
+              </div>
+              <Link
+                href={`/agenda/${event?.id}`}
+                className="hidden lg:block"
+              >
+                <p className="font-medium text-base">Leer más</p>
+              </Link>
+            </div>
+          </div>
         </CardBody>
-        <Divider />
-        <CardFooter>
-          <Button
-            variant="light"
-            as={Link}
-            href={`/agenda/${props.event.id}`}
-          >
-            Leer más
-          </Button>
+        <Divider className="lg:hidden" />
+        <CardFooter className="px-0 lg:hidden">
+          <Link href={`/agenda/${event?.id}`}>
+            <p className="font-medium text-base">Leer más</p>
+          </Link>
         </CardFooter>
       </Card>
     </>
