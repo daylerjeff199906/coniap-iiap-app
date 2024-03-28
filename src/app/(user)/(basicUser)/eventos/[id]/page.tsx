@@ -1,4 +1,4 @@
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
 import { DetailsEvent } from '@/components'
 import { fetchEventById } from '@/api'
 import { IEvent } from '@/types'
@@ -10,18 +10,12 @@ interface IProps {
 
 type Props = {
   params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // read route params
   const id = params.id
 
-  // fetch data
-  // const product = await fetch(`https://.../${id}`).then((res) => res.json())
   const event: IEvent = await fetchEventById(id)
 
   // optionally access and extend (rather than replace) parent metadata
