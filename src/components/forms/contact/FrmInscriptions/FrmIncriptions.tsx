@@ -44,14 +44,23 @@ export const FrmInscriptions = () => {
 
     const res = await addPerson(newData)
     if (res === null) {
-      methods.reset()
-      setFiles([])
+      resetForm()
       toast.success('Datos registrados con éxito', {
         description: 'Enviaremos un mensaje de confirmación a tu correo',
       })
     }
 
     setIsOpenAction(false)
+  }
+
+  const resetForm = () => {
+    methods.setValue('name', '')
+    methods.setValue('surName', '')
+    methods.setValue('job', '')
+    methods.setValue('institution', '')
+    methods.setValue('location', '')
+    methods.setValue('email', '')
+    setFiles([])
   }
 
   return (
