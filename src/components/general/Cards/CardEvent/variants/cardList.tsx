@@ -1,6 +1,18 @@
 import { IEvent } from '@/types'
-import { Button, Card, CardBody, Chip, Image } from '@nextui-org/react'
-import { IconCalendarEvent, IconClockHour12 } from '@tabler/icons-react'
+import {
+  Button,
+  Card,
+  CardBody,
+  Chip,
+  Divider,
+  Image,
+  User,
+} from '@nextui-org/react'
+import {
+  IconCalendarEvent,
+  IconClockHour12,
+  IconArrowRight,
+} from '@tabler/icons-react'
 import logo from '@/assets/images/logo_coniap_simple.webp'
 
 interface IProps {
@@ -15,6 +27,7 @@ export const CardListEvent = (props: IProps) => {
       <Card
         shadow="none"
         className="border-nonw w-full"
+        isPressable
       >
         <CardBody>
           <div className="grid grid-cols-12 gap-4 w-full">
@@ -40,7 +53,7 @@ export const CardListEvent = (props: IProps) => {
                   radius="sm"
                   className="bg-stone-900 text-white mb-2"
                 >
-                  Sala {event.salaId}
+                  Sala {event.sala}
                 </Chip>
                 <div className="pb-2">
                   <h1 className="font-bold sm:text-lg">{event.name}</h1>
@@ -60,14 +73,23 @@ export const CardListEvent = (props: IProps) => {
                   </div>
                 </div>
               </section>
-              <section className="flex justify-end">
-                <Button
-                  color="primary"
-                  radius="full"
-                  size="sm"
-                >
-                  Ver más
-                </Button>
+              <section className="space-y-2">
+                <Divider />
+                <div className="flex items-center justify-between">
+                  <User
+                    name={event?.person?.name || 'Nombre de ponente'}
+                    description={event?.person?.institution || 'Institucion'}
+                  />
+                  <Button
+                    color="primary"
+                    radius="full"
+                    size="sm"
+                    endContent={<IconArrowRight size={16} />}
+                    variant="light"
+                  >
+                    Ver más
+                  </Button>
+                </div>
               </section>
             </div>
           </div>

@@ -83,6 +83,8 @@ export const AgendaSection = (props: IProps) => {
                         <CardEvent
                           key={eventIndex}
                           event={filteredEvent}
+                          variant="list"
+                          showImage={false}
                         />
                       ))}
                   </div>
