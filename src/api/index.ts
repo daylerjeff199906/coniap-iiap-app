@@ -6,12 +6,14 @@ import {
   createProgram,
   updateProgram,
   updateFieldProgram,
+  fetchProgram,
 } from './fetchPrograms'
 
 export {
   fetchEvents,
   fetchEventById,
   createPerson,
+  fetchProgram,
   fetchPrograms,
   createProgram,
   updateProgram,

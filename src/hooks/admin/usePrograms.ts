@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { IProgram } from '@/types'
-import { fetchPrograms, updateProgram, updateFieldProgram } from '@/api'
+import {
+  fetchProgram,
+  fetchPrograms,
+  updateProgram,
+  updateFieldProgram,
+  createProgram,
+} from '@/api'
 import { toast } from 'sonner'
 
 export function usePrograms() {
@@ -17,17 +23,17 @@ export function usePrograms() {
     setLoading(false)
   }
 
-  const createProgram = async (data: IProgram) => {
-    // setLoading(true)
-    // try {
-    //   await new Promise((resolve) => setTimeout(resolve, 2000))
-    //   const docRef = await addDoc(collection(db, 'programs'), data)
-    //   // console.log('Document written with ID: ', docRef.id)
-    //   toast.success(`Programa creado con exito, ID: ${docRef.id}`)
-    //   setLoading(false)
-    // } catch (error) {
-    //   console.log(error)
-    // }
+  const addProgram = async (data: IProgram) => {
+    setLoading(true)
+    const res = await createProgram(data)
+
+    if (res) {
+      toast.success('Programa creado con exito')
+    } else {
+      toast.error('Error al crear el programa')
+    }
+    setLoading(false)
+    return res
   }
 
   const updateDataProgram = async (id: string, data: IProgram) => {
@@ -61,31 +67,19 @@ export function usePrograms() {
   }
 
   const getProgramById = async (id: string) => {
-    // setLoading(true)
-    // try {
-    //   const categoryRef: DocumentReference<DocumentData> = doc(
-    //     db,
-    //     'programs',
-    //     id
-    //   )
-    //   const docSnap = await getDoc(categoryRef)
-    //   if (docSnap.exists()) {
-    //     const data = docSnap.data()
-    //     setProgram(data as IProgram)
-    //   } else {
-    //     console.log('No such document!')
-    //   }
-    //   setLoading(false)
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    setLoading(true)
+    const data = await fetchProgram(id)
+      .then((res) => res)
+      .catch((err) => err)
+    setProgram(data)
+    setLoading(false)
   }
 
   return {
     loading,
     getPrograms,
     programs,
-    createProgram,
+    addProgram,
     getProgramById,
     updateDataProgram,
     updateFieldDataProgram,

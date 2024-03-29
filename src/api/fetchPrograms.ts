@@ -16,13 +16,29 @@ export async function fetchPrograms(query: string) {
   }
 }
 
-export async function createProgram(props: IProgram) {
+export async function fetchProgram(id: string) {
   const supabase = createClient()
+  const { data, error } = await supabase.from('programs').select().eq('id', id)
 
-  const { data, error } = await supabase.from('programs').insert([props])
   if (error) {
     return error
   } else {
+    return data
+  }
+}
+
+export async function createProgram(props: IProgram) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('programs')
+    .insert([props])
+    .select()
+
+  if (error) {
+    return error
+  } else {
+    console.log('data', data)
     return data
   }
 }
@@ -57,7 +73,6 @@ export async function updateFieldProgram(
     console.error('error', error)
     return error
   } else {
-    console.log('data', data)
     return data
   }
 }
