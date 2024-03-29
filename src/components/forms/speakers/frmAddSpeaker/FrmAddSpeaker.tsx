@@ -3,39 +3,44 @@ import { useState } from 'react'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-import { ISpeaker } from '@/types'
+import { IPerson } from '@/types'
 import { InfoGeneral, MultimediaSection } from './sections'
 import { LoadingPages, ModalAction } from '@/components'
 
-import { useSpeakers } from '@/hooks/admin'
+import { usePersons, useFiles } from '@/hooks/admin'
 
 export const FrmAddSpeaker = () => {
   const [isOpen, setOpen] = useState(false)
   const [file, setFile] = useState([])
-  const methods = useForm<ISpeaker>()
+  const methods = useForm<IPerson>()
 
-  const { createSpeaker, uploadImage, editSpeakerField, loading } =
-    useSpeakers()
+  const { addPerson, loading } = usePersons()
+  const { editField, loading: loadFile, uploadImage } = useFiles()
+  const router = useRouter()
 
   const onSubmit = () => {
     setOpen(true)
   }
 
-  const handleFormSubmit: SubmitHandler<ISpeaker> = async (data: ISpeaker) => {
-    const newData = {
+  const handleFormSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
+    const newData: IPerson = {
       ...data,
       image: '',
-      isActive: false,
+      isActived: false,
+      typePerson: 'speaker',
     }
-    const idSpeaker = await createSpeaker(newData)
-    if (idSpeaker !== null && file.length > 0) {
-      const url = await uploadImage(file[0])
-      await editSpeakerField(idSpeaker, 'image', url)
-    }
-    // const url = await uploadImage(data.image[0], 'speakers')
-    // const url = await uploadImage(data.image[0])
     setOpen(false)
+    const speaker: IPerson = await addPerson(newData)
+    if (speaker && file.length > 0) {
+      const url = await uploadImage('speaker', file[0])
+      await editField(speaker.id, 'persons', 'image', url)
+    }
+
+    if (speaker) {
+      router.push('/admin/ponentes')
+    }
   }
 
   return (
@@ -57,6 +62,8 @@ export const FrmAddSpeaker = () => {
             <Button
               type="submit"
               color="primary"
+              isDisabled={loading || loadFile}
+              isLoading={loading || loadFile}
             >
               Guardar
             </Button>
@@ -77,7 +84,7 @@ export const FrmAddSpeaker = () => {
         message="¿Estás seguro de agregar este ponente?"
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
-      <LoadingPages isOpen={loading} />
+      <LoadingPages isOpen={loading || loadFile} />
     </>
   )
 }

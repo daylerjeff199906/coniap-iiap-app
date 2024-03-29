@@ -5,7 +5,10 @@ import { IPerson } from '@/types'
 export async function createPerson(props: IPerson) {
   const supabase = createClient()
 
-  const { data, error } = await supabase.from('persons').insert([props])
+  const { data, error } = await supabase
+    .from('persons')
+    .insert([props])
+    .select('*')
   if (error) {
     return error
   } else {

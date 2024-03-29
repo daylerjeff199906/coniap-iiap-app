@@ -12,24 +12,23 @@ export function usePersons() {
 
   const addPerson = async (data: IPerson) => {
     setLoading(true)
-    try {
-      const res = await createPerson(data)
-      if (res !== null) {
-        if (res.message) {
-          toast.error(
-            res.message === message
-              ? 'El correo ya existe'
-              : 'Error al guardar la persona'
-          )
-        } else {
-          toast.success('Datos registrados con éxito')
-        }
-      }
-      return res
-    } catch (error) {
-      toast.error('Error al guardar la persona')
-    } finally {
+    const res = await createPerson(data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res[0]) {
+      toast.success('Persona creada correctamente')
       setLoading(false)
+      return res[0]
+    } else {
+      if (res.message === message) {
+        toast.error('El correo ya esta registrado')
+      } else {
+        toast.error('Error al crear persona', {
+          description: res.message,
+        })
+      }
+      setLoading(false)
+      return null
     }
   }
 
