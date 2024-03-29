@@ -5,10 +5,11 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 
 import { useRouter } from 'next/navigation'
 
-import { signInWithCredentials, SignInWithGoogle } from '@/auth'
+import { signInWithCredentials } from '@/auth'
 import { LoadingPages } from '@/components'
-import { IUser } from '@/types'
 import { createCookie, createLocalStorage } from '@/lib'
+
+import { signInWithGoogleSB } from '@/auth/supaBaseAuth'
 
 interface ILogin {
   email: string
@@ -20,39 +21,31 @@ export const FrmLogin = () => {
   const methods = useForm<ILogin>()
   const router = useRouter()
 
-  const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
-    setLoading(true)
-    const res = await signInWithCredentials(data)
-    await createCookie('user', JSON.stringify(res))
-    await createLocalStorage('user', res)
-    new Promise((resolve) => setTimeout(resolve, 2000))
+  // const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
+  //   setLoading(true)
+  //   const res = await signInWithCredentials(data)
+  //   await createCookie('user', JSON.stringify(res))
+  //   await createLocalStorage('user', res)
+  //   new Promise((resolve) => setTimeout(resolve, 2000))
 
-    if (res !== null) {
-      if (res?.role === 'admin') {
-        console.log('admin', data)
-        router.push('/admin')
-      } else {
-        router.push('/')
-      }
-    }
-    setLoading(false)
-  }
+  //   if (res !== null) {
+  //     if (res?.role === 'admin') {
+  //       console.log('admin', data)
+  //       router.push('/admin')
+  //     } else {
+  //       router.push('/')
+  //     }
+  //   }
+  //   setLoading(false)
+  // }
 
   const handleGoogle = async () => {
     setLoading(true)
-    const data = await SignInWithGoogle()
+    const data = await signInWithGoogleSB()
+    const url = data?.url
 
-    await createCookie('user', JSON.stringify(data))
-    await createLocalStorage('user', data)
-
-    new Promise((resolve) => setTimeout(resolve, 2000))
-    if (data !== null) {
-      if (data?.role === 'admin') {
-        console.log('admin', data)
-        router.push('/admin')
-      } else {
-        router.push('/')
-      }
+    if (url) {
+      router.push(url)
     }
     setLoading(false)
   }
@@ -67,7 +60,7 @@ export const FrmLogin = () => {
           </h1>
           <form
             className="w-full space-y-4 pb-6"
-            onSubmit={methods.handleSubmit(onSubmit)}
+            // onSubmit={methods.handleSubmit(onSubmit)}
           >
             <section className="space-y-12">
               <Controller
