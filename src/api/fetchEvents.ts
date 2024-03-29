@@ -18,6 +18,16 @@ export async function fetchEvents(props: IProps) {
   return event
 }
 
+export async function fetchAllEvents(query: string) {
+  const supabase = createClient()
+
+  const { data: event } = await supabase
+    .from('events')
+    .select('*, persons(*)')
+    .ilike('name', `%${query}%`)
+  return event
+}
+
 export async function fetchEventById(id: string) {
   const supabase = createClient()
 

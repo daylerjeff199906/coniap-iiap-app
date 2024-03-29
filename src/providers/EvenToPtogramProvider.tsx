@@ -8,11 +8,15 @@ export const EventToProgramContext = createContext<{
   program: IProgram | null
   getProgramById: (id: string) => void
   createEventInProgram: (data: IEvent, program: IProgram) => void
+  getEvents: (query: string) => void
+  events: IEvent[] | null
   loading: boolean
 }>({
   program: null,
+  events: null,
   getProgramById: () => {},
   createEventInProgram: () => {},
+  getEvents: () => {},
   loading: false,
 })
 
@@ -22,7 +26,7 @@ export const EventToProgramProvider = ({
   children: React.ReactNode
 }) => {
   const { getProgramById, program } = usePrograms()
-  const { createEvent } = useEvents()
+  const { createEvent, getEvents, events } = useEvents()
   const { editField } = useFiles()
 
   const [loading, setLoading] = useState(false)
@@ -64,6 +68,8 @@ export const EventToProgramProvider = ({
         program,
         getProgramById,
         createEventInProgram,
+        getEvents,
+        events,
         loading,
       }}
     >

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -37,17 +38,29 @@ const transformEvent = (event: IEvent) => {
   }
 }
 
+function filterEventsToProgram(
+  events: IEvent[] | null,
+  idProgram: string | undefined
+) {
+  if (!events) return []
+  return events.filter((event) => event.idProgram === idProgram)
+}
+
 export const CalendarSection = () => {
   const [view, setView] = useState('day')
 
-  const { program } = useLogicEventToProgram()
+  const { program, getEvents, events } = useLogicEventToProgram()
+
+  useEffect(() => {
+    getEvents('')
+  }, [])
 
   return (
     <>
       <div className="">
         <Calendar
           localizer={localizer}
-          events={program?.events?.map(transformEvent) || []}
+          events={events as any}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}

@@ -14,6 +14,8 @@ import {
   addDoc,
 } from 'firebase/firestore'
 
+import { fetchAllEvents } from '@/api'
+
 import {
   ref,
   uploadBytes,
@@ -23,46 +25,6 @@ import {
 
 import { IEvent } from '@/types'
 import { toast } from 'sonner'
-
-// const convertDataToIProgram = (data: DocumentData[]) => {
-//   return data?.map((program) => {
-//     const { banner, events, date, title } = program
-//     const id = program?.id
-
-//     const FDate = program?.date.toDate()
-//     // acortar la fecha de modificacion
-
-//     return {
-//       id: id,
-//       banner,
-//       events,
-//       date: FDate,
-//       title,
-//     }
-//   })
-// }
-
-// const convertDataToISlidersById = (data: DocumentData) => {
-//   const { image, name, tag, isActive, createdAt, updatedAt } = data
-//   const id = data?.id
-
-//   // acortar la fecha de modificacion
-
-//   return {
-//     id: id,
-//     image,
-//     name,
-//     tag,
-//     isActive,
-//     createdAt,
-//     updatedAt,
-//   }
-// }
-
-// function convertTimestampToDate(timestamp: any) {
-//   const date = new Date(timestamp * 1000) // Multiplicamos por 1000 para convertir segundos a milisegundos
-//   return date.toLocaleDateString() // Utilizamos toLocaleDateString para obtener la fecha en formato local
-// }
 
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -83,20 +45,13 @@ export function useEvents() {
     }
   }
 
-  const getEvents = async () => {
+  const getEvents = async (query: string) => {
     setLoading(true)
-    try {
-      const querySnapshot = await getDocs(query(collection(db, 'events')))
-
-      const speakers = querySnapshot.docs.map((doc) => ({
-        id: doc.id.toString(),
-        ...doc.data(),
-      }))
-      setEvents(speakers as IEvent[])
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
+    const data = await fetchAllEvents(query)
+      .then((res) => res)
+      .catch((err) => err)
+    setEvents(data)
+    setLoading(false)
   }
 
   const getEventById = async (id: string) => {

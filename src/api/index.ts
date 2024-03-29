@@ -1,4 +1,4 @@
-import { fetchEvents } from './fetchEvents'
+import { fetchEvents, fetchAllEvents } from './fetchEvents'
 import { fetchEventById } from './fetchEvents'
 import { createPerson } from './fetchPerson'
 import {
@@ -11,6 +11,7 @@ import {
 
 export {
   fetchEvents,
+  fetchAllEvents,
   fetchEventById,
   createPerson,
   fetchProgram,

@@ -71,7 +71,7 @@ export function usePrograms() {
     const data = await fetchProgram(id)
       .then((res) => res)
       .catch((err) => err)
-    setProgram(data)
+    setProgram(data[0])
     setLoading(false)
   }
 
