@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { updateField } from '@/api'
+import { updateField, addFileToStorage } from '@/api'
 
 //
 import { toast } from 'sonner'
@@ -23,21 +23,17 @@ export function useFiles() {
     setLoading(false)
   }
 
-  const uploadImage = async (namePath: string, file: File): Promise<string> => {
+  const uploadImage = async (namePath: string, file: File) => {
     setLoading(true)
-    // try {
-    //   const storageRef = ref(storage, `${namePath}/${file.name}`)
-    //   await uploadBytes(storageRef, file)
-
-    //   const url = await getDownloadURL(storageRef)
-    //   setLoading(false)
-    //   return url
-    // } catch (e) {
-    //   console.error('Error uploading image: ', e)
-    //   setLoading(false)
-    //   return ''
-    // }
-    return ''
+    const response = await addFileToStorage(file, namePath)
+    console.log('response', response)
+    if (response) {
+      toast.success('Imagen subida correctamente')
+    } else {
+      toast.error('Error al subir imagen')
+    }
+    setLoading(false)
+    return response
   }
 
   return {

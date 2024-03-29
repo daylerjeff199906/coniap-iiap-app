@@ -18,7 +18,7 @@ import {
 } from 'react-hook-form'
 import { FilePond } from 'react-filepond'
 
-import { ITopic } from '@/types'
+import { ISpeaker, ITopic } from '@/types'
 import { useTopics } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
 import { Loading } from './loading'
@@ -59,11 +59,12 @@ export const FrmManageTopic = (props: IProps) => {
         image: '',
         isActived: false,
       }
-      const idSpeaker = await creatTopic(newData)
-      // if (idSpeaker !== null && files.length > 0) {
-      //   const url = await uploadImage('topics', files[0])
-      //   await editField(idSpeaker, 'topics', 'image', url)
-      // }
+      const dataSpeaker: ISpeaker = await creatTopic(newData)
+      if (dataSpeaker !== null && files.length > 0) {
+        const url = await uploadImage('topics', files[0])
+        console.log('url', url)
+        // await editField(dataSpeaker.id, 'topics', 'image', url)
+      }
     }
     handleOpenChange(false)
     loadData && loadData(true)

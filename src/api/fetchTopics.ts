@@ -5,7 +5,11 @@ import { ITopic } from '@/types'
 export async function createTopic(props: ITopic) {
   const supabase = createClient()
 
-  const { data, error } = await supabase.from('topics').insert([props])
+  const { data, error } = await supabase
+    .from('topics')
+    .insert([props])
+    .select('*')
+
   if (error) {
     return error
   } else {

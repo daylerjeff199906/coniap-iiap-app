@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { fetchTopics, fetchTopic } from '@/api'
+import { fetchTopics, fetchTopic, createTopic } from '@/api'
 import { ITopic } from '@/types'
 import { toast } from 'sonner'
 
@@ -20,6 +20,18 @@ export function useTopics() {
 
   const creatTopic = async (data: ITopic) => {
     setLoading(true)
+    const res = await createTopic(data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res) {
+      toast.success('Tema creado correctamente')
+      setLoading(false)
+      return res[0]
+    } else {
+      toast.error('Error al crear tema')
+      setLoading(false)
+      return null
+    }
   }
 
   const updateTopic = async (id: string, data: ITopic) => {

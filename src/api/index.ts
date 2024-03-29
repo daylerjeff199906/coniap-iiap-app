@@ -6,7 +6,7 @@ import {
 } from './fetchEvents'
 
 import { createPerson, fetchPerson, fetchSpeakers } from './fetchPerson'
-import { updateField } from './fetchFields'
+import { updateField, addFileToStorage } from './fetchFields'
 
 import {
   fetchPrograms,
@@ -44,4 +44,5 @@ export {
   fetchSponsors,
   //Fields crud
   updateField,
+  addFileToStorage,
 }
