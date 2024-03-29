@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { TableGeneral } from '@/components'
@@ -39,24 +39,21 @@ const columns: Array<IColumns> = [
 export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
   const { getTopics, topics, loading } = useTopics()
   const { editField, loading: loadingFile } = useFiles()
-
-  // const searchParams = useSearchParams()
-
-  // const isEdit = searchParams.get('edit') !== null
+  const [query, setQuery] = useState<string>('')
 
   useEffect(() => {
-    getTopics()
-  }, [])
+    getTopics(query)
+  }, [query])
 
   useEffect(() => {
     if (loadData) {
-      getTopics()
+      getTopics('')
     }
   }, [loadData])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'topics', 'isActived', value)
-    getTopics()
+    getTopics('')
   }
 
   return (
