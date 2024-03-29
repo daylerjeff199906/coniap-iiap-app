@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
-import { useSpeakers } from '@/hooks/admin'
-import { useEffect, useState } from 'react'
+import { useSpeakers, useFiles } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
   {
@@ -39,7 +39,8 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListSpeakersSection = () => {
-  const { getSpekers, speakers, editSpeakerField, loading } = useSpeakers()
+  const { getSpekers, speakers, loading } = useSpeakers()
+  const { editField, loading: editLoading } = useFiles()
   const [query, setQuery] = useState<string>('')
 
   useEffect(() => {
@@ -47,14 +48,14 @@ export const ListSpeakersSection = () => {
   }, [query])
 
   const handleStatusChange = async (key: string, value: boolean) => {
-    await editSpeakerField(key, 'isActive', value)
+    await editField(key, 'persons', 'isActived', value)
     getSpekers('')
   }
 
   return (
     <>
       <TableGeneral
-        loading={loading}
+        loading={loading || editLoading}
         columns={columns}
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
