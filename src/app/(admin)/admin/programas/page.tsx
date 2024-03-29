@@ -3,7 +3,6 @@ import { ListProgramsSection } from '@/components'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-// import { UpdateEvento } from './updateEvento'
 
 export default function Page() {
   const searchParams = useSearchParams()

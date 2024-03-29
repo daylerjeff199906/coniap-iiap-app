@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
@@ -41,16 +41,18 @@ const columns: Array<IColumns> = [
 ]
 
 export const ListProgramsSection = () => {
-  const { getPrograms, programs, loading } = usePrograms()
-  const { editField, loading: updateLoading } = useFiles()
+  const { getPrograms, programs, loading, updateFieldDataProgram } =
+    usePrograms()
+  const { loading: updateLoading } = useFiles()
+  const [query, setQuery] = useState<string>('')
 
   useEffect(() => {
-    getPrograms()
-  }, [])
+    getPrograms(query)
+  }, [query])
 
   const handleStatusChange = async (key: string, value: boolean) => {
-    await editField(key, 'programs', 'isActived', value)
-    getPrograms()
+    await updateFieldDataProgram(key, 'isActived', value ? 'TRUE' : 'FALSE')
+    getPrograms('')
   }
 
   return (
@@ -62,8 +64,8 @@ export const ListProgramsSection = () => {
           handleStatusChange(String(key), value)
         }}
         rows={
-          programs
-            ? programs.map((event) => {
+          programs !== null
+            ? programs?.map((event) => {
                 return {
                   key: event.id,
                   title: event.title,
