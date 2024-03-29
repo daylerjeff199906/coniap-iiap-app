@@ -42,14 +42,15 @@ const columns: Array<IColumns> = [
 export const ListEventsSection = () => {
   const { getEvents, events, getEventById, event, editEventField, loading } =
     useEvents()
+  const [query, setQuery] = useState('')
 
   const searchParams = useSearchParams()
 
   const isEdit = searchParams.get('edit') !== null
 
   useEffect(() => {
-    getEvents()
-  }, [])
+    getEvents(query)
+  }, [query])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +61,7 @@ export const ListEventsSection = () => {
           await getEventById(id)
         }
       } else {
-        getEvents()
+        getEvents('')
       }
     }
 
@@ -69,7 +70,7 @@ export const ListEventsSection = () => {
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editEventField(key, 'isActived', value)
-    getEvents()
+    getEvents('')
   }
 
   return (
