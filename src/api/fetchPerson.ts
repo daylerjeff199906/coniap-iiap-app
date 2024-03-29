@@ -36,8 +36,6 @@ export async function fetchSpeakers(query: string) {
     .not('typePerson', 'eq', 'participant')
     .ilike('name', `%${query}%`)
 
-  console.log(data)
-
   if (error) {
     return error
   } else {
