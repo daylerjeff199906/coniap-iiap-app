@@ -27,3 +27,14 @@ export async function fetchTopics(query: string) {
     return data
   }
 }
+
+export async function fetchTopic(id: number) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase.from('topics').select('*').eq('id', id)
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { fetchTopics } from '@/api'
+import { fetchTopics, fetchTopic } from '@/api'
 import { ITopic } from '@/types'
 import { toast } from 'sonner'
 
@@ -28,6 +28,11 @@ export function useTopics() {
 
   const getTopicById = async (id: string) => {
     setLoading(true)
+    const data = await fetchTopic(Number(id))
+      .then((res) => res)
+      .catch((err) => err)
+    setTopic(data[0])
+    setLoading(false)
   }
 
   return {

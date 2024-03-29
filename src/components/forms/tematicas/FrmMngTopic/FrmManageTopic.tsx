@@ -60,10 +60,10 @@ export const FrmManageTopic = (props: IProps) => {
         isActived: false,
       }
       const idSpeaker = await creatTopic(newData)
-      if (idSpeaker !== null && files.length > 0) {
-        const url = await uploadImage('topics', files[0])
-        await editField(idSpeaker, 'topics', 'image', url)
-      }
+      // if (idSpeaker !== null && files.length > 0) {
+      //   const url = await uploadImage('topics', files[0])
+      //   await editField(idSpeaker, 'topics', 'image', url)
+      // }
     }
     handleOpenChange(false)
     loadData && loadData(true)

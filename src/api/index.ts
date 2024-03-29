@@ -16,7 +16,7 @@ import {
   fetchProgram,
 } from './fetchPrograms'
 
-import { fetchTopics, createTopic } from './fetchTopics'
+import { fetchTopics, fetchTopic, createTopic } from './fetchTopics'
 import { createSponsor, fetchSponsors } from './fetchSponsors'
 
 export {
@@ -37,6 +37,7 @@ export {
   updateFieldProgram,
   //Topics crud
   fetchTopics,
+  fetchTopic,
   createTopic,
   //Sponsors crud
   createSponsor,
