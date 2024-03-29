@@ -23,7 +23,12 @@ import {
   updateTopic,
 } from './fetchTopics'
 
-import { createSponsor, fetchSponsors } from './fetchSponsors'
+import {
+  createSponsor,
+  fetchSponsors,
+  updateSponsor,
+  fetchSponsor,
+} from './fetchSponsors'
 
 export {
   //Events crud
@@ -49,6 +54,8 @@ export {
   //Sponsors crud
   createSponsor,
   fetchSponsors,
+  updateSponsor,
+  fetchSponsor,
   //Fields crud
   updateField,
   addFileToBucket,

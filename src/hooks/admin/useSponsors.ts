@@ -2,7 +2,12 @@ import { useState } from 'react'
 import { ISponsor } from '@/types'
 import { toast } from 'sonner'
 
-import { fetchSponsors } from '@/api'
+import {
+  fetchSponsors,
+  updateSponsor,
+  fetchSponsor,
+  createSponsor,
+} from '@/api'
 
 export function useSponsors() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -19,53 +24,54 @@ export function useSponsors() {
     setLoading(false)
   }
 
-  const createSponsor = async (data: ISponsor) => {
+  const createDataSponsor = async (data: ISponsor) => {
     setLoading(true)
+    const res = await createSponsor(data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res) {
+      toast.success('Sponsor creado correctamente')
+      setLoading(false)
+      return res[0]
+    } else {
+      toast.error('Error al crear sponsor')
+      setLoading(false)
+      return null
+    }
   }
 
-  const updateSponsor = async (id: string, data: ISponsor) => {
+  const updateDataSponsor = async (id: string, data: ISponsor) => {
     setLoading(true)
-    // try {
-    //   await new Promise((resolve) => setTimeout(resolve, 2000))
-    //   const eventRef: DocumentReference<DocumentData> = doc(db, 'sponsors', id)
-    //   await updateDoc(eventRef, data as any)
-    //   toast.success('Colaborador actualizado con exito')
-    //   setLoading(false)
-    // } catch (error) {
-    //   console.log(error)
-    //   setLoading(false)
-    // }
+    const res = await updateSponsor(id, data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res) {
+      toast.success('Sponsor actualizado correctamente')
+      setLoading(false)
+      return res[0]
+    } else {
+      toast.error('Error al actualizar sponsor')
+      setLoading(false)
+      return null
+    }
   }
 
   const getSponsorById = async (id: string) => {
     setLoading(true)
-    // try {
-    //   const categoryRef: DocumentReference<DocumentData> = doc(
-    //     db,
-    //     'sponsors',
-    //     id
-    //   )
-    //   const docSnap = await getDoc(categoryRef)
-    //   if (docSnap.exists()) {
-    //     setSponsor(docSnap.data() as ISponsor)
-    //     // return docSnap.data()
-    //   } else {
-    //     console.log('No such document!')
-    //   }
-
-    //   setLoading(false)
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    const data = await fetchSponsor(id)
+      .then((res) => res)
+      .catch((err) => err)
+    setSponsor(data[0])
+    setLoading(false)
   }
 
   return {
     loading,
     sponsors,
     getSponsors,
-    createSponsor,
     getSponsorById,
     sponsor,
-    updateSponsor,
+    createDataSponsor,
+    updateDataSponsor,
   }
 }

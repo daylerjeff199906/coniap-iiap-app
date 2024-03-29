@@ -47,7 +47,7 @@ export function useFiles() {
     }
   }
 
-  const deleteImage = async (namePath: string, url: string) => {
+  const deleteImage = async (url: string) => {
     setLoading(true)
     try {
       const storageRef = ref(storage, `${url}`)

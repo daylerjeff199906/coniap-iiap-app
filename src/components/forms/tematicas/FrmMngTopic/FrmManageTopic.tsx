@@ -56,7 +56,7 @@ export const FrmManageTopic = (props: IProps) => {
     if (id) {
       await updateDataTopic(id, data)
       if (files.length > 0) {
-        await deleteImage('topics', topic?.image as string)
+        await deleteImage(topic?.image as string)
         const url = await uploadImage('topics', files[0])
         await editField(id, 'topics', 'image', url)
       }
