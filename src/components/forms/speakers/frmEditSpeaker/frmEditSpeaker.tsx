@@ -1,10 +1,15 @@
 'use client'
 import { useState } from 'react'
 import { IPerson } from '@/types'
-import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  Controller,
+} from 'react-hook-form'
 import { useSearchParams, useRouter } from 'next/navigation'
 
-import { Button } from '@nextui-org/react'
+import { Button, Select, SelectItem } from '@nextui-org/react'
 import Link from 'next/link'
 
 import { InfoGeneralSection, MultimediasSection } from './sections'
@@ -12,6 +17,12 @@ import { InfoGeneralSection, MultimediasSection } from './sections'
 import { LoadingPages, ModalAction } from '@/components'
 import { useSpeakers } from '@/hooks/admin'
 import { usePersons } from '@/hooks/admin/usePersons'
+
+const typePerson = [
+  { value: 'speaker', label: 'Ponente' },
+  { value: 'speaker_mg', label: 'Ponente Magistral' },
+  { value: 'participant', label: 'Paricipante' },
+]
 interface IProps {
   speaker: IPerson
 }
@@ -72,6 +83,35 @@ export const FrmEditSpeaker = (props: IProps) => {
         >
           <div className="w-full col-span-1">
             <MultimediasSection />
+            <div className="">
+              <Controller
+                control={methods.control}
+                name="typePerson"
+                rules={{ required: 'Este campo es requerido' }}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    label="Tipo de participante"
+                    labelPlacement="outside"
+                    name="typePerson"
+                    value={value}
+                    defaultSelectedKeys={[speaker.typePerson]}
+                    onSelectionChange={onChange}
+                    size="sm"
+                    radius="sm"
+                    isInvalid={
+                      methods.formState.errors.typePerson !== undefined
+                    }
+                    errorMessage={
+                      methods.formState.errors.typePerson?.message as string
+                    }
+                  >
+                    {typePerson.map((item) => (
+                      <SelectItem key={item.value}>{item.label}</SelectItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </div>
           </div>
           <div className="w-full col-span-1 lg:col-span-2">
             <InfoGeneralSection />
