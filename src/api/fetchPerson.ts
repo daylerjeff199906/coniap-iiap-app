@@ -26,3 +26,21 @@ export async function fetchPerson(query: string) {
     return data
   }
 }
+
+export async function fetchSpeakers(query: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('*')
+    .not('typePerson', 'eq', 'participant')
+    .ilike('name', `%${query}%`)
+
+  console.log(data)
+
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}

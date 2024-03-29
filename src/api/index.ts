@@ -5,7 +5,7 @@ import {
   createEvent,
 } from './fetchEvents'
 
-import { createPerson, fetchPerson } from './fetchPerson'
+import { createPerson, fetchPerson, fetchSpeakers } from './fetchPerson'
 import { updateField } from './fetchFields'
 
 import {
@@ -27,6 +27,7 @@ export {
   createEvent,
   //Persons crud
   fetchPerson,
+  fetchSpeakers,
   createPerson,
   //Programs crud
   fetchProgram,
