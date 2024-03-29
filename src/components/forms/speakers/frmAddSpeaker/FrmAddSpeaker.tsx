@@ -1,7 +1,12 @@
 'use client'
 import { useState } from 'react'
-import { Button } from '@nextui-org/react'
-import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
+import { Button, Select, SelectItem } from '@nextui-org/react'
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  Controller,
+} from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -10,6 +15,12 @@ import { InfoGeneral, MultimediaSection } from './sections'
 import { LoadingPages, ModalAction } from '@/components'
 
 import { usePersons, useFiles } from '@/hooks/admin'
+
+const typePerson = [
+  { value: 'speaker', label: 'Ponente' },
+  { value: 'speaker_mg', label: 'Ponente Magistral' },
+  { value: 'participant', label: 'Paricipante' },
+]
 
 export const FrmAddSpeaker = () => {
   const [isOpen, setOpen] = useState(false)
@@ -50,7 +61,37 @@ export const FrmAddSpeaker = () => {
           className="space-y-4"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <h1 className="text-2xl font-bold">Agregar Ponente</h1>
+          <div className="flex flex-col gap-4">
+            <h1 className="text-2xl font-bold w-full">Agregar Participante</h1>
+            <div className="max-w-sm">
+              <Controller
+                control={methods.control}
+                name="typePerson"
+                rules={{ required: 'Este campo es requerido' }}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    label="Tipo de participante"
+                    labelPlacement="outside"
+                    name="typePerson"
+                    value={value}
+                    onSelectionChange={onChange}
+                    size="sm"
+                    radius="sm"
+                    isInvalid={
+                      methods.formState.errors.typePerson !== undefined
+                    }
+                    errorMessage={
+                      methods.formState.errors.typePerson?.message as string
+                    }
+                  >
+                    {typePerson.map((item) => (
+                      <SelectItem key={item.value}>{item.label}</SelectItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </div>
+          </div>
           <div className="grid grid-cols-1 gap-4">
             <InfoGeneral />
             <MultimediaSection
