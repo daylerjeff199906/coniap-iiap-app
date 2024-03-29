@@ -5,11 +5,11 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 
 import { useRouter } from 'next/navigation'
 
-import { signInWithCredentials } from '@/auth'
+// import { signInWithCredentials } from '@/auth'
 import { LoadingPages } from '@/components'
-import { createCookie, createLocalStorage } from '@/lib'
+// import { createCookie, createLocalStorage } from '@/lib'
 
-import { signInWithGoogleSB } from '@/auth/supaBaseAuth'
+import { signInWithGoogleSB, signOut } from '@/auth/supaBaseAuth'
 
 interface ILogin {
   email: string
@@ -47,6 +47,12 @@ export const FrmLogin = () => {
     if (url) {
       router.push(url)
     }
+    setLoading(false)
+  }
+
+  const logout = async () => {
+    setLoading(true)
+    await signOut()
     setLoading(false)
   }
 
@@ -129,6 +135,7 @@ export const FrmLogin = () => {
             >
               Sign in with Google
             </Button>
+            <Button onPress={logout}>Cerrar sesión</Button>
           </section>
         </div>
       </section>
