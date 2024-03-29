@@ -1,18 +1,7 @@
 import { useState } from 'react'
-import { db, storage } from '@/firebase/firebase'
-import {
-  collection,
-  getDocs,
-  DocumentData,
-  doc,
-  DocumentReference,
-  getDoc,
-  query,
-  // where,
-  // orderBy,
-  updateDoc,
-  addDoc,
-} from 'firebase/firestore'
+import { updateField } from '@/api'
+
+import { storage } from '@/firebase/firebase'
 
 import {
   ref,
@@ -33,38 +22,14 @@ export function useFiles() {
     value: any
   ) => {
     setLoading(true)
-    try {
-      const productDocRef = doc(db, namePath, id)
-      await updateDoc(productDocRef, {
-        [fieldToUpdate]: value,
-      })
-      toast.success(`Campo ${fieldToUpdate} actualizado con exito de id: ${id}`)
-      setLoading(false)
-    } catch (e) {
-      console.error('Error adding document: ', e)
-      setLoading(false)
+    const response = await updateField(namePath, id, fieldToUpdate, value)
+    if (response) {
+      toast.success('Campo actualizado correctamente')
+    } else {
+      toast.error('Error al actualizar campo')
     }
+    setLoading(false)
   }
-
-  // const editFieldTypeArray = async (
-  //   id: string,
-  //   namePath: string,
-  //   fieldToUpdate: string,
-  //   value: any
-  // ) => {
-  //   setLoading(true)
-  //   try {
-  //     const productDocRef = doc(db, namePath, id)
-  //     await updateDoc(productDocRef, {
-  //       [fieldToUpdate]: value,
-  //     })
-  //     toast.success(`Campo ${fieldToUpdate} actualizado con exito de id: ${id}`)
-  //     setLoading(false)
-  //   } catch (e) {
-  //     console.error('Error adding document: ', e)
-  //     setLoading(false)
-  //   }
-  // }
 
   const uploadImage = async (namePath: string, file: File): Promise<string> => {
     setLoading(true)
@@ -82,9 +47,24 @@ export function useFiles() {
     }
   }
 
+  const deleteImage = async (url: string) => {
+    setLoading(true)
+    try {
+      const storageRef = ref(storage, `${url}`)
+      await deleteObject(storageRef)
+      setLoading(false)
+      return true
+    } catch (e) {
+      console.error('Error deleting image: ', e)
+      setLoading(false)
+      return false
+    }
+  }
+
   return {
     loading,
     uploadImage,
     editField,
+    deleteImage,
   }
 }

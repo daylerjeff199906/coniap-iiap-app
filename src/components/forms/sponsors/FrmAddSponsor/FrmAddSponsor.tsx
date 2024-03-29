@@ -33,9 +33,14 @@ interface IProps {
 export const FrmAddSponsor = (props: IProps) => {
   const { isOpen, onOpenChange, id, loadData } = props
 
-  const { createSponsor, updateSponsor, getSponsorById, sponsor, loading } =
-    useSponsors()
-  const { uploadImage, editField } = useFiles()
+  const {
+    createDataSponsor,
+    updateDataSponsor,
+    getSponsorById,
+    sponsor,
+    loading,
+  } = useSponsors()
+  const { uploadImage, editField, loading: loadFile } = useFiles()
   const router = useRouter()
 
   const [files, setFiles] = useState([])
@@ -48,7 +53,7 @@ export const FrmAddSponsor = (props: IProps) => {
 
   const onSubmit: SubmitHandler<ISponsor> = async (data: ISponsor) => {
     if (id) {
-      await updateSponsor(id, data)
+      await updateDataSponsor(id, data)
       if (files.length > 0) {
         const url = await uploadImage('sponsors', files[0])
         await editField(id, 'sponsors', 'image', url)
@@ -57,12 +62,12 @@ export const FrmAddSponsor = (props: IProps) => {
       const newData = {
         ...data,
         image: '',
-        isActive: false,
+        isActived: false,
       }
-      const idSpeaker = await createSponsor(newData)
-      if (idSpeaker !== null && files.length > 0) {
+      const sponsor: ISponsor = await createDataSponsor(newData)
+      if (sponsor && files.length > 0) {
         const url = await uploadImage('sponsors', files[0])
-        await editField(idSpeaker, 'sponsors', 'image', url)
+        await editField(sponsor.id, 'sponsors', 'image', url)
       }
     }
     handleOpenChange(false)
@@ -106,7 +111,7 @@ export const FrmAddSponsor = (props: IProps) => {
           <ModalBody>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
-                {loading ? (
+                {loading || loadFile ? (
                   <>
                     <Loading />
                   </>
@@ -147,7 +152,8 @@ export const FrmAddSponsor = (props: IProps) => {
                   <Button
                     color="primary"
                     type="submit"
-                    isDisabled={loading}
+                    isDisabled={loading || loadFile}
+                    isLoading={loading || loadFile}
                   >
                     {id ? 'Actualizar' : 'Guardar'}
                   </Button>

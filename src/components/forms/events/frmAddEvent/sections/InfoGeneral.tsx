@@ -107,7 +107,7 @@ export const InfoGeneral = () => {
         <div>
           <Controller
             control={control}
-            name="salaId"
+            name="sala"
             render={({ field: { onChange, value } }) => (
               <Select
                 aria-label="Tipo de sala"

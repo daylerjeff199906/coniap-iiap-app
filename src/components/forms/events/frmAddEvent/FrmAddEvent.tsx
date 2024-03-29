@@ -16,7 +16,7 @@ export const FrmAddEvent = () => {
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()
-  const { createEvent, loading } = useEvents()
+  const { createDataEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>()
 
@@ -24,51 +24,27 @@ export const FrmAddEvent = () => {
     setOpen(true)
   }
 
-  // id: string
-  // name: string
-  // timeStart: string
-  // timeEnd: string
-  // date?: string
-  // shortDescription?: string
-  // place: string
-  // banner?: string
-  // image: string[]
-  // salas: string
-  // linkZoom?: string
-  // linkYoutube?: string
-  // linkFacebook?: string
-  // customContent?: string
-  // body?: string
-  // idProgram?: string
-  // inProgram?: boolean
-  // idTypeEvent?: string
-
-  const handleFormSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
+  const handleFormSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     setOpen(false)
     const newData = {
       ...data,
-      place: '',
       banner: '',
-      images: [],
-      salaId: '',
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
       linkZoom: data.linkZoom || '',
       linkYoutube: data.linkYoutube || '',
       linkFacebook: data.linkFacebook || '',
-      idProgram: '',
-      inProgram: data.idProgram ? true : false,
       isActived: false,
-      idTypeEvent: '',
     }
-    createEvent(newData)
-      .then(() => {
-        toast.success('Evento creado')
-        router.push('/admin/eventos')
-      })
-      .catch(() => {
-        toast.error('Error al crear evento')
-      })
+    const res = createDataEvent(newData)
+    console.log(res)
+    // if (!res) {
+    //   toast.error('Error al crear el evento')
+    // } else {
+    //   toast.success('Evento creado con exito')
+    //   router.push('/admin/eventos')
+    // }
+
     resetForm()
   }
 
@@ -78,17 +54,10 @@ export const FrmAddEvent = () => {
     methods.setValue('timeEnd', '')
     methods.setValue('date', '')
     methods.setValue('shortDescription', '')
-    // methods.setValue('place', '')
-    // methods.setValue('banner', '')
-    // methods.setValue('images', [])
-    // methods.setValue('sala', '')
     methods.setValue('linkZoom', '')
     methods.setValue('linkYoutube', '')
     methods.setValue('linkFacebook', '')
     methods.setValue('customContent', '')
-    // methods.setValue('idProgram', '')
-    // methods.setValue('inProgram', false)
-    // methods.setValue('idTypeEvent', '')
   }
 
   return (

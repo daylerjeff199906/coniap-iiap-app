@@ -17,8 +17,5 @@ export interface IEvent {
   linkFacebook: string
   customContent: string
   //delete
-  idProgram: string
-  inProgram: boolean
-  idTypeEvent: string
   created_at: Date
 }

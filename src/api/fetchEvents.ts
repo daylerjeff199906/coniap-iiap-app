@@ -1,4 +1,5 @@
 'use server'
+import { IEvent } from '@/types'
 import { createClient } from '@/utils/supabase/server'
 
 interface IProps {
@@ -18,6 +19,16 @@ export async function fetchEvents(props: IProps) {
   return event
 }
 
+export async function fetchAllEvents(query: string) {
+  const supabase = createClient()
+
+  const { data: event } = await supabase
+    .from('events')
+    .select('*, persons(*)')
+    .ilike('name', `%${query}%`)
+  return event
+}
+
 export async function fetchEventById(id: string) {
   const supabase = createClient()
 
@@ -27,6 +38,18 @@ export async function fetchEventById(id: string) {
     .eq('isActived', true)
     .eq('id', id)
     .single()
+
+  if (error) {
+    console.error('error', error)
+  } else {
+    return event
+  }
+}
+
+export async function createEvent(data: IEvent) {
+  const supabase = createClient()
+
+  const { data: event, error } = await supabase.from('events').insert([data])
 
   if (error) {
     console.error('error', error)

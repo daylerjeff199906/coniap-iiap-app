@@ -1,14 +1,14 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { IPerson } from '@/types'
+import { IProgram } from '@/types'
 
-export async function createPerson(props: IPerson) {
+export async function fetchPrograms(query: string) {
   const supabase = createClient()
-
   const { data, error } = await supabase
-    .from('persons')
-    .insert([props])
-    .select('*')
+    .from('programs')
+    .select()
+    .ilike('title', `%${query}%`)
+
   if (error) {
     return error
   } else {
@@ -16,15 +16,40 @@ export async function createPerson(props: IPerson) {
   }
 }
 
-export async function updatePerson(id: string, props: IPerson) {
+export async function fetchProgram(id: string) {
+  const supabase = createClient()
+  const { data, error } = await supabase.from('programs').select().eq('id', id)
+
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}
+
+export async function createProgram(props: IProgram) {
   const supabase = createClient()
 
   const { data, error } = await supabase
-    .from('persons')
+    .from('programs')
+    .insert([props])
+    .select()
+
+  if (error) {
+    return error
+  } else {
+    console.log('data', data)
+    return data
+  }
+}
+
+export async function updateProgram(id: string, props: IProgram) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('programs')
     .update(props)
     .eq('id', id)
-    .select('*')
-
   if (error) {
     return error
   } else {
@@ -32,45 +57,20 @@ export async function updatePerson(id: string, props: IPerson) {
   }
 }
 
-export async function fetchPerson(query: string) {
+export async function updateFieldProgram(
+  id: string,
+  field: string,
+  value: any
+) {
   const supabase = createClient()
-
   const { data, error } = await supabase
-    .from('persons')
-    .select('*')
-    .ilike('name', `%${query}%`)
-  if (error) {
-    return error
-  } else {
-    return data
-  }
-}
-
-export async function fetchSpeakers(query: string) {
-  const supabase = createClient()
-
-  const { data, error } = await supabase
-    .from('persons')
-    .select('*')
-    .order('name', { ascending: true })
-    .not('typePerson', 'eq', 'participant')
-    .ilike('name', `%${query}%`)
-
-  if (error) {
-    return error
-  } else {
-    return data
-  }
-}
-
-export async function fetchPersonById(id: string) {
-  const supabase = createClient()
-
-  const { data, error } = await supabase
-    .from('persons')
-    .select('*')
+    .from('programs')
+    .update({ [field]: value })
     .eq('id', id)
+    .select()
+
   if (error) {
+    console.error('error', error)
     return error
   } else {
     return data

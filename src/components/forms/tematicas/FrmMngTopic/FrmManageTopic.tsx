@@ -34,8 +34,14 @@ interface IProps {
 export const FrmManageTopic = (props: IProps) => {
   const { isOpen, onOpenChange, id, loadData } = props
 
-  const { creatTopic, updateTopic, getTopicById, topic, loading } = useTopics()
-  const { uploadImage, editField } = useFiles()
+  const { creatTopic, updateDataTopic, getTopicById, topic, loading } =
+    useTopics()
+  const {
+    uploadImage,
+    editField,
+    deleteImage,
+    loading: fileLoading,
+  } = useFiles()
   const router = useRouter()
 
   const [files, setFiles] = useState([])
@@ -48,8 +54,9 @@ export const FrmManageTopic = (props: IProps) => {
 
   const onSubmit: SubmitHandler<ITopic> = async (data: ITopic) => {
     if (id) {
-      await updateTopic(id, data)
+      await updateDataTopic(id, data)
       if (files.length > 0) {
+        await deleteImage(topic?.image as string)
         const url = await uploadImage('topics', files[0])
         await editField(id, 'topics', 'image', url)
       }
@@ -59,10 +66,12 @@ export const FrmManageTopic = (props: IProps) => {
         image: '',
         isActived: false,
       }
-      const idSpeaker = await creatTopic(newData)
-      if (idSpeaker !== null && files.length > 0) {
+      const dataTopic: ITopic = await creatTopic(newData)
+      if (dataTopic && files.length > 0) {
+        console.log('Se guardara imagen')
         const url = await uploadImage('topics', files[0])
-        await editField(idSpeaker, 'topics', 'image', url)
+        await editField(dataTopic.id, 'topics', 'image', url)
+        new Promise((resolve) => setTimeout(resolve, 2000))
       }
     }
     handleOpenChange(false)
@@ -104,7 +113,7 @@ export const FrmManageTopic = (props: IProps) => {
           <ModalBody>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
-                {loading ? (
+                {loading || fileLoading ? (
                   <>
                     <Loading />
                   </>
@@ -168,8 +177,8 @@ export const FrmManageTopic = (props: IProps) => {
                   <Button
                     color="primary"
                     type="submit"
-                    isDisabled={loading}
-                    isLoading={loading}
+                    isDisabled={loading || fileLoading}
+                    isLoading={loading || fileLoading}
                   >
                     {id ? 'Actualizar' : 'Guardar'}
                   </Button>

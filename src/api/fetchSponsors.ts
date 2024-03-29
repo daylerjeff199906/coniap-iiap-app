@@ -1,12 +1,12 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { IPerson } from '@/types'
+import { ISponsor } from '@/types'
 
-export async function createPerson(props: IPerson) {
+export async function createSponsor(props: ISponsor) {
   const supabase = createClient()
 
   const { data, error } = await supabase
-    .from('persons')
+    .from('sponsors')
     .insert([props])
     .select('*')
   if (error) {
@@ -16,15 +16,14 @@ export async function createPerson(props: IPerson) {
   }
 }
 
-export async function updatePerson(id: string, props: IPerson) {
+export async function updateSponsor(id: string, props: ISponsor) {
   const supabase = createClient()
 
   const { data, error } = await supabase
-    .from('persons')
+    .from('sponsors')
     .update(props)
     .eq('id', id)
     .select('*')
-
   if (error) {
     return error
   } else {
@@ -32,30 +31,14 @@ export async function updatePerson(id: string, props: IPerson) {
   }
 }
 
-export async function fetchPerson(query: string) {
+export async function fetchSponsors(query: string) {
   const supabase = createClient()
 
   const { data, error } = await supabase
-    .from('persons')
-    .select('*')
-    .ilike('name', `%${query}%`)
-  if (error) {
-    return error
-  } else {
-    return data
-  }
-}
-
-export async function fetchSpeakers(query: string) {
-  const supabase = createClient()
-
-  const { data, error } = await supabase
-    .from('persons')
+    .from('sponsors')
     .select('*')
     .order('name', { ascending: true })
-    .not('typePerson', 'eq', 'participant')
     .ilike('name', `%${query}%`)
-
   if (error) {
     return error
   } else {
@@ -63,11 +46,11 @@ export async function fetchSpeakers(query: string) {
   }
 }
 
-export async function fetchPersonById(id: string) {
+export async function fetchSponsor(id: string) {
   const supabase = createClient()
 
   const { data, error } = await supabase
-    .from('persons')
+    .from('sponsors')
     .select('*')
     .eq('id', id)
   if (error) {

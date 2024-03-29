@@ -45,7 +45,7 @@ export const TableGeneral = (props: IProps) => {
             >
               <IconEdit stroke={1.5} />
             </Button>
-            <Button
+            {/* <Button
               size="sm"
               variant="light"
               isIconOnly
@@ -53,7 +53,7 @@ export const TableGeneral = (props: IProps) => {
               href={`?view=${item.key}`}
             >
               <IconEye stroke={1.5} />
-            </Button>
+            </Button> */}
           </div>
         )
       case 'status':
