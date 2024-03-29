@@ -43,3 +43,17 @@ export async function fetchSpeakers(query: string) {
     return data
   }
 }
+
+export async function fetchPersonById(id: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('*')
+    .eq('id', id)
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}

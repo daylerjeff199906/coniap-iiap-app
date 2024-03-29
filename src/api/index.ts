@@ -5,7 +5,13 @@ import {
   createEvent,
 } from './fetchEvents'
 
-import { createPerson, fetchPerson, fetchSpeakers } from './fetchPerson'
+import {
+  createPerson,
+  fetchPerson,
+  fetchSpeakers,
+  fetchPersonById,
+} from './fetchPerson'
+
 import { updateField, addFileToBucket } from './fetchFields'
 
 import {
@@ -40,6 +46,7 @@ export {
   fetchPerson,
   fetchSpeakers,
   createPerson,
+  fetchPersonById,
   //Programs crud
   fetchProgram,
   fetchPrograms,

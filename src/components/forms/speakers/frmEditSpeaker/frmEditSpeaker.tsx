@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { ISpeaker } from '@/types'
+import { IPerson } from '@/types'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useSearchParams, useRouter } from 'next/navigation'
 
@@ -12,7 +12,7 @@ import { InfoGeneralSection, MultimediasSection } from './sections'
 import { LoadingPages, ModalAction } from '@/components'
 import { useSpeakers } from '@/hooks/admin'
 interface IProps {
-  speaker: ISpeaker
+  speaker: IPerson
 }
 
 export const FrmEditSpeaker = (props: IProps) => {
@@ -22,7 +22,7 @@ export const FrmEditSpeaker = (props: IProps) => {
   const [isEditables, setIsEditables] = useState(true)
   const [openConfirm, setOpenConfirm] = useState(false)
 
-  const methods = useForm<ISpeaker>({
+  const methods = useForm<IPerson>({
     defaultValues: speaker,
   })
 
@@ -34,7 +34,7 @@ export const FrmEditSpeaker = (props: IProps) => {
 
   const id = searchParams.get('edit') || ''
 
-  const handleSave: SubmitHandler<ISpeaker> = async (data: ISpeaker) => {
+  const handleSave: SubmitHandler<IPerson> = async (data: IPerson) => {
     setOpenConfirm(false)
     updateSpeaker(id, data)
       .then(() => {
@@ -47,9 +47,8 @@ export const FrmEditSpeaker = (props: IProps) => {
   }
 
   const clearForm = () => {
-    methods.setValue('fullName', '')
+    methods.setValue('name', '')
     methods.setValue('surName', '')
-    methods.setValue('levelStudy', '')
     methods.setValue('institution', '')
     methods.setValue('job', '')
     methods.setValue('image', '')

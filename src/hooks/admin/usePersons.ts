@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createPerson } from '@/api'
+import { createPerson, fetchPersonById } from '@/api'
 import { IPerson } from '@/types'
 import { toast } from 'sonner'
 
@@ -8,6 +8,7 @@ const message =
 
 export function usePersons() {
   const [loading, setLoading] = useState<boolean>(false)
+  const [person, setPerson] = useState<IPerson | null>(null)
 
   const addPerson = async (data: IPerson) => {
     setLoading(true)
@@ -32,8 +33,19 @@ export function usePersons() {
     }
   }
 
+  const getPerson = async (id: string) => {
+    setLoading(true)
+    const data = await fetchPersonById(id)
+      .then((res) => res)
+      .catch((err) => err)
+    setPerson(data)
+    setLoading(false)
+  }
+
   return {
     loading,
     addPerson,
+    getPerson,
+    person,
   }
 }

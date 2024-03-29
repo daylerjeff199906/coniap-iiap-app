@@ -6,7 +6,6 @@ import { fetchSpeakers } from '@/api'
 export function useSpeakers() {
   const [loading, setLoading] = useState<boolean>(false)
   const [speakers, setSpeakers] = useState<IPerson[] | null>(null)
-  const [speaker, setSpeaker] = useState<IPerson | null>(null)
 
   const getSpekers = async (query: string) => {
     setLoading(true)
@@ -15,31 +14,6 @@ export function useSpeakers() {
       .catch((err) => err)
     setSpeakers(data)
     setLoading(false)
-  }
-
-  const geSpeakerById = async (id: string) => {
-    // setLoading(true)
-    // try {
-    //   const categoryRef: DocumentReference<DocumentData> = doc(
-    //     db,
-    //     'speakers',
-    //     id
-    //   )
-    //   const docSnap = await getDoc(categoryRef)
-    //   if (docSnap.exists()) {
-    //     // setEvent(convertDataToISlidersById(docSnap.data()))
-    //     // add id to the object
-    //     setSpeaker(docSnap.data() as ISpeaker)
-    //     // return docSnap.data()
-    //   } else {
-    //     console.log('No such document!')
-    //     setSpeaker(null)
-    //   }
-    //   setLoading(false)
-    // } catch (error) {
-    //   console.log(error)
-    //   setLoading(false)
-    // }
   }
 
   const createSpeaker = async (data: IPerson) => {
@@ -116,8 +90,6 @@ export function useSpeakers() {
     editSpeakerField,
     createSpeaker,
     uploadImage,
-    geSpeakerById,
-    speaker,
     updateSpeaker,
     // getSlider,
   }
