@@ -14,7 +14,7 @@ import {
   addDoc,
 } from 'firebase/firestore'
 
-import { fetchAllEvents } from '@/api'
+import { fetchAllEvents, createEvent } from '@/api'
 
 import {
   ref,
@@ -31,18 +31,17 @@ export function useEvents() {
   const [events, setEvents] = useState<IEvent[] | null>(null)
   const [event, setEvent] = useState<IEvent | null>(null)
 
-  const createEvent = async (data: IEvent) => {
+  const createDataEvent = async (data: IEvent) => {
     setLoading(true)
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const docRef = await addDoc(collection(db, 'events'), data)
-      // console.log('Document written with ID: ', docRef.id)
-      toast.success(`Evento creado con exito, ID: ${docRef.id}`)
-      setLoading(false)
-      return docRef.id
-    } catch (error) {
-      console.log(error)
+    const res = await createEvent(data)
+
+    if (res) {
+      toast.success('Programa creado con exito')
+    } else {
+      toast.error('Error al crear el programa')
     }
+    setLoading(false)
+    return res
   }
 
   const getEvents = async (query: string) => {
@@ -88,27 +87,6 @@ export function useEvents() {
     }
   }
 
-  const editEventField = async (
-    id: string,
-    fieldToUpdate: string,
-    value: any
-  ) => {
-    setLoading(true)
-    try {
-      const productDocRef = doc(db, 'events', id)
-      await updateDoc(productDocRef, {
-        [fieldToUpdate]: value,
-      })
-      toast.success(
-        `Campo ${fieldToUpdate} actualizado con exito en el evento ${id}`
-      )
-      setLoading(false)
-    } catch (e) {
-      console.error('Error adding document: ', e)
-      setLoading(false)
-    }
-  }
-
   const uploadImage = async (file: File): Promise<string> => {
     setLoading(true)
     try {
@@ -127,13 +105,12 @@ export function useEvents() {
 
   return {
     loading,
-    createEvent,
+    createDataEvent,
     getEvents,
     events,
     getEventById,
     event,
     updateEvent,
-    editEventField,
     uploadImage,
   }
 }
