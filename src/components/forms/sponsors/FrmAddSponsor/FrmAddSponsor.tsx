@@ -17,7 +17,7 @@ import {
 } from 'react-hook-form'
 import { FilePond } from 'react-filepond'
 
-import { ISpeaker, ISponsor } from '@/types'
+import { ISponsor } from '@/types'
 import { useSponsors } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
 import { Loading } from './loading'
@@ -64,10 +64,10 @@ export const FrmAddSponsor = (props: IProps) => {
         image: '',
         isActived: false,
       }
-      const speaker: ISpeaker = await createDataSponsor(newData)
-      if (speaker && files.length > 0) {
+      const sponsor: ISponsor = await createDataSponsor(newData)
+      if (sponsor && files.length > 0) {
         const url = await uploadImage('sponsors', files[0])
-        await editField(speaker.id, 'sponsors', 'image', url)
+        await editField(sponsor.id, 'sponsors', 'image', url)
       }
     }
     handleOpenChange(false)

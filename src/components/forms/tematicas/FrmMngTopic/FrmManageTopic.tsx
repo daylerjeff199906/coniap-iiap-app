@@ -18,7 +18,7 @@ import {
 } from 'react-hook-form'
 import { FilePond } from 'react-filepond'
 
-import { ISpeaker, ITopic } from '@/types'
+import { ITopic } from '@/types'
 import { useTopics } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
 import { Loading } from './loading'
@@ -66,11 +66,11 @@ export const FrmManageTopic = (props: IProps) => {
         image: '',
         isActived: false,
       }
-      const dataSpeaker: ISpeaker = await creatTopic(newData)
-      if (dataSpeaker && files.length > 0) {
+      const dataTopic: ITopic = await creatTopic(newData)
+      if (dataTopic && files.length > 0) {
         console.log('Se guardara imagen')
         const url = await uploadImage('topics', files[0])
-        await editField(dataSpeaker.id, 'topics', 'image', url)
+        await editField(dataTopic.id, 'topics', 'image', url)
         new Promise((resolve) => setTimeout(resolve, 2000))
       }
     }
