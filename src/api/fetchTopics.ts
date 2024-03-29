@@ -17,6 +17,22 @@ export async function createTopic(props: ITopic) {
   }
 }
 
+export async function updateTopic(id: number, props: ITopic) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('topics')
+    .update(props)
+    .eq('id', id)
+    .select('*')
+
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}
+
 export async function fetchTopics(query: string) {
   const supabase = createClient()
 

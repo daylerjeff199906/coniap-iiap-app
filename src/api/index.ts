@@ -6,7 +6,7 @@ import {
 } from './fetchEvents'
 
 import { createPerson, fetchPerson, fetchSpeakers } from './fetchPerson'
-import { updateField, addFileToStorage } from './fetchFields'
+import { updateField, addFileToBucket } from './fetchFields'
 
 import {
   fetchPrograms,
@@ -16,7 +16,13 @@ import {
   fetchProgram,
 } from './fetchPrograms'
 
-import { fetchTopics, fetchTopic, createTopic } from './fetchTopics'
+import {
+  fetchTopics,
+  fetchTopic,
+  createTopic,
+  updateTopic,
+} from './fetchTopics'
+
 import { createSponsor, fetchSponsors } from './fetchSponsors'
 
 export {
@@ -39,10 +45,11 @@ export {
   fetchTopics,
   fetchTopic,
   createTopic,
+  updateTopic,
   //Sponsors crud
   createSponsor,
   fetchSponsors,
   //Fields crud
   updateField,
-  addFileToStorage,
+  addFileToBucket,
 }

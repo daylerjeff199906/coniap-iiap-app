@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { fetchTopics, fetchTopic, createTopic } from '@/api'
+import { fetchTopics, fetchTopic, createTopic, updateTopic } from '@/api'
 import { ITopic } from '@/types'
 import { toast } from 'sonner'
 
@@ -34,8 +34,19 @@ export function useTopics() {
     }
   }
 
-  const updateTopic = async (id: string, data: ITopic) => {
+  const updateDataTopic = async (id: string, data: ITopic) => {
     setLoading(true)
+    const res = await updateTopic(Number(id), data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res) {
+      toast.success('Tema actualizado correctamente')
+      setLoading(false)
+      return res[0]
+    }
+    toast.error('Error al actualizar tema')
+    setLoading(false)
+    return null
   }
 
   const getTopicById = async (id: string) => {
@@ -53,7 +64,7 @@ export function useTopics() {
     getTopics,
     getTopicById,
     creatTopic,
-    updateTopic,
+    updateDataTopic,
     topic,
   }
 }
