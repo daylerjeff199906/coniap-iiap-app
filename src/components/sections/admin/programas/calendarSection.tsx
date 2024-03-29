@@ -43,7 +43,7 @@ function filterEventsToProgram(
   idProgram: string | undefined
 ) {
   if (!events) return []
-  return events.filter((event) => event.idProgram === idProgram)
+  // return events.filter((event) => event.idProgram === idProgram)
 }
 
 export const CalendarSection = () => {
