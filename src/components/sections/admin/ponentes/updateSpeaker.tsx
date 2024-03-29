@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { FrmEditSpeaker } from '@/components'
-
-import { useSpeakers } from '@/hooks/admin'
 import { usePersons } from '@/hooks/admin/usePersons'
 import { useEffect } from 'react'
 

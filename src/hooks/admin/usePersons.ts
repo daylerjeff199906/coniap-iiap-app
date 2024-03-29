@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createPerson, fetchPersonById } from '@/api'
+import { createPerson, fetchPersonById, updatePerson } from '@/api'
 import { IPerson } from '@/types'
 import { toast } from 'sonner'
 
@@ -38,8 +38,24 @@ export function usePersons() {
     const data = await fetchPersonById(id)
       .then((res) => res)
       .catch((err) => err)
-    setPerson(data)
+    setPerson(data[0])
     setLoading(false)
+  }
+
+  const updatePersonData = async (id: string, data: IPerson) => {
+    setLoading(true)
+    const res = await updatePerson(id, data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res) {
+      toast.success('Persona actualizada correctamente')
+      setLoading(false)
+      return res[0]
+    } else {
+      toast.error('Error al actualizar persona')
+      setLoading(false)
+      return null
+    }
   }
 
   return {
@@ -47,5 +63,6 @@ export function usePersons() {
     addPerson,
     getPerson,
     person,
+    updatePersonData,
   }
 }

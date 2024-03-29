@@ -11,13 +11,14 @@ import { InfoGeneralSection, MultimediasSection } from './sections'
 
 import { LoadingPages, ModalAction } from '@/components'
 import { useSpeakers } from '@/hooks/admin'
+import { usePersons } from '@/hooks/admin/usePersons'
 interface IProps {
   speaker: IPerson
 }
 
 export const FrmEditSpeaker = (props: IProps) => {
   const { speaker } = props
-  const { updateSpeaker, loading } = useSpeakers()
+  const { updatePersonData, loading } = usePersons()
 
   const [isEditables, setIsEditables] = useState(true)
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -36,7 +37,7 @@ export const FrmEditSpeaker = (props: IProps) => {
 
   const handleSave: SubmitHandler<IPerson> = async (data: IPerson) => {
     setOpenConfirm(false)
-    updateSpeaker(id, data)
+    updatePersonData(id, data)
       .then(() => {
         clearForm()
         router.push('/admin/ponentes')
@@ -50,6 +51,8 @@ export const FrmEditSpeaker = (props: IProps) => {
     methods.setValue('name', '')
     methods.setValue('surName', '')
     methods.setValue('institution', '')
+    methods.setValue('email', '')
+    methods.setValue('location', '')
     methods.setValue('job', '')
     methods.setValue('image', '')
     methods.setValue('presentation', '')

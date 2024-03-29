@@ -13,6 +13,22 @@ export async function createPerson(props: IPerson) {
   }
 }
 
+export async function updatePerson(id: string, props: IPerson) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .update(props)
+    .eq('id', id)
+    .select('*')
+
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}
+
 export async function fetchPerson(query: string) {
   const supabase = createClient()
 
