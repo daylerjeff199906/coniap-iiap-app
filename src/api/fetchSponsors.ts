@@ -1,11 +1,11 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { IPerson } from '@/types'
+import { ISponsor } from '@/types'
 
-export async function createPerson(props: IPerson) {
+export async function createSponsor(props: ISponsor) {
   const supabase = createClient()
 
-  const { data, error } = await supabase.from('persons').insert([props])
+  const { data, error } = await supabase.from('sponsors').insert([props])
   if (error) {
     return error
   } else {
@@ -13,11 +13,11 @@ export async function createPerson(props: IPerson) {
   }
 }
 
-export async function fetchPerson(query: string) {
+export async function fetchSponsors(query: string) {
   const supabase = createClient()
 
   const { data, error } = await supabase
-    .from('persons')
+    .from('sponsors')
     .select('*')
     .ilike('name', `%${query}%`)
   if (error) {
