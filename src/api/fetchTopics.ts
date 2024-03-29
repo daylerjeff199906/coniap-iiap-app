@@ -19,6 +19,7 @@ export async function fetchTopics(query: string) {
   const { data, error } = await supabase
     .from('topics')
     .select('*')
+    .order('id', { ascending: true })
     .ilike('name', `%${query}%`)
   if (error) {
     return error

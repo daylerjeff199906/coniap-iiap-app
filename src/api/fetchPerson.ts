@@ -33,6 +33,7 @@ export async function fetchSpeakers(query: string) {
   const { data, error } = await supabase
     .from('persons')
     .select('*')
+    .order('name', { ascending: true })
     .not('typePerson', 'eq', 'participant')
     .ilike('name', `%${query}%`)
 

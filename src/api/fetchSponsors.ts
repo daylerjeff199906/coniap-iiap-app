@@ -19,6 +19,7 @@ export async function fetchSponsors(query: string) {
   const { data, error } = await supabase
     .from('sponsors')
     .select('*')
+    .order('name', { ascending: true })
     .ilike('name', `%${query}%`)
   if (error) {
     return error
