@@ -1,6 +1,7 @@
 import { fetchEvents, fetchAllEvents } from './fetchEvents'
 import { fetchEventById } from './fetchEvents'
 import { createPerson } from './fetchPerson'
+import { updateField } from './fetchFields'
 import {
   fetchPrograms,
   createProgram,
@@ -19,4 +20,5 @@ export {
   createProgram,
   updateProgram,
   updateFieldProgram,
+  updateField,
 }

@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
-import { useEvents } from '@/hooks/admin'
+import { useEvents, useFiles } from '@/hooks/admin'
 import { useEffect, useState } from 'react'
 
 const columns: Array<IColumns> = [
@@ -40,8 +40,8 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
-  const { getEvents, events, getEventById, event, editEventField, loading } =
-    useEvents()
+  const { getEvents, events, getEventById, event, loading } = useEvents()
+  const { editField } = useFiles()
   const [query, setQuery] = useState('')
 
   const searchParams = useSearchParams()
@@ -69,7 +69,7 @@ export const ListEventsSection = () => {
   }, [event, isEdit])
 
   const handleStatusChange = async (key: string, value: boolean) => {
-    await editEventField(key, 'isActived', value)
+    await editField(key, 'events', 'isActived', value)
     getEvents('')
   }
 
@@ -97,12 +97,6 @@ export const ListEventsSection = () => {
             : []
         }
       />
-      {/* {eventData && (
-        <FrmEditEvent
-          isOpen={openModal}
-          event={eventData}
-        />
-      )} */}
     </>
   )
 }
