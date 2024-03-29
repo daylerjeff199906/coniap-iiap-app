@@ -1,10 +1,13 @@
-// 'use client'
+'use client'
 import { AdminLayout } from '@/components'
+import { AuthProvider } from '@/providers'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <AdminLayout>{children}</AdminLayout>
+      <AuthProvider>
+        <AdminLayout>{children}</AdminLayout>
+      </AuthProvider>
     </>
   )
 }
