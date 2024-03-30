@@ -48,15 +48,14 @@ export const FrmEditSpeaker = (props: IProps) => {
 
   const handleSave: SubmitHandler<IPerson> = async (data: IPerson) => {
     setOpenConfirm(false)
-    // updatePersonData(id, data)
-    //   .then(() => {
-    //     clearForm()
-    //     router.push('/admin/ponentes')
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
-    console.log(data)
+    updatePersonData(id, data)
+      .then(() => {
+        clearForm()
+        router.push('/admin/ponentes')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const clearForm = () => {
