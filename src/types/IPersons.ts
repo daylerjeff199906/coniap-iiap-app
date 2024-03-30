@@ -17,6 +17,6 @@ export interface IPerson {
   // levelStudy?: string
   isActived?: boolean
   created_at: string
-  file?: File | null
+  file_resumen?: string | null
   typePerson: 'speaker' | 'speaker_mg' | 'participant'
 }

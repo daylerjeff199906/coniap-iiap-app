@@ -37,7 +37,7 @@ export const FrmInscriptions = () => {
     const newData: IPerson = {
       ...data,
       typePerson: showFile ? 'speaker' : 'participant',
-      file: showFile ? files[0] : null,
+      file_resumen: '',
       isActived: false,
       image: '',
     }
