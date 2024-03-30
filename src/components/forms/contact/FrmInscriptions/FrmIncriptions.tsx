@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { FilePond } from 'react-filepond'
 import { ModalAction } from '@/components'
 import { IPerson } from '@/types'
-import { usePersons } from '@/hooks/admin/usePersons'
+import { usePersons, useFiles } from '@/hooks/admin'
 import { toast } from 'sonner'
 
 export const FrmInscriptions = () => {
@@ -19,6 +19,7 @@ export const FrmInscriptions = () => {
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
   const { addPerson } = usePersons()
+  const { uploadImage, editField } = useFiles()
 
   const methods = useForm<IPerson>()
 
@@ -42,8 +43,25 @@ export const FrmInscriptions = () => {
       image: '',
     }
 
-    const res = await addPerson(newData)
-    if (res === null) {
+    const res: IPerson = await addPerson(newData)
+    if (files.length > 0) {
+      const file = files[0]
+      const resFile = await uploadImage('files', file)
+      if (resFile === null) {
+        const resEdit = await editField(
+          res.id,
+          'persons',
+          'file_resumen',
+          res.id
+        )
+        if (resEdit === null) {
+          resetForm()
+          toast.success('Datos registrados con éxito', {
+            description: 'Enviaremos un mensaje de confirmación a tu correo',
+          })
+        }
+      }
+    } else if (res === null) {
       resetForm()
       toast.success('Datos registrados con éxito', {
         description: 'Enviaremos un mensaje de confirmación a tu correo',
