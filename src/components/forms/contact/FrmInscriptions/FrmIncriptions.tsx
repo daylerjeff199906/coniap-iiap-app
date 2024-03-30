@@ -12,6 +12,7 @@ import { ModalAction } from '@/components'
 import { IPerson } from '@/types'
 import { usePersons, useFiles } from '@/hooks/admin'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export const FrmInscriptions = () => {
   const [showFile, setShowFile] = useState<boolean>(false)
@@ -20,6 +21,7 @@ export const FrmInscriptions = () => {
 
   const { addPerson, loading: loadAddPerson } = usePersons()
   const { uploadImage, editField, loading } = useFiles()
+  const router = useRouter()
 
   const methods = useForm<IPerson>()
 
@@ -60,6 +62,7 @@ export const FrmInscriptions = () => {
           toast.success('Datos registrados con éxito', {
             description: 'Enviaremos un mensaje de confirmación a tu correo',
           })
+          router.push('/success')
         }
       }
     } else if (!res === null) {
@@ -67,6 +70,7 @@ export const FrmInscriptions = () => {
       toast.success('Datos registrados con éxito', {
         description: 'Enviaremos un mensaje de confirmación a tu correo',
       })
+      router.push('/success')
     }
   }
 
