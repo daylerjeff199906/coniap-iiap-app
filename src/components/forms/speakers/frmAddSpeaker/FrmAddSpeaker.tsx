@@ -40,7 +40,6 @@ export const FrmAddSpeaker = () => {
       ...data,
       image: '',
       isActived: false,
-      typePerson: 'speaker',
     }
     setOpen(false)
     const speaker: IPerson = await addPerson(newData)
@@ -74,7 +73,9 @@ export const FrmAddSpeaker = () => {
                     labelPlacement="outside"
                     name="typePerson"
                     value={value}
-                    onSelectionChange={onChange}
+                    onChange={(value) => {
+                      onChange(value)
+                    }}
                     size="sm"
                     radius="sm"
                     isInvalid={

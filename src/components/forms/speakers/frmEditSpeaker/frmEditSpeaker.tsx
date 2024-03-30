@@ -95,7 +95,9 @@ export const FrmEditSpeaker = (props: IProps) => {
                     name="typePerson"
                     value={value}
                     defaultSelectedKeys={[speaker.typePerson]}
-                    onSelectionChange={onChange}
+                    onChange={(value) => {
+                      onChange(value)
+                    }}
                     size="sm"
                     radius="sm"
                     isInvalid={

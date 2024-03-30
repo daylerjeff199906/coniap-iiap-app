@@ -37,7 +37,7 @@ export function usePersons() {
     const data = await fetchPersonById(id)
       .then((res) => res)
       .catch((err) => err)
-    setPerson(data[0])
+    setPerson(data)
     setLoading(false)
   }
 

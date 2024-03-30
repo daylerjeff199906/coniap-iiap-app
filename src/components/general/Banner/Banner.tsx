@@ -108,7 +108,7 @@ export const Banner = () => {
           className="absolute top-0 -z-20 object-cover left-0 right-0 w-full h-full"
         />
       </section>
-      <section className="py-4 bg-danger-400"></section>
+      <section className="py-3 bg-danger-400"></section>
     </>
   )
 }

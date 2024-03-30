@@ -10,15 +10,18 @@ import { useState } from 'react'
 import { FilePond } from 'react-filepond'
 import { ModalAction } from '@/components'
 import { IPerson } from '@/types'
-import { usePersons } from '@/hooks/admin/usePersons'
+import { usePersons, useFiles } from '@/hooks/admin'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export const FrmInscriptions = () => {
   const [showFile, setShowFile] = useState<boolean>(false)
   const [files, setFiles] = useState<File[]>([])
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const { addPerson } = usePersons()
+  const { addPerson, loading: loadAddPerson } = usePersons()
+  const { uploadImage, editField, loading } = useFiles()
+  const router = useRouter()
 
   const methods = useForm<IPerson>()
 
@@ -34,23 +37,41 @@ export const FrmInscriptions = () => {
   }
 
   const handleOnSubmit: SubmitHandler<IPerson> = async (data) => {
+    setIsOpenAction(false)
     const newData: IPerson = {
       ...data,
       typePerson: showFile ? 'speaker' : 'participant',
-      file: showFile ? files[0] : null,
+      file_resumen: '',
       isActived: false,
       image: '',
     }
 
-    const res = await addPerson(newData)
-    if (res === null) {
+    const res: IPerson = await addPerson(newData)
+    if (files.length > 0) {
+      const file = files[0]
+      const resFile = await uploadImage('files', file)
+      if (resFile) {
+        const resEdit = await editField(
+          res.id,
+          'persons',
+          'file_resumen',
+          resFile
+        )
+        if (resEdit !== null) {
+          resetForm()
+          toast.success('Datos registrados con éxito', {
+            description: 'Enviaremos un mensaje de confirmación a tu correo',
+          })
+          router.push('/inscripciones/success')
+        }
+      }
+    } else if (res !== null) {
       resetForm()
       toast.success('Datos registrados con éxito', {
         description: 'Enviaremos un mensaje de confirmación a tu correo',
       })
+      router.push('/inscripciones/success')
     }
-
-    setIsOpenAction(false)
   }
 
   const resetForm = () => {
@@ -230,6 +251,8 @@ export const FrmInscriptions = () => {
               color="primary"
               type="submit"
               size="lg"
+              isLoading={loadAddPerson || loading}
+              isDisabled={loadAddPerson || loading}
             >
               Enviar
             </Button>

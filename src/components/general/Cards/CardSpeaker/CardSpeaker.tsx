@@ -1,6 +1,8 @@
 'use client'
-import { Card, CardBody, CardFooter, Divider, Image } from '@nextui-org/react'
+import { Card, CardBody, Image } from '@nextui-org/react'
 import { IPerson } from '@/types'
+import Link from 'next/link'
+import { useState } from 'react'
 
 interface IProps {
   speaker: IPerson
@@ -18,9 +20,11 @@ export const CardSpeaker = (props: IProps) => {
       isHoverable
       isBlurred
       className="w-full"
+      as={Link}
+      href={`/ponentes/${speaker?.id}`}
     >
       <Image
-        src={speaker.image !== '' ? speaker.image : urlImgeDefault}
+        src={speaker?.image !== '' ? speaker?.image : urlImgeDefault}
         alt="image"
         radius="lg"
         className="h-64 w-full object-cover rounded-none"
