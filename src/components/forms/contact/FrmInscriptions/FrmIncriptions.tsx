@@ -18,8 +18,8 @@ export const FrmInscriptions = () => {
   const [files, setFiles] = useState<File[]>([])
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const { addPerson } = usePersons()
-  const { uploadImage, editField } = useFiles()
+  const { addPerson, loading: loadAddPerson } = usePersons()
+  const { uploadImage, editField, loading } = useFiles()
 
   const methods = useForm<IPerson>()
 
@@ -48,14 +48,14 @@ export const FrmInscriptions = () => {
     if (files.length > 0) {
       const file = files[0]
       const resFile = await uploadImage('files', file)
-      if (resFile === null) {
+      if (resFile) {
         const resEdit = await editField(
           res.id,
           'persons',
           'file_resumen',
-          res.id
+          resFile
         )
-        if (resEdit === null) {
+        if (resEdit !== null) {
           resetForm()
           toast.success('Datos registrados con éxito', {
             description: 'Enviaremos un mensaje de confirmación a tu correo',
@@ -247,6 +247,8 @@ export const FrmInscriptions = () => {
               color="primary"
               type="submit"
               size="lg"
+              isLoading={loadAddPerson || loading}
+              isDisabled={loadAddPerson || loading}
             >
               Enviar
             </Button>
