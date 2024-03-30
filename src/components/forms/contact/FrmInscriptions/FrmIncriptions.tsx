@@ -35,6 +35,7 @@ export const FrmInscriptions = () => {
   }
 
   const handleOnSubmit: SubmitHandler<IPerson> = async (data) => {
+    setIsOpenAction(false)
     const newData: IPerson = {
       ...data,
       typePerson: showFile ? 'speaker' : 'participant',
@@ -61,14 +62,12 @@ export const FrmInscriptions = () => {
           })
         }
       }
-    } else if (res === null) {
+    } else if (!res === null) {
       resetForm()
       toast.success('Datos registrados con éxito', {
         description: 'Enviaremos un mensaje de confirmación a tu correo',
       })
     }
-
-    setIsOpenAction(false)
   }
 
   const resetForm = () => {
