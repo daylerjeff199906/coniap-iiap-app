@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { DetailsEvent } from '@/components'
-import { fetchEventById } from '@/api'
-import { IEvent } from '@/types'
+import { DetailsSpeaker } from '@/components'
+import { fetchPersonById } from '@/api'
+import { IPerson } from '@/types'
 interface IProps {
   params: {
     id: string
@@ -16,20 +16,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // read route params
   const id = params.id
 
-  const event: IEvent = await fetchEventById(id)
+  const person: IPerson = await fetchPersonById(id)
 
   // optionally access and extend (rather than replace) parent metadata
 
   return {
-    title: event?.name,
-    description: event?.shortDescription,
+    title: person?.name,
+    description: person?.presentation,
   }
 }
 
 export default async function Page(props: IProps) {
   const { id } = props.params
-  const event = await fetchEventById(id)
-  console.log(event)
+  const speaker = await fetchPersonById(id)
 
-  return <>{event && <DetailsEvent event={event} />}</>
+  return <>{speaker && <DetailsSpeaker speaker={speaker} />}</>
 }

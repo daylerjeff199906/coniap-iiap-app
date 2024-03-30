@@ -70,8 +70,10 @@ export async function fetchPersonById(id: string) {
     .from('persons')
     .select('*')
     .eq('id', id)
+    .single()
+
   if (error) {
-    return error
+    return null
   } else {
     return data
   }
