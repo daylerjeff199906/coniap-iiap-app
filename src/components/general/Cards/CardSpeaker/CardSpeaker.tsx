@@ -1,7 +1,8 @@
 'use client'
-import { Card, CardBody, CardFooter, Divider, Image } from '@nextui-org/react'
+import { Card, CardBody, Image } from '@nextui-org/react'
 import { IPerson } from '@/types'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface IProps {
   speaker: IPerson
