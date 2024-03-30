@@ -62,15 +62,15 @@ export const FrmInscriptions = () => {
           toast.success('Datos registrados con éxito', {
             description: 'Enviaremos un mensaje de confirmación a tu correo',
           })
-          router.push('/success')
+          router.push('/inscripciones/success')
         }
       }
-    } else if (!res === null) {
+    } else if (res !== null) {
       resetForm()
       toast.success('Datos registrados con éxito', {
         description: 'Enviaremos un mensaje de confirmación a tu correo',
       })
-      router.push('/success')
+      router.push('/inscripciones/success')
     }
   }
 
