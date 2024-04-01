@@ -64,6 +64,9 @@ export const OrganizationSection = () => {
               className="flex items-center gap-3 pb-3"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, animation: 1 }}
+              transition={{
+                duration: 1,
+              }}
             >
               <div className="dot-custom" />
               <p className="text-xs font-semibold">COMITÉ - CONIAP</p>
@@ -72,6 +75,9 @@ export const OrganizationSection = () => {
               className="text-3xl sm:text-[40px] pb-6 leading-tight"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, animation: 1 }}
+              transition={{
+                duration: 1,
+              }}
             >
               Comité: la <b>columna</b> vertebral del <b>CONIAP</b>
             </motion.h2>
