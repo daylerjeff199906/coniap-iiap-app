@@ -62,16 +62,16 @@ export const OrganizationSection = () => {
           <div>
             <motion.div
               className="flex items-center gap-3 pb-3"
-              initial={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, animation: 1 }}
             >
               <div className="dot-custom" />
               <p className="text-xs font-semibold">COMITÉ - CONIAP</p>
             </motion.div>
             <motion.h2
               className="text-3xl sm:text-[40px] pb-6 leading-tight"
-              initial={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, animation: 1 }}
             >
               Comité: la <b>columna</b> vertebral del <b>CONIAP</b>
             </motion.h2>
