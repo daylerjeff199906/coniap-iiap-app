@@ -4,7 +4,6 @@ import { Card } from '@nextui-org/react'
 import { IconPlant } from '@tabler/icons-react'
 
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 
 import { ITopic } from '@/types'
 
@@ -14,21 +13,22 @@ interface IProps {
 
 export const TopicsSection = (props: IProps) => {
   const { topics } = props
-  const [ref, inView] = useInView({
-    triggerOnce: false, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
 
   return (
     <section className=" bg-black/70">
-      <div
-        className="container section-home space-y-2"
-        ref={ref}
-      >
+      <div className="container section-home space-y-2">
         <motion.header
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, x: -50 }}
+          viewport={{
+            once: false,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
         >
           <div className="flex items-center gap-3 pb-3">
             <div className="dot-custom" />
@@ -38,10 +38,6 @@ export const TopicsSection = (props: IProps) => {
             <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight text-white">
               Líneas <b>temáticas</b>
             </h2>
-            {/* <h3 className="text-lg">
-                Fomentando un Diálogo Multidisciplinario para el Avance
-                Sostenible Globalmente.
-              </h3> */}
           </div>
         </motion.header>
         <div className="grid grid-cols-1 sm:grid-cols-3  py-4">
@@ -50,8 +46,16 @@ export const TopicsSection = (props: IProps) => {
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 100 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{
+                  once: false,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 1,
+                  },
+                }}
               >
                 <CardTopics
                   title={topic.name}

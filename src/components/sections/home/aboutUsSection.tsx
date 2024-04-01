@@ -1,7 +1,6 @@
 'use client'
 import { Card, CardBody, Image } from '@nextui-org/react'
 import { motion } from 'framer-motion'
-// import { useInView } from 'react-intersection-observer'
 
 import {
   IconFlag,
@@ -84,10 +83,10 @@ export const AboutUsSection = () => {
             className="w-full h-full max-h-[720px] object-cover rounded-xl"
           />
         </section>
-        <section className="p-5 sm:p-10 flex flex-wrap">
+        <section className="sm:p-10 flex flex-wrap">
           <motion.div
             className="flex items-center gap-3 pb-3"
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 10 }}
             viewport={{
               once: false,
             }}
@@ -103,41 +102,29 @@ export const AboutUsSection = () => {
             <p className="text-xs font-semibold">#CONIAP - 2024</p>
           </motion.div>
 
-          <div className="">
-            <motion.h2
-              className="text-3xl sm:text-[40px] pb-6 leading-tight"
-              initial={{ opacity: 0 }}
-              viewport={{
-                once: false,
-              }}
-              whileInView={{
-                opacity: 1,
-                transition: {
-                  duration: 1, // Animation duration
-                },
-              }}
-            >
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, x: 15 }}
+            viewport={{
+              once: false,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 1, // Animation duration
+              },
+            }}
+          >
+            <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
               Por un Futuro Verde:
               <b>CONIAP</b> y la transformación de la <b>Amazonía</b>
-            </motion.h2>
-            <motion.h3
-              className="text-lg"
-              initial={{ opacity: 0, y: 100 }}
-              viewport={{
-                once: false,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0, // Slide in to its original position
-                transition: {
-                  duration: 1, // Animation duration
-                },
-              }}
-            >
+            </h2>
+            <h3 className="text-lg">
               Fomentando un Diálogo Multidisciplinario para el Avance Sostenible
               Globalmente.
-            </motion.h3>
-          </div>
+            </h3>
+          </motion.div>
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 "
             variants={container}
@@ -155,12 +142,12 @@ export const AboutUsSection = () => {
             {indicator.map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 100 }}
+                initial={{ opacity: 0, x: 10 }}
                 whileInView={{
                   opacity: 1,
-                  y: 0, // Slide in to its original position
+                  x: 0, // Slide in to its original position
                   transition: {
-                    duration: 1, // Animation duration
+                    duration: 1 + index, // Animation duration
                   },
                 }}
               >

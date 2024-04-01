@@ -1,13 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
 import { Button } from '@nextui-org/react'
-// import { IconChevronRight } from '@tabler/icons-react'
 import { CardSpeaker } from '@/components'
 import Link from 'next/link'
 
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 
 import { IPerson } from '@/types'
 
@@ -18,23 +15,24 @@ interface IProps {
 export const SpeakersSection = (props: IProps) => {
   const { persons: speakersActive } = props
 
-  const [ref, inView] = useInView({
-    triggerOnce: false, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
-
   return (
     <>
       <section className="section ">
         <div className="w-full bg-warning-50/60 section-home">
-          <div
-            className="container space-y-6 flex flex-wrap"
-            ref={ref}
-          >
+          <div className="container space-y-6 flex flex-wrap">
             <motion.header
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5 }}
+              className="w-full"
+              initial={{ opacity: 0, x: -15 }}
+              viewport={{
+                once: false,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 1, // Animation duration
+                },
+              }}
             >
               <div className="flex items-center gap-3 pb-3">
                 <div className="dot-custom" />
@@ -45,10 +43,6 @@ export const SpeakersSection = (props: IProps) => {
                   Nuestros invitados,
                   <b>Magistrales</b> que provocan el <b>cambio</b>
                 </h2>
-                {/* <h3 className="text-lg">
-                Fomentando un Diálogo Multidisciplinario para el Avance
-                Sostenible Globalmente.
-              </h3> */}
               </div>
               <Button
                 radius="full"
@@ -69,9 +63,17 @@ export const SpeakersSection = (props: IProps) => {
                   <motion.div
                     key={speaker.id}
                     className="w-full"
-                    initial={{ opacity: 0 }}
-                    animate={inView ? { opacity: 1 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                    initial={{ opacity: 0, x: 15 }}
+                    viewport={{
+                      once: false,
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      x: 0,
+                      transition: {
+                        duration: 1 + index,
+                      },
+                    }}
                   >
                     <CardSpeaker speaker={speaker} />
                   </motion.div>
