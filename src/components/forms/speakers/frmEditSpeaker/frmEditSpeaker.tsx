@@ -10,12 +10,12 @@ import {
 import { useSearchParams, useRouter } from 'next/navigation'
 
 import { Button, Select, SelectItem } from '@nextui-org/react'
+import { IconPdf } from '@tabler/icons-react'
 import Link from 'next/link'
 
 import { InfoGeneralSection, MultimediasSection } from './sections'
 
 import { LoadingPages, ModalAction } from '@/components'
-import { useSpeakers } from '@/hooks/admin'
 import { usePersons } from '@/hooks/admin/usePersons'
 
 const typePerson = [
@@ -84,6 +84,22 @@ export const FrmEditSpeaker = (props: IProps) => {
           <div className="w-full col-span-1">
             <MultimediasSection />
             <div className="">
+              <div className="py-4">
+                {speaker?.file_resumen && (
+                  <Button
+                    as={Link}
+                    href={speaker.file_resumen}
+                    target="_blank"
+                    fullWidth
+                    size="sm"
+                    radius="sm"
+                    color="danger"
+                    startContent={<IconPdf size={20} />}
+                  >
+                    Visualizar resumen
+                  </Button>
+                )}
+              </div>
               <Controller
                 control={methods.control}
                 name="typePerson"
@@ -100,6 +116,7 @@ export const FrmEditSpeaker = (props: IProps) => {
                     }}
                     size="sm"
                     radius="sm"
+                    disallowEmptySelection
                     isInvalid={
                       methods.formState.errors.typePerson !== undefined
                     }

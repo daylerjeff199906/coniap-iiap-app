@@ -147,7 +147,7 @@ export const AboutUsSection = () => {
                   opacity: 1,
                   x: 0, // Slide in to its original position
                   transition: {
-                    duration: 1 + index, // Animation duration
+                    duration: 0.1 + index, // Animation duration
                   },
                 }}
               >

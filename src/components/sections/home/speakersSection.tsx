@@ -17,7 +17,7 @@ export const SpeakersSection = (props: IProps) => {
 
   return (
     <>
-      <section className="section ">
+      <section className="section">
         <div className="w-full bg-warning-50/60 section-home">
           <div className="container space-y-6 flex flex-wrap">
             <motion.header
@@ -71,7 +71,7 @@ export const SpeakersSection = (props: IProps) => {
                       opacity: 1,
                       x: 0,
                       transition: {
-                        duration: 1 + index,
+                        duration: 0.1 + index,
                       },
                     }}
                   >
