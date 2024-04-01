@@ -61,18 +61,30 @@ export const MoreEventsSection = (props: IProps) => {
           <header className="pb-4">
             <motion.div
               className="flex items-center gap-3 pb-3"
-              initial={{ opacity: 0 }}
-              // animate={inView ? { opacity: 1 } : {}}
-              // transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: -15 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 1,
+                },
+              }}
             >
               <div className="dot-custom" />
               <p className="text-xs font-semibold">ponentes - 2024</p>
             </motion.div>
             <motion.div
               className="w-full"
-              initial={{ opacity: 0, x: -100 }}
-              // animate={inView ? { opacity: 1, x: 1 } : {}}
-              // transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: -15 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 1,
+                },
+              }}
             >
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
                 Nuestras conferencias <b> Magistrales</b> del congreso
@@ -80,26 +92,34 @@ export const MoreEventsSection = (props: IProps) => {
             </motion.div>
             <motion.div
               className="grid grid-cols-1 sm:flex items-center gap-6 sm:justify-between"
-              initial={{ opacity: 0, x: 10 }}
-              // animate={inView ? { opacity: 1, x: 1 } : {}}
-              // transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: 15 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 1,
+                },
+              }}
             >
               <h3 className="text-lg w-full max-w-4xl">
                 Descubra las ponencias del congreso creadas conjuntamente con
                 los principales especialistas tanto nacionales como
                 internacionales que tuvieron lugar en el congreso.
               </h3>
-              <Button
-                radius="full"
-                size="lg"
-                variant="solid"
-                color="primary"
-                className="text-white"
-                as={Link}
-                href="/agenda"
-              >
-                Ver todo
-              </Button>
+              <div>
+                <Button
+                  radius="full"
+                  size="lg"
+                  variant="solid"
+                  color="primary"
+                  className="text-white"
+                  as={Link}
+                  href="/agenda"
+                >
+                  Ver todo
+                </Button>
+              </div>
             </motion.div>
           </header>
           <div className="p-6 sm:p-10 w-full">
@@ -139,8 +159,13 @@ export const MoreEventsSection = (props: IProps) => {
                     <motion.div
                       className="rounded-lg p-6 w-full space-y-6"
                       initial={{ opacity: 0 }}
-                      // animate={inView ? { opacity: 1 } : {}}
-                      // transition={{ duration: 0.7, delay: index * 0.2 }}
+                      viewport={{ once: false }}
+                      whileInView={{
+                        opacity: 1,
+                        transition: {
+                          duration: 1,
+                        },
+                      }}
                     >
                       <h3 className="text-xl sm:text-2xl line-clamp-3 leading-tight">
                         {event.name}

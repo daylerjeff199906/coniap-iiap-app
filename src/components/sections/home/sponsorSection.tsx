@@ -25,7 +25,16 @@ export const SponsorSection = (props: IProps) => {
     <>
       <section className="bg-white section-home">
         <div className="container space-y-6">
-          <motion.header initial={{ opacity: 0 }}>
+          <motion.header
+            initial={{ opacity: 0 }}
+            viewport={{ once: false }}
+            whileInView={{
+              opacity: 1,
+              transition: {
+                duration: 1,
+              },
+            }}
+          >
             <div className="flex items-center gap-3 pb-3">
               <div className="dot-custom" />
               <p className="text-xs font-semibold">#CONIAP- 2024</p>
@@ -36,7 +45,16 @@ export const SponsorSection = (props: IProps) => {
               </h2>
             </div>
           </motion.header>
-          <motion.div initial={{ opacity: 0 }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            viewport={{ once: false }}
+            whileInView={{
+              opacity: 1,
+              transition: {
+                duration: 1,
+              },
+            }}
+          >
             {sponsors && (
               <>
                 <Swiper

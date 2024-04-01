@@ -14,8 +14,13 @@ export const InscriptionsSection = () => {
             <motion.div
               className="w.full h-full sm:min-w-[300px] lg:min-w-[420px]"
               initial={{ opacity: 0 }}
-              // animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
-              // transition={{ duration: 0.5 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                transition: {
+                  duration: 1,
+                },
+              }}
             >
               <Image
                 src="/logo_coniap.webp"
@@ -27,8 +32,13 @@ export const InscriptionsSection = () => {
             <motion.div
               className="space-y-4 sm:space-y-6 lg:space-y-8 sm:m-4 lg:m-6"
               initial={{ opacity: 0 }}
-              // animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
-              // transition={{ duration: 0.5 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                transition: {
+                  duration: 1,
+                },
+              }}
             >
               <div className="space-y-2">
                 <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold">

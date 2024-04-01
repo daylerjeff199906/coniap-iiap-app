@@ -1,7 +1,6 @@
 'use client'
 import { Accordion, AccordionItem, Image } from '@nextui-org/react'
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 import { IconPlus } from '@tabler/icons-react'
 import svgAddorm from '@/assets/svg/patron-fino.svg'
 
@@ -56,22 +55,14 @@ const data = [
 ]
 
 export const OrganizationSection = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
   return (
     <>
-      <section
-        className="py-10 sm:py-20"
-        ref={ref}
-      >
+      <section className="py-10 sm:py-20">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
           <div>
             <motion.div
               className="flex items-center gap-3 pb-3"
               initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
               transition={{ duration: 0.5 }}
             >
               <div className="dot-custom" />
@@ -80,7 +71,6 @@ export const OrganizationSection = () => {
             <motion.h2
               className="text-3xl sm:text-[40px] pb-6 leading-tight"
               initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
               transition={{ duration: 0.5 }}
             >
               Comité: la <b>columna</b> vertebral del <b>CONIAP</b>
