@@ -33,7 +33,23 @@ export const BannerHome = () => {
       className="h-screen flex items-center relative bg-gradient-to-r from-black/90 to-transparent w-full"
     >
       <div className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-4">
-        <div className="w-full lg:max-w-2xl space-y-8">
+        <motion.div
+          className="w-full lg:max-w-2xl space-y-8"
+          initial={{
+            opacity: 0,
+            x: -100,
+          }}
+          viewport={{
+            once: false,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0, // Slide in to its original position
+            transition: {
+              duration: 1, // Animation duration
+            },
+          }}
+        >
           <h1 className="text-3xl lg:text-[2.8rem] font-bold animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional de la{' '}
             <span className="text-green-500 ">Amazonía</span> Peruana
@@ -72,7 +88,7 @@ export const BannerHome = () => {
               Inscríbete
             </Button>
           </div>
-        </div>
+        </motion.div>
         <motion.div
           variants={container}
           initial="hidden"

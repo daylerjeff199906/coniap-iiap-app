@@ -1,7 +1,6 @@
 'use client'
 import { Card, CardBody, Image } from '@nextui-org/react'
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 
 import {
   IconFlag,
@@ -72,16 +71,9 @@ const container = {
 }
 
 export const AboutUsSection = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: false, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
   return (
     <article className="section section-home">
-      <main
-        className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container"
-        ref={ref}
-      >
+      <main className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
         <section className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
           <Image
             src={imgAboutUs.src}
@@ -91,49 +83,73 @@ export const AboutUsSection = () => {
             className="w-full h-full max-h-[720px] object-cover rounded-xl"
           />
         </section>
-        <section className="p-5 sm:p-10 flex flex-wrap">
+        <section className="sm:p-10 flex flex-wrap">
           <motion.div
             className="flex items-center gap-3 pb-3"
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, x: 10 }}
+            viewport={{
+              once: false,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0, // Slide in to its original position
+              transition: {
+                duration: 1, // Animation duration
+              },
+            }}
           >
             <div className="dot-custom" />
             <p className="text-xs font-semibold">#CONIAP - 2024</p>
           </motion.div>
 
-          <div className="">
-            <motion.h2
-              className="text-3xl sm:text-[40px] pb-6 leading-tight"
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
-              transition={{ duration: 0.5 }}
-            >
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, x: 15 }}
+            viewport={{
+              once: false,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 1, // Animation duration
+              },
+            }}
+          >
+            <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
               Por un Futuro Verde:
               <b>CONIAP</b> y la transformación de la <b>Amazonía</b>
-            </motion.h2>
-            <motion.h3
-              className="text-lg"
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}} // Animación cuando el elemento está en el viewport
-              transition={{ duration: 0.5 }}
-            >
+            </h2>
+            <h3 className="text-lg">
               Fomentando un Diálogo Multidisciplinario para el Avance Sostenible
               Globalmente.
-            </motion.h3>
-          </div>
+            </h3>
+          </motion.div>
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 "
             variants={container}
-            // initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
+            initial={{ opacity: 0 }}
+            viewport={{
+              once: false,
+            }}
+            whileInView={{
+              opacity: 1,
+              transition: {
+                duration: 1, // Animation duration
+              },
+            }}
           >
             {indicator.map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 100 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: index * 0.2 }}
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0, // Slide in to its original position
+                  transition: {
+                    duration: 1 + index, // Animation duration
+                  },
+                }}
               >
                 <Card
                   className="space-y-3 lg:p-5 rounded-xl text-center border-none"

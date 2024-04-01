@@ -1,8 +1,7 @@
 'use client'
 import { CardEvent } from '@/components'
 import { IEvent } from '@/types'
-// import { motion } from 'framer-motion'
-import { Button, Card, CardBody, CardFooter, Image } from '@nextui-org/react'
+import { motion } from 'framer-motion'
 
 interface IProps {
   events: IEvent[] | undefined
@@ -14,7 +13,17 @@ export const EventsSection = (props: IProps) => {
     <>
       <section className="bg-white section-home w-full">
         <div className="container space-y-6">
-          <header>
+          <motion.header
+            initial={{ opacity: 0, x: -15 }}
+            viewport={{ once: false }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 1,
+              },
+            }}
+          >
             <div className="flex items-center gap-3 pb-3">
               <div className="dot-custom" />
               <p className="text-xs font-semibold">#eventos- 2024</p>
@@ -24,14 +33,23 @@ export const EventsSection = (props: IProps) => {
                 Próximos <b>eventos</b>
               </h2>
             </div>
-          </header>
+          </motion.header>
           <div>
             {events &&
               events.map((event, i) => (
-                <CardEvent
+                <motion.div
                   key={i}
-                  event={event}
-                />
+                  initial={{ opacity: 0 }}
+                  viewport={{ once: false }}
+                  whileInView={{
+                    opacity: 1,
+                    transition: {
+                      duration: 1,
+                    },
+                  }}
+                >
+                  <CardEvent event={event} />
+                </motion.div>
               ))}
           </div>
         </div>
