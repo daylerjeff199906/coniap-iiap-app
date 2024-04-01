@@ -3,7 +3,6 @@
 import { Image } from '@nextui-org/react'
 
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -22,23 +21,11 @@ interface IProps {
 export const SponsorSection = (props: IProps) => {
   const { sponsors } = props
 
-  const [ref, inView] = useInView({
-    triggerOnce: false, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
-
   return (
     <>
       <section className="bg-white section-home">
-        <div
-          className="container space-y-6"
-          ref={ref}
-        >
-          <motion.header
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5 }}
-          >
+        <div className="container space-y-6">
+          <motion.header initial={{ opacity: 0 }}>
             <div className="flex items-center gap-3 pb-3">
               <div className="dot-custom" />
               <p className="text-xs font-semibold">#CONIAP- 2024</p>
@@ -49,11 +36,7 @@ export const SponsorSection = (props: IProps) => {
               </h2>
             </div>
           </motion.header>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5 }}
-          >
+          <motion.div initial={{ opacity: 0 }}>
             {sponsors && (
               <>
                 <Swiper

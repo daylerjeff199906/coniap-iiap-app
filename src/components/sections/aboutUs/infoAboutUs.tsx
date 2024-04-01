@@ -1,20 +1,12 @@
 'use client'
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 import img_logo from '@/assets/svg/IMAGOTIPO - CONIAP.svg'
 import { Image } from '@nextui-org/react'
 
 export const InfoAboutUs = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
   return (
     <>
-      <section
-        className=""
-        ref={ref}
-      >
+      <section className="">
         <main className="p-4 grid grid-cols-1 sm:grid-cols-2 items-center">
           <div className="">
             <Image
@@ -28,8 +20,6 @@ export const InfoAboutUs = () => {
             <motion.div
               className="flex items-center gap-3 pb-3"
               initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
-              transition={{ duration: 0.5 }}
             >
               <div className="dot-custom" />
               <p className="text-xs font-semibold">#CONIAP - 2024</p>
@@ -37,16 +27,12 @@ export const InfoAboutUs = () => {
             <motion.h2
               className="text-3xl sm:text-[40px] pb-6 leading-tight"
               initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
-              transition={{ duration: 0.5 }}
             >
               Congreso <b>Internacional</b> de la <b>AMAZONÍA </b> Peruana
             </motion.h2>
             <motion.div
               className="w-full"
               initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}} // Animación cuando el elemento está en el viewport
-              transition={{ duration: 0.5 }}
             >
               <p className="leading-relaxed">
                 El Congreso Internacional sobre Amazonia peruana: investigación
