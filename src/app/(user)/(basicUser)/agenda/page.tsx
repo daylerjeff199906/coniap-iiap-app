@@ -1,29 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client'
-import { useEffect } from 'react'
-import { ListShedule, LoadingPages } from '@/components'
-import { usePrograms } from '@/hooks/client'
+import { createClient } from '@/utils/supabase/server'
+import { ListShedule, OtherEventsSection } from '@/components'
 import { DataNotFound } from '@/components'
+import { IEvent, IProgram } from '@/types'
 
-export default function Page() {
-  const { getPrograms, programs, loading } = usePrograms()
+export default async function Page() {
+  const supabase = createClient()
 
-  useEffect(() => {
-    getPrograms()
-  }, [])
+  const { data: programs } = (await supabase
+    .from('programs')
+    .select()
+    .eq('isActived', true)) as { data: IProgram[] }
+
+  const { data: eventSpeakers } = (await supabase
+    .from('events')
+    .select('*, persons(*)')
+    .eq('isActived', true)
+    .not('program_id', 'is', null)) as { data: IEvent[] }
+
+  const { data: otherEvents } = (await supabase
+    .from('events')
+    .select()
+    .eq('isActived', true)
+    .is('sala', null)) as { data: IEvent[] }
 
   return (
     <>
-      <div>
-        {programs !== null && programs.length > 0 ? (
+      <section className="container">
+        {programs !== undefined && programs?.length > 0 ? (
           <>
-            <ListShedule programs={programs} />
+            <ListShedule
+              programs={programs}
+              events={eventSpeakers}
+            />
           </>
         ) : (
           <DataNotFound />
         )}
-      </div>
-      <LoadingPages isOpen={loading} />
+      </section>
+      <OtherEventsSection events={otherEvents} />
     </>
   )
 }

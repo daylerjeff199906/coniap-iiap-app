@@ -1,28 +1,66 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Divider } from '@nextui-org/react'
+import img_logo from '@/assets/svg/IMAGOTIPO - CONIAP.svg'
+import { Image } from '@nextui-org/react'
 
 export const InfoAboutUs = () => {
   return (
     <>
-      <section>
-        <motion.header
-          className="flex flex-col items-center"
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="text-center flex flex-col items-center">
-            <h4 className="subtitle-section-home">CONIAP</h4>
-            <h2 className="title-section-home">Nuestro propósito</h2>
-            <Divider className="bg-orange-500 pt-1 rounded-full mt-4 w-36 " />
-          </div>
-        </motion.header>
-        <main className="p-4">
-          <section>
-            <div></div>
-            <div>
-              <p>
+      <section className="">
+        <main className="p-4 grid grid-cols-1 sm:grid-cols-2 items-center">
+          <motion.div
+            className=""
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.2,
+              ease: [0, 0.71, 0.2, 1.01],
+              scale: {
+                type: 'spring',
+                damping: 5,
+                stiffness: 100,
+                restDelta: 0.001,
+              },
+            }}
+          >
+            <Image
+              src={img_logo.src}
+              alt="CONIAP 2024"
+              removeWrapper
+              className="w-full h-full max-h-[520px] rounded-xl"
+            />
+          </motion.div>
+          <section className="w-full">
+            <motion.div
+              className="flex items-center gap-3 pb-3"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 1,
+              }}
+            >
+              <div className="dot-custom" />
+              <p className="text-xs font-semibold">#CONIAP - 2024</p>
+            </motion.div>
+            <motion.h2
+              className="text-3xl sm:text-[40px] pb-6 leading-tight"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 1,
+              }}
+            >
+              Congreso <b>Internacional</b> de la <b>AMAZONÍA </b> Peruana
+            </motion.h2>
+            <motion.div
+              className="w-full"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 1,
+              }}
+            >
+              <p className="leading-relaxed">
                 El Congreso Internacional sobre Amazonia peruana: investigación
                 para el desarrollo, perspectivas y retos, que se realizará
                 anualmente, se constituye en un espacio de diálogo abierto de
@@ -40,7 +78,7 @@ export const InfoAboutUs = () => {
                 cambio climático y el marco de los Objetivos del Desarrollo
                 Sostenible - ODS.
               </p>
-            </div>
+            </motion.div>
           </section>
         </main>
       </section>

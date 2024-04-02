@@ -1,20 +1,21 @@
+import { IPerson } from '.'
 export interface IEvent {
   id: string
+  program_id: string
+  //observar
+  persons: IPerson | null
+  sala: string
   isActived: boolean
   name: string
   timeStart: string
   timeEnd: string
-  date?: string
-  shortDescription?: string
-  place: string
-  banner?: string
-  images: string[]
-  salaId: string
-  linkZoom?: string
-  linkYoutube?: string
-  linkFacebook?: string
-  customContent?: string
-  idProgram?: string
-  inProgram?: boolean
-  idTypeEvent?: string
+  date: string
+  shortDescription: string
+  banner: string
+  linkZoom: string
+  linkYoutube: string
+  linkFacebook: string
+  customContent: string
+  //delete
+  created_at: Date
 }

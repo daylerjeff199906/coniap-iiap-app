@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
-import { IUser } from '@/types'
 import { createCookie, createLocalStorage } from '@/lib'
 
 interface ILogin {

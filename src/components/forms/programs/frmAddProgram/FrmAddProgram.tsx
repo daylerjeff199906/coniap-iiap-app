@@ -16,7 +16,7 @@ export const FrmAddProgram = () => {
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()
-  const { createProgram, loading } = usePrograms()
+  const { addProgram, loading } = usePrograms()
 
   const methods = useForm<IProgram>()
 
@@ -24,25 +24,27 @@ export const FrmAddProgram = () => {
     setOpen(true)
   }
 
-  const handleFormSubmit: SubmitHandler<IProgram> = (data: IProgram) => {
+  const handleFormSubmit: SubmitHandler<IProgram> = async (data: IProgram) => {
     setOpen(false)
     const newData = {
       ...data,
       banner: '',
       isActived: false,
-      events: [],
     }
-    createProgram(newData)
-      .then(() => {
-        router.push('/admin/programas')
-      })
-      .catch(() => {
-        toast.error('Error al crear evento')
-      })
+    const res = await addProgram(newData)
+    if (res) {
+      router.push('/admin/programas')
+    } else {
+      toast.error('Error al crear programa')
+    }
     resetForm()
   }
 
-  const resetForm = () => {}
+  const resetForm = () => {
+    methods.setValue('title', '')
+    methods.setValue('shortDescription', '')
+    methods.setValue('date', '')
+  }
 
   return (
     <>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { TableGeneral } from '@/components'
@@ -35,23 +35,25 @@ export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
   const { getSponsors, sponsors, loading } = useSponsors()
   const { editField, loading: loadingFile } = useFiles()
 
+  const [query, setQuery] = useState<string>('')
+
   // const searchParams = useSearchParams()
 
   // const isEdit = searchParams.get('edit') !== null
 
   useEffect(() => {
-    getSponsors()
-  }, [])
+    getSponsors(query)
+  }, [query])
 
   useEffect(() => {
     if (loadData) {
-      getSponsors()
+      getSponsors('')
     }
   }, [loadData])
 
   const handleStatusChange = async (key: string, value: boolean) => {
-    await editField(key, 'sponsors', 'isActive', value)
-    getSponsors()
+    await editField(key, 'sponsors', 'isActived', value)
+    getSponsors('')
   }
 
   return (
@@ -69,7 +71,7 @@ export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
                   key: sponsor.id,
                   image: RenderImage(sponsor.image),
                   name: sponsor.name,
-                  status: sponsor.isActive,
+                  status: sponsor.isActived,
                   actions: 'actions',
                 }
               })
@@ -79,15 +81,6 @@ export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
     </>
   )
 }
-
-// const RenderColumnName = (fullname: string, surname: string) => {
-//   return (
-//     <div className="flex flex-col">
-//       <p className="text-base font-bold">{fullname}</p>
-//       <p className="text-xs font-medium text-slate-500">{surname}</p>
-//     </div>
-//   )
-// }
 
 const RenderImage = (image: string) => {
   return (

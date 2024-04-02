@@ -10,11 +10,12 @@ import { FilePond } from 'react-filepond'
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css'
 
-import { useEvents } from '@/hooks/admin'
+import { useEvents, useFiles } from '@/hooks/admin'
 
 export const HeaderSection = () => {
   const { watch, setValue } = useFormContext()
-  const { uploadImage, editEventField } = useEvents()
+  const { uploadImage } = useEvents()
+  const { editField } = useFiles()
 
   const searchParams = useSearchParams()
   const id = searchParams.get('edit') as string
@@ -72,7 +73,7 @@ export const HeaderSection = () => {
               const data = file as File
               const url = await uploadImage(data)
               if (url !== '') {
-                await editEventField(id, 'banner', url)
+                await editField(id, 'events', 'banner', url)
                 setValue('banner', url)
               }
               load(url)

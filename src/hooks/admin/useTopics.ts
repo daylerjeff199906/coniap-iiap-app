@@ -1,17 +1,5 @@
 import { useState } from 'react'
-import { db } from '@/firebase/firebase'
-import {
-  collection,
-  getDocs,
-  DocumentData,
-  doc,
-  DocumentReference,
-  getDoc,
-  query,
-  addDoc,
-  updateDoc,
-  // where,
-} from 'firebase/firestore'
+import { fetchTopics, fetchTopic, createTopic, updateTopic } from '@/api'
 import { ITopic } from '@/types'
 import { toast } from 'sonner'
 
@@ -21,69 +9,53 @@ export function useTopics() {
   const [topics, setTopics] = useState<ITopic[] | null>(null)
   const [topic, setTopic] = useState<ITopic | null>(null)
 
-  const getTopics = async () => {
+  const getTopics = async (query: string) => {
     setLoading(true)
-    try {
-      const querySnapshot = await getDocs(query(collection(db, 'topics')))
-
-      const topics = querySnapshot.docs.map((doc) => ({
-        id: doc.id.toString(),
-        ...doc.data(),
-      }))
-
-      setLoading(false)
-      setTopics(topics as ITopic[])
-    } catch (error) {
-      console.log(error)
-    }
+    const data = await fetchTopics(query)
+      .then((res) => res)
+      .catch((err) => err)
+    setTopics(data)
+    setLoading(false)
   }
 
   const creatTopic = async (data: ITopic) => {
     setLoading(true)
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const docRef = await addDoc(collection(db, 'topics'), data)
-      // console.log('Document written with ID: ', docRef.id)
-      toast.success(`Nuevo tema añadido con éxito, ID: ${docRef.id}`)
+    const res = await createTopic(data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res) {
+      toast.success('Tema creado correctamente')
       setLoading(false)
-      return docRef.id
-    } catch (error) {
+      return res[0]
+    } else {
+      toast.error('Error al crear tema')
       setLoading(false)
-      console.log(error)
       return null
     }
   }
 
-  const updateTopic = async (id: string, data: ITopic) => {
+  const updateDataTopic = async (id: string, data: ITopic) => {
     setLoading(true)
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const eventRef: DocumentReference<DocumentData> = doc(db, 'topics', id)
-      await updateDoc(eventRef, data as any)
-      toast.success('Colaborador actualizado con exito')
+    const res = await updateTopic(Number(id), data)
+      .then((res) => res)
+      .catch((err) => err)
+    if (res) {
+      toast.success('Tema actualizado correctamente')
       setLoading(false)
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
+      return res[0]
     }
+    toast.error('Error al actualizar tema')
+    setLoading(false)
+    return null
   }
 
   const getTopicById = async (id: string) => {
     setLoading(true)
-    try {
-      const categoryRef: DocumentReference<DocumentData> = doc(db, 'topics', id)
-      const docSnap = await getDoc(categoryRef)
-      if (docSnap.exists()) {
-        setTopic(docSnap.data() as ITopic)
-        // return docSnap.data()
-      } else {
-        console.log('No such document!')
-      }
-
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
+    const data = await fetchTopic(Number(id))
+      .then((res) => res)
+      .catch((err) => err)
+    setTopic(data[0])
+    setLoading(false)
   }
 
   return {
@@ -92,7 +64,7 @@ export function useTopics() {
     getTopics,
     getTopicById,
     creatTopic,
-    updateTopic,
+    updateDataTopic,
     topic,
   }
 }

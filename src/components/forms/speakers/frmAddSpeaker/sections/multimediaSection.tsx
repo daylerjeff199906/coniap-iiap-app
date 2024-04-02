@@ -31,7 +31,7 @@ export const MultimediaSection = (props: IProps) => {
         )}
       /> */}
       <FilePond
-        allowMultiple={true}
+        allowMultiple={false}
         acceptedFileTypes={['image/*']}
         labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
         files={files}

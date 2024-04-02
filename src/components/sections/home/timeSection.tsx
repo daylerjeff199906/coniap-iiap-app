@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
 import Vector from '@/assets/svg/patron_vectores.svg'
 import Image from 'next/image'
+
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 
 const dateStart = new Date('2024-11-13').getTime()
 const dateEnd = new Date('2024-11-15').getTime()
@@ -92,11 +95,25 @@ export const TimeSection = () => {
   )
 }
 
-const TimeDisplay = ({ label, value }: { label: string; value: number }) => (
-  <div className="w-full text-center">
-    <h2 className="text-white lg:pb-3 font-medium text-tiny lg:text-base">
-      {label}
-    </h2>
-    <h1 className="text-2xl lg:text-5xl font-bold">{value}</h1>
-  </div>
-)
+const TimeDisplay = ({ label, value }: { label: string; value: number }) => {
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, Math.round)
+
+  useEffect(() => {
+    const controls = animate(count, value, {
+      // type: 'tween',
+      duration: 2,
+    })
+  }, [value])
+
+  return (
+    <div className="w-full text-center">
+      <h2 className="text-white lg:pb-3 font-medium text-tiny lg:text-base">
+        {label}
+      </h2>
+      <motion.h1 className="text-2xl lg:text-5xl font-bold">
+        {rounded}
+      </motion.h1>
+    </div>
+  )
+}

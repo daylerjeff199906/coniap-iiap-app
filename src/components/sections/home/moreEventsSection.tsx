@@ -1,6 +1,5 @@
 'use client'
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import { IconArrowRight } from '@tabler/icons-react'
@@ -11,6 +10,10 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 // import required modules
 import { Pagination } from 'swiper/modules'
+import { IEvent } from '@/types'
+
+import Image from 'next/image'
+import dividerShape from '@/assets/svg/wavesOpacityBottom.svg'
 
 const data = [
   {
@@ -47,33 +50,49 @@ const data = [
   },
 ]
 
-export const MoreEventsSection = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: false, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
+interface IProps {
+  events: IEvent[]
+}
+
+export const MoreEventsSection = (props: IProps) => {
+  const { events } = props
+
   return (
     <>
-      <section className="w-full bg-gray-200 section-home">
-        <div
-          className="container"
-          ref={ref}
-        >
-          <header className="pb-4">
+      <section className="w-full bg-gray-200 section-shape relative">
+        <Image
+          src={dividerShape}
+          alt="divider"
+          className="absolute z-0 top-0 left-0 w-full "
+        />
+        <div className="container">
+          <header className="pt-14 pb-4">
             <motion.div
               className="flex items-center gap-3 pb-3"
-              initial={{ opacity: 0, x: -100 }}
-              animate={inView ? { opacity: 1, x: 1 } : {}}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: -15 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 0.4,
+                },
+              }}
             >
               <div className="dot-custom" />
-              <p className="text-xs font-semibold">ponentes - 2024</p>
+              <p className="text-xs font-semibold z-10">ponentes - 2024</p>
             </motion.div>
             <motion.div
               className="w-full"
-              initial={{ opacity: 0, x: -100 }}
-              animate={inView ? { opacity: 1, x: 1 } : {}}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: -15 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 0.4,
+                },
+              }}
             >
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
                 Nuestras conferencias <b> Magistrales</b> del congreso
@@ -81,26 +100,34 @@ export const MoreEventsSection = () => {
             </motion.div>
             <motion.div
               className="grid grid-cols-1 sm:flex items-center gap-6 sm:justify-between"
-              initial={{ opacity: 0, x: 10 }}
-              animate={inView ? { opacity: 1, x: 1 } : {}}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, x: 15 }}
+              viewport={{ once: false }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 0.4,
+                },
+              }}
             >
               <h3 className="text-lg w-full max-w-4xl">
                 Descubra las ponencias del congreso creadas conjuntamente con
                 los principales especialistas tanto nacionales como
                 internacionales que tuvieron lugar en el congreso.
               </h3>
-              <Button
-                radius="full"
-                size="lg"
-                variant="solid"
-                color="primary"
-                className="text-white"
-                as={Link}
-                href="/ponentes"
-              >
-                Ver todo
-              </Button>
+              <div>
+                <Button
+                  radius="full"
+                  size="lg"
+                  variant="solid"
+                  color="primary"
+                  className="text-white"
+                  as={Link}
+                  href="/agenda"
+                >
+                  Ver todo
+                </Button>
+              </div>
             </motion.div>
           </header>
           <div className="p-6 sm:p-10 w-full">
@@ -127,39 +154,50 @@ export const MoreEventsSection = () => {
               modules={[Pagination]}
               className="mySwiper"
             >
-              {data?.map((event, index) => (
-                <SwiperSlide
-                  key={index}
-                  className="w-full"
-                >
-                  {/* <CardEvent event={event} /> */}
-                  <motion.div
-                    className="rounded-lg p-6 w-full space-y-6"
-                    initial={{ opacity: 0 }}
-                    animate={inView ? { opacity: 1 } : {}}
-                    transition={{ duration: 0.7, delay: index * 0.2 }}
+              {events
+                ?.filter(
+                  (event) =>
+                    event.persons && event.persons.typePerson === 'speaker_mg'
+                )
+                .map((event, index) => (
+                  <SwiperSlide
+                    key={index}
+                    className="w-full"
                   >
-                    <h3 className="text-xl sm:text-2xl line-clamp-3 leading-tight">
-                      {event.title}
-                    </h3>
-                    <p className="text-tiny sm:text-medium font-bold">
-                      {event.subtitle}
-                    </p>
-                    <p className="text-tiny sm:text-medium ">{event.speaker}</p>
-                    <Link
-                      href={event.href}
-                      className="underline font-bold leading-normal py-4"
+                    <motion.div
+                      className="rounded-lg p-6 w-full space-y-6"
+                      initial={{ opacity: 0 }}
+                      viewport={{ once: false }}
+                      whileInView={{
+                        opacity: 1,
+                        transition: {
+                          duration: 0.4,
+                        },
+                      }}
                     >
-                      <div className="font-bold py-4 inline-block relative">
-                        <div className="flex items-center gap-4">
-                          <h1>Más información</h1> <IconArrowRight />
+                      <h3 className="text-xl sm:text-2xl line-clamp-3 leading-tight">
+                        {event.name}
+                      </h3>
+                      <p className="text-tiny sm:text-medium font-bold">
+                        Conferencia Magistral
+                      </p>
+                      <p className="text-tiny sm:text-medium ">
+                        {event.persons?.name + ' ' + event?.persons?.surName}
+                      </p>
+                      <Link
+                        href={`/eventos/${event?.id}`}
+                        className="underline font-bold leading-normal py-4"
+                      >
+                        <div className="font-bold py-4 inline-block relative">
+                          <div className="flex items-center gap-4">
+                            <h1>Más información</h1> <IconArrowRight />
+                          </div>
+                          <span className="absolute bottom-2 left-0 w-full h-0.5 bg-black transition-all"></span>
                         </div>
-                        <span className="absolute bottom-2 left-0 w-full h-0.5 bg-black transition-all"></span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                </SwiperSlide>
-              ))}
+                      </Link>
+                    </motion.div>
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
         </div>

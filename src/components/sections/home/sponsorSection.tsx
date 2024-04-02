@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -15,33 +13,27 @@ import 'swiper/css/pagination'
 
 // import required modules
 import { Pagination } from 'swiper/modules'
+import { ISponsor } from '@/types'
 
-//import hook useSponsors
-import { useSponsors } from '@/hooks/client'
-
-export const SponsorSection = () => {
-  const { sponsorsActive, getSponsors } = useSponsors()
-
-  useEffect(() => {
-    getSponsors()
-  }, [])
-
-  const [ref, inView] = useInView({
-    triggerOnce: false, // La animación solo se activará una vez
-    threshold: 0.3, // Porcentaje de visibilidad del elemento en el viewport para activar la animación
-  })
+interface IProps {
+  sponsors: ISponsor[] | undefined
+}
+export const SponsorSection = (props: IProps) => {
+  const { sponsors } = props
 
   return (
     <>
       <section className="bg-white section-home">
-        <div
-          className="container space-y-6"
-          ref={ref}
-        >
+        <div className="container space-y-6">
           <motion.header
-            initial={{ opacity: 0, x: -100 }}
-            animate={inView ? { opacity: 1, x: 1 } : {}}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            viewport={{ once: false }}
+            whileInView={{
+              opacity: 1,
+              transition: {
+                duration: 1,
+              },
+            }}
           >
             <div className="flex items-center gap-3 pb-3">
               <div className="dot-custom" />
@@ -51,18 +43,19 @@ export const SponsorSection = () => {
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
                 Nuestros <b>colaboradores</b>
               </h2>
-              {/* <h3 className="text-lg">
-                Fomentando un Diálogo Multidisciplinario para el Avance
-                Sostenible Globalmente.
-              </h3> */}
             </div>
           </motion.header>
           <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={inView ? { opacity: 1, x: 1 } : {}}
-          transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            viewport={{ once: false }}
+            whileInView={{
+              opacity: 1,
+              transition: {
+                duration: 1,
+              },
+            }}
           >
-            {sponsorsActive && (
+            {sponsors && (
               <>
                 <Swiper
                   slidesPerView={1}
@@ -87,7 +80,7 @@ export const SponsorSection = () => {
                   modules={[Pagination]}
                   className="mySwiper"
                 >
-                  {sponsorsActive?.map((sponsor) => (
+                  {sponsors?.map((sponsor) => (
                     <SwiperSlide key={sponsor.id}>
                       <Image
                         src={sponsor.image}

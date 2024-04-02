@@ -9,7 +9,6 @@ import {
   getDocs,
 } from 'firebase/firestore'
 
-import { createCookie } from '@/lib'
 import { toast } from 'sonner'
 import { IUser } from '@/types'
 

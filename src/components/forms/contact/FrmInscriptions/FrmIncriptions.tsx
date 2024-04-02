@@ -9,14 +9,21 @@ import { Button, Checkbox, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { FilePond } from 'react-filepond'
 import { ModalAction } from '@/components'
-import { IParticipants } from '@/types'
+import { IPerson } from '@/types'
+import { usePersons, useFiles } from '@/hooks/admin'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export const FrmInscriptions = () => {
   const [showFile, setShowFile] = useState<boolean>(false)
   const [files, setFiles] = useState<File[]>([])
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const methods = useForm<IParticipants>()
+  const { addPerson, loading: loadAddPerson } = usePersons()
+  const { uploadImage, editField, loading } = useFiles()
+  const router = useRouter()
+
+  const methods = useForm<IPerson>()
 
   const dateLimit = '2024-10-01'
   const inDate = new Date() < new Date(dateLimit)
@@ -29,23 +36,67 @@ export const FrmInscriptions = () => {
     setIsOpenAction(true)
   }
 
-  const handleOnSubmit: SubmitHandler<IParticipants> = (data) => {
-    console.log(data)
+  const handleOnSubmit: SubmitHandler<IPerson> = async (data) => {
+    setIsOpenAction(false)
+    const newData: IPerson = {
+      ...data,
+      typePerson: showFile ? 'speaker' : 'participant',
+      file_resumen: '',
+      isActived: false,
+      image: '',
+    }
+
+    const res: IPerson = await addPerson(newData)
+    if (files.length > 0) {
+      const file = files[0]
+      const resFile = await uploadImage('files', file)
+      if (resFile) {
+        const resEdit = await editField(
+          res.id,
+          'persons',
+          'file_resumen',
+          resFile
+        )
+        if (resEdit !== null) {
+          resetForm()
+          toast.success('Datos registrados con éxito', {
+            description: 'Enviaremos un mensaje de confirmación a tu correo',
+          })
+          router.push('/inscripciones/success')
+        }
+      }
+    } else if (res !== null) {
+      resetForm()
+      toast.success('Datos registrados con éxito', {
+        description: 'Enviaremos un mensaje de confirmación a tu correo',
+      })
+      router.push('/inscripciones/success')
+    }
+  }
+
+  const resetForm = () => {
+    methods.setValue('name', '')
+    methods.setValue('surName', '')
+    methods.setValue('job', '')
+    methods.setValue('institution', '')
+    methods.setValue('location', '')
+    methods.setValue('email', '')
+    setFiles([])
   }
 
   return (
     <>
       <FormProvider {...methods}>
         <form
-          className="w-full max-w-xl sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6 sm:py-8 sm:shadow-lg sm:rounded-lg"
+          className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div className="col-span-2">
-            <h1 className="text-xl font-bold">Formulario de inscripción</h1>
-            <p className="text-xs text-gray-500">
-              Ingresa tus datos para inscribirte en el evento, puedes participar
-              como asistente o expositor.
-            </p>
+            <h3 className="text-sm sm:text-lg">
+              <b>¿Listo para aprovechar la oportunidad?</b> Déjanos tus datos
+              para descargar nuestra Carpeta de Eventos 2024 y explorar todas
+              nuestras fórmulas de participación.
+            </h3>
           </div>
           <Controller
             control={methods.control}
@@ -60,7 +111,7 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.name !== undefined}
-                errorMessage={methods.formState.errors.name?.message}
+                errorMessage={methods.formState.errors.name?.message as string}
               />
             )}
           />
@@ -77,7 +128,9 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.surName !== undefined}
-                errorMessage={methods.formState.errors.surName?.message}
+                errorMessage={
+                  methods.formState.errors.surName?.message as string
+                }
               />
             )}
           />
@@ -94,7 +147,7 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.job !== undefined}
-                errorMessage={methods.formState.errors.job?.message}
+                errorMessage={methods.formState.errors.job?.message as string}
               />
             )}
           />
@@ -111,7 +164,9 @@ export const FrmInscriptions = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.institution !== undefined}
-                errorMessage={methods.formState.errors.institution?.message}
+                errorMessage={
+                  methods.formState.errors.institution?.message as string
+                }
               />
             )}
           />
@@ -129,7 +184,9 @@ export const FrmInscriptions = () => {
                   value={value}
                   onValueChange={onChange}
                   isInvalid={methods.formState.errors.location !== undefined}
-                  errorMessage={methods.formState.errors.location?.message}
+                  errorMessage={
+                    methods.formState.errors.location?.message as string
+                  }
                 />
               )}
             />
@@ -154,7 +211,9 @@ export const FrmInscriptions = () => {
                   value={value}
                   onValueChange={onChange}
                   isInvalid={methods.formState.errors.email !== undefined}
-                  errorMessage={methods.formState.errors.email?.message}
+                  errorMessage={
+                    methods.formState.errors.email?.message as string
+                  }
                 />
               )}
             />
@@ -186,11 +245,14 @@ export const FrmInscriptions = () => {
           >
             Acepto los términos y condiciones
           </Checkbox>
-          <div className="col-span-2 flex justify-end">
+          <div className="col-span-2">
             <Button
-              radius="sm"
+              radius="full"
               color="primary"
               type="submit"
+              size="lg"
+              isLoading={loadAddPerson || loading}
+              isDisabled={loadAddPerson || loading}
             >
               Enviar
             </Button>

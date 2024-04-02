@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { FrmEditSpeaker } from '@/components'
-
-import { useSpeakers } from '@/hooks/admin'
+import { usePersons } from '@/hooks/admin/usePersons'
 import { useEffect } from 'react'
 
 interface IProps {
@@ -13,13 +12,13 @@ interface IProps {
 export const UpdateSpeaker = (props: IProps) => {
   const { id, isEdit } = props
 
-  const { geSpeakerById, speaker } = useSpeakers()
+  const { getPerson, person } = usePersons()
 
   useEffect(() => {
     const fetchData = async () => {
       if (isEdit) {
         if (id) {
-          await geSpeakerById(id)
+          await getPerson(id)
         }
       }
     }
@@ -27,5 +26,5 @@ export const UpdateSpeaker = (props: IProps) => {
     fetchData()
   }, [id, isEdit])
 
-  return <>{speaker !== null && <FrmEditSpeaker speaker={speaker} />}</>
+  return <>{person !== null && <FrmEditSpeaker speaker={person} />}</>
 }

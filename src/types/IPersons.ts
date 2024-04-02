@@ -1,4 +1,4 @@
-export interface IParticipants {
+export interface IPerson {
   id: string
   name: string
   surName: string
@@ -6,10 +6,10 @@ export interface IParticipants {
   image: string
   email: string
   location?: string
+  presentation?: string
   institution?: string
-  //   presentation?: string
-  file?: File
   isActived?: boolean
-  isSpeaker?: boolean
-  isMasterly?: boolean
+  created_at: string
+  file_resumen?: string | null
+  typePerson: 'speaker' | 'speaker_mg' | 'participant'
 }

@@ -1,9 +1,7 @@
-'use client'
-import dividerCustom from '@/assets/svg/patron-fino.svg'
+import { createClient } from '@/utils/supabase/server'
 import {
   AboutUsSection,
   BannerHome,
-  ScheduleSection,
   TimeSection,
   SpeakersSection,
   TopicsSection,
@@ -11,21 +9,85 @@ import {
   EventsSection,
   InscriptionsSection,
   MoreEventsSection,
+  AgendaSection,
+  FrmContactUs,
 } from '@/components'
 
-export default function Page() {
+import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
+
+export default async function Page() {
+  const supabase = createClient()
+  const { data: topics } = await supabase
+    .from('topics')
+    .select()
+    .eq('isActived', true)
+
+  const { data: persons } = await supabase
+    .from('persons')
+    .select()
+    .eq('isActived', true)
+    .eq('typePerson', 'speaker_mg')
+
+  const { data: sponsors } = await supabase
+    .from('sponsors')
+    .select()
+    .eq('isActived', true)
+
+  const { data: event } = await supabase
+    .from('events')
+    .select()
+    .eq('isActived', true)
+    .is('sala', null)
+
+  const { data: programs } = (await supabase
+    .from('programs')
+    .select()
+    .eq('isActived', true)) as { data: IProgram[] }
+
+  const { data: eventSpeakers } = (await supabase
+    .from('events')
+    .select('*, persons(*)')
+    .eq('isActived', true)
+    .not('program_id', 'is', null)) as { data: IEvent[] }
+
+  const dataTopics: ITopic[] | undefined = topics?.map((topic: ITopic) => ({
+    ...topic,
+    date: new Date(topic?.created_at),
+  }))
+
+  const dataPersons = persons?.map((person: IPerson) => ({
+    ...person,
+    date: new Date(person?.created_at),
+  }))
+
+  const dataSponsors: ISponsor[] | undefined = sponsors?.map(
+    (sponsor: ISponsor) => ({
+      ...sponsor,
+      created_at: new Date(sponsor?.created_at),
+    })
+  )
+
+  const dataEvents: IEvent[] | undefined = event?.map((event: IEvent) => ({
+    ...event,
+    date: event?.date,
+  }))
+
   return (
-    <main>
+    <main className="">
       <BannerHome />
       <TimeSection />
       <AboutUsSection />
-      <SpeakersSection />
-      <TopicsSection />
-      <ScheduleSection />
-      <MoreEventsSection />
-      <EventsSection />
+      <SpeakersSection persons={dataPersons} />
+      <TopicsSection topics={dataTopics} />
+      <AgendaSection
+        events={eventSpeakers}
+        programs={programs}
+      />
+      <MoreEventsSection events={eventSpeakers} />
+      <EventsSection events={dataEvents} />
       <InscriptionsSection />
-      <SponsorSection />
+      <SponsorSection sponsors={dataSponsors} />
+      <FrmContactUs />
     </main>
   )
 }

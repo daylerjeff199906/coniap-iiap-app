@@ -1,6 +1,8 @@
 import { FrmLogin } from '@/components'
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  // console.log('user', user)
+
   return (
     <>
       <FrmLogin />

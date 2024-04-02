@@ -1,11 +1,27 @@
-'use client'
+import { createClient } from '@/utils/supabase/server'
 import { ListSpeakers } from '@/components'
+import { IPerson } from '@/types'
 
-export default function Page() {
+export default async function Page() {
+  const supabase = createClient()
+
+  const { data: speakers } = await supabase
+    .from('persons')
+    .select()
+    .eq('isActived', true)
+    .not('typePerson', 'eq', 'participant')
+
+  const speakersData: IPerson[] | undefined = speakers?.map(
+    (speaker: IPerson) => ({
+      ...speaker,
+      date: new Date(speaker?.created_at),
+    })
+  )
+
   return (
     <>
       <section className="section-page space-y-8">
-        <ListSpeakers />
+        <ListSpeakers speakers={speakersData} />
       </section>
     </>
   )

@@ -16,7 +16,7 @@ export const InfoGeneralSection = () => {
             rules={{
               required: 'Este campo es requerido',
             }}
-            name="fullName"
+            name="name"
             render={({ field: { onChange, value } }) => (
               <Input
                 aria-label="Nombre del ponente"
@@ -26,8 +26,8 @@ export const InfoGeneralSection = () => {
                 placeholder="Nombre del ponente"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.fullName !== undefined}
-                errorMessage={errors.fullName?.message as string}
+                isInvalid={errors.name !== undefined}
+                errorMessage={errors.name?.message as string}
               />
             )}
           />
@@ -59,18 +59,18 @@ export const InfoGeneralSection = () => {
             rules={{
               required: 'Este campo es requerido',
             }}
-            name="levelStudy"
+            name="location"
             render={({ field: { onChange, value } }) => (
               <Input
-                aria-label="Grado académico"
-                label="Grado académico"
+                aria-label="location"
+                label="Localidad"
                 labelPlacement="outside"
-                placeholder="Dr. MSc. Ing. Lic. etc."
+                placeholder="Perú, Bolivia, México, etc."
                 radius="sm"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.levelStudy !== undefined}
-                errorMessage={errors.levelStudy?.message as string}
+                isInvalid={errors.location !== undefined}
+                errorMessage={errors.location?.message as string}
               />
             )}
           />
