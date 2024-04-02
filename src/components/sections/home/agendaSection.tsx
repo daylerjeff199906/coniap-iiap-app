@@ -28,7 +28,7 @@ export const AgendaSection = (props: IProps) => {
               opacity: 1,
               x: 0,
               transition: {
-                duration: 1, // Animation duration
+                duration: 0.4, // Animation duration
               },
             }}
           >

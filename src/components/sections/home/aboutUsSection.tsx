@@ -1,6 +1,7 @@
 'use client'
-import { Card, CardBody, Image } from '@nextui-org/react'
+import { Card, CardBody, Image as ImageUI } from '@nextui-org/react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 import {
   IconFlag,
@@ -10,6 +11,7 @@ import {
 } from '@tabler/icons-react'
 
 import imgAboutUs from '@/assets/images/img_about.webp'
+import dividerShape from '@/assets/svg/wavesOpacity.svg'
 
 const indicator = [
   {
@@ -58,24 +60,17 @@ const indicator = [
   },
 ]
 
-const container = {
-  hidden: { opacity: 1, scale: 0 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delayChildren: 0.3,
-      staggerChildren: 0.2,
-    },
-  },
-}
-
 export const AboutUsSection = () => {
   return (
-    <article className="section section-home">
+    <article className="section section-shape relative w-full">
+      <Image
+        src={dividerShape}
+        alt="divider"
+        className="absolute z-10 top-0 left-0 w-full "
+      />
       <main className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
         <section className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
-          <Image
+          <ImageUI
             src={imgAboutUs.src}
             alt="CONIAP 2024"
             radius="lg"
@@ -83,7 +78,7 @@ export const AboutUsSection = () => {
             className="w-full h-full max-h-[720px] object-cover rounded-xl"
           />
         </section>
-        <section className="sm:p-10 flex flex-wrap">
+        <section className="sm:p-10 flex flex-wrap z-20">
           <motion.div
             className="flex items-center gap-3 pb-3"
             initial={{ opacity: 0, x: 10 }}
@@ -94,7 +89,7 @@ export const AboutUsSection = () => {
               opacity: 1,
               x: 0, // Slide in to its original position
               transition: {
-                duration: 1, // Animation duration
+                duration: 0.5, // Animation duration
               },
             }}
           >
@@ -112,7 +107,7 @@ export const AboutUsSection = () => {
               opacity: 1,
               x: 0,
               transition: {
-                duration: 1, // Animation duration
+                duration: 0.4, // Animation duration
               },
             }}
           >
@@ -127,7 +122,7 @@ export const AboutUsSection = () => {
           </motion.div>
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 "
-            variants={container}
+            // variants={container}
             initial={{ opacity: 0 }}
             viewport={{
               once: false,
@@ -135,7 +130,7 @@ export const AboutUsSection = () => {
             whileInView={{
               opacity: 1,
               transition: {
-                duration: 1, // Animation duration
+                duration: 0.2, // Animation duration
               },
             }}
           >
@@ -147,7 +142,7 @@ export const AboutUsSection = () => {
                   opacity: 1,
                   x: 0, // Slide in to its original position
                   transition: {
-                    duration: 1 + index, // Animation duration
+                    duration: index / 10, // Animation duration
                   },
                 }}
               >

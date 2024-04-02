@@ -12,6 +12,9 @@ import 'swiper/css/pagination'
 import { Pagination } from 'swiper/modules'
 import { IEvent } from '@/types'
 
+import Image from 'next/image'
+import dividerShape from '@/assets/svg/wavesOpacityBottom.svg'
+
 const data = [
   {
     id: 1,
@@ -56,9 +59,14 @@ export const MoreEventsSection = (props: IProps) => {
 
   return (
     <>
-      <section className="w-full bg-gray-200 section-home">
+      <section className="w-full bg-gray-200 section-shape relative">
+        <Image
+          src={dividerShape}
+          alt="divider"
+          className="absolute z-0 top-0 left-0 w-full "
+        />
         <div className="container">
-          <header className="pb-4">
+          <header className="pt-14 pb-4">
             <motion.div
               className="flex items-center gap-3 pb-3"
               initial={{ opacity: 0, x: -15 }}
@@ -67,12 +75,12 @@ export const MoreEventsSection = (props: IProps) => {
                 opacity: 1,
                 x: 0,
                 transition: {
-                  duration: 1,
+                  duration: 0.4,
                 },
               }}
             >
               <div className="dot-custom" />
-              <p className="text-xs font-semibold">ponentes - 2024</p>
+              <p className="text-xs font-semibold z-10">ponentes - 2024</p>
             </motion.div>
             <motion.div
               className="w-full"
@@ -82,7 +90,7 @@ export const MoreEventsSection = (props: IProps) => {
                 opacity: 1,
                 x: 0,
                 transition: {
-                  duration: 1,
+                  duration: 0.4,
                 },
               }}
             >
@@ -98,7 +106,7 @@ export const MoreEventsSection = (props: IProps) => {
                 opacity: 1,
                 x: 0,
                 transition: {
-                  duration: 1,
+                  duration: 0.4,
                 },
               }}
             >
@@ -163,7 +171,7 @@ export const MoreEventsSection = (props: IProps) => {
                       whileInView={{
                         opacity: 1,
                         transition: {
-                          duration: 1,
+                          duration: 0.4,
                         },
                       }}
                     >
