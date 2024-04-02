@@ -46,7 +46,7 @@ export const BannerHome = () => {
             opacity: 1,
             x: 0, // Slide in to its original position
             transition: {
-              duration: 1, // Animation duration
+              duration: 0.5, // Animation duration
             },
           }}
         >

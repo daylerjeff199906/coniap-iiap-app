@@ -3,11 +3,12 @@
 import { Button } from '@nextui-org/react'
 import { CardSpeaker } from '@/components'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { motion } from 'framer-motion'
 
 import { IPerson } from '@/types'
-
+import dividerShape from '@/assets/svg/wavesOpacityBottom.svg'
 interface IProps {
   persons: IPerson[] | undefined
 }
@@ -17,11 +18,16 @@ export const SpeakersSection = (props: IProps) => {
 
   return (
     <>
-      <section className="section">
-        <div className="w-full bg-warning-50/60 section-home">
+      <section className="section relative">
+        <Image
+          src={dividerShape}
+          alt="divider"
+          className="absolute z-0 top-0 left-0 w-full bg-red text-slate-700"
+        />
+        <div className="w-full bg-warning-50/60 section-shape">
           <div className="container space-y-6 flex flex-wrap">
             <motion.header
-              className="w-full"
+              className="w-full z-10 "
               initial={{ opacity: 0, x: -15 }}
               viewport={{
                 once: false,
