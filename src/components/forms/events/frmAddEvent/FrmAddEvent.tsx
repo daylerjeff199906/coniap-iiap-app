@@ -64,11 +64,11 @@ export const FrmAddEvent = () => {
     <>
       <FormProvider {...methods}>
         <form
-          className="space-y-3"
+          className="space-y-3 max-w-3xl"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <h1 className="text-2xl font-bold">Agregar Evento</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 gap-5">
             <InfoGeneral />
             <MoreInfo />
           </div>

@@ -20,7 +20,6 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <h1 className="">Información general</h1>
         <Controller
           control={control}
           rules={{
