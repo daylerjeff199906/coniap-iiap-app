@@ -115,7 +115,7 @@ export const InfoGeneral = () => {
                 radius="sm"
                 placeholder="Tipo de sala"
                 value={value}
-                onSelectionChange={onChange}
+                onSelectionChange={(value) => onChange(value as string)}
               >
                 {typeSala.map((item) => (
                   <SelectItem

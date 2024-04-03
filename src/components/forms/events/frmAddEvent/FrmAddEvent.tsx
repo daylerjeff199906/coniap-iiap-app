@@ -20,7 +20,7 @@ import Link from 'next/link'
 export const FrmAddEvent = () => {
   const [isOpen, setOpen] = useState(false)
 
-  const router = useRouter()
+  // const router = useRouter()
   const { createDataEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>()
@@ -64,6 +64,8 @@ export const FrmAddEvent = () => {
     methods.setValue('linkFacebook', '')
     methods.setValue('customContent', '')
   }
+
+  console.log(methods.watch())
 
   return (
     <>
