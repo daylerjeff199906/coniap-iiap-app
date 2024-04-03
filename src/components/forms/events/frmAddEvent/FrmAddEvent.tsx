@@ -4,7 +4,12 @@ import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
-import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
+import {
+  InfoGeneral,
+  MoreDescription,
+  MoreInfo,
+  SectionSpeaker,
+} from './sections'
 import { IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
@@ -69,6 +74,7 @@ export const FrmAddEvent = () => {
         >
           <h1 className="text-2xl font-bold">Agregar Evento</h1>
           <div className="grid grid-cols-1 gap-5">
+            <SectionSpeaker />
             <InfoGeneral />
             <MoreInfo />
           </div>
