@@ -137,13 +137,24 @@ export const BannerHome = () => {
           </div>
         </motion.div>
       </div>
-      <Image
+      {/* <Image
         src={bgImage.src}
         alt="Banner Home"
         className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
         removeWrapper
         radius="none"
-      />
+      /> */}
+      <video
+        autoPlay
+        muted
+        loop
+        className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
+      >
+        <source
+          src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=2ba28c62-58cc-4a1e-8973-c820b7bc6c6c"
+          type="video/mp4"
+        />
+      </video>
     </section>
   )
 }

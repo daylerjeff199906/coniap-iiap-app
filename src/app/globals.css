@@ -10,10 +10,6 @@
   @apply py-20 sm:py-28 lg:py-32;
 }
 
-.section-shape {
-  @apply pt-16 lg:pt-24 pb-8 lg:pb-10;
-}
-
 .title-section-home {
   @apply text-2xl sm:text-3xl lg:text-4xl font-extrabold;
 }
