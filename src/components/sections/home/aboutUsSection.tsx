@@ -1,7 +1,6 @@
 'use client'
 import { Card, CardBody, Image as ImageUI } from '@nextui-org/react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 
 import {
   IconFlag,
@@ -11,7 +10,6 @@ import {
 } from '@tabler/icons-react'
 
 import imgAboutUs from '@/assets/images/img_about.webp'
-import dividerShape from '@/assets/svg/wavesOpacity.svg'
 
 const indicator = [
   {
@@ -62,12 +60,7 @@ const indicator = [
 
 export const AboutUsSection = () => {
   return (
-    <article className="section section-shape relative w-full">
-      <Image
-        src={dividerShape}
-        alt="divider"
-        className="absolute z-10 top-0 left-0 w-full "
-      />
+    <article className="section section-home w-full">
       <main className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
         <section className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
           <ImageUI

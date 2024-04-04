@@ -12,44 +12,6 @@ import 'swiper/css/pagination'
 import { Pagination } from 'swiper/modules'
 import { IEvent } from '@/types'
 
-import Image from 'next/image'
-import dividerShape from '@/assets/svg/wavesOpacityBottom.svg'
-
-const data = [
-  {
-    id: 1,
-    title:
-      'Construyendo resiliencia climática: desatando la innovación en las ciudades',
-    subtitle: 'Conferencia Magistral',
-    speaker: 'Dr. Juan Pérez',
-    href: '/ponentes',
-  },
-  {
-    id: 2,
-    title:
-      'Construyendo resiliencia climática: desatando la innovación en las ciudades',
-    subtitle: 'Conferencia Magistral',
-    speaker: 'Dr. Juan Pérez',
-    href: '/ponentes',
-  },
-  {
-    id: 3,
-    title:
-      'Construyendo resiliencia climática: desatando la innovación en las ciudades',
-    subtitle: 'Conferencia Magistral',
-    speaker: 'Dr. Juan Pérez',
-    href: '/ponentes',
-  },
-  {
-    id: 4,
-    title:
-      'Construyendo resiliencia climática: desatando la innovación en las ciudades',
-    subtitle: 'Conferencia Magistral',
-    speaker: 'Dr. Juan Pérez',
-    href: '/ponentes',
-  },
-]
-
 interface IProps {
   events: IEvent[]
 }
@@ -59,12 +21,7 @@ export const MoreEventsSection = (props: IProps) => {
 
   return (
     <>
-      <section className="w-full bg-gray-200 section-shape relative">
-        <Image
-          src={dividerShape}
-          alt="divider"
-          className="absolute z-0 top-0 left-0 w-full "
-        />
+      <section className="w-full bg-gray-200 section-home">
         <div className="container">
           <header className="pt-14 pb-4">
             <motion.div

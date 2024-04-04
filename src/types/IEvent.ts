@@ -2,6 +2,7 @@ import { IPerson } from '.'
 export interface IEvent {
   id: string
   program_id: string
+  person_id: string
   //observar
   persons: IPerson | null
   sala: string
