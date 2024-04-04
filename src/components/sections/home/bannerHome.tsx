@@ -5,6 +5,7 @@ import bgImage from '@/assets/images/bgBanner.webp'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useState } from 'react'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -27,6 +28,12 @@ const item = {
 }
 
 export const BannerHome = () => {
+  const [videoLoaded, setVideoLoaded] = useState(false)
+
+  const handleVideoLoaded = () => {
+    setVideoLoaded(true)
+  }
+
   return (
     <section
       id="banner-home"
@@ -137,24 +144,29 @@ export const BannerHome = () => {
           </div>
         </motion.div>
       </div>
-      {/* <Image
-        src={bgImage.src}
-        alt="Banner Home"
-        className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
-        removeWrapper
-        radius="none"
-      /> */}
-      <video
-        autoPlay
-        muted
-        loop
-        className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
-      >
-        <source
-          src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=a15b38ba-d052-42d8-96e5-69411348b070"
-          type="video/mp4"
+      {videoLoaded === false && (
+        <Image
+          src={bgImage.src}
+          alt="Banner Home"
+          className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
+          removeWrapper
+          radius="none"
         />
-      </video>
+      )}
+      {videoLoaded === true && (
+        <video
+          autoPlay
+          muted
+          loop
+          className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
+          onLoadedData={handleVideoLoaded}
+        >
+          <source
+            src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=a15b38ba-d052-42d8-96e5-69411348b070"
+            type="video/mp4"
+          />
+        </video>
+      )}
     </section>
   )
 }
