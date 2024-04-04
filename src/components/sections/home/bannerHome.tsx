@@ -151,7 +151,7 @@ export const BannerHome = () => {
         className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
       >
         <source
-          src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=400035af-1dd9-4c63-94f7-02273be31d5a"
+          src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=a15b38ba-d052-42d8-96e5-69411348b070"
           type="video/mp4"
         />
       </video>
