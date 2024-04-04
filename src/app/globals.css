@@ -7,7 +7,7 @@
 }
 
 .section-home {
-  @apply py-14 lg:py-20;
+  @apply py-20 sm:py-28 lg:py-32;
 }
 
 .section-shape {

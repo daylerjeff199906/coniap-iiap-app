@@ -14,12 +14,7 @@ export const EventsSection = (props: IProps) => {
   const { events } = props
   return (
     <>
-      <section className="bg-white section-shape w-full relative">
-        <Image
-          src={dividerShape}
-          alt="divider"
-          className="absolute z-10 top-0 left-0 w-full "
-        />
+      <section className="bg-white section-home w-full">
         <div className="container space-y-6 py-4">
           <motion.header
             initial={{ opacity: 0, x: -15 }}
