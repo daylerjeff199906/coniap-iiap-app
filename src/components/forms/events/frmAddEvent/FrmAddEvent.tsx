@@ -25,7 +25,8 @@ export const FrmAddEvent = () => {
 
   const methods = useForm<IEvent>()
 
-  const onSubmit = () => {
+  const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
+    console.log(data)
     setOpen(true)
   }
 
@@ -41,14 +42,15 @@ export const FrmAddEvent = () => {
       linkFacebook: data.linkFacebook || '',
       isActived: false,
     }
-    const res = createDataEvent(newData)
-    console.log(res)
-    // if (!res) {
-    //   toast.error('Error al crear el evento')
-    // } else {
-    //   toast.success('Evento creado con exito')
-    //   router.push('/admin/eventos')
-    // }
+    console.log(newData)
+    // const res = await createDataEvent(newData)
+    // console.log(res)
+    // // if (!res) {
+    // //   toast.error('Error al crear el evento')
+    // // } else {
+    // //   toast.success('Evento creado con exito')
+    // //   router.push('/admin/eventos')
+    // // }
 
     resetForm()
   }
@@ -64,8 +66,6 @@ export const FrmAddEvent = () => {
     methods.setValue('linkFacebook', '')
     methods.setValue('customContent', '')
   }
-
-  console.log(methods.watch())
 
   return (
     <>
@@ -84,6 +84,7 @@ export const FrmAddEvent = () => {
           <div className="flex items-center gap-4 justify-end">
             <Button
               color="primary"
+              // onPress={onSubmit}
               type="submit"
               isLoading={loading}
               isDisabled={loading}

@@ -14,6 +14,7 @@ export const SectionSpeaker = () => {
   }, [query])
 
   const dataEvents = persons ? persons : []
+  // console.log(persons)
 
   const {
     control,
@@ -37,9 +38,9 @@ export const SectionSpeaker = () => {
             inputValue={query}
             onInputChange={(value) => setQuery(value)}
             value={value}
-            onValueChange={onChange}
-            isInvalid={errors.id_person !== undefined}
-            errorMessage={errors.id_person?.message as string}
+            isInvalid={errors.person_id !== undefined}
+            errorMessage={errors.person_id?.message as string}
+            onChange={onChange}
           >
             {dataEvents?.map((person) => (
               <AutocompleteItem
