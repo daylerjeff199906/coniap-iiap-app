@@ -14,7 +14,7 @@ import {
   addDoc,
 } from 'firebase/firestore'
 
-import { fetchAllEvents, createEvent } from '@/api'
+import { fetchAllEvents, createEvent, fetchEventById } from '@/api'
 
 import {
   ref,
@@ -55,23 +55,11 @@ export function useEvents() {
 
   const getEventById = async (id: string) => {
     setLoading(true)
-    try {
-      const categoryRef: DocumentReference<DocumentData> = doc(db, 'events', id)
-      const docSnap = await getDoc(categoryRef)
-      if (docSnap.exists()) {
-        // setEvent(convertDataToISlidersById(docSnap.data()))
-        // add id to the object
-        setEvent(docSnap.data() as IEvent)
-        // return docSnap.data()
-      } else {
-        console.log('No such document!')
-        setEvent(null)
-      }
-
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
+    const data = await fetchEventById(id)
+      .then((res) => res)
+      .catch((err) => err)
+    setEvent(data)
+    setLoading(false)
   }
 
   const updateEvent = async (id: string, data: IEvent) => {

@@ -35,7 +35,6 @@ export async function fetchEventById(id: string) {
   const { data: event, error } = await supabase
     .from('events')
     .select('*, persons(*)')
-    .eq('isActived', true)
     .eq('id', id)
     .single()
 
