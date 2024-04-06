@@ -4,11 +4,11 @@ import { useFormContext, Controller } from 'react-hook-form'
 const typeSala = [
   {
     label: 'Sala 1',
-    value: '1',
+    value: 1,
   },
   {
     label: 'Sala 2',
-    value: '2',
+    value: 2,
   },
 ]
 
@@ -111,8 +111,8 @@ export const InfoGeneral = () => {
                 radius="sm"
                 placeholder="Tipo de sala"
                 value={value}
-                onSelectionChange={(value) => onChange(value)}
                 description="(Opcional) En caso de pertenecer a una sala de zoom en específico"
+                onChange={(e) => onChange(e.target.value)}
               >
                 {typeSala.map((item) => (
                   <SelectItem

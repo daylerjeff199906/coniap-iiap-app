@@ -14,7 +14,6 @@ export const SectionSpeaker = () => {
   }, [query])
 
   const dataEvents = persons ? persons : []
-  // console.log(persons)
 
   const {
     control,

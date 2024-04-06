@@ -25,16 +25,17 @@ export const FrmAddEvent = () => {
 
   const methods = useForm<IEvent>()
 
-  const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
-    console.log(data)
+  const onSubmit = () => {
     setOpen(true)
   }
 
   const handleFormSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     setOpen(false)
-    const newData = {
+    const newData: IEvent = {
       ...data,
       banner: '',
+      sala: data.sala || '',
+      date: data.date || '',
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
       linkZoom: data.linkZoom || '',
@@ -43,8 +44,8 @@ export const FrmAddEvent = () => {
       isActived: false,
     }
     console.log(newData)
-    // const res = await createDataEvent(newData)
-    // console.log(res)
+    const res = await createDataEvent(newData)
+    console.log(res)
     // // if (!res) {
     // //   toast.error('Error al crear el evento')
     // // } else {
