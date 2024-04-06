@@ -1,20 +1,7 @@
 import { useState } from 'react'
 import { db, storage } from '@/firebase/firebase'
-import {
-  collection,
-  getDocs,
-  DocumentData,
-  doc,
-  DocumentReference,
-  getDoc,
-  query,
-  // where,
-  // orderBy,
-  updateDoc,
-  addDoc,
-} from 'firebase/firestore'
 
-import { fetchAllEvents, createEvent, fetchEventById } from '@/api'
+import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
 
 import {
   ref,
@@ -62,17 +49,16 @@ export function useEvents() {
     setLoading(false)
   }
 
-  const updateEvent = async (id: string, data: IEvent) => {
+  const updateDataEvent = async (id: string, data: IEvent) => {
     setLoading(true)
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const eventRef: DocumentReference<DocumentData> = doc(db, 'events', id)
-      await updateDoc(eventRef, data as any)
+    const res = await updateEvent(id, data)
+    if (res) {
       toast.success('Evento actualizado con exito')
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
+    } else {
+      toast.error('Error al actualizar el evento')
     }
+    setLoading(false)
+    return res
   }
 
   const uploadImage = async (file: File): Promise<string> => {
@@ -98,7 +84,7 @@ export function useEvents() {
     events,
     getEventById,
     event,
-    updateEvent,
+    updateDataEvent,
     uploadImage,
   }
 }

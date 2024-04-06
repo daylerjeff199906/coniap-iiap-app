@@ -3,6 +3,7 @@ import {
   fetchAllEvents,
   fetchEventById,
   createEvent,
+  updateEvent,
 } from './fetchEvents'
 
 import {
@@ -44,6 +45,7 @@ export {
   fetchAllEvents,
   fetchEventById,
   createEvent,
+  updateEvent,
   //Persons crud
   fetchPerson,
   fetchSpeakers,

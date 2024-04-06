@@ -18,8 +18,8 @@ export const SectionSpeaker = () => {
     getEvents('', 'person_id')
   }, [])
 
-  const dataEvents = events ? events : []
-  // const dataEvents = events ? events.map((event) => event.persons) : []
+  // const dataEvents = events ? events : []
+  const dataEvents = events ? events.map((event) => event.persons) : []
 
   // const filteredPersons = events
   //   ? dataEvents?.filter((person) => {
@@ -54,13 +54,14 @@ export const SectionSpeaker = () => {
             errorMessage={errors.person_id?.message as string}
             onSelectionChange={(value) => onChange(value)}
             defaultSelectedKey={watch('person_id')}
+            disabled={true}
           >
             {dataEvents?.map((person) => (
               <AutocompleteItem
-                key={person.id}
-                value={person.id}
+                key={String(person?.id)}
+                value={person?.id}
               >
-                {person.name}
+                {person?.name}
               </AutocompleteItem>
             ))}
           </Autocomplete>

@@ -30,14 +30,16 @@ export const FrmEditEvent = (props: IProps) => {
 
   const [isEditables, setIsEditables] = useState(true)
 
-  const { updateEvent, loading } = useEvents()
+  const { updateDataEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>({
     defaultValues: event,
   })
 
-  const onSubmit: SubmitHandler<IEvent> = (data: IEvent) => {
-    updateEvent(id, data)
+  const onSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
+    const { persons, ...rest } = data
+
+    await updateDataEvent(id, rest)
       .then(() => {
         clearForm()
         router.push('/admin/eventos')
@@ -54,6 +56,7 @@ export const FrmEditEvent = (props: IProps) => {
     methods.setValue('date', '')
     methods.setValue('shortDescription', '')
     methods.setValue('sala', '')
+    methods.setValue('persons', null)
     methods.setValue('linkZoom', '')
     methods.setValue('linkYoutube', '')
     methods.setValue('linkFacebook', '')
@@ -158,9 +161,7 @@ export const FrmEditEvent = (props: IProps) => {
                   color="primary"
                   isDisabled={loading}
                   isLoading={loading}
-                  onPress={() => {
-                    methods.handleSubmit(onSubmit)()
-                  }}
+                  type="submit"
                 >
                   Guardar cambios
                 </Button>

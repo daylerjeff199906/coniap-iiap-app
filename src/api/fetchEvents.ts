@@ -59,3 +59,19 @@ export async function createEvent(data: IEvent) {
     return event
   }
 }
+
+export async function updateEvent(id: string, data: IEvent) {
+  const supabase = createClient()
+
+  const { data: event, error } = await supabase
+    .from('events')
+    .update(data)
+    .eq('id', id)
+    .select('*')
+
+  if (error) {
+    console.error('error', error)
+  } else {
+    return event
+  }
+}
