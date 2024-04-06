@@ -20,7 +20,7 @@ import Link from 'next/link'
 export const FrmAddEvent = () => {
   const [isOpen, setOpen] = useState(false)
 
-  // const router = useRouter()
+  const router = useRouter()
   const { createDataEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>()
@@ -45,15 +45,13 @@ export const FrmAddEvent = () => {
     }
     console.log(newData)
     const res = await createDataEvent(newData)
-    console.log(res)
-    // // if (!res) {
-    // //   toast.error('Error al crear el evento')
-    // // } else {
-    // //   toast.success('Evento creado con exito')
-    // //   router.push('/admin/eventos')
-    // // }
-
-    resetForm()
+    if (!res) {
+      toast.error('Error al crear el evento')
+    } else {
+      toast.success('Evento creado con exito')
+      router.push('/admin/eventos')
+      resetForm()
+    }
   }
 
   const resetForm = () => {
@@ -85,7 +83,6 @@ export const FrmAddEvent = () => {
           <div className="flex items-center gap-4 justify-end">
             <Button
               color="primary"
-              // onPress={onSubmit}
               type="submit"
               isLoading={loading}
               isDisabled={loading}
