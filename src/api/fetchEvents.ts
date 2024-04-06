@@ -19,12 +19,12 @@ export async function fetchEvents(props: IProps) {
   return event
 }
 
-export async function fetchAllEvents(query: string) {
+export async function fetchAllEvents(query: string, column?: string) {
   const supabase = createClient()
-
+  const allSelect = column ? column : '*'
   const { data: event } = await supabase
     .from('events')
-    .select('*, persons(*)')
+    .select(`${allSelect}, persons(*)`)
     .ilike('name', `%${query}%`)
   return event
 }

@@ -14,9 +14,9 @@ export function usePrograms() {
   const [programs, setPrograms] = useState<IProgram[] | null>(null)
   const [program, setProgram] = useState<IProgram | null>(null)
 
-  const getPrograms = async (query: string) => {
+  const getPrograms = async (query: string, column?: string) => {
     setLoading(true)
-    const data = await fetchPrograms(query)
+    const data = await fetchPrograms(query, column)
       .then((res) => res)
       .catch((err) => err)
     setPrograms(data)

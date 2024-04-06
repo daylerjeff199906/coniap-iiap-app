@@ -44,9 +44,9 @@ export function useEvents() {
     return res
   }
 
-  const getEvents = async (query: string) => {
+  const getEvents = async (query: string, column?: string) => {
     setLoading(true)
-    const data = await fetchAllEvents(query)
+    const data = await fetchAllEvents(query, column)
       .then((res) => res)
       .catch((err) => err)
     setEvents(data)

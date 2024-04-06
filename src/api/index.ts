@@ -11,6 +11,7 @@ import {
   fetchSpeakers,
   fetchPersonById,
   updatePerson,
+  fetchPersonsInEvent,
 } from './fetchPerson'
 
 import { updateField, addFileToBucket } from './fetchFields'
@@ -49,6 +50,7 @@ export {
   createPerson,
   fetchPersonById,
   updatePerson,
+  fetchPersonsInEvent,
   //Programs crud
   fetchProgram,
   fetchPrograms,

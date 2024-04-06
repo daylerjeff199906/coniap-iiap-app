@@ -2,18 +2,29 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
-import { usePersons } from '@/hooks/admin'
 import { useFormContext, Controller } from 'react-hook-form'
+import { usePersons, useEvents } from '@/hooks/admin'
 
 export const SectionSpeaker = () => {
   const { getPersons, persons } = usePersons()
+  const { getEvents, events } = useEvents()
   const [query, setQuery] = useState('')
 
   useEffect(() => {
     getPersons(query)
   }, [query])
 
+  useEffect(() => {
+    getEvents('', 'person_id')
+  }, [])
+
   const dataEvents = persons ? persons : []
+
+  const filteredPersons = events
+    ? dataEvents?.filter((person) => {
+        return !events.some((event) => event.persons?.id === person.id)
+      })
+    : []
 
   const {
     control,
@@ -41,7 +52,7 @@ export const SectionSpeaker = () => {
             errorMessage={errors.person_id?.message as string}
             onSelectionChange={(value) => onChange(value)}
           >
-            {dataEvents?.map((person) => (
+            {filteredPersons?.map((person) => (
               <AutocompleteItem
                 key={person.id}
                 value={person.id}
