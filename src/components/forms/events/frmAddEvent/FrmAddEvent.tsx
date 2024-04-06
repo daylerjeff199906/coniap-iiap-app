@@ -13,7 +13,6 @@ import {
 import { IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
-import { toast } from 'sonner'
 import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
@@ -35,7 +34,7 @@ export const FrmAddEvent = () => {
       ...data,
       banner: '',
       sala: data.sala || '',
-      date: data.date || '',
+      date: data.date || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
       linkZoom: data.linkZoom || '',
@@ -43,12 +42,10 @@ export const FrmAddEvent = () => {
       linkFacebook: data.linkFacebook || '',
       isActived: false,
     }
-    console.log(newData)
     const res = await createDataEvent(newData)
+    console.log('res', res)
     if (!res) {
-      toast.error('Error al crear el evento')
     } else {
-      toast.success('Evento creado con exito')
       router.push('/admin/eventos')
       resetForm()
     }

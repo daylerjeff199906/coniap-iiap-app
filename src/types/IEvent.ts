@@ -10,7 +10,7 @@ export interface IEvent {
   name: string
   timeStart: string
   timeEnd: string
-  date: string
+  date: string | null
   shortDescription: string
   banner: string
   linkZoom: string

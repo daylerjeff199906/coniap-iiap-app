@@ -49,9 +49,10 @@ export async function fetchEventById(id: string) {
 export async function createEvent(data: IEvent) {
   const supabase = createClient()
 
-  const { data: event, error } = await supabase.from('events').insert([data])
-  console.log('event', event)
-  console.log('error', error)
+  const { data: event, error } = await supabase
+    .from('events')
+    .insert([data])
+    .select('*')
 
   if (error) {
     console.error('error', error)

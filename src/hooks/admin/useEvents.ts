@@ -36,7 +36,7 @@ export function useEvents() {
     const res = await createEvent(data)
 
     if (res) {
-      toast.success('Programa creado con exito')
+      toast.success('Evento creado con exito')
     } else {
       toast.error('Error al crear el programa')
     }
