@@ -40,7 +40,7 @@ export const SectionSpeaker = () => {
             value={value}
             isInvalid={errors.person_id !== undefined}
             errorMessage={errors.person_id?.message as string}
-            onChange={onChange}
+            onSelectionChange={(value) => onChange(value)}
           >
             {dataEvents?.map((person) => (
               <AutocompleteItem

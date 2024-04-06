@@ -111,7 +111,7 @@ export const InfoGeneral = () => {
                 radius="sm"
                 placeholder="Tipo de sala"
                 value={value}
-                onSelectionChange={(value) => onChange(value as string)}
+                onSelectionChange={(value) => onChange(value)}
                 description="(Opcional) En caso de pertenecer a una sala de zoom en específico"
               >
                 {typeSala.map((item) => (
