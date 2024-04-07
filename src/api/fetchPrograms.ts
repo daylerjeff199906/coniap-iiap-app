@@ -2,11 +2,12 @@
 import { createClient } from '@/utils/supabase/server'
 import { IProgram } from '@/types'
 
-export async function fetchPrograms(query: string) {
+export async function fetchPrograms(query: string, column?: string) {
   const supabase = createClient()
+  const allSelect = column ? column : '*'
   const { data, error } = await supabase
     .from('programs')
-    .select()
+    .select(allSelect)
     .ilike('title', `%${query}%`)
 
   if (error) {

@@ -9,7 +9,7 @@ import {
   IconStar,
 } from '@tabler/icons-react'
 
-import imgAboutUs from '@/assets/images/img_about.webp'
+import imgAboutUs from '@/assets/images/about-us.webp'
 
 const indicator = [
   {
@@ -61,15 +61,27 @@ const indicator = [
 export const AboutUsSection = () => {
   return (
     <article className="section section-home w-full">
-      <main className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
+      <main className="grid grid-cols-1 gap-3 lg:grid-cols-2 sm:gap-6 container">
         <section className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
-          <ImageUI
-            src={imgAboutUs.src}
-            alt="CONIAP 2024"
-            radius="lg"
-            removeWrapper
-            className="w-full h-full max-h-[720px] object-cover rounded-xl"
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            viewport={{ once: false }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 0.3,
+              },
+            }}
+          >
+            <ImageUI
+              src={imgAboutUs.src}
+              alt="CONIAP 2024"
+              radius="lg"
+              removeWrapper
+              className="w-full h-full max-h-[720px] object-cover rounded-xl"
+            />
+          </motion.div>
         </section>
         <section className="sm:p-10 flex flex-wrap z-20">
           <motion.div

@@ -13,14 +13,13 @@ import {
 import { IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
-import { toast } from 'sonner'
 import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
 export const FrmAddEvent = () => {
   const [isOpen, setOpen] = useState(false)
 
-  // const router = useRouter()
+  const router = useRouter()
   const { createDataEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>()
@@ -31,9 +30,11 @@ export const FrmAddEvent = () => {
 
   const handleFormSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     setOpen(false)
-    const newData = {
+    const newData: IEvent = {
       ...data,
       banner: '',
+      sala: data.sala || null,
+      date: data.date || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
       linkZoom: data.linkZoom || '',
@@ -41,16 +42,13 @@ export const FrmAddEvent = () => {
       linkFacebook: data.linkFacebook || '',
       isActived: false,
     }
-    const res = createDataEvent(newData)
-    console.log(res)
-    // if (!res) {
-    //   toast.error('Error al crear el evento')
-    // } else {
-    //   toast.success('Evento creado con exito')
-    //   router.push('/admin/eventos')
-    // }
-
-    resetForm()
+    const res = await createDataEvent(newData)
+    console.log('res', res)
+    if (!res) {
+    } else {
+      router.push('/admin/eventos')
+      resetForm()
+    }
   }
 
   const resetForm = () => {
@@ -64,8 +62,6 @@ export const FrmAddEvent = () => {
     methods.setValue('linkFacebook', '')
     methods.setValue('customContent', '')
   }
-
-  console.log(methods.watch())
 
   return (
     <>

@@ -4,13 +4,13 @@ export interface IEvent {
   program_id: string
   person_id: string
   //observar
-  persons: IPerson | null
-  sala: string
+  persons?: IPerson | null
+  sala: string | number | null
   isActived: boolean
   name: string
   timeStart: string
   timeEnd: string
-  date: string
+  date: string | null
   shortDescription: string
   banner: string
   linkZoom: string

@@ -29,7 +29,7 @@ export const SpeakersSection = (props: IProps) => {
                 opacity: 1,
                 x: 0,
                 transition: {
-                  duration: 1, // Animation duration
+                  duration: 0.4, // Animation duration
                 },
               }}
             >
@@ -58,7 +58,7 @@ export const SpeakersSection = (props: IProps) => {
 
             {speakersActive && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
-                {speakersActive.slice(0, 7).map((speaker, index) => (
+                {speakersActive.slice(0, 8).map((speaker, index) => (
                   <motion.div
                     key={speaker.id}
                     className="w-full"
@@ -70,7 +70,7 @@ export const SpeakersSection = (props: IProps) => {
                       opacity: 1,
                       x: 0,
                       transition: {
-                        duration: 0.1 + index,
+                        duration: 0.1 + index / 10,
                       },
                     }}
                   >

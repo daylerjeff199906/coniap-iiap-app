@@ -73,7 +73,7 @@ export default async function Page() {
   }))
 
   return (
-    <main className="">
+    <main className="h-ful">
       <BannerHome />
       <TimeSection />
       <AboutUsSection />

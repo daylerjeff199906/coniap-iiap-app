@@ -26,7 +26,7 @@ export const DetailsEvent = (props: IProps) => {
       <BannerStatic
         title={event?.name}
         subtitle={subtitle}
-        description={event?.date}
+        description={event?.date || ''}
         urlImage={event?.banner || ''}
       />
       <main className="container section grid grid-cols-1 sm:flex max-w-7xl py-12 gap-6">

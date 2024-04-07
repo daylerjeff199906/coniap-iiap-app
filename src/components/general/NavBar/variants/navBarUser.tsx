@@ -6,92 +6,163 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenu,
-  NavbarMenuItem,
   NavbarMenuToggle,
 } from '@nextui-org/react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { usePathname } from 'next/navigation'
-
-const menuItems = [
-  { name: 'Home', link: '/' },
-  { name: 'Sobre nosotros', link: '/sobre-coniap' },
-  { name: 'Agenda', link: '/agenda' },
-  { name: 'Ponentes', link: '/ponentes' },
-  { name: 'Eventos', link: '/eventos' },
-]
+import { menuItems } from './components/linkData'
+import { NavBarUserPhone } from './components/navBarUserPhone'
 
 export const NavBarUser = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   const pathname = usePathname()
+  const { scrollY } = useScroll()
+  const navbarY = useTransform(scrollY, [0, 20], [-100, 0])
+  const backgroundColor = useTransform(
+    scrollY,
+    [0, 20], // Rango de entrada: de 0 a 20 píxeles
+    ['rgba(0,0,0,0)', 'rgba(0,45,97,1)'] // Rango de salida: de transparente a azul con opacidad
+  )
 
   return (
     <>
-      <Navbar
-        maxWidth="full"
-        classNames={{
-          base: 'bg-gray-800 text-white py-3',
-        }}
-        height={72}
+      <motion.nav
+        className="lg:hidden fixed top-0 right-0 left-0 z-50 flex justify-between items-center p-4"
+        style={{ backgroundColor }} // Aplicar color de fondo dinámico
+        initial={{ backgroundColor: 'rgba(0,0,0,0)' }} // Color de fondo inicial transparente
+        transition={{ duration: 1 }}
       >
-        <NavbarContent>
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            className="sm:hidden"
-          />
-          <NavbarBrand>
-            <Link href={'/'}>
-              <Image
-                src="/logo_coniap.webp"
-                alt="Logo"
-                width={140}
-                height={100}
-                priority
-              />
-            </Link>
-          </NavbarBrand>
-        </NavbarContent>
-
-        <NavbarContent
-          className="hidden sm:flex gap-4"
-          justify="center"
+        <div className="z-50">
+          <Link href={'/'}>
+            <Image
+              src="/logo_coniap.webp"
+              alt="Logo"
+              width={120}
+              height={90}
+              priority
+            />
+          </Link>
+        </div>
+        <NavBarUserPhone />
+      </motion.nav>
+      <nav
+        className={`hidden lg:block fixed top-0 right-0 left-0 z-50 ${
+          navbarY && 'hidden'
+        }`}
+      >
+        <Navbar
+          maxWidth="full"
+          classNames={{
+            base: 'bg-transparent text-white py-2',
+          }}
+          className="bg-transparent"
+          height={72}
+          isBlurred={false}
         >
-          {menuItems.map((item, index) => (
-            <NavbarItem
-              key={index}
-              isActive={pathname === item.link}
-            >
-              <Link href={item.link}>{item.name}</Link>
+          <NavbarContent>
+            <NavbarBrand>
+              <Link href={'/'}>
+                <Image
+                  src="/logo_coniap.webp"
+                  alt="Logo"
+                  width={120}
+                  height={90}
+                  priority
+                />
+              </Link>
+            </NavbarBrand>
+          </NavbarContent>
+
+          <NavbarContent
+            className="hidden sm:flex gap-4"
+            justify="center"
+          >
+            {menuItems.map((item, index) => (
+              <NavbarItem
+                key={index}
+                isActive={pathname === item.link}
+                className={` hover:text-gray-300 ${
+                  pathname === item.link ? 'text-success-500' : 'text-white'
+                }`}
+              >
+                <Link href={item.link}>{item.name}</Link>
+              </NavbarItem>
+            ))}
+          </NavbarContent>
+          <NavbarContent justify="end">
+            <NavbarItem>
+              <Button
+                as={Link}
+                href="/inscripciones"
+                radius="full"
+                size="sm"
+                className="text-white bg-transparent border-white border-2 hover:bg-white hover:text-black font-bold"
+              >
+                ¡Inscríbete ya!
+              </Button>
             </NavbarItem>
-          ))}
-        </NavbarContent>
-        <NavbarContent justify="end">
-          {/* <NavbarItem className="hidden lg:flex">
-            <Link href="#">Login</Link>
-          </NavbarItem> */}
-          <NavbarItem>
-            <Button
-              as={Link}
-              color="danger"
-              href="/inscripciones"
-              variant="solid"
-              radius="full"
-            >
-              ¡Inscríbete ya!
-            </Button>
-          </NavbarItem>
-        </NavbarContent>
-        <NavbarMenu>
-          {menuItems?.map((item, index) => (
-            <NavbarMenuItem key={index}>
-              <Link href={item.link}>{item.name}</Link>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
-      </Navbar>
+          </NavbarContent>
+        </Navbar>
+      </nav>
+      <motion.nav
+        className="hidden lg:block fixed top-0 z-50 right-0 left-0"
+        style={{ y: navbarY }}
+      >
+        <Navbar
+          maxWidth="full"
+          classNames={{
+            base: 'bg-[rgba(0,45,97,1)] text-white py-2',
+          }}
+          height={72}
+        >
+          <NavbarContent>
+            <NavbarBrand>
+              <Link href={'/'}>
+                <Image
+                  src="/logo_coniap.webp"
+                  alt="Logo"
+                  width={120}
+                  height={90}
+                  priority
+                />
+              </Link>
+            </NavbarBrand>
+          </NavbarContent>
+
+          <NavbarContent
+            className="hidden sm:flex gap-4"
+            justify="center"
+          >
+            {menuItems.map((item, index) => (
+              <NavbarItem
+                key={index}
+                isActive={pathname === item.link}
+                className={` hover:text-gray-300 ${
+                  pathname === item.link ? 'text-success-500' : 'text-white'
+                }`}
+              >
+                <Link href={item.link}>{item.name}</Link>
+              </NavbarItem>
+            ))}
+          </NavbarContent>
+          <NavbarContent justify="end">
+            <NavbarItem>
+              <Button
+                as={Link}
+                color="danger"
+                href="/inscripciones"
+                variant="solid"
+                radius="full"
+                size="sm"
+              >
+                ¡Inscríbete ya!
+              </Button>
+            </NavbarItem>
+          </NavbarContent>
+        </Navbar>
+      </motion.nav>
     </>
   )
 }
