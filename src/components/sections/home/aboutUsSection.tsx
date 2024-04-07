@@ -61,7 +61,7 @@ const indicator = [
 export const AboutUsSection = () => {
   return (
     <article className="section section-home w-full">
-      <main className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 container">
+      <main className="grid grid-cols-1 gap-3 lg:grid-cols-2 sm:gap-6 container">
         <section className="pb-4 sm:p-10 flex flex-col justify-center items-center h-full">
           <motion.div
             initial={{ opacity: 0, y: 100 }}

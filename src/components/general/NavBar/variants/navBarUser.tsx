@@ -15,14 +15,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { usePathname } from 'next/navigation'
-
-const menuItems = [
-  { name: 'Home', link: '/' },
-  { name: 'Sobre nosotros', link: '/sobre-coniap' },
-  { name: 'Agenda', link: '/agenda' },
-  { name: 'Ponentes', link: '/ponentes' },
-  { name: 'Eventos', link: '/eventos' },
-]
+import { menuItems } from './components/linkData'
+import { NavBarUserPhone } from './components/navBarUserPhone'
 
 export const NavBarUser = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -33,7 +27,6 @@ export const NavBarUser = () => {
 
   return (
     <>
-      <nav className="block lg:hidden"></nav>
       <nav
         className={`hidden lg:block fixed top-0 right-0 left-0 z-50 ${
           navbarY && 'hidden'
