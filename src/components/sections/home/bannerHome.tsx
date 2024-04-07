@@ -39,7 +39,8 @@ export const BannerHome = () => {
   return (
     <section
       id="banner-home"
-      className="h-screen flex items-center relative bg-gradient-to-r from-black/90 to-transparent w-full"
+      // className="h-screen flex items-center relative bg-gradient-to-r from-black/90 to-transparent w-full"
+      className="h-screen flex items-center relative bg-black/60 w-full"
     >
       <div className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-4">
         <motion.div
