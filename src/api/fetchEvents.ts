@@ -19,12 +19,12 @@ export async function fetchEvents(props: IProps) {
   return event
 }
 
-export async function fetchAllEvents(query: string) {
+export async function fetchAllEvents(query: string, column?: string) {
   const supabase = createClient()
-
+  const allSelect = column ? column : '*'
   const { data: event } = await supabase
     .from('events')
-    .select('*, persons(*)')
+    .select(`${allSelect}, persons(*)`)
     .ilike('name', `%${query}%`)
   return event
 }
@@ -35,7 +35,6 @@ export async function fetchEventById(id: string) {
   const { data: event, error } = await supabase
     .from('events')
     .select('*, persons(*)')
-    .eq('isActived', true)
     .eq('id', id)
     .single()
 
@@ -49,7 +48,26 @@ export async function fetchEventById(id: string) {
 export async function createEvent(data: IEvent) {
   const supabase = createClient()
 
-  const { data: event, error } = await supabase.from('events').insert([data])
+  const { data: event, error } = await supabase
+    .from('events')
+    .insert([data])
+    .select('*')
+
+  if (error) {
+    console.error('error', error)
+  } else {
+    return event
+  }
+}
+
+export async function updateEvent(id: string, data: IEvent) {
+  const supabase = createClient()
+
+  const { data: event, error } = await supabase
+    .from('events')
+    .update(data)
+    .eq('id', id)
+    .select('*')
 
   if (error) {
     console.error('error', error)

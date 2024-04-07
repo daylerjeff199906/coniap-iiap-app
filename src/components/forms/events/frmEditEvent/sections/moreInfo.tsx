@@ -7,21 +7,6 @@ export const MoreInfo = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        {/* <Controller
-          control={control}
-          name="place"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              aria-label="Lugar del evento"
-              label="Lugar"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Lugar del evento"
-              value={value}
-              onValueChange={onChange}
-            />
-          )}
-        /> */}
         <Controller
           control={control}
           name="linkZoom"

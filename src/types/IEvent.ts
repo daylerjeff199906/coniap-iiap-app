@@ -2,14 +2,15 @@ import { IPerson } from '.'
 export interface IEvent {
   id: string
   program_id: string
+  person_id: string
   //observar
-  persons: IPerson | null
-  sala: string
+  persons?: IPerson | null
+  sala: string | number | null
   isActived: boolean
   name: string
   timeStart: string
   timeEnd: string
-  date: string
+  date: string | null
   shortDescription: string
   banner: string
   linkZoom: string

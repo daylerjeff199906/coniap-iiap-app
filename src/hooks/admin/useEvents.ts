@@ -1,20 +1,7 @@
 import { useState } from 'react'
 import { db, storage } from '@/firebase/firebase'
-import {
-  collection,
-  getDocs,
-  DocumentData,
-  doc,
-  DocumentReference,
-  getDoc,
-  query,
-  // where,
-  // orderBy,
-  updateDoc,
-  addDoc,
-} from 'firebase/firestore'
 
-import { fetchAllEvents, createEvent } from '@/api'
+import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
 
 import {
   ref,
@@ -36,7 +23,7 @@ export function useEvents() {
     const res = await createEvent(data)
 
     if (res) {
-      toast.success('Programa creado con exito')
+      toast.success('Evento creado con exito')
     } else {
       toast.error('Error al crear el programa')
     }
@@ -44,9 +31,9 @@ export function useEvents() {
     return res
   }
 
-  const getEvents = async (query: string) => {
+  const getEvents = async (query: string, column?: string) => {
     setLoading(true)
-    const data = await fetchAllEvents(query)
+    const data = await fetchAllEvents(query, column)
       .then((res) => res)
       .catch((err) => err)
     setEvents(data)
@@ -55,36 +42,23 @@ export function useEvents() {
 
   const getEventById = async (id: string) => {
     setLoading(true)
-    try {
-      const categoryRef: DocumentReference<DocumentData> = doc(db, 'events', id)
-      const docSnap = await getDoc(categoryRef)
-      if (docSnap.exists()) {
-        // setEvent(convertDataToISlidersById(docSnap.data()))
-        // add id to the object
-        setEvent(docSnap.data() as IEvent)
-        // return docSnap.data()
-      } else {
-        console.log('No such document!')
-        setEvent(null)
-      }
-
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
+    const data = await fetchEventById(id)
+      .then((res) => res)
+      .catch((err) => err)
+    setEvent(data)
+    setLoading(false)
   }
 
-  const updateEvent = async (id: string, data: IEvent) => {
+  const updateDataEvent = async (id: string, data: IEvent) => {
     setLoading(true)
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const eventRef: DocumentReference<DocumentData> = doc(db, 'events', id)
-      await updateDoc(eventRef, data as any)
+    const res = await updateEvent(id, data)
+    if (res) {
       toast.success('Evento actualizado con exito')
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
+    } else {
+      toast.error('Error al actualizar el evento')
     }
+    setLoading(false)
+    return res
   }
 
   const uploadImage = async (file: File): Promise<string> => {
@@ -110,7 +84,7 @@ export function useEvents() {
     events,
     getEventById,
     event,
-    updateEvent,
+    updateDataEvent,
     uploadImage,
   }
 }

@@ -4,11 +4,11 @@ import { useFormContext, Controller } from 'react-hook-form'
 const typeSala = [
   {
     label: 'Sala 1',
-    value: '1',
+    value: 1,
   },
   {
     label: 'Sala 2',
-    value: '2',
+    value: 2,
   },
 ]
 
@@ -20,7 +20,6 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <h1 className="">Información general</h1>
         <Controller
           control={control}
           rules={{
@@ -45,9 +44,6 @@ export const InfoGeneral = () => {
         <div className="flex gap-3">
           <Controller
             control={control}
-            rules={{
-              required: 'Este campo es requerido',
-            }}
             name="date"
             render={({ field: { onChange, value } }) => (
               <Input
@@ -58,8 +54,7 @@ export const InfoGeneral = () => {
                 type="date"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.date !== undefined}
-                errorMessage={errors.date?.message as string}
+                description="(Opcional) Fecha del evento"
               />
             )}
           />
@@ -78,8 +73,8 @@ export const InfoGeneral = () => {
                 type="time"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.startTime !== undefined}
-                errorMessage={errors.startTime?.message as string}
+                isInvalid={errors.timeStart !== undefined}
+                errorMessage={errors.timeStart?.message as string}
               />
             )}
           />
@@ -98,8 +93,8 @@ export const InfoGeneral = () => {
                 type="time"
                 value={value}
                 onValueChange={onChange}
-                isInvalid={errors.endTime !== undefined}
-                errorMessage={errors.endTime?.message as string}
+                isInvalid={errors.timeEnd !== undefined}
+                errorMessage={errors.timeEnd?.message as string}
               />
             )}
           />
@@ -116,7 +111,8 @@ export const InfoGeneral = () => {
                 radius="sm"
                 placeholder="Tipo de sala"
                 value={value}
-                onSelectionChange={onChange}
+                description="(Opcional) En caso de pertenecer a una sala de zoom en específico"
+                onChange={(e) => onChange(e.target.value)}
               >
                 {typeSala.map((item) => (
                   <SelectItem

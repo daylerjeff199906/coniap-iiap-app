@@ -4,11 +4,15 @@ import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
-import { InfoGeneral, MoreDescription, MoreInfo } from './sections'
+import {
+  InfoGeneral,
+  MoreDescription,
+  MoreInfo,
+  SectionSpeaker,
+} from './sections'
 import { IEvent } from '@/types'
 
 import { useEvents } from '@/hooks/admin'
-import { toast } from 'sonner'
 import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
@@ -26,9 +30,11 @@ export const FrmAddEvent = () => {
 
   const handleFormSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     setOpen(false)
-    const newData = {
+    const newData: IEvent = {
       ...data,
       banner: '',
+      sala: data.sala || null,
+      date: data.date || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
       linkZoom: data.linkZoom || '',
@@ -36,16 +42,13 @@ export const FrmAddEvent = () => {
       linkFacebook: data.linkFacebook || '',
       isActived: false,
     }
-    const res = createDataEvent(newData)
-    console.log(res)
-    // if (!res) {
-    //   toast.error('Error al crear el evento')
-    // } else {
-    //   toast.success('Evento creado con exito')
-    //   router.push('/admin/eventos')
-    // }
-
-    resetForm()
+    const res = await createDataEvent(newData)
+    console.log('res', res)
+    if (!res) {
+    } else {
+      router.push('/admin/eventos')
+      resetForm()
+    }
   }
 
   const resetForm = () => {
@@ -64,11 +67,12 @@ export const FrmAddEvent = () => {
     <>
       <FormProvider {...methods}>
         <form
-          className="space-y-3"
+          className="space-y-3 max-w-3xl"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <h1 className="text-2xl font-bold">Agregar Evento</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 gap-5">
+            <SectionSpeaker />
             <InfoGeneral />
             <MoreInfo />
           </div>

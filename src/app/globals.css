@@ -7,11 +7,7 @@
 }
 
 .section-home {
-  @apply py-14 lg:py-20;
-}
-
-.section-shape {
-  @apply pt-16 lg:pt-24 pb-8 lg:pb-10;
+  @apply py-20 sm:py-28 lg:py-32;
 }
 
 .title-section-home {

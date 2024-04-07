@@ -78,3 +78,15 @@ export async function fetchPersonById(id: string) {
     return data
   }
 }
+
+export async function fetchPersonsInEvent() {
+  const supabase = createClient()
+
+  const { data, error } = await supabase.from('events').select('persons(*)')
+
+  if (error) {
+    return null
+  } else {
+    return data
+  }
+}
