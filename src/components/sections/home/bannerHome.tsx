@@ -146,7 +146,7 @@ export const BannerHome = () => {
           </div>
         </motion.div>
       </div>
-      {videoLoaded === false && (
+      {/* {videoLoaded === false && (
         <Image
           src={bgImage.src}
           alt="Banner Home"
@@ -154,23 +154,22 @@ export const BannerHome = () => {
           removeWrapper
           radius="none"
         />
-      )}
-      {videoLoaded === true && (
-        <video
-          autoPlay
-          muted
-          loop
-          className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
+      )} */}
+
+      <video
+        autoPlay
+        muted
+        loop
+        className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
+        onLoadedData={handleVideoLoaded}
+        onLoad={handleVideoLoaded}
+      >
+        <source
+          src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=a15b38ba-d052-42d8-96e5-69411348b070"
+          type="video/mp4"
           onLoadedData={handleVideoLoaded}
-          onLoad={handleVideoLoaded}
-        >
-          <source
-            src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=a15b38ba-d052-42d8-96e5-69411348b070"
-            type="video/mp4"
-            onLoadedData={handleVideoLoaded}
-          />
-        </video>
-      )}
+        />
+      </video>
     </section>
   )
 }

@@ -6,6 +6,7 @@ import { IColumns } from './table/IColumns'
 import { IUser } from './IUser'
 import { ITopic } from './ITopics'
 import { IPerson } from './IPersons'
+import { IGeneralInfo } from './IGeneralInfo'
 
 export type {
   ISponsor,
@@ -16,4 +17,5 @@ export type {
   IUser,
   ITopic,
   IPerson,
+  IGeneralInfo,
 }
