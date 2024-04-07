@@ -147,7 +147,7 @@ export const FrmAddEventInProgram = (props: IProps) => {
                   radius="sm"
                   defaultSelectedKeys={['1']}
                   disallowEmptySelection
-                  value={value}
+                  value={value as string}
                   onChange={onChange}
                 >
                   {typeRoom.map((item) => (
