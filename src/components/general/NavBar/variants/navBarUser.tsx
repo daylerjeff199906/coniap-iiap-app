@@ -6,8 +6,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenu,
-  NavbarMenuItem,
   NavbarMenuToggle,
 } from '@nextui-org/react'
 import { motion, useScroll, useTransform } from 'framer-motion'
@@ -19,14 +17,36 @@ import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
 
 export const NavBarUser = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   const pathname = usePathname()
   const { scrollY } = useScroll()
   const navbarY = useTransform(scrollY, [0, 20], [-100, 0])
+  const backgroundColor = useTransform(
+    scrollY,
+    [0, 20], // Rango de entrada: de 0 a 20 píxeles
+    ['rgba(0,0,0,0)', 'rgba(0,45,97,1)'] // Rango de salida: de transparente a azul con opacidad
+  )
 
   return (
     <>
+      <motion.nav
+        className="lg:hidden fixed top-0 right-0 left-0 z-50 flex justify-between items-center p-4"
+        style={{ backgroundColor }} // Aplicar color de fondo dinámico
+        initial={{ backgroundColor: 'rgba(0,0,0,0)' }} // Color de fondo inicial transparente
+        transition={{ duration: 1 }}
+      >
+        <div className="z-50">
+          <Link href={'/'}>
+            <Image
+              src="/logo_coniap.webp"
+              alt="Logo"
+              width={120}
+              height={90}
+              priority
+            />
+          </Link>
+        </div>
+        <NavBarUserPhone />
+      </motion.nav>
       <nav
         className={`hidden lg:block fixed top-0 right-0 left-0 z-50 ${
           navbarY && 'hidden'
@@ -42,10 +62,6 @@ export const NavBarUser = () => {
           isBlurred={false}
         >
           <NavbarContent>
-            <NavbarMenuToggle
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              className="sm:hidden"
-            />
             <NavbarBrand>
               <Link href={'/'}>
                 <Image
@@ -102,10 +118,6 @@ export const NavBarUser = () => {
           height={72}
         >
           <NavbarContent>
-            <NavbarMenuToggle
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              className="sm:hidden"
-            />
             <NavbarBrand>
               <Link href={'/'}>
                 <Image
