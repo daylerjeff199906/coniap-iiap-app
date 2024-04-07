@@ -113,7 +113,7 @@ export const NavBarUser = () => {
         <Navbar
           maxWidth="full"
           classNames={{
-            base: 'bg-gray-800 text-white py-2',
+            base: 'bg-[rgba(0,45,97,1)] text-white py-2',
           }}
           height={72}
         >

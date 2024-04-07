@@ -15,10 +15,9 @@ export const NavBarUserPhone = () => {
   return (
     <>
       <Button
-        className="fixed right-4 z-50"
+        className="fixed right-4 z-50 text-white"
         onPress={() => setIsActived(!isActived)}
         isIconOnly
-        // size="sm"
         radius="lg"
         variant="light"
       >
@@ -35,13 +34,18 @@ export const NavBarUserPhone = () => {
         )}
       </Button>
       <AnimatePresence mode="wait">
-        {isActived && <NavSection />}
+        {isActived && <NavSection onValueChange={() => setIsActived(false)} />}
       </AnimatePresence>
     </>
   )
 }
 
-const NavSection = () => {
+interface IProps {
+  onValueChange: () => void
+}
+
+const NavSection = (props: IProps) => {
+  const { onValueChange } = props
   const pathname = usePathname()
   const [selectedIndicator, setSelectedIndicator] = useState(pathname)
 
@@ -85,7 +89,7 @@ const NavSection = () => {
             onMouseLeave={() => {
               setSelectedIndicator(pathname)
             }}
-            className="flex flex-col text-5xl gap-3 mt-20"
+            className="flex flex-col text-5xl gap-3 mt-12"
           >
             <div className="border-b border-gray-200 uppercase text-xs mb-10">
               <p>Navigation</p>
@@ -98,19 +102,28 @@ const NavSection = () => {
                   data={{ ...data, index }}
                   isActive={selectedIndicator == data.link}
                   setSelectedIndicator={setSelectedIndicator}
-                ></LinkUi>
+                  onValueChange={onValueChange}
+                />
               )
             })}
           </div>
 
-          <div className="flex w-full justify-between text-sm">
-            <a className="text-white font-semibold">Awwwards</a>
+          <div className="pt-4">
+            <Button
+              size="lg"
+              variant="solid"
+              color="danger"
+              radius="full"
+              fullWidth
+            >
+              ¡Registrarse ya!
+            </Button>
+          </div>
 
+          <div className="flex w-full justify-between text-sm pt-6">
             <a className="text-white font-semibold">Instagram</a>
-
-            <a className="text-white font-semibold">Dribble</a>
-
-            <a className="text-white font-semibold">LinkedIn</a>
+            <a className="text-white font-semibold">Facebook</a>
+            <a className="text-white font-semibold">Tik tok</a>
           </div>
         </div>
         <svg className="absolute top-0 -left-24 w-24 h-full stroke-none fill-primary-800">
@@ -134,16 +147,18 @@ interface ILinkProps {
   }
   isActive: boolean
   setSelectedIndicator: (href: string) => void
+  onValueChange?: () => void
 }
 
 const LinkUi = (props: ILinkProps) => {
-  const { data, isActive, setSelectedIndicator } = props
+  const { data, isActive, setSelectedIndicator, onValueChange } = props
   const { name, link, index } = data
   return (
     <motion.div
       className="relative flex items-center"
       onMouseEnter={() => {
         setSelectedIndicator(link)
+        onValueChange && onValueChange()
       }}
       custom={index}
       variants={slide}
