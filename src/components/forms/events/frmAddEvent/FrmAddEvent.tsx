@@ -33,7 +33,7 @@ export const FrmAddEvent = () => {
     const newData: IEvent = {
       ...data,
       banner: '',
-      sala: data.sala || '',
+      sala: data.sala || null,
       date: data.date || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',

@@ -5,7 +5,7 @@ export interface IEvent {
   person_id: string
   //observar
   persons?: IPerson | null
-  sala: string | number
+  sala: string | number | null
   isActived: boolean
   name: string
   timeStart: string
