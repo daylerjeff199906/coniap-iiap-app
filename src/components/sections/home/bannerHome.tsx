@@ -58,9 +58,9 @@ export const BannerHome = () => {
             },
           }}
         >
-          <h1 className="text-3xl lg:text-[2.8rem] font-bold animate-appearance-in leading-tight text-white">
+          <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional de la{' '}
-            <span className="text-green-500 ">Amazonía</span> Peruana
+            <span className="text-green-500 font-bold">Amazonía</span> Peruana
           </h1>
           {/* <p className="text-sm lg:text-lg animate-appearance-in text-white">
             Del 15 al 18 de noviembre de 2022, ven y participa de este gran
