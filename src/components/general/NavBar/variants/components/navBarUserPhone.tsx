@@ -116,7 +116,7 @@ const NavSection = (props: IProps) => {
               radius="full"
               fullWidth
             >
-              ¡Registrarse ya!
+              ¡Inscríbete ya!
             </Button>
           </div>
 

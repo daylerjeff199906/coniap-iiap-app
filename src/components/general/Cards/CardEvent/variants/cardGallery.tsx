@@ -24,7 +24,7 @@ export const CardGalleryEvent = (props: IProps) => {
           alt="Event"
           removeWrapper
           className=""
-          radius="none"
+          radius="lg"
         />
       )}
       <CardBody className="px-0">

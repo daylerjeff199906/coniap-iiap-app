@@ -34,8 +34,6 @@ export const BannerHome = () => {
     setVideoLoaded(true)
   }
 
-  console.log('videoLoaded', videoLoaded)
-
   return (
     <section
       id="banner-home"
@@ -71,7 +69,7 @@ export const BannerHome = () => {
           <div className="flex items-center gap-2">
             <IconCalendarEvent
               size={56}
-              stroke={1.5}
+              stroke={1}
               color="#fff"
             />
             <h3 className="text-white sm:text-lg max-w-48">
