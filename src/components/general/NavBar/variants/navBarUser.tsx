@@ -20,6 +20,7 @@ export const NavBarUser = () => {
   const pathname = usePathname()
   const { scrollY } = useScroll()
   const navbarY = useTransform(scrollY, [0, 20], [-100, 0])
+  const navbarYEmpty = useTransform(scrollY, [0, 20], [0, -100])
   const backgroundColor = useTransform(
     scrollY,
     [0, 20], // Rango de entrada: de 0 a 20 píxeles
@@ -28,6 +29,7 @@ export const NavBarUser = () => {
 
   return (
     <>
+      {/* NavBar Phone */}
       <motion.nav
         className="lg:hidden fixed top-0 right-0 left-0 z-50 flex justify-between items-center p-4"
         style={{ backgroundColor }} // Aplicar color de fondo dinámico
@@ -47,15 +49,15 @@ export const NavBarUser = () => {
         </div>
         <NavBarUserPhone />
       </motion.nav>
-      <nav
-        className={`hidden lg:block fixed top-0 right-0 left-0 z-50 ${
-          navbarY && 'hidden'
-        }`}
+      {/* NavBar Desktop Transparent */}
+      <motion.nav
+        className="hidden lg:block fixed top-0 right-0 left-0 z-50"
+        style={{ y: navbarYEmpty }}
       >
         <Navbar
           maxWidth="full"
           classNames={{
-            base: 'bg-transparent text-white py-2',
+            base: 'bg-transparent text-white py-3',
           }}
           className="bg-transparent"
           height={72}
@@ -105,15 +107,19 @@ export const NavBarUser = () => {
             </NavbarItem>
           </NavbarContent>
         </Navbar>
-      </nav>
+      </motion.nav>
+
+      {/* NavBar Desktop Color */}
       <motion.nav
         className="hidden lg:block fixed top-0 z-50 right-0 left-0"
         style={{ y: navbarY }}
+        initial={{ y: -100 }}
+        transition={{ duration: 0.5 }}
       >
         <Navbar
           maxWidth="full"
           classNames={{
-            base: 'bg-[rgba(0,45,97,1)] text-white py-2',
+            base: 'bg-[rgba(0,45,97,1)] text-white py-3',
           }}
           height={72}
         >

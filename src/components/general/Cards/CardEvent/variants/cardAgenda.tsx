@@ -29,7 +29,7 @@ export const CardAgendaEvent = (props: IProps) => {
     <>
       <Card
         shadow="none"
-        className="border"
+        className="lg:border"
       >
         <CardBody className="px-0 sm:p-6 lg:p-8  grid grid-cols-1 sm:grid-cols-12 gap-6">
           <div className="hidden sm:block sm:col-span-3">
@@ -66,7 +66,7 @@ export const CardAgendaEvent = (props: IProps) => {
               />
             </div>
             <Divider />
-            <div className="lg:flex justify-between gap-4">
+            <div className="sm:flex justify-between gap-4">
               <div className="sm:flex items-center gap-6">
                 <div className="flex items-center gap-3">
                   <IconCalendarEvent size={20} />
@@ -82,15 +82,15 @@ export const CardAgendaEvent = (props: IProps) => {
               </div>
               <Link
                 href={`/eventos/${event?.id}`}
-                className="hidden lg:block"
+                className="hidden sm:block"
               >
                 <p className="font-medium text-base">Leer más</p>
               </Link>
             </div>
           </div>
         </CardBody>
-        <Divider className="lg:hidden" />
-        <CardFooter className="px-0 lg:hidden">
+        <Divider className="sm:hidden" />
+        <CardFooter className="px-0 sm:hidden">
           <Link href={`/agenda/${event?.id}`}>
             <p className="font-medium text-base">Leer más</p>
           </Link>

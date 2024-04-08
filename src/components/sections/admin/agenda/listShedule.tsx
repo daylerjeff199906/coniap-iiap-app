@@ -30,7 +30,7 @@ export const ListShedule = (props: IProps) => {
             <Tab
               key={index}
               title={formatDateToDDMMM(program.date)}
-              className="w-full "
+              className="w-full"
             >
               <main className="sm:p-4 w-full">
                 <header className="p-4 w-full flex flex-col items-center">
@@ -41,7 +41,7 @@ export const ListShedule = (props: IProps) => {
                 </header>
                 <section className="w-full py-2 space-y-5">
                   <div className="">
-                    <div className='flex gap-3 justify-between items-center py-3'>
+                    <div className="flex gap-3 justify-between items-center py-3">
                       <h1 className="font-medium text-lg">Eventos del día</h1>
                       <Button
                         variant="light"
@@ -57,7 +57,7 @@ export const ListShedule = (props: IProps) => {
                   </div>
                   {events.length > 0 ? (
                     <>
-                      <div className="w-ful grid grid-cols-1 gap-8 lg:p-6">
+                      <div className="w-full grid grid-cols-1 gap-8 lg:p-6">
                         {events
                           ?.filter((event) => event.program_id === program.id) // Filtrar eventos por program_id
                           .slice(0, 7)
