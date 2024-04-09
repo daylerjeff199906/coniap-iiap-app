@@ -17,7 +17,7 @@ const columns: Array<IColumns> = [
   },
   {
     key: 'name',
-    label: 'Colaborador',
+    label: 'Temas',
     align: 'start',
   },
   {
@@ -94,7 +94,7 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
 
 const RenderImage = (image: string) => {
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center bg-black/70 rounded-full">
       <Image
         src={image}
         alt="sponsor"
