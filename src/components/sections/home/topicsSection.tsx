@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Card } from '@nextui-org/react'
-import { IconPlant } from '@tabler/icons-react'
+import { Card, Image } from '@nextui-org/react'
 
 import { motion } from 'framer-motion'
 
@@ -76,13 +75,14 @@ const CardTopics = ({ title, icon }: { title: string; icon: string }) => {
       radius="none"
       shadow="none"
     >
-      <div className="flex justify-center items-center  rounded-full p-4">
-        <IconPlant
-          size={42}
-          stroke={1}
+      <div className="flex justify-center items-center  rounded-full p-4 ">
+        <Image
+          src={icon}
+          alt={title}
+          className="h-24 w-24"
         />
       </div>
-      <h3 className="font-bold">{title}</h3>
+      <h3 className="">{title}</h3>
     </Card>
   )
 }
