@@ -10,10 +10,14 @@ import {
   Button,
   Switch,
   Input,
+  Dropdown,
+  DropdownTrigger,
+  DropdownItem,
+  DropdownMenu,
 } from '@nextui-org/react'
 import { useCallback } from 'react'
 import { IColumns, IRows } from '@/types'
-import { IconEdit, IconSearch } from '@tabler/icons-react'
+import { IconEdit, IconSearch, IconDots } from '@tabler/icons-react'
 import Link from 'next/link'
 import { LoadingPages } from '../..'
 
@@ -45,8 +49,27 @@ export const TableGeneral = (props: IProps) => {
     switch (columnKey) {
       case 'actions':
         return (
-          <div className="flex gap-2">
-            <Button
+          <>
+            <Dropdown size="sm">
+              <DropdownTrigger>
+                <Button
+                  size="sm"
+                  variant="light"
+                  isIconOnly
+                >
+                  <IconDots
+                    stroke={1.5}
+                    className="text-gray-500"
+                  />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu>
+                <DropdownItem>
+                  <Link href={`?edit=${item.key}`}>Editar</Link>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            {/* <Button
               size="sm"
               variant="light"
               isIconOnly
@@ -54,7 +77,7 @@ export const TableGeneral = (props: IProps) => {
               href={`?edit=${item.key}`}
             >
               <IconEdit stroke={1.5} />
-            </Button>
+            </Button> */}
             {/* <Button
               size="sm"
               variant="light"
@@ -64,7 +87,7 @@ export const TableGeneral = (props: IProps) => {
             >
               <IconEye stroke={1.5} />
             </Button> */}
-          </div>
+          </>
         )
       case 'status':
         return (
@@ -140,7 +163,9 @@ export const TableGeneral = (props: IProps) => {
           {(item) => (
             <TableRow key={item?.key}>
               {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
+                <TableCell width={columnKey === 'actions' ? '100px' : 'auto'}>
+                  {renderCell(item, columnKey)}
+                </TableCell>
               )}
             </TableRow>
           )}

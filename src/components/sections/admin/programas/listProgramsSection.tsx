@@ -63,6 +63,8 @@ export const ListProgramsSection = () => {
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}
+        onSearch={(value) => setQuery(value)}
+        searchValue={query}
         rows={
           programs !== null
             ? programs?.map((event) => {
