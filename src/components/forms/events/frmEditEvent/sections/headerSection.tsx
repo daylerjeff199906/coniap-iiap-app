@@ -30,7 +30,6 @@ export const HeaderSection = () => {
 
   useEffect(() => {
     const banner = watch('banner')
-    console.log(banner)
     if (banner) {
       setFiles([
         {

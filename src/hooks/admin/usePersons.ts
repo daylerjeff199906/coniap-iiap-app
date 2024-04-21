@@ -6,7 +6,7 @@ import {
   fetchPerson,
   fetchPersonsInEvent,
 } from '@/api'
-import { IPerson } from '@/types'
+import { IPerson, IRes } from '@/types'
 import { toast } from 'sonner'
 
 const message =
@@ -51,17 +51,16 @@ export function usePersons() {
 
   const updatePersonData = async (id: string, data: IPerson) => {
     setLoading(true)
-    const res = await updatePerson(id, data)
-      .then((res) => res)
-      .catch((err) => err)
-    if (res) {
+    const res: IRes = (await updatePerson(id, data)) as IRes
+
+    if (res.message) {
+      toast.error('Error al actualizar persona', { description: res.message })
+      setLoading(false)
+      return res
+    } else {
       toast.success('Persona actualizada correctamente')
       setLoading(false)
-      return res[0]
-    } else {
-      toast.error('Error al actualizar persona')
-      setLoading(false)
-      return null
+      return res
     }
   }
 
