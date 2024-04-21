@@ -21,7 +21,7 @@ export const FrmAddProgram = (props: IProps) => {
 
   const router = useRouter()
   const { program } = props
-  const { addProgram, loading } = usePrograms()
+  const { addProgram, loading, updateDataProgram } = usePrograms()
 
   const searchParams = useSearchParams()
   const id = searchParams.get('edit') || ''
@@ -41,7 +41,9 @@ export const FrmAddProgram = (props: IProps) => {
       banner: '',
       isActived: false,
     }
-    const res = await addProgram(newData)
+    const res = id
+      ? await updateDataProgram(id, newData)
+      : await addProgram(newData)
     if (res) {
       router.push('/admin/programas')
     } else {
@@ -63,7 +65,9 @@ export const FrmAddProgram = (props: IProps) => {
           className="space-y-3"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <h1 className="text-2xl font-bold">Agregar Programa</h1>
+          <h1 className="text-2xl font-bold">
+            {id ? 'Editar' : 'Crear'} Programa
+          </h1>
           <InfoGeneral />
           {/* <MoreInfo /> */}
           {/* <MoreDescription /> */}
@@ -74,7 +78,7 @@ export const FrmAddProgram = (props: IProps) => {
               isLoading={loading}
               isDisabled={loading}
             >
-              Agregar Programa
+              {id ? 'Editar' : 'Crear'}
             </Button>
             <Button
               as={Link}
