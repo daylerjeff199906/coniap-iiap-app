@@ -63,30 +63,15 @@ export const TableGeneral = (props: IProps) => {
                   />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>
-                  <Link href={`?edit=${item.key}`}>Editar</Link>
+              <DropdownMenu aria-label="DropdownMenu">
+                <DropdownItem
+                  as={Link}
+                  href={`?edit=${item.key}`}
+                >
+                  Editar
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            {/* <Button
-              size="sm"
-              variant="light"
-              isIconOnly
-              as={Link}
-              href={`?edit=${item.key}`}
-            >
-              <IconEdit stroke={1.5} />
-            </Button> */}
-            {/* <Button
-              size="sm"
-              variant="light"
-              isIconOnly
-              as={Link}
-              href={`?view=${item.key}`}
-            >
-              <IconEye stroke={1.5} />
-            </Button> */}
           </>
         )
       case 'status':
