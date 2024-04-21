@@ -60,6 +60,8 @@ export const ListSpeakersSection = () => {
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}
+        onSearch={(value) => setQuery(value)}
+        searchValue={query}
         rows={
           speakers !== null
             ? speakers?.map((speaker) => {
