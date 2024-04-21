@@ -34,6 +34,7 @@ export const FrmAddEvent = () => {
     const newData: IEvent = {
       ...data,
       banner: '',
+      program_id: data.program_id || null,
       sala: data.sala || null,
       date: data.date || null,
       shortDescription: data.shortDescription || '',

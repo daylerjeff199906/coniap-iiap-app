@@ -1,7 +1,7 @@
 import { IPerson } from '.'
 export interface IEvent {
   id: string
-  program_id: string
+  program_id: string | null
   person_id: string
   //observar
   persons?: IPerson | null
