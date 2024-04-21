@@ -37,11 +37,8 @@ export const CountrySection = () => {
             placeholder="Escribe para buscar..."
             radius="sm"
             value={value}
-            // onValueChange={onChange}
-            // onValueChange={(value) => {
-            //   onChange(value)
-            //   setQuery(value)
-            // }}
+            onSelectionChange={onChange}
+            inputValue={query}
             onInputChange={(value) => {
               setQuery(value)
             }}
@@ -49,10 +46,10 @@ export const CountrySection = () => {
             errorMessage={errors.location?.message as string}
           >
             {countries !== null
-              ? countries.map((country, i) => (
+              ? countries?.map((country, i) => (
                   <AutocompleteItem
                     key={i}
-                    value={country.name.common}
+                    value={country?.name.common}
                   >
                     <div className="flex gap-2 items-center">
                       <Image
@@ -61,7 +58,7 @@ export const CountrySection = () => {
                         removeWrapper
                         className="w-6 h-6"
                       />
-                      {country.name.common}
+                      {country?.name.common}
                     </div>
                   </AutocompleteItem>
                 ))

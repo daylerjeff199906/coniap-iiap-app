@@ -10,9 +10,10 @@ export function useCountries() {
     setLoading(true)
     const data = await fetchCountries({ query })
       .then((res) => res.json())
-      .then((res) => res)
-      .catch((err) => err)
+      .catch((err) => [])
     setCountries(data)
+    // add new promise
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     setLoading(false)
   }
 
