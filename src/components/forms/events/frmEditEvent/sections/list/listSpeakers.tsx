@@ -42,8 +42,7 @@ export const ListSpeakers = (props: IProps) => {
   }, [query])
 
   const onSelectionChange = (row: IRows) => {
-    setValue('program_id', row.key)
-    setValue('date', row.date)
+    setValue('person_id', row.key)
     onSetOpen(false)
   }
 
