@@ -22,53 +22,6 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <SectionSpeaker />
-        <Controller
-          control={control}
-          rules={{
-            required: 'Este campo es requerido',
-          }}
-          name="name"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              aria-label="Nombre del evento"
-              label="Nombre"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Nombre del evento"
-              value={value}
-              onValueChange={onChange}
-              isInvalid={errors.name !== undefined}
-              errorMessage={errors.name?.message as string}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="sala"
-          render={({ field: { onChange, value } }) => (
-            <Select
-              aria-label="Tipo de sala"
-              label="Tipo de sala"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Tipo de sala"
-              value={value}
-              description="(Opcional) En caso de pertenecer a una sala de zoom en específico"
-              onChange={(e) => onChange(e.target.value)}
-              defaultSelectedKeys={[watch('sala')]}
-            >
-              {typeSala.map((item) => (
-                <SelectItem
-                  key={item.value}
-                  value={item.value}
-                >
-                  {item.label}
-                </SelectItem>
-              ))}
-            </Select>
-          )}
-        />
         <div className="flex gap-3">
           <Controller
             control={control}
@@ -133,6 +86,26 @@ export const InfoGeneral = () => {
         </div>
         <Controller
           control={control}
+          rules={{
+            required: 'Este campo es requerido',
+          }}
+          name="name"
+          render={({ field: { onChange, value } }) => (
+            <Input
+              aria-label="Nombre del evento"
+              label="Nombre"
+              labelPlacement="outside"
+              radius="sm"
+              placeholder="Nombre del evento"
+              value={value}
+              onValueChange={onChange}
+              isInvalid={errors.name !== undefined}
+              errorMessage={errors.name?.message as string}
+            />
+          )}
+        />
+        <Controller
+          control={control}
           name="shortDescription"
           rules={{
             required: 'Este campo es requerido',
@@ -149,6 +122,34 @@ export const InfoGeneral = () => {
               isInvalid={errors.shortDescription !== undefined}
               errorMessage={errors.shortDescription?.message as string}
             />
+          )}
+        />
+        <SectionSpeaker />
+
+        <Controller
+          control={control}
+          name="sala"
+          render={({ field: { onChange, value } }) => (
+            <Select
+              aria-label="Tipo de sala"
+              label="Tipo de sala"
+              labelPlacement="outside"
+              radius="sm"
+              placeholder="Tipo de sala"
+              value={value}
+              description="(Opcional) En caso de pertenecer a una sala de zoom en específico"
+              onChange={(e) => onChange(e.target.value)}
+              defaultSelectedKeys={[watch('sala')]}
+            >
+              {typeSala.map((item) => (
+                <SelectItem
+                  key={item.value}
+                  value={item.value}
+                >
+                  {item.label}
+                </SelectItem>
+              ))}
+            </Select>
           )}
         />
       </section>

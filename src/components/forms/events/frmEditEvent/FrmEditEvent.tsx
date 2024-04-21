@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useState } from 'react'
-import { Button, Link, Switch } from '@nextui-org/react'
+import { Button, Divider } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -24,11 +23,8 @@ export const FrmEditEvent = (props: IProps) => {
   const { event } = props
   const router = useRouter()
   const searchParams = useSearchParams()
-  //   const isEdit = searchParams.get('edit') !== null
 
   const id = searchParams.get('edit') || ''
-
-  // const [isEditables, setIsEditables] = useState(true)
 
   const { updateDataEvent, loading } = useEvents()
 
@@ -65,64 +61,77 @@ export const FrmEditEvent = (props: IProps) => {
 
   return (
     <>
-      <FormProvider {...methods}>
-        <header>
-          <h2 className="text-2xl font-bold">Editar evento: {event?.name}</h2>
-        </header>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <main className="grid grid-cols-1 gap-6">
-            <section className="space-y-2">
-              <header className="w-full">
-                {/* <div className="w-full p-2 relative">
-                  <Switch
-                    defaultChecked={isEditables}
-                    //   checked={isEditables}
-                    onValueChange={() => setIsEditables(!isEditables)}
-                    className="absolute top-8 right-6 z-30 "
-                  >
-                    <p className="text-white">
-                      {isEditables ? 'Vizualizar' : 'Editar'}
-                    </p>
-                  </Switch>
-                </div> */}
-                <HeaderSection />
-              </header>
-              <div className="space-y-3">
-                <h1 className="text-sm font-semibold">Información general</h1>
-                <div className="grid grid-cols-2 gap-5">
-                  <InfoGeneral />
-                  <MoreInfo />
+      <main className="w-full max-w-3xl">
+        <FormProvider {...methods}>
+          <header>
+            <h2 className="text-2xl font-bold">Editar evento: {event?.name}</h2>
+          </header>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <main className="grid grid-cols gap-6">
+              <HeaderSection />
+              <div
+                id="info-general"
+                className="grid grid-col gap-3"
+              >
+                <div className="space-y-1">
+                  <h1 className="text-sm font-semibold">Información general</h1>
+                  <h2 className="text-tiny text-gray-500">
+                    Ingresa la información general del evento, como el nombre,
+                    la fecha, la hora de inicio y fin, la descripción corta, la
+                    sala.
+                  </h2>
+                  <Divider />
                 </div>
+                <InfoGeneral />
               </div>
-              <div className="space-y-3">
+              <div
+                id="more-info"
+                className="grid grid-col gap-3"
+              >
+                <div className="space-y-1">
+                  <h1 className="text-sm font-semibold">
+                    Enlaces de las plataformas
+                  </h1>
+                  <h2 className="text-tiny text-gray-500">
+                    Agrega los enlaces de las plataformas donde se llevará a
+                    cabo el evento.
+                  </h2>
+                  <Divider />
+                </div>
+                <MoreInfo />
+              </div>
+              <div
+                id="custom-content"
+                className="grid grid-col gap-3"
+              >
                 <h1 className="text-sm font-semibold">
                   Contenido Personalizado
                 </h1>
                 <MoreDescription defaultContent={event?.customContent ?? ''} />
               </div>
-            </section>
-          </main>
-          <footer className="pt-4">
-            <div className="flex items-center gap-3 justify-end">
-              <Button
-                color="primary"
-                isDisabled={loading}
-                isLoading={loading}
-                type="submit"
-              >
-                Guardar cambios
-              </Button>
-              <Button
-                onPress={() => {
-                  router.push('/admin/eventos')
-                }}
-              >
-                Cancelar
-              </Button>
-            </div>
-          </footer>
-        </form>
-      </FormProvider>
+            </main>
+            <footer className="pt-4">
+              <div className="flex items-center gap-3 justify-end">
+                <Button
+                  color="primary"
+                  isDisabled={loading}
+                  isLoading={loading}
+                  type="submit"
+                >
+                  Guardar cambios
+                </Button>
+                <Button
+                  onPress={() => {
+                    router.push('/admin/eventos')
+                  }}
+                >
+                  Cancelar
+                </Button>
+              </div>
+            </footer>
+          </form>
+        </FormProvider>
+      </main>
       <LoadingPages isOpen={loading} />
     </>
   )
