@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button, Input } from '@nextui-org/react'
 import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { ListPrograms } from './list/listPrograms'
+import { ListPrograms } from '../../list'
 import { DrawerSelect } from '@/components'
 
 export const ProgramSection = () => {

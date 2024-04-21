@@ -2,11 +2,11 @@
 'use client'
 import { useState } from 'react'
 import { Button, Input } from '@nextui-org/react'
-import { useEvents } from '@/hooks/admin'
+// import { useEvents } from '@/hooks/admin'
 import { IconLink } from '@tabler/icons-react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { DrawerSelect } from '@/components/general'
-import { ListSpeakers } from './list/listSpeakers'
+import { ListSpeakers } from '../../list'
 
 export const SectionSpeaker = () => {
   const [isOpen, setIsOpen] = useState(false)

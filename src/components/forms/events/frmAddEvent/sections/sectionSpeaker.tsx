@@ -1,67 +1,52 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
-import { useFormContext, Controller } from 'react-hook-form'
-import { usePersons, useEvents } from '@/hooks/admin'
+import { useState } from 'react'
+import { Button, Input } from '@nextui-org/react'
+// import { useEvents } from '@/hooks/admin'
+import { IconLink } from '@tabler/icons-react'
+import { Controller, useFormContext } from 'react-hook-form'
+import { DrawerSelect } from '@/components/general'
+import { ListSpeakers } from '../../list'
 
 export const SectionSpeaker = () => {
-  const { getPersons, persons } = usePersons()
-  const { getEvents, events } = useEvents()
-  const [query, setQuery] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
-  useEffect(() => {
-    getPersons(query)
-  }, [query])
-
-  useEffect(() => {
-    getEvents('', 'person_id')
-  }, [])
-
-  const dataEvents = persons ? persons : []
-
-  const filteredPersons = events
-    ? dataEvents?.filter((person) => {
-        return !events.some((event) => event.persons?.id === person.id)
-      })
-    : []
-
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext()
+  const { control } = useFormContext()
 
   return (
     <>
       <Controller
         name="person_id"
         control={control}
-        rules={{
-          required: 'Este campo es requerido',
-        }}
         render={({ field: { onChange, value } }) => (
-          <Autocomplete
+          <Input
             aria-label="Speakers"
             label="Ponente"
-            placeholder="Seleccionar ponente"
             labelPlacement="outside"
-            inputValue={query}
-            onInputChange={(value) => setQuery(value)}
+            placeholder="Seleccionar ponente"
             value={value}
-            isInvalid={errors.person_id !== undefined}
-            errorMessage={errors.person_id?.message as string}
-            onSelectionChange={(value) => onChange(value)}
-          >
-            {filteredPersons?.map((person) => (
-              <AutocompleteItem
-                key={person.id}
-                value={person.id}
-              >
-                {person.name}
-              </AutocompleteItem>
-            ))}
-          </Autocomplete>
+            onChange={onChange}
+            description="Seleccione el programa al que pertenece el evento, es opcional"
+            endContent={
+              <div>
+                <Button
+                  size="sm"
+                  radius="sm"
+                  startContent={<IconLink size={16} />}
+                  onPress={() => setIsOpen(true)}
+                >
+                  Seleccionar
+                </Button>
+              </div>
+            }
+          />
         )}
+      />
+      <DrawerSelect
+        isOpen={isOpen}
+        setOpen={setIsOpen}
+        title="Seleccionar programa"
+        content={<ListSpeakers onSetOpen={setIsOpen} />}
       />
     </>
   )
