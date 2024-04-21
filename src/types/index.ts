@@ -9,6 +9,7 @@ import { IPerson } from './IPersons'
 import { IGeneralInfo } from './IGeneralInfo'
 import { IRows } from './table/IRows'
 import { IRes } from './responses/IResponse'
+import { ICountry } from './Icountry'
 
 export type {
   ISponsor,
@@ -22,4 +23,5 @@ export type {
   IGeneralInfo,
   IRows,
   IRes,
+  ICountry,
 }

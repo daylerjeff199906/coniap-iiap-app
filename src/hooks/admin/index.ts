@@ -5,6 +5,7 @@ import { useFiles } from './useFiles'
 import { useSponsors } from './useSponsors'
 import { useTopics } from './useTopics'
 import { usePersons } from './usePersons'
+import { useCountries } from './useCountries'
 
 export {
   useEvents,
@@ -14,4 +15,5 @@ export {
   useSponsors,
   useTopics,
   usePersons,
+  useCountries,
 }

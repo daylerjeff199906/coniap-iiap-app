@@ -16,9 +16,9 @@ export const MultimediaSection = (props: IProps) => {
   }
 
   return (
-    <section className="space-y-3">
-      <h3>Multimedia</h3>
-      <div className='w-44 h-44'>
+    <section className="space-y-3 w-full ">
+      <h3>Imagen de perfil</h3>
+      <div className="w-44 h-44">
         <FilePond
           allowMultiple={false}
           acceptedFileTypes={['image/*']}

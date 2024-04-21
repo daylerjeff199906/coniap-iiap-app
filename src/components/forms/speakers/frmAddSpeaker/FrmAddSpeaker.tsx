@@ -65,7 +65,7 @@ export const FrmAddSpeaker = () => {
             setFiles={setFile}
             files={file}
           />
-          <div className="max-w-sm">
+          <div className="pt-3">
             <Controller
               control={methods.control}
               name="typePerson"

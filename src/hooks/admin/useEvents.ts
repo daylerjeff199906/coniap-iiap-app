@@ -1,14 +1,9 @@
 import { useState } from 'react'
-import { db, storage } from '@/firebase/firebase'
+import { storage } from '@/firebase/firebase'
 
 import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
 
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import { IEvent, IRes } from '@/types'
 import { toast } from 'sonner'
