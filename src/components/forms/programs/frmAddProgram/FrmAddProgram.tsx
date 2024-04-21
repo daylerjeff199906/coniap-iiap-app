@@ -44,10 +44,10 @@ export const FrmAddProgram = (props: IProps) => {
     const res = id
       ? await updateDataProgram(id, newData)
       : await addProgram(newData)
-    if (res) {
-      router.push('/admin/programas')
+    if (res.message) {
+      return null
     } else {
-      toast.error('Error al crear programa')
+      router.push('/admin/programas')
     }
     resetForm()
   }

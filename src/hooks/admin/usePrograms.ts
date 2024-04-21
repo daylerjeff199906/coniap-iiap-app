@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IProgram } from '@/types'
+import { IProgram, IRes } from '@/types'
 import {
   fetchProgram,
   fetchPrograms,
@@ -25,12 +25,14 @@ export function usePrograms() {
 
   const addProgram = async (data: IProgram) => {
     setLoading(true)
-    const res = await createProgram(data)
+    const res: IRes = (await createProgram(data)) as IRes
 
-    if (res) {
-      toast.success('Programa creado con exito')
+    if (res.message) {
+      toast.error('Error al crear el programa', {
+        description: res.message,
+      })
     } else {
-      toast.error('Error al crear el programa', {})
+      toast.success('Programa creado con exito')
     }
     setLoading(false)
     return res
@@ -38,15 +40,16 @@ export function usePrograms() {
 
   const updateDataProgram = async (id: string, data: IProgram) => {
     setLoading(true)
-    const res = await updateProgram(id, data)
-      .then((res) => res)
-      .catch((err) => err)
-    if (res) {
-      toast.success('Programa actualizado con exito')
+    const res: IRes = (await updateProgram(id, data)) as IRes
+    if (res.message) {
+      toast.error('Error al actualizar el programa', {
+        description: res.message,
+      })
     } else {
-      toast.error('Error al actualizar el programa')
+      toast.success('Programa actualizado con exito')
     }
     setLoading(false)
+    return res
   }
 
   const updateFieldDataProgram = async (
