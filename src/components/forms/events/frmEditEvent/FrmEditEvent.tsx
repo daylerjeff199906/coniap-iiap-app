@@ -34,8 +34,12 @@ export const FrmEditEvent = (props: IProps) => {
 
   const onSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     const { persons, ...rest } = data
+    const dataNew = {
+      ...rest,
+      program_id: rest.program_id || null,
+    }
 
-    const res = await updateDataEvent(id, rest)
+    const res = await updateDataEvent(id, dataNew)
     if (res.message) {
       return null
     } else {
