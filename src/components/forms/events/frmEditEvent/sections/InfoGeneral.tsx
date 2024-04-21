@@ -1,6 +1,6 @@
 import { Input, Textarea, Select, SelectItem } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { SectionSpeaker } from '.'
+import { ProgramSection, SectionSpeaker } from '.'
 
 const typeSala = [
   {
@@ -22,6 +22,7 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
+        <ProgramSection />
         <div className="flex gap-3">
           <Controller
             control={control}
