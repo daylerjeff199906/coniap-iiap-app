@@ -16,34 +16,6 @@ export const ProgramSection = () => {
 
   return (
     <>
-      {/* <Controller
-        name="program_id"
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <Autocomplete
-            aria-label="Programs"
-            label="Programa"
-            placeholder="Seleccionar programa"
-            labelPlacement="outside"
-            inputValue={query}
-            onInputChange={(value) => setQuery(value)}
-            value={value}
-            onSelectionChange={(value) => onChange(value)}
-            defaultSelectedKey={String(watch('program_id'))}
-            isLoading={loading}
-            description="Seleccione el programa al que pertenece el evento, es opcional"
-          >
-            {dataPrograms?.map((program) => (
-              <AutocompleteItem
-                key={String(program?.id)}
-                value={program?.id}
-              >
-                {program?.title} - {program?.date}
-              </AutocompleteItem>
-            ))}
-          </Autocomplete>
-        )}
-      /> */}
       <Controller
         name="program_id"
         control={control}
@@ -112,7 +84,7 @@ export const DrawerSelect = (props: IProps) => {
         </header>
         <Divider />
         <main className="overflow-y-auto h-[calc(100%-6rem)] p-4">
-          <ListPrograms />
+          <ListPrograms onSetOpen={setOpen} />
         </main>
         <Divider />
         <footer className="flex justify-end gap-3 p-2">

@@ -2,7 +2,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components/general'
-import { IColumns, IProgram, IRows } from '@/types'
+import { IColumns, IRows } from '@/types'
 
 import { usePrograms } from '@/hooks/admin'
 import { useFormContext } from 'react-hook-form'
@@ -26,9 +26,14 @@ const columns: IColumns[] = [
   },
 ]
 
-export const ListPrograms = () => {
+interface IProps {
+  onSetOpen: (value: boolean) => void
+}
+
+export const ListPrograms = (props: IProps) => {
   const { getPrograms, programs, loading } = usePrograms()
-  const { control, setValue } = useFormContext()
+  const { setValue } = useFormContext()
+  const { onSetOpen } = props
 
   const [query, setQuery] = useState('')
 
@@ -39,6 +44,7 @@ export const ListPrograms = () => {
   const onSelectionChange = (row: IRows) => {
     setValue('program_id', row.key)
     setValue('date', row.date)
+    onSetOpen(false)
   }
 
   return (
@@ -50,6 +56,9 @@ export const ListPrograms = () => {
           onSelectionChange={(row) => {
             onSelectionChange(row)
           }}
+          loading={loading}
+          onSearch={(value) => setQuery(value)}
+          searchValue={query}
           rows={
             programs !== null
               ? programs?.map((program) => {
