@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { FrmAddProgram } from '@/components'
-
-import { usePrograms } from '@/hooks/admin'
 import { useEffect } from 'react'
+
+import { FrmAddProgram } from '@/components'
+import { usePrograms } from '@/hooks/admin'
 
 interface IProps {
   id: string

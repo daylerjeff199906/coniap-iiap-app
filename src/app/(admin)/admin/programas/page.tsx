@@ -1,5 +1,5 @@
 'use client'
-import { ListProgramsSection } from '@/components'
+import { ListProgramsSection, UpdateProgram } from '@/components'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -25,10 +25,10 @@ export default function Page() {
       )}
       {isEdit ? (
         <>
-          {/* <UpdateEvento
+          <UpdateProgram
             id={searchParams.get('edit') ?? ''}
             isEdit={isEdit}
-          /> */}
+          />
         </>
       ) : (
         <section className="py-6">
