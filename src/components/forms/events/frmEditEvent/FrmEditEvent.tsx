@@ -35,14 +35,13 @@ export const FrmEditEvent = (props: IProps) => {
   const onSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     const { persons, ...rest } = data
 
-    await updateDataEvent(id, rest)
-      .then(() => {
-        clearForm()
-        router.push('/admin/eventos')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    const res = await updateDataEvent(id, rest)
+    if (res.message) {
+      return null
+    } else {
+      clearForm()
+      router.push('/admin/eventos')
+    }
   }
 
   const clearForm = () => {
