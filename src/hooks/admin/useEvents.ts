@@ -20,12 +20,14 @@ export function useEvents() {
 
   const createDataEvent = async (data: IEvent) => {
     setLoading(true)
-    const res = await createEvent(data)
+    const res: IRes = (await createEvent(data)) as IRes
 
-    if (res) {
-      toast.success('Evento creado con exito')
+    if (res.message) {
+      toast.error('Error al crear el programa', {
+        description: res.message,
+      })
     } else {
-      toast.error('Error al crear el programa')
+      toast.success('Evento creado con exito')
     }
     setLoading(false)
     return res

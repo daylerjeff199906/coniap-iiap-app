@@ -43,11 +43,11 @@ export const FrmAddEvent = () => {
       isActived: false,
     }
     const res = await createDataEvent(newData)
-    console.log('res', res)
-    if (!res) {
+    if (res.message) {
+      return null
     } else {
-      router.push('/admin/eventos')
       resetForm()
+      router.push('/admin/eventos')
     }
   }
 

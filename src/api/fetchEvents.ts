@@ -55,6 +55,7 @@ export async function createEvent(data: IEvent) {
 
   if (error) {
     console.error('error', error)
+    return error
   } else {
     return event
   }
