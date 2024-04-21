@@ -55,7 +55,9 @@ export function useEvents() {
     if (res) {
       toast.success('Evento actualizado con exito')
     } else {
-      toast.error('Error al actualizar el evento')
+      toast.error('Error al actualizar el evento', {
+        description: 'Intente nuevamente',
+      })
     }
     setLoading(false)
     return res

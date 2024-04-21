@@ -30,7 +30,7 @@ export function usePrograms() {
     if (res) {
       toast.success('Programa creado con exito')
     } else {
-      toast.error('Error al crear el programa')
+      toast.error('Error al crear el programa', {})
     }
     setLoading(false)
     return res

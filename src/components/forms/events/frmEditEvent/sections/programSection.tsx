@@ -7,7 +7,7 @@ import { useFormContext, Controller } from 'react-hook-form'
 import { IProgram } from '@/types'
 
 export const ProgramSection = () => {
-  const { getPrograms, programs } = usePrograms()
+  const { getPrograms, programs, loading } = usePrograms()
   const [query, setQuery] = useState('')
 
   useEffect(() => {
@@ -19,11 +19,10 @@ export const ProgramSection = () => {
     formState: { errors },
     watch,
   } = useFormContext()
-
-  const dataPrograms: IProgram[] = programs ?? []
-  const programSelected: IProgram = dataPrograms.find(
-    (program) => program.id === watch('program_id')
-  ) as IProgram
+  const dataPrograms: IProgram[] = programs ? programs : []
+  //   const programSelected: IProgram = dataPrograms.find(
+  //     (program) => program.id === watch('program_id')
+  //   ) as IProgram
 
   return (
     <>
@@ -39,11 +38,9 @@ export const ProgramSection = () => {
             inputValue={query}
             onInputChange={(value) => setQuery(value)}
             value={value}
-            isInvalid={errors.person_id !== undefined}
-            errorMessage={errors.person_id?.message as string}
             onSelectionChange={(value) => onChange(value)}
             defaultSelectedKey={String(watch('program_id'))}
-            // defaultInputValue={programSelected?.title}
+            isLoading={loading}
             disabled={true}
             description="Seleccione el programa al que pertenece el evento, es opcional"
           >
