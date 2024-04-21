@@ -34,7 +34,7 @@ export async function createProgram(props: IProgram) {
   const { data, error } = await supabase
     .from('programs')
     .insert([props])
-    .select()
+    .select('*')
 
   if (error) {
     return error
@@ -51,6 +51,8 @@ export async function updateProgram(id: string, props: IProgram) {
     .from('programs')
     .update(props)
     .eq('id', id)
+    .select('*')
+    
   if (error) {
     return error
   } else {

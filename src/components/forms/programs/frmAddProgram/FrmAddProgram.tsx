@@ -92,8 +92,12 @@ export const FrmAddProgram = (props: IProps) => {
       <ModalAction
         isOpen={isOpen}
         setOpen={setOpen}
-        title="Crear programa"
-        message="¿Estás seguro de crear este programa?"
+        title={id ? 'Editar Programa' : 'Crear Programa'}
+        message={
+          id
+            ? '¿Estás seguro de editar el programa?'
+            : '¿Estás seguro de crear el programa?'
+        }
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
       <LoadingPages isOpen={loading} />
