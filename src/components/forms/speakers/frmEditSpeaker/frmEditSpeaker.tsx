@@ -47,7 +47,6 @@ export const FrmEditSpeaker = (props: IProps) => {
   const id = searchParams.get('edit') || ''
 
   const handleSave: SubmitHandler<IPerson> = async (data: IPerson) => {
-    console.log(data)
     setOpenConfirm(false)
     const res = await updatePersonData(id, data)
     if (res.message) {

@@ -18,25 +18,19 @@ export const MultimediaSection = (props: IProps) => {
   return (
     <section className="space-y-3">
       <h3>Multimedia</h3>
-      {/* <Controller
-        name="image"
-        render={({ field: { onChange, value } }) => (
-          <FilePond
-            allowMultiple={true}
-            acceptedFileTypes={['image/*']}
-            labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-            files={value}
-            onupdatefiles={handleUpdateFiles}
-          />
-        )}
-      /> */}
-      <FilePond
-        allowMultiple={false}
-        acceptedFileTypes={['image/*']}
-        labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-        files={files}
-        onupdatefiles={handleUpdateFiles}
-      />
+      <div className='w-44 h-44'>
+        <FilePond
+          allowMultiple={false}
+          acceptedFileTypes={['image/*']}
+          labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
+          files={files}
+          onupdatefiles={handleUpdateFiles}
+          stylePanelLayout={'compact circle'}
+          styleLoadIndicatorPosition="center bottom"
+          styleProgressIndicatorPosition="right bottom"
+          styleButtonRemoveItemPosition="left bottom"
+        />
+      </div>
     </section>
   )
 }
