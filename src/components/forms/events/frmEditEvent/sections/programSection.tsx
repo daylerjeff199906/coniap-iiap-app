@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import { Button, Divider, Input } from '@nextui-org/react'
+import { Button, Input } from '@nextui-org/react'
 import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { ListPrograms } from './programs/listPrograms'
+import { ListPrograms } from './list/listPrograms'
 import { DrawerSelect } from '@/components'
 
 export const ProgramSection = () => {
@@ -50,54 +50,3 @@ export const ProgramSection = () => {
     </>
   )
 }
-
-// interface IProps {
-//   isOpen: boolean
-//   setOpen: (value: boolean) => void
-// }
-
-// export const DrawerSelect = (props: IProps) => {
-//   const { isOpen, setOpen } = props
-
-//   const drawerClasses = `fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform ${
-//     isOpen ? 'translate-x-0' : 'translate-x-full'
-//   } bg-white w-[520px] dark:bg-gray-800`
-
-//   const overlayClasses = `fixed top-0 right-0 bottom-0 left-0 z-40 transition-opacity ${
-//     isOpen ? 'opacity-50 ' : 'opacity-0 pointer-events-none'
-//   } bg-black`
-
-//   return (
-//     <>
-//       <div
-//         className={overlayClasses}
-//         onClick={() => setOpen && setOpen(false)}
-//       />
-//       <div
-//         id="drawer"
-//         aria-label="drawer"
-//         className={drawerClasses}
-//         tabIndex={-1}
-//       >
-//         <header className="px-4 py-2">
-//           <h2 className="text-lg text-gray-500">Seleccionar programa</h2>
-//         </header>
-//         <Divider />
-//         <main className="overflow-y-auto h-[calc(100%-6rem)] p-4">
-//           <ListPrograms onSetOpen={setOpen} />
-//         </main>
-//         <Divider />
-//         <footer className="flex justify-end gap-3 p-2">
-//           <Button
-//             size="sm"
-//             radius="sm"
-//             onPress={() => setOpen(false)}
-//             variant="bordered"
-//           >
-//             Cancelar
-//           </Button>
-//         </footer>
-//       </div>
-//     </>
-//   )
-// }
