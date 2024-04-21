@@ -8,6 +8,7 @@ import { ITopic } from './ITopics'
 import { IPerson } from './IPersons'
 import { IGeneralInfo } from './IGeneralInfo'
 import { IRows } from './table/IRows'
+import { IRes } from './responses/IResponse'
 
 export type {
   ISponsor,
@@ -20,4 +21,5 @@ export type {
   IPerson,
   IGeneralInfo,
   IRows,
+  IRes,
 }

@@ -10,7 +10,7 @@ import {
   deleteObject,
 } from 'firebase/storage'
 
-import { IEvent } from '@/types'
+import { IEvent, IRes } from '@/types'
 import { toast } from 'sonner'
 
 export function useEvents() {
@@ -51,13 +51,13 @@ export function useEvents() {
 
   const updateDataEvent = async (id: string, data: IEvent) => {
     setLoading(true)
-    const res = await updateEvent(id, data)
-    if (res) {
-      toast.success('Evento actualizado con exito')
-    } else {
+    const res: IRes = (await updateEvent(id, data)) as IRes
+    if (res.message) {
       toast.error('Error al actualizar el evento', {
-        description: 'Intente nuevamente',
+        description: res.message,
       })
+    } else {
+      toast.success('Evento actualizado con exito')
     }
     setLoading(false)
     return res

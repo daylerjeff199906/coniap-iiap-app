@@ -71,6 +71,7 @@ export async function updateEvent(id: string, data: IEvent) {
 
   if (error) {
     console.error('error', error)
+    return error
   } else {
     return event
   }
