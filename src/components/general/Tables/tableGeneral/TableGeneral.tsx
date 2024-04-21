@@ -9,26 +9,36 @@ import {
   getKeyValue,
   Button,
   Switch,
+  Input,
 } from '@nextui-org/react'
 import { useCallback } from 'react'
-import { IColumns } from '@/types'
-import { IconEdit, IconEye } from '@tabler/icons-react'
+import { IColumns, IRows } from '@/types'
+import { IconEdit, IconSearch } from '@tabler/icons-react'
 import Link from 'next/link'
 import { LoadingPages } from '../..'
-interface IRows {
-  key: string | number
-  [key: string]: string | React.ReactNode
-}
 
 interface IProps {
   columns: Array<IColumns>
   rows: Array<IRows>
   loading?: boolean
+  selectionMode?: 'single' | 'multiple' | 'none'
   onValueStatusChange?: (key: string | number, value: boolean) => void
+  onSelectionChange?: (row: IRows) => void
+  //For the search input
+  onSearch?: (value: string) => void
+  searchValue?: string
 }
 
 export const TableGeneral = (props: IProps) => {
-  const { columns, rows, onValueStatusChange } = props
+  const {
+    columns,
+    rows,
+    onValueStatusChange,
+    onSelectionChange,
+    selectionMode,
+    onSearch,
+    searchValue,
+  } = props
 
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
     const value = getKeyValue(item, columnKey)
@@ -76,19 +86,40 @@ export const TableGeneral = (props: IProps) => {
     }
   }, [])
 
+  const onRowAction = (key: string | number | bigint) => {
+    const item = rows.filter((row) => Number(row.key) === Number(key))
+    onSelectionChange && onSelectionChange(item[0])
+  }
+
   return (
     <>
+      <section className="pb-4">
+        <Input
+          aria-label="Buscar"
+          variant="bordered"
+          placeholder="Type to search..."
+          radius="sm"
+          classNames={{
+            input: ['max-w-[300px]'],
+            inputWrapper: ['w-full max-w-[300px]'],
+          }}
+          value={searchValue}
+          onValueChange={(value) => onSearch && onSearch(value)}
+          startContent={<IconSearch size={16} />}
+        />
+      </section>
       <Table
         aria-label="TableGeneral"
         aria-labelledby="TableGeneral"
         removeWrapper
         isHeaderSticky
-        isCompact
         classNames={{
           th: ['font-bold', 'bg-black', 'text-white'],
           base: 'max-h-[calc(100vh-16rem)] overflow-y-auto bg-white',
           td: ['text-xs'],
         }}
+        selectionMode={selectionMode}
+        onRowAction={onRowAction}
       >
         <TableHeader columns={columns}>
           {(column) => (

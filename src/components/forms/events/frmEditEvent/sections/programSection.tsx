@@ -1,32 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
-import { usePrograms } from '@/hooks/admin'
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+import { useState } from 'react'
+import { Button, Divider, Input } from '@nextui-org/react'
+import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { IProgram } from '@/types'
+import { ListPrograms } from './programs/listPrograms'
 
 export const ProgramSection = () => {
-  const { getPrograms, programs, loading } = usePrograms()
-  const [query, setQuery] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
-  useEffect(() => {
-    getPrograms(query)
-  }, [query])
-
-  const {
-    control,
-    formState: { errors },
-    watch,
-  } = useFormContext()
-  const dataPrograms: IProgram[] = programs ? programs : []
+  const { control, watch } = useFormContext()
   //   const programSelected: IProgram = dataPrograms.find(
   //     (program) => program.id === watch('program_id')
   //   ) as IProgram
 
   return (
     <>
-      <Controller
+      {/* <Controller
         name="program_id"
         control={control}
         render={({ field: { onChange, value } }) => (
@@ -41,7 +31,6 @@ export const ProgramSection = () => {
             onSelectionChange={(value) => onChange(value)}
             defaultSelectedKey={String(watch('program_id'))}
             isLoading={loading}
-            disabled={true}
             description="Seleccione el programa al que pertenece el evento, es opcional"
           >
             {dataPrograms?.map((program) => (
@@ -54,7 +43,89 @@ export const ProgramSection = () => {
             ))}
           </Autocomplete>
         )}
+      /> */}
+      <Controller
+        name="program_id"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <Input
+            aria-label="Programs"
+            label="Programa"
+            labelPlacement="outside"
+            placeholder="Seleccionar programa"
+            value={value}
+            onChange={onChange}
+            description="Seleccione el programa al que pertenece el evento, es opcional"
+            endContent={
+              <div>
+                <Button
+                  size="sm"
+                  radius="sm"
+                  startContent={<IconLink size={16} />}
+                  onPress={() => setIsOpen(true)}
+                >
+                  Seleccionar
+                </Button>
+              </div>
+            }
+          />
+        )}
       />
+      <DrawerSelect
+        isOpen={isOpen}
+        setOpen={setIsOpen}
+      />
+    </>
+  )
+}
+
+interface IProps {
+  isOpen: boolean
+  setOpen: (value: boolean) => void
+}
+
+export const DrawerSelect = (props: IProps) => {
+  const { isOpen, setOpen } = props
+
+  const drawerClasses = `fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform ${
+    isOpen ? 'translate-x-0' : 'translate-x-full'
+  } bg-white w-[520px] dark:bg-gray-800`
+
+  const overlayClasses = `fixed top-0 right-0 bottom-0 left-0 z-40 transition-opacity ${
+    isOpen ? 'opacity-50 ' : 'opacity-0 pointer-events-none'
+  } bg-black`
+
+  return (
+    <>
+      <div
+        className={overlayClasses}
+        onClick={() => setOpen && setOpen(false)}
+      />
+      <div
+        id="drawer"
+        aria-label="drawer"
+        className={drawerClasses}
+        tabIndex={-1}
+      >
+        <header className="px-4 py-2">
+          <h2 className="text-lg text-gray-500">Seleccionar programa</h2>
+        </header>
+        <Divider />
+        <main className="overflow-y-auto h-[calc(100%-6rem)] p-4">
+          <ListPrograms />
+        </main>
+        <Divider />
+        <footer className="flex justify-end gap-3 p-2">
+          <Button
+            size="sm"
+            radius="sm"
+            onPress={() => setOpen(false)}
+            variant="bordered"
+          >
+            Cancelar
+          </Button>
+        </footer>
+      </div>
     </>
   )
 }
