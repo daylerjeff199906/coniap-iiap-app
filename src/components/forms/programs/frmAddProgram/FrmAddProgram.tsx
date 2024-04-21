@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { InfoGeneral } from './sections'
 import { IProgram } from '@/types'
@@ -12,13 +12,23 @@ import { toast } from 'sonner'
 import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
-export const FrmAddProgram = () => {
+interface IProps {
+  program?: IProgram
+}
+
+export const FrmAddProgram = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()
+  const { program } = props
   const { addProgram, loading } = usePrograms()
 
-  const methods = useForm<IProgram>()
+  const searchParams = useSearchParams()
+  const id = searchParams.get('edit') || ''
+
+  const methods = useForm<IProgram>({
+    defaultValues: program,
+  })
 
   const onSubmit = () => {
     setOpen(true)

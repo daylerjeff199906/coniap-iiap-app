@@ -50,7 +50,15 @@ export const TableGeneral = (props: IProps) => {
       case 'actions':
         return (
           <>
-            <Dropdown size="sm">
+            <Dropdown
+              size="sm"
+              radius="sm"
+              showArrow
+              classNames={{
+                content: 'bg-white border border-gray-200 shadow-lg w-[200px]',
+                base: 'text-tiny w-[200px] ',
+              }}
+            >
               <DropdownTrigger>
                 <Button
                   size="sm"
