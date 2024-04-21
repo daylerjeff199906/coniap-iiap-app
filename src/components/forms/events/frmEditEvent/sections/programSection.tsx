@@ -11,9 +11,6 @@ export const ProgramSection = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const { control, watch } = useFormContext()
-  //   const programSelected: IProgram = dataPrograms.find(
-  //     (program) => program.id === watch('program_id')
-  //   ) as IProgram
 
   return (
     <>
