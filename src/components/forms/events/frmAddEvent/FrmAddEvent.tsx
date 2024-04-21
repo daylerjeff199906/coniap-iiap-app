@@ -8,6 +8,7 @@ import {
   InfoGeneral,
   MoreDescription,
   MoreInfo,
+  ProgramSection,
   SectionSpeaker,
 } from './sections'
 import { IEvent } from '@/types'
@@ -72,8 +73,9 @@ export const FrmAddEvent = () => {
         >
           <h1 className="text-2xl font-bold">Agregar Evento</h1>
           <div className="grid grid-cols-1 gap-5">
-            <SectionSpeaker />
+            <ProgramSection />
             <InfoGeneral />
+            <SectionSpeaker />
             <MoreInfo />
           </div>
           <MoreDescription />

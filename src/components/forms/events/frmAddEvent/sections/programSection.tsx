@@ -2,37 +2,30 @@
 'use client'
 import { useState } from 'react'
 import { Button, Input } from '@nextui-org/react'
-// import { useEvents } from '@/hooks/admin'
 import { IconLink } from '@tabler/icons-react'
-import { Controller, useFormContext } from 'react-hook-form'
-import { DrawerSelect } from '@/components/general'
-import { ListSpeakers } from '../../list'
+import { useFormContext, Controller } from 'react-hook-form'
+import { ListPrograms } from '../../list'
+import { DrawerSelect } from '@/components'
 
-export const SectionSpeaker = () => {
+export const ProgramSection = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext()
+  const { control, watch } = useFormContext()
 
   return (
     <>
       <Controller
-        name="person_id"
+        name="program_id"
         control={control}
-        rules={{ required: 'Este campo es requerido' }}
         render={({ field: { onChange, value } }) => (
           <Input
-            aria-label="Speakers"
-            label="Ponente"
+            aria-label="Programs"
+            label="Programa"
             labelPlacement="outside"
-            placeholder="Seleccionar ponente"
+            placeholder="Seleccionar programa"
             value={value}
             onChange={onChange}
             description="Seleccione el programa al que pertenece el evento, es opcional"
-            isInvalid={errors.person_id !== undefined}
-            errorMessage={errors.person_id?.message as string}
             endContent={
               <div>
                 <Button
@@ -52,7 +45,7 @@ export const SectionSpeaker = () => {
         isOpen={isOpen}
         setOpen={setIsOpen}
         title="Seleccionar programa"
-        content={<ListSpeakers onSetOpen={setIsOpen} />}
+        content={<ListPrograms onSetOpen={setIsOpen} />}
       />
     </>
   )
