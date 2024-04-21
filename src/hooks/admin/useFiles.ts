@@ -53,6 +53,7 @@ export function useFiles() {
       const storageRef = ref(storage, `${url}`)
       await deleteObject(storageRef)
       setLoading(false)
+      toast.success('Imagen eliminada correctamente')
       return true
     } catch (e) {
       console.error('Error deleting image: ', e)
