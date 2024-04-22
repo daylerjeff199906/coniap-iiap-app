@@ -38,6 +38,8 @@ export const FrmEditSpeaker = (props: IProps) => {
     defaultValues: speaker,
   })
 
+  console.log(speaker)
+
   const onSubmit = () => {
     setOpenConfirm(true)
   }

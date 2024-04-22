@@ -34,6 +34,11 @@ export const CountrySection = () => {
             label="Assigned to"
             placeholder="Select a user"
             labelPlacement="outside"
+            isLoading={loading}
+            value={value}
+            onChange={(value) => {
+              onChange(value)
+            }}
             classNames={{
               base: 'max-w-xs',
               trigger: 'h-12',
