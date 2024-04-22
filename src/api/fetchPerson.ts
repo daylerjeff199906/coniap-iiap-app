@@ -90,3 +90,19 @@ export async function fetchPersonsInEvent() {
     return data
   }
 }
+
+export async function fetchPersonsNotInEvent() {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('*')
+    .eq('typePerson', 'speaker')
+
+  if (error) {
+    console.error('Error fetching persons:', error.message)
+    return null
+  } else {
+    return data
+  }
+}
