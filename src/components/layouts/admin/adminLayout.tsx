@@ -43,11 +43,30 @@ export const menuAside: IMenuAside[] = [
   },
   {
     id: '3',
-    nameOption: 'Ponentes',
+    nameOption: 'Participantes',
     titleOption: null,
-    hrefLink: '/admin/ponentes',
+    hrefLink: null,
     icon: <IconUsers stroke={stroke} />,
-    subItems: null,
+    subItems: [
+      {
+        id: 'all',
+        nameOption: 'Todos',
+        titleOption: null,
+        url: '/admin/participantes',
+      },
+      {
+        id: 'speakers',
+        nameOption: 'Ponentes',
+        titleOption: null,
+        url: '/admin/ponentes',
+      },
+      {
+        id: 'asistens',
+        nameOption: 'Asistentes',
+        titleOption: null,
+        url: '/admin/participantes',
+      },
+    ],
   },
   {
     id: '4',
