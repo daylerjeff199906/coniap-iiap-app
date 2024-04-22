@@ -38,6 +38,7 @@ export async function fetchPerson(query: string) {
   const { data, error } = await supabase
     .from('persons')
     .select('*')
+    .order('name', { ascending: true })
     .ilike('name', `%${query}%`)
   if (error) {
     return error
@@ -97,7 +98,7 @@ export async function fetchPersonsNotInEvent() {
   const { data, error } = await supabase
     .from('persons')
     .select('*')
-    .eq('typePerson', 'speaker')
+    .eq('typePerson', 'participant')
 
   if (error) {
     console.error('Error fetching persons:', error.message)

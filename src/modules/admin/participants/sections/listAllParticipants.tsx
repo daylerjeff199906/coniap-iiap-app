@@ -32,11 +32,6 @@ const columns: Array<IColumns> = [
     label: 'Estado',
     align: 'center',
   },
-  {
-    key: 'actions',
-    label: 'Acciones',
-    align: 'center',
-  },
 ]
 export const ListParticipants = () => {
   const { getPersons, persons, loading } = usePersons()
@@ -47,19 +42,19 @@ export const ListParticipants = () => {
     getPersons(query)
   }, [query])
 
-  //   const handleStatusChange = async (key: string, value: boolean) => {
-  //     await editField(key, 'persons', 'isActived', value)
-  //     getSpekers('')
-  //   }
+  const handleStatusChange = async (key: string, value: boolean) => {
+    await editField(key, 'persons', 'isActived', value)
+    getPersons('')
+  }
 
   return (
     <>
       <TableGeneral
         loading={loading || editLoading}
         columns={columns}
-        // onValueStatusChange={(key: string | number, value: boolean) => {
-        //   handleStatusChange(String(key), value)
-        // }}
+        onValueStatusChange={(key: string | number, value: boolean) => {
+          handleStatusChange(String(key), value)
+        }}
         onSearch={(value) => setQuery(value)}
         searchValue={query}
         rows={
