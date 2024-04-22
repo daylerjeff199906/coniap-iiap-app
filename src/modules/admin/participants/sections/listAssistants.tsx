@@ -38,7 +38,7 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
-export const ListAssstants = () => {
+export const ListAssistants = () => {
   const { getPersons, persons, loading } = usePersons()
   const { editField, loading: editLoading } = useFiles()
   const [query, setQuery] = useState<string>('')

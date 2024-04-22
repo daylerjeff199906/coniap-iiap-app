@@ -5,6 +5,7 @@ import {
   updatePerson,
   fetchPerson,
   fetchPersonsInEvent,
+  fetchPersonsNotInEvent,
 } from '@/api'
 import { IPerson, IRes } from '@/types'
 import { toast } from 'sonner'
@@ -17,6 +18,7 @@ export function usePersons() {
   const [person, setPerson] = useState<IPerson | null>(null)
   const [persons, setPersons] = useState<IPerson[] | null>(null)
   const [personInEvent, setPersonInEvent] = useState<IPerson[] | null>(null)
+  const [asisstants, setAssistants] = useState<IPerson[] | null>(null)
 
   const addPerson = async (data: IPerson) => {
     setLoading(true)
@@ -82,6 +84,15 @@ export function usePersons() {
     setLoading(false)
   }
 
+  const getAssistants = async (query: string) => {
+    setLoading(true)
+    const data = await fetchPersonsNotInEvent(query)
+      .then((res) => res)
+      .catch((err) => err)
+    setAssistants(data)
+    setLoading(false)
+  }
+
   return {
     loading,
     addPerson,
@@ -92,5 +103,7 @@ export function usePersons() {
     persons,
     personInEvent,
     getListPersonsInEvent,
+    asisstants,
+    getAssistants,
   }
 }
