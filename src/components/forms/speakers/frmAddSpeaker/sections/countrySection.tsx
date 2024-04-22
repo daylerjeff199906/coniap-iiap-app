@@ -3,7 +3,15 @@
 import { useEffect, useState } from 'react'
 import { useCountries } from '@/hooks/admin'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Autocomplete, AutocompleteItem, Image, Input } from '@nextui-org/react'
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Avatar,
+  Image,
+  Input,
+  Select,
+  SelectItem,
+} from '@nextui-org/react'
 
 export const CountrySection = () => {
   const { countries, getCountries, loading } = useCountries()
@@ -29,41 +37,51 @@ export const CountrySection = () => {
         }}
         name="location"
         render={({ field: { onChange, value } }) => (
-          <Autocomplete
-            aria-label="localidad"
-            label="Localidad"
-            isLoading={loading}
+          <Select
+            items={countries ? countries : []}
+            label="País"
             labelPlacement="outside"
-            placeholder="Escribe para buscar..."
-            radius="sm"
-            value={value}
-            onSelectionChange={onChange}
-            inputValue={query}
-            onInputChange={(value) => {
-              setQuery(value)
+            placeholder="Seleccionar país"
+            renderValue={(items) => {
+              return items.map((item) => (
+                <div
+                  className="flex gap-2 items-center"
+                  key={item.key}
+                >
+                  <Avatar
+                    alt={item?.data?.flags.alt}
+                    className="flex-shrink-0"
+                    size="sm"
+                    src={item?.data?.flags.png}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-small">
+                      {item?.data?.name.common}
+                    </span>
+                  </div>
+                </div>
+              ))
             }}
-            isInvalid={errors.location !== undefined}
-            errorMessage={errors.location?.message as string}
           >
-            {countries !== null
-              ? countries?.map((country, i) => (
-                  <AutocompleteItem
-                    key={i}
-                    value={country?.name.common}
-                  >
-                    <div className="flex gap-2 items-center">
-                      <Image
-                        src={country?.flags?.png}
-                        alt={country?.flags?.alt}
-                        removeWrapper
-                        className="w-6 h-6"
-                      />
-                      {country?.name.common}
-                    </div>
-                  </AutocompleteItem>
-                ))
-              : []}
-          </Autocomplete>
+            {(countries) => (
+              <SelectItem
+                key={countries.cca2}
+                textValue={countries.name.common}
+              >
+                <div className="flex gap-2 items-center">
+                  <Avatar
+                    alt={countries.flags.alt}
+                    className="flex-shrink-0"
+                    size="sm"
+                    src={countries.flags.png}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-small">{countries.name.common}</span>
+                  </div>
+                </div>
+              </SelectItem>
+            )}
+          </Select>
         )}
       />
     </>

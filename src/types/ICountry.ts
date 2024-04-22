@@ -1,4 +1,5 @@
 export interface ICountry {
+  cca2: number
   name: {
     common: string
     official: string
