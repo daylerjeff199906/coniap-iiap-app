@@ -18,7 +18,12 @@ export default function Page() {
     <>
       {!isEditOrView && (
         <section className="flex gap-4 justify-between items-center">
-          <h1 className="text-2xl font-bold">Asistentes</h1>
+          <div>
+            <h1 className="text-2xl font-bold">Asistentes</h1>
+            <h3 className="text-xs">
+              Lista de asistentes que participarán en los eventos del congreso
+            </h3>
+          </div>
           <Button
             color="primary"
             as={Link}
