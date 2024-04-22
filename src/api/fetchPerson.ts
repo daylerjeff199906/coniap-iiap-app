@@ -64,6 +64,24 @@ export async function fetchSpeakers(query: string) {
   }
 }
 
+export async function fetchPersonsNotInEvent(query: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('*')
+    .eq('typePerson', 'participant')
+    .order('name', { ascending: true })
+    .ilike('name', `%${query}%`)
+
+  if (error) {
+    console.error('Error fetching persons:', error.message)
+    return null
+  } else {
+    return data
+  }
+}
+
 export async function fetchPersonById(id: string) {
   const supabase = createClient()
 
@@ -86,23 +104,6 @@ export async function fetchPersonsInEvent() {
   const { data, error } = await supabase.from('events').select('persons(*)')
 
   if (error) {
-    return null
-  } else {
-    return data
-  }
-}
-
-export async function fetchPersonsNotInEvent(query: string) {
-  const supabase = createClient()
-
-  const { data, error } = await supabase
-    .from('persons')
-    .select('*')
-    .eq('typePerson', 'participant')
-    .ilike('name', `%${query}%`)
-
-  if (error) {
-    console.error('Error fetching persons:', error.message)
     return null
   } else {
     return data

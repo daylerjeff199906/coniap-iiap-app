@@ -19,7 +19,7 @@ const columns: Array<IColumns> = [
   },
   {
     key: 'country',
-    label:'País',
+    label: 'País',
     align: 'start',
   },
   {
@@ -39,17 +39,17 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListAssistants = () => {
-  const { getPersons, persons, loading } = usePersons()
+  const { getAssistants, asisstants, loading } = usePersons()
   const { editField, loading: editLoading } = useFiles()
   const [query, setQuery] = useState<string>('')
 
   useEffect(() => {
-    getPersons(query)
+    getAssistants(query)
   }, [query])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'persons', 'isActived', value)
-    getPersons('')
+    getAssistants('')
   }
 
   return (
@@ -63,8 +63,8 @@ export const ListAssistants = () => {
         onSearch={(value) => setQuery(value)}
         searchValue={query}
         rows={
-          persons !== null
-            ? persons?.map((speaker) => {
+          asisstants !== null
+            ? asisstants?.map((speaker) => {
                 return {
                   key: speaker.id,
                   name: RenderColumnName(speaker.name, speaker.surName),
