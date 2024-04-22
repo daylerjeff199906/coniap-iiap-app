@@ -7,7 +7,6 @@ import {
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import { IPerson } from '@/types'
@@ -49,8 +48,12 @@ export const FrmAddSpeaker = () => {
     }
 
     if (speaker) {
-      router.push('/admin/ponentes')
+      router.back()
     }
+  }
+
+  const handleBack = () => {
+    router.back()
   }
 
   return (
@@ -104,9 +107,8 @@ export const FrmAddSpeaker = () => {
               Guardar
             </Button>
             <Button
-              as={Link}
-              href="/admin/ponentes"
               type="reset"
+              onPress={handleBack}
             >
               Cancelar
             </Button>

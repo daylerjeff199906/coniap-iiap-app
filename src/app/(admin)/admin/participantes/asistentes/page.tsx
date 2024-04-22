@@ -27,7 +27,7 @@ export default function Page() {
           <Button
             color="primary"
             as={Link}
-            href="/admin/participantes/ponentes/nuevo"
+            href="/admin/participantes/asistentes/nuevo"
             size="sm"
           >
             Añadir ponente

@@ -11,7 +11,6 @@ import { useSearchParams, useRouter } from 'next/navigation'
 
 import { Button, Select, SelectItem } from '@nextui-org/react'
 import { IconPdf } from '@tabler/icons-react'
-import Link from 'next/link'
 
 import { InfoGeneralSection, MultimediasSection } from './sections'
 
@@ -55,8 +54,12 @@ export const FrmEditSpeaker = (props: IProps) => {
       return
     } else {
       clearForm()
-      router.push('/admin/ponentes')
+      router.back()
     }
+  }
+
+  const handleBack = () => {
+    router.back()
   }
 
   const clearForm = () => {
@@ -124,8 +127,8 @@ export const FrmEditSpeaker = (props: IProps) => {
               Guardar
             </Button>
             <Button
-              as={Link}
-              href="/admin/ponentes"
+              type="reset"
+              onPress={handleBack}
             >
               Cancelar
             </Button>
