@@ -39,7 +39,7 @@ import {
   fetchSponsor,
 } from './fetchSponsors'
 
-import { fetchCountries } from './fetchCountries'
+import { fetchCountries, fetchAllCountries } from './fetchCountries'
 
 export {
   //Events crud
@@ -76,4 +76,5 @@ export {
   addFileToBucket,
   //Countries
   fetchCountries,
+  fetchAllCountries,
 }

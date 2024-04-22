@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { fetchCountries } from '@/api'
+import { fetchCountries, fetchAllCountries } from '@/api'
 import { ICountry } from '@/types'
 
 export function useCountries() {
   const [loading, setLoading] = useState<boolean>(false)
   const [countries, setCountries] = useState<ICountry[] | null>(null)
+  const [allCountries, setAllCountries] = useState<ICountry[] | null>(null)
 
   const getCountries = async (query: string) => {
     setLoading(true)
@@ -17,9 +18,20 @@ export function useCountries() {
     setLoading(false)
   }
 
+  const getAllCountries = async () => {
+    setLoading(true)
+    const data = await fetchAllCountries()
+      .then((res) => res.json())
+      .catch((err) => [])
+    setAllCountries(data)
+    setLoading(false)
+  }
+
   return {
     getCountries,
     countries,
+    getAllCountries,
+    allCountries,
     loading,
   }
 }

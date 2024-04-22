@@ -1,5 +1,6 @@
 import { Input, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
+import { CountrySection } from './countrySection'
 
 export const InfoGeneralSection = () => {
   const {
@@ -54,26 +55,7 @@ export const InfoGeneralSection = () => {
         </div>
 
         <div className="flex gap-3">
-          <Controller
-            control={control}
-            rules={{
-              required: 'Este campo es requerido',
-            }}
-            name="location"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                aria-label="location"
-                label="Localidad"
-                labelPlacement="outside"
-                placeholder="Perú, Bolivia, México, etc."
-                radius="sm"
-                value={value}
-                onValueChange={onChange}
-                isInvalid={errors.location !== undefined}
-                errorMessage={errors.location?.message as string}
-              />
-            )}
-          />
+          <CountrySection />
           <Controller
             control={control}
             name="institution"
