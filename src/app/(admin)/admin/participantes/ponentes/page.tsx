@@ -1,5 +1,7 @@
 'use client'
-import { ListSpeakersSection, UpdateSpeaker } from '@/components'
+import { UpdateSpeaker } from '@/components'
+import { ListSpeakersSection } from '@/modules/admin'
+// import {ListSpe}
 // import { ListProgramsSection } from '@/components'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
