@@ -6,6 +6,7 @@ import { useSponsors } from './useSponsors'
 import { useTopics } from './useTopics'
 import { usePersons } from './usePersons'
 import { useCountries } from './useCountries'
+import { useSummaries } from './useSumaries'
 
 export {
   useEvents,
@@ -16,4 +17,5 @@ export {
   useTopics,
   usePersons,
   useCountries,
+  useSummaries,
 }

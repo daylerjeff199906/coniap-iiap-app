@@ -9,7 +9,8 @@ import { IPerson } from './IPersons'
 import { IGeneralInfo } from './IGeneralInfo'
 import { IRows } from './table/IRows'
 import { IRes } from './responses/IResponse'
-import { ICountry } from './Icountry'
+import { ICountry } from './ICountry'
+import { ISummary } from './ISummary'
 
 export type {
   ISponsor,
@@ -24,4 +25,5 @@ export type {
   IRows,
   IRes,
   ICountry,
+  ISummary,
 }

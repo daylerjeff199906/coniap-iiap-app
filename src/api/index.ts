@@ -42,6 +42,13 @@ import {
 
 import { fetchCountries, fetchAllCountries } from './fetchCountries'
 
+import {
+  createSummary,
+  updateSummary,
+  fetchSummaries,
+  fetchSummaryStatus,
+} from './fetchSummaries'
+
 export {
   //Events crud
   fetchEvents,
@@ -79,4 +86,9 @@ export {
   //Countries
   fetchCountries,
   fetchAllCountries,
+  //Summaries
+  createSummary,
+  updateSummary,
+  fetchSummaries,
+  fetchSummaryStatus,
 }
