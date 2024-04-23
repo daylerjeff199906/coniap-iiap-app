@@ -1,6 +1,7 @@
 'use client'
 import { ListSummaries } from '@/modules/admin'
 import { Button, Tab, Tabs } from '@nextui-org/react'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const listTabs = [
@@ -60,6 +61,8 @@ export default function Page() {
         <Button
           color="primary"
           size="sm"
+          as={Link}
+          href="/admin/participantes/resumenes/nuevo"
         >
           Añadir resumen
         </Button>
