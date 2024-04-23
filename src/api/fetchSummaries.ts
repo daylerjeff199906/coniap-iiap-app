@@ -67,7 +67,7 @@ export async function fetchSummaryById(id: string) {
 
   const { data, error } = await supabase
     .from('summaries')
-    .select('*, person_id(*)')
+    .select('*,person:person_id(*)')
     .eq('id', id)
   if (error) {
     return error

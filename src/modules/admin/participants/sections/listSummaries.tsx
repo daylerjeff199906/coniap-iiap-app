@@ -89,8 +89,7 @@ export const ListSummaries = () => {
                   key: summary.id,
                   title: summary.title,
                   created_at: summary.created_at,
-                  person:
-                    summary.person_id.name + ' ' + summary.person_id.surName,
+                  person: summary.person?.name + ' ' + summary.person?.surName,
                   st_review: RenderColumnAproved(summary.isApproved),
                   status: summary.isActived,
                   actions: 'actions',
