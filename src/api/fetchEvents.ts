@@ -13,9 +13,10 @@ export async function fetchEvents(props: IProps) {
 
   const { data: event } = await supabase
     .from('events')
-    .select('*, persons(*)')
+    .select('*')
     .eq('isActived', true)
     .ilike('name', `%${query}%`)
+
   return event
 }
 
@@ -24,8 +25,10 @@ export async function fetchAllEvents(query: string, column?: string) {
   const allSelect = column ? column : '*'
   const { data: event } = await supabase
     .from('events')
-    .select(`${allSelect}, persons(*)`)
+    .select(`${allSelect}, summary_id(*)`)
     .ilike('name', `%${query}%`)
+
+    console.log(event)
   return event
 }
 
@@ -37,8 +40,6 @@ export async function fetchEventById(id: string) {
     .select('*')
     .eq('id', id)
     .single()
-
-  console.log('event', event)
 
   if (error) {
     console.error('error', error)
