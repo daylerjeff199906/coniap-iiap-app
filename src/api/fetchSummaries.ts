@@ -61,3 +61,17 @@ export async function fetchSummaryStatus(query: string, isApproved: boolean) {
     return data
   }
 }
+
+export async function fetchSummaryById(id: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('summaries')
+    .select('*, person_id(*)')
+    .eq('id', id)
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}

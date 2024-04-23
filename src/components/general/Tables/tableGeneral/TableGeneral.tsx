@@ -21,7 +21,7 @@ import { IColumns, IRows } from '@/types'
 import { IconEdit, IconSearch, IconDots } from '@tabler/icons-react'
 import Link from 'next/link'
 import { LoadingPages } from '../..'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 interface IProps {
   columns: Array<IColumns>
@@ -46,7 +46,6 @@ export const TableGeneral = (props: IProps) => {
     searchValue,
   } = props
 
-  const router = useRouter()
   const pathname = usePathname()
 
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
@@ -84,7 +83,8 @@ export const TableGeneral = (props: IProps) => {
                   Editar
                 </DropdownItem>
                 <DropdownItem
-                  onPress={() => router.push(`${pathname}/${item.key}`)}
+                  as={Link}
+                  href={`${pathname}/${item.key}`}
                 >
                   Detalles
                 </DropdownItem>

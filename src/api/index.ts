@@ -47,6 +47,7 @@ import {
   updateSummary,
   fetchSummaries,
   fetchSummaryStatus,
+  fetchSummaryById,
 } from './fetchSummaries'
 
 export {
@@ -91,4 +92,5 @@ export {
   updateSummary,
   fetchSummaries,
   fetchSummaryStatus,
+  fetchSummaryById,
 }
