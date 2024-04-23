@@ -14,6 +14,11 @@ const columns: Array<IColumns> = [
     align: 'start',
   },
   {
+    key: 'speaker',
+    label: 'Expositor',
+    align: 'start',
+  },
+  {
     key: 'date',
     label: 'Fecha',
     align: 'start',
@@ -93,6 +98,7 @@ export const ListEventsSection = () => {
                   timeStart: event.timeStart,
                   timeEnd: event.timeEnd,
                   status: event.isActived,
+                  speaker: event?.summary?.person?.name,
                   actions: 'actions',
                 }
               })

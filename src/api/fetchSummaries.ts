@@ -36,7 +36,7 @@ export async function fetchSummaries(query: string) {
 
   const { data, error } = await supabase
     .from('summaries')
-    .select('*, person_id(*)')
+    .select('*, person:person_id(*)')
     .order('title', { ascending: true })
     .ilike('title', `%${query}%`)
   if (error) {
@@ -51,7 +51,7 @@ export async function fetchSummaryStatus(query: string, isApproved: boolean) {
 
   const { data, error } = await supabase
     .from('summaries')
-    .select('*, person_id(*)')
+    .select('*,person:person_id(*)')
     .order('title', { ascending: true })
     .eq('isApproved', isApproved)
     .ilike('title', `%${query}%`)

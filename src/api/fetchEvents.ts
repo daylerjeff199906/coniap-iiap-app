@@ -25,10 +25,9 @@ export async function fetchAllEvents(query: string, column?: string) {
   const allSelect = column ? column : '*'
   const { data: event } = await supabase
     .from('events')
-    .select(`${allSelect}, summary:summary_id(*)`)
+    .select(`${allSelect}, summary:summary_id(*, person:person_id(*))`)
     .ilike('name', `%${query}%`)
 
-    console.log(event)
   return event
 }
 
