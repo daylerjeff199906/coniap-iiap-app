@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback } from 'react'
+
 import {
   Table,
   TableBody,
@@ -15,11 +17,11 @@ import {
   DropdownItem,
   DropdownMenu,
 } from '@nextui-org/react'
-import { useCallback } from 'react'
 import { IColumns, IRows } from '@/types'
 import { IconEdit, IconSearch, IconDots } from '@tabler/icons-react'
 import Link from 'next/link'
 import { LoadingPages } from '../..'
+import { useRouter, usePathname } from 'next/navigation'
 
 interface IProps {
   columns: Array<IColumns>
@@ -43,6 +45,9 @@ export const TableGeneral = (props: IProps) => {
     onSearch,
     searchValue,
   } = props
+
+  const router = useRouter()
+  const pathname = usePathname()
 
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
     const value = getKeyValue(item, columnKey)
@@ -77,6 +82,11 @@ export const TableGeneral = (props: IProps) => {
                   href={`?edit=${item.key}`}
                 >
                   Editar
+                </DropdownItem>
+                <DropdownItem
+                  onPress={() => router.push(`${pathname}/${item.key}`)}
+                >
+                  Detalles
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

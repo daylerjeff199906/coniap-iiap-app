@@ -21,7 +21,6 @@ export const SectionSpeaker = () => {
       <Controller
         name="person_id"
         control={control}
-        rules={{ required: 'Este campo es requerido' }}
         render={({ field: { onChange, value } }) => (
           <Input
             aria-label="Speakers"
@@ -31,8 +30,8 @@ export const SectionSpeaker = () => {
             value={value}
             onChange={onChange}
             description="Seleccione el programa al que pertenece el evento, es opcional"
-            isInvalid={errors.person_id !== undefined}
-            errorMessage={errors.person_id?.message as string}
+            // isInvalid={errors.person_id !== undefined}
+            // errorMessage={errors.person_id?.message as string}
             endContent={
               <div>
                 <Button

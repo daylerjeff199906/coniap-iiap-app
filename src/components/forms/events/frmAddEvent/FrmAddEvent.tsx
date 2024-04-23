@@ -76,9 +76,9 @@ export const FrmAddEvent = () => {
           <h1 className="text-2xl font-bold">Agregar Evento</h1>
           <div className="grid grid-cols-1 gap-5">
             <ProgramSection />
+            <SummarySection />
             <InfoGeneral />
             <SectionSpeaker />
-            <SummarySection />
             <MoreInfo />
           </div>
           <MoreDescription />

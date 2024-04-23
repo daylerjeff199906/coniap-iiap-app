@@ -30,8 +30,8 @@ export const SummarySection = () => {
             value={value}
             onChange={onChange}
             description="Seleccione un tema para el evento"
-            isInvalid={errors.person_id !== undefined}
-            errorMessage={errors.person_id?.message as string}
+            isInvalid={errors.summary_id !== undefined}
+            errorMessage={errors.summary_id?.message as string}
             endContent={
               <div>
                 <Button
