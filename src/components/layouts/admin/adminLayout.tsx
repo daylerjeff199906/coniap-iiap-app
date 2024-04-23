@@ -66,6 +66,12 @@ export const menuAside: IMenuAside[] = [
         titleOption: null,
         url: '/admin/participantes/asistentes',
       },
+      {
+        id: 'summary',
+        nameOption: 'Resúmenes',
+        titleOption: null,
+        url: '/admin/participantes/resumenes',
+      },
     ],
   },
   {
