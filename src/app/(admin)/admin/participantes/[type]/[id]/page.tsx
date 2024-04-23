@@ -1,4 +1,5 @@
 import { fetchPersonById, fetchSummaryById } from '@/api'
+import { DetailsParticipant } from '@/modules/admin'
 
 interface IProps {
   params: {
@@ -16,9 +17,11 @@ export default async function Page(props: IProps) {
 
   return (
     <div>
-      <h1>Page</h1>
-      {params.type}
-      {params.id}
+      <h1 className="text-xl font-bold">
+        Detalle de {params.type.slice(0, -1)}
+      </h1>
+
+      <DetailsParticipant data={person} />
     </div>
   )
 }
