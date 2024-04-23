@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
-import { usePersons, useFiles, useSummaries } from '@/hooks/admin'
+import { useFiles, useSummaries } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
   {
@@ -38,6 +38,7 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
+
 export const ListSummaries = () => {
   const { getSummaries, summaries, loading } = useSummaries()
   const { editField, loading: editLoading } = useFiles()
