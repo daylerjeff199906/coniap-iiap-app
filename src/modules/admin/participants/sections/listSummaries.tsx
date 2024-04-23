@@ -15,13 +15,13 @@ const columns: Array<IColumns> = [
     align: 'start',
   },
   {
-    key: 'created_at',
-    label: 'Fecha de creación',
+    key: 'person',
+    label: 'Persona',
     align: 'start',
   },
   {
-    key: 'person',
-    label: 'Persona',
+    key: 'created_at',
+    label: 'Fecha de creación',
     align: 'start',
   },
   {

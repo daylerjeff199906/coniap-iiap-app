@@ -10,6 +10,7 @@ import {
   MoreInfo,
   ProgramSection,
   SectionSpeaker,
+  SummarySection,
 } from './sections'
 import { IEvent } from '@/types'
 
@@ -77,6 +78,7 @@ export const FrmAddEvent = () => {
             <ProgramSection />
             <InfoGeneral />
             <SectionSpeaker />
+            <SummarySection />
             <MoreInfo />
           </div>
           <MoreDescription />

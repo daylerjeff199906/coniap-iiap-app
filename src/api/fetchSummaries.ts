@@ -51,7 +51,7 @@ export async function fetchSummaryStatus(query: string, isApproved: boolean) {
 
   const { data, error } = await supabase
     .from('summaries')
-    .select('*')
+    .select('*, person_id(*)')
     .order('title', { ascending: true })
     .eq('isApproved', isApproved)
     .ilike('title', `%${query}%`)

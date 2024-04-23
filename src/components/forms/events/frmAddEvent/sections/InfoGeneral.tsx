@@ -20,27 +20,6 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <Controller
-          control={control}
-          rules={{
-            required: 'Este campo es requerido',
-          }}
-          name="name"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              aria-label="Nombre del evento"
-              label="Nombre"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Nombre del evento"
-              value={value}
-              onValueChange={onChange}
-              isInvalid={errors.name !== undefined}
-              errorMessage={errors.name?.message as string}
-            />
-          )}
-        />
-
         <div className="flex gap-3">
           <Controller
             control={control}
@@ -99,6 +78,26 @@ export const InfoGeneral = () => {
             )}
           />
         </div>
+        <Controller
+          control={control}
+          rules={{
+            required: 'Este campo es requerido',
+          }}
+          name="name"
+          render={({ field: { onChange, value } }) => (
+            <Input
+              aria-label="Nombre del evento"
+              label="Nombre"
+              labelPlacement="outside"
+              radius="sm"
+              placeholder="Nombre del evento"
+              value={value}
+              onValueChange={onChange}
+              isInvalid={errors.name !== undefined}
+              errorMessage={errors.name?.message as string}
+            />
+          )}
+        />
         <div>
           <Controller
             control={control}

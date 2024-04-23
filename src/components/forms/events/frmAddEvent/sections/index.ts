@@ -3,6 +3,7 @@ import { MoreInfo } from './moreInfo'
 import { MoreDescription } from './moreDescription'
 import { SectionSpeaker } from './sectionSpeaker'
 import { ProgramSection } from './programSection'
+import { SummarySection } from './summarySection'
 
 export {
   InfoGeneral,
@@ -10,4 +11,5 @@ export {
   MoreDescription,
   SectionSpeaker,
   ProgramSection,
+  SummarySection,
 }
