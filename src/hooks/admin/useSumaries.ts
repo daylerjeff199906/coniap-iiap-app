@@ -33,7 +33,6 @@ export function useSummaries() {
     const data = await fetchSummaries(query)
       .then((res) => res)
       .catch((err) => err)
-    console.log(data)
     setSummaries(data)
     setLoading(false)
   }
@@ -43,7 +42,6 @@ export function useSummaries() {
     const data = await fetchSummaryStatus(query, isApproved)
       .then((res) => res)
       .catch((err) => err)
-    console.log(data)
     setSummaries(data)
     setLoading(false)
   }

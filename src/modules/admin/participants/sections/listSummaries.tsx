@@ -5,6 +5,8 @@ import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { useFiles, useSummaries } from '@/hooks/admin'
+import { useSearchParams } from 'next/navigation'
+import { Chip } from '@nextui-org/react'
 
 const columns: Array<IColumns> = [
   {
@@ -40,13 +42,30 @@ const columns: Array<IColumns> = [
 ]
 
 export const ListSummaries = () => {
-  const { getSummaries, summaries, loading } = useSummaries()
+  const { getSummaries, getSummariesStatus, summaries, loading } =
+    useSummaries()
   const { editField, loading: editLoading } = useFiles()
   const [query, setQuery] = useState<string>('')
 
+  const searchParams = useSearchParams()
+  const status = searchParams.get('status') || 'all'
+
   useEffect(() => {
-    getSummaries(query)
-  }, [query])
+    switch (status) {
+      case 'all':
+        getSummaries('')
+        break
+      case 'approved':
+        getSummariesStatus('', true)
+        break
+      case 'pending':
+        getSummariesStatus('', false)
+        break
+      default:
+        getSummaries('')
+        break
+    }
+  }, [query, status])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'summaries', 'isActived', value)
@@ -72,7 +91,7 @@ export const ListSummaries = () => {
                   created_at: summary.created_at,
                   person:
                     summary.person_id.name + ' ' + summary.person_id.surName,
-                  st_review: summary.isApproved ? 'Aprobado' : 'Pendiente',
+                  st_review: RenderColumnAproved(summary.isApproved),
                   status: summary.isActived,
                   actions: 'actions',
                 }
@@ -84,11 +103,16 @@ export const ListSummaries = () => {
   )
 }
 
-const RenderColumnName = (fullname: string, surname: string) => {
+const RenderColumnAproved = (value: boolean) => {
   return (
     <div className="flex flex-col">
-      <p className="text-base font-bold">{fullname}</p>
-      <p className="text-xs font-medium text-slate-500">{surname}</p>
+      <Chip
+        color={value ? 'success' : 'warning'}
+        variant="flat"
+        size="sm"
+      >
+        {value ? 'Aprobado' : 'Pendiente'}
+      </Chip>
     </div>
   )
 }
