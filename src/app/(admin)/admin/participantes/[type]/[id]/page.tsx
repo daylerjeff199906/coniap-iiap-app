@@ -16,11 +16,7 @@ export default async function Page(props: IProps) {
       : await fetchSummaryById(params.id)
 
   return (
-    <div>
-      <h1 className="text-xl font-bold">
-        Detalle de {params.type.slice(0, -1)}
-      </h1>
-
+    <div className="grid grid-cols-1 gap-4">
       <DetailsParticipant data={person} />
     </div>
   )

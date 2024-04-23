@@ -1,5 +1,5 @@
 import { IPerson } from '@/types'
-import { Image } from '@nextui-org/react'
+import { Image, Chip } from '@nextui-org/react'
 
 interface IProps {
   data: IPerson
@@ -8,18 +8,47 @@ interface IProps {
 export const DetailsParticipant = (props: IProps) => {
   const { data } = props
   return (
-    <div>
-      <div>
-        <Image
-          src={data.image}
-          alt={data.name}
-        />
-        <div>
-          <h3 className="text-xl font-bold">{data.name}</h3>
+    <main className="flex flex-col gap-4 w-full p-6 border rounded-xl">
+      <section className="flex items-center gap-4">
+        <div className="w-fit">
+          <Image
+            src={data.image}
+            alt={data.name}
+            removeWrapper
+            width={72}
+            className="h-40 w-44 object-cover rounded-full"
+          />
+        </div>
+        <div className="w-full">
+          <Chip
+            size="sm"
+            radius="sm"
+            variant="flat"
+            color="success"
+          >
+            {data.typePerson === 'speaker'
+              ? 'Ponente'
+              : data.typePerson === 'speaker_mg'
+              ? 'Ponente magistral'
+              : 'Participante'}
+          </Chip>
+          <h3 className="text-5xl font-bold">{data.name}</h3>
           <p className="text-lg ">{data.surName}</p>
           <p className="text-sm text-gray-500">{data.email}</p>
         </div>
-      </div>
-    </div>
+      </section>
+      <section>
+        <h4 className="font-bold mt-4 text-gray-500">Presentación</h4>
+        <p className="text-sm">{data.presentation}</p>
+      </section>
+      <section className="flex flex-col gap-2">
+        <h4 className="font-bold mt-4 text-gray-500">Otros datos</h4>
+        <div>
+          <p>Institución: {data.institution}</p>
+          <p>País: {data.location}</p>
+          <p>Área de conocimiento: {data.job}</p>
+        </div>
+      </section>
+    </main>
   )
 }
