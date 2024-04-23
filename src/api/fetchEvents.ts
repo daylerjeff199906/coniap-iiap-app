@@ -34,9 +34,11 @@ export async function fetchEventById(id: string) {
 
   const { data: event, error } = await supabase
     .from('events')
-    .select('*, persons(*)')
+    .select('*')
     .eq('id', id)
     .single()
+
+  console.log('event', event)
 
   if (error) {
     console.error('error', error)

@@ -50,8 +50,13 @@ export default function Page() {
           />
         ))}
       </Tabs>
-      <div className="flex gap-2 items-center justify-between pb-4">
-        <h1 className="text-2xl font-bold">Resúmenes</h1>
+      <div className="flex gap-2 items-center justify-between py-3">
+        <div>
+          <h1 className="text-2xl font-bold">Temas (Resúmenes)</h1>
+          <p className="text-sm text-gray-500">
+            {listTabs.find((tab) => tab.key === status)?.description}
+          </p>
+        </div>
         <Button
           color="primary"
           size="sm"

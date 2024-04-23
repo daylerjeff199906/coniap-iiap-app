@@ -33,7 +33,7 @@ export const FrmEditEvent = (props: IProps) => {
   })
 
   const onSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
-    const { persons, ...rest } = data
+    const { ...rest } = data
     const dataNew = {
       ...rest,
       program_id: rest.program_id || null,
@@ -55,7 +55,6 @@ export const FrmEditEvent = (props: IProps) => {
     methods.setValue('date', '')
     methods.setValue('shortDescription', '')
     methods.setValue('sala', '')
-    methods.setValue('persons', null)
     methods.setValue('linkZoom', '')
     methods.setValue('linkYoutube', '')
     methods.setValue('linkFacebook', '')

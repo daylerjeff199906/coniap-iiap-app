@@ -1,11 +1,8 @@
-import { IPerson } from '.'
 export interface IEvent {
   id: string
   summary_id: string | null
   program_id: string | null
-  person_id: string
   //observar
-  persons?: IPerson | null
   sala: string | number | null
   isActived: boolean
   name: string

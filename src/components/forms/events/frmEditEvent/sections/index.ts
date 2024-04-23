@@ -4,6 +4,7 @@ import { MoreDescription } from './moreDescription'
 import { HeaderSection } from './headerSection'
 import { SectionSpeaker } from './sectionSpeaker'
 import { ProgramSection } from './programSection'
+import { SummarySection } from './summarySection'
 
 export {
   InfoGeneral,
@@ -12,4 +13,5 @@ export {
   HeaderSection,
   SectionSpeaker,
   ProgramSection,
+  SummarySection,
 }
