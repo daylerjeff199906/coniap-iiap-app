@@ -98,7 +98,12 @@ export const ListEventsSection = () => {
                   timeStart: event.timeStart,
                   timeEnd: event.timeEnd,
                   status: event.isActived,
-                  speaker: event?.summary?.person?.name,
+                  speaker:
+                    event?.summary !== null
+                      ? event?.summary?.person?.name +
+                        ' ' +
+                        event?.summary?.person?.surName
+                      : '',
                   actions: 'actions',
                 }
               })
