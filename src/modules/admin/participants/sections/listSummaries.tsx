@@ -81,6 +81,7 @@ export const ListSummaries = () => {
           handleStatusChange(String(key), value)
         }}
         onSearch={(value) => setQuery(value)}
+        actionsList={[{ label: 'Editar', href: '/' }]}
         searchValue={query}
         rows={
           summaries !== null

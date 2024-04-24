@@ -56,40 +56,68 @@ export const TableGeneral = (props: IProps) => {
       case 'actions':
         return (
           <>
-            <Dropdown
-              size="sm"
-              radius="sm"
-              showArrow
-              classNames={{
-                content: 'bg-white border border-gray-200 shadow-lg w-[200px]',
-                base: 'text-tiny w-[200px] ',
-              }}
-            >
-              <DropdownTrigger>
-                <Button
+            {actionsList ? (
+              <>
+                <Dropdown
                   size="sm"
-                  variant="light"
-                  isIconOnly
+                  radius="sm"
+                  showArrow
+                  classNames={{
+                    content:
+                      'bg-white border border-gray-200 shadow-lg w-[200px]',
+                    base: 'text-tiny w-[200px] ',
+                  }}
                 >
-                  <IconDots
-                    stroke={1.5}
-                    className="text-gray-500"
-                  />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="DropdownMenu">
-                {actionsList ? (
-                  actionsList.map((action, index) => (
-                    <DropdownItem
-                      key={index}
-                      as={Link}
-                      href={`${pathname}/${action.href}${item.key}`}
+                  <DropdownTrigger>
+                    <Button
+                      size="sm"
+                      variant="light"
+                      isIconOnly
                     >
-                      {action.label}
-                    </DropdownItem>
-                  ))
-                ) : (
-                  <>
+                      <IconDots
+                        stroke={1.5}
+                        className="text-gray-500"
+                      />
+                    </Button>
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="DropdownMenu">
+                    {actionsList.map((action, index) => (
+                      <DropdownItem
+                        key={index}
+                        as={Link}
+                        href={`${pathname}/${action.href}${item.key}`}
+                      >
+                        {action.label}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </>
+            ) : (
+              <>
+                <Dropdown
+                  size="sm"
+                  radius="sm"
+                  showArrow
+                  classNames={{
+                    content:
+                      'bg-white border border-gray-200 shadow-lg w-[200px]',
+                    base: 'text-tiny w-[200px] ',
+                  }}
+                >
+                  <DropdownTrigger>
+                    <Button
+                      size="sm"
+                      variant="light"
+                      isIconOnly
+                    >
+                      <IconDots
+                        stroke={1.5}
+                        className="text-gray-500"
+                      />
+                    </Button>
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="DropdownMenu">
                     <DropdownItem
                       as={Link}
                       href={`?edit=${item.key}`}
@@ -102,10 +130,10 @@ export const TableGeneral = (props: IProps) => {
                     >
                       Detalles
                     </DropdownItem>
-                  </>
-                )}
-              </DropdownMenu>
-            </Dropdown>
+                  </DropdownMenu>
+                </Dropdown>
+              </>
+            )}
           </>
         )
       case 'status':
