@@ -10,12 +10,13 @@ import {
 import { ISummary } from '@/types'
 
 interface IProps {
+  isEdit: boolean
   summary: ISummary
   children?: React.ReactNode
 }
 
 export const ModalSummary = (props: IProps) => {
-  const { summary, children } = props
+  const { summary, children, isEdit } = props
   const router = useRouter()
 
   const handleClose = () => {
@@ -27,11 +28,15 @@ export const ModalSummary = (props: IProps) => {
       <Modal
         isOpen
         onClose={handleClose}
-        size="3xl"
+        size={isEdit ? '3xl' : '2xl'}
       >
         <ModalContent>
           <ModalHeader>
-            <h1 className="text-lg font-semibold">{summary.title}</h1>
+            {isEdit ? (
+              <h1 className="text-lg font-semibold">{summary.title}</h1>
+            ) : (
+              <h1 className="text-lg font-semibold">Detalles del resumen</h1>
+            )}
           </ModalHeader>
           <Divider />
           <ModalBody>{children}</ModalBody>

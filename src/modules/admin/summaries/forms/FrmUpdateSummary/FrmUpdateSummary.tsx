@@ -36,7 +36,10 @@ export const FrmUpdateSummary = (props: IProps) => {
     if (summary.id) {
       if (file.length > 0) {
         const fileUp = file as unknown as File[]
-        await deleteImage(summary.file)
+
+        if (summary.file) {
+          await deleteImage(summary.file)
+        }
         const url = await uploadImage('files', fileUp[0])
         newData = { ...rest, file: url }
       } else {

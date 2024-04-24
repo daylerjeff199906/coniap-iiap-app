@@ -16,7 +16,10 @@ export const ModalDetails = (props: IProps) => {
 
   return (
     <>
-      <ModalSummary summary={summary}>
+      <ModalSummary
+        summary={summary}
+        isEdit={isEdit}
+      >
         {isEdit ? (
           <FrmUpdateSummary summary={summary} />
         ) : (
