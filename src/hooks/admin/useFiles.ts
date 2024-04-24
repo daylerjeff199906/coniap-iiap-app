@@ -29,6 +29,7 @@ export function useFiles() {
       toast.error('Error al actualizar campo')
     }
     setLoading(false)
+    return response
   }
 
   const uploadImage = async (namePath: string, file: File): Promise<string> => {

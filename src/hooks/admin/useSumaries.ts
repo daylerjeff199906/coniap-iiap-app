@@ -1,5 +1,4 @@
 import { useState } from 'react'
-// import { storage } from '@/firebase/firebase'
 
 import {
   fetchSummaries,
@@ -7,8 +6,7 @@ import {
   createSummary,
   updateSummary,
 } from '@/api'
-
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { useFiles } from './useFiles'
 
 import { IRes, ISummary } from '@/types'
 import { toast } from 'sonner'
@@ -16,7 +14,7 @@ import { toast } from 'sonner'
 export function useSummaries() {
   const [loading, setLoading] = useState<boolean>(false)
   const [summaries, setSummaries] = useState<ISummary[] | null>(null)
-  //   const [event, setEvent] = useState<IEvent | null>(null)
+  const { editField } = useFiles()
 
   const createDataSummary = async (data: ISummary) => {
     setLoading(true)
@@ -65,6 +63,13 @@ export function useSummaries() {
     setLoading(false)
   }
 
+  const approveSummary = async (id: string) => {
+    setLoading(true)
+    const res = await editField(id, 'summaries', 'isApproved', true)
+    setLoading(false)
+    return res
+  }
+
   //   const getEventById = async (id: string) => {
   //     setLoading(true)
   //     const data = await fetchEventById(id)
@@ -81,5 +86,6 @@ export function useSummaries() {
     getSummariesStatus,
     createDataSummary,
     updateDataSummary,
+    approveSummary,
   }
 }
