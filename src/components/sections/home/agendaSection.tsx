@@ -13,8 +13,6 @@ interface IProps {
 
 export const AgendaSection = (props: IProps) => {
   const { programs, events } = props
-  console.log('programs', programs)
-  console.log('events', events)
   return (
     <>
       <section className=" bg-white">

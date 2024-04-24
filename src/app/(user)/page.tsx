@@ -46,7 +46,7 @@ export default async function Page() {
 
   const { data: eventSpeakers } = (await supabase
     .from('events')
-    .select('*, summary:summary_id(*)')
+    .select('*,summary:summary_id(*, person:person_id(*))')
     .eq('isActived', true)
     .not('program_id', 'is', null)) as { data: IEvent[] }
 
