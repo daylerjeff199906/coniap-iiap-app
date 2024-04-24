@@ -1,13 +1,23 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { Modal, ModalBody, ModalContent } from '@nextui-org/react'
 
 export default function Page() {
+  const router = useRouter()
+
+  const handleClose = () => {
+    router.back()
+  }
+
   return (
     <>
-      <Modal isOpen={true}>
+      <Modal
+        isOpen
+        onClose={handleClose}
+      >
         <ModalContent>
           <ModalBody>
-            <h1>Añadir resumen</h1>
+            <div>Hola</div>
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -2,7 +2,6 @@
 import { AdminLayout } from '@/components'
 
 export default function Layout({
-  admin,
   children,
 }: {
   admin: React.ReactNode
@@ -10,10 +9,7 @@ export default function Layout({
 }) {
   return (
     <>
-      <AdminLayout>
-        {admin}
-        {children}
-      </AdminLayout>
+      <AdminLayout>{children}</AdminLayout>
     </>
   )
 }
