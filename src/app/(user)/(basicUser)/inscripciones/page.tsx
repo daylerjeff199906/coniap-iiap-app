@@ -11,10 +11,11 @@ export default function Page() {
         <section className="section py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
           <div className=" col-span-2">
             <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-              PARTICIPAR COMO <b>EXPOSITOR EN LOS EVENTOS, </b> ¡QUÉ ESPERAS!
+              PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
             </h1>
             <p className="text-sm sm:text-base lg:text-lg">
-              Adjunta el resumen de tu propuesta de participación en los eventos
+              <b>¡Inscríbete ya!</b> Llena el formulario para participar de las
+              presentaciones del congreso CONIAP - 2024.
             </p>
             <Image
               src={img_logo.src}
