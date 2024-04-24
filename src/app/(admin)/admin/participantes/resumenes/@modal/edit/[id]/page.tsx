@@ -1,5 +1,5 @@
 import { fetchSummaryById } from '@/api'
-import { ModalDetails } from '../modal'
+import { ModalDetails } from '../../modal'
 import { ISummary } from '@/types'
 
 interface IProps {
@@ -15,7 +15,7 @@ export default async function Page(params: IProps) {
     <>
       <ModalDetails
         summary={data}
-        isEdit={false}
+        isEdit={true}
       />
     </>
   )

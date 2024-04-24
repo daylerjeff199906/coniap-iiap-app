@@ -8,14 +8,14 @@ import {
   ModalHeader,
 } from '@nextui-org/react'
 import { ISummary } from '@/types'
-import { FrmUpdateSummary } from '@/modules/admin'
 
 interface IProps {
   summary: ISummary
+  children?: React.ReactNode
 }
 
-export const ModalDetails = (props: IProps) => {
-  const { summary } = props
+export const ModalSummary = (props: IProps) => {
+  const { summary, children } = props
   const router = useRouter()
 
   const handleClose = () => {
@@ -29,14 +29,12 @@ export const ModalDetails = (props: IProps) => {
         onClose={handleClose}
         size="3xl"
       >
-        <ModalHeader>
-          <h1 className="text-lg font-semibold">{summary.title}</h1>
-        </ModalHeader>
-        <Divider />
         <ModalContent>
-          <ModalBody>
-            <FrmUpdateSummary summary={summary} />
-          </ModalBody>
+          <ModalHeader>
+            <h1 className="text-lg font-semibold">{summary.title}</h1>
+          </ModalHeader>
+          <Divider />
+          <ModalBody>{children}</ModalBody>
         </ModalContent>
       </Modal>
     </>

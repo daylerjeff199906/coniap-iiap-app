@@ -42,8 +42,8 @@ const columns: Array<IColumns> = [
 ]
 
 const actionsList = [
-  { label: 'Ver', href: '/' },
-  { label: 'Editar', href: '/' },
+  { label: 'Ver', href: '' },
+  { label: 'Editar', href: 'edit/' },
 ]
 
 export const ListSummaries = () => {
