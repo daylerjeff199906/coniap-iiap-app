@@ -37,9 +37,22 @@ export const menuAside: IMenuAside[] = [
     id: '2',
     nameOption: 'Eventos',
     titleOption: null,
-    hrefLink: '/admin/eventos',
+    hrefLink: null,
     icon: <IconCalendarEvent stroke={stroke} />,
-    subItems: null,
+    subItems: [
+      {
+        id: 'all',
+        nameOption: 'Lista',
+        titleOption: null,
+        url: '/admin/eventos',
+      },
+      {
+        id: 'calendar',
+        nameOption: 'Calendario',
+        titleOption: null,
+        url: '/admin/eventos/calendario',
+      },
+    ],
   },
   {
     id: '3',
