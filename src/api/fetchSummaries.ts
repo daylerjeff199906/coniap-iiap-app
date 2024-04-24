@@ -69,6 +69,8 @@ export async function fetchSummaryById(id: string) {
     .from('summaries')
     .select('*,person:person_id(*)')
     .eq('id', id)
+    .single()
+    
   if (error) {
     return error
   } else {

@@ -21,7 +21,7 @@ interface IProps {
 export const FrmUpdateSummary = (props: IProps) => {
   const { summary } = props
   const { updateDataSummary, createDataSummary, loading } = useSummaries()
-  const { uploadImage, editField, loading: loadingFile } = useFiles()
+  const { uploadImage, loading: loadingFile } = useFiles()
 
   const router = useRouter()
 
@@ -45,7 +45,9 @@ export const FrmUpdateSummary = (props: IProps) => {
     const summary = await createDataSummary(newData)
 
     if (!summary.message) {
-      router.push('/admin/participantes/resumenes')
+      router.push('/admin/participantes/resumenes?status=pending', {
+        scroll: true,
+      })
     }
   }
 
@@ -60,14 +62,13 @@ export const FrmUpdateSummary = (props: IProps) => {
           onSubmit={methods.handleSubmit(handleFormSubmit)}
           className="p-4 flex flex-col gap-3"
         >
-          {loadingFile ||
-            (loading && (
-              <div className="py-1">
-                <h2 className="text-sm text-gray-500 animate-pulse">
-                  Guardando resumen...
-                </h2>
-              </div>
-            ))}
+          {loading && (
+            <div className="py-1">
+              <h2 className="text-sm text-gray-500 animate-pulse">
+                Guardando resumen...
+              </h2>
+            </div>
+          )}
           <Controller
             name="title"
             control={methods.control}
