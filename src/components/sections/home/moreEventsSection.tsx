@@ -114,7 +114,8 @@ export const MoreEventsSection = (props: IProps) => {
               {events
                 ?.filter(
                   (event) =>
-                    event.persons && event.persons.typePerson === 'speaker_mg'
+                    event.summary?.person &&
+                    event.summary?.person.typePerson === 'speaker_mg'
                 )
                 .map((event, index) => (
                   <SwiperSlide
@@ -139,7 +140,9 @@ export const MoreEventsSection = (props: IProps) => {
                         Conferencia Magistral
                       </p>
                       <p className="text-tiny sm:text-medium ">
-                        {event.persons?.name + ' ' + event?.persons?.surName}
+                        {event?.summary?.person?.name +
+                          ' ' +
+                          event?.summary?.person?.surName}
                       </p>
                       <Link
                         href={`/eventos/${event?.id}`}
