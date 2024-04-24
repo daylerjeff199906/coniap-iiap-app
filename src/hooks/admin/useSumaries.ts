@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { storage } from '@/firebase/firebase'
 
-import { fetchSummaries, fetchSummaryStatus } from '@/api'
+import {
+  fetchSummaries,
+  fetchSummaryStatus,
+  createSummary,
+  updateSummary,
+} from '@/api'
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
@@ -13,20 +18,34 @@ export function useSummaries() {
   const [summaries, setSummaries] = useState<ISummary[] | null>(null)
   //   const [event, setEvent] = useState<IEvent | null>(null)
 
-  //   const createDataEvent = async (data: IEvent) => {
-  //     setLoading(true)
-  //     const res: IRes = (await createEvent(data)) as IRes
+  const createSummary = async (data: IEvent) => {
+    setLoading(true)
+    const res: IRes = (await createSummary(data)) as IRes
 
-  //     if (res.message) {
-  //       toast.error('Error al crear el programa', {
-  //         description: res.message,
-  //       })
-  //     } else {
-  //       toast.success('Evento creado con exito')
-  //     }
-  //     setLoading(false)
-  //     return res
-  //   }
+    if (res.message) {
+      toast.error('Error al crear el programa', {
+        description: res.message,
+      })
+    } else {
+      toast.success('Evento creado con exito')
+    }
+    setLoading(false)
+    return res
+  }
+
+  const updateSummary = async (id: string, data: IEvent) => {
+    setLoading(true)
+    const res: IRes = (await updateSummary(id, data)) as IRes
+    if (res.message) {
+      toast.error('Error al actualizar el evento', {
+        description: res.message,
+      })
+    } else {
+      toast.success('Evento actualizado con exito')
+    }
+    setLoading(false)
+    return res
+  }
 
   const getSummaries = async (query: string) => {
     setLoading(true)
@@ -55,40 +74,12 @@ export function useSummaries() {
   //     setLoading(false)
   //   }
 
-  //   const updateDataEvent = async (id: string, data: IEvent) => {
-  //     setLoading(true)
-  //     const res: IRes = (await updateEvent(id, data)) as IRes
-  //     if (res.message) {
-  //       toast.error('Error al actualizar el evento', {
-  //         description: res.message,
-  //       })
-  //     } else {
-  //       toast.success('Evento actualizado con exito')
-  //     }
-  //     setLoading(false)
-  //     return res
-  //   }
-
-  //   const uploadImage = async (file: File): Promise<string> => {
-  //     setLoading(true)
-  //     try {
-  //       const storageRef = ref(storage, `events/${file.name}`)
-  //       await uploadBytes(storageRef, file)
-
-  //       const url = await getDownloadURL(storageRef)
-  //       setLoading(false)
-  //       return url
-  //     } catch (e) {
-  //       console.error('Error uploading image: ', e)
-  //       setLoading(false)
-  //       return ''
-  //     }
-  //   }
-
   return {
     loading,
     summaries,
     getSummaries,
     getSummariesStatus,
+    createSummary,
+    updateSummary,
   }
 }
