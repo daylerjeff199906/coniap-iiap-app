@@ -1,6 +1,12 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react'
+import {
+  Divider,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+} from '@nextui-org/react'
 import { ISummary } from '@/types'
 import { FrmUpdateSummary } from '@/modules/admin'
 
@@ -24,8 +30,9 @@ export const ModalDetails = (props: IProps) => {
         size="3xl"
       >
         <ModalHeader>
-          <h1 className="text-lg font-semibold">Nuevo resumen</h1>
+          <h1 className="text-lg font-semibold">{summary.title}</h1>
         </ModalHeader>
+        <Divider />
         <ModalContent>
           <ModalBody>
             <FrmUpdateSummary summary={summary} />

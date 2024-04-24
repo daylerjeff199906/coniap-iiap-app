@@ -21,7 +21,7 @@ interface IProps {
 export const FrmUpdateSummary = (props: IProps) => {
   const { summary } = props
   const { updateDataSummary, createDataSummary, loading } = useSummaries()
-  const { uploadImage, loading: loadingFile } = useFiles()
+  const { uploadImage, loading: loadingFile, deleteImage } = useFiles()
 
   const router = useRouter()
 
@@ -33,21 +33,43 @@ export const FrmUpdateSummary = (props: IProps) => {
     const { file, person, ...rest } = data
     let newData: ISummary
 
-    if (file.length > 0) {
-      const fileUp = file as unknown as File[]
-      const url = await uploadImage('files', fileUp[0])
+    if (summary.id) {
+      if (file.length > 0) {
+        const fileUp = file as unknown as File[]
+        await deleteImage(summary.file)
+        const url = await uploadImage('files', fileUp[0])
+        newData = { ...rest, file: url }
+      } else {
+        newData = { ...rest, file: summary.file }
+      }
 
-      newData = { ...rest, file: url, isActived: false, isApproved: false }
+      const res = await updateDataSummary(summary.id, newData)
+      if (summary?.isApproved) {
+        router.push('/admin/participantes/resumenes?status=approved', {
+          scroll: true,
+        })
+      } else {
+        router.push('/admin/participantes/resumenes?status=pending', {
+          scroll: true,
+        })
+      }
     } else {
-      newData = { ...rest, file: '', isActived: false, isApproved: false }
-    }
+      if (file.length > 0) {
+        const fileUp = file as unknown as File[]
+        const url = await uploadImage('files', fileUp[0])
 
-    const summary = await createDataSummary(newData)
+        newData = { ...rest, file: url, isActived: false, isApproved: false }
+      } else {
+        newData = { ...rest, file: '', isActived: false, isApproved: false }
+      }
 
-    if (!summary.message) {
-      router.push('/admin/participantes/resumenes?status=pending', {
-        scroll: true,
-      })
+      const summary = await createDataSummary(newData)
+
+      if (!summary.message) {
+        router.push('/admin/participantes/resumenes?status=pending', {
+          scroll: true,
+        })
+      }
     }
   }
 
@@ -62,10 +84,10 @@ export const FrmUpdateSummary = (props: IProps) => {
           onSubmit={methods.handleSubmit(handleFormSubmit)}
           className="p-4 flex flex-col gap-3"
         >
-          {loading && (
+          {loadingFile && (
             <div className="py-1">
               <h2 className="text-sm text-gray-500 animate-pulse">
-                Guardando resumen...
+                {summary.id ? 'Actualizando resumen' : 'Guardando resumen'}
               </h2>
             </div>
           )}
@@ -102,7 +124,7 @@ export const FrmUpdateSummary = (props: IProps) => {
                 isLoading={loading || loadingFile}
                 isDisabled={loading || loadingFile}
               >
-                Guardar
+                {summary.id ? 'Actualizar' : 'Guardar'}
               </Button>
               <Button
                 size="sm"
