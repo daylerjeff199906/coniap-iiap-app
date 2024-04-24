@@ -11,6 +11,7 @@ import { IRows } from './table/IRows'
 import { IRes } from './responses/IResponse'
 import { ICountry } from './ICountry'
 import { ISummary } from './ISummary'
+import { IActions } from './table/IActions'
 
 export type {
   ISponsor,
@@ -26,4 +27,5 @@ export type {
   IRes,
   ICountry,
   ISummary,
+  IActions,
 }

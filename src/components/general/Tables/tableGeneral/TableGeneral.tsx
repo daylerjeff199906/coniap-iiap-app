@@ -17,14 +17,15 @@ import {
   DropdownItem,
   DropdownMenu,
 } from '@nextui-org/react'
-import { IColumns, IRows } from '@/types'
-import { IconEdit, IconSearch, IconDots } from '@tabler/icons-react'
+import { IColumns, IRows, IActions } from '@/types'
+import { IconSearch, IconDots } from '@tabler/icons-react'
 import Link from 'next/link'
 import { LoadingPages } from '../..'
 import { usePathname } from 'next/navigation'
 
 interface IProps {
   columns: Array<IColumns>
+  actionsList?: Array<IActions>
   rows: Array<IRows>
   loading?: boolean
   selectionMode?: 'single' | 'multiple' | 'none'
@@ -44,6 +45,7 @@ export const TableGeneral = (props: IProps) => {
     selectionMode,
     onSearch,
     searchValue,
+    actionsList,
   } = props
 
   const pathname = usePathname()
@@ -76,18 +78,32 @@ export const TableGeneral = (props: IProps) => {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu aria-label="DropdownMenu">
-                <DropdownItem
-                  as={Link}
-                  href={`?edit=${item.key}`}
-                >
-                  Editar
-                </DropdownItem>
-                <DropdownItem
-                  as={Link}
-                  href={`${pathname}/${item.key}`}
-                >
-                  Detalles
-                </DropdownItem>
+                {actionsList ? (
+                  actionsList.map((action, index) => (
+                    <DropdownItem
+                      key={index}
+                      as={Link}
+                      href={`${pathname}/${action.href}${item.key}`}
+                    >
+                      {action.label}
+                    </DropdownItem>
+                  ))
+                ) : (
+                  <>
+                    <DropdownItem
+                      as={Link}
+                      href={`?edit=${item.key}`}
+                    >
+                      Editar
+                    </DropdownItem>
+                    <DropdownItem
+                      as={Link}
+                      href={`${pathname}/${item.key}`}
+                    >
+                      Detalles
+                    </DropdownItem>
+                  </>
+                )}
               </DropdownMenu>
             </Dropdown>
           </>
