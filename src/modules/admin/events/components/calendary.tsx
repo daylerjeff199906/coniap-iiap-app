@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { IEvent } from '@/types'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
@@ -16,50 +16,52 @@ const resourcesMap = [
   { resourceId: '2', resourceTitle: 'Sala 2' },
 ]
 
-const events = [
-  {
-    id: 0,
-    title: 'Board meeting',
-    start: new Date(2024, 0, 23, 9, 0, 0),
-    end: new Date(2024, 0, 23, 13, 0, 0),
-    resourceId: 1,
-  },
-]
-
 const transformEvent = (event: IEvent) => {
   const startTime = new Date(event?.date as unknown as string)
   startTime.setHours(parseInt(event.timeStart, 10), 10, 0, 0)
-  console.log('startTime', startTime)
+
+  const endTime = new Date(event?.date as unknown as string)
+  endTime.setHours(parseInt(event.timeEnd, 10), 10, 0, 0)
+
   return {
     id: event.id,
     title: event.name,
     start: startTime,
-    end: new Date(event.timeEnd),
+    end: endTime,
     resourceId: event.sala,
   }
 }
 
+const transformEvents = (events: Array<IEvent>) => {
+  return events.map((event) => transformEvent(event))
+}
+
 export const Calendary = (props: IProps) => {
+  const [date, setDate] = useState(new Date())
   const [view, setView] = useState('day')
   const { data } = props
+
   return (
     <>
       <div className="">
         <Calendar
           localizer={localizer}
-          //   events={events as any}
+          events={transformEvents(data)}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}
-          resources={resourcesMap}
-          resourceIdAccessor="resourceId"
-          resourceTitleAccessor="resourceTitle"
+          //   resources={resourcesMap}
+          //   resourceIdAccessor="resourceId"
+          //   resourceTitleAccessor="resourceTitle"
           view={view as any}
+          views={['day', 'agenda', 'month', 'week']}
+        //   defaultDate={date}
           onView={(view) => setView(view)}
-          views={['day', 'agenda']}
-          defaultDate={new Date()}
-          min={new Date(2021, 0, 0, 8, 0, 0)}
-          max={new Date(2021, 0, 0, 22, 0, 0)}
+        //   onSelectEvent={(event) => console.log('event', event)}
+          onNavigate={(date) => setDate(date)}
+          //   defaultDate={new Date()}
+          //   min={new Date(2021, 0, 0, 8, 0, 0)}
+          //   max={new Date(2021, 0, 0, 22, 0, 0)}
         />
       </div>
     </>
