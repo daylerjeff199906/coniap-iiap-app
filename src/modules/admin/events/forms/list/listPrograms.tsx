@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { TableGeneral } from '@/components/general'
+import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 
 import { usePrograms } from '@/hooks/admin'

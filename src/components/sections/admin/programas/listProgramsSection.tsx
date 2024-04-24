@@ -5,7 +5,6 @@ import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { usePrograms, useFiles } from '@/hooks/admin'
-import Link from 'next/link'
 
 const columns: Array<IColumns> = [
   {

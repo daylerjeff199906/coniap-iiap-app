@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { TableGeneral } from '@/components/general'
+import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 
 import { useSummaries } from '@/hooks/admin'
@@ -75,8 +75,8 @@ export const ListSummaries = (props: IProps) => {
                     title: summary.title,
                     created_at: summary.created_at,
                     person:
-                      summary?.person !== null
-                        ? summary.person.name + summary.person.surName
+                      summary?.person !== null && summary?.person !== undefined
+                        ? summary?.person?.name + summary?.person?.surName
                         : '',
                     st_review: RenderColumnAproved(summary.isApproved),
                     status: summary.isActived,
