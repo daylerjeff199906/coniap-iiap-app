@@ -41,6 +41,11 @@ const columns: Array<IColumns> = [
   },
 ]
 
+const actionsList = [
+  { label: 'Ver', href: '/' },
+  { label: 'Editar', href: '/' },
+]
+
 export const ListSummaries = () => {
   const { getSummaries, getSummariesStatus, summaries, loading } =
     useSummaries()
@@ -81,7 +86,7 @@ export const ListSummaries = () => {
           handleStatusChange(String(key), value)
         }}
         onSearch={(value) => setQuery(value)}
-        actionsList={[{ label: 'Editar', href: '/' }]}
+        actionsList={actionsList}
         searchValue={query}
         rows={
           summaries !== null
