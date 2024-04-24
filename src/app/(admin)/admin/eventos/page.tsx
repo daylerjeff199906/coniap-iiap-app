@@ -1,9 +1,8 @@
 'use client'
-import { ListEventsSection } from '@/components'
+import { UpdateEvento, ListEventsSection } from '@/modules/admin/events'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { UpdateEvento } from '@/components'
 
 export default function Page() {
   const searchParams = useSearchParams()

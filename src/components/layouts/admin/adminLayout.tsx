@@ -3,10 +3,10 @@ import { usePathname } from 'next/navigation'
 import {
   IconLayoutDashboard,
   IconCalendarEvent,
-  IconCalendarMonth,
   IconUsers,
   IconFlag3,
-  IconCategory2,
+  IconPresentationAnalytics,
+  IconStack3,
 } from '@tabler/icons-react'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 
@@ -30,7 +30,7 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Programas',
     titleOption: null,
     hrefLink: '/admin/programas',
-    icon: <IconCalendarMonth stroke={stroke} />,
+    icon: <IconCalendarEvent stroke={stroke} />,
     subItems: null,
   },
   {
@@ -38,7 +38,7 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Eventos',
     titleOption: null,
     hrefLink: null,
-    icon: <IconCalendarEvent stroke={stroke} />,
+    icon: <IconPresentationAnalytics stroke={stroke} />,
     subItems: [
       {
         id: 'all',
@@ -100,7 +100,7 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Temáticas',
     titleOption: null,
     hrefLink: '/admin/tematicas',
-    icon: <IconCategory2 stroke={stroke} />,
+    icon: <IconStack3 stroke={stroke} />,
     subItems: null,
   },
 ]

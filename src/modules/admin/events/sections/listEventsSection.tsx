@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
-
 import { useEvents, useFiles } from '@/hooks/admin'
-import { useEffect, useState } from 'react'
 
 const columns: Array<IColumns> = [
   {

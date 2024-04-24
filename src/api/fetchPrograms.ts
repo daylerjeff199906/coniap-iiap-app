@@ -9,7 +9,6 @@ export async function fetchPrograms(query: string, column?: string) {
     .from('programs')
     .select(allSelect)
     .ilike('title', `%${query}%`)
-
   if (error) {
     return error
   } else {
@@ -52,7 +51,7 @@ export async function updateProgram(id: string, props: IProgram) {
     .update(props)
     .eq('id', id)
     .select('*')
-    
+
   if (error) {
     return error
   } else {

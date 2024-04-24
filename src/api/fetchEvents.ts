@@ -30,6 +30,7 @@ export async function fetchAllEvents(query: string, column?: string) {
 
   return event
 }
+// export async function fetchEventsByProgram(query: string, programsId: string) {}
 
 export async function fetchEventById(id: string) {
   const supabase = createClient()
