@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import { fetchTopics, fetchTopic, createTopic, updateTopic } from '@/api'
 import { ITopic } from '@/types'
