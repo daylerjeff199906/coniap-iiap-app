@@ -7,7 +7,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { DrawerSelect } from '@/components/general'
 import { ListSpeakers } from '../../list'
 
-export const SpeakerSection = () => {
+export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const {
@@ -32,6 +32,7 @@ export const SpeakerSection = () => {
             description="Seleccione el programa al que pertenece el evento, es opcional"
             isInvalid={errors.person_id !== undefined}
             errorMessage={errors.person_id?.message as string}
+            isDisabled={loading}
             endContent={
               <div>
                 <Button

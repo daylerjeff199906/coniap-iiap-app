@@ -2,7 +2,7 @@
 import { FilePond } from 'react-filepond'
 import { useFormContext, Controller } from 'react-hook-form'
 
-export const MultimediaSection = () => {
+export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
   const { control } = useFormContext()
 
   return (
@@ -14,8 +14,8 @@ export const MultimediaSection = () => {
           control={control}
           render={({ field: { onChange } }) => (
             <FilePond
-              // files={value}
               allowMultiple={false}
+              disabled={loading}
               // onupdatefiles={onChange}
               instantUpload={false}
               acceptedFileTypes={['apllication/pdf']}

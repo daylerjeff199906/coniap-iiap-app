@@ -5,14 +5,14 @@ import { ISummary } from '@/types'
 export async function createSummary(props: ISummary) {
   const supabase = createClient()
 
-  const { data, error } = await supabase
+  const { data: summary, error } = await supabase
     .from('summaries')
     .insert([props])
     .select('*')
   if (error) {
     return error
   } else {
-    return data
+    return summary
   }
 }
 

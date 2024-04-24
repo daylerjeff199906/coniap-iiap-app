@@ -4,7 +4,7 @@ export interface IEvent {
   id: string
   summary_id: string | null
   program_id: string | null
-  summary: ISummary | null
+  summary?: ISummary | null
   //observar
   sala: string | number | null
   isActived: boolean

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { storage } from '@/firebase/firebase'
+// import { storage } from '@/firebase/firebase'
 
 import {
   fetchSummaries,
@@ -10,7 +10,7 @@ import {
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-import { IEvent, IRes, ISummary } from '@/types'
+import { IRes, ISummary } from '@/types'
 import { toast } from 'sonner'
 
 export function useSummaries() {
@@ -18,7 +18,7 @@ export function useSummaries() {
   const [summaries, setSummaries] = useState<ISummary[] | null>(null)
   //   const [event, setEvent] = useState<IEvent | null>(null)
 
-  const createSummary = async (data: IEvent) => {
+  const createDataSummary = async (data: ISummary) => {
     setLoading(true)
     const res: IRes = (await createSummary(data)) as IRes
 
@@ -33,7 +33,7 @@ export function useSummaries() {
     return res
   }
 
-  const updateSummary = async (id: string, data: IEvent) => {
+  const updateDataSummary = async (id: string, data: ISummary) => {
     setLoading(true)
     const res: IRes = (await updateSummary(id, data)) as IRes
     if (res.message) {
@@ -79,7 +79,7 @@ export function useSummaries() {
     summaries,
     getSummaries,
     getSummariesStatus,
-    createSummary,
-    updateSummary,
+    createDataSummary,
+    updateDataSummary,
   }
 }

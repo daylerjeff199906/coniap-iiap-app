@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { useRouter } from 'next/navigation'
 import { ISummary } from '@/types'
 import { Button, Input } from '@nextui-org/react'
 import {
@@ -9,7 +11,8 @@ import {
 } from 'react-hook-form'
 import { SpeakerSection } from './speakerSection'
 import { MultimediaSection } from './multimediaSection'
-import { useRouter } from 'next/navigation'
+import { useSummaries, useFiles } from '@/hooks/admin'
+import { LoadingPages } from '@/components'
 
 interface IProps {
   summary: ISummary
@@ -17,6 +20,9 @@ interface IProps {
 
 export const FrmUpdateSummary = (props: IProps) => {
   const { summary } = props
+  const { updateDataSummary, createDataSummary, loading } = useSummaries()
+  const { uploadImage, editField, loading: loadingFile } = useFiles()
+
   const router = useRouter()
 
   const methods = useForm<ISummary>({
@@ -24,7 +30,23 @@ export const FrmUpdateSummary = (props: IProps) => {
   })
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    console.log(data)
+    const { file, person, ...rest } = data
+    let newData: ISummary
+
+    if (file.length > 0) {
+      const fileUp = file as unknown as File[]
+      const url = await uploadImage('files', fileUp[0])
+
+      newData = { ...rest, file: url, isActived: false, isApproved: false }
+    } else {
+      newData = { ...rest, file: '', isActived: false, isApproved: false }
+    }
+
+    const summary = await createDataSummary(newData)
+
+    if (!summary.message) {
+      router.push('/admin/participantes/resumenes')
+    }
   }
 
   const handleCancel = () => {
@@ -38,6 +60,14 @@ export const FrmUpdateSummary = (props: IProps) => {
           onSubmit={methods.handleSubmit(handleFormSubmit)}
           className="p-4 flex flex-col gap-3"
         >
+          {loadingFile ||
+            (loading && (
+              <div className="py-1">
+                <h2 className="text-sm text-gray-500 animate-pulse">
+                  Guardando resumen...
+                </h2>
+              </div>
+            ))}
           <Controller
             name="title"
             control={methods.control}
@@ -53,12 +83,13 @@ export const FrmUpdateSummary = (props: IProps) => {
                 radius="sm"
                 isInvalid={methods.formState.errors?.title !== undefined}
                 errorMessage={methods.formState.errors?.title?.message}
+                isDisabled={loading || loadingFile}
               />
             )}
           />
 
-          <SpeakerSection />
-          <MultimediaSection />
+          <SpeakerSection loading={loading || loadingFile} />
+          <MultimediaSection loading={loading || loadingFile} />
 
           <footer>
             <div className="flex items-center justify-end gap-3">
@@ -67,6 +98,8 @@ export const FrmUpdateSummary = (props: IProps) => {
                 size="sm"
                 radius="sm"
                 color="primary"
+                isLoading={loading || loadingFile}
+                isDisabled={loading || loadingFile}
               >
                 Guardar
               </Button>
@@ -82,6 +115,7 @@ export const FrmUpdateSummary = (props: IProps) => {
           </footer>
         </form>
       </FormProvider>
+      <LoadingPages isOpen={loading || loadingFile} />
     </>
   )
 }
