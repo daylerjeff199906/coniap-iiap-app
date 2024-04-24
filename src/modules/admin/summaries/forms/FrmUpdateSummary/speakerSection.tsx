@@ -20,6 +20,7 @@ export const SpeakerSection = () => {
       <Controller
         name="person_id"
         control={control}
+        rules={{ required: 'Este campo es requerido' }}
         render={({ field: { onChange, value } }) => (
           <Input
             aria-label="Speakers"
