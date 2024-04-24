@@ -1,6 +1,14 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { Modal, ModalBody, ModalContent } from '@nextui-org/react'
+import {
+  Divider,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+} from '@nextui-org/react'
+import { FrmUpdateSummary } from '@/modules/admin'
+import { ISummary } from '@/types'
 
 export default function Page() {
   const router = useRouter()
@@ -14,10 +22,15 @@ export default function Page() {
       <Modal
         isOpen
         onClose={handleClose}
+        size="3xl"
       >
         <ModalContent>
+          <ModalHeader>
+            <h1 className="text-lg font-semibold">Nuevo resumen</h1>
+          </ModalHeader>
+          <Divider />
           <ModalBody>
-            <div>Hola</div>
+            <FrmUpdateSummary summary={{} as ISummary} />
           </ModalBody>
         </ModalContent>
       </Modal>

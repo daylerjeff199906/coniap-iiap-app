@@ -11,7 +11,7 @@ export const DrawerSelect = (props: IProps) => {
   const { isOpen, setOpen, title, content } = props
 
   const drawerClasses = `fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform ${
-    isOpen ? 'translate-x-0' : 'translate-x-full'
+    isOpen ? 'translate-x-0' : 'translate-x-full hidden'
   } bg-white w-[520px] dark:bg-gray-800`
 
   const overlayClasses = `fixed top-0 right-0 bottom-0 left-0 z-40 transition-opacity ${
