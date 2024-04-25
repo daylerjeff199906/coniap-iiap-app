@@ -11,8 +11,8 @@ export default function Page() {
       />
       <main className="container">
         <ListEventsPage />
-        <FrmContactUs />
       </main>
+      <FrmContactUs />
     </>
   )
 }
