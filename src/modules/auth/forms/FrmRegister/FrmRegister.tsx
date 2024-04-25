@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { FormProvider, Controller, useForm } from 'react-hook-form'
 import { registerAndSendEmailVerification, SignInWithGoogle } from '@/auth'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 interface ICredentials {
   email: string
@@ -22,7 +23,20 @@ export const FrmRegister = () => {
 
   const onSubmit = async (data: ICredentials) => {
     setLoading(true)
-    await registerAndSendEmailVerification(data)
+    const res = await registerAndSendEmailVerification(data)
+    if (res === 'El correo ya está en uso') {
+      toast.error('El correo ya está en uso', {
+        description: 'Intenta con otro correo, o intenta iniciar sesión',
+      })
+    } else if (res === 'El correo no es válido') {
+      toast.error('El correo no es válido')
+    } else if (res === 'La contraseña es débil') {
+      toast.error('La contraseña es débil')
+    } else {
+      toast.success('Usuario creado con éxito', {
+        description: 'Se ha enviado un correo de verificación',
+      })
+    }
     setLoading(false)
   }
 
