@@ -1,11 +1,12 @@
 'use client'
+import { useState } from 'react'
 import { Button, Image, Input } from '@nextui-org/react'
 import { svgIsotipoConiap } from '@/assets'
 import Link from 'next/link'
 import { FormProvider, Controller, useForm } from 'react-hook-form'
 import { registerAndSendEmailVerification, SignInWithGoogle } from '@/auth'
-import { useState } from 'react'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 interface ICredentials {
   email: string
@@ -14,6 +15,7 @@ interface ICredentials {
 
 export const FrmRegister = () => {
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const methods = useForm<ICredentials>({
     defaultValues: {
       email: '',
@@ -36,6 +38,7 @@ export const FrmRegister = () => {
       toast.success('Usuario creado con éxito', {
         description: 'Se ha enviado un correo de verificación',
       })
+      methods.reset()
     }
     setLoading(false)
   }
@@ -44,6 +47,7 @@ export const FrmRegister = () => {
     setLoading(true)
     await SignInWithGoogle()
     setLoading(false)
+    router.push('/login')
   }
 
   return (

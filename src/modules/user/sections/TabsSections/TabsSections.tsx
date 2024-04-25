@@ -7,17 +7,17 @@ import { IconHome, IconFile, IconUser } from '@tabler/icons-react'
 const dataTabs = [
   {
     title: 'Inicio',
-    href: '/myProfile',
+    href: '/dashboard',
     icon: <IconHome size={20} />,
   },
   {
     title: 'Mis archivos',
-    href: '/myProfile/files',
+    href: '/dashboard/files',
     icon: <IconFile size={20} />,
   },
   {
     title: 'Configuración',
-    href: '/myProfile/settings',
+    href: '/dashboard/settings',
     icon: <IconUser size={20} />,
   },
 ]
