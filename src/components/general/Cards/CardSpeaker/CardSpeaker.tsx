@@ -22,9 +22,8 @@ export const CardSpeaker = (props: IProps) => {
         shadow="none"
         radius="none"
         isPressable
-        isHoverable
         isBlurred
-        className="w-full"
+        className="w-full bg-transparent"
         as={Link}
         href={`/ponentes/${speaker?.id}`}
       >
