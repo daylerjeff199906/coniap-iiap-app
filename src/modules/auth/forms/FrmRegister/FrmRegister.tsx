@@ -36,9 +36,11 @@ export const FrmRegister = () => {
       toast.error('La contraseña es débil')
     } else {
       toast.success('Usuario creado con éxito', {
-        description: 'Se ha enviado un correo de verificación',
+        description:
+          'Se ha enviado un correo de verificación, Inicia sesión para continuar',
       })
       methods.reset()
+      router.push('/login')
     }
     setLoading(false)
   }
@@ -47,7 +49,6 @@ export const FrmRegister = () => {
     setLoading(true)
     await SignInWithGoogle()
     setLoading(false)
-    router.push('/login')
   }
 
   return (
@@ -82,10 +83,10 @@ export const FrmRegister = () => {
               }}
               render={({ field: { onChange, value } }) => (
                 <Input
-                  aria-label="Usuario"
-                  label="Usuario"
+                  aria-label="email"
+                  label="Correo electrónico"
                   labelPlacement="outside"
-                  placeholder="Escribe tu usuario"
+                  placeholder="ejemplo@ejemplo.com"
                   radius="sm"
                   value={value}
                   onChange={onChange}

@@ -27,7 +27,7 @@ export async function registerAndSendEmailVerification(props: ICredentials) {
     console.log(userCredential)
 
     // Enviar correo de verificación
-    const res = await sendEmailVerification(userCredential.user)
+    await sendEmailVerification(userCredential.user)
 
     // Devolver el usuario creado
     return userCredential.user
@@ -44,14 +44,3 @@ export async function registerAndSendEmailVerification(props: ICredentials) {
     }
   }
 }
-
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    // El usuario está autenticado
-    console.log('Usuario autenticado:', user)
-    // Puedes realizar acciones adicionales aquí si es necesario
-  } else {
-    // El usuario no está autenticado
-    console.log('Usuario no autenticado')
-  }
-})
