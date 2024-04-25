@@ -72,19 +72,19 @@ export const DetailsEvent = (props: IProps) => {
             <h1 className="text-2xl font-bold">Ponente</h1>
             <div className="flex items-center gap-4">
               <Avatar
-                src={event?.persons?.image || logo_iiap.src}
+                src={event?.summary?.person?.image || logo_iiap.src}
                 className="w-24 h-24"
               />
               <div>
                 <div>
                   <h4 className="text-gray-400 text-sm">
-                    {event?.persons?.institution}
+                    {event?.summary?.person?.institution}
                   </h4>
                 </div>
                 <h2 className="text-lg font-semibold">
-                  {event?.persons?.name}
+                  {event?.summary?.person?.name}
                 </h2>
-                <h3 className="">{event?.persons?.surName}</h3>
+                <h3 className="">{event?.summary?.person?.surName}</h3>
               </div>
             </div>
           </section>

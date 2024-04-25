@@ -55,7 +55,7 @@ export const ListShedule = (props: IProps) => {
                     </div>
                     <Divider />
                   </div>
-                  {events.length > 0 ? (
+                  {events?.length > 0 ? (
                     <>
                       <div className="w-full grid grid-cols-1 gap-8 lg:p-6">
                         {events

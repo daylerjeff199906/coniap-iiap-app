@@ -8,12 +8,12 @@ import {
 export default function Page() {
   return (
     <>
-      <article className="py-6">
+      <article className="container py-6">
         <InfoAboutUs />
         <AlbumSection />
         <OrganizationSection />
-        <FrmContactUs />
       </article>
+      <FrmContactUs />
     </>
   )
 }
