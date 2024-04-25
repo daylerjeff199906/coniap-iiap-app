@@ -14,7 +14,7 @@ export const DetailsSpeaker = (props: IProps) => {
   const { speaker } = props
   return (
     <>
-      <main className="section-home space-y-6">
+      <main className="container section-home space-y-6">
         <section>
           <div className="flex gap-4 items-center">
             <Link

@@ -5,7 +5,6 @@ import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 
 import { usePrograms, useFiles } from '@/hooks/admin'
-import Link from 'next/link'
 
 const columns: Array<IColumns> = [
   {
@@ -19,18 +18,13 @@ const columns: Array<IColumns> = [
     align: 'start',
   },
   {
-    key: 'events',
-    label: 'Cant. de Eventos',
+    key: 'description',
+    label: 'Detalles',
     align: 'start',
   },
   {
     key: 'status',
     label: 'Estado',
-    align: 'center',
-  },
-  {
-    key: 'addEvents',
-    label: 'Add eventos',
     align: 'center',
   },
   {
@@ -63,16 +57,17 @@ export const ListProgramsSection = () => {
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}
+        onSearch={(value) => setQuery(value)}
+        searchValue={query}
         rows={
           programs !== null
-            ? programs?.map((event) => {
+            ? programs?.map((program) => {
                 return {
-                  key: event.id,
-                  title: event.title,
-                  date: event.date,
-                  events: event.events?.length,
-                  status: event.isActived,
-                  addEvents: RenderColumAddEvents(event.id),
+                  key: program.id,
+                  title: program.title,
+                  description: program.shortDescription,
+                  date: program.date,
+                  status: program.isActived,
                   actions: 'actions',
                 }
               })
@@ -83,15 +78,15 @@ export const ListProgramsSection = () => {
   )
 }
 
-const RenderColumAddEvents = (id: string) => {
-  return (
-    <>
-      <Link
-        href={`/admin/programas/${id}/eventos`}
-        className="text-primary-500 hover:text-primary-300"
-      >
-        Agregar eventos
-      </Link>
-    </>
-  )
-}
+// const RenderColumAddEvents = (id: string) => {
+//   return (
+//     <>
+//       <Link
+//         href={`/admin/programas/${id}/eventos`}
+//         className="text-primary-500 hover:text-primary-300"
+//       >
+//         Agregar eventos
+//       </Link>
+//     </>
+//   )
+// }

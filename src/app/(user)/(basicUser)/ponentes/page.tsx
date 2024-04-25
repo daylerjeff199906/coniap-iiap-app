@@ -20,9 +20,11 @@ export default async function Page() {
 
   return (
     <>
-      <section className="section-page space-y-8">
-        <ListSpeakers speakers={speakersData} />
-      </section>
+      <main className="container">
+        <section className="section-page space-y-8">
+          <ListSpeakers speakers={speakersData} />
+        </section>
+      </main>
     </>
   )
 }

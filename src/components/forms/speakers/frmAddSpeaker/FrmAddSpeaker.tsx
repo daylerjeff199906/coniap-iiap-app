@@ -7,7 +7,6 @@ import {
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import { IPerson } from '@/types'
@@ -49,57 +48,55 @@ export const FrmAddSpeaker = () => {
     }
 
     if (speaker) {
-      router.push('/admin/ponentes')
+      router.back()
     }
+  }
+
+  const handleBack = () => {
+    router.back()
   }
 
   return (
     <>
       <FormProvider {...methods}>
         <form
-          className="space-y-4"
+          className="space-y-4 max-w-3xl"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold w-full">Agregar Participante</h1>
-            <div className="max-w-sm">
-              <Controller
-                control={methods.control}
-                name="typePerson"
-                rules={{ required: 'Este campo es requerido' }}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    label="Tipo de participante"
-                    labelPlacement="outside"
-                    name="typePerson"
-                    value={value}
-                    onChange={(value) => {
-                      onChange(value)
-                    }}
-                    size="sm"
-                    radius="sm"
-                    isInvalid={
-                      methods.formState.errors.typePerson !== undefined
-                    }
-                    errorMessage={
-                      methods.formState.errors.typePerson?.message as string
-                    }
-                  >
-                    {typePerson.map((item) => (
-                      <SelectItem key={item.value}>{item.label}</SelectItem>
-                    ))}
-                  </Select>
-                )}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            <InfoGeneral />
-            <MultimediaSection
-              setFiles={setFile}
-              files={file}
+          <h1 className="text-2xl font-bold w-full">Agregar Participante</h1>
+          <MultimediaSection
+            setFiles={setFile}
+            files={file}
+          />
+          <div className="pt-3">
+            <Controller
+              control={methods.control}
+              name="typePerson"
+              rules={{ required: 'Este campo es requerido' }}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  label="Tipo de participante"
+                  labelPlacement="outside"
+                  placeholder="Selecciona un tipo de participante"
+                  name="typePerson"
+                  value={value}
+                  onChange={(value) => {
+                    onChange(value)
+                  }}
+                  radius="sm"
+                  isInvalid={methods.formState.errors.typePerson !== undefined}
+                  errorMessage={
+                    methods.formState.errors.typePerson?.message as string
+                  }
+                >
+                  {typePerson.map((item) => (
+                    <SelectItem key={item.value}>{item.label}</SelectItem>
+                  ))}
+                </Select>
+              )}
             />
           </div>
+          <InfoGeneral />
           <footer className="flex items-center justify-end gap-3">
             <Button
               type="submit"
@@ -110,9 +107,8 @@ export const FrmAddSpeaker = () => {
               Guardar
             </Button>
             <Button
-              as={Link}
-              href="/admin/ponentes"
               type="reset"
+              onPress={handleBack}
             >
               Cancelar
             </Button>

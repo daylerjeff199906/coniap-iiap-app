@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { FrmEditEvent } from '@/components'
-
+import { FrmEditEvent } from '@/modules/admin/events'
 import { useEvents } from '@/hooks/admin'
 import { useEffect } from 'react'
 
@@ -27,14 +26,5 @@ export const UpdateEvento = (props: IProps) => {
     fetchData()
   }, [id, isEdit])
 
-  return (
-    <>
-      {event !== null && (
-        <FrmEditEvent
-          //   isOpen={openModal}
-          event={event}
-        />
-      )}
-    </>
-  )
+  return <>{event !== null && <FrmEditEvent event={event} />}</>
 }

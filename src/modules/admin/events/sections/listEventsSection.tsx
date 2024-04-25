@@ -1,16 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
-
 import { useEvents, useFiles } from '@/hooks/admin'
-import { useEffect, useState } from 'react'
 
 const columns: Array<IColumns> = [
   {
     key: 'name',
     label: 'Nombre',
+    align: 'start',
+  },
+  {
+    key: 'speaker',
+    label: 'Expositor',
     align: 'start',
   },
   {
@@ -81,6 +85,8 @@ export const ListEventsSection = () => {
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}
+        onSearch={(value) => setQuery(value)}
+        searchValue={query}
         rows={
           events
             ? events.map((event) => {
@@ -91,6 +97,12 @@ export const ListEventsSection = () => {
                   timeStart: event.timeStart,
                   timeEnd: event.timeEnd,
                   status: event.isActived,
+                  speaker:
+                    event?.summary !== null
+                      ? event?.summary?.person?.name +
+                        ' ' +
+                        event?.summary?.person?.surName
+                      : '',
                   actions: 'actions',
                 }
               })

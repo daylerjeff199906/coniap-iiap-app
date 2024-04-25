@@ -1,8 +1,13 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { Button, Accordion, AccordionItem, Divider } from '@nextui-org/react'
-import { IconTriangleInvertedFilled } from '@tabler/icons-react'
-
+import {
+  Button,
+  Accordion,
+  AccordionItem,
+  Divider,
+  Image,
+} from '@nextui-org/react'
+import logo from '@/assets/images/logo-admin.webp'
 import { IMenuAside } from '@/types'
 import Link from 'next/link'
 
@@ -24,9 +29,12 @@ export const AsideMenu = (props: IProps) => {
   return (
     <div className="w-full">
       <header className="w-full">
-        <div className="flex items-center justify-start w-full h-16 px-9">
-          <IconTriangleInvertedFilled size={20} />
-          <h1 className="text-2xl font-bold">Admin</h1>
+        <div className="px-4 py-3">
+          <Image
+            src={logo.src}
+            alt="logo"
+            removeWrapper
+          />
         </div>
         <Divider />
       </header>

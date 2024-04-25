@@ -38,6 +38,7 @@ export async function fetchPerson(query: string) {
   const { data, error } = await supabase
     .from('persons')
     .select('*')
+    .order('name', { ascending: true })
     .ilike('name', `%${query}%`)
   if (error) {
     return error
@@ -58,6 +59,24 @@ export async function fetchSpeakers(query: string) {
 
   if (error) {
     return error
+  } else {
+    return data
+  }
+}
+
+export async function fetchPersonsNotInEvent(query: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('*')
+    .eq('typePerson', 'participant')
+    .order('name', { ascending: true })
+    .ilike('name', `%${query}%`)
+
+  if (error) {
+    console.error('Error fetching persons:', error.message)
+    return null
   } else {
     return data
   }

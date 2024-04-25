@@ -11,7 +11,6 @@ import { useSearchParams, useRouter } from 'next/navigation'
 
 import { Button, Select, SelectItem } from '@nextui-org/react'
 import { IconPdf } from '@tabler/icons-react'
-import Link from 'next/link'
 
 import { InfoGeneralSection, MultimediasSection } from './sections'
 
@@ -38,6 +37,8 @@ export const FrmEditSpeaker = (props: IProps) => {
     defaultValues: speaker,
   })
 
+  console.log(speaker)
+
   const onSubmit = () => {
     setOpenConfirm(true)
   }
@@ -48,14 +49,17 @@ export const FrmEditSpeaker = (props: IProps) => {
 
   const handleSave: SubmitHandler<IPerson> = async (data: IPerson) => {
     setOpenConfirm(false)
-    updatePersonData(id, data)
-      .then(() => {
-        clearForm()
-        router.push('/admin/ponentes')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    const res = await updatePersonData(id, data)
+    if (res.message) {
+      return
+    } else {
+      clearForm()
+      router.back()
+    }
+  }
+
+  const handleBack = () => {
+    router.back()
   }
 
   const clearForm = () => {
@@ -78,63 +82,41 @@ export const FrmEditSpeaker = (props: IProps) => {
       </header>
       <FormProvider {...methods}>
         <form
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-5"
+          className="flex flex-col gap-2 sm:gap-4 lg:gap-5 max-w-3xl"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <div className="w-full col-span-1">
-            <MultimediasSection />
-            <div className="">
-              <div className="py-4">
-                {speaker?.file_resumen && (
-                  <Button
-                    as={Link}
-                    href={speaker.file_resumen}
-                    target="_blank"
-                    fullWidth
-                    size="sm"
-                    radius="sm"
-                    color="danger"
-                    startContent={<IconPdf size={20} />}
-                  >
-                    Visualizar resumen
-                  </Button>
-                )}
-              </div>
-              <Controller
-                control={methods.control}
-                name="typePerson"
-                rules={{ required: 'Este campo es requerido' }}
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    label="Tipo de participante"
-                    labelPlacement="outside"
-                    name="typePerson"
-                    value={value}
-                    defaultSelectedKeys={[speaker.typePerson]}
-                    onChange={(value) => {
-                      onChange(value)
-                    }}
-                    size="sm"
-                    radius="sm"
-                    disallowEmptySelection
-                    isInvalid={
-                      methods.formState.errors.typePerson !== undefined
-                    }
-                    errorMessage={
-                      methods.formState.errors.typePerson?.message as string
-                    }
-                  >
-                    {typePerson.map((item) => (
-                      <SelectItem key={item.value}>{item.label}</SelectItem>
-                    ))}
-                  </Select>
-                )}
-              />
-            </div>
+          <MultimediasSection />
+          <div className="">
+            <Controller
+              control={methods.control}
+              name="typePerson"
+              rules={{ required: 'Este campo es requerido' }}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  label="Tipo de participante"
+                  labelPlacement="outside"
+                  name="typePerson"
+                  value={value}
+                  defaultSelectedKeys={[speaker.typePerson]}
+                  onChange={(value) => {
+                    onChange(value)
+                  }}
+                  size="sm"
+                  radius="sm"
+                  disallowEmptySelection
+                  isInvalid={methods.formState.errors.typePerson !== undefined}
+                  errorMessage={
+                    methods.formState.errors.typePerson?.message as string
+                  }
+                >
+                  {typePerson.map((item) => (
+                    <SelectItem key={item.value}>{item.label}</SelectItem>
+                  ))}
+                </Select>
+              )}
+            />
           </div>
-          <div className="w-full col-span-1 lg:col-span-2">
-            <InfoGeneralSection />
-          </div>
+          <InfoGeneralSection />
           <footer className="flex items-center gap-3 justify-end col-span-1 sm:col-span-2 lg:col-span-3">
             <Button
               color="primary"
@@ -145,8 +127,8 @@ export const FrmEditSpeaker = (props: IProps) => {
               Guardar
             </Button>
             <Button
-              as={Link}
-              href="/admin/ponentes"
+              type="reset"
+              onPress={handleBack}
             >
               Cancelar
             </Button>
@@ -163,4 +145,23 @@ export const FrmEditSpeaker = (props: IProps) => {
       <LoadingPages isOpen={loading} />
     </>
   )
+}
+
+{
+  /* <div className="py-4">
+                {speaker?.file_resumen && (
+                  <Button
+                    as={Link}
+                    href={speaker.file_resumen}
+                    target="_blank"
+                    fullWidth
+                    size="sm"
+                    radius="sm"
+                    color="danger"
+                    startContent={<IconPdf size={20} />}
+                  >
+                    Visualizar resumen
+                  </Button>
+                )}
+              </div> */
 }

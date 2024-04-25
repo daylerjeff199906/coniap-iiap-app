@@ -15,6 +15,7 @@
     "@tabler/icons-react": "^2.47.0",
     "@types/react-big-calendar": "^1.8.9",
     "filepond": "^4.30.6",
+    "filepond-plugin-image-preview": "^4.6.12",
     "firebase": "^10.8.1",
     "framer-motion": "^11.0.8",
     "next": "14.1.3",

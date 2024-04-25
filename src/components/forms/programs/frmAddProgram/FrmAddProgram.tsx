@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { InfoGeneral } from './sections'
 import { IProgram } from '@/types'
@@ -12,13 +12,23 @@ import { toast } from 'sonner'
 import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
-export const FrmAddProgram = () => {
+interface IProps {
+  program?: IProgram
+}
+
+export const FrmAddProgram = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()
-  const { addProgram, loading } = usePrograms()
+  const { program } = props
+  const { addProgram, loading, updateDataProgram } = usePrograms()
 
-  const methods = useForm<IProgram>()
+  const searchParams = useSearchParams()
+  const id = searchParams.get('edit') || ''
+
+  const methods = useForm<IProgram>({
+    defaultValues: program,
+  })
 
   const onSubmit = () => {
     setOpen(true)
@@ -31,11 +41,13 @@ export const FrmAddProgram = () => {
       banner: '',
       isActived: false,
     }
-    const res = await addProgram(newData)
-    if (res) {
-      router.push('/admin/programas')
+    const res = id
+      ? await updateDataProgram(id, newData)
+      : await addProgram(newData)
+    if (res.message) {
+      return null
     } else {
-      toast.error('Error al crear programa')
+      router.push('/admin/programas')
     }
     resetForm()
   }
@@ -53,7 +65,9 @@ export const FrmAddProgram = () => {
           className="space-y-3"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <h1 className="text-2xl font-bold">Agregar Programa</h1>
+          <h1 className="text-2xl font-bold">
+            {id ? 'Editar' : 'Crear'} Programa
+          </h1>
           <InfoGeneral />
           {/* <MoreInfo /> */}
           {/* <MoreDescription /> */}
@@ -64,7 +78,7 @@ export const FrmAddProgram = () => {
               isLoading={loading}
               isDisabled={loading}
             >
-              Agregar Programa
+              {id ? 'Editar' : 'Crear'}
             </Button>
             <Button
               as={Link}
@@ -78,8 +92,12 @@ export const FrmAddProgram = () => {
       <ModalAction
         isOpen={isOpen}
         setOpen={setOpen}
-        title="Crear programa"
-        message="¿Estás seguro de crear este programa?"
+        title={id ? 'Editar Programa' : 'Crear Programa'}
+        message={
+          id
+            ? '¿Estás seguro de editar el programa?'
+            : '¿Estás seguro de crear el programa?'
+        }
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
       <LoadingPages isOpen={loading} />

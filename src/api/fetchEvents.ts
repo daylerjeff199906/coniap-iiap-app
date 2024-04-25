@@ -13,9 +13,10 @@ export async function fetchEvents(props: IProps) {
 
   const { data: event } = await supabase
     .from('events')
-    .select('*, persons(*)')
+    .select('*')
     .eq('isActived', true)
     .ilike('name', `%${query}%`)
+
   return event
 }
 
@@ -24,17 +25,19 @@ export async function fetchAllEvents(query: string, column?: string) {
   const allSelect = column ? column : '*'
   const { data: event } = await supabase
     .from('events')
-    .select(`${allSelect}, persons(*)`)
+    .select(`${allSelect}, summary:summary_id(*, person:person_id(*))`)
     .ilike('name', `%${query}%`)
+
   return event
 }
+// export async function fetchEventsByProgram(query: string, programsId: string) {}
 
 export async function fetchEventById(id: string) {
   const supabase = createClient()
 
   const { data: event, error } = await supabase
     .from('events')
-    .select('*, persons(*)')
+    .select('*')
     .eq('id', id)
     .single()
 
@@ -55,6 +58,7 @@ export async function createEvent(data: IEvent) {
 
   if (error) {
     console.error('error', error)
+    return error
   } else {
     return event
   }
@@ -71,6 +75,7 @@ export async function updateEvent(id: string, data: IEvent) {
 
   if (error) {
     console.error('error', error)
+    return error
   } else {
     return event
   }

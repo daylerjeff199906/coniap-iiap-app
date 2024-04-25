@@ -3,10 +3,10 @@ import { usePathname } from 'next/navigation'
 import {
   IconLayoutDashboard,
   IconCalendarEvent,
-  IconCalendarMonth,
   IconUsers,
   IconFlag3,
-  IconCategory2,
+  IconPresentationAnalytics,
+  IconStack3,
 } from '@tabler/icons-react'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 
@@ -30,24 +30,62 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Programas',
     titleOption: null,
     hrefLink: '/admin/programas',
-    icon: <IconCalendarMonth stroke={stroke} />,
+    icon: <IconCalendarEvent stroke={stroke} />,
     subItems: null,
   },
   {
     id: '2',
     nameOption: 'Eventos',
     titleOption: null,
-    hrefLink: '/admin/eventos',
-    icon: <IconCalendarEvent stroke={stroke} />,
-    subItems: null,
+    hrefLink: null,
+    icon: <IconPresentationAnalytics stroke={stroke} />,
+    subItems: [
+      {
+        id: 'all',
+        nameOption: 'Lista',
+        titleOption: null,
+        url: '/admin/eventos',
+      },
+      {
+        id: 'calendar',
+        nameOption: 'Calendario',
+        titleOption: null,
+        url: '/admin/eventos/calendario',
+      },
+    ],
   },
   {
     id: '3',
-    nameOption: 'Ponentes',
+    nameOption: 'Participantes',
     titleOption: null,
-    hrefLink: '/admin/ponentes',
+    hrefLink: null,
     icon: <IconUsers stroke={stroke} />,
-    subItems: null,
+    subItems: [
+      {
+        id: 'all',
+        nameOption: 'Todos',
+        titleOption: null,
+        url: '/admin/participantes',
+      },
+      {
+        id: 'speakers',
+        nameOption: 'Ponentes',
+        titleOption: null,
+        url: '/admin/participantes/ponentes',
+      },
+      {
+        id: 'asistens',
+        nameOption: 'Asistentes',
+        titleOption: null,
+        url: '/admin/participantes/asistentes',
+      },
+      {
+        id: 'summary',
+        nameOption: 'Resúmenes',
+        titleOption: null,
+        url: '/admin/participantes/resumenes',
+      },
+    ],
   },
   {
     id: '4',
@@ -62,7 +100,7 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Temáticas',
     titleOption: null,
     hrefLink: '/admin/tematicas',
-    icon: <IconCategory2 stroke={stroke} />,
+    icon: <IconStack3 stroke={stroke} />,
     subItems: null,
   },
 ]

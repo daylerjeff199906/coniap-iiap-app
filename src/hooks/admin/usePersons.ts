@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import {
   createPerson,
@@ -5,8 +6,9 @@ import {
   updatePerson,
   fetchPerson,
   fetchPersonsInEvent,
+  fetchPersonsNotInEvent,
 } from '@/api'
-import { IPerson } from '@/types'
+import { IPerson, IRes } from '@/types'
 import { toast } from 'sonner'
 
 const message =
@@ -17,6 +19,7 @@ export function usePersons() {
   const [person, setPerson] = useState<IPerson | null>(null)
   const [persons, setPersons] = useState<IPerson[] | null>(null)
   const [personInEvent, setPersonInEvent] = useState<IPerson[] | null>(null)
+  const [asisstants, setAssistants] = useState<IPerson[] | null>(null)
 
   const addPerson = async (data: IPerson) => {
     setLoading(true)
@@ -51,17 +54,16 @@ export function usePersons() {
 
   const updatePersonData = async (id: string, data: IPerson) => {
     setLoading(true)
-    const res = await updatePerson(id, data)
-      .then((res) => res)
-      .catch((err) => err)
-    if (res) {
+    const res: IRes = (await updatePerson(id, data)) as IRes
+
+    if (res.message) {
+      toast.error('Error al actualizar persona', { description: res.message })
+      setLoading(false)
+      return res
+    } else {
       toast.success('Persona actualizada correctamente')
       setLoading(false)
-      return res[0]
-    } else {
-      toast.error('Error al actualizar persona')
-      setLoading(false)
-      return null
+      return res
     }
   }
 
@@ -83,6 +85,15 @@ export function usePersons() {
     setLoading(false)
   }
 
+  const getAssistants = async (query: string) => {
+    setLoading(true)
+    const data = await fetchPersonsNotInEvent(query)
+      .then((res) => res)
+      .catch((err) => err)
+    setAssistants(data)
+    setLoading(false)
+  }
+
   return {
     loading,
     addPerson,
@@ -93,5 +104,7 @@ export function usePersons() {
     persons,
     personInEvent,
     getListPersonsInEvent,
+    asisstants,
+    getAssistants,
   }
 }

@@ -8,5 +8,6 @@ import { DataNotFound } from './DataNotFound/DataNotFound'
 export * from './Cards'
 export * from './Modals'
 export * from './Tables'
+export * from './Drawer'
 
 export { NavBar, Footer, Banner, LoadingPages, BannerStatic, DataNotFound }

@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import { IPerson } from '@/types'
 import { fetchSpeakers } from '@/api'

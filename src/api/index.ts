@@ -13,6 +13,7 @@ import {
   fetchPersonById,
   updatePerson,
   fetchPersonsInEvent,
+  fetchPersonsNotInEvent,
 } from './fetchPerson'
 
 import { updateField, addFileToBucket } from './fetchFields'
@@ -39,6 +40,16 @@ import {
   fetchSponsor,
 } from './fetchSponsors'
 
+import { fetchCountries, fetchAllCountries } from './fetchCountries'
+
+import {
+  createSummary,
+  updateSummary,
+  fetchSummaries,
+  fetchSummaryStatus,
+  fetchSummaryById,
+} from './fetchSummaries'
+
 export {
   //Events crud
   fetchEvents,
@@ -53,6 +64,7 @@ export {
   fetchPersonById,
   updatePerson,
   fetchPersonsInEvent,
+  fetchPersonsNotInEvent,
   //Programs crud
   fetchProgram,
   fetchPrograms,
@@ -72,4 +84,13 @@ export {
   //Fields crud
   updateField,
   addFileToBucket,
+  //Countries
+  fetchCountries,
+  fetchAllCountries,
+  //Summaries
+  createSummary,
+  updateSummary,
+  fetchSummaries,
+  fetchSummaryStatus,
+  fetchSummaryById,
 }

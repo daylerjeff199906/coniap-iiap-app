@@ -61,8 +61,12 @@ export const CardAgendaEvent = (props: IProps) => {
             </div>
             <div>
               <User
-                name={event?.persons?.name + ' ' + event?.persons?.surName}
-                description={event?.persons?.institution}
+                name={
+                  event?.summary?.person?.name +
+                  ' ' +
+                  event?.summary?.person?.surName
+                }
+                description={event?.summary?.person?.institution}
               />
             </div>
             <Divider />

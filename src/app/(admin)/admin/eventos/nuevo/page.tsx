@@ -1,4 +1,4 @@
-import { FrmAddEvent } from '@/components'
+import { FrmAddEvent } from '@/modules/admin/events'
 
 export default function Page() {
   return (

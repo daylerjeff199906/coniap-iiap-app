@@ -1,16 +1,12 @@
+'use client'
 import { useState } from 'react'
-import { db, storage } from '@/firebase/firebase'
+import { storage } from '@/firebase/firebase'
 
 import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
 
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-import { IEvent } from '@/types'
+import { IEvent, IRes } from '@/types'
 import { toast } from 'sonner'
 
 export function useEvents() {
@@ -20,12 +16,14 @@ export function useEvents() {
 
   const createDataEvent = async (data: IEvent) => {
     setLoading(true)
-    const res = await createEvent(data)
+    const res: IRes = (await createEvent(data)) as IRes
 
-    if (res) {
-      toast.success('Evento creado con exito')
+    if (res.message) {
+      toast.error('Error al crear el programa', {
+        description: res.message,
+      })
     } else {
-      toast.error('Error al crear el programa')
+      toast.success('Evento creado con exito')
     }
     setLoading(false)
     return res
@@ -51,11 +49,13 @@ export function useEvents() {
 
   const updateDataEvent = async (id: string, data: IEvent) => {
     setLoading(true)
-    const res = await updateEvent(id, data)
-    if (res) {
-      toast.success('Evento actualizado con exito')
+    const res: IRes = (await updateEvent(id, data)) as IRes
+    if (res.message) {
+      toast.error('Error al actualizar el evento', {
+        description: res.message,
+      })
     } else {
-      toast.error('Error al actualizar el evento')
+      toast.success('Evento actualizado con exito')
     }
     setLoading(false)
     return res

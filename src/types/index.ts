@@ -7,6 +7,11 @@ import { IUser } from './IUser'
 import { ITopic } from './ITopics'
 import { IPerson } from './IPersons'
 import { IGeneralInfo } from './IGeneralInfo'
+import { IRows } from './table/IRows'
+import { IRes } from './responses/IResponse'
+import { ICountry } from './ICountry'
+import { ISummary } from './ISummary'
+import { IActions } from './table/IActions'
 
 export type {
   ISponsor,
@@ -18,4 +23,9 @@ export type {
   ITopic,
   IPerson,
   IGeneralInfo,
+  IRows,
+  IRes,
+  ICountry,
+  ISummary,
+  IActions,
 }

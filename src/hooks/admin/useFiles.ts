@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import { updateField } from '@/api'
 
@@ -29,6 +30,7 @@ export function useFiles() {
       toast.error('Error al actualizar campo')
     }
     setLoading(false)
+    return response
   }
 
   const uploadImage = async (namePath: string, file: File): Promise<string> => {
@@ -53,6 +55,7 @@ export function useFiles() {
       const storageRef = ref(storage, `${url}`)
       await deleteObject(storageRef)
       setLoading(false)
+      toast.success('Imagen eliminada correctamente')
       return true
     } catch (e) {
       console.error('Error deleting image: ', e)

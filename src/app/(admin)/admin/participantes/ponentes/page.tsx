@@ -1,10 +1,9 @@
 'use client'
-import { ListSpeakersSection, UpdateSpeaker } from '@/components'
-// import { ListProgramsSection } from '@/components'
+import { UpdateSpeaker } from '@/components'
+import { ListSpeakersSection } from '@/modules/admin'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-// import { UpdateEvento } from './updateEvento'
 
 export default function Page() {
   const searchParams = useSearchParams()
@@ -16,11 +15,14 @@ export default function Page() {
     <>
       {!isEditOrView && (
         <section className="flex gap-4 justify-between items-center">
-          <h1 className="text-2xl font-bold">Ponentes</h1>
+          <div>
+            <h1 className="text-2xl font-bold">Ponentes</h1>
+            <h3 className="text-xs">Lista de ponentes registrados</h3>
+          </div>
           <Button
             color="primary"
             as={Link}
-            href="/admin/ponentes/nuevo"
+            href="/admin/participantes/ponentes/nuevo"
             size="sm"
           >
             Añadir ponente

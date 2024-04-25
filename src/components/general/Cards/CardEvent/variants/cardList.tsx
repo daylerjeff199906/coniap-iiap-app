@@ -81,12 +81,15 @@ export const CardListEvent = (props: IProps) => {
                 <Divider />
                 <div className="flex items-center justify-between">
                   <User
-                    avatarProps={{ src: event?.persons?.image || '' }}
+                    avatarProps={{ src: event?.summary?.person?.image || '' }}
                     name={
-                      event?.persons?.name + ' ' + event?.persons?.surName ||
-                      'Nombre de ponente'
+                      event?.summary?.person?.name +
+                        ' ' +
+                        event?.summary?.person?.surName || 'Nombre de ponente'
                     }
-                    description={event?.persons?.institution || 'Institucion'}
+                    description={
+                      event?.summary?.person?.institution || 'Institucion'
+                    }
                   />
                   <Button
                     color="primary"

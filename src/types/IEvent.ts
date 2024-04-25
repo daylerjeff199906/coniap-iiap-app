@@ -1,10 +1,11 @@
-import { IPerson } from '.'
+import { ISummary } from './ISummary'
+
 export interface IEvent {
   id: string
-  program_id: string
-  person_id: string
+  summary_id: string | null
+  program_id: string | null
+  summary?: ISummary | null
   //observar
-  persons?: IPerson | null
   sala: string | number | null
   isActived: boolean
   name: string
