@@ -36,7 +36,7 @@ export const CardSpeaker = (props: IProps) => {
           removeWrapper
           isBlurred
         />
-        <CardBody className="bg-white p-6">
+        <CardBody className="bg-transparent px-0">
           <div className="flex flex-col space-y-2">
             <h3 className="font-bold text-lg sm:text-xl line-clamp-1">
               {speaker.name + ' ' + speaker.surName}
