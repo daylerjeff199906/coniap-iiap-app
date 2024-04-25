@@ -32,7 +32,6 @@ export const FrmInscriptions = () => {
     const newData: IPerson = {
       ...data,
       typePerson: 'participant',
-      file_resumen: '',
       isActived: false,
       image: '',
     }
