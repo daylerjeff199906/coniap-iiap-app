@@ -207,7 +207,7 @@ export const FrmInscriptions = () => {
               isLoading={loadAddPerson}
               isDisabled={loadAddPerson}
             >
-              Enviar
+              Enviar inscripción
             </Button>
           </div>
         </form>
