@@ -7,8 +7,9 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore'
+import { fetchPersonByEmail } from '@/api'
 
-import { IUser } from '@/types'
+import { IPerson, IUser } from '@/types'
 // import { createCookie, createLocalStorage } from '@/lib'
 import { toast } from 'sonner'
 
@@ -24,7 +25,7 @@ interface IError {
 
 export const signInWithCredentials = async (
   props: ILogin
-): Promise<IUser | string> => {
+): Promise<IUser | null> => {
   const auth = getAuth()
   const firestore = getFirestore()
   const { email, password } = props
@@ -41,10 +42,24 @@ export const signInWithCredentials = async (
       const querySnapshot = await getDocs(q)
 
       if (querySnapshot.empty) {
-        toast.error(
-          'No tiene acceso a la plataforma. Contacte al administrador.'
+        const person: IPerson = await fetchPersonByEmail(
+          userCredential.user.email as string
         )
-        return 'No tiene acceso a la plataforma. Contacte al administrador.'
+        if (person) {
+          const userData: IUser = {
+            id: person.id,
+            email: userCredential.user.email || '',
+            userName: person.name || '',
+            photo: person.image || '',
+            role: person.typePerson || '',
+          }
+          return userData
+        } else {
+          toast.error(
+            'No tiene acceso a la plataforma. Contacte al administrador.'
+          )
+          return null
+        }
       } else {
         let userData: IUser | null = null
         for (const doc of querySnapshot.docs) {
@@ -63,16 +78,19 @@ export const signInWithCredentials = async (
       }
     } else {
       toast.error('Revise su correo electrónico para verificar su cuenta')
-      return 'Por favor, verifique su correo electrónico'
+      return null
     }
   } catch (error) {
     const err = error as unknown as IError
     if (err.code === 'auth/user-not-found') {
-      return 'El usuario no existe'
+      toast.error('El usuario no existe')
+      return null
     } else if (err.code === 'auth/wrong-password') {
-      return 'La contraseña es incorrecta'
+      toast.error('La contraseña es incorrecta')
+      return null
     } else {
-      return err.message
+      toast.error('Error desconocido', { description: err.message })
+      return null
     }
   }
 }

@@ -109,3 +109,20 @@ export async function fetchPersonsInEvent() {
     return data
   }
 }
+
+//find person by email
+export async function fetchPersonByEmail(email: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('*')
+    .eq('email', email)
+    .single()
+
+  if (error) {
+    return null
+  } else {
+    return data
+  }
+}

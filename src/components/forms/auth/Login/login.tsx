@@ -24,12 +24,13 @@ export const FrmLogin = () => {
     const res = await signInWithCredentials(data)
     await createCookie('user', JSON.stringify(res))
     await createLocalStorage('user', res)
-    new Promise((resolve) => setTimeout(resolve, 2000))
+    new Promise((resolve) => setTimeout(resolve, 1000))
 
     if (res !== null) {
       if (res?.role === 'admin') {
-        console.log('admin', data)
         router.push('/admin')
+      } else if (res?.role !== 'participant') {
+        router.push('/dashboard')
       } else {
         router.push('/')
       }
@@ -39,16 +40,17 @@ export const FrmLogin = () => {
 
   const handleGoogle = async () => {
     setLoading(true)
-    const data = await SignInWithGoogle()
+    const res = await SignInWithGoogle()
 
-    await createCookie('user', JSON.stringify(data))
-    await createLocalStorage('user', data)
+    await createCookie('user', JSON.stringify(res))
+    await createLocalStorage('user', res)
 
-    new Promise((resolve) => setTimeout(resolve, 2000))
-    if (data !== null) {
-      if (data?.role === 'admin') {
-        console.log('admin', data)
+    new Promise((resolve) => setTimeout(resolve, 1000))
+    if (res !== null) {
+      if (res?.role === 'admin') {
         router.push('/admin')
+      } else if (res?.role !== 'participant') {
+        router.push('/dashboard')
       } else {
         router.push('/')
       }
