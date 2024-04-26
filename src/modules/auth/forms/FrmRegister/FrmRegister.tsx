@@ -53,19 +53,7 @@ export const FrmRegister = () => {
 
   return (
     <>
-      <div className="max-w-md px-8 py-10 flex flex-col justify-center gap-4 shadow-large rounded-lg w-full">
-        <div className="flex gap-3 items-center justify-center">
-          <Image
-            src={svgIsotipoConiap.src}
-            alt="Logo de CONIAP"
-            removeWrapper
-            className="w-24"
-          />
-          <div>
-            <h1 className="text-2xl font-bold">Regístrate</h1>
-            <p className="text-sm text-gray-600">Crea tu cuenta en CONIAP</p>
-          </div>
-        </div>
+      <div className="flex flex-col justify-center gap-4 w-full">
         <FormProvider {...methods}>
           <form
             className="flex flex-col gap-4"
@@ -111,7 +99,7 @@ export const FrmRegister = () => {
                   aria-label="Contraseña"
                   label="Contraseña"
                   labelPlacement="outside"
-                  placeholder="Escribe tu contraseña"
+                  placeholder="* * * * * * * *"
                   type="password"
                   radius="sm"
                   value={value}
@@ -155,7 +143,7 @@ export const FrmRegister = () => {
             </Button>
           </form>
         </FormProvider>
-        <div className="flex gap-3 items-center">
+        <footer className="flex gap-3 items-center">
           <Button
             fullWidth
             variant="bordered"
@@ -171,7 +159,7 @@ export const FrmRegister = () => {
           >
             Iniciar con Google
           </Button>
-        </div>
+        </footer>
         <div className="flex flex-col justify-center items-center">
           <Link
             href="/login"

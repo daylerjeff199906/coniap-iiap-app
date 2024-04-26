@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 import { createCookie, createLocalStorage } from '@/lib'
+import Link from 'next/link'
 
 interface ILogin {
   email: string
@@ -60,86 +61,96 @@ export const FrmLogin = () => {
 
   return (
     <>
-      <section className="w-full flex items-center justify-center h-screen">
-        {/* <button onClick={signInWithGoogle}>Login with Google</button> */}
-        <div className="w-full max-w-md  px-8 py-6 h-fit sm:shadow-2xl rounded-lg">
-          <h1 className="text-2xl font-bold text-center pb-8">
-            Iniciar Sesión
-          </h1>
-          <form
-            className="w-full space-y-4 pb-6"
-            onSubmit={methods.handleSubmit(onSubmit)}
+      <form
+        className="w-full flex flex-col gap-10 "
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
+        <section className="flex flex-col gap-5 pb-4">
+          <Controller
+            control={methods.control}
+            name="email"
+            rules={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: 'Invalid email address',
+              },
+            }}
+            render={({ field: { value, onChange } }) => (
+              <Input
+                label="Correo electrónico"
+                labelPlacement="outside"
+                type="email"
+                placeholder="correo@correo.com"
+                radius="sm"
+                value={value}
+                onValueChange={onChange}
+                isInvalid={methods.formState.errors.email !== undefined}
+                errorMessage={methods.formState.errors.email?.message}
+              />
+            )}
+          />
+          <Controller
+            control={methods.control}
+            name="password"
+            rules={{ required: 'Password is required' }}
+            render={({ field: { value, onChange } }) => (
+              <Input
+                type="password"
+                label="Contraseña"
+                labelPlacement="outside"
+                placeholder="* * * * * * * *"
+                radius="sm"
+                value={value}
+                onValueChange={onChange}
+                isInvalid={methods.formState.errors.password !== undefined}
+                errorMessage={methods.formState.errors.password?.message}
+              />
+            )}
+          />
+        </section>
+        <section className="pt-2 flex justify-end">
+          <Link
+            href="/forgotPassword"
+            className="text-primary-500 hover:text-primary-800 cursor-pointer text-xs text-end pb-2 underline"
           >
-            <section className="space-y-12">
-              <Controller
-                control={methods.control}
-                name="email"
-                rules={{
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: 'Invalid email address',
-                  },
-                }}
-                render={({ field: { value, onChange } }) => (
-                  <Input
-                    label="Email"
-                    labelPlacement="outside"
-                    type="email"
-                    placeholder="Email"
-                    radius="sm"
-                    value={value}
-                    onValueChange={onChange}
-                    isInvalid={methods.formState.errors.email !== undefined}
-                    errorMessage={methods.formState.errors.email?.message}
-                  />
-                )}
-              />
-              <Controller
-                control={methods.control}
-                name="password"
-                rules={{ required: 'Password is required' }}
-                render={({ field: { value, onChange } }) => (
-                  <Input
-                    type="password"
-                    label="Password"
-                    labelPlacement="outside"
-                    placeholder="Password"
-                    radius="sm"
-                    value={value}
-                    onValueChange={onChange}
-                    isInvalid={methods.formState.errors.password !== undefined}
-                    errorMessage={methods.formState.errors.password?.message}
-                  />
-                )}
-              />
-            </section>
-            <Button
-              variant="solid"
-              color="primary"
-              fullWidth
-              radius="sm"
-              type="submit"
-              isDisabled={loading}
-              isLoading={loading}
-            >
-              Iniciar sesión
-            </Button>
-          </form>
-          <Divider />
-          <section className="pt-6">
-            <Button
-              radius="sm"
-              fullWidth
-              className="flex items-center justify-center space-x-2"
-              variant="light"
-              onPress={handleGoogle}
-            >
-              Sign in with Google
-            </Button>
-          </section>
-        </div>
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </section>
+        <Button
+          variant="solid"
+          color="primary"
+          fullWidth
+          radius="sm"
+          type="submit"
+          isDisabled={loading}
+          isLoading={loading}
+          size="lg"
+        >
+          Iniciar sesión
+        </Button>
+      </form>
+      <section className="pt-3 flex flxe-col justify-center items-center pb-3">
+        <Link
+          href="/singIn"
+          className="text-center text-sm text-primary-500 hover:text-primary-800 cursor-pointer"
+        >
+          ¿ No tienes cuenta? <span className="font-bold">Regístrate</span>
+        </Link>
       </section>
+      <Divider />
+      <section className="pt-6 ">
+        <Button
+          radius="sm"
+          fullWidth
+          className="flex items-center justify-center space-x-2"
+          variant="light"
+          onPress={handleGoogle}
+        >
+          Sign in with Google
+        </Button>
+      </section>
+
       <LoadingPages isOpen={loading} />
     </>
   )
