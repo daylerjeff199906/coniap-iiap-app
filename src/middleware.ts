@@ -15,6 +15,12 @@ export function middleware(request: NextRequest) {
       request.nextUrl.pathname === '/admin'
     ) {
       return NextResponse.next()
+    } else if (
+      dataUser &&
+      dataUser?.role !== 'participant' &&
+      request.nextUrl.pathname === '/dashboard'
+    ) {
+      return NextResponse.next()
     }
   }
 
@@ -24,5 +30,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   //   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/dashboard/:path*'],
 }
