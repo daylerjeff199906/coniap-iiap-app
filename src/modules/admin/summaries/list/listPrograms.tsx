@@ -63,7 +63,7 @@ export const ListPrograms = (props: IProps) => {
             programs !== null
               ? programs?.map((program) => {
                   return {
-                    key: program.id,
+                    key: String(program.id),
                     name: program.title,
                     date: program.date,
                     events: program.events?.length,
