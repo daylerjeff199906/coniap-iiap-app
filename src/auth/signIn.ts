@@ -7,7 +7,7 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore'
-import { fetchPersonByEmail } from '@/api'
+import { fetchPersonByEmail, createPerson } from '@/api'
 
 import { IPerson, IUser } from '@/types'
 // import { createCookie, createLocalStorage } from '@/lib'
@@ -42,12 +42,12 @@ export const signInWithCredentials = async (
       const querySnapshot = await getDocs(q)
 
       if (querySnapshot.empty) {
-        const person: IPerson = await fetchPersonByEmail(
+        const person: IPerson = (await fetchPersonByEmail(
           userCredential.user.email as string
-        )
+        )) as IPerson
         if (person) {
           const userData: IUser = {
-            id: person.id,
+            id: person.id as string,
             email: userCredential.user.email || '',
             userName: person.name || '',
             photo: person.image || '',
@@ -55,10 +55,36 @@ export const signInWithCredentials = async (
           }
           return userData
         } else {
-          toast.error(
-            'No tiene acceso a la plataforma. Contacte al administrador.'
-          )
-          return null
+          const newPerson: IPerson = {
+            email: userCredential.user.email || '',
+            name: userCredential.user.displayName || '',
+            surName: '',
+            image: userCredential.user.photoURL || '',
+            typePerson: 'speaker',
+            institution: '',
+            presentation: '',
+            isActived: true,
+            location: '',
+            phone: '',
+            job: '',
+            created_at: new Date().toISOString(),
+          }
+          const personCreated = await createPerson(newPerson)
+            .then((res) => res)
+            .catch((err) => err)
+          if (personCreated) {
+            const userData: IUser = {
+              id: personCreated[0].id,
+              email: userCredential.user.email || '',
+              userName: userCredential.user.displayName || '',
+              photo: userCredential.user.photoURL || '',
+              role: 'speaker',
+            }
+            return userData
+          } else {
+            toast.error('No se pudo crear el usuario')
+            return null
+          }
         }
       } else {
         let userData: IUser | null = null
@@ -87,6 +113,21 @@ export const signInWithCredentials = async (
       return null
     } else if (err.code === 'auth/wrong-password') {
       toast.error('La contraseña es incorrecta')
+      return null
+    } else if (err.code === 'auth/too-many-requests') {
+      toast.error('Demasiados intentos fallidos. Intente más tarde')
+      return null
+    } else if (err.code === 'auth/user-disabled') {
+      toast.error('El usuario ha sido deshabilitado')
+      return null
+    } else if (err.code === 'auth/invalid-email') {
+      toast.error('El correo no es válido')
+      return null
+    } else if (err.code === 'auth/email-already-in-use') {
+      toast.error('El correo ya está en uso')
+      return null
+    } else if (err.code === 'auth/invalid-credential') {
+      toast.error('Credenciales no válidas')
       return null
     } else {
       toast.error('Error desconocido', { description: err.message })
