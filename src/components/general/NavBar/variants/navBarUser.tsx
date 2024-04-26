@@ -119,7 +119,7 @@ export const NavBarUser = () => {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem>
-              {user ? (
+              {user?.id ? (
                 <Popover
                   placement="bottom"
                   showArrow
@@ -155,13 +155,13 @@ export const NavBarUser = () => {
               ) : (
                 <Button
                   as={Link}
-                  color="danger"
-                  href="/login"
-                  variant="solid"
+                  href="/inscripciones"
+                  // variant="solid"
                   radius="full"
                   size="sm"
+                  className="bg-transparent hover:bg-[#002D61] text-white hover:text-white border-white border"
                 >
-                  Iniciar Sesión
+                  ¡Inscríbete ya!
                 </Button>
               )}
             </NavbarItem>
@@ -215,16 +215,51 @@ export const NavBarUser = () => {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem>
-              <Button
-                as={Link}
-                color="danger"
-                href="/inscripciones"
-                variant="solid"
-                radius="full"
-                size="sm"
-              >
-                ¡Inscríbete ya!
-              </Button>
+              {user?.id ? (
+                <Popover
+                  placement="bottom"
+                  showArrow
+                >
+                  <PopoverTrigger>
+                    <User
+                      as={Button}
+                      variant="light"
+                      size="sm"
+                      name={user?.userName}
+                      description={user?.email}
+                      avatarProps={{
+                        src: user?.photo,
+                        size: 'sm',
+                      }}
+                    />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <Listbox
+                      variant="faded"
+                      aria-label="Menu"
+                    >
+                      <ListboxItem
+                        aria-label="Cerrar Sesión"
+                        key="out"
+                        onPress={handleLogout}
+                      >
+                        Cerrar Sesión
+                      </ListboxItem>
+                    </Listbox>
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <Button
+                  as={Link}
+                  color="danger"
+                  href="/inscripciones"
+                  variant="solid"
+                  radius="full"
+                  size="sm"
+                >
+                  ¡Inscríbete ya!
+                </Button>
+              )}
             </NavbarItem>
           </NavbarContent>
         </Navbar>
