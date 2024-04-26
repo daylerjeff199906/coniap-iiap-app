@@ -1,23 +1,36 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Button,
+  Listbox,
+  ListboxItem,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenuToggle,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  User,
 } from '@nextui-org/react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
+import { getLocalStorage, deleteLocalStorage, deleteCookie } from '@/lib'
+import { IUser } from '@/types'
 
 export const NavBarUser = () => {
+  const [user, setUser] = useState<IUser | null>(null)
+
   const pathname = usePathname()
+  const router = useRouter()
+
   const { scrollY } = useScroll()
   const navbarY = useTransform(scrollY, [0, 20], [-100, 0])
   const navbarYEmpty = useTransform(scrollY, [0, 20], [0, -100])
@@ -26,6 +39,17 @@ export const NavBarUser = () => {
     [0, 20], // Rango de entrada: de 0 a 20 píxeles
     ['rgba(0,0,0,0)', 'rgba(0,45,97,1)'] // Rango de salida: de transparente a azul con opacidad
   )
+
+  useEffect(() => {
+    const user: IUser = getLocalStorage('user')
+    setUser(user)
+  }, [])
+
+  const handleLogout = () => {
+    deleteLocalStorage('user')
+    deleteCookie('user')
+    router.push('/')
+  }
 
   return (
     <>
@@ -95,15 +119,51 @@ export const NavBarUser = () => {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem>
-              <Button
-                as={Link}
-                href="/inscripciones"
-                radius="full"
-                size="sm"
-                className="text-white bg-transparent border-white border-2 hover:bg-white hover:text-black font-bold"
-              >
-                ¡Inscríbete ya!
-              </Button>
+              {user ? (
+                <Popover
+                  placement="bottom"
+                  showArrow
+                >
+                  <PopoverTrigger>
+                    <User
+                      as={Button}
+                      variant="light"
+                      size="sm"
+                      name={user?.userName}
+                      description={user?.email}
+                      avatarProps={{
+                        src: user?.photo,
+                        size: 'sm',
+                      }}
+                    />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <Listbox
+                      variant="faded"
+                      aria-label="Menu"
+                    >
+                      <ListboxItem
+                        aria-label="Cerrar Sesión"
+                        key="out"
+                        onPress={handleLogout}
+                      >
+                        Cerrar Sesión
+                      </ListboxItem>
+                    </Listbox>
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <Button
+                  as={Link}
+                  color="danger"
+                  href="/login"
+                  variant="solid"
+                  radius="full"
+                  size="sm"
+                >
+                  Iniciar Sesión
+                </Button>
+              )}
             </NavbarItem>
           </NavbarContent>
         </Navbar>
