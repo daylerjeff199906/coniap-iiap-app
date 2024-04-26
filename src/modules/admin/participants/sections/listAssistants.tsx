@@ -66,7 +66,7 @@ export const ListAssistants = () => {
           asisstants !== null
             ? asisstants?.map((speaker) => {
                 return {
-                  key: speaker.id,
+                  key: String(speaker.id),
                   name: RenderColumnName(speaker.name, speaker.surName),
                   job: speaker.job,
                   institution: speaker.institution,
