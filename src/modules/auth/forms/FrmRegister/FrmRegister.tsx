@@ -37,7 +37,7 @@ export const FrmRegister = () => {
     } else {
       toast.success('Usuario creado con éxito', {
         description:
-          'Se ha enviado un correo de verificación, Inicia sesión para continuar',
+          'Se ha enviado un correo de verificación,Confirme su correo, Inicia sesión para continuar',
       })
       methods.reset()
       router.push('/login')

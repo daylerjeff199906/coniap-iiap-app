@@ -1,3 +1,4 @@
+'use server'
 import { createClient } from '@/utils/supabase/server'
 
 interface ICrendentials {
@@ -5,7 +6,12 @@ interface ICrendentials {
   password: string
 }
 
-async function signUpNewUser(props: ICrendentials) {
+interface IError {
+  code: string
+  message: string
+}
+
+export async function signUpNewUser(props: ICrendentials) {
   const { email, password } = props
   const supabase = createClient()
   const { data, error } = await supabase.auth.signUp({
@@ -16,5 +22,22 @@ async function signUpNewUser(props: ICrendentials) {
       emailRedirectTo: '/',
     },
   })
-  console.log(data, error)
+
+  console.log(data)
+    console.log(error)
+
+  if (error) {
+    const err = error as unknown as IError
+    if (err.code === 'auth/email-already-in-use') {
+      return 'El correo ya está en uso'
+    } else if (err.code === 'auth/invalid-email') {
+      return 'El correo no es válido'
+    } else if (err.code === 'auth/weak-password') {
+      return 'La contraseña es débil'
+    } else {
+      return err.message
+    }
+  } else {
+    return data
+  }
 }
