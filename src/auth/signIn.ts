@@ -13,6 +13,7 @@ import { IError } from './types'
 import { IPerson, IUser } from '@/types'
 // import { createCookie, createLocalStorage } from '@/lib'
 import { toast } from 'sonner'
+import { getErrors } from './getErrors'
 
 interface ILogin {
   email: string
@@ -104,30 +105,7 @@ export const signInWithCredentials = async (
     }
   } catch (error) {
     const err = error as unknown as IError
-    if (err.code === 'auth/user-not-found') {
-      toast.error('El usuario no existe')
-      return null
-    } else if (err.code === 'auth/wrong-password') {
-      toast.error('La contraseña es incorrecta')
-      return null
-    } else if (err.code === 'auth/too-many-requests') {
-      toast.error('Demasiados intentos fallidos. Intente más tarde')
-      return null
-    } else if (err.code === 'auth/user-disabled') {
-      toast.error('El usuario ha sido deshabilitado')
-      return null
-    } else if (err.code === 'auth/invalid-email') {
-      toast.error('El correo no es válido')
-      return null
-    } else if (err.code === 'auth/email-already-in-use') {
-      toast.error('El correo ya está en uso')
-      return null
-    } else if (err.code === 'auth/invalid-credential') {
-      toast.error('Credenciales no válidas')
-      return null
-    } else {
-      toast.error('Error desconocido', { description: err.message })
-      return null
-    }
+    toast.error(getErrors(err))
+    return null
   }
 }

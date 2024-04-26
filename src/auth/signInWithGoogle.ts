@@ -13,6 +13,7 @@ import { IError } from './types'
 import { toast } from 'sonner'
 
 import { fetchPersonByEmail, createPerson } from '@/api'
+import { getErrors } from './getErrors'
 
 export const SignInWithGoogle = async (): Promise<IUser | null> => {
   const provider = new GoogleAuthProvider()
@@ -79,32 +80,8 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
       return userData
     }
   } catch (error) {
-    console.error(error)
     const err = error as unknown as IError
-    if (err.code === 'auth/user-not-found') {
-      toast.error('El usuario no existe')
-      return null
-    } else if (err.code === 'auth/wrong-password') {
-      toast.error('La contraseña es incorrecta')
-      return null
-    } else if (err.code === 'auth/too-many-requests') {
-      toast.error('Demasiados intentos fallidos. Intente más tarde')
-      return null
-    } else if (err.code === 'auth/user-disabled') {
-      toast.error('El usuario ha sido deshabilitado')
-      return null
-    } else if (err.code === 'auth/invalid-email') {
-      toast.error('El correo no es válido')
-      return null
-    } else if (err.code === 'auth/email-already-in-use') {
-      toast.error('El correo ya está en uso')
-      return null
-    } else if (err.code === 'auth/invalid-credential') {
-      toast.error('Credenciales no válidas')
-      return null
-    } else {
-      toast.error('Error desconocido', { description: err.message })
-      return null
-    }
+    toast.error(getErrors(err))
+    return null
   }
 }
