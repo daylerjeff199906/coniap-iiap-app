@@ -8,6 +8,7 @@ import {
   getDocs,
 } from 'firebase/firestore'
 import { fetchPersonByEmail, createPerson } from '@/api'
+import { IError } from './types'
 
 import { IPerson, IUser } from '@/types'
 // import { createCookie, createLocalStorage } from '@/lib'
@@ -16,11 +17,6 @@ import { toast } from 'sonner'
 interface ILogin {
   email: string
   password: string
-}
-
-interface IError {
-  code: string
-  message: string
 }
 
 export const signInWithCredentials = async (

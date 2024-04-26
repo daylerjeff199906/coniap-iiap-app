@@ -8,9 +8,11 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore'
-
+import { IPerson, IUser } from '@/types'
+import { IError } from './types'
 import { toast } from 'sonner'
-import { IUser } from '@/types'
+
+import { fetchPersonByEmail, createPerson } from '@/api'
 
 export const SignInWithGoogle = async (): Promise<IUser | null> => {
   const provider = new GoogleAuthProvider()
@@ -25,8 +27,41 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
     const querySnapshot = await getDocs(q)
 
     if (querySnapshot.empty) {
-      toast.error('No tiene acceso a la plataforma. Contacte al administrador.')
-      return null
+      const person = await fetchPersonByEmail(user.email as string)
+      if (person) {
+        const userData: IUser = {
+          id: person.id as string,
+          email: user.email || '',
+          userName: person.name || '',
+          photo: person.image || '',
+          role: person.typePerson || '',
+        }
+        return userData
+      } else {
+        const newPerson: IPerson = {
+          email: user.email || '',
+          name: user.displayName || '',
+          surName: '',
+          image: user.photoURL || '',
+          typePerson: 'speaker',
+          institution: '',
+          job: '',
+          created_at: new Date().toISOString(),
+          isActived: true,
+          location: '',
+          phone: '',
+          presentation: '',
+        }
+        await createPerson(newPerson)
+        const userData: IUser = {
+          id: user.uid,
+          email: user.email || '',
+          userName: user.displayName || '',
+          photo: user.photoURL || '',
+          role: 'speaker',
+        }
+        return userData
+      }
     } else {
       let userData: IUser | null = null
       for (const doc of querySnapshot.docs) {
@@ -45,6 +80,31 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
     }
   } catch (error) {
     console.error(error)
-    return null
+    const err = error as unknown as IError
+    if (err.code === 'auth/user-not-found') {
+      toast.error('El usuario no existe')
+      return null
+    } else if (err.code === 'auth/wrong-password') {
+      toast.error('La contraseña es incorrecta')
+      return null
+    } else if (err.code === 'auth/too-many-requests') {
+      toast.error('Demasiados intentos fallidos. Intente más tarde')
+      return null
+    } else if (err.code === 'auth/user-disabled') {
+      toast.error('El usuario ha sido deshabilitado')
+      return null
+    } else if (err.code === 'auth/invalid-email') {
+      toast.error('El correo no es válido')
+      return null
+    } else if (err.code === 'auth/email-already-in-use') {
+      toast.error('El correo ya está en uso')
+      return null
+    } else if (err.code === 'auth/invalid-credential') {
+      toast.error('Credenciales no válidas')
+      return null
+    } else {
+      toast.error('Error desconocido', { description: err.message })
+      return null
+    }
   }
 }
