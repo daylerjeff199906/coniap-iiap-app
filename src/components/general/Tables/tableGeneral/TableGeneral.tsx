@@ -51,7 +51,7 @@ export const TableGeneral = (props: IProps) => {
   const pathname = usePathname()
 
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
-    const value = getKeyValue(item, columnKey)
+    const value = getKeyValue(item, columnKey as string)
     switch (columnKey) {
       case 'actions':
         return (
