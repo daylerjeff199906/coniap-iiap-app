@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components/general'
 import { IColumns, IRows } from '@/types'
 
-import { usePersons, usePrograms } from '@/hooks/admin'
+import { usePersons } from '@/hooks/admin'
 import { useFormContext } from 'react-hook-form'
 
 const columns: IColumns[] = [
@@ -62,7 +62,7 @@ export const ListSpeakers = (props: IProps) => {
             persons !== null
               ? persons?.map((person) => {
                   return {
-                    key: person.id,
+                    key: String(person.id),
                     fullname: person.name + ' ' + person.surName,
                     typePerson: person.typePerson,
                     estado: person.isActived ? 'Activo' : 'Inactivo',
