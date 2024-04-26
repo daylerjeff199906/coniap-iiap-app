@@ -92,7 +92,7 @@ export const ListSummaries = () => {
           summaries !== null
             ? summaries?.map((summary) => {
                 return {
-                  key: summary.id,
+                  key: String(summary.id),
                   title: summary.title,
                   created_at: summary.created_at,
                   person: summary.person?.name + ' ' + summary.person?.surName,

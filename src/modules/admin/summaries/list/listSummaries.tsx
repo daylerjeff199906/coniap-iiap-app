@@ -71,7 +71,7 @@ export const ListSummaries = (props: IProps) => {
             summaries !== null
               ? summaries?.map((summary) => {
                   return {
-                    key: summary.id,
+                    key: String(summary.id),
                     title: summary.title,
                     created_at: summary.created_at,
                     person:

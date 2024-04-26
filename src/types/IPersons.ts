@@ -1,5 +1,5 @@
 export interface IPerson {
-  id: string
+  id?: string
   name: string
   surName: string
   phone?: string

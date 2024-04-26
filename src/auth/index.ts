@@ -1,9 +1,13 @@
 import { SignInWithGoogle } from './signInWithGoogle'
 import { signInWithCredentials } from './signIn'
-import { registerAndSendEmailVerification } from './registerWithEmail'
+import {
+  registerAndSendEmailVerification,
+  registerWithEmail,
+} from './registerWithEmail'
 
 export {
   SignInWithGoogle,
   signInWithCredentials,
   registerAndSendEmailVerification,
+  registerWithEmail,
 }

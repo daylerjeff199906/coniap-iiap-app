@@ -1,10 +1,12 @@
 'use client'
+import { useState } from 'react'
 import { Button, Image, Input } from '@nextui-org/react'
 import { svgIsotipoConiap } from '@/assets'
 import Link from 'next/link'
 import { FormProvider, Controller, useForm } from 'react-hook-form'
 import { registerAndSendEmailVerification, SignInWithGoogle } from '@/auth'
-import { useState } from 'react'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 interface ICredentials {
   email: string
@@ -13,6 +15,7 @@ interface ICredentials {
 
 export const FrmRegister = () => {
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const methods = useForm<ICredentials>({
     defaultValues: {
       email: '',
@@ -22,7 +25,23 @@ export const FrmRegister = () => {
 
   const onSubmit = async (data: ICredentials) => {
     setLoading(true)
-    await registerAndSendEmailVerification(data)
+    const res = await registerAndSendEmailVerification(data)
+    if (res === 'El correo ya está en uso') {
+      toast.error('El correo ya está en uso', {
+        description: 'Intenta con otro correo, o intenta iniciar sesión',
+      })
+    } else if (res === 'El correo no es válido') {
+      toast.error('El correo no es válido')
+    } else if (res === 'La contraseña es débil') {
+      toast.error('La contraseña es débil')
+    } else {
+      toast.success('Usuario creado con éxito', {
+        description:
+          'Se ha enviado un correo de verificación,Confirme su correo, Inicia sesión para continuar',
+      })
+      methods.reset()
+      router.push('/login')
+    }
     setLoading(false)
   }
 
@@ -34,19 +53,7 @@ export const FrmRegister = () => {
 
   return (
     <>
-      <div className="max-w-md px-8 py-10 flex flex-col justify-center gap-4 shadow-large rounded-lg w-full">
-        <div className="flex gap-3 items-center justify-center">
-          <Image
-            src={svgIsotipoConiap.src}
-            alt="Logo de CONIAP"
-            removeWrapper
-            className="w-24"
-          />
-          <div>
-            <h1 className="text-2xl font-bold">Regístrate</h1>
-            <p className="text-sm text-gray-600">Crea tu cuenta en CONIAP</p>
-          </div>
-        </div>
+      <div className="flex flex-col justify-center gap-4 w-full">
         <FormProvider {...methods}>
           <form
             className="flex flex-col gap-4"
@@ -64,10 +71,10 @@ export const FrmRegister = () => {
               }}
               render={({ field: { onChange, value } }) => (
                 <Input
-                  aria-label="Usuario"
-                  label="Usuario"
+                  aria-label="email"
+                  label="Correo electrónico"
                   labelPlacement="outside"
-                  placeholder="Escribe tu usuario"
+                  placeholder="ejemplo@ejemplo.com"
                   radius="sm"
                   value={value}
                   onChange={onChange}
@@ -92,7 +99,7 @@ export const FrmRegister = () => {
                   aria-label="Contraseña"
                   label="Contraseña"
                   labelPlacement="outside"
-                  placeholder="Escribe tu contraseña"
+                  placeholder="* * * * * * * *"
                   type="password"
                   radius="sm"
                   value={value}
@@ -136,7 +143,7 @@ export const FrmRegister = () => {
             </Button>
           </form>
         </FormProvider>
-        <div className="flex gap-3 items-center">
+        <footer className="flex gap-3 items-center">
           <Button
             fullWidth
             variant="bordered"
@@ -152,7 +159,7 @@ export const FrmRegister = () => {
           >
             Iniciar con Google
           </Button>
-        </div>
+        </footer>
         <div className="flex flex-col justify-center items-center">
           <Link
             href="/login"

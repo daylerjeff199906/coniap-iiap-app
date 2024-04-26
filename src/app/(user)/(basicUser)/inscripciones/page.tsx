@@ -48,7 +48,7 @@ export default function Page() {
                   size="lg"
                   radius="full"
                   as={Link}
-                  href="/register"
+                  href="/singIn"
                   color="danger"
                 >
                   Enviar propuesta

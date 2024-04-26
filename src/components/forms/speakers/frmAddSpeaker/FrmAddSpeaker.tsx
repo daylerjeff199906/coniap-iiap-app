@@ -44,7 +44,7 @@ export const FrmAddSpeaker = () => {
     const speaker: IPerson = await addPerson(newData)
     if (speaker && file.length > 0) {
       const url = await uploadImage('speaker', file[0])
-      await editField(speaker.id, 'persons', 'image', url)
+      await editField(String(speaker.id), 'persons', 'image', url)
     }
 
     if (speaker) {

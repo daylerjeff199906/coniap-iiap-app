@@ -62,7 +62,7 @@ export const ListSpeakers = (props: IProps) => {
             persons !== null
               ? persons?.map((person) => {
                   return {
-                    key: person.id,
+                    key: String(person.id),
                     fullname: person.name + ' ' + person.surName,
                     typePerson: person.typePerson,
                     estado: person.isActived ? 'Activo' : 'Inactivo',
