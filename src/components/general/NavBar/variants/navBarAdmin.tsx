@@ -14,7 +14,6 @@ import {
 
 import { useRouter } from 'next/navigation'
 import { getLocalStorage, deleteLocalStorage, deleteCookie } from '@/lib'
-import { useEffect, useState } from 'react'
 import { IUser } from '@/types'
 // import { IUser } from '@/types'
 
@@ -22,7 +21,7 @@ export const NavBarAdmin = () => {
   // const [user, setUser] = useState<IUser | null>(null)
 
   const router = useRouter()
-  const user: IUser = getLocalStorage('user')
+  const user: IUser = getLocalStorage('user') as unknown as IUser
 
   // useEffect(() => {
   //   setUser(user)
