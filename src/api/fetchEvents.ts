@@ -13,7 +13,7 @@ export async function fetchEvents(props: IProps) {
 
   const { data: event } = await supabase
     .from('events')
-    .select('*')
+    .select('*,summary:summary_id(*, person:person_id(*))')
     .eq('isActived', true)
     .ilike('name', `%${query}%`)
 
@@ -37,7 +37,7 @@ export async function fetchEventById(id: string) {
 
   const { data: event, error } = await supabase
     .from('events')
-    .select('*')
+    .select('*,summary:summary_id(*, person:person_id(*))')
     .eq('id', id)
     .single()
 

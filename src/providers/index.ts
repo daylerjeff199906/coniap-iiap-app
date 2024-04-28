@@ -1,6 +1,3 @@
-import {
-  EventToProgramProvider,
-  useLogicEventToProgram,
-} from './EvenToPtogramProvider'
+import { AuthProvider, useAuth } from './authProvider'
 
-export { EventToProgramProvider, useLogicEventToProgram }
+export { AuthProvider, useAuth }

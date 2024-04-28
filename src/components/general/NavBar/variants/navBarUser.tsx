@@ -88,16 +88,17 @@ export const NavBarUser = () => {
           isBlurred={false}
         >
           <NavbarContent>
-            <NavbarBrand>
-              <Link href={'/'}>
-                <Image
-                  src="/logo_coniap.webp"
-                  alt="Logo"
-                  width={120}
-                  height={90}
-                  priority
-                />
-              </Link>
+            <NavbarBrand
+              as={Link}
+              href={'/'}
+            >
+              <Image
+                src="/logo_coniap.webp"
+                alt="Logo"
+                width={120}
+                height={90}
+                priority
+              />
             </NavbarBrand>
           </NavbarContent>
 

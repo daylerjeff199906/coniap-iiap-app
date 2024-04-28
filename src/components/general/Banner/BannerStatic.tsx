@@ -26,7 +26,7 @@ export const BannerStatic = (props: IBanner) => {
             <h1 className="text-[2.6rem] sm:text-6xl font-bold pb-1 sm:pb-5 text-warning-400">
               {title}
             </h1>
-            <h2 className="text-[2.1rem] sm:text-5xl font-bold leading-tight sm:leading-normal">
+            <h2 className="text-[2.1rem] sm:text-5xl font-bold leading-tight sm:leading-normal text-white">
               {subtitle}
             </h2>
             <p className="max-w-lg pt-1 sm:pt-2">{description}</p>
@@ -34,7 +34,10 @@ export const BannerStatic = (props: IBanner) => {
         </div>
         <Image
           alt={title}
-          src={urlImage || 'https://img.freepik.com/foto-gratis/trabajador-oficina-que-usa-videoconferencia-reunirse-gente-negocios-camara-web-hablando-colegas-videoconferencia-remota-tener-conversacion-internet-llamada-teleconferencia_482257-50395.jpg?t=st=1711815457~exp=1711819057~hmac=296ed2236e230cc88b8cc57763f778841f26786771322a146f0f4f75712b632f&w=1380'}
+          src={
+            urlImage ||
+            'https://img.freepik.com/foto-gratis/trabajador-oficina-que-usa-videoconferencia-reunirse-gente-negocios-camara-web-hablando-colegas-videoconferencia-remota-tener-conversacion-internet-llamada-teleconferencia_482257-50395.jpg?t=st=1711815457~exp=1711819057~hmac=296ed2236e230cc88b8cc57763f778841f26786771322a146f0f4f75712b632f&w=1380'
+          }
           removeWrapper
           isBlurred
           radius="none"

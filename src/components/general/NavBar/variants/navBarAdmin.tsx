@@ -14,24 +14,23 @@ import {
 
 import { useRouter } from 'next/navigation'
 import { getLocalStorage, deleteLocalStorage, deleteCookie } from '@/lib'
-import { useEffect, useState } from 'react'
 import { IUser } from '@/types'
 // import { IUser } from '@/types'
 
 export const NavBarAdmin = () => {
-  const [user, setUser] = useState<IUser | null>(null)
+  // const [user, setUser] = useState<IUser | null>(null)
 
   const router = useRouter()
+  const user: IUser = getLocalStorage('user') as unknown as IUser
 
-  useEffect(() => {
-    const user: IUser = getLocalStorage('user')
-    setUser(user)
-  }, [])
+  // useEffect(() => {
+  //   setUser(user)
+  // }, [user])
 
-  const handleLogout = () => {
-    deleteLocalStorage('user')
-    deleteCookie('user')
-    router.push('/login')
+  const handleLogout = async () => {
+    await deleteLocalStorage('user')
+    await deleteCookie('user')
+    router.refresh()
   }
 
   return (

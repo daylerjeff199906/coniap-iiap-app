@@ -9,8 +9,12 @@ function deleteLocalStorage(name: string) {
 }
 
 function getLocalStorage(name: string) {
-  localStorage.getItem(name)
-  return JSON.parse(localStorage.getItem(name) || '{}')
+  if (typeof window !== 'undefined') {
+    const data = localStorage.getItem(name)
+    return data ? JSON.parse(data) : null
+  } else {
+    return null
+  }
 }
 
 export { createLocalStorage, deleteLocalStorage, getLocalStorage }
