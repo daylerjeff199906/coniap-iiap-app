@@ -28,10 +28,10 @@ export const NavBarAdmin = () => {
     setUser(user)
   }, [])
 
-  const handleLogout = () => {
-    deleteLocalStorage('user')
-    deleteCookie('user')
-    router.push('/login')
+  const handleLogout = async () => {
+    await deleteLocalStorage('user')
+    await deleteCookie('user')
+    router.refresh()
   }
 
   return (

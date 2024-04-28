@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { fetchPersonByEmail } from '@/api'
 import { IPerson, IUser } from '@/types'
 import { getCookie } from '@/lib'
@@ -14,10 +14,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [myPerson, setMyPerson] = useState<IPerson | null>(null)
   const user: IUser = getCookie('user') as unknown as IUser
 
-  if (user) {
-    const person: IPerson = fetchPersonByEmail(user.email) as unknown as IPerson
-    setMyPerson(person)
+  const getPerson = async () => {
+    const res = await fetchPersonByEmail(user.email)
+    if (res) {
+      setMyPerson(res)
+    }
   }
+
+  useEffect(() => {
+    getPerson()
+  }, [])
 
   return (
     <AuthContext.Provider
