@@ -19,14 +19,14 @@ import { IUser } from '@/types'
 // import { IUser } from '@/types'
 
 export const NavBarAdmin = () => {
-  const [user, setUser] = useState<IUser | null>(null)
+  // const [user, setUser] = useState<IUser | null>(null)
 
   const router = useRouter()
+  const user: IUser = getLocalStorage('user')
 
-  useEffect(() => {
-    const user: IUser = getLocalStorage('user')
-    setUser(user)
-  }, [])
+  // useEffect(() => {
+  //   setUser(user)
+  // }, [user])
 
   const handleLogout = async () => {
     await deleteLocalStorage('user')
