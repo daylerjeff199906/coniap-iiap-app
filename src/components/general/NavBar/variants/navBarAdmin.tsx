@@ -15,17 +15,19 @@ import {
 import { useRouter } from 'next/navigation'
 import { getLocalStorage, deleteLocalStorage, deleteCookie } from '@/lib'
 import { IUser } from '@/types'
+import { useEffect, useState } from 'react'
 // import { IUser } from '@/types'
 
 export const NavBarAdmin = () => {
-  // const [user, setUser] = useState<IUser | null>(null)
+  const [user, setUser] = useState<IUser | null>(null)
 
   const router = useRouter()
-  const user: IUser = getLocalStorage('user') as unknown as IUser
+  // const user: IUser = getLocalStorage('user') as unknown as IUser
 
-  // useEffect(() => {
-  //   setUser(user)
-  // }, [user])
+  useEffect(() => {
+    const user: IUser = getLocalStorage('user')
+    setUser(user)
+  }, [])
 
   const handleLogout = async () => {
     await deleteLocalStorage('user')
@@ -37,8 +39,8 @@ export const NavBarAdmin = () => {
     <Navbar maxWidth="full">
       {/* <NavbarBrand>Admin</NavbarBrand> */}
       <NavbarContent justify="end">
-        <NavbarItem>
-          {user && (
+        {user && (
+          <NavbarItem>
             <Popover
               placement="bottom"
               showArrow
@@ -69,8 +71,8 @@ export const NavBarAdmin = () => {
                 </Listbox>
               </PopoverContent>
             </Popover>
-          )}
-        </NavbarItem>
+          </NavbarItem>
+        )}
       </NavbarContent>
     </Navbar>
   )
