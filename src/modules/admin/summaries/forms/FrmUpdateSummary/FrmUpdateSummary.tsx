@@ -46,7 +46,7 @@ export const FrmUpdateSummary = (props: IProps) => {
         newData = { ...rest, file: summary.file }
       }
 
-      const res = await updateDataSummary(summary.id, newData)
+      await updateDataSummary(summary.id, newData)
       if (summary?.isApproved) {
         router.push('/admin/participantes/resumenes?status=approved', {
           scroll: true,

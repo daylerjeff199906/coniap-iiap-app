@@ -18,7 +18,6 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
   } = useFormContext<ISummary>()
 
   const onSelectedSpeaker = (row: any) => {
-    console.log(row)
     setValue('person', row)
     setValue('person_id', row.key)
     setIsOpen(false)
