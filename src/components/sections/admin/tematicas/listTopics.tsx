@@ -36,7 +36,7 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
-export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
+export const ListTopicsSections = () => {
   const { getTopics, topics, loading } = useTopics()
   const { editField, loading: loadingFile } = useFiles()
   const [query, setQuery] = useState<string>('')
@@ -44,12 +44,6 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
   useEffect(() => {
     getTopics(query)
   }, [query])
-
-  useEffect(() => {
-    if (loadData) {
-      getTopics('')
-    }
-  }, [loadData])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'topics', 'isActived', value)
@@ -82,15 +76,6 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
     </>
   )
 }
-
-// const RenderColumnName = (fullname: string, surname: string) => {
-//   return (
-//     <div className="flex flex-col">
-//       <p className="text-base font-bold">{fullname}</p>
-//       <p className="text-xs font-medium text-slate-500">{surname}</p>
-//     </div>
-//   )
-// }
 
 const RenderImage = (image: string) => {
   return (

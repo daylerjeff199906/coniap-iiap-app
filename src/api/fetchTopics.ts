@@ -51,7 +51,11 @@ export async function fetchTopics(query: string) {
 export async function fetchTopic(id: number) {
   const supabase = createClient()
 
-  const { data, error } = await supabase.from('topics').select('*').eq('id', id)
+  const { data, error } = await supabase
+    .from('topics')
+    .select('*')
+    .eq('id', id)
+    .single()
   if (error) {
     return error
   } else {

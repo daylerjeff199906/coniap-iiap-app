@@ -25,23 +25,20 @@ import { Loading } from './loading'
 
 import { useRouter } from 'next/navigation'
 interface IProps {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-  id?: string | null
-  loadData?: (value: boolean) => void
+  dataDefault?: ITopic
 }
 
 export const FrmManageTopic = (props: IProps) => {
-  const { isOpen, onOpenChange, id, loadData } = props
+  const { dataDefault } = props
 
-  const { creatTopic, updateDataTopic, getTopicById, topic, loading } =
-    useTopics()
+  const { creatTopic, updateDataTopic, topic, loading } = useTopics()
   const {
     uploadImage,
     editField,
     deleteImage,
     loading: fileLoading,
   } = useFiles()
+
   const router = useRouter()
 
   const [files, setFiles] = useState([])
@@ -53,12 +50,12 @@ export const FrmManageTopic = (props: IProps) => {
   }
 
   const onSubmit: SubmitHandler<ITopic> = async (data: ITopic) => {
-    if (id) {
-      await updateDataTopic(id, data)
+    if (dataDefault?.id) {
+      await updateDataTopic(dataDefault?.id, data)
       if (files.length > 0) {
         await deleteImage(topic?.image as string)
         const url = await uploadImage('topics', files[0])
-        await editField(id, 'topics', 'image', url)
+        await editField(dataDefault?.id, 'topics', 'image', url)
       }
     } else {
       const newData = {
@@ -74,42 +71,26 @@ export const FrmManageTopic = (props: IProps) => {
         new Promise((resolve) => setTimeout(resolve, 2000))
       }
     }
-    handleOpenChange(false)
-    loadData && loadData(true)
     await new Promise((resolve) => setTimeout(resolve, 2000))
-    loadData && loadData(false)
   }
 
-  const handleOpenChange = (open: boolean) => {
-    onOpenChange(open)
+  const handleExit = () => {
     methods.reset()
     setFiles([])
-    if (id) {
-      router.push('/admin/tematicas')
-    }
+    router.push('/admin/tematicas')
   }
-
-  useEffect(() => {
-    if (id) {
-      getTopicById(id)
-    }
-  }, [id])
-
-  useEffect(() => {
-    if (topic) {
-      methods.reset(topic)
-    }
-  }, [topic])
 
   return (
     <>
       <Modal
-        isOpen={isOpen}
-        onOpenChange={handleOpenChange}
+        isOpen
+        onOpenChange={handleExit}
         size="3xl"
       >
         <ModalContent>
-          <ModalHeader>{id ? 'Editar Tema' : 'Agregar Tema'}</ModalHeader>
+          <ModalHeader>
+            {dataDefault?.id ? 'Editar Tema' : 'Agregar Tema'}
+          </ModalHeader>
           <ModalBody>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -180,11 +161,9 @@ export const FrmManageTopic = (props: IProps) => {
                     isDisabled={loading || fileLoading}
                     isLoading={loading || fileLoading}
                   >
-                    {id ? 'Actualizar' : 'Guardar'}
+                    {dataDefault?.id ? 'Actualizar' : 'Guardar'}
                   </Button>
-                  <Button onPress={() => handleOpenChange(false)}>
-                    Cancelar
-                  </Button>
+                  <Button onPress={handleExit}>Cancelar</Button>
                 </footer>
               </form>
             </FormProvider>
