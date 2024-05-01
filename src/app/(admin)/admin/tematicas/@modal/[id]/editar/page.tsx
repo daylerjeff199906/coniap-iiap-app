@@ -1,5 +1,5 @@
 import { fetchTopic } from '@/api'
-import { FrmManageTopic } from '@/components'
+import { FrmManageTopic } from '@/modules/admin'
 import { ITopic } from '@/types'
 interface IProps {
   params: {

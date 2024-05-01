@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { TableGeneral } from '@/components'
-import { IColumns } from '@/types'
+import { IActions, IColumns } from '@/types'
 
 import { useTopics } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
@@ -36,6 +36,14 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
+
+const actions: IActions[] = [
+  {
+    label: 'Editar',
+    href: '/admin/tematicas/',
+  },
+]
+
 export const ListTopicsSections = () => {
   const { getTopics, topics, loading } = useTopics()
   const { editField, loading: loadingFile } = useFiles()
@@ -55,6 +63,7 @@ export const ListTopicsSections = () => {
       <TableGeneral
         loading={loading || loadingFile}
         columns={columns}
+        actionsList={actions}
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}

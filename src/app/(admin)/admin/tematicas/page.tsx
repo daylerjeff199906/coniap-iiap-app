@@ -1,10 +1,4 @@
 'use client'
-import { useEffect, useState } from 'react'
-import {
-  FrmAddSponsor,
-  FrmManageTopic,
-  ListSponsorsSections,
-} from '@/components'
 import { Button } from '@nextui-org/react'
 import { ListTopicsSections } from '@/components/sections/admin/tematicas'
 import Link from 'next/link'

@@ -43,7 +43,9 @@ export const FrmManageTopic = (props: IProps) => {
 
   const [files, setFiles] = useState([])
 
-  const methods = useForm<ITopic>()
+  const methods = useForm<ITopic>({
+    defaultValues: dataDefault,
+  })
 
   const handleUpdateFiles = (fileItems: any) => {
     setFiles(fileItems.map((fileItem: any) => fileItem.file))
