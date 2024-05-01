@@ -25,6 +25,7 @@ export async function updateTopic(id: number, props: ITopic) {
     .update(props)
     .eq('id', id)
     .select('*')
+    .single()
 
   if (error) {
     return error

@@ -53,11 +53,14 @@ export const FrmManageTopic = (props: IProps) => {
 
   const onSubmit: SubmitHandler<ITopic> = async (data: ITopic) => {
     if (dataDefault?.id) {
-      await updateDataTopic(dataDefault?.id, data)
+      const res = await updateDataTopic(dataDefault?.id, data)
       if (files.length > 0) {
         await deleteImage(topic?.image as string)
         const url = await uploadImage('topics', files[0])
         await editField(dataDefault?.id, 'topics', 'image', url)
+      }
+      if (res) {
+        router.push('/admin/tematicas')
       }
     } else {
       const newData = {
@@ -67,13 +70,12 @@ export const FrmManageTopic = (props: IProps) => {
       }
       const dataTopic: ITopic = await creatTopic(newData)
       if (dataTopic && files.length > 0) {
-        console.log('Se guardara imagen')
         const url = await uploadImage('topics', files[0])
         await editField(dataTopic.id, 'topics', 'image', url)
         new Promise((resolve) => setTimeout(resolve, 2000))
       }
+      handleExit()
     }
-    await new Promise((resolve) => setTimeout(resolve, 2000))
   }
 
   const handleExit = () => {
@@ -108,11 +110,11 @@ export const FrmManageTopic = (props: IProps) => {
                       rules={{ required: 'Este campo es requerido' }}
                       render={({ field: { onChange, value } }) => (
                         <Input
-                          aria-label="Nombre del colaborador"
+                          aria-label="Nombre del TENA"
                           label="Nombre"
                           labelPlacement="outside"
                           radius="sm"
-                          placeholder="Escribe el nombre del colaborador"
+                          placeholder="Escribe el nombre del tema"
                           value={value}
                           onValueChange={onChange}
                           isInvalid={
@@ -142,6 +144,24 @@ export const FrmManageTopic = (props: IProps) => {
                           errorMessage={
                             methods.formState.errors.description?.message
                           }
+                        />
+                      )}
+                    />
+                    <Controller
+                      control={methods.control}
+                      name="color"
+                      render={({ field: { onChange, value } }) => (
+                        <Input
+                          aria-label="Descripción del colaborador"
+                          label="Color del tema"
+                          labelPlacement="outside"
+                          radius="sm"
+                          placeholder="Selecciona un color"
+                          description="Selecciona un color o escribe el código hexadecimal"
+                          value={value}
+                          type="color"
+                          onValueChange={onChange}
+                          className="pt-4"
                         />
                       )}
                     />

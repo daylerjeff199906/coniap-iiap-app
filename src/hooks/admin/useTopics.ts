@@ -43,7 +43,7 @@ export function useTopics() {
     if (res) {
       toast.success('Tema actualizado correctamente')
       setLoading(false)
-      return res[0]
+      return res
     }
     toast.error('Error al actualizar tema')
     setLoading(false)
