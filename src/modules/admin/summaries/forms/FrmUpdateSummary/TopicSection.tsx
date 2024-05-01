@@ -19,6 +19,9 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
   } = useFormContext<ISummary>()
 
   const datalist = topics ? topics : []
+  const placeholder = loadingList
+    ? 'Cargando categorias...'
+    : 'Selecciona una categoria'
 
   return (
     <>
@@ -30,9 +33,9 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
           <Select
             label="Categoria"
             labelPlacement="outside"
-            placeholder="Selecciona un categoria"
+            placeholder={placeholder}
             description="Seleccione la categoria a la que pertenece el resumen"
-            value={value}
+            selectedKeys={value ? [value] : []}
             onChange={(value) => {
               onChange(value)
             }}

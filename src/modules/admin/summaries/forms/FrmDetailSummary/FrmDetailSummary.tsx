@@ -24,7 +24,7 @@ export const FrmDetailSummary = (props: IProps) => {
     <>
       <div className="px-4 py-6">
         <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1">
+          <section className="flex flex-col gap-1">
             <Chip
               size="sm"
               radius="sm"
@@ -38,10 +38,14 @@ export const FrmDetailSummary = (props: IProps) => {
               <span className="font-semibold">Fecha de creación:</span>{' '}
               {summary?.created_at}
             </p>
-          </div>
+          </section>
+          <section>
+            <h3 className=" font-semibold">Linea temática</h3>
+            <h1 className='text-lg text-gray-500'>{summary?.topic?.name || 'No tiene temática asignada'}</h1>
+          </section>
           <h1 className="font-semibold">Autor | Ponente</h1>
           <Divider />
-          <div className="flex items-center gap-4">
+          <section className="flex items-center gap-4">
             <Avatar
               src={summary?.person?.image}
               alt={summary.person?.name}
@@ -56,7 +60,7 @@ export const FrmDetailSummary = (props: IProps) => {
                 {summary.person?.email}
               </p>
             </div>
-          </div>
+          </section>
           <div className="flex flex-col gap-3">
             <Button
               variant="light"
