@@ -6,6 +6,7 @@ import { IconLink } from '@tabler/icons-react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { DrawerSelect } from '@/components/general'
 import { ListSpeakers } from '../../list'
+import { ISummary } from '@/types'
 
 export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -13,12 +14,20 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
   const {
     control,
     formState: { errors },
-  } = useFormContext()
+    setValue,
+  } = useFormContext<ISummary>()
+
+  const onSelectedSpeaker = (row: any) => {
+    console.log(row)
+    setValue('person', row)
+    setValue('person_id', row.key)
+    setIsOpen(false)
+  }
 
   return (
     <>
       <Controller
-        name="person_id"
+        name="person"
         control={control}
         rules={{ required: 'Este campo es requerido' }}
         render={({ field: { onChange, value } }) => (
@@ -27,7 +36,7 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
             label="Ponente"
             labelPlacement="outside"
             placeholder="Seleccionar ponente"
-            value={value}
+            value={value?.name}
             onChange={onChange}
             description="Seleccione el programa al que pertenece el evento, es opcional"
             isInvalid={errors.person_id !== undefined}
@@ -52,7 +61,7 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
         isOpen={isOpen}
         setOpen={setIsOpen}
         title="Seleccionar programa"
-        content={<ListSpeakers onSetOpen={setIsOpen} />}
+        content={<ListSpeakers onSelectedSpeaker={onSelectedSpeaker} />}
       />
     </>
   )

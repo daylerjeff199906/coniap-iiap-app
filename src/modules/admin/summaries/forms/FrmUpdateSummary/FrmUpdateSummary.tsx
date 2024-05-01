@@ -34,7 +34,7 @@ export const FrmUpdateSummary = (props: IProps) => {
     let newData: ISummary
 
     if (summary.id) {
-      if (file.length > 0) {
+      if (file?.length > 0) {
         const fileUp = file as unknown as File[]
 
         if (summary.file) {
@@ -57,7 +57,7 @@ export const FrmUpdateSummary = (props: IProps) => {
         })
       }
     } else {
-      if (file.length > 0) {
+      if (file?.length > 0) {
         const fileUp = file as unknown as File[]
         const url = await uploadImage('files', fileUp[0])
 

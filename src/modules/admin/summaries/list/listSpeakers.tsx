@@ -13,12 +13,12 @@ const columns: IColumns[] = [
     key: 'key',
   },
   {
+    key: 'name',
     label: 'Ponente',
-    key: 'fullname',
   },
   {
-    label: 'Fecha',
-    key: 'date',
+    label: 'T. Participante',
+    key: 'typePerson',
   },
   {
     label: 'Estado',
@@ -27,13 +27,13 @@ const columns: IColumns[] = [
 ]
 
 interface IProps {
-  onSetOpen: (value: boolean) => void
+  onSelectedSpeaker: (row: IRows) => void
 }
 
 export const ListSpeakers = (props: IProps) => {
   const { getPersons, persons, loading } = usePersons()
   const { setValue } = useFormContext()
-  const { onSetOpen } = props
+  const { onSelectedSpeaker } = props
 
   const [query, setQuery] = useState('')
 
@@ -43,8 +43,20 @@ export const ListSpeakers = (props: IProps) => {
 
   const onSelectionChange = (row: IRows) => {
     setValue('person_id', row.key)
-    onSetOpen(false)
+    onSelectedSpeaker(row)
   }
+
+  const rows: IRows[] =
+    persons !== null
+      ? persons?.map((person) => {
+          return {
+            key: String(person.id),
+            name: person.name + ' ' + person.surName,
+            typePerson: person.typePerson,
+            estado: person.isActived ? 'Activo' : 'Inactivo',
+          }
+        })
+      : []
 
   return (
     <>
@@ -58,18 +70,7 @@ export const ListSpeakers = (props: IProps) => {
           loading={loading}
           onSearch={(value) => setQuery(value)}
           searchValue={query}
-          rows={
-            persons !== null
-              ? persons?.map((person) => {
-                  return {
-                    key: String(person.id),
-                    fullname: person.name + ' ' + person.surName,
-                    typePerson: person.typePerson,
-                    estado: person.isActived ? 'Activo' : 'Inactivo',
-                  }
-                })
-              : []
-          }
+          rows={rows}
         />
       </section>
     </>
