@@ -13,6 +13,7 @@ import { SpeakerSection } from './speakerSection'
 import { MultimediaSection } from './multimediaSection'
 import { useSummaries, useFiles } from '@/hooks/admin'
 import { LoadingPages } from '@/components'
+import { TopicSection } from './TopicSection'
 
 interface IProps {
   summary: ISummary
@@ -30,7 +31,7 @@ export const FrmUpdateSummary = (props: IProps) => {
   })
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    const { file, person, ...rest } = data
+    const { file, person, topic, ...rest } = data
     let newData: ISummary
 
     if (summary.id) {
@@ -94,6 +95,8 @@ export const FrmUpdateSummary = (props: IProps) => {
               </h2>
             </div>
           )}
+          <TopicSection loading={loading || loadingFile} />
+
           <Controller
             name="title"
             control={methods.control}
