@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { fetchPersonByEmail } from '@/api'
 import { IPerson, IUser } from '@/types'
@@ -19,9 +20,6 @@ export const AuthContext = createContext<{
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [myPerson, setMyPerson] = useState<IPerson | null>(null)
   const [user, setUser] = useState<IUser | null>(null)
-
-  console.log('user', user)
-  console.log('myPerson', myPerson)
 
   const getUser = async () => {
     const user: ICookieRes = (await getCookie('user')) as unknown as ICookieRes

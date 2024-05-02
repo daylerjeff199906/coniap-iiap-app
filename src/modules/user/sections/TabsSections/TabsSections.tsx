@@ -17,8 +17,8 @@ const dataTabs = [
     icon: <IconFile size={28} />,
   },
   {
-    title: 'Configuración',
-    href: '/dashboard/settings',
+    title: 'Perfil',
+    href: '/dashboard/profile',
     icon: <IconUser size={28} />,
   },
 ]

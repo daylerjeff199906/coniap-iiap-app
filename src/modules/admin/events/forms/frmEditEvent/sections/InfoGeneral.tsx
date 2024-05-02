@@ -1,6 +1,6 @@
 import { Input, Textarea, Select, SelectItem } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { ProgramSection, SectionSpeaker, SummarySection } from '.'
+import { ProgramSection, SummarySection } from '.'
 
 const typeSala = [
   {
@@ -126,7 +126,6 @@ export const InfoGeneral = () => {
             />
           )}
         />
-        {/* <SectionSpeaker /> */}
 
         <Controller
           control={control}

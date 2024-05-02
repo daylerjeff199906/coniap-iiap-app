@@ -1,14 +1,16 @@
-import { FrmUploadSummary } from '@/modules/admin'
+import { ListSummaries } from '@/modules/user'
 
 export default function Page() {
   return (
     <>
-      <section>
-        <h1 className="text-xl">Envía tus resúmenes</h1>
-      </section>
-      <section>
-        <FrmUploadSummary />
-      </section>
+      <main className='flex flex-col gap-4'>
+        <section>
+          <h1 className="sm:text-xl font-semibold">Historial de resúmenes</h1>
+        </section>
+        <section>
+          <ListSummaries />
+        </section>
+      </main>
     </>
   )
 }
