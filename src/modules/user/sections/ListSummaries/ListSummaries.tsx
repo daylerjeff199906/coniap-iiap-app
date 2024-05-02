@@ -5,9 +5,8 @@ import Link from 'next/link'
 
 export const ListSummaries = () => {
   const { myPerson } = useAuth()
-  console.log(myPerson)
 
-  if (myPerson?.name === '' && myPerson?.surName === '')
+  if (myPerson?.name === '' || myPerson?.surName === '')
     return (
       <>
         <section>
