@@ -15,7 +15,7 @@ interface IFrmProfileProps {
 export const FrmProfile = (props: IFrmProfileProps) => {
   const { person } = props
   const router = useRouter()
-  const { myPerson } = useAuth()
+  const { myPerson, getUser } = useAuth()
   const { updatePersonData, loading } = usePersons()
 
   const methods = useForm<IPerson>({
@@ -27,8 +27,10 @@ export const FrmProfile = (props: IFrmProfileProps) => {
     if (res.message) {
       return null
     } else {
-      methods.reset()
       router.push('/dashboard/profile')
+      const dataDefault: IPerson[] = res as unknown as IPerson[]
+      methods.reset(dataDefault[0])
+      getUser()
     }
   }
 

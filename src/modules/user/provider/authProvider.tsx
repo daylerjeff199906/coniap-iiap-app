@@ -13,8 +13,10 @@ interface ICookieRes {
 
 export const AuthContext = createContext<{
   myPerson: IPerson | null
+  getUser: () => void
 }>({
   myPerson: null,
+  getUser: () => null,
 })
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -48,6 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider
       value={{
         myPerson,
+        getUser,
       }}
     >
       {children}
