@@ -3,6 +3,7 @@ import { ContactData, PersonData } from './sections'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { IPerson } from '@/types'
 import { Button } from '@nextui-org/react'
+import { useRouter } from 'next/navigation'
 
 import { usePersons } from '@/hooks/admin'
 import { useAuth } from '../..'
@@ -11,12 +12,14 @@ interface IFrmProfileProps {
   person: IPerson
 }
 
-export const FrmProfile = () => {
+export const FrmProfile = (props: IFrmProfileProps) => {
+  const { person } = props
+  const router = useRouter()
   const { myPerson } = useAuth()
   const { updatePersonData, loading } = usePersons()
 
   const methods = useForm<IPerson>({
-    defaultValues: myPerson || {},
+    defaultValues: person,
   })
 
   const onSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
@@ -25,7 +28,12 @@ export const FrmProfile = () => {
       return null
     } else {
       methods.reset()
+      router.push('/dashboard/profile')
     }
+  }
+
+  const handleCancel = () => {
+    router.push('/dashboard')
   }
 
   return (
@@ -48,7 +56,7 @@ export const FrmProfile = () => {
               >
                 Guardar cambios
               </Button>
-              <Button>Cancelar</Button>
+              <Button onPress={handleCancel}>Cancelar</Button>
             </div>
           </footer>
         </form>

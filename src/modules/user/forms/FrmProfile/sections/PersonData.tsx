@@ -1,3 +1,4 @@
+'use client'
 import { IPerson } from '@/types'
 import { Input, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'

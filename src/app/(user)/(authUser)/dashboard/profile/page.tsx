@@ -1,7 +1,20 @@
-'use client'
-import { FrmProfile } from '@/modules/user'
+import { ProfileSection } from '@/modules/user'
+import { fetchPersonByEmail } from '@/api'
+import { getCookie } from '@/lib'
+import { IUser } from '@/types'
 
-export default function Page() {
+interface ICookieRes {
+  name: string
+  path: string
+  value: string
+}
+
+export default async function Page() {
+  const user: ICookieRes = (await getCookie('user')) as unknown as ICookieRes
+  const dataParse: IUser = await JSON.parse(user.value as unknown as string)
+
+  const res = await fetchPersonByEmail(dataParse.email)
+
   return (
     <>
       <main className="flex flex-col gap-4">
@@ -12,7 +25,7 @@ export default function Page() {
           </p>
         </section>
         <section>
-          <FrmProfile />
+          <ProfileSection person={res} />
         </section>
       </main>
     </>
