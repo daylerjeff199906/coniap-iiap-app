@@ -85,7 +85,11 @@ export const TableGeneral = (props: IProps) => {
                       <DropdownItem
                         key={index}
                         as={Link}
-                        href={`${pathname}/${action.href}${item.key}`}
+                        href={
+                          action?.label === 'Editar'
+                            ? `${pathname}/${item.key}/editar`
+                            : `${pathname}/${action.href}${item.key}`
+                        }
                       >
                         {action.label}
                       </DropdownItem>

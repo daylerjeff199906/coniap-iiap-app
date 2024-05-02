@@ -1,3 +1,5 @@
 import { TabsSections } from './TabsSections/TabsSections'
+import { ListSummaries } from './ListSummaries/ListSummaries'
+import { ProfileSection } from './Profile/ProfileSection'
 
-export { TabsSections }
+export { TabsSections, ListSummaries, ProfileSection }

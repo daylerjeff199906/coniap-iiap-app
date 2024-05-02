@@ -2,7 +2,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
-import { IColumns } from '@/types'
+import { IColumns, IRows } from '@/types'
 
 import { useFiles, useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
@@ -12,6 +12,11 @@ const columns: Array<IColumns> = [
   {
     key: 'title',
     label: 'Título',
+    align: 'start',
+  },
+  {
+    key: 'topic',
+    label: 'Temática',
     align: 'start',
   },
   {
@@ -77,6 +82,22 @@ export const ListSummaries = () => {
     getSummaries('')
   }
 
+  const rows: IRows[] =
+    summaries !== null
+      ? summaries?.map((summary) => {
+          return {
+            key: String(summary.id),
+            title: summary.title,
+            created_at: summary.created_at,
+            person: summary.person?.name + ' ' + summary.person?.surName,
+            topic: summary.topic?.name || 'No tiene temática asignada',
+            st_review: RenderColumnAproved(summary.isApproved),
+            status: summary.isActived,
+            actions: 'actions',
+          }
+        })
+      : []
+
   return (
     <>
       <TableGeneral
@@ -88,21 +109,7 @@ export const ListSummaries = () => {
         onSearch={(value) => setQuery(value)}
         actionsList={actionsList}
         searchValue={query}
-        rows={
-          summaries !== null
-            ? summaries?.map((summary) => {
-                return {
-                  key: String(summary.id),
-                  title: summary.title,
-                  created_at: summary.created_at,
-                  person: summary.person?.name + ' ' + summary.person?.surName,
-                  st_review: RenderColumnAproved(summary.isApproved),
-                  status: summary.isActived,
-                  actions: 'actions',
-                }
-              })
-            : []
-        }
+        rows={rows}
       />
     </>
   )

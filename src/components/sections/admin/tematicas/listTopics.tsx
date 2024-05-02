@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { TableGeneral } from '@/components'
-import { IColumns } from '@/types'
+import { IActions, IColumns } from '@/types'
 
 import { useTopics } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
@@ -36,7 +36,15 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
-export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
+
+const actions: IActions[] = [
+  {
+    label: 'Editar',
+    href: '/admin/tematicas/',
+  },
+]
+
+export const ListTopicsSections = () => {
   const { getTopics, topics, loading } = useTopics()
   const { editField, loading: loadingFile } = useFiles()
   const [query, setQuery] = useState<string>('')
@@ -44,12 +52,6 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
   useEffect(() => {
     getTopics(query)
   }, [query])
-
-  useEffect(() => {
-    if (loadData) {
-      getTopics('')
-    }
-  }, [loadData])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'topics', 'isActived', value)
@@ -61,6 +63,7 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
       <TableGeneral
         loading={loading || loadingFile}
         columns={columns}
+        actionsList={actions}
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}
@@ -82,15 +85,6 @@ export const ListTopicsSections = ({ loadData }: { loadData: boolean }) => {
     </>
   )
 }
-
-// const RenderColumnName = (fullname: string, surname: string) => {
-//   return (
-//     <div className="flex flex-col">
-//       <p className="text-base font-bold">{fullname}</p>
-//       <p className="text-xs font-medium text-slate-500">{surname}</p>
-//     </div>
-//   )
-// }
 
 const RenderImage = (image: string) => {
   return (

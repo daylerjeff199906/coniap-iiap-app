@@ -43,7 +43,7 @@ export function useTopics() {
     if (res) {
       toast.success('Tema actualizado correctamente')
       setLoading(false)
-      return res[0]
+      return res
     }
     toast.error('Error al actualizar tema')
     setLoading(false)
@@ -55,7 +55,7 @@ export function useTopics() {
     const data = await fetchTopic(Number(id))
       .then((res) => res)
       .catch((err) => err)
-    setTopic(data[0])
+    setTopic(data)
     setLoading(false)
   }
 
