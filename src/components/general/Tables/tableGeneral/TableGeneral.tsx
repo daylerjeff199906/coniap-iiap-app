@@ -166,8 +166,8 @@ export const TableGeneral = (props: IProps) => {
   }
 
   return (
-    <>
-      <section className="pb-4">
+    <main className="flex flex-col gap-3">
+      <section>
         <Input
           aria-label="Buscar"
           variant="bordered"
@@ -223,6 +223,6 @@ export const TableGeneral = (props: IProps) => {
         </TableBody>
       </Table>
       <LoadingPages isOpen={props.loading ?? false} />
-    </>
+    </main>
   )
 }

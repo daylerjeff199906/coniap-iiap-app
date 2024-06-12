@@ -1,40 +1,18 @@
 'use client'
-import { ListProgramsSection, UpdateProgram } from '@/components'
-import { Button } from '@nextui-org/react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { ListProgramsSection } from '@/components'
+import { HeaderSection } from '@/modules/core'
 
 export default function Page() {
-  const searchParams = useSearchParams()
-  const isEdit = searchParams.get('edit') !== null
-
   return (
-    <>
-      {!isEdit && (
-        <section className="flex gap-4 justify-between items-center">
-          <h1 className="text-2xl font-bold">Programas</h1>
-          <Button
-            color="primary"
-            as={Link}
-            href="/admin/programas/nuevo"
-            size="sm"
-          >
-            Añadir programa
-          </Button>
-        </section>
-      )}
-      {isEdit ? (
-        <>
-          <UpdateProgram
-            id={searchParams.get('edit') ?? ''}
-            isEdit={isEdit}
-          />
-        </>
-      ) : (
-        <section className="py-6">
-          <ListProgramsSection />
-        </section>
-      )}
-    </>
+    <main className='flex flex-col gap-5'>
+      <HeaderSection
+        title="Lista de programaciones"
+        subtitle="Lista de programaciones registradas en la base de datos"
+        isButtonVisible
+        href="/admin/programas/nuevo"
+        labelButton="Añadir programación"
+      />
+      <ListProgramsSection />
+    </main>
   )
 }
