@@ -77,16 +77,3 @@ export const ListProgramsSection = () => {
     </>
   )
 }
-
-// const RenderColumAddEvents = (id: string) => {
-//   return (
-//     <>
-//       <Link
-//         href={`/admin/programas/${id}/eventos`}
-//         className="text-primary-500 hover:text-primary-300"
-//       >
-//         Agregar eventos
-//       </Link>
-//     </>
-//   )
-// }

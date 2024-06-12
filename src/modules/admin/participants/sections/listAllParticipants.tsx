@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
-import { IColumns } from '@/types'
+import { IColumns, IPerson } from '@/types'
 
-import { usePersons, useFiles } from '@/hooks/admin'
+import { useFiles } from '@/hooks/admin'
+import { useFilterFromUrl } from '@/modules/core'
 
 const columns: Array<IColumns> = [
   {
@@ -32,46 +32,57 @@ const columns: Array<IColumns> = [
     label: 'Estado',
     align: 'center',
   },
+  {
+    key: 'actions',
+    label: 'Acciones',
+    align: 'center',
+  },
 ]
-export const ListParticipants = () => {
-  const { getPersons, persons, loading } = usePersons()
-  const { editField, loading: editLoading } = useFiles()
-  const [query, setQuery] = useState<string>('')
 
-  useEffect(() => {
-    getPersons(query)
-  }, [query])
+interface IProps {
+  dataList: IPerson[]
+}
+
+export const ListParticipants = (prop: IProps) => {
+  const { dataList } = prop
+  const { getParams, updateFilter } = useFilterFromUrl()
+  const { editField, loading: editLoading } = useFiles()
+
+  const query = getParams('query', '')
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'persons', 'isActived', value)
-    getPersons('')
+    // getPersons('')
   }
+
+  const handleQuery = (value: string) => {
+    updateFilter('query', value)
+  }
+
+  const persons =
+    dataList?.map((speaker) => {
+      return {
+        key: String(speaker.id),
+        name: RenderColumnName(speaker.name, speaker.surName),
+        job: speaker.job,
+        institution: speaker.institution,
+        level: speaker.typePerson,
+        status: speaker.isActived,
+        actions: 'actions',
+      }
+    }) || []
 
   return (
     <>
       <TableGeneral
-        loading={loading || editLoading}
+        loading={editLoading}
         columns={columns}
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}
-        onSearch={(value) => setQuery(value)}
+        onSearch={handleQuery}
         searchValue={query}
-        rows={
-          persons !== null
-            ? persons?.map((speaker) => {
-                return {
-                  key: String(speaker.id),
-                  name: RenderColumnName(speaker.name, speaker.surName),
-                  job: speaker.job,
-                  institution: speaker.institution,
-                  level: speaker.typePerson,
-                  status: speaker.isActived,
-                  actions: 'actions',
-                }
-              })
-            : []
-        }
+        rows={persons}
       />
     </>
   )

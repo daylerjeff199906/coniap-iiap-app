@@ -15,6 +15,7 @@ import {
   fetchPersonsInEvent,
   fetchPersonsNotInEvent,
   fetchPersonByEmail,
+  fetchPersons,
 } from './fetchPerson'
 
 import { updateField, addFileToBucket } from './fetchFields'
@@ -62,6 +63,7 @@ export {
   fetchPerson,
   fetchSpeakers,
   createPerson,
+  fetchPersons,
   fetchPersonById,
   updatePerson,
   fetchPersonsInEvent,

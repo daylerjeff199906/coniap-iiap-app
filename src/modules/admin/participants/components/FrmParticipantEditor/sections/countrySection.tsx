@@ -1,22 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Autocomplete, AutocompleteItem, Avatar } from '@nextui-org/react'
+import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
 import countriesData from '@/utils/json/countries.json'
+import { IPerson } from '@/types'
 
 export const CountrySection = () => {
   const {
     control,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext<IPerson>()
 
   return (
     <>
       <Controller
         control={control}
-        rules={{
-          required: 'Este campo es requerido',
-        }}
+        // rules={{
+        //   required: 'Este campo es requerido',
+        // }}
         name="location"
         render={({ field: { onChange, value } }) => (
           <Autocomplete
@@ -24,17 +25,18 @@ export const CountrySection = () => {
             labelPlacement="outside"
             placeholder="Selecciona un país"
             name="location"
-            value={value}
-            onChange={(value) => {
-              onChange(value)
+            value={value || ''}
+            onValueChange={(value) => {
+              // onChange(value)
+              console.log(value)
             }}
             radius="sm"
             isInvalid={errors.location !== undefined}
             errorMessage={errors.location?.message as string}
           >
-            {countriesData.map((item) => (
+            {countriesData?.map((item) => (
               <AutocompleteItem
-                key={item.code}
+                key={item.country}
                 value={item.country}
               >
                 {item.country}
