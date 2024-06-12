@@ -14,9 +14,9 @@ export const CountrySection = () => {
     <>
       <Controller
         control={control}
-        rules={{
-          required: 'Este campo es requerido',
-        }}
+        // rules={{
+        //   required: 'Este campo es requerido',
+        // }}
         name="location"
         render={({ field: { onChange, value } }) => (
           <Autocomplete
@@ -24,9 +24,8 @@ export const CountrySection = () => {
             labelPlacement="outside"
             placeholder="Selecciona un país"
             name="location"
-            value={value}
-            selectedKey={value}
-            onChange={(value) => {
+            value={value || ''}
+            onValueChange={(value) => {
               onChange(value)
             }}
             radius="sm"
@@ -35,7 +34,7 @@ export const CountrySection = () => {
           >
             {countriesData.map((item) => (
               <AutocompleteItem
-                key={item.code}
+                key={item.country}
                 value={item.country}
               >
                 {item.country}
