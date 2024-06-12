@@ -47,7 +47,11 @@ export async function fetchPerson(query: string) {
   }
 }
 
-export async function fetchPersons(query: string, typePerson: string) {
+export async function fetchPersons(
+  query: string,
+  typePerson: string,
+  isNot?: string
+) {
   const supabase = createClient()
 
   // Comenzamos construyendo la consulta básica
@@ -60,6 +64,11 @@ export async function fetchPersons(query: string, typePerson: string) {
   // Agregamos la condición solo si typePerson no está vacío
   if (typePerson) {
     queryBuilder = queryBuilder.eq('typePerson', typePerson)
+  }
+
+  // Agregamos la condición solo si isNot no está vacío
+  if (isNot) {
+    queryBuilder = queryBuilder.not('typePerson', 'eq', isNot)
   }
 
   // Ejecutamos la consulta
