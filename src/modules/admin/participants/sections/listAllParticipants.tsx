@@ -32,6 +32,11 @@ const columns: Array<IColumns> = [
     label: 'Estado',
     align: 'center',
   },
+  {
+    key: 'actions',
+    label: 'Acciones',
+    align: 'center',
+  },
 ]
 export const ListParticipants = () => {
   const { getPersons, persons, loading } = usePersons()

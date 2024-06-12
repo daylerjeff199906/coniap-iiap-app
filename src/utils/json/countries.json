@@ -1,0 +1,1721 @@
+[
+  {
+    "country": "Afganistán",
+    "countryCode": 93,
+    "code": "AF",
+    "flag": "https://flagcdn.com/af.svg",
+    "emoji": "🇦🇫",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Albania",
+    "countryCode": 355,
+    "code": "AL",
+    "flag": "https://flagcdn.com/al.svg",
+    "emoji": "🇦🇱",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Alemania",
+    "countryCode": 49,
+    "code": "DE",
+    "flag": "https://flagcdn.com/de.svg",
+    "emoji": "🇩🇪",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Andorra",
+    "countryCode": 376,
+    "code": "AD",
+    "flag": "https://flagcdn.com/ad.svg",
+    "emoji": "🇦🇩",
+    "latinAmerica": false,
+    "phoneLength": 6
+  },
+  {
+    "country": "Angola",
+    "countryCode": 244,
+    "code": "AO",
+    "flag": "https://flagcdn.com/ao.svg",
+    "emoji": "🇦🇴",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Antigua y Barbuda",
+    "countryCode": 1268,
+    "code": "AG",
+    "flag": "https://flagcdn.com/ag.svg",
+    "emoji": "🇦🇬",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Arabia Saudita",
+    "countryCode": 966,
+    "code": "SA",
+    "flag": "https://flagcdn.com/sa.svg",
+    "emoji": "🇸🇦",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Argelia",
+    "countryCode": 213,
+    "code": "DZ",
+    "flag": "https://flagcdn.com/dz.svg",
+    "emoji": "🇩🇿",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Argentina",
+    "countryCode": 54,
+    "code": "AR",
+    "flag": "https://flagcdn.com/ar.svg",
+    "emoji": "🇦🇷",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Armenia",
+    "countryCode": 374,
+    "code": "AM",
+    "flag": "https://flagcdn.com/am.svg",
+    "emoji": "🇦🇲",
+    "latinAmerica": false,
+    "phoneLength": 6
+  },
+  {
+    "country": "Australia",
+    "countryCode": 61,
+    "code": "AU",
+    "flag": "https://flagcdn.com/au.svg",
+    "emoji": "🇦🇺",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Austria",
+    "countryCode": 43,
+    "code": "AT",
+    "flag": "https://flagcdn.com/at.svg",
+    "emoji": "🇦🇹",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Azerbaiyán",
+    "countryCode": 994,
+    "code": "AZ",
+    "flag": "https://flagcdn.com/az.svg",
+    "emoji": "🇦🇿",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Bahamas",
+    "countryCode": 1242,
+    "code": "BS",
+    "flag": "https://flagcdn.com/bs.svg",
+    "emoji": "🇧🇸",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Bangladés",
+    "countryCode": 880,
+    "code": "BD",
+    "flag": "https://flagcdn.com/bd.svg",
+    "emoji": "🇧🇩",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Barbados",
+    "countryCode": 1246,
+    "code": "BB",
+    "flag": "https://flagcdn.com/bb.svg",
+    "emoji": "🇧🇧",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Baréin",
+    "countryCode": 973,
+    "code": "BH",
+    "flag": "https://flagcdn.com/bh.svg",
+    "emoji": "🇧🇭",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Bélgica",
+    "countryCode": 32,
+    "code": "BE",
+    "flag": "https://flagcdn.com/be.svg",
+    "emoji": "🇧🇪",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Belice",
+    "countryCode": 501,
+    "code": "BZ",
+    "flag": "https://flagcdn.com/bz.svg",
+    "emoji": "🇧🇿",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Benín",
+    "countryCode": 229,
+    "code": "BJ",
+    "flag": "https://flagcdn.com/bj.svg",
+    "emoji": "🇧🇯",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Bielorrusia",
+    "countryCode": 375,
+    "code": "BY",
+    "flag": "https://flagcdn.com/by.svg",
+    "emoji": "🇧🇾",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Birmania",
+    "countryCode": 95,
+    "code": "MM",
+    "flag": "https://flagcdn.com/mm.svg",
+    "emoji": "🇲🇲",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Bolivia",
+    "countryCode": 591,
+    "code": "BO",
+    "flag": "https://flagcdn.com/bo.svg",
+    "emoji": "🇧🇴",
+    "latinAmerica": true,
+    "phoneLength": 9
+  },
+  {
+    "country": "Bosnia y Herzegovina",
+    "countryCode": 387,
+    "code": "BA",
+    "flag": "https://flagcdn.com/ba.svg",
+    "emoji": "🇧🇦",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Botsuana",
+    "countryCode": 267,
+    "code": "BW",
+    "flag": "https://flagcdn.com/bw.svg",
+    "emoji": "🇧🇼",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Brasil",
+    "countryCode": 55,
+    "code": "BR",
+    "flag": "https://flagcdn.com/br.svg",
+    "emoji": "🇧🇷",
+    "latinAmerica": true,
+    "phoneLength": 11
+  },
+  {
+    "country": "Brunéi",
+    "countryCode": 673,
+    "code": "BN",
+    "flag": "https://flagcdn.com/bn.svg",
+    "emoji": "🇧🇳",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Bulgaria",
+    "countryCode": 359,
+    "code": "BG",
+    "flag": "https://flagcdn.com/bg.svg",
+    "emoji": "🇧🇬",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Burkina Faso",
+    "countryCode": 226,
+    "code": "BF",
+    "flag": "https://flagcdn.com/bf.svg",
+    "emoji": "🇧🇫",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Burundi",
+    "countryCode": 257,
+    "code": "BI",
+    "flag": "https://flagcdn.com/bi.svg",
+    "emoji": "🇧🇮",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Bután",
+    "countryCode": 975,
+    "code": "BT",
+    "flag": "https://flagcdn.com/bt.svg",
+    "emoji": "🇧🇹",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Cabo Verde",
+    "countryCode": 238,
+    "code": "CV",
+    "flag": "https://flagcdn.com/cv.svg",
+    "emoji": "🇨🇻",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Camboya",
+    "countryCode": 855,
+    "code": "KH",
+    "flag": "https://flagcdn.com/kh.svg",
+    "emoji": "🇰🇭",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Camerún",
+    "countryCode": 237,
+    "code": "CM",
+    "flag": "https://flagcdn.com/cm.svg",
+    "emoji": "🇨🇲",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Canadá",
+    "countryCode": 1,
+    "code": "CA",
+    "flag": "https://flagcdn.com/ca.svg",
+    "emoji": "🇨🇦",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Catar",
+    "countryCode": 974,
+    "code": "QA",
+    "flag": "https://flagcdn.com/qa.svg",
+    "emoji": "🇶🇦",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Chad",
+    "countryCode": 235,
+    "code": "TD",
+    "flag": "https://flagcdn.com/td.svg",
+    "emoji": "🇹🇩",
+    "latinAmerica": false,
+    "phoneLength": 6
+  },
+  {
+    "country": "Chile",
+    "countryCode": 56,
+    "code": "CL",
+    "flag": "https://flagcdn.com/cl.svg",
+    "emoji": "🇨🇱",
+    "latinAmerica": true,
+    "phoneLength": 9
+  },
+  {
+    "country": "China",
+    "countryCode": 86,
+    "code": "CN",
+    "flag": "https://flagcdn.com/cn.svg",
+    "emoji": "🇨🇳",
+    "latinAmerica": false,
+    "phoneLength": 11
+  },
+  {
+    "country": "Chipre",
+    "countryCode": 357,
+    "code": "CY",
+    "flag": "https://flagcdn.com/cy.svg",
+    "emoji": "🇨🇾",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Colombia",
+    "countryCode": 57,
+    "code": "CO",
+    "flag": "https://flagcdn.com/co.svg",
+    "emoji": "🇨🇴",
+    "latinAmerica": true,
+    "phoneLength": 10
+  },
+  {
+    "country": "Comoras",
+    "countryCode": 269,
+    "code": "KM",
+    "flag": "https://flagcdn.com/km.svg",
+    "emoji": "🇰🇲",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Congo",
+    "countryCode": 242,
+    "code": "CG",
+    "flag": "https://flagcdn.com/cg.svg",
+    "emoji": "🇨🇬",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Corea del Norte",
+    "countryCode": 850,
+    "code": "KP",
+    "flag": "https://flagcdn.com/kp.svg",
+    "emoji": "🇰🇵",
+    "latinAmerica": false,
+    "phoneLength": 13
+  },
+  {
+    "country": "Corea del Sur",
+    "countryCode": 82,
+    "code": "KR",
+    "flag": "https://flagcdn.com/kr.svg",
+    "emoji": "🇰🇷",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Costa de Marfil",
+    "countryCode": 225,
+    "code": "CI",
+    "flag": "https://flagcdn.com/ci.svg",
+    "emoji": "🇨🇮",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Costa Rica",
+    "countryCode": 506,
+    "code": "CR",
+    "flag": "https://flagcdn.com/cr.svg",
+    "emoji": "🇨🇷",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Croacia",
+    "countryCode": 385,
+    "code": "HR",
+    "flag": "https://flagcdn.com/hr.svg",
+    "emoji": "🇭🇷",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Cuba",
+    "countryCode": 53,
+    "code": "CU",
+    "flag": "https://flagcdn.com/cu.svg",
+    "emoji": "🇨🇺",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Dinamarca",
+    "countryCode": 45,
+    "code": "DK",
+    "flag": "https://flagcdn.com/dk.svg",
+    "emoji": "🇩🇰",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Dominica",
+    "countryCode": 1767,
+    "code": "DM",
+    "flag": "https://flagcdn.com/dm.svg",
+    "emoji": "🇩🇲",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Ecuador",
+    "countryCode": 593,
+    "code": "EC",
+    "flag": "https://flagcdn.com/ec.svg",
+    "emoji": "🇪🇨",
+    "latinAmerica": true,
+    "phoneLength": 9
+  },
+  {
+    "country": "Egipto",
+    "countryCode": 20,
+    "code": "EG",
+    "flag": "https://flagcdn.com/eg.svg",
+    "emoji": "🇪🇬",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "El Salvador",
+    "countryCode": 503,
+    "code": "SV",
+    "flag": "https://flagcdn.com/sv.svg",
+    "emoji": "🇸🇻",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Emiratos Árabes Unidos",
+    "countryCode": 971,
+    "code": "AE",
+    "flag": "https://flagcdn.com/ae.svg",
+    "emoji": "🇦🇪",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Eritrea",
+    "countryCode": 291,
+    "code": "ER",
+    "flag": "https://flagcdn.com/er.svg",
+    "emoji": "🇪🇷",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Eslovaquia",
+    "countryCode": 421,
+    "code": "SK",
+    "flag": "https://flagcdn.com/sk.svg",
+    "emoji": "🇸🇰",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Eslovenia",
+    "countryCode": 386,
+    "code": "SI",
+    "flag": "https://flagcdn.com/si.svg",
+    "emoji": "🇸🇮",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "España",
+    "countryCode": 34,
+    "code": "ES",
+    "flag": "https://flagcdn.com/es.svg",
+    "emoji": "🇪🇸",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Estados Unidos",
+    "countryCode": 1,
+    "code": "US",
+    "flag": "https://flagcdn.com/us.svg",
+    "emoji": "🇺🇸",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Estonia",
+    "countryCode": 372,
+    "code": "EE",
+    "flag": "https://flagcdn.com/ee.svg",
+    "emoji": "🇪🇪",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Etiopía",
+    "countryCode": 251,
+    "code": "ET",
+    "flag": "https://flagcdn.com/et.svg",
+    "emoji": "🇪🇹",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Filipinas",
+    "countryCode": 63,
+    "code": "PH",
+    "flag": "https://flagcdn.com/ph.svg",
+    "emoji": "🇵🇭",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Finlandia",
+    "countryCode": 358,
+    "code": "FI",
+    "flag": "https://flagcdn.com/fi.svg",
+    "emoji": "🇫🇮",
+    "latinAmerica": false,
+    "phoneLength": 11
+  },
+  {
+    "country": "Fiyi",
+    "countryCode": 679,
+    "code": "FJ",
+    "flag": "https://flagcdn.com/fj.svg",
+    "emoji": "🇫🇯",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Francia",
+    "countryCode": 33,
+    "code": "FR",
+    "flag": "https://flagcdn.com/fr.svg",
+    "emoji": "🇫🇷",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Gabón",
+    "countryCode": 241,
+    "code": "GA",
+    "flag": "https://flagcdn.com/ga.svg",
+    "emoji": "🇬🇦",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Gambia",
+    "countryCode": 220,
+    "code": "GM",
+    "flag": "https://flagcdn.com/gm.svg",
+    "emoji": "🇬🇲",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Georgia",
+    "countryCode": 995,
+    "code": "GE",
+    "flag": "https://flagcdn.com/ge.svg",
+    "emoji": "🇬🇪",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Ghana",
+    "countryCode": 233,
+    "code": "GH",
+    "flag": "https://flagcdn.com/gh.svg",
+    "emoji": "🇬🇭",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Granada",
+    "countryCode": 1473,
+    "code": "GD",
+    "flag": "https://flagcdn.com/gd.svg",
+    "emoji": "🇬🇩",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Grecia",
+    "countryCode": 30,
+    "code": "GR",
+    "flag": "https://flagcdn.com/gr.svg",
+    "emoji": "🇬🇷",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Guatemala",
+    "countryCode": 502,
+    "code": "GT",
+    "flag": "https://flagcdn.com/gt.svg",
+    "emoji": "🇬🇹",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Guinea",
+    "countryCode": 224,
+    "code": "GN",
+    "flag": "https://flagcdn.com/gn.svg",
+    "emoji": "🇬🇳",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Guinea-Bisáu",
+    "countryCode": 245,
+    "code": "GW",
+    "flag": "https://flagcdn.com/gw.svg",
+    "emoji": "🇬🇼",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Guinea Ecuatorial",
+    "countryCode": 240,
+    "code": "GQ",
+    "flag": "https://flagcdn.com/gq.svg",
+    "emoji": "🇬🇶",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Guyana",
+    "countryCode": 592,
+    "code": "GY",
+    "flag": "https://flagcdn.com/gy.svg",
+    "emoji": "🇬🇾",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Haití",
+    "countryCode": 509,
+    "code": "HT",
+    "flag": "https://flagcdn.com/ht.svg",
+    "emoji": "🇭🇹",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Honduras",
+    "countryCode": 504,
+    "code": "HN",
+    "flag": "https://flagcdn.com/hn.svg",
+    "emoji": "🇭🇳",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Hungría",
+    "countryCode": 36,
+    "code": "HU",
+    "flag": "https://flagcdn.com/hu.svg",
+    "emoji": "🇭🇺",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "India",
+    "countryCode": 91,
+    "code": "IN",
+    "flag": "https://flagcdn.com/in.svg",
+    "emoji": "🇮🇳",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Indonesia",
+    "countryCode": 62,
+    "code": "ID",
+    "flag": "https://flagcdn.com/id.svg",
+    "emoji": "🇮🇩",
+    "latinAmerica": false,
+    "phoneLength": 11
+  },
+  {
+    "country": "Irak",
+    "countryCode": 964,
+    "code": "IQ",
+    "flag": "https://flagcdn.com/iq.svg",
+    "emoji": "🇮🇶",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Irán",
+    "countryCode": 98,
+    "code": "IR",
+    "flag": "https://flagcdn.com/ir.svg",
+    "emoji": "🇮🇷",
+    "latinAmerica": false,
+    "phoneLength": 11
+  },
+  {
+    "country": "Irlanda",
+    "countryCode": 353,
+    "code": "IE",
+    "flag": "https://flagcdn.com/ie.svg",
+    "emoji": "🇮🇪",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Islandia",
+    "countryCode": 354,
+    "code": "IS",
+    "flag": "https://flagcdn.com/is.svg",
+    "emoji": "🇮🇸",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Islas Marshall",
+    "countryCode": 692,
+    "code": "MH",
+    "flag": "https://flagcdn.com/mh.svg",
+    "emoji": "🇲🇭",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Islas Salomón",
+    "countryCode": 677,
+    "code": "SB",
+    "flag": "https://flagcdn.com/sb.svg",
+    "emoji": "🇸🇧",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Israel",
+    "countryCode": 972,
+    "code": "IL",
+    "flag": "https://flagcdn.com/il.svg",
+    "emoji": "🇮🇱",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Italia",
+    "countryCode": 39,
+    "code": "IT",
+    "flag": "https://flagcdn.com/it.svg",
+    "emoji": "🇮🇹",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Jamaica",
+    "countryCode": 1876,
+    "code": "JM",
+    "flag": "https://flagcdn.com/jm.svg",
+    "emoji": "🇯🇲",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Japón",
+    "countryCode": 81,
+    "code": "JP",
+    "flag": "https://flagcdn.com/jp.svg",
+    "emoji": "🇯🇵",
+    "latinAmerica": false,
+    "phoneLength": 0
+  },
+  {
+    "country": "Jordania",
+    "countryCode": 962,
+    "code": "JO",
+    "flag": "https://flagcdn.com/jo.svg",
+    "emoji": "🇯🇴",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Kazajistán",
+    "countryCode": 7,
+    "code": "KZ",
+    "flag": "https://flagcdn.com/kz.svg",
+    "emoji": "🇰🇿",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Kenia",
+    "countryCode": 254,
+    "code": "KE",
+    "flag": "https://flagcdn.com/ke.svg",
+    "emoji": "🇰🇪",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Kirguistán",
+    "countryCode": 996,
+    "code": "KG",
+    "flag": "https://flagcdn.com/kg.svg",
+    "emoji": "🇰🇬",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Kiribati",
+    "countryCode": 686,
+    "code": "KI",
+    "flag": "https://flagcdn.com/ki.svg",
+    "emoji": "🇰🇮",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Kuwait",
+    "countryCode": 965,
+    "code": "KW",
+    "flag": "https://flagcdn.com/kw.svg",
+    "emoji": "🇰🇼",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Laos",
+    "countryCode": 856,
+    "code": "LA",
+    "flag": "https://flagcdn.com/la.svg",
+    "emoji": "🇱🇦",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Lesoto",
+    "countryCode": 266,
+    "code": "LS",
+    "flag": "https://flagcdn.com/ls.svg",
+    "emoji": "🇱🇸",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Letonia",
+    "countryCode": 371,
+    "code": "LV",
+    "flag": "https://flagcdn.com/lv.svg",
+    "emoji": "🇱🇻",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Líbano",
+    "countryCode": 961,
+    "code": "LB",
+    "flag": "https://flagcdn.com/lb.svg",
+    "emoji": "🇱🇧",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Liberia",
+    "countryCode": 231,
+    "code": "LR",
+    "flag": "https://flagcdn.com/lr.svg",
+    "emoji": "🇱🇷",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Libia",
+    "countryCode": 218,
+    "code": "LY",
+    "flag": "https://flagcdn.com/ly.svg",
+    "emoji": "🇱🇾",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Liechtenstein",
+    "countryCode": 423,
+    "code": "LI",
+    "flag": "https://flagcdn.com/li.svg",
+    "emoji": "🇱🇮",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Lituania",
+    "countryCode": 370,
+    "code": "LT",
+    "flag": "https://flagcdn.com/lt.svg",
+    "emoji": "🇱🇹",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Luxemburgo",
+    "countryCode": 352,
+    "code": "LU",
+    "flag": "https://flagcdn.com/lu.svg",
+    "emoji": "🇱🇺",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Madagascar",
+    "countryCode": 261,
+    "code": "MG",
+    "flag": "https://flagcdn.com/mg.svg",
+    "emoji": "🇲🇬",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Malasia",
+    "countryCode": 60,
+    "code": "MY",
+    "flag": "https://flagcdn.com/my.svg",
+    "emoji": "🇲🇾",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Malaui",
+    "countryCode": 265,
+    "code": "MW",
+    "flag": "https://flagcdn.com/mw.svg",
+    "emoji": "🇲🇼",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Maldivas",
+    "countryCode": 960,
+    "code": "MV",
+    "flag": "https://flagcdn.com/mv.svg",
+    "emoji": "🇲🇻",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Malí",
+    "countryCode": 223,
+    "code": "ML",
+    "flag": "https://flagcdn.com/ml.svg",
+    "emoji": "🇲🇱",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Malta",
+    "countryCode": 356,
+    "code": "MT",
+    "flag": "https://flagcdn.com/mt.svg",
+    "emoji": "🇲🇹",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Marruecos",
+    "countryCode": 212,
+    "code": "MA",
+    "flag": "https://flagcdn.com/ma.svg",
+    "emoji": "🇲🇦",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Mauricio",
+    "countryCode": 230,
+    "code": "MU",
+    "flag": "https://flagcdn.com/mu.svg",
+    "emoji": "🇲🇺",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Mauritania",
+    "countryCode": 222,
+    "code": "MR",
+    "flag": "https://flagcdn.com/mr.svg",
+    "emoji": "🇲🇷",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "México",
+    "countryCode": 52,
+    "code": "MX",
+    "flag": "https://flagcdn.com/mx.svg",
+    "emoji": "🇲🇽",
+    "latinAmerica": true,
+    "phoneLength": 10
+  },
+  {
+    "country": "Micronesia",
+    "countryCode": 691,
+    "code": "FM",
+    "flag": "https://flagcdn.com/fm.svg",
+    "emoji": "🇫🇲",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Moldavia",
+    "countryCode": 373,
+    "code": "MD",
+    "flag": "https://flagcdn.com/md.svg",
+    "emoji": "🇲🇩",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Mónaco",
+    "countryCode": 377,
+    "code": "MC",
+    "flag": "https://flagcdn.com/mc.svg",
+    "emoji": "🇲🇨",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Mongolia",
+    "countryCode": 976,
+    "code": "MN",
+    "flag": "https://flagcdn.com/mn.svg",
+    "emoji": "🇲🇳",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Montenegro",
+    "countryCode": 382,
+    "code": "ME",
+    "flag": "https://flagcdn.com/me.svg",
+    "emoji": "🇲🇪",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Mozambique",
+    "countryCode": 258,
+    "code": "MZ",
+    "flag": "https://flagcdn.com/mz.svg",
+    "emoji": "🇲🇿",
+    "latinAmerica": false,
+    "phoneLength": 12
+  },
+  {
+    "country": "Namibia",
+    "countryCode": 264,
+    "code": "NA",
+    "flag": "https://flagcdn.com/na.svg",
+    "emoji": "🇳🇦",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Nauru",
+    "countryCode": 674,
+    "code": "NR",
+    "flag": "https://flagcdn.com/nr.svg",
+    "emoji": "🇳🇷",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Nepal",
+    "countryCode": 977,
+    "code": "NP",
+    "flag": "https://flagcdn.com/np.svg",
+    "emoji": "🇳🇵",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Nicaragua",
+    "countryCode": 505,
+    "code": "NI",
+    "flag": "https://flagcdn.com/ni.svg",
+    "emoji": "🇳🇮",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Níger",
+    "countryCode": 227,
+    "code": "NE",
+    "flag": "https://flagcdn.com/ne.svg",
+    "emoji": "🇳🇪",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Nigeria",
+    "countryCode": 234,
+    "code": "NG",
+    "flag": "https://flagcdn.com/ng.svg",
+    "emoji": "🇳🇬",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Noruega",
+    "countryCode": 47,
+    "code": "NO",
+    "flag": "https://flagcdn.com/no.svg",
+    "emoji": "🇳🇴",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Nueva Zelanda",
+    "countryCode": 64,
+    "code": "NZ",
+    "flag": "https://flagcdn.com/nz.svg",
+    "emoji": "🇳🇿",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Omán",
+    "countryCode": 968,
+    "code": "OM",
+    "flag": "https://flagcdn.com/om.svg",
+    "emoji": "🇴🇲",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Países Bajos",
+    "countryCode": 31,
+    "code": "NL",
+    "flag": "https://flagcdn.com/nl.svg",
+    "emoji": "🇳🇱",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Pakistán",
+    "countryCode": 92,
+    "code": "PK",
+    "flag": "https://flagcdn.com/pk.svg",
+    "emoji": "🇵🇰",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Palaos",
+    "countryCode": 680,
+    "code": "PW",
+    "flag": "https://flagcdn.com/pw.svg",
+    "emoji": "🇵🇼",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Panamá",
+    "countryCode": 507,
+    "code": "PA",
+    "flag": "https://flagcdn.com/pa.svg",
+    "emoji": "🇵🇦",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Papúa Nueva Guinea",
+    "countryCode": 675,
+    "code": "PG",
+    "flag": "https://flagcdn.com/pg.svg",
+    "emoji": "🇵🇬",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Paraguay",
+    "countryCode": 595,
+    "code": "PY",
+    "flag": "https://flagcdn.com/py.svg",
+    "emoji": "🇵🇾",
+    "latinAmerica": true,
+    "phoneLength": 9
+  },
+  {
+    "country": "Perú",
+    "countryCode": 51,
+    "code": "PE",
+    "flag": "https://flagcdn.com/pe.svg",
+    "emoji": "🇵🇪",
+    "latinAmerica": true,
+    "phoneLength": 9
+  },
+  {
+    "country": "Polonia",
+    "countryCode": 48,
+    "code": "PL",
+    "flag": "https://flagcdn.com/pl.svg",
+    "emoji": "🇵🇱",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Portugal",
+    "countryCode": 351,
+    "code": "PT",
+    "flag": "https://flagcdn.com/pt.svg",
+    "emoji": "🇵🇹",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Reino Unido",
+    "countryCode": 44,
+    "code": "GB",
+    "flag": "https://flagcdn.com/gb.svg",
+    "emoji": "🇬🇧",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "República Centroafricana",
+    "countryCode": 236,
+    "code": "CF",
+    "flag": "https://flagcdn.com/cf.svg",
+    "emoji": "🇨🇫",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "República Checa",
+    "countryCode": 420,
+    "code": "CZ",
+    "flag": "https://flagcdn.com/cz.svg",
+    "emoji": "🇨🇿",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "República del Congo",
+    "countryCode": 243,
+    "code": "CD",
+    "flag": "https://flagcdn.com/cd.svg",
+    "emoji": "🇨🇩",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "República Dominicana",
+    "countryCode": 1809,
+    "code": "DO",
+    "flag": "https://flagcdn.com/do.svg",
+    "emoji": "🇩🇴",
+    "latinAmerica": true,
+    "phoneLength": 10
+  },
+  {
+    "country": "Ruanda",
+    "countryCode": 250,
+    "code": "RW",
+    "flag": "https://flagcdn.com/rw.svg",
+    "emoji": "🇷🇼",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Rumania",
+    "countryCode": 40,
+    "code": "RO",
+    "flag": "https://flagcdn.com/ro.svg",
+    "emoji": "🇷🇴",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Rusia",
+    "countryCode": 7,
+    "code": "RU",
+    "flag": "https://flagcdn.com/ru.svg",
+    "emoji": "🇷🇺",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Samoa",
+    "countryCode": 685,
+    "code": "WS",
+    "flag": "https://flagcdn.com/ws.svg",
+    "emoji": "🇼🇸",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "San Cristóbal y Nieves",
+    "countryCode": 1869,
+    "code": "KN",
+    "flag": "https://flagcdn.com/kn.svg",
+    "emoji": "🇰🇳",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "San Marino",
+    "countryCode": 378,
+    "code": "SM",
+    "flag": "https://flagcdn.com/sm.svg",
+    "emoji": "🇸🇲",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Santa Lucía",
+    "countryCode": 1758,
+    "code": "LC",
+    "flag": "https://flagcdn.com/lc.svg",
+    "emoji": "🇱🇨",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Santo Tomé y Príncipe",
+    "countryCode": 239,
+    "code": "ST",
+    "flag": "https://flagcdn.com/st.svg",
+    "emoji": "🇸🇹",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "San Vicente y las Granadinas",
+    "countryCode": 1784,
+    "code": "VC",
+    "flag": "https://flagcdn.com/vc.svg",
+    "emoji": "🇻🇨",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Senegal",
+    "countryCode": 221,
+    "code": "SN",
+    "flag": "https://flagcdn.com/sn.svg",
+    "emoji": "🇸🇳",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Serbia",
+    "countryCode": 381,
+    "code": "RS",
+    "flag": "https://flagcdn.com/rs.svg",
+    "emoji": "🇷🇸",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Seychelles",
+    "countryCode": 248,
+    "code": "SC",
+    "flag": "https://flagcdn.com/sc.svg",
+    "emoji": "🇸🇨",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Sierra Leona",
+    "countryCode": 232,
+    "code": "SL",
+    "flag": "https://flagcdn.com/sl.svg",
+    "emoji": "🇸🇱",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Singapur",
+    "countryCode": 65,
+    "code": "SG",
+    "flag": "https://flagcdn.com/sg.svg",
+    "emoji": "🇸🇬",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Siria",
+    "countryCode": 963,
+    "code": "SY",
+    "flag": "https://flagcdn.com/sy.svg",
+    "emoji": "🇸🇾",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Somalia",
+    "countryCode": 252,
+    "code": "SO",
+    "flag": "https://flagcdn.com/so.svg",
+    "emoji": "🇸🇴",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Sri Lanka",
+    "countryCode": 94,
+    "code": "LK",
+    "flag": "https://flagcdn.com/lk.svg",
+    "emoji": "🇱🇰",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Sudáfrica",
+    "countryCode": 27,
+    "code": "ZA",
+    "flag": "https://flagcdn.com/za.svg",
+    "emoji": "🇿🇦",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Sudán",
+    "countryCode": 249,
+    "code": "SD",
+    "flag": "https://flagcdn.com/sd.svg",
+    "emoji": "🇸🇩",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Sudán del Sur",
+    "countryCode": 211,
+    "code": "SS",
+    "flag": "https://flagcdn.com/ss.svg",
+    "emoji": "🇸🇸",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Suecia",
+    "countryCode": 46,
+    "code": "SE",
+    "flag": "https://flagcdn.com/se.svg",
+    "emoji": "🇸🇪",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Suiza",
+    "countryCode": 41,
+    "code": "CH",
+    "flag": "https://flagcdn.com/ch.svg",
+    "emoji": "🇨🇭",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Surinam",
+    "countryCode": 597,
+    "code": "SR",
+    "flag": "https://flagcdn.com/sr.svg",
+    "emoji": "🇸🇷",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Tailandia",
+    "countryCode": 66,
+    "code": "TH",
+    "flag": "https://flagcdn.com/th.svg",
+    "emoji": "🇹🇭",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Tanzania",
+    "countryCode": 255,
+    "code": "TZ",
+    "flag": "https://flagcdn.com/tz.svg",
+    "emoji": "🇹🇿",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Tayikistán",
+    "countryCode": 992,
+    "code": "TJ",
+    "flag": "https://flagcdn.com/tj.svg",
+    "emoji": "🇹🇯",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Timor Oriental",
+    "countryCode": 670,
+    "code": "TL",
+    "flag": "https://flagcdn.com/tl.svg",
+    "emoji": "🇹🇱",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Togo",
+    "countryCode": 228,
+    "code": "TG",
+    "flag": "https://flagcdn.com/tg.svg",
+    "emoji": "🇹🇬",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Tonga",
+    "countryCode": 676,
+    "code": "TO",
+    "flag": "https://flagcdn.com/to.svg",
+    "emoji": "🇹🇴",
+    "latinAmerica": false,
+    "phoneLength": 5
+  },
+  {
+    "country": "Trinidad y Tobago",
+    "countryCode": 1868,
+    "code": "TT",
+    "flag": "https://flagcdn.com/tt.svg",
+    "emoji": "🇹🇹",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Túnez",
+    "countryCode": 216,
+    "code": "TN",
+    "flag": "https://flagcdn.com/tn.svg",
+    "emoji": "🇹🇳",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Turkmenistán",
+    "countryCode": 993,
+    "code": "TM",
+    "flag": "https://flagcdn.com/tm.svg",
+    "emoji": "🇹🇲",
+    "latinAmerica": false,
+    "phoneLength": 8
+  },
+  {
+    "country": "Turquía",
+    "countryCode": 90,
+    "code": "TR",
+    "flag": "https://flagcdn.com/tr.svg",
+    "emoji": "🇹🇷",
+    "latinAmerica": false,
+    "phoneLength": 11
+  },
+  {
+    "country": "Tuvalu",
+    "countryCode": 688,
+    "code": "TV",
+    "flag": "https://flagcdn.com/tv.svg",
+    "emoji": "🇹🇻",
+    "latinAmerica": false,
+    "phoneLength": 5
+  },
+  {
+    "country": "Ucrania",
+    "countryCode": 380,
+    "code": "UA",
+    "flag": "https://flagcdn.com/ua.svg",
+    "emoji": "🇺🇦",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Uganda",
+    "countryCode": 256,
+    "code": "UG",
+    "flag": "https://flagcdn.com/ug.svg",
+    "emoji": "🇺🇬",
+    "latinAmerica": false,
+    "phoneLength": 7
+  },
+  {
+    "country": "Uruguay",
+    "countryCode": 598,
+    "code": "UY",
+    "flag": "https://flagcdn.com/uy.svg",
+    "emoji": "🇺🇾",
+    "latinAmerica": true,
+    "phoneLength": 8
+  },
+  {
+    "country": "Uzbekistán",
+    "countryCode": 998,
+    "code": "UZ",
+    "flag": "https://flagcdn.com/uz.svg",
+    "emoji": "🇺🇿",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Vanuatu",
+    "countryCode": 678,
+    "code": "VU",
+    "flag": "https://flagcdn.com/vu.svg",
+    "emoji": "🇻🇺",
+    "latinAmerica": false,
+    "phoneLength": 5
+  },
+  {
+    "country": "Venezuela",
+    "countryCode": 58,
+    "code": "VE",
+    "flag": "https://flagcdn.com/ve.svg",
+    "emoji": "🇻🇪",
+    "latinAmerica": true,
+    "phoneLength": 7
+  },
+  {
+    "country": "Vietnam",
+    "countryCode": 84,
+    "code": "VN",
+    "flag": "https://flagcdn.com/vn.svg",
+    "emoji": "🇻🇳",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Yemen",
+    "countryCode": 967,
+    "code": "YE",
+    "flag": "https://flagcdn.com/ye.svg",
+    "emoji": "🇾🇪",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Yibuti",
+    "countryCode": 253,
+    "code": "DJ",
+    "flag": "https://flagcdn.com/dj.svg",
+    "emoji": "🇩🇯",
+    "latinAmerica": false,
+    "phoneLength": 10
+  },
+  {
+    "country": "Zambia",
+    "countryCode": 260,
+    "code": "ZM",
+    "flag": "https://flagcdn.com/zm.svg",
+    "emoji": "🇿🇲",
+    "latinAmerica": false,
+    "phoneLength": 9
+  },
+  {
+    "country": "Zimbabue",
+    "countryCode": 263,
+    "code": "ZW",
+    "flag": "https://flagcdn.com/zw.svg",
+    "emoji": "🇿🇼",
+    "latinAmerica": false,
+    "phoneLength": 9
+  }
+]
