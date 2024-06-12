@@ -1,16 +1,17 @@
 import { Input, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 import { CountrySection } from './countrySection'
+import { IPerson } from '@/types'
 
 export const InfoGeneral = () => {
   const {
     control,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext<IPerson>()
 
   return (
     <>
-      <section className="grid grid-cols-1 gap-4">
+      <section className="grid grid-cols-1 gap-4 w-full">
         <h1 className="font-medium text-sm">Información general</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Controller
@@ -55,45 +56,43 @@ export const InfoGeneral = () => {
           />
         </div>
 
-        <div className="flex gap-3">
-          <CountrySection />
-          <Controller
-            control={control}
-            name="institution"
-            rules={{
-              required: 'Este campo es requerido',
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                aria-label="Institución"
-                label="Institución"
-                labelPlacement="outside"
-                placeholder="Institución a la que pertenece"
-                radius="sm"
-                value={value}
-                onValueChange={onChange}
-                isInvalid={errors.institution !== undefined}
-                errorMessage={errors.institution?.message as string}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="job"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                label="Puesto"
-                labelPlacement="outside"
-                placeholder="Puesto que desempeña"
-                radius="sm"
-                value={value}
-                onValueChange={onChange}
-                isInvalid={errors.job !== undefined}
-                errorMessage={errors.job?.message as string}
-              />
-            )}
-          />
-        </div>
+        <CountrySection />
+        <Controller
+          control={control}
+          name="institution"
+          rules={{
+            required: 'Este campo es requerido',
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              aria-label="Institución"
+              label="Institución"
+              labelPlacement="outside"
+              placeholder="Institución a la que pertenece"
+              radius="sm"
+              value={value}
+              onValueChange={onChange}
+              isInvalid={errors.institution !== undefined}
+              errorMessage={errors.institution?.message as string}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="job"
+          render={({ field: { onChange, value } }) => (
+            <Input
+              label="Puesto"
+              labelPlacement="outside"
+              placeholder="Puesto que desempeña"
+              radius="sm"
+              value={value}
+              onValueChange={onChange}
+              isInvalid={errors.job !== undefined}
+              errorMessage={errors.job?.message as string}
+            />
+          )}
+        />
         <div className="">
           <Controller
             control={control}

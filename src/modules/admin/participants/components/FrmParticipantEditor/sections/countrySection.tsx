@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Autocomplete, AutocompleteItem, Avatar } from '@nextui-org/react'
+import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
 import countriesData from '@/utils/json/countries.json'
+import { IPerson } from '@/types'
 
 export const CountrySection = () => {
   const {
     control,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext<IPerson>()
 
   return (
     <>
@@ -26,13 +27,14 @@ export const CountrySection = () => {
             name="location"
             value={value || ''}
             onValueChange={(value) => {
-              onChange(value)
+              // onChange(value)
+              console.log(value)
             }}
             radius="sm"
             isInvalid={errors.location !== undefined}
             errorMessage={errors.location?.message as string}
           >
-            {countriesData.map((item) => (
+            {countriesData?.map((item) => (
               <AutocompleteItem
                 key={item.country}
                 value={item.country}
