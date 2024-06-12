@@ -15,8 +15,6 @@ export default async function Page(props: IProps) {
     .then((res) => res)
     .catch((err) => err)
 
-  console.log(person)
-
   if (person) {
     return (
       <section className="flex flex-col w-full justify-center items-center">
