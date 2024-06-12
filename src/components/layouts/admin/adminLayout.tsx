@@ -135,7 +135,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname()
   return (
     <div className="flex gap-4 w-full">
-      <aside className="w-80 bg-gray-100 h-screen sticky top-0 overflow-y-auto">
+      <aside className="w-60 min-w-60 max-w-60 bg-gray-100 h-screen sticky top-0 overflow-y-auto">
         <AsideMenu menuAside={menuAside} />
       </aside>
       <main className="w-full">
@@ -157,7 +157,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </Breadcrumbs>
           )}
         </section>
-        <section className="w-full container">{children}</section>
+        <main className="w-full container">{children}</main>
         <footer className="w-full  p-4 text-center">
           <h3 className="text-sm">
             Realizado con ❤️ por el equipo de desarrollo de GESCON | Todos los
