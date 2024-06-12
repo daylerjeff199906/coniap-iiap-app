@@ -1,10 +1,10 @@
-import { FrmAddSpeaker } from '@/components'
+import { FrmParticipantEditor } from '@/modules/admin'
 
 export default function Page() {
   return (
     <>
-      <section>
-        <FrmAddSpeaker />
+      <section className="flex flex-col items-center w-full">
+        <FrmParticipantEditor />
       </section>
     </>
   )

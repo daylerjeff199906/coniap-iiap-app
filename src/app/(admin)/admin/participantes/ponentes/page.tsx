@@ -25,11 +25,11 @@ export default async function Page(props: IProps) {
   return (
     <>
       <HeaderSection
-        title="Participantes general (Asistentes no expositor)"
-        subtitle="Lista de participantes solo que participan en el congreso como asistentes"
+        title="Lista de expositores"
+        subtitle="Lista de participantes que participan en el congreso como expositores, ponentes y ponentes magistrales"
         isButtonVisible
         labelButton="Agregar Participante"
-        href="/admin/participantes/asistentes/nuevo"
+        href="/admin/participantes/ponentes/nuevo"
       />
       <section className="py-6">
         <ListParticipants dataList={persons} />
