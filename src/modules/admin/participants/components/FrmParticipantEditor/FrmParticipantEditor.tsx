@@ -46,31 +46,29 @@ export const FrmParticipantEditor = (props: IProps) => {
   const handleFormSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
     setOpen(false)
 
-    console.log(data)
+    const newData: IPerson = {
+      ...data,
+      image: '',
+      isActived: dataDefault?.id ? dataDefault.isActived : false,
+    }
 
-    // const newData: IPerson = {
-    //   ...data,
-    //   image: '',
-    //   isActived: dataDefault?.id ? dataDefault.isActived : false,
-    // }
+    if (dataDefault?.id) {
+      const speaker = await updatePersonData(dataDefault.id, newData)
+      if (speaker && file.length > 0) {
+        const url = await uploadImage('speaker', file[0])
+        await editField(dataDefault.id, 'persons', 'image', url)
+      }
+    } else {
+      const speaker: IPerson = await addPerson(newData)
+      if (speaker && file.length > 0) {
+        const url = await uploadImage('speaker', file[0])
+        await editField(String(speaker.id), 'persons', 'image', url)
+      }
 
-    // if (dataDefault?.id) {
-    //   const speaker = await updatePersonData(dataDefault.id, newData)
-    //   if (speaker && file.length > 0) {
-    //     const url = await uploadImage('speaker', file[0])
-    //     await editField(dataDefault.id, 'persons', 'image', url)
-    //   }
-    // } else {
-    //   const speaker: IPerson = await addPerson(newData)
-    //   if (speaker && file.length > 0) {
-    //     const url = await uploadImage('speaker', file[0])
-    //     await editField(String(speaker.id), 'persons', 'image', url)
-    //   }
-
-    //   if (speaker) {
-    //     router.back()
-    //   }
-    // }
+      if (speaker) {
+        router.back()
+      }
+    }
   }
 
   const handleBack = () => {
