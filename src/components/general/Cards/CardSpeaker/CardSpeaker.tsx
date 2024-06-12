@@ -1,17 +1,26 @@
 'use client'
-import { Card, CardBody, Image } from '@nextui-org/react'
+import { Avatar, Card, CardBody, Image } from '@nextui-org/react'
 import { IPerson } from '@/types'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import dataCountry from '@/utils/json/countries.json'
 
 interface IProps {
   speaker: IPerson
+}
+
+function getCountryByname(name: string) {
+  const country = dataCountry.find((country) => country.country === name)
+  return country
 }
 
 export const CardSpeaker = (props: IProps) => {
   const { speaker } = props
   const urlImgeDefault =
     'https://img.freepik.com/foto-gratis/apuesto-hombre-negocios-maduro-traje-negro-mostrando-pulgar-arriba-hombre-negocios-mediana-edad-sonriendo-mirando-camara-aislada-sobre-fondo-amarillo-concepto-negocio_549566-937.jpg?t=st=1709857822~exp=1709861422~hmac=a61fd698c394cd2418867b0184a62c67a1c626ce06479b952ae52e155b57b4c4&w=740'
+
+  const country = getCountryByname(speaker?.location || '')
+
   return (
     <motion.div
       whileHover={{
@@ -37,9 +46,16 @@ export const CardSpeaker = (props: IProps) => {
         />
         <CardBody className="bg-transparent px-0">
           <div className="flex flex-col space-y-2">
-            <h3 className="font-bold text-lg sm:text-xl line-clamp-1">
-              {speaker.name + ' ' + speaker.surName}
-            </h3>
+            <div className="flex gap-3">
+              <Avatar
+                src={country?.flag || ''}
+                className="w-6 h-6 rounded-sm"
+              />
+              <h3 className="font-bold text-lg sm:text-xl line-clamp-1">
+                {speaker.name + ' ' + speaker.surName}
+              </h3>
+            </div>
+
             <p className="text-tiny sm:text-medium ">{speaker.institution}</p>
           </div>
         </CardBody>
