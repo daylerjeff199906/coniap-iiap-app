@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useState } from 'react'
 import { TableGeneral } from '@/components'
 import { IColumns, IPerson } from '@/types'
 
-import { usePersons, useFiles } from '@/hooks/admin'
+import { useFiles } from '@/hooks/admin'
+import { useFilterFromUrl } from '@/modules/core'
 
 const columns: Array<IColumns> = [
   {
@@ -45,13 +45,18 @@ interface IProps {
 
 export const ListParticipants = (prop: IProps) => {
   const { dataList } = prop
-
+  const { getParams, updateFilter } = useFilterFromUrl()
   const { editField, loading: editLoading } = useFiles()
-  const [query, setQuery] = useState<string>('')
+
+  const query = getParams('query', '')
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'persons', 'isActived', value)
     // getPersons('')
+  }
+
+  const handleQuery = (value: string) => {
+    updateFilter('query', value)
   }
 
   const persons =
@@ -75,7 +80,7 @@ export const ListParticipants = (prop: IProps) => {
         onValueStatusChange={(key: string | number, value: boolean) => {
           handleStatusChange(String(key), value)
         }}
-        onSearch={(value) => setQuery(value)}
+        onSearch={handleQuery}
         searchValue={query}
         rows={persons}
       />

@@ -1,53 +1,35 @@
-'use client'
-import { UpdateSpeaker } from '@/components'
-import { ListAssistants } from '@/modules/admin'
-// import {ListSpe}
-// import { ListProgramsSection } from '@/components'
-import { Button } from '@nextui-org/react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-// import { UpdateEvento } from './updateEvento'
+import { fetchPersons } from '@/api'
+import { ListParticipants } from '@/modules/admin'
+import { HeaderSection } from '@/modules/core'
+import { IPerson } from '@/types'
 
-export default function Page() {
-  const searchParams = useSearchParams()
-  const isEdit = searchParams.get('edit') !== null
-  const isView = searchParams.get('view') !== null
-  const isEditOrView = isEdit || isView
+interface IProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function Page(props: IProps) {
+  const { searchParams } = props
+  const { query } = searchParams
+
+  const search = query ? String(query) : ''
+  const type = 'participant'
+
+  const persons: IPerson[] = (await fetchPersons(search, type)) as IPerson[]
 
   return (
     <>
-      {!isEditOrView && (
-        <section className="flex gap-4 justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold">Asistentes</h1>
-            <h3 className="text-xs">
-              Lista de asistentes que participarán en los eventos del congreso
-            </h3>
-          </div>
-          <Button
-            color="primary"
-            as={Link}
-            href="/admin/participantes/asistentes/nuevo"
-            size="sm"
-          >
-            Añadir ponente
-          </Button>
-        </section>
-      )}
-      {isEdit ? (
-        <>
-          <UpdateSpeaker
-            id={searchParams.get('edit') ?? ''}
-            isEdit
-          />
-        </>
-      ) : isView ? (
-        <></>
-      ) : (
-        <section className="py-6">
-          <ListAssistants />
-        </section>
-      )}
+      <HeaderSection
+        title="Participantes general (Asistentes no expositor)"
+        subtitle="Lista de participantes solo que participan en el congreso como asistentes"
+        isButtonVisible
+        labelButton="Agregar Participante"
+        href="/admin/participantes/asistentes/nuevo"
+      />
+      <section className="py-6">
+        <ListParticipants dataList={persons} />
+      </section>
     </>
   )
 }
