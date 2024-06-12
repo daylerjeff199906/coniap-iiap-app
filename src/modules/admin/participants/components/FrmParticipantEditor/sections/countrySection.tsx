@@ -1,18 +1,8 @@
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import {
-  Autocomplete,
-  AutocompleteItem,
-  // Avatar,
-  // Button,
-  Input,
-} from '@nextui-org/react'
+import { Autocomplete, AutocompleteItem, Input } from '@nextui-org/react'
 import countriesData from '@/utils/json/countries.json'
 import { IPerson } from '@/types'
-
-// function findCode(country: string) {
-//   return countriesData.find((item) => item.country === country)
-// }
 
 export const CountrySection = () => {
   const {
@@ -20,9 +10,6 @@ export const CountrySection = () => {
     formState: { errors },
     // watch,
   } = useFormContext<IPerson>()
-
-  // const country = watch('location') || ''
-  // const countryCode = findCode(country)
 
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 gap-5">
