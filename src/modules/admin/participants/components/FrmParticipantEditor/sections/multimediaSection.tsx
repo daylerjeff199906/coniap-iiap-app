@@ -16,7 +16,7 @@ export const MultimediaSection = (props: IProps) => {
   }
 
   return (
-    <section className="space-y-3 w-full ">
+    <section className="space-y-3 w-full flex flex-col items-center">
       <h3>Imagen de perfil</h3>
       <div className="w-44 h-44">
         <FilePond

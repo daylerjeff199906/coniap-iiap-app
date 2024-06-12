@@ -47,6 +47,23 @@ export async function fetchPerson(query: string) {
   }
 }
 
+export async function fetchPersons(query: string, typePerson: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('*')
+    .order('name', { ascending: true })
+    .ilike('surName', `%${query}%`)
+    .eq('typePerson', typePerson)
+
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}
+
 export async function fetchSpeakers(query: string) {
   const supabase = createClient()
 
