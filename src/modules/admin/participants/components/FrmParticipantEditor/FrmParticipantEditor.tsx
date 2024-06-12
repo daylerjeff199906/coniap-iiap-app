@@ -153,8 +153,8 @@ export const FrmParticipantEditor = (props: IProps) => {
       <ModalAction
         isOpen={isOpen}
         setOpen={setOpen}
-        title="Agregar ponente"
-        message="¿Estás seguro de agregar este ponente?"
+        title="Guardar cambios"
+        message="¿Estás seguro de guardar los cambios?"
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
       <LoadingPages isOpen={loading || loadFile} />

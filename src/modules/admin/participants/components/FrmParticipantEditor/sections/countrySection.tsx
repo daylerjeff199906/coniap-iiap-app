@@ -1,23 +1,33 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+import {
+  Autocomplete,
+  AutocompleteItem,
+  // Avatar,
+  // Button,
+  Input,
+} from '@nextui-org/react'
 import countriesData from '@/utils/json/countries.json'
 import { IPerson } from '@/types'
+
+// function findCode(country: string) {
+//   return countriesData.find((item) => item.country === country)
+// }
 
 export const CountrySection = () => {
   const {
     control,
     formState: { errors },
+    // watch,
   } = useFormContext<IPerson>()
 
+  // const country = watch('location') || ''
+  // const countryCode = findCode(country)
+
   return (
-    <>
+    <section className="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <Controller
         control={control}
-        // rules={{
-        //   required: 'Este campo es requerido',
-        // }}
         name="location"
         render={({ field: { onChange, value } }) => (
           <Autocomplete
@@ -42,6 +52,23 @@ export const CountrySection = () => {
           </Autocomplete>
         )}
       />
-    </>
+      <Controller
+        control={control}
+        name="phone"
+        render={({ field: { onChange, value } }) => (
+          <Input
+            aria-label="Teléfono del participante"
+            label="Teléfono"
+            labelPlacement="outside"
+            radius="sm"
+            placeholder="Teléfono del participante"
+            value={value}
+            onValueChange={onChange}
+            isInvalid={errors.phone !== undefined}
+            errorMessage={errors.phone?.message as string}
+          />
+        )}
+      />
+    </section>
   )
 }

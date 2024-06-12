@@ -18,8 +18,13 @@ const columns: Array<IColumns> = [
     align: 'start',
   },
   {
-    key: 'job',
-    label: 'Puesto de trabajo',
+    key: 'email',
+    label: 'Email',
+    align: 'start',
+  },
+  {
+    key: 'phone',
+    label: 'Teléfono',
     align: 'start',
   },
   {
@@ -64,7 +69,8 @@ export const ListParticipants = (prop: IProps) => {
       return {
         key: String(speaker.id),
         name: RenderColumnName(speaker.name, speaker.surName),
-        job: speaker.job,
+        email: speaker.email,
+        phone: speaker.phone,
         institution: speaker.institution,
         level: speaker.typePerson,
         status: speaker.isActived,
