@@ -25,24 +25,20 @@ export const CountrySection = () => {
             labelPlacement="outside"
             placeholder="Selecciona un país"
             name="location"
-            value={value || ''}
+            defaultItems={countriesData}
             onSelectionChange={(value) => {
-              const newValue = Object.values(value)[0]
-              onChange(newValue)
+              onChange(value)
             }}
             selectedKey={value || ''}
             radius="sm"
             isInvalid={errors.location !== undefined}
             errorMessage={errors.location?.message as string}
           >
-            {countriesData?.map((item) => (
-              <AutocompleteItem
-                key={item.country}
-                value={item.country}
-              >
+            {(item) => (
+              <AutocompleteItem key={item.country}>
                 {item.country}
               </AutocompleteItem>
-            ))}
+            )}
           </Autocomplete>
         )}
       />

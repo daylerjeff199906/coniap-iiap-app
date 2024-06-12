@@ -97,6 +97,7 @@ export const InfoGeneral = () => {
           <Controller
             control={control}
             rules={{
+              required: 'Este campo es obligatorio',  
               pattern: {
                 value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
                 message: 'Correo inválido',

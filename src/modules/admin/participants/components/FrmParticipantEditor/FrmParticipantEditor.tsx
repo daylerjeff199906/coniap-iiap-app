@@ -108,9 +108,8 @@ export const FrmParticipantEditor = (props: IProps) => {
                   label="Tipo de participante"
                   labelPlacement="outside"
                   placeholder="Selecciona un tipo de participante"
-                  value={value || ''}
+                  defaultSelectedKeys={['participant']}
                   selectedKeys={[value] || ['participant']}
-                  // defaultSelectedKeys={['participant']}
                   onSelectionChange={(value) => {
                     const newValue = Object.values(value)[0]
                     onChange(newValue)
