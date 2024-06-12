@@ -8,6 +8,11 @@ import { usePrograms, useFiles } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
   {
+    key: 'id',
+    label: 'ID',
+    align: 'center',
+  },
+  {
     key: 'title',
     label: 'Título',
     align: 'start',
@@ -64,6 +69,7 @@ export const ListProgramsSection = () => {
             ? programs?.map((program) => {
                 return {
                   key: program.id,
+                  id: program.id,
                   title: program.title,
                   description: program.shortDescription,
                   date: program.date,

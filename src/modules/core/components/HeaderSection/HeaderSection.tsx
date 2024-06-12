@@ -36,8 +36,7 @@ export const HeaderSection = (props: IProps) => {
                     className="text-white"
                   />
                 }
-                // className="button-dark"
-                color="secondary"
+                className="button-dark"
                 as={Link}
                 href={href || '#'}
               >

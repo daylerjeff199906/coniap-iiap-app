@@ -35,7 +35,7 @@ export default function Page() {
             <div className="lg:col-span-3 flex flex-col gap-3">
               <div className=" col-span-2">
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-                  PARTICIPA DE ESTE <b>CONGRESO, COMO PONENETE</b> ¡QUÉ ESPERAS!
+                  PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
                 </h1>
                 <p className="text-sm sm:text-base lg:text-lg">
                   <b>¡Inscríbete ya!</b> Si deseas participar como ponente y
