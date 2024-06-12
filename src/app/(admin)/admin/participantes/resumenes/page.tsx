@@ -1,5 +1,6 @@
 'use client'
 import { ListSummaries } from '@/modules/admin'
+import { HeaderSection } from '@/modules/core'
 import { Button, Tab, Tabs } from '@nextui-org/react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -37,7 +38,7 @@ export default function Page() {
   }
 
   return (
-    <>
+    <main className="flex flex-col gap-3">
       <Tabs
         size="sm"
         variant="underlined"
@@ -51,23 +52,17 @@ export default function Page() {
           />
         ))}
       </Tabs>
-      <div className="flex gap-2 items-center justify-between py-3">
-        <div>
-          <h1 className="text-2xl font-bold">Temas (Resúmenes)</h1>
-          <p className="text-sm text-gray-500">
-            {listTabs.find((tab) => tab.key === status)?.description}
-          </p>
-        </div>
-        <Button
-          color="primary"
-          size="sm"
-          as={Link}
-          href="/admin/participantes/resumenes/nuevo"
-        >
-          Añadir resumen
-        </Button>
-      </div>
+
+      <HeaderSection
+        title="Temas (Resúmenes)"
+        subtitle={
+          listTabs?.find((tab) => tab.key === status)?.description || ''
+        }
+        isButtonVisible
+        labelButton="Añadir resumen"
+        href="/admin/participantes/resumenes/nuevo"
+      />
       <ListSummaries />
-    </>
+    </main>
   )
 }

@@ -67,13 +67,13 @@ export const ListParticipants = (prop: IProps) => {
   const persons =
     dataList?.map((speaker) => {
       return {
-        key: String(speaker.id),
-        name: RenderColumnName(speaker.name, speaker.surName),
-        email: speaker.email,
-        phone: speaker.phone,
-        institution: speaker.institution,
-        level: speaker.typePerson,
-        status: speaker.isActived,
+        key: String(speaker?.id),
+        name: RenderColumnName(speaker?.name, speaker?.surName),
+        email: speaker?.email,
+        phone: speaker?.phone,
+        institution: speaker?.institution,
+        level: speaker?.typePerson,
+        status: speaker?.isActived,
         actions: 'actions',
       }
     }) || []

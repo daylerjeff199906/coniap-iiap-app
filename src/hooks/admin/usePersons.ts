@@ -7,6 +7,7 @@ import {
   fetchPerson,
   fetchPersonsInEvent,
   fetchPersonsNotInEvent,
+  fetchPersons,
 } from '@/api'
 import { IPerson, IRes } from '@/types'
 import { toast } from 'sonner'
@@ -67,9 +68,13 @@ export function usePersons() {
     }
   }
 
-  const getPersons = async (query: string) => {
+  const getPersons = async (
+    query: string,
+    typePerson: string,
+    isNot?: string
+  ) => {
     setLoading(true)
-    const data = await fetchPerson(query)
+    const data = await fetchPersons(query, '', isNot)
       .then((res) => res)
       .catch((err) => err)
     setPersons(data)
