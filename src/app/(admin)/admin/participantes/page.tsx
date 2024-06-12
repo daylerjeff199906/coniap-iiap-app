@@ -14,7 +14,7 @@ export default async function Page(props: IProps) {
   const { query, typePerson } = searchParams
 
   const search = query ? String(query) : ''
-  const type = typePerson ? String(typePerson) : 'participant'
+  const type = typePerson ? String(typePerson) : ''
 
   const persons: IPerson[] = (await fetchPersons(search, type)) as IPerson[]
 

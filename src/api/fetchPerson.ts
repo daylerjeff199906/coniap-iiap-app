@@ -50,12 +50,20 @@ export async function fetchPerson(query: string) {
 export async function fetchPersons(query: string, typePerson: string) {
   const supabase = createClient()
 
-  const { data, error } = await supabase
+  // Comenzamos construyendo la consulta básica
+  let queryBuilder = supabase
     .from('persons')
     .select('*')
     .order('name', { ascending: true })
     .ilike('surName', `%${query}%`)
-    .eq('typePerson', typePerson)
+
+  // Agregamos la condición solo si typePerson no está vacío
+  if (typePerson) {
+    queryBuilder = queryBuilder.eq('typePerson', typePerson)
+  }
+
+  // Ejecutamos la consulta
+  const { data, error } = await queryBuilder
 
   if (error) {
     return error
