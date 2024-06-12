@@ -190,7 +190,7 @@ export const TableGeneral = (props: IProps) => {
         classNames={{
           th: ['font-bold', 'bg-black', 'text-white'],
           base: 'max-h-[calc(100vh-22rem)] overflow-y-auto bg-white',
-          td: ['text-xs'],
+          td: ['text-xs', 'font-medium'],
         }}
         selectionMode={selectionMode}
         onRowAction={onRowAction}

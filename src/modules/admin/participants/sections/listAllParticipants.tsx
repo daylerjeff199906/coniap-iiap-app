@@ -18,8 +18,13 @@ const columns: Array<IColumns> = [
     align: 'start',
   },
   {
-    key: 'job',
-    label: 'Puesto de trabajo',
+    key: 'email',
+    label: 'Email',
+    align: 'start',
+  },
+  {
+    key: 'phone',
+    label: 'Teléfono',
     align: 'start',
   },
   {
@@ -62,12 +67,13 @@ export const ListParticipants = (prop: IProps) => {
   const persons =
     dataList?.map((speaker) => {
       return {
-        key: String(speaker.id),
-        name: RenderColumnName(speaker.name, speaker.surName),
-        job: speaker.job,
-        institution: speaker.institution,
-        level: speaker.typePerson,
-        status: speaker.isActived,
+        key: String(speaker?.id),
+        name: RenderColumnName(speaker?.name, speaker?.surName),
+        email: speaker?.email,
+        phone: speaker?.phone,
+        institution: speaker?.institution,
+        level: speaker?.typePerson,
+        status: speaker?.isActived,
         actions: 'actions',
       }
     }) || []

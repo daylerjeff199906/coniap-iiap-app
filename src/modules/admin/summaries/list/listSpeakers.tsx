@@ -38,7 +38,7 @@ export const ListSpeakers = (props: IProps) => {
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    getPersons(query)
+    getPersons(query, '', 'participant')
   }, [query])
 
   const onSelectionChange = (row: IRows) => {
@@ -50,10 +50,10 @@ export const ListSpeakers = (props: IProps) => {
     persons !== null
       ? persons?.map((person) => {
           return {
-            key: String(person.id),
-            name: person.name + ' ' + person.surName,
-            typePerson: person.typePerson,
-            estado: person.isActived ? 'Activo' : 'Inactivo',
+            key: String(person?.id),
+            name: person?.name + ' ' + person?.surName,
+            typePerson: person?.typePerson,
+            estado: person?.isActived ? 'Activo' : 'Inactivo',
           }
         })
       : []

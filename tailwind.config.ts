@@ -13,7 +13,7 @@ const config: Config = {
       screens: {
         sm: '100%',
         md: '100%',
-        xl: '1920px',
+        xl: '1280px',
       },
       center: true,
       padding: {

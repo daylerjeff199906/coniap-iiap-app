@@ -38,7 +38,7 @@ export const ListSpeakers = (props: IProps) => {
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    getPersons(query)
+    getPersons(query, '')
   }, [query])
 
   const onSelectionChange = (row: IRows) => {

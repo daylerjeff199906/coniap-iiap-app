@@ -26,7 +26,7 @@ export function useSummaries() {
         description: res.message,
       })
     } else {
-      toast.success('Evento creado con exito')
+      toast.success('Resumen añadido con éxito')
     }
     setLoading(false)
     return res
@@ -70,15 +70,6 @@ export function useSummaries() {
     setLoading(false)
     return res
   }
-
-  //   const getEventById = async (id: string) => {
-  //     setLoading(true)
-  //     const data = await fetchEventById(id)
-  //       .then((res) => res)
-  //       .catch((err) => err)
-  //     setEvent(data)
-  //     setLoading(false)
-  //   }
 
   return {
     loading,
