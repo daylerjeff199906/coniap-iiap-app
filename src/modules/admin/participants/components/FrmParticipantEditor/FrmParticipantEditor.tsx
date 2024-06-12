@@ -46,29 +46,31 @@ export const FrmParticipantEditor = (props: IProps) => {
   const handleFormSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
     setOpen(false)
 
-    const newData: IPerson = {
-      ...data,
-      image: '',
-      isActived: dataDefault?.id ? dataDefault.isActived : false,
-    }
+    console.log(data)
 
-    if (dataDefault?.id) {
-      const speaker = await updatePersonData(dataDefault.id, newData)
-      if (speaker && file.length > 0) {
-        const url = await uploadImage('speaker', file[0])
-        await editField(dataDefault.id, 'persons', 'image', url)
-      }
-    } else {
-      const speaker: IPerson = await addPerson(newData)
-      if (speaker && file.length > 0) {
-        const url = await uploadImage('speaker', file[0])
-        await editField(String(speaker.id), 'persons', 'image', url)
-      }
+    // const newData: IPerson = {
+    //   ...data,
+    //   image: '',
+    //   isActived: dataDefault?.id ? dataDefault.isActived : false,
+    // }
 
-      if (speaker) {
-        router.back()
-      }
-    }
+    // if (dataDefault?.id) {
+    //   const speaker = await updatePersonData(dataDefault.id, newData)
+    //   if (speaker && file.length > 0) {
+    //     const url = await uploadImage('speaker', file[0])
+    //     await editField(dataDefault.id, 'persons', 'image', url)
+    //   }
+    // } else {
+    //   const speaker: IPerson = await addPerson(newData)
+    //   if (speaker && file.length > 0) {
+    //     const url = await uploadImage('speaker', file[0])
+    //     await editField(String(speaker.id), 'persons', 'image', url)
+    //   }
+
+    //   if (speaker) {
+    //     router.back()
+    //   }
+    // }
   }
 
   const handleBack = () => {
@@ -102,14 +104,18 @@ export const FrmParticipantEditor = (props: IProps) => {
               rules={{ required: 'Este campo es requerido' }}
               render={({ field: { onChange, value } }) => (
                 <Select
+                  aria-label="select"
                   label="Tipo de participante"
                   labelPlacement="outside"
                   placeholder="Selecciona un tipo de participante"
-                  name="typePerson"
-                  selectedKeys={[value] || ['']}
-                  onChange={(value) => {
-                    onChange(value)
+                  value={value || ''}
+                  selectedKeys={[value] || ['participant']}
+                  // defaultSelectedKeys={['participant']}
+                  onSelectionChange={(value) => {
+                    const newValue = Object.values(value)[0]
+                    onChange(newValue)
                   }}
+                  disallowEmptySelection
                   radius="sm"
                   isInvalid={methods.formState.errors.typePerson !== undefined}
                   errorMessage={
@@ -117,7 +123,12 @@ export const FrmParticipantEditor = (props: IProps) => {
                   }
                 >
                   {typePerson.map((item) => (
-                    <SelectItem key={item.value}>{item.label}</SelectItem>
+                    <SelectItem
+                      key={item.value}
+                      value={item.value}
+                    >
+                      {item.label}
+                    </SelectItem>
                   ))}
                 </Select>
               )}

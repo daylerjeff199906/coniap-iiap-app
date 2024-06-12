@@ -26,10 +26,11 @@ export const CountrySection = () => {
             placeholder="Selecciona un país"
             name="location"
             value={value || ''}
-            onValueChange={(value) => {
-              // onChange(value)
-              console.log(value)
+            onSelectionChange={(value) => {
+              const newValue = Object.values(value)[0]
+              onChange(newValue)
             }}
+            selectedKey={value || ''}
             radius="sm"
             isInvalid={errors.location !== undefined}
             errorMessage={errors.location?.message as string}
