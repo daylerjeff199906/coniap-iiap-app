@@ -1,6 +1,6 @@
-import { fetchProgram } from '@/api'
-import { FrmAddProgram } from '@/components'
-import { IProgram } from '@/types'
+import { fetchPerson } from '@/api'
+import { FrmParticipantEditor } from '@/modules/admin'
+import { IPerson } from '@/types'
 
 interface IProps {
   params: {
@@ -11,14 +11,14 @@ interface IProps {
 export default async function Page(props: IProps) {
   const { id } = props.params
 
-  const program: IProgram = await fetchProgram(id)
+  const person: IPerson = await fetchPerson(id)
     .then((res) => res)
     .catch((err) => err)
 
-  if (program) {
+  if (person) {
     return (
       <section className="flex flex-col w-full justify-center items-center">
-        <FrmAddProgram program={program} />
+        <FrmParticipantEditor dataDefault={person} />
       </section>
     )
   }
