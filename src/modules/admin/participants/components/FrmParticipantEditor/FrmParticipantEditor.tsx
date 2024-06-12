@@ -14,6 +14,7 @@ import { InfoGeneral, MultimediaSection } from './sections'
 import { LoadingPages, ModalAction } from '@/components'
 
 import { usePersons, useFiles } from '@/hooks/admin'
+import { HeaderSection } from '@/modules/core'
 
 const typePerson = [
   { value: 'speaker', label: 'Ponente' },
@@ -21,12 +22,20 @@ const typePerson = [
   { value: 'participant', label: 'Paricipante' },
 ]
 
-export const FrmParticipantEditor = () => {
+interface IProps {
+  dataDefault?: IPerson
+}
+
+export const FrmParticipantEditor = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
   const [file, setFile] = useState([])
-  const methods = useForm<IPerson>()
 
-  const { addPerson, loading } = usePersons()
+  const { dataDefault } = props
+  const methods = useForm<IPerson>({
+    defaultValues: dataDefault,
+  })
+
+  const { addPerson, updatePersonData, loading } = usePersons()
   const { editField, loading: loadFile, uploadImage } = useFiles()
   const router = useRouter()
 
@@ -35,26 +44,41 @@ export const FrmParticipantEditor = () => {
   }
 
   const handleFormSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
+    setOpen(false)
+
     const newData: IPerson = {
       ...data,
       image: '',
-      isActived: false,
-    }
-    setOpen(false)
-    const speaker: IPerson = await addPerson(newData)
-    if (speaker && file.length > 0) {
-      const url = await uploadImage('speaker', file[0])
-      await editField(String(speaker.id), 'persons', 'image', url)
+      isActived: dataDefault?.id ? dataDefault.isActived : false,
     }
 
-    if (speaker) {
-      router.back()
+    if (dataDefault?.id) {
+      const speaker = await updatePersonData(dataDefault.id, newData)
+      if (speaker && file.length > 0) {
+        const url = await uploadImage('speaker', file[0])
+        await editField(dataDefault.id, 'persons', 'image', url)
+      }
+    } else {
+      const speaker: IPerson = await addPerson(newData)
+      if (speaker && file.length > 0) {
+        const url = await uploadImage('speaker', file[0])
+        await editField(String(speaker.id), 'persons', 'image', url)
+      }
+
+      if (speaker) {
+        router.back()
+      }
     }
   }
 
   const handleBack = () => {
     router.back()
   }
+
+  const title = dataDefault?.id ? 'Editar datos' : 'Agregar participante'
+  const subtitle = dataDefault?.id
+    ? 'Edita los datos del participante'
+    : 'Agrega un nuevo participante'
 
   return (
     <>
@@ -63,7 +87,10 @@ export const FrmParticipantEditor = () => {
           className="space-y-4 max-w-3xl border border-gray-200 p-4 rounded-lg"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <h1 className="text-2xl font-bold w-full">Agregar Participante</h1>
+          <HeaderSection
+            title={title}
+            subtitle={subtitle}
+          />
           <MultimediaSection
             setFiles={setFile}
             files={file}
