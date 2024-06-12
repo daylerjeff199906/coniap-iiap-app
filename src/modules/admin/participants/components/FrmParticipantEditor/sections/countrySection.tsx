@@ -25,6 +25,7 @@ export const CountrySection = () => {
             placeholder="Selecciona un país"
             name="location"
             value={value}
+            selectedKey={value}
             onChange={(value) => {
               onChange(value)
             }}

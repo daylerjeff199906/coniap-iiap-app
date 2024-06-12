@@ -11,7 +11,7 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <h1 className="">Información general</h1>
+        <h1 className="font-medium text-sm">Información general</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Controller
             control={control}
@@ -80,9 +80,6 @@ export const InfoGeneral = () => {
           <Controller
             control={control}
             name="job"
-            rules={{
-              required: 'Este campo es requerido',
-            }}
             render={({ field: { onChange, value } }) => (
               <Input
                 label="Puesto"

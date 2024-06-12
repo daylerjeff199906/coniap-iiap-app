@@ -106,7 +106,7 @@ export const FrmParticipantEditor = (props: IProps) => {
                   labelPlacement="outside"
                   placeholder="Selecciona un tipo de participante"
                   name="typePerson"
-                  value={value}
+                  selectedKeys={[value] || ['']}
                   onChange={(value) => {
                     onChange(value)
                   }}

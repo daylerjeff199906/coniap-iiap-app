@@ -40,6 +40,8 @@ export async function fetchPerson(query: string) {
     .select('*')
     .order('name', { ascending: true })
     .ilike('name', `%${query}%`)
+    .single()
+
   if (error) {
     return error
   } else {

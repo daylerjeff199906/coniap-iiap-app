@@ -1,8 +1,7 @@
 'use client'
-// import { useState } from 'react'
-import { FilePond } from 'react-filepond'
-// import { useFormContext } from 'react-hook-form'
-
+import { FilePond, registerPlugin } from 'react-filepond'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+registerPlugin(FilePondPluginFileValidateType)
 interface IProps {
   files: any[]
   setFiles: (files: any) => void
@@ -17,7 +16,9 @@ export const MultimediaSection = (props: IProps) => {
 
   return (
     <section className="space-y-3 w-full flex flex-col items-center">
-      <h3>Imagen de perfil</h3>
+      <h3 className="w-full text-start text-sm font-medium">
+        Imagen de perfil
+      </h3>
       <div className="w-44 h-44">
         <FilePond
           allowMultiple={false}

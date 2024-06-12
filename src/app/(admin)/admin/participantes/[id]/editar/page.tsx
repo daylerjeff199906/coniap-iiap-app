@@ -1,4 +1,4 @@
-import { fetchPerson } from '@/api'
+import { fetchPerson, fetchPersonById } from '@/api'
 import { FrmParticipantEditor } from '@/modules/admin'
 import { IPerson } from '@/types'
 
@@ -11,9 +11,11 @@ interface IProps {
 export default async function Page(props: IProps) {
   const { id } = props.params
 
-  const person: IPerson = await fetchPerson(id)
+  const person: IPerson = await fetchPersonById(id)
     .then((res) => res)
     .catch((err) => err)
+
+  console.log(person)
 
   if (person) {
     return (
