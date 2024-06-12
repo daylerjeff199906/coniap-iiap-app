@@ -1,3 +1,4 @@
+import { IProgram } from '@/types'
 import { Input, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 
@@ -5,11 +6,12 @@ export const InfoGeneral = () => {
   const {
     control,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext<IProgram>()
+
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <h1 className="text-lg">Información general</h1>
+        <h1 className="text-sm font-medium">Información general</h1>
         <Controller
           control={control}
           rules={{
@@ -25,8 +27,8 @@ export const InfoGeneral = () => {
               placeholder="Escríbe el título del programa"
               value={value}
               onValueChange={onChange}
-              isInvalid={errors.name !== undefined}
-              errorMessage={errors.name?.message as string}
+              isInvalid={errors.title !== undefined}
+              errorMessage={errors.title?.message as string}
             />
           )}
         />

@@ -124,7 +124,7 @@ export const TableGeneral = (props: IProps) => {
                   <DropdownMenu aria-label="DropdownMenu">
                     <DropdownItem
                       as={Link}
-                      href={`?edit=${item.key}`}
+                      href={`${pathname}/${item.key}/editar`}
                     >
                       Editar
                     </DropdownItem>

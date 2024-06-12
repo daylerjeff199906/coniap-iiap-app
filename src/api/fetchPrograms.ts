@@ -18,7 +18,11 @@ export async function fetchPrograms(query: string, column?: string) {
 
 export async function fetchProgram(id: string) {
   const supabase = createClient()
-  const { data, error } = await supabase.from('programs').select().eq('id', id)
+  const { data, error } = await supabase
+    .from('programs')
+    .select()
+    .eq('id', id)
+    .single()
 
   if (error) {
     return error
