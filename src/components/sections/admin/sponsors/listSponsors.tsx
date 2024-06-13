@@ -11,6 +11,11 @@ import { useFiles } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
   {
+    key: 'key',
+    label: 'ID',
+    align: 'center',
+  },
+  {
     key: 'image',
     label: 'Imagen',
     align: 'center',
@@ -31,7 +36,7 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
-export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
+export const ListSponsorsSections = () => {
   const { getSponsors, sponsors, loading } = useSponsors()
   const { editField, loading: loadingFile } = useFiles()
 
@@ -44,12 +49,6 @@ export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
   useEffect(() => {
     getSponsors(query)
   }, [query])
-
-  useEffect(() => {
-    if (loadData) {
-      getSponsors('')
-    }
-  }, [loadData])
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'sponsors', 'isActived', value)
@@ -69,6 +68,7 @@ export const ListSponsorsSections = ({ loadData }: { loadData: boolean }) => {
             ? sponsors?.map((sponsor) => {
                 return {
                   key: sponsor.id,
+                  id: sponsor.id,
                   image: RenderImage(sponsor.image),
                   name: sponsor.name,
                   status: sponsor.isActived,
