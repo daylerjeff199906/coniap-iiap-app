@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Modal,
   ModalBody,
@@ -22,40 +22,34 @@ import { useSponsors } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
 
 import { useRouter } from 'next/navigation'
+import { HeaderSection } from '@/modules/core'
 interface IProps {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-  id?: string | null
-  loadData?: (value: boolean) => void
+  defaultData?: ISponsor
 }
 
 export const FrmSponsorEditor = (props: IProps) => {
-  const { isOpen, onOpenChange, id, loadData } = props
+  const { defaultData } = props
 
-  const {
-    createDataSponsor,
-    updateDataSponsor,
-    getSponsorById,
-    sponsor,
-    loading,
-  } = useSponsors()
+  const { createDataSponsor, updateDataSponsor, loading } = useSponsors()
   const { uploadImage, editField, loading: loadFile } = useFiles()
   const router = useRouter()
 
   const [files, setFiles] = useState([])
 
-  const methods = useForm<ISponsor>()
+  const methods = useForm<ISponsor>({
+    defaultValues: defaultData,
+  })
 
   const handleUpdateFiles = (fileItems: any) => {
     setFiles(fileItems.map((fileItem: any) => fileItem.file))
   }
 
   const onSubmit: SubmitHandler<ISponsor> = async (data: ISponsor) => {
-    if (id) {
-      await updateDataSponsor(id, data)
+    if (defaultData?.id) {
+      await updateDataSponsor(defaultData?.id, data)
       if (files.length > 0) {
         const url = await uploadImage('sponsors', files[0])
-        await editField(id, 'sponsors', 'image', url)
+        await editField(defaultData?.id, 'sponsors', 'image', url)
       }
     } else {
       const newData = {
@@ -69,43 +63,32 @@ export const FrmSponsorEditor = (props: IProps) => {
         await editField(sponsor.id, 'sponsors', 'image', url)
       }
     }
-    handleOpenChange(false)
-    loadData && loadData(true)
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    loadData && loadData(false)
+    handleOpenChange()
   }
 
-  const handleOpenChange = (open: boolean) => {
-    onOpenChange(open)
-    methods.reset()
-    setFiles([])
-    if (id) {
-      router.push('/admin/sponsors')
-    }
+  const handleOpenChange = () => {
+    router.push('/admin/sponsors')
   }
-
-  useEffect(() => {
-    if (id) {
-      getSponsorById(id)
-    }
-  }, [id])
-
-  useEffect(() => {
-    if (sponsor) {
-      methods.reset(sponsor)
-    }
-  }, [sponsor])
 
   return (
     <>
       <Modal
-        isOpen={isOpen}
+        isOpen
         onOpenChange={handleOpenChange}
         size="3xl"
       >
         <ModalContent>
           <ModalHeader>
-            {id ? 'Editar Colaborador' : 'Agregar Colaborador'}
+            <HeaderSection
+              title={
+                defaultData?.id ? 'Editar colaborador' : 'Nuevo colaborador'
+              }
+              subtitle={
+                defaultData?.id
+                  ? 'Edita los datos del colaborador'
+                  : 'Añade un nuevo colaborador'
+              }
+            />
           </ModalHeader>
           <ModalBody>
             <FormProvider {...methods}>
@@ -135,7 +118,7 @@ export const FrmSponsorEditor = (props: IProps) => {
                   files={files}
                   onupdatefiles={handleUpdateFiles}
                   labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-                  required={id ? false : true}
+                  required={defaultData?.id ? false : true}
                 />
                 <footer className="flex gap-3 justify-end pt-4 pb-4">
                   <Button
@@ -144,11 +127,9 @@ export const FrmSponsorEditor = (props: IProps) => {
                     isDisabled={loading || loadFile}
                     isLoading={loading || loadFile}
                   >
-                    {id ? 'Actualizar' : 'Guardar'}
+                    {defaultData?.id ? 'Actualizar' : 'Guardar'}
                   </Button>
-                  <Button onPress={() => handleOpenChange(false)}>
-                    Cancelar
-                  </Button>
+                  <Button onPress={handleOpenChange}>Cancelar</Button>
                 </footer>
               </form>
             </FormProvider>

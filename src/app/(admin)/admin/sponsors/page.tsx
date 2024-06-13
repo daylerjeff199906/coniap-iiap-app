@@ -1,4 +1,3 @@
-'use client'
 import { ListSponsorsSections } from '@/components'
 import { HeaderSection } from '@/modules/core'
 
