@@ -20,7 +20,6 @@ import { FilePond } from 'react-filepond'
 import { ISponsor } from '@/types'
 import { useSponsors } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
-import { Loading } from './loading'
 
 import { useRouter } from 'next/navigation'
 interface IProps {
@@ -30,7 +29,7 @@ interface IProps {
   loadData?: (value: boolean) => void
 }
 
-export const FrmAddSponsor = (props: IProps) => {
+export const FrmSponsorEditor = (props: IProps) => {
   const { isOpen, onOpenChange, id, loadData } = props
 
   const {
@@ -111,43 +110,33 @@ export const FrmAddSponsor = (props: IProps) => {
           <ModalBody>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
-                {loading || loadFile ? (
-                  <>
-                    <Loading />
-                  </>
-                ) : (
-                  <>
-                    <Controller
-                      control={methods.control}
-                      name="name"
-                      rules={{ required: 'Este campo es requerido' }}
-                      render={({ field: { onChange, value } }) => (
-                        <Input
-                          aria-label="Nombre del colaborador"
-                          label="Nombre"
-                          labelPlacement="outside"
-                          radius="sm"
-                          placeholder="Escribe el nombre del colaborador"
-                          value={value}
-                          onValueChange={onChange}
-                          isInvalid={
-                            methods.formState.errors.name !== undefined
-                          }
-                          errorMessage={methods.formState.errors.name?.message}
-                        />
-                      )}
+                <Controller
+                  control={methods.control}
+                  name="name"
+                  rules={{ required: 'Este campo es requerido' }}
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      aria-label="Nombre del colaborador"
+                      label="Nombre"
+                      labelPlacement="outside"
+                      radius="sm"
+                      placeholder="Escribe el nombre del colaborador"
+                      value={value}
+                      onValueChange={onChange}
+                      isInvalid={methods.formState.errors.name !== undefined}
+                      errorMessage={methods.formState.errors.name?.message}
                     />
-                    <p className="mt-4 mb-2 text-sm">Imagen</p>
-                    <FilePond
-                      allowMultiple={false}
-                      acceptedFileTypes={['image/*']}
-                      files={files}
-                      onupdatefiles={handleUpdateFiles}
-                      labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-                      required={id ? false : true}
-                    />
-                  </>
-                )}
+                  )}
+                />
+                <p className="mt-4 mb-2 text-sm">Imagen</p>
+                <FilePond
+                  allowMultiple={false}
+                  acceptedFileTypes={['image/*']}
+                  files={files}
+                  onupdatefiles={handleUpdateFiles}
+                  labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
+                  required={id ? false : true}
+                />
                 <footer className="flex gap-3 justify-end pt-4 pb-4">
                   <Button
                     color="primary"
