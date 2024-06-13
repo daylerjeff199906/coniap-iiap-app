@@ -1,5 +1,4 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { ListSponsorsSections } from '@/components'
 import { HeaderSection } from '@/modules/core'
 
