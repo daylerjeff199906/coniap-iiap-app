@@ -79,16 +79,18 @@ export const FrmSponsorEditor = (props: IProps) => {
       >
         <ModalContent>
           <ModalHeader>
-            <HeaderSection
-              title={
-                defaultData?.id ? 'Editar colaborador' : 'Nuevo colaborador'
-              }
-              subtitle={
-                defaultData?.id
-                  ? 'Edita los datos del colaborador'
-                  : 'Añade un nuevo colaborador'
-              }
-            />
+            <main className="w-full">
+              <HeaderSection
+                title={
+                  defaultData?.id ? 'Editar colaborador' : 'Nuevo colaborador'
+                }
+                subtitle={
+                  defaultData?.id
+                    ? 'Edita los datos del colaborador'
+                    : 'Añade un nuevo colaborador'
+                }
+              />
+            </main>
           </ModalHeader>
           <ModalBody>
             <FormProvider {...methods}>

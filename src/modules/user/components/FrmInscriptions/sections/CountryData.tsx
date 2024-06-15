@@ -1,17 +1,16 @@
 'use client'
-import { Controller, useFormContext } from 'react-hook-form'
-import { Autocomplete, AutocompleteItem, Input } from '@nextui-org/react'
-import countriesData from '@/utils/json/countries.json'
 import { IPerson } from '@/types'
+import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+import { Controller, useFormContext } from 'react-hook-form'
+import countriesData from '@/utils/json/countries.json'
 
-export const CountrySection = () => {
+export const CountryData = () => {
   const {
     control,
     formState: { errors },
   } = useFormContext<IPerson>()
-
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <>
       <Controller
         control={control}
         name="location"
@@ -38,23 +37,6 @@ export const CountrySection = () => {
           </Autocomplete>
         )}
       />
-      <Controller
-        control={control}
-        name="phone"
-        render={({ field: { onChange, value } }) => (
-          <Input
-            aria-label="Teléfono del participante"
-            label="Teléfono"
-            labelPlacement="outside"
-            radius="sm"
-            placeholder="Teléfono del participante"
-            value={value}
-            onValueChange={onChange}
-            isInvalid={errors.phone !== undefined}
-            errorMessage={errors.phone?.message as string}
-          />
-        )}
-      />
-    </section>
+    </>
   )
 }

@@ -1,6 +1,6 @@
-import { fetchTopic } from '@/api'
-import { FrmManageTopic } from '@/modules/admin'
-import { ITopic } from '@/types'
+import { fetchSponsor } from '@/api'
+import { FrmSponsorEditor } from '@/modules/admin'
+import { ISponsor } from '@/types'
 interface IProps {
   params: {
     id: string
@@ -10,7 +10,7 @@ interface IProps {
 export default async function Page(props: IProps) {
   const { id } = props.params
 
-  const res = await fetchTopic(Number(id))
+  const res = await fetchSponsor(id)
   if (!res) {
     return (
       <div>
@@ -19,11 +19,11 @@ export default async function Page(props: IProps) {
     )
   }
 
-  const dataTopic: ITopic = res
+  const dataSponsor: ISponsor = res
 
   return (
     <>
-      <FrmManageTopic dataDefault={dataTopic} />
+      <FrmSponsorEditor defaultData={dataSponsor} />
     </>
   )
 }

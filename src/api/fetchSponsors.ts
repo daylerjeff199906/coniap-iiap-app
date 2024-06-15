@@ -53,6 +53,7 @@ export async function fetchSponsor(id: string) {
     .from('sponsors')
     .select('*')
     .eq('id', id)
+    .single()
   if (error) {
     return error
   } else {
