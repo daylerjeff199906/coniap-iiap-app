@@ -12,7 +12,13 @@ import { IPerson } from '@/types'
 import { usePersons } from '@/hooks/admin'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { InfoData, JobData } from './sections'
+import {
+  ContactData,
+  CountryData,
+  InfoData,
+  JobData,
+  RoleData,
+} from './sections'
 
 export const FrmInscriptions = () => {
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
@@ -65,63 +71,17 @@ export const FrmInscriptions = () => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div className="col-span-2">
-            <h3 className="text-sm sm:text-lg">
-              <b>¿Listo para aprovechar la oportunidad?</b> Déjanos tingresa tus
-              datos y participa de las conferencias y asegura tu certificado de
-              participación.
+            <h3 className="text-sm">
+              <b>Regístrate para participar</b> Participa como asistente a los
+              eventos, o si deseas presentar tu trabajo de investigación, puedes
+              hacerlo como ponente.
             </h3>
           </div>
           <InfoData />
           <JobData />
-          <Controller
-            control={methods.control}
-            name="location"
-            rules={{ required: 'Este campo es requerido' }}
-            render={({ field: { value, onChange } }) => (
-              <Input
-                label="Localidad/Procedencia"
-                labelPlacement="outside"
-                radius="sm"
-                placeholder="País, Ciudad"
-                value={value || ''}
-                onValueChange={onChange}
-                isInvalid={methods.formState.errors.location !== undefined}
-                errorMessage={
-                  methods.formState.errors.location?.message as string
-                }
-              />
-            )}
-          />
-          <Controller
-            control={methods.control}
-            name="email"
-            rules={{
-              required: 'Este campo es requerido',
-              pattern: {
-                value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                message: 'Email no válido',
-              },
-            }}
-            render={({ field: { value, onChange } }) => (
-              <Input
-                label="Email"
-                labelPlacement="outside"
-                radius="sm"
-                placeholder="ejemplo@hotmail.com"
-                value={value || ''}
-                onValueChange={onChange}
-                isInvalid={methods.formState.errors.email !== undefined}
-                errorMessage={methods.formState.errors.email?.message as string}
-              />
-            )}
-          />
-          <Checkbox
-            className="col-span-2"
-            size="sm"
-            required
-          >
-            Acepto los términos y condiciones
-          </Checkbox>
+          <CountryData />
+          <ContactData />
+          <RoleData />
           <div className="col-span-2">
             <Button
               radius="full"
