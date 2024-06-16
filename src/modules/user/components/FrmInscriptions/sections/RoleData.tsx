@@ -36,6 +36,8 @@ export const RoleData = () => {
               ),
               label: 'w-full',
             }}
+            isSelected={methods?.watch('typePerson') === 'speaker'}
+            onValueChange={(value) => handleRole(value)}
           >
             <div className="w-full">
               <h1 className="text-sm font-bold">Participar como ponente</h1>
@@ -48,12 +50,23 @@ export const RoleData = () => {
           </Checkbox>
         </div>
       </section>
-      {methods?.watch('typePerson') !== 'speaker' && (
-        <Input
-          radius="sm"
-          placeholder="Ingrese su contraseña"
-          className="col-span-1 sm:col-span-2"
-        />
+      {methods?.watch('typePerson') === 'speaker' && (
+        <section className="pt-2 col-span-1 sm:col-span-2 flex flex-col gap-2">
+          <Input
+            radius="sm"
+            label="Contraseña"
+            labelPlacement="outside"
+            placeholder="Ingrese su contraseña"
+            type="password"
+          />
+          <Input
+            radius="sm"
+            label="Confirmar contraseña"
+            labelPlacement="outside"
+            placeholder="Confirme su contraseña"
+            type="password"
+          />
+        </section>
       )}
     </>
   )
