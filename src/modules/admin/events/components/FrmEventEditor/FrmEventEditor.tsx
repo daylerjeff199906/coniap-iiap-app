@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 import {
   InfoGeneral,
   MoreDescription,
-  MoreInfo,
   ProgramSection,
   SummarySection,
 } from './sections'
@@ -78,7 +77,6 @@ export const FrmEventEditor = (props: IProps) => {
             <ProgramSection />
             <SummarySection />
             <InfoGeneral />
-            <MoreInfo />
           </div>
           <MoreDescription />
           <div className="flex items-center gap-4 justify-end">

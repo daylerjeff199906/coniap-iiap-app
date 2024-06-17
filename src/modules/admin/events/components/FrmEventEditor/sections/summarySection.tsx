@@ -13,10 +13,19 @@ export const SummarySection = () => {
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useFormContext<IEvent>()
 
   const [isOpen, setIsOpen] = useState(false)
   const [isSummary, setIsSummary] = useState(watch('summary') ? true : false)
+
+  const onValueChange = (value: boolean) => {
+    setIsSummary(value)
+    if (!value) {
+      setValue('summary.id', '')
+      setValue('summary_name', '')
+    }
+  }
 
   return (
     <>
@@ -35,7 +44,7 @@ export const SummarySection = () => {
               label: 'w-full',
             }}
             isSelected={isSummary}
-            onValueChange={setIsSummary}
+            onValueChange={onValueChange}
           >
             <div className="w-full">
               <h1 className="text-sm font-bold">

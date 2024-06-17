@@ -10,9 +10,17 @@ import { IEvent } from '@/types'
 import { DateEvent } from '.'
 
 export const ProgramSection = () => {
-  const { control, watch } = useFormContext<IEvent>()
+  const { control, watch, setValue } = useFormContext<IEvent>()
   const [isOpen, setIsOpen] = useState(false)
   const [isProgram, setIsProgram] = useState(watch('program') ? true : false)
+
+  const onValueChange = (value: boolean) => {
+    setIsProgram(value)
+    if (!value) {
+      setValue('program.id', '')
+      setValue('program_name', '')
+    }
+  }
 
   return (
     <>
@@ -31,7 +39,7 @@ export const ProgramSection = () => {
               label: 'w-full',
             }}
             isSelected={isProgram}
-            onValueChange={setIsProgram}
+            onValueChange={onValueChange}
           >
             <div className="w-full">
               <h1 className="text-sm font-bold">
