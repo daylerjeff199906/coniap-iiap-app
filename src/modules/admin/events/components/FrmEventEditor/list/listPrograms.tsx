@@ -41,9 +41,11 @@ export const ListPrograms = (props: IProps) => {
     getPrograms(query)
   }, [query])
 
-  const onSelectionChange = (row: IRows) => {
-    // setValue('program_name', )
-    // setValue('date', row.date)
+  const onSelectionChange = (row: any) => {
+    const full_name = row.key + ' - ' + row.name + ' - ' + row.date
+    setValue('program', row.key)
+    setValue('program_name', full_name)
+    setValue('date', row.date)
     onSetOpen(false)
   }
 
