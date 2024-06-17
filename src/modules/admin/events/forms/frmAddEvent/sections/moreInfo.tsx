@@ -1,8 +1,10 @@
+import { IEvent } from '@/types'
 import { Input } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 
 export const MoreInfo = () => {
-  const { control } = useFormContext()
+  const { control } = useFormContext<IEvent>()
+  
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
@@ -22,48 +24,6 @@ export const MoreInfo = () => {
             />
           )}
         /> */}
-        <Controller
-          control={control}
-          name="linkZoom"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              label="Link de Zoom"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Link del evento en meet"
-              value={value}
-              onValueChange={onChange}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="linkFacebook"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              label="Link de facebook"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Link del evento en facebook"
-              value={value}
-              onValueChange={onChange}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="linkYoutube"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              label="Link de youtube"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Link del evento en meet"
-              value={value}
-              onValueChange={onChange}
-            />
-          )}
-        />
       </section>
     </>
   )

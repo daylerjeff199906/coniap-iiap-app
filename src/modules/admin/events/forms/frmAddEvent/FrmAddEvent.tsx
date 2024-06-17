@@ -39,9 +39,6 @@ export const FrmAddEvent = () => {
       date: data.date || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
-      linkZoom: data.linkZoom || '',
-      linkYoutube: data.linkYoutube || '',
-      linkFacebook: data.linkFacebook || '',
       isActived: false,
     }
     const res = await createDataEvent(newData)
@@ -59,9 +56,6 @@ export const FrmAddEvent = () => {
     methods.setValue('timeEnd', '')
     methods.setValue('date', '')
     methods.setValue('shortDescription', '')
-    methods.setValue('linkZoom', '')
-    methods.setValue('linkYoutube', '')
-    methods.setValue('linkFacebook', '')
     methods.setValue('customContent', '')
   }
 

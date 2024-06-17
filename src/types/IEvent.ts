@@ -14,9 +14,6 @@ export interface IEvent {
   date: string | null
   shortDescription: string
   banner: string
-  linkZoom: string
-  linkYoutube: string
-  linkFacebook: string
   customContent: string
   //delete
   created_at: Date

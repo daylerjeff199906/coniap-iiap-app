@@ -6,11 +6,12 @@ import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
 import { ListPrograms } from '../../list'
 import { DrawerSelect } from '@/components'
+import { IEvent } from '@/types'
 
 export const ProgramSection = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const { control, watch } = useFormContext()
+  const { control, watch } = useFormContext<IEvent>()
 
   return (
     <>
@@ -23,7 +24,7 @@ export const ProgramSection = () => {
             label="Programa"
             labelPlacement="outside"
             placeholder="Seleccionar programa"
-            value={value}
+            value={String(value) || ''}
             onChange={onChange}
             description="Seleccione el programa al que pertenece el evento, es opcional"
             endContent={

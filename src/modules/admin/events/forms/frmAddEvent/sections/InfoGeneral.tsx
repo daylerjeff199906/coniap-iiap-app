@@ -1,3 +1,4 @@
+import { IEvent } from '@/types'
 import { Input, Select, SelectItem, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 
@@ -16,7 +17,8 @@ export const InfoGeneral = () => {
   const {
     control,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext<IEvent>()
+
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
@@ -31,7 +33,7 @@ export const InfoGeneral = () => {
                 labelPlacement="outside"
                 radius="sm"
                 type="date"
-                value={value}
+                value={String(value) || ''}
                 onValueChange={onChange}
                 description="(Opcional) Fecha del evento"
               />
@@ -109,7 +111,7 @@ export const InfoGeneral = () => {
                 labelPlacement="outside"
                 radius="sm"
                 placeholder="Tipo de sala"
-                value={value}
+                value={String(value) || ''}
                 description="(Opcional) En caso de pertenecer a una sala de zoom en específico"
                 onChange={(e) => onChange(e.target.value)}
               >
