@@ -1,6 +1,6 @@
 import { ISponsor } from './ISponsors'
 import { IProgram } from './IProgram'
-import { IEvent } from './IEvent'
+import { IEvent } from './event/IEvent'
 import { IMenuAside } from './IMenuAside'
 import { IColumns } from './table/IColumns'
 import { IUser } from './IUser'

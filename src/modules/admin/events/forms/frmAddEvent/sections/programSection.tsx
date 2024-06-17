@@ -11,7 +11,7 @@ import { IEvent } from '@/types'
 export const ProgramSection = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const { control, watch } = useFormContext<IEvent>()
+  const { control } = useFormContext<IEvent>()
 
   return (
     <>
@@ -24,7 +24,7 @@ export const ProgramSection = () => {
             label="Programa"
             labelPlacement="outside"
             placeholder="Seleccionar programa"
-            value={String(value) || ''}
+            value={value || ''}
             onChange={onChange}
             description="Seleccione el programa al que pertenece el evento, es opcional"
             endContent={

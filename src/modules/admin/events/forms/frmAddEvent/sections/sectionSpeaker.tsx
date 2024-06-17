@@ -7,14 +7,12 @@ import { IconLink } from '@tabler/icons-react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { DrawerSelect } from '@/components/general'
 import { ListSpeakers } from '../../list'
+import { IEvent } from '@/types'
 
 export const SectionSpeaker = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext()
+  const { control } = useFormContext<IEvent>()
 
   return (
     <>
@@ -27,7 +25,7 @@ export const SectionSpeaker = () => {
             label="Ponente"
             labelPlacement="outside"
             placeholder="Seleccionar ponente"
-            value={value}
+            value={String(value) || ''}
             onChange={onChange}
             description="Seleccione el programa al que pertenece el evento, es opcional"
             // isInvalid={errors.person_id !== undefined}

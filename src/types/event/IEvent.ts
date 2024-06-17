@@ -1,9 +1,11 @@
-import { ISummary } from './ISummary'
+import { IProgram } from '..'
+import { ISummary } from '../ISummary'
 
 export interface IEvent {
   id: string
-  summary_id: string | null
-  program_id: string | null
+  //   summary_id: string | null
+  //   program_id: string | null
+  program: IProgram | null
   summary?: ISummary | null
   //observar
   sala: string | number | null
