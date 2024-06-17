@@ -64,7 +64,7 @@ export async function createEvent(data: IEventRes) {
   }
 }
 
-export async function updateEvent(id: string, data: IEvent) {
+export async function updateEvent(id: string, data: IEventRes) {
   const supabase = createClient()
 
   const { data: event, error } = await supabase

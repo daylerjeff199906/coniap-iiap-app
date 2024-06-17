@@ -47,7 +47,7 @@ export function useEvents() {
     setLoading(false)
   }
 
-  const updateDataEvent = async (id: string, data: IEvent) => {
+  const updateDataEvent = async (id: string, data: IEventRes) => {
     setLoading(true)
     const res: IRes = (await updateEvent(id, data)) as IRes
     if (res.message) {

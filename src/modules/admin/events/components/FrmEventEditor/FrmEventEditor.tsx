@@ -25,7 +25,7 @@ export const FrmEventEditor = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()
-  const { createDataEvent, loading } = useEvents()
+  const { createDataEvent, updateDataEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>({
     defaultValues: dataDefault,
@@ -37,7 +37,6 @@ export const FrmEventEditor = (props: IProps) => {
 
   const handleFormSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     setOpen(false)
-    console.log(data)
     const { program, summary, program_name, summary_name, ...resData } = data
     const newData: IEventRes = {
       ...resData,
@@ -51,8 +50,13 @@ export const FrmEventEditor = (props: IProps) => {
       isActived: false,
     }
 
-    console.log(newData)
-    const res = await createDataEvent(newData)
+    let res: any
+    if (dataDefault) {
+      res = await updateDataEvent(dataDefault.id, newData)
+    } else {
+      res = await createDataEvent(newData)
+    }
+
     if (res.message) {
       return null
     } else {
