@@ -10,21 +10,20 @@ import { IEvent } from '@/types'
 import { DateEvent } from '.'
 
 export const ProgramSection = () => {
+  const { control, watch } = useFormContext<IEvent>()
   const [isOpen, setIsOpen] = useState(false)
-  const [isProgram, setIsProgram] = useState(false)
-
-  const { control } = useFormContext<IEvent>()
+  const [isProgram, setIsProgram] = useState(watch('program') ? true : false)
 
   return (
     <>
-      <section className="flex flex-col gap-3">
-        <div className="w-full py-2">
+      <section className="flex flex-col gap-3 border p-4 rounded-lg w-full">
+        <div className="w-full py-2 sm:pl-3">
           <Checkbox
             aria-label="Programs"
             className="w-full"
             classNames={{
               base: cn(
-                'inline-flex w-full bg-content1',
+                'inline-flex w-full bg-content1 w-full',
                 'hover:bg-content2 items-center justify-start',
                 'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
                 'data-[selected=true]:border-primary'

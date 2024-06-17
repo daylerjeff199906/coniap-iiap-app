@@ -22,26 +22,6 @@ export const InfoGeneral = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-4">
-        <Controller
-          control={control}
-          rules={{
-            required: 'Este campo es requerido',
-          }}
-          name="name"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              aria-label="Nombre del evento"
-              label="Nombre"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Nombre del evento"
-              value={value}
-              onValueChange={onChange}
-              isInvalid={errors.name !== undefined}
-              errorMessage={errors.name?.message as string}
-            />
-          )}
-        />
         <div>
           <Controller
             control={control}
@@ -69,26 +49,6 @@ export const InfoGeneral = () => {
             )}
           />
         </div>
-        <Controller
-          control={control}
-          name="shortDescription"
-          rules={{
-            required: 'Este campo es requerido',
-          }}
-          render={({ field: { onChange, value } }) => (
-            <Textarea
-              aria-label="Descripción del evento"
-              label="Descripción"
-              labelPlacement="outside"
-              radius="sm"
-              placeholder="Descripción del evento"
-              value={value}
-              onValueChange={onChange}
-              isInvalid={errors.shortDescription !== undefined}
-              errorMessage={errors.shortDescription?.message as string}
-            />
-          )}
-        />
       </section>
     </>
   )

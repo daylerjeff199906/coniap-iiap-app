@@ -6,7 +6,7 @@ import { Button, Input } from '@nextui-org/react'
 import { IconLink } from '@tabler/icons-react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { DrawerSelect } from '@/components/general'
-import { ListSpeakers } from '../list/listSpeakers'
+// import { ListSpeakers } from '../list/listSummaries'
 import { IEvent } from '@/types'
 
 export const SectionSpeaker = () => {
@@ -45,12 +45,12 @@ export const SectionSpeaker = () => {
           />
         )}
       />
-      <DrawerSelect
+      {/* <DrawerSelect
         isOpen={isOpen}
         setOpen={setIsOpen}
         title="Seleccionar programa"
         content={<ListSpeakers onSetOpen={setIsOpen} />}
-      />
+      /> */}
     </>
   )
 }

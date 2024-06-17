@@ -2,9 +2,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components/general'
-import { IColumns, IRows } from '@/types'
+import { IColumns, IEvent, IRows } from '@/types'
 
-import { usePersons, usePrograms } from '@/hooks/admin'
+import { usePersons, usePrograms, useSummaries } from '@/hooks/admin'
 import { useFormContext } from 'react-hook-form'
 
 const columns: IColumns[] = [
@@ -17,12 +17,12 @@ const columns: IColumns[] = [
     key: 'fullname',
   },
   {
-    label: 'Fecha',
-    key: 'date',
+    label: 'Tema de resumen',
+    key: 'summary',
   },
   {
-    label: 'Estado',
-    key: 'estado',
+    label: 'Categoria',
+    key: 'topic',
   },
 ]
 
@@ -30,21 +30,33 @@ interface IProps {
   onSetOpen: (value: boolean) => void
 }
 
-export const ListSpeakers = (props: IProps) => {
-  const { getPersons, persons, loading } = usePersons()
-  const { setValue } = useFormContext()
+export const ListSummaries = (props: IProps) => {
+  const { getSummaries, summaries, loading } = useSummaries()
+  const { setValue } = useFormContext<IEvent>()
   const { onSetOpen } = props
 
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    getPersons(query, '')
+    getSummaries(query)
   }, [query])
 
-  const onSelectionChange = (row: IRows) => {
-    setValue('person_id', row.key)
+  const onSelectionChange = (row: any) => {
+    setValue('summary.id', row.key)
+    setValue('summary_name', row.fullname)
+    setValue('name', row.summary)
     onSetOpen(false)
   }
+
+  const rows =
+    summaries?.map((summary) => {
+      return {
+        key: String(summary.id),
+        fullname: summary?.person?.name + ' ' + summary?.person?.surName,
+        summary: summary.title,
+        topic: summary.topic?.name,
+      }
+    }) || []
 
   return (
     <>
@@ -58,18 +70,7 @@ export const ListSpeakers = (props: IProps) => {
           loading={loading}
           onSearch={(value) => setQuery(value)}
           searchValue={query}
-          rows={
-            persons !== null
-              ? persons?.map((person) => {
-                  return {
-                    key: String(person.id),
-                    fullname: person.name + ' ' + person.surName,
-                    typePerson: person.typePerson,
-                    estado: person.isActived ? 'Activo' : 'Inactivo',
-                  }
-                })
-              : []
-          }
+          rows={rows}
         />
       </section>
     </>
