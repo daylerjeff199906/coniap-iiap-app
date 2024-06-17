@@ -17,13 +17,20 @@ import { useEvents } from '@/hooks/admin'
 import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
-export const FrmAddEvent = () => {
+interface IProps {
+  dataDefault?: IEvent
+}
+
+export const FrmEventEditor = (props: IProps) => {
+  const { dataDefault } = props
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()
   const { createDataEvent, loading } = useEvents()
 
-  const methods = useForm<IEvent>()
+  const methods = useForm<IEvent>({
+    defaultValues: dataDefault,
+  })
 
   const onSubmit = () => {
     setOpen(true)

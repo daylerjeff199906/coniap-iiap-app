@@ -1,5 +1,5 @@
 'use server'
-import { IEvent } from '@/types'
+import { IEvent, IEventRes } from '@/types'
 import { createClient } from '@/utils/supabase/server'
 
 interface IProps {
@@ -48,7 +48,7 @@ export async function fetchEventById(id: string) {
   }
 }
 
-export async function createEvent(data: IEvent) {
+export async function createEvent(data: IEventRes) {
   const supabase = createClient()
 
   const { data: event, error } = await supabase

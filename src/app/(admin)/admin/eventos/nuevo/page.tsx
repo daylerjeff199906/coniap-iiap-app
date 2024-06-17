@@ -1,10 +1,10 @@
-import { FrmAddEvent } from '@/modules/admin/events'
+import { FrmEventEditor } from '@/modules/admin'
 
 export default function Page() {
   return (
     <>
       <section>
-        <FrmAddEvent />
+        <FrmEventEditor />
       </section>
     </>
   )

@@ -1,11 +1,10 @@
 import { IProgram } from '..'
 import { ISummary } from '../ISummary'
 
-export interface IEvent {
+export interface IEventRes {
   id: string
-  //   summary_id: string | null
-  //   program_id: string | null
-  program: IProgram | null
+  summary_id?: string | null
+  program_id: string | null
   summary?: ISummary | null
   //observar
   sala: string | number | null
@@ -19,7 +18,4 @@ export interface IEvent {
   customContent: string
   //delete
   created_at: Date
-  //For labels
-  program_name: string
-  summary_name: string
 }

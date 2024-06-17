@@ -6,7 +6,7 @@ import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-import { IEvent, IRes } from '@/types'
+import { IEvent, IEventRes, IRes } from '@/types'
 import { toast } from 'sonner'
 
 export function useEvents() {
@@ -14,7 +14,7 @@ export function useEvents() {
   const [events, setEvents] = useState<IEvent[] | null>(null)
   const [event, setEvent] = useState<IEvent | null>(null)
 
-  const createDataEvent = async (data: IEvent) => {
+  const createDataEvent = async (data: IEventRes) => {
     setLoading(true)
     const res: IRes = (await createEvent(data)) as IRes
 
