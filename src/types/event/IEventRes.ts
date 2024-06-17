@@ -17,5 +17,5 @@ export interface IEventRes {
   banner: string
   customContent: string
   //delete
-  created_at: Date
+  created_at?: Date
 }

@@ -37,16 +37,21 @@ export const FrmEventEditor = (props: IProps) => {
 
   const handleFormSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     setOpen(false)
+    console.log(data)
+    const { program, summary, program_name, summary_name, ...resData } = data
     const newData: IEventRes = {
-      ...data,
+      ...resData,
       banner: '',
       program_id: data.program?.id || null,
+      summary_id: data.summary?.id || null,
       sala: data.sala || null,
       date: data.date || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
       isActived: false,
     }
+
+    console.log(newData)
     const res = await createDataEvent(newData)
     if (res.message) {
       return null
