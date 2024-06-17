@@ -7,6 +7,7 @@ import { useFormContext, Controller } from 'react-hook-form'
 import { ListPrograms } from '../list/listPrograms'
 import { DrawerSelect } from '@/components'
 import { IEvent } from '@/types'
+import { DateEvent } from '.'
 
 export const ProgramSection = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -82,6 +83,9 @@ export const ProgramSection = () => {
             />
           </div>
         )}
+        <div>
+          <DateEvent />
+        </div>
       </section>
     </>
   )
