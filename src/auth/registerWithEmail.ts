@@ -3,18 +3,9 @@ import {
   sendEmailVerification,
 } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
+import { ICrendentials, IError } from '@/types'
 
-interface IError {
-  code: string
-  message: string
-}
-
-interface ICredentials {
-  email: string
-  password: string
-}
-
-export async function registerAndSendEmailVerification(props: ICredentials) {
+export async function registerAndSendEmailVerification(props: ICrendentials) {
   const { email, password } = props
 
   try {
@@ -44,7 +35,7 @@ export async function registerAndSendEmailVerification(props: ICredentials) {
   }
 }
 
-export async function registerWithEmail(props: ICredentials) {
+export async function registerWithEmail(props: ICrendentials) {
   const { email, password } = props
 
   try {

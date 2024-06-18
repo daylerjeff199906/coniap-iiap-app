@@ -29,3 +29,4 @@ export type {
 export * from './event'
 export * from './IRooms'
 export * from './Person'
+export * from './Auth'

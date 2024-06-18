@@ -1,11 +1,6 @@
 'use client'
-import {
-  useForm,
-  Controller,
-  FormProvider,
-  SubmitHandler,
-} from 'react-hook-form'
-import { Button, Checkbox, Input } from '@nextui-org/react'
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
+import { Button } from '@nextui-org/react'
 import { useState } from 'react'
 import { ModalAction } from '@/components'
 import { IInscription, IPerson } from '@/types'
@@ -19,26 +14,64 @@ import {
   JobData,
   RoleData,
 } from './sections'
+import { registerAndSendEmailVerification } from '@/auth'
+
 import data from '@/utils/json/infoConiap.json'
 
 export const FrmInscriptions = () => {
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const { addPerson, loading: loadAddPerson } = usePersons()
+  const { addPerson } = usePersons()
+  const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
   const methods = useForm<IInscription>()
+
+  const typePerson = methods.watch('typePerson')
+  const email = methods.watch('email')
+  const message =
+    typePerson === 'speaker'
+      ? '¿Estás seguro de enviar tu inscripción?'
+      : `Se enviará un mensaje de confirmación a tu correo ${email}, ¿Estás seguro de enviar tu inscripción?`
 
   const onSubmit = () => {
     setIsOpenAction(true)
   }
 
-  const handleOnSubmit: SubmitHandler<IInscription> = async (data) => {
+  const handleOnSubmit: SubmitHandler<IInscription> = async (
+    data: IInscription
+  ) => {
     setIsOpenAction(false)
+    setLoading(true)
+    const { password, password_confirmation, ...resData } = data
+
     if (data?.typePerson !== 'participant') {
+      const res = await registerAndSendEmailVerification({
+        email: resData.email,
+        password,
+      })
+      console.log(res)
+      if (typeof res === 'string') {
+        toast.error(res)
+      } else {
+        const newData: IPerson = {
+          ...resData,
+          typePerson: 'speaker',
+          isActived: false,
+          image: '',
+        }
+        const res: IPerson = await addPerson(newData)
+        if (res !== null) {
+          resetForm()
+          toast.success('Datos registrados con éxito', {
+            description: 'Enviaremos un mensaje de confirmación a tu correo',
+          })
+          router.push('/inscripciones/success')
+        }
+      }
     } else {
       const newData: IPerson = {
-        ...data,
+        ...resData,
         typePerson: 'participant',
         isActived: false,
         image: '',
@@ -52,6 +85,7 @@ export const FrmInscriptions = () => {
         router.push('/inscripciones/success')
       }
     }
+    setLoading(false)
   }
 
   const resetForm = () => {
@@ -88,8 +122,8 @@ export const FrmInscriptions = () => {
               color="primary"
               type="submit"
               size="lg"
-              isLoading={loadAddPerson}
-              isDisabled={loadAddPerson}
+              isLoading={loading}
+              isDisabled={loading}
             >
               Enviar inscripción
             </Button>
@@ -99,7 +133,7 @@ export const FrmInscriptions = () => {
       <ModalAction
         isOpen={isOpenAction}
         setOpen={setIsOpenAction}
-        message="¿Estás seguro de enviar tu inscripción?"
+        message={message}
         title="Confirmar inscripción"
         onPress={methods.handleSubmit(handleOnSubmit)}
       />

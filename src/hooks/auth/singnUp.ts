@@ -1,15 +1,6 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-
-interface ICrendentials {
-  email: string
-  password: string
-}
-
-interface IError {
-  code: string
-  message: string
-}
+import { ICrendentials, IError } from '@/types'
 
 export async function signUpNewUser(props: ICrendentials) {
   const { email, password } = props
@@ -22,9 +13,6 @@ export async function signUpNewUser(props: ICrendentials) {
       emailRedirectTo: '/',
     },
   })
-
-  console.log(data)
-    console.log(error)
 
   if (error) {
     const err = error as unknown as IError
