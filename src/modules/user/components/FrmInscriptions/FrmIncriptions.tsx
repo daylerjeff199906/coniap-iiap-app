@@ -8,7 +8,7 @@ import {
 import { Button, Checkbox, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { ModalAction } from '@/components'
-import { IInscription } from '@/types'
+import { IInscription, IPerson } from '@/types'
 import { usePersons } from '@/hooks/admin'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -34,21 +34,24 @@ export const FrmInscriptions = () => {
   }
 
   const handleOnSubmit: SubmitHandler<IInscription> = async (data) => {
-    // setIsOpenAction(false)
-    // const newData: IPerson = {
-    //   ...data,
-    //   typePerson: 'participant',
-    //   isActived: false,
-    //   image: '',
-    // }
-    // const res: IPerson = await addPerson(newData)
-    // if (res !== null) {
-    //   resetForm()
-    //   toast.success('Datos registrados con éxito', {
-    //     description: 'Enviaremos un mensaje de confirmación a tu correo',
-    //   })
-    //   router.push('/inscripciones/success')
-    // }
+    setIsOpenAction(false)
+    if (data?.typePerson !== 'participant') {
+    } else {
+      const newData: IPerson = {
+        ...data,
+        typePerson: 'participant',
+        isActived: false,
+        image: '',
+      }
+      const res: IPerson = await addPerson(newData)
+      if (res !== null) {
+        resetForm()
+        toast.success('Datos registrados con éxito', {
+          description: 'Enviaremos un mensaje de confirmación a tu correo',
+        })
+        router.push('/inscripciones/success')
+      }
+    }
   }
 
   const resetForm = () => {

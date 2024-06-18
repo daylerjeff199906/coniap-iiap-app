@@ -57,6 +57,10 @@ export const RoleData = () => {
           <Controller
             control={methods.control}
             name="password"
+            rules={{
+              required:
+                methods.watch('typePerson') !== 'participant' && 'Requerido',
+            }}
             render={({ field: { onChange, value } }) => (
               <Input
                 radius="sm"
@@ -66,6 +70,8 @@ export const RoleData = () => {
                 type="password"
                 value={value || ''}
                 onChange={onChange}
+                isInvalid={methods.formState.errors.password !== undefined}
+                errorMessage={methods.formState.errors.password?.message}
               />
             )}
           />
