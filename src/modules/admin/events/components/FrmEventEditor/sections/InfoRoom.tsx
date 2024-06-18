@@ -1,54 +1,95 @@
-import { IEvent } from '@/types'
-import { Input, Select, SelectItem, Textarea } from '@nextui-org/react'
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+import { useState } from 'react'
+import { Button, Checkbox, Input, cn } from '@nextui-org/react'
+import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
-
-const typeSala = [
-  {
-    label: 'Sala 1',
-    value: 1,
-  },
-  {
-    label: 'Sala 2',
-    value: 2,
-  },
-]
+import { ListPrograms } from '../list/listPrograms'
+import { DrawerSelect } from '@/components'
+import { IEvent } from '@/types'
+import { DateEvent } from '.'
 
 export const InfoRoom = () => {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<IEvent>()
+  const { control, watch, setValue } = useFormContext<IEvent>()
+  const [isOpen, setIsOpen] = useState(false)
+  const [isProgram, setIsProgram] = useState(watch('program') ? true : false)
+
+  const onValueChange = (value: boolean) => {
+    setIsProgram(value)
+    if (!value) {
+      setValue('program.id', '')
+      setValue('program_name', '')
+    }
+  }
 
   return (
     <>
-      <section className="grid grid-cols-1 gap-4">
-        <div>
-          <Controller
-            control={control}
-            name="sala"
-            render={({ field: { onChange, value } }) => (
-              <Select
-                aria-label="Tipo de sala"
-                label="Tipo de sala"
-                labelPlacement="outside"
-                radius="sm"
-                placeholder="Tipo de sala"
-                value={String(value) || ''}
-                description="(Opcional) En caso de pertenecer a una sala de zoom en específico"
-                onChange={(e) => onChange(e.target.value)}
-              >
-                {typeSala.map((item) => (
-                  <SelectItem
-                    key={item.value}
-                    value={item.value}
-                  >
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </Select>
-            )}
-          />
+      <section className="flex flex-col gap-3 border p-4 rounded-lg w-full">
+        <div className="w-full py-2 sm:pl-3">
+          <Checkbox
+            aria-label="Programs"
+            className="w-full"
+            classNames={{
+              base: cn(
+                'inline-flex w-full bg-content1 w-full',
+                'hover:bg-content2 items-center justify-start',
+                'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
+                'data-[selected=true]:border-primary'
+              ),
+              label: 'w-full',
+            }}
+            isSelected={isProgram}
+            onValueChange={onValueChange}
+          >
+            <div className="w-full">
+              <h1 className="text-sm font-bold">
+                Pertenece a un programa registrado en el sistema
+              </h1>
+              <p className="text-tiny text-gray-500">
+                Un programa es una fecha única registrada en el sistema. Si el
+                evento tiene un programa (fecha definida en el sistema),
+                seleccione esta opción.
+              </p>
+            </div>
+          </Checkbox>
         </div>
+        {isProgram && (
+          <div>
+            <Controller
+              name="program_name"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  aria-label="Programs"
+                  label="Programa"
+                  labelPlacement="outside"
+                  placeholder="Seleccionar programa"
+                  value={value || ''}
+                  onChange={onChange}
+                  description="Seleccione el programa al que pertenece el evento, es opcional"
+                  endContent={
+                    <div>
+                      <Button
+                        size="sm"
+                        radius="sm"
+                        startContent={<IconLink size={16} />}
+                        onPress={() => setIsOpen(true)}
+                      >
+                        Seleccionar
+                      </Button>
+                    </div>
+                  }
+                />
+              )}
+            />
+            <DrawerSelect
+              isOpen={isOpen}
+              setOpen={setIsOpen}
+              title="Seleccionar programa"
+              content={<ListPrograms onSetOpen={setIsOpen} />}
+            />
+          </div>
+        )}
       </section>
     </>
   )
