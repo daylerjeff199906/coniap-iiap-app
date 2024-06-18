@@ -59,7 +59,7 @@ export const ListShedule = (props: IProps) => {
                     <>
                       <div className="w-full grid grid-cols-1 gap-8 lg:p-6">
                         {events
-                          ?.filter((event) => event.program_id === program.id) // Filtrar eventos por program_id
+                          ?.filter((event) => event.program?.id === program.id) // Filtrar eventos por program_id
                           .slice(0, 7)
                           .map((filteredEvent, eventIndex) => (
                             <CardEvent
