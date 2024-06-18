@@ -30,7 +30,7 @@ export const FrmInscriptions = () => {
   const typePerson = methods.watch('typePerson')
   const email = methods.watch('email')
   const message =
-    typePerson === 'speaker'
+    typePerson === 'participant'
       ? '¿Estás seguro de enviar tu inscripción?'
       : `Se enviará un mensaje de confirmación a tu correo ${email}, ¿Estás seguro de enviar tu inscripción?`
 
