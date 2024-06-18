@@ -50,6 +50,7 @@ import {
   fetchSummaries,
   fetchSummaryStatus,
   fetchSummaryById,
+  fetchSummaryByIdPerson,
 } from './fetchSummaries'
 
 import { fetchSalas } from './fetchSalas'
@@ -99,6 +100,7 @@ export {
   fetchSummaries,
   fetchSummaryStatus,
   fetchSummaryById,
+  fetchSummaryByIdPerson,
   //Salas
   fetchSalas,
 }

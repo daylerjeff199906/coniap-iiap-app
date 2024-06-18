@@ -62,6 +62,21 @@ export async function fetchSummaryStatus(query: string, isApproved: boolean) {
   }
 }
 
+export async function fetchSummaryByIdPerson(idPerson: string) {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('summaries')
+    .select('*,person:person_id(*), topic:topic_id(*)')
+    .eq('person_id', idPerson)
+    .order('title', { ascending: true })
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}
+
 export async function fetchSummaryById(id: string) {
   const supabase = createClient()
 
