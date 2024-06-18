@@ -65,7 +65,7 @@ export const FrmLogin = () => {
         className="w-full flex flex-col gap-6"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <section className="flex flex-col gap-5 pb-4">
+        <section className="flex flex-col gap-5">
           <Controller
             control={methods.control}
             name="email"
