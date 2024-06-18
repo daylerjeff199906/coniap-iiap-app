@@ -6,6 +6,7 @@ import {
   fetchSummaryStatus,
   createSummary,
   updateSummary,
+  fetchSummaryByIdPerson,
 } from '@/api'
 import { useFiles } from './useFiles'
 
@@ -22,7 +23,7 @@ export function useSummaries() {
     const res: IRes = (await createSummary(data)) as IRes
 
     if (res.message) {
-      toast.error('Error al crear el programa', {
+      toast.error('Error al crear el resumen', {
         description: res.message,
       })
     } else {
@@ -64,6 +65,15 @@ export function useSummaries() {
     setLoading(false)
   }
 
+  const getSummaryByIdPerson = async (idPerson: string) => {
+    setLoading(true)
+    const data = await fetchSummaryByIdPerson(idPerson)
+      .then((res) => res)
+      .catch((err) => err)
+    setSummaries(data)
+    setLoading(false)
+  }
+
   const approveSummary = async (id: string) => {
     setLoading(true)
     const res = await editField(id, 'summaries', 'isApproved', true)
@@ -79,5 +89,6 @@ export function useSummaries() {
     createDataSummary,
     updateDataSummary,
     approveSummary,
+    getSummaryByIdPerson,
   }
 }
