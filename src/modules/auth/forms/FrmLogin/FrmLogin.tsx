@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 import { createCookie, createLocalStorage } from '@/lib'
-import Link from 'next/link'
+import { toast } from 'sonner'
 
 interface ILogin {
   email: string
@@ -34,6 +34,7 @@ export const FrmLogin = () => {
         router.push('/dashboard')
       } else {
         router.push('/')
+        toast.success('Bienvenido')
       }
     }
     setLoading(false)
