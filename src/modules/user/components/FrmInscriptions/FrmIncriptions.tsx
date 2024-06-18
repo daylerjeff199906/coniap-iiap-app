@@ -8,7 +8,7 @@ import {
 import { Button, Checkbox, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { ModalAction } from '@/components'
-import { IPerson } from '@/types'
+import { IInscription } from '@/types'
 import { usePersons } from '@/hooks/admin'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -27,13 +27,13 @@ export const FrmInscriptions = () => {
   const { addPerson, loading: loadAddPerson } = usePersons()
   const router = useRouter()
 
-  const methods = useForm<IPerson>()
+  const methods = useForm<IInscription>()
 
   const onSubmit = () => {
     setIsOpenAction(true)
   }
 
-  const handleOnSubmit: SubmitHandler<IPerson> = async (data) => {
+  const handleOnSubmit: SubmitHandler<IInscription> = async (data) => {
     // setIsOpenAction(false)
     // const newData: IPerson = {
     //   ...data,
@@ -41,9 +41,7 @@ export const FrmInscriptions = () => {
     //   isActived: false,
     //   image: '',
     // }
-
     // const res: IPerson = await addPerson(newData)
-
     // if (res !== null) {
     //   resetForm()
     //   toast.success('Datos registrados con éxito', {

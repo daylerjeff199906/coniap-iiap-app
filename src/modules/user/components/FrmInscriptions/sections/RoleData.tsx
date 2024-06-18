@@ -1,16 +1,18 @@
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
 import { Checkbox, Input, cn } from '@nextui-org/react'
-import { IPerson } from '@/types'
+import { IInscription } from '@/types'
 
 export const RoleData = () => {
-  const methods = useFormContext<IPerson>()
+  const methods = useFormContext<IInscription>()
 
   const handleRole = (isSpeaker: boolean) => {
     if (isSpeaker) {
       methods.setValue('typePerson', 'speaker')
     } else {
       methods.setValue('typePerson', 'participant')
+      methods.setValue('password', '')
+      methods.setValue('password_confirmation', '')
     }
   }
 
@@ -52,19 +54,36 @@ export const RoleData = () => {
       </section>
       {methods?.watch('typePerson') === 'speaker' && (
         <section className="pt-2 col-span-1 sm:col-span-2 flex flex-col gap-2">
-          <Input
-            radius="sm"
-            label="Contraseña"
-            labelPlacement="outside"
-            placeholder="Ingrese su contraseña"
-            type="password"
+          <Controller
+            control={methods.control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                radius="sm"
+                label="Contraseña"
+                labelPlacement="outside"
+                placeholder="Ingrese su contraseña"
+                type="password"
+                value={value || ''}
+                onChange={onChange}
+              />
+            )}
           />
-          <Input
-            radius="sm"
-            label="Confirmar contraseña"
-            labelPlacement="outside"
-            placeholder="Confirme su contraseña"
-            type="password"
+
+          <Controller
+            control={methods.control}
+            name="password_confirmation"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                radius="sm"
+                label="Confirmar contraseña"
+                labelPlacement="outside"
+                placeholder="Confirme su contraseña"
+                type="password"
+                value={value || ''}
+                onChange={onChange}
+              />
+            )}
           />
         </section>
       )}

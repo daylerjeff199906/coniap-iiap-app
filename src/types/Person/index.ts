@@ -1,3 +1,4 @@
 import { IPerson } from './IPersons'
+import { IInscription } from './IInscription'
 
-export type { IPerson }
+export type { IPerson, IInscription }
