@@ -1,4 +1,4 @@
-import { IProgram } from '..'
+import { IProgram, ISala } from '..'
 import { ISummary } from '../ISummary'
 
 export interface IEvent {
@@ -7,8 +7,8 @@ export interface IEvent {
   //   program_id: string | null
   program: IProgram | null
   summary?: ISummary | null
+  sala: ISala | null
   //observar
-  sala: string | number | null
   isActived: boolean
   name: string
   timeStart: string
@@ -22,4 +22,5 @@ export interface IEvent {
   //For labels
   program_name: string
   summary_name: string
+  sala_name: string
 }

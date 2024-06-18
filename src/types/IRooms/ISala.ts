@@ -1,5 +1,5 @@
 export interface ISala {
-  id: number
+  id: string
   name: string
   url: string
   platform: string

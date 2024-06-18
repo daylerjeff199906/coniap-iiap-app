@@ -4,21 +4,20 @@ import { useState } from 'react'
 import { Button, Checkbox, Input, cn } from '@nextui-org/react'
 import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { ListPrograms } from '../list/listPrograms'
 import { DrawerSelect } from '@/components'
 import { IEvent } from '@/types'
-import { DateEvent } from '.'
+import { ListRooms } from '../list/listRooms'
 
 export const InfoRoom = () => {
   const { control, watch, setValue } = useFormContext<IEvent>()
   const [isOpen, setIsOpen] = useState(false)
-  const [isProgram, setIsProgram] = useState(watch('program') ? true : false)
+  const [isRoom, setIsRoom] = useState(watch('sala') ? true : false)
 
   const onValueChange = (value: boolean) => {
-    setIsProgram(value)
+    setIsRoom(value)
     if (!value) {
-      setValue('program.id', '')
-      setValue('program_name', '')
+      setValue('sala.id', '')
+      setValue('sala_name', '')
     }
   }
 
@@ -38,35 +37,35 @@ export const InfoRoom = () => {
               ),
               label: 'w-full',
             }}
-            isSelected={isProgram}
+            isSelected={isRoom}
             onValueChange={onValueChange}
           >
             <div className="w-full">
               <h1 className="text-sm font-bold">
-                Pertenece a un programa registrado en el sistema
+                Agrgar link de la sala virtual
               </h1>
               <p className="text-tiny text-gray-500">
-                Un programa es una fecha única registrada en el sistema. Si el
-                evento tiene un programa (fecha definida en el sistema),
-                seleccione esta opción.
+                Agrega el link de la sala virtual en la que se llevará a cabo el
+                evento virtual. Es opcional. Seleccione una sala que esté en el
+                sistema.
               </p>
             </div>
           </Checkbox>
         </div>
-        {isProgram && (
+        {isRoom && (
           <div>
             <Controller
-              name="program_name"
+              name="sala_name"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <Input
-                  aria-label="Programs"
-                  label="Programa"
+                  aria-label="Sala"
+                  label="Sala virtual"
                   labelPlacement="outside"
-                  placeholder="Seleccionar programa"
+                  placeholder="Seleccionar sala virtual"
                   value={value || ''}
                   onChange={onChange}
-                  description="Seleccione el programa al que pertenece el evento, es opcional"
+                  description="Seleccione la sala virtual en la que se llevará a cabo el evento"
                   endContent={
                     <div>
                       <Button
@@ -85,8 +84,8 @@ export const InfoRoom = () => {
             <DrawerSelect
               isOpen={isOpen}
               setOpen={setIsOpen}
-              title="Seleccionar programa"
-              content={<ListPrograms onSetOpen={setIsOpen} />}
+              title="Seleccionar sala virtual"
+              content={<ListRooms onSetOpen={setIsOpen} />}
             />
           </div>
         )}

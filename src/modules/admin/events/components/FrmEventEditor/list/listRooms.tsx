@@ -42,10 +42,9 @@ export const ListRooms = (props: IProps) => {
   }, [query])
 
   const onSelectionChange = (row: any) => {
-    const full_name = row.key + ' - ' + row.name + ' - ' + row.date
-    setValue('program.id', row.key)
-    setValue('program_name', full_name)
-    setValue('date', row.date)
+    const full_name = row.key + ' - ' + row.name + ' - ' + row.platform
+    setValue('sala.id', row.key)
+    setValue('sala_name', full_name)
     onSetOpen(false)
   }
 
