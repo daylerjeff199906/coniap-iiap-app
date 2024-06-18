@@ -1,6 +1,6 @@
 import { FrmUploadFile } from '@/modules/user'
 import { getCookie } from '@/lib'
-import { IPerson, IResCookie } from '@/types'
+import { IPerson, IResCookie, ISummary } from '@/types'
 import { fetchPersonById } from '@/api'
 
 export default async function Page() {
@@ -10,11 +10,13 @@ export default async function Page() {
   }
   const id_person = res.value.toString()
   const person: IPerson = await fetchPersonById(id_person)
+  const summary = {} as ISummary
 
   return (
     <>
       <FrmUploadFile
         summary={{
+          ...summary,
           person: person,
         }}
       />
