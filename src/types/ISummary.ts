@@ -1,5 +1,5 @@
 import { ITopic } from '.'
-import { IPerson } from './IPersons'
+import { IPerson } from '@/types'
 
 export interface ISummary {
   id: string
