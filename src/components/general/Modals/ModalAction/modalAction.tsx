@@ -12,8 +12,9 @@ interface IProps {
   isOpen: boolean
   setOpen: (value: boolean) => void
   title: string
-  message: string
+  message?: string
   onPress: () => void
+  bodyMessage?: React.ReactNode
 }
 
 export const ModalAction = ({
@@ -21,6 +22,7 @@ export const ModalAction = ({
   setOpen,
   title,
   message,
+  bodyMessage,
   onPress,
 }: IProps) => {
   return (
@@ -33,14 +35,19 @@ export const ModalAction = ({
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
         <ModalBody>
-          <div>
-            <p>{message}</p>
-          </div>
+          {message ? (
+            <div>
+              <p>{message}</p>
+            </div>
+          ) : (
+            bodyMessage
+          )}
         </ModalBody>
         <ModalFooter>
           <Button
             color="primary"
             onPress={onPress}
+            radius="sm"
           >
             Aceptar
           </Button>
@@ -49,6 +56,7 @@ export const ModalAction = ({
               setOpen(false)
             }}
             color="danger"
+            radius="sm"
           >
             Cancelar
           </Button>
