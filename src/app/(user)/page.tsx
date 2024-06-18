@@ -10,8 +10,8 @@ import {
   InscriptionsSection,
   MoreEventsSection,
   AgendaSection,
-  FrmContactUs,
 } from '@/components'
+import { FrmContactUs } from '@/modules/user'
 
 import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
 

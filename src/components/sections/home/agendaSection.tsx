@@ -73,7 +73,7 @@ export const AgendaSection = (props: IProps) => {
                 >
                   <div className="sm:p-4 lg:p-6">
                     {events
-                      ?.filter((event) => event.program_id === program.id) // Filtrar eventos por program_id
+                      ?.filter((event) => event.program?.id === program.id) // Filtrar eventos por program_id
                       .slice(0, 7)
                       .map((filteredEvent, eventIndex) => (
                         <CardEvent

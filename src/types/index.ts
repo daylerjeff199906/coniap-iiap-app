@@ -1,6 +1,5 @@
 import { ISponsor } from './ISponsors'
 import { IProgram } from './IProgram'
-import { IEvent } from './IEvent'
 import { IMenuAside } from './IMenuAside'
 import { IColumns } from './table/IColumns'
 import { IUser } from './IUser'
@@ -16,7 +15,6 @@ import { IActions } from './table/IActions'
 export type {
   ISponsor,
   IProgram,
-  IEvent,
   IMenuAside,
   IColumns,
   IUser,
@@ -29,3 +27,6 @@ export type {
   ISummary,
   IActions,
 }
+
+export * from './event'
+export * from './IRooms'

@@ -1,4 +1,5 @@
-import { BannerStatic, FrmContactUs, ListEventsPage } from '@/components'
+import { BannerStatic, ListEventsPage } from '@/components'
+import { FrmContactUs } from '@/modules/user'
 
 export default function Page() {
   return (

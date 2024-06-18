@@ -8,7 +8,6 @@ export const CountrySection = () => {
   const {
     control,
     formState: { errors },
-    // watch,
   } = useFormContext<IPerson>()
 
   return (

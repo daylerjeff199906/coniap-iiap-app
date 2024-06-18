@@ -52,6 +52,8 @@ import {
   fetchSummaryById,
 } from './fetchSummaries'
 
+import { fetchSalas } from './fetchSalas'
+
 export {
   //Events crud
   fetchEvents,
@@ -97,4 +99,6 @@ export {
   fetchSummaries,
   fetchSummaryStatus,
   fetchSummaryById,
+  //Salas
+  fetchSalas,
 }

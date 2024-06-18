@@ -1,5 +1,5 @@
 'use server'
-import { IEvent } from '@/types'
+import { IEvent, IEventRes } from '@/types'
 import { createClient } from '@/utils/supabase/server'
 
 interface IProps {
@@ -37,7 +37,9 @@ export async function fetchEventById(id: string) {
 
   const { data: event, error } = await supabase
     .from('events')
-    .select('*,summary:summary_id(*, person:person_id(*))')
+    .select(
+      '*,summary:summary_id(*, person:person_id(*), topic:topic_id(*)), program:program_id(*), sala:sala(*)'
+    )
     .eq('id', id)
     .single()
 
@@ -48,7 +50,7 @@ export async function fetchEventById(id: string) {
   }
 }
 
-export async function createEvent(data: IEvent) {
+export async function createEvent(data: IEventRes) {
   const supabase = createClient()
 
   const { data: event, error } = await supabase
@@ -64,7 +66,7 @@ export async function createEvent(data: IEvent) {
   }
 }
 
-export async function updateEvent(id: string, data: IEvent) {
+export async function updateEvent(id: string, data: IEventRes) {
   const supabase = createClient()
 
   const { data: event, error } = await supabase

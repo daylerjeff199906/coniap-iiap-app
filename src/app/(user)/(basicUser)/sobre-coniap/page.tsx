@@ -1,9 +1,5 @@
-import {
-  AlbumSection,
-  FrmContactUs,
-  InfoAboutUs,
-  OrganizationSection,
-} from '@/components'
+import { AlbumSection, InfoAboutUs, OrganizationSection } from '@/components'
+import { FrmContactUs } from '@/modules/user'
 
 export default function Page() {
   return (

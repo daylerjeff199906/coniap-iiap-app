@@ -7,6 +7,7 @@ import { useTopics } from './useTopics'
 import { usePersons } from './usePersons'
 import { useCountries } from './useCountries'
 import { useSummaries } from './useSumaries'
+import { useSalas } from './useSalas'
 
 export {
   useEvents,
@@ -18,4 +19,5 @@ export {
   usePersons,
   useCountries,
   useSummaries,
+  useSalas
 }

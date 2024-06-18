@@ -57,7 +57,7 @@ export const CardListEvent = (props: IProps) => {
                   radius="sm"
                   className="bg-stone-900 text-white mb-2"
                 >
-                  Sala {event.sala}
+                  Sala {event.sala_name}
                 </Chip>
                 <div className="pb-2">
                   <h1 className="font-bold sm:text-lg">{event.name}</h1>
