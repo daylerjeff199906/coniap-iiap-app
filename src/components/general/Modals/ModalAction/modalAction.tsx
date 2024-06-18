@@ -47,6 +47,7 @@ export const ModalAction = ({
           <Button
             color="primary"
             onPress={onPress}
+            radius="sm"
           >
             Aceptar
           </Button>
@@ -55,6 +56,7 @@ export const ModalAction = ({
               setOpen(false)
             }}
             color="danger"
+            radius="sm"
           >
             Cancelar
           </Button>

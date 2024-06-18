@@ -14,7 +14,7 @@ import {
   JobData,
   RoleData,
 } from './sections'
-import { registerAndSendEmailVerification } from '@/auth'
+import { registerWithEmail } from '@/auth'
 
 import data from '@/utils/json/infoConiap.json'
 
@@ -30,9 +30,18 @@ export const FrmInscriptions = () => {
   const typePerson = methods.watch('typePerson')
   const email = methods.watch('email')
   const message =
-    typePerson === 'participant'
-      ? '¿Estás seguro de enviar tu inscripción?'
-      : `Se enviará un mensaje de confirmación a tu correo ${email}, ¿Estás seguro de enviar tu inscripción?`
+    typePerson === 'participant' ? (
+      <>
+        <p className="text-sm">¿Estás seguro de enviar tu inscripción?</p>
+      </>
+    ) : (
+      <div className="text-sm">
+        <p>
+          Se enviará un mensaje de confirmación a tu correo
+          <b>{email}</b>, ¿Estás seguro de enviar tu inscripción?
+        </p>
+      </div>
+    )
 
   const onSubmit = () => {
     setIsOpenAction(true)
@@ -46,13 +55,13 @@ export const FrmInscriptions = () => {
     const { password, password_confirmation, ...resData } = data
 
     if (data?.typePerson !== 'participant') {
-      const res = await registerAndSendEmailVerification({
+      const res = await registerWithEmail({
         email: resData.email,
         password,
       })
-      console.log(res)
       if (typeof res === 'string') {
         toast.error(res)
+        return setLoading(false)
       } else {
         const newData: IPerson = {
           ...resData,
@@ -133,8 +142,8 @@ export const FrmInscriptions = () => {
       <ModalAction
         isOpen={isOpenAction}
         setOpen={setIsOpenAction}
-        message={message}
         title="Confirmar inscripción"
+        bodyMessage={message}
         onPress={methods.handleSubmit(handleOnSubmit)}
       />
     </>

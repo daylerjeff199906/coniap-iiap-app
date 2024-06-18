@@ -62,7 +62,7 @@ export const FrmLogin = () => {
   return (
     <>
       <form
-        className="w-full flex flex-col gap-10 "
+        className="w-full flex flex-col gap-6"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <section className="flex flex-col gap-5 pb-4">
@@ -109,14 +109,14 @@ export const FrmLogin = () => {
             )}
           />
         </section>
-        <section className="pt-2 flex justify-end">
+        {/* <section className="pt-2 flex justify-end">
           <Link
             href="/forgotPassword"
             className="text-primary-500 hover:text-primary-800 cursor-pointer text-xs text-end pb-2 underline"
           >
             ¿Olvidaste tu contraseña?
           </Link>
-        </section>
+        </section> */}
         <Button
           variant="solid"
           color="primary"
@@ -130,14 +130,14 @@ export const FrmLogin = () => {
           Iniciar sesión
         </Button>
       </form>
-      <section className="pt-3 flex flxe-col justify-center items-center pb-3">
+      {/* <section className="pt-3 flex flxe-col justify-center items-center pb-3">
         <Link
           href="/singIn"
           className="text-center text-sm text-primary-500 hover:text-primary-800 cursor-pointer"
         >
           ¿ No tienes cuenta? <span className="font-bold">Regístrate</span>
         </Link>
-      </section>
+      </section> */}
       <Divider />
       <section className="pt-6 ">
         <Button
