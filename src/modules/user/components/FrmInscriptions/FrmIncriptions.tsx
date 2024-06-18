@@ -19,6 +19,7 @@ import {
   JobData,
   RoleData,
 } from './sections'
+import data from '@/utils/json/infoConiap.json'
 
 export const FrmInscriptions = () => {
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
@@ -28,30 +29,28 @@ export const FrmInscriptions = () => {
 
   const methods = useForm<IPerson>()
 
-  const dateLimit = '2024-10-01'
-
   const onSubmit = () => {
     setIsOpenAction(true)
   }
 
   const handleOnSubmit: SubmitHandler<IPerson> = async (data) => {
-    setIsOpenAction(false)
-    const newData: IPerson = {
-      ...data,
-      typePerson: 'participant',
-      isActived: false,
-      image: '',
-    }
+    // setIsOpenAction(false)
+    // const newData: IPerson = {
+    //   ...data,
+    //   typePerson: 'participant',
+    //   isActived: false,
+    //   image: '',
+    // }
 
-    const res: IPerson = await addPerson(newData)
+    // const res: IPerson = await addPerson(newData)
 
-    if (res !== null) {
-      resetForm()
-      toast.success('Datos registrados con éxito', {
-        description: 'Enviaremos un mensaje de confirmación a tu correo',
-      })
-      router.push('/inscripciones/success')
-    }
+    // if (res !== null) {
+    //   resetForm()
+    //   toast.success('Datos registrados con éxito', {
+    //     description: 'Enviaremos un mensaje de confirmación a tu correo',
+    //   })
+    //   router.push('/inscripciones/success')
+    // }
   }
 
   const resetForm = () => {

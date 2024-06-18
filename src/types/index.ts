@@ -4,7 +4,6 @@ import { IMenuAside } from './IMenuAside'
 import { IColumns } from './table/IColumns'
 import { IUser } from './IUser'
 import { ITopic } from './ITopics'
-import { IPerson } from './IPersons'
 import { IGeneralInfo } from './IGeneralInfo'
 import { IRows } from './table/IRows'
 import { IRes } from './responses/IResponse'
@@ -19,7 +18,6 @@ export type {
   IColumns,
   IUser,
   ITopic,
-  IPerson,
   IGeneralInfo,
   IRows,
   IRes,
@@ -30,3 +28,4 @@ export type {
 
 export * from './event'
 export * from './IRooms'
+export * from './Person'
