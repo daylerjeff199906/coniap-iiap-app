@@ -29,3 +29,30 @@
 .button-dark {
   @apply bg-black text-white;
 }
+
+/* styles/globals.css */
+.custom-quill {
+  h1 {
+    @apply text-4xl font-bold;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold;
+  }
+
+  h3 {
+    @apply text-2xl font-medium;
+  }
+
+  h4 {
+    @apply text-xl font-medium;
+  }
+
+  p {
+    @apply text-base;
+  }
+
+  strong {
+    @apply font-bold;
+  }
+}

@@ -156,5 +156,10 @@ export const DetailsEvent = (props: IProps) => {
 }
 
 function DisplayHTMLContent({ htmlContent }: ISection) {
-  return <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+  return (
+    <div
+      className=".custom-quill"
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+    />
+  )
 }
