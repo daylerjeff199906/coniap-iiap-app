@@ -28,7 +28,16 @@ export const FrmEventEditor = (props: IProps) => {
   const { createDataEvent, updateDataEvent, loading } = useEvents()
 
   const methods = useForm<IEvent>({
-    defaultValues: dataDefault,
+    defaultValues: {
+      ...dataDefault,
+      program_name:
+        dataDefault?.program?.title + ' - ' + dataDefault?.date || '',
+      summary_name:
+        dataDefault?.summary?.person?.name +
+        ' - ' +
+        dataDefault?.summary?.person?.surName,
+      sala_name: dataDefault?.sala?.name || '',
+    },
   })
 
   const onSubmit = () => {
