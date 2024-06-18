@@ -16,7 +16,7 @@ export const ListSummaries = () => {
     if (isFiles && myPerson?.id) {
       getSummaryByIdPerson(myPerson?.id)
     }
-  }, [isFiles])
+  }, [isFiles, myPerson?.id])
 
   if (myPerson?.name === '' || myPerson?.surName === '')
     return (
