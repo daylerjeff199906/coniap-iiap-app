@@ -13,7 +13,7 @@ const typeSala = [
   },
 ]
 
-export const InfoGeneral = () => {
+export const InfoRoom = () => {
   const {
     control,
     formState: { errors },

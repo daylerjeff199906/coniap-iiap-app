@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 const message =
   'duplicate key value violates unique constraint "persons_email_key"'
 
-export function useSala() {
+export function useSalas() {
   const [loading, setLoading] = useState<boolean>(false)
   const [listRooms, setListRooms] = useState<ISala[] | null>(null)
 

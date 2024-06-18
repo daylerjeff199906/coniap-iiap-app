@@ -5,7 +5,7 @@ import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
 import {
-  InfoGeneral,
+  InfoRoom,
   MoreDescription,
   ProgramSection,
   SummarySection,
@@ -85,7 +85,7 @@ export const FrmEventEditor = (props: IProps) => {
           <div className="grid grid-cols-1 gap-5">
             <ProgramSection />
             <SummarySection />
-            <InfoGeneral />
+            <InfoRoom />
           </div>
           <MoreDescription />
           <div className="flex items-center gap-4 justify-end">
