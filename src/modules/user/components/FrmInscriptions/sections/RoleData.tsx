@@ -73,6 +73,11 @@ export const RoleData = () => {
           <Controller
             control={methods.control}
             name="password_confirmation"
+            rules={{
+              validate: (value) =>
+                value === methods.getValues('password') ||
+                'Las contraseñas no coinciden',
+            }}
             render={({ field: { onChange, value } }) => (
               <Input
                 radius="sm"
@@ -82,6 +87,12 @@ export const RoleData = () => {
                 type="password"
                 value={value || ''}
                 onChange={onChange}
+                isInvalid={
+                  methods.formState.errors.password_confirmation !== undefined
+                }
+                errorMessage={
+                  methods.formState.errors.password_confirmation?.message
+                }
               />
             )}
           />
