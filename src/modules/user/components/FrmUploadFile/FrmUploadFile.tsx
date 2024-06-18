@@ -1,12 +1,10 @@
 'use client'
-import { useState } from 'react'
 import { HeaderSection } from '@/modules/core'
 import {
   Button,
   Modal,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
 } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
@@ -57,8 +55,16 @@ export const FrmUploadFile = (props: IProps) => {
 
         newData = { ...rest, file: url, isActived: false, isApproved: false }
       } else {
-        newData = { ...rest, file: '', isActived: false, isApproved: false }
+        newData = {
+          ...rest,
+          person_id: person?.id || '',
+          file: '',
+          isActived: false,
+          isApproved: false,
+        }
       }
+
+      console.log(newData)
 
       const resData = await createDataSummary(newData)
 
@@ -102,23 +108,21 @@ export const FrmUploadFile = (props: IProps) => {
                 <InfoSection />
                 <MultimediaSection />
                 <TopicSection />
+                <footer className="flex gap-3 items-center justify-end">
+                  <Button
+                    radius="sm"
+                    type="submit"
+                    isLoading={loading || loadingFile}
+                    isDisabled={loading || loadingFile}
+                    className="button-dark"
+                  >
+                    Guardar
+                  </Button>
+                  <Button radius="sm">Cancelar</Button>
+                </footer>
               </form>
             </FormProvider>
           </ModalBody>
-          <ModalFooter>
-            <footer className="flex gap-3 items-center">
-              <Button
-                radius="sm"
-                onPress={() => methods.handleSubmit(handleFormSubmit)}
-                isLoading={loading || loadingFile}
-                isDisabled={loading || loadingFile}
-                className="button-dark"
-              >
-                Guardar
-              </Button>
-              <Button radius="sm">Cancelar</Button>
-            </footer>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

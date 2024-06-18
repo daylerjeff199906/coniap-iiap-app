@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Select, SelectItem } from '@nextui-org/react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { ISummary } from '@/types'
@@ -40,7 +40,7 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
               onChange(value)
             }}
             radius="sm"
-            isInvalid={errors.topic !== undefined}
+            isInvalid={errors.topic?.id !== undefined}
             errorMessage={errors.topic?.message as string}
             isLoading={loadingList || loading}
             isDisabled={loadingList || loading}

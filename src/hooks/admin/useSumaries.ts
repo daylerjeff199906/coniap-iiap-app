@@ -22,7 +22,7 @@ export function useSummaries() {
     const res: IRes = (await createSummary(data)) as IRes
 
     if (res.message) {
-      toast.error('Error al crear el programa', {
+      toast.error('Error al crear el resumen', {
         description: res.message,
       })
     } else {
