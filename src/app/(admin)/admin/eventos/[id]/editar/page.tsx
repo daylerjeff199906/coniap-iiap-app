@@ -20,8 +20,6 @@ export default async function Page(props: IProps) {
   }
 
   const dataTopic: IEvent = res
-  console.log(dataTopic)
-
   return (
     <>
       <FrmEventEditor dataDefault={dataTopic} />

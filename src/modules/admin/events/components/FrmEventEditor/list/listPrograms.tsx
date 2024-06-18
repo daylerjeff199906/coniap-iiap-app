@@ -14,7 +14,7 @@ const columns: IColumns[] = [
   },
   {
     label: 'Programa',
-    key: 'name',
+    key: 'title',
   },
   {
     label: 'Fecha',
@@ -42,7 +42,7 @@ export const ListPrograms = (props: IProps) => {
   }, [query])
 
   const onSelectionChange = (row: any) => {
-    const full_name = row.key + ' - ' + row.name + ' - ' + row.date
+    const full_name = row.key + ' - ' + row.title + ' - ' + row.date
     setValue('program.id', row.key)
     setValue('program_name', full_name)
     setValue('date', row.date)
@@ -66,7 +66,7 @@ export const ListPrograms = (props: IProps) => {
               ? programs?.map((program) => {
                   return {
                     key: program.id,
-                    name: program.title,
+                    title: program.title,
                     date: program.date,
                     events: program.events?.length,
                     estado: program.isActived ? 'Activo' : 'Inactivo',
