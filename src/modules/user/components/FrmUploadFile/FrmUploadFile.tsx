@@ -70,11 +70,17 @@ export const FrmUploadFile = (props: IProps) => {
     }
   }
 
+  const handleExit = () => {
+    router.push('/dashboard/files', {
+      scroll: true,
+    })
+  }
+
   return (
     <>
       <Modal
         isOpen
-        onClose={() => {}}
+        onClose={handleExit}
         size="2xl"
         radius="sm"
       >
@@ -106,6 +112,7 @@ export const FrmUploadFile = (props: IProps) => {
                 onPress={() => methods.handleSubmit(handleFormSubmit)}
                 isLoading={loading || loadingFile}
                 isDisabled={loading || loadingFile}
+                className="button-dark"
               >
                 Guardar
               </Button>
