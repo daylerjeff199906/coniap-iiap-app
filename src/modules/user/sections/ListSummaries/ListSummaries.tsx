@@ -12,6 +12,12 @@ export const ListSummaries = () => {
   const pathname = usePathname()
   const isFiles = pathname === '/dashboard/files'
 
+  useEffect(() => {
+    if (isFiles && myPerson?.id) {
+      getSummaryByIdPerson(myPerson?.id)
+    }
+  }, [isFiles])
+
   if (myPerson?.name === '' || myPerson?.surName === '')
     return (
       <>
@@ -35,12 +41,6 @@ export const ListSummaries = () => {
         </section>
       </>
     )
-
-  useEffect(() => {
-    if (isFiles && myPerson?.id) {
-      getSummaryByIdPerson(myPerson?.id)
-    }
-  }, [isFiles])
 
   return (
     <>
