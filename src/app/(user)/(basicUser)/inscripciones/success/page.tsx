@@ -22,12 +22,18 @@ export default function Page() {
               Volver al inicio
             </Button>
           </section>
-          <Link
-            href="/login"
-            className="text-primary-500 hover:text-primary-800 cursor-pointer text-xs text-end pb-2 underline"
-          >
-            Iniciar sesión
-          </Link>
+          <section>
+            <h1>
+              Si te registraste como ponente, inicia sesión para enviar tu
+              resumen
+            </h1>
+            <Link
+              href="/login"
+              className="text-primary-500 hover:text-primary-800 cursor-pointer text-xs text-end pb-2 underline"
+            >
+              Iniciar sesión
+            </Link>
+          </section>
         </section>
       </main>
     </>

@@ -64,11 +64,8 @@ export const FrmParticipantEditor = (props: IProps) => {
         const url = await uploadImage('speaker', file[0])
         await editField(String(speaker.id), 'persons', 'image', url)
       }
-
-      if (speaker) {
-        router.back()
-      }
     }
+    router.back()
   }
 
   const handleBack = () => {
