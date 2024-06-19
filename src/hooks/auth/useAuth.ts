@@ -1,5 +1,3 @@
-// crea un hook para obtener el usuario del cookie y tambien que tenga para cerrar sesion
-
 import { getCookie, deleteCookie, deleteLocalStorage } from '@/lib'
 import { useEffect, useState } from 'react'
 import { IResCookie, IUser } from '@/types'
@@ -25,5 +23,5 @@ export const useAuth = () => {
     setUser(null)
   }
 
-  return { user, logout }
+  return { user, logout, setUser }
 }
