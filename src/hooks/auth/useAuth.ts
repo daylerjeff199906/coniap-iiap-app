@@ -9,7 +9,7 @@ export const useAuth = () => {
 
   async function getUser() {
     const res: IResCookie = (await getCookie('user')) as IResCookie
-    const value = JSON.parse(res.value)
+    const value = res ? JSON.parse(res.value) : null
     if (res) {
       setUser(value)
     }
