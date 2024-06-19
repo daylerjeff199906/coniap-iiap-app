@@ -30,10 +30,11 @@ export const FrmLogin = () => {
       if (res?.role === 'admin') {
         router.push('/admin')
       } else if (res?.role !== 'participant') {
+        toast.success('Bienvenido', { position: 'top-right' })
         router.push('/dashboard')
       } else {
+        toast.success('Bienvenido', { position: 'top-right' })
         router.push('/')
-        toast.success('Bienvenido')
       }
     }
     setLoading(false)
