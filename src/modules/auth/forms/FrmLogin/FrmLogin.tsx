@@ -25,7 +25,6 @@ export const FrmLogin = () => {
     const res = await signInWithCredentials(data)
     await createCookie('user', JSON.stringify(res))
     await createLocalStorage('user', res)
-    new Promise((resolve) => setTimeout(resolve, 1000))
 
     if (res !== null) {
       if (res?.role === 'admin') {
