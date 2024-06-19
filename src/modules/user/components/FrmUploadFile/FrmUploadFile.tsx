@@ -118,7 +118,12 @@ export const FrmUploadFile = (props: IProps) => {
                   >
                     Guardar
                   </Button>
-                  <Button radius="sm">Cancelar</Button>
+                  <Button
+                    radius="sm"
+                    onPress={handleExit}
+                  >
+                    Cancelar
+                  </Button>
                 </footer>
               </form>
             </FormProvider>

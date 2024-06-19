@@ -40,8 +40,8 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
               onChange(value)
             }}
             radius="sm"
-            isInvalid={errors.topic?.id !== undefined}
-            errorMessage={errors.topic?.message as string}
+            isInvalid={errors.topic_id !== undefined}
+            errorMessage={errors.topic_id?.message as string}
             isLoading={loadingList || loading}
             isDisabled={loadingList || loading}
           >
