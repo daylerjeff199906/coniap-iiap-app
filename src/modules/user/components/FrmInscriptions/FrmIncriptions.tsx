@@ -14,7 +14,7 @@ import {
   JobData,
   RoleData,
 } from './sections'
-import { registerWithEmail } from '@/auth'
+import { registerAndSendEmailVerification } from '@/auth'
 
 import data from '@/utils/json/infoConiap.json'
 
@@ -55,7 +55,7 @@ export const FrmInscriptions = () => {
     const { password, password_confirmation, ...resData } = data
 
     if (data?.typePerson !== 'participant') {
-      const res = await registerWithEmail({
+      const res = await registerAndSendEmailVerification({
         email: resData.email,
         password,
       })
@@ -89,7 +89,8 @@ export const FrmInscriptions = () => {
       if (res !== null) {
         resetForm()
         toast.success('Datos registrados con éxito', {
-          description: 'Enviaremos un mensaje de confirmación a tu correo',
+          description:
+            'Mantente atento a tu correo, te enviaremos más información',
         })
         router.push('/inscripciones/success')
       }
