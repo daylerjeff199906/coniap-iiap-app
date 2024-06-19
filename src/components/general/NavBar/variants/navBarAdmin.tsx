@@ -13,22 +13,11 @@ import {
 } from '@nextui-org/react'
 
 import { useRouter } from 'next/navigation'
-import { getLocalStorage, deleteLocalStorage, deleteCookie } from '@/lib'
-import { IUser } from '@/types'
-import { useEffect, useState } from 'react'
 import { useAuthContext } from '@/provider'
-
 export const NavBarAdmin = () => {
   const { user, logout } = useAuthContext()
-  // const [user, setUser] = useState<IUser | null>(null)
 
   const router = useRouter()
-  // const user: IUser = getLocalStorage('user') as unknown as IUser
-
-  // useEffect(() => {
-  //   const user: IUser = getLocalStorage('user')
-  //   setUser(user)
-  // }, [])
 
   const handleLogout = async () => {
     logout()

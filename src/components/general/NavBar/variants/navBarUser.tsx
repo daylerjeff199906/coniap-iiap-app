@@ -1,5 +1,4 @@
 'use client'
-import { useEffect, useState } from 'react'
 import {
   Button,
   Listbox,
@@ -8,7 +7,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -22,11 +20,11 @@ import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
-import { getLocalStorage, deleteLocalStorage, deleteCookie } from '@/lib'
-import { IUser } from '@/types'
+
+import { useAuthContext } from '@/provider'
 
 export const NavBarUser = () => {
-  const [user, setUser] = useState<IUser | null>(null)
+  const { user, logout } = useAuthContext()
 
   const pathname = usePathname()
   const router = useRouter()
@@ -40,14 +38,8 @@ export const NavBarUser = () => {
     ['rgba(0,0,0,0)', 'rgba(0,45,97,1)'] // Rango de salida: de transparente a azul con opacidad
   )
 
-  useEffect(() => {
-    const user: IUser = getLocalStorage('user')
-    setUser(user)
-  }, [])
-
   const handleLogout = () => {
-    deleteLocalStorage('user')
-    deleteCookie('user')
+    logout()
     router.push('/')
   }
 
