@@ -33,7 +33,6 @@ export const FrmUploadFile = (props: IProps) => {
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, ...rest } = data
     let newData: ISummary
-
     if (summary?.id) {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]
@@ -42,9 +41,9 @@ export const FrmUploadFile = (props: IProps) => {
           await deleteImage(summary.file)
         }
         const url = await uploadImage('files', fileUp[0])
-        newData = { ...rest, file: url }
+        newData = { ...rest, person_id: person?.id || '', file: url }
       } else {
-        newData = { ...rest, file: summary.file }
+        newData = { ...rest, person_id: person?.id || '', file: summary.file }
       }
 
       await updateDataSummary(summary.id, newData)
@@ -53,7 +52,13 @@ export const FrmUploadFile = (props: IProps) => {
         const fileUp = file as unknown as File[]
         const url = await uploadImage('files', fileUp[0])
 
-        newData = { ...rest, file: url, isActived: false, isApproved: false }
+        newData = {
+          ...rest,
+          person_id: person?.id || '',
+          file: url,
+          isActived: false,
+          isApproved: false,
+        }
       } else {
         newData = {
           ...rest,
@@ -63,8 +68,6 @@ export const FrmUploadFile = (props: IProps) => {
           isApproved: false,
         }
       }
-
-      console.log(newData)
 
       const resData = await createDataSummary(newData)
 
