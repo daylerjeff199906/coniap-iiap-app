@@ -33,6 +33,7 @@ export const ContactData = () => {
             onValueChange={onChange}
             isInvalid={errors.email !== undefined}
             errorMessage={errors.email?.message}
+            isDisabled
           />
         )}
       />
