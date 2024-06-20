@@ -12,7 +12,7 @@ const dataTabs = [
     icon: <IconHome size={28} />,
   },
   {
-    title: 'Mis archivos',
+    title: 'Mis resumenes',
     href: '/dashboard/files',
     icon: <IconFile size={28} />,
   },

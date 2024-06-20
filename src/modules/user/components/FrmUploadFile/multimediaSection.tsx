@@ -5,7 +5,13 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 registerPlugin(FilePondPluginFileValidateType)
 
 export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
-  const { control } = useFormContext()
+  const {
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext()
+
+  const file = watch('file')
 
   return (
     <section className="space-y-3 w-full ">
@@ -14,13 +20,16 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
         <Controller
           name="file"
           control={control}
+          rules={{
+            required: 'Este campo es requerido',
+          }}
           render={({ field: { onChange } }) => (
             <FilePond
               allowMultiple={false}
               disabled={loading}
-              // onupdatefiles={onChange}
               instantUpload={false}
-              acceptedFileTypes={['doc/*', 'pdf/*']}
+              acceptedFileTypes={['application/pdf', 'application/msword']}
+              required
               server={{
                 process: (
                   fieldName: any,

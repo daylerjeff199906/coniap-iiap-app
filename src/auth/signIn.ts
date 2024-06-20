@@ -101,12 +101,14 @@ export const signInWithCredentials = async (
       }
     } else {
       console.log(userCredential.user.emailVerified)
-      toast.error('Revise su correo electrónico para verificar su cuenta')
+      toast.error('Revise su correo electrónico para verificar su cuenta', {
+        position: 'top-right',
+      })
       return null
     }
   } catch (error) {
     const err = error as unknown as IError
-    toast.error(getErrors(err))
+    toast.error(getErrors(err), { position: 'top-right' })
     return null
   }
 }

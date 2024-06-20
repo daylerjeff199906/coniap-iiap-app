@@ -3,12 +3,15 @@
 
 import { NextUIProvider } from '@nextui-org/react'
 import { Toaster } from 'sonner'
+import { AuthProvider } from '@/provider'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
-      <Toaster />
-      {children}
+      <AuthProvider>
+        <Toaster />
+        {children}
+      </AuthProvider>
     </NextUIProvider>
   )
 }

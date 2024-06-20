@@ -31,17 +31,17 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
         rules={{ required: 'Este campo es requerido' }}
         render={({ field: { onChange, value } }) => (
           <Select
-            label="Categoria"
+            label="Línea de investigación"
             labelPlacement="outside"
             placeholder={placeholder}
-            description="Seleccione la categoria a la que pertenece el resumen"
+            description="Seleccione una línea temática para su archivo"
             selectedKeys={value ? [value] : []}
             onChange={(value) => {
               onChange(value)
             }}
             radius="sm"
-            isInvalid={errors.topic?.id !== undefined}
-            errorMessage={errors.topic?.message as string}
+            isInvalid={errors.topic_id !== undefined}
+            errorMessage={errors.topic_id?.message as string}
             isLoading={loadingList || loading}
             isDisabled={loadingList || loading}
           >
