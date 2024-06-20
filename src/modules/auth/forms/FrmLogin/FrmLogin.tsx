@@ -10,6 +10,8 @@ import { LoadingPages } from '@/components'
 import { createCookie, createLocalStorage } from '@/lib'
 import { toast } from 'sonner'
 
+import { useAuth } from '@/hooks/auth'
+
 interface ILogin {
   email: string
   password: string
@@ -19,6 +21,7 @@ export const FrmLogin = () => {
   const [loading, setLoading] = useState(false)
   const methods = useForm<ILogin>()
   const router = useRouter()
+  const { getUser } = useAuth()
 
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
@@ -27,6 +30,8 @@ export const FrmLogin = () => {
     await createLocalStorage('user', res)
 
     if (res !== null) {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      getUser()
       if (res?.role === 'admin') {
         router.push('/admin')
       } else if (res?.role !== 'participant') {

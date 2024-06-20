@@ -21,5 +21,5 @@ export const useAuth = () => {
     setUser(null)
   }
 
-  return { user, logout }
+  return { user, logout, getUser }
 }
