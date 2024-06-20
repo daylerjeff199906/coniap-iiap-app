@@ -1,16 +1,14 @@
-import { getCookie, deleteCookie, deleteLocalStorage } from '@/lib'
+import { getLocalStorage, deleteCookie, deleteLocalStorage } from '@/lib'
 import { useEffect, useState } from 'react'
-import { IResCookie, IUser } from '@/types'
+import { IUser } from '@/types'
 
 export const useAuth = () => {
   const [user, setUser] = useState<IUser | null>(null)
 
   async function getUser() {
-    const res: IResCookie = (await getCookie('user')) as IResCookie
-    const value = res ? JSON.parse(res.value) : null
-    if (res) {
-      setUser(value)
-    }
+    const user = await getLocalStorage('user')
+    const value = user ? user : null
+    setUser(value)
   }
 
   useEffect(() => {
@@ -23,5 +21,5 @@ export const useAuth = () => {
     setUser(null)
   }
 
-  return { user, logout, setUser }
+  return { user, logout }
 }

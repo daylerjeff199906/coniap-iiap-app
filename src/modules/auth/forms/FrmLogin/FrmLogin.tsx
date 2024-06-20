@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 import { createCookie, createLocalStorage } from '@/lib'
-import { useAuth } from '@/hooks/auth'
 import { toast } from 'sonner'
 
 interface ILogin {
@@ -19,7 +18,6 @@ interface ILogin {
 export const FrmLogin = () => {
   const [loading, setLoading] = useState(false)
   const methods = useForm<ILogin>()
-  const { setUser } = useAuth()
   const router = useRouter()
 
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
@@ -27,8 +25,6 @@ export const FrmLogin = () => {
     const res = await signInWithCredentials(data)
     await createCookie('user', JSON.stringify(res))
     await createLocalStorage('user', res)
-
-    setUser(res)
 
     if (res !== null) {
       if (res?.role === 'admin') {
