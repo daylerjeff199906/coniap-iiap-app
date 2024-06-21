@@ -1,7 +1,7 @@
 'use client'
 import { Button, Image } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
-import bgImage from '@/assets/images/bgBanner.webp'
+import infoConiap from '@/utils/json/infoConiap.json'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -62,10 +62,6 @@ export const BannerHome = () => {
             Bienvenidos al III Congreso Internacional de la{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
           </h1>
-          {/* <p className="text-sm lg:text-lg animate-appearance-in text-white">
-            Del 15 al 18 de noviembre de 2022, ven y participa de este gran
-            evento.
-          </p> */}
           <div className="flex items-center gap-2">
             <IconCalendarEvent
               size={56}
@@ -73,7 +69,7 @@ export const BannerHome = () => {
               color="#fff"
             />
             <h3 className="text-white sm:text-lg max-w-48">
-              Del 13 al 15 de noviembre de 2022
+              Del 13 al 15 de noviembre de 2024
             </h3>
           </div>
           <div className="w-full flex items-center gap-3">
@@ -92,6 +88,8 @@ export const BannerHome = () => {
               radius="full"
               size="lg"
               className="bg-white text-black animate-appearance-in"
+              as={Link}
+              href="/inscripciones"
             >
               Inscríbete
             </Button>
