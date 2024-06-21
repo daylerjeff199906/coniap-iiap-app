@@ -24,7 +24,7 @@ function getUrlByRole(role: string): string {
     case 'participant':
       return '/'
     default:
-      return '/login'
+      return '/'
   }
 }
 
