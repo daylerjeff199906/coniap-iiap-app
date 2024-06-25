@@ -3,12 +3,24 @@
 import { useEffect, useState } from 'react'
 import Vector from '@/assets/svg/patron_vectores.svg'
 import Image from 'next/image'
-
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
+import dataInfo from '@/utils/json/infoConiap.json'
 
-const dateStart = new Date('2024-11-13').getTime()
-const dateEnd = new Date('2024-11-15').getTime()
-const dateNext = new Date('2026-11-01').getTime()
+const dateStart = new Date(
+  dataInfo.data.dates['date-conference'].start
+).getTime()
+const dateEnd = new Date(dataInfo.data.dates['date-conference'].end).getTime()
+// sumar 2 años a dateEnd para que sea la fecha de la próxima conferencia
+function addYears(date: Date, years: number) {
+  const newDate = new Date(date)
+  newDate.setFullYear(newDate.getFullYear() + years)
+  return newDate
+}
+
+const dateNext = addYears(
+  new Date(dataInfo.data.dates['date-conference'].end),
+  2
+).getTime()
 
 export const TimeSection = () => {
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null)
