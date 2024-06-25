@@ -76,6 +76,8 @@ export const Footer = () => {
 
   const year = new Date(rangeDate.start).getFullYear()
 
+  const modality = dataInfo.data.modalidad
+
   return (
     <>
       <footer className="">
@@ -100,10 +102,10 @@ export const Footer = () => {
                 </div>
                 <div>
                   <p>Del {`${startDay} al ${endDay} de ${month} ${year}`}</p>
-                  <p className="font-bold text-zinc-400">Virtual</p>
+                  <p className="font-bold text-zinc-400">{modality}</p>
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-lg">#CONIAP2024</h3>
+                  <h3 className="text-lg">#CONIAP{year}</h3>
                   <div className="flex gap-6">
                     {socialMedia.map((item, index) => (
                       <Link
