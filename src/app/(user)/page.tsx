@@ -87,7 +87,7 @@ export default async function Page() {
       <EventsSection events={dataEvents} />
       <InscriptionsSection />
       <SponsorSection sponsors={dataSponsors} />
-      <FrmContactUs />
+      {/* <FrmContactUs /> */}
     </main>
   )
 }

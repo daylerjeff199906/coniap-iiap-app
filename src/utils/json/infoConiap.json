@@ -1,5 +1,10 @@
 {
   "data": {
+    "title": {
+      "es": "III Congreso Internacional sobre la Amazonía Peruana",
+      "en": "III International Congress on the Peruvian Amazon"
+    },
+    "siglas": "CONIAP",
     "dates": {
       "inscription": {
         "start": "2019-01-01",
