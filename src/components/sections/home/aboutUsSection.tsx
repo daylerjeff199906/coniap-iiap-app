@@ -99,7 +99,7 @@ export const AboutUsSection = () => {
             }}
           >
             <div className="dot-custom" />
-            <p className="text-xs font-semibold">CONIAP - 2024</p>
+            <p className="text-xs font-semibold">#CONIAP - 2024</p>
           </motion.div>
 
           <motion.div

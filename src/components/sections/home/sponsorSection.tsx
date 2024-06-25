@@ -37,7 +37,7 @@ export const SponsorSection = (props: IProps) => {
           >
             <div className="flex items-center gap-3 pb-3">
               <div className="dot-custom" />
-              <p className="text-xs font-semibold uppercase">CONIAP - 2024</p>
+              <p className="text-xs font-semibold uppercase">#CONIAP - 2024</p>
             </div>
             <div className="w-full max-w-4xl">
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">

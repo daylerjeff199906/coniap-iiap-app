@@ -37,7 +37,7 @@ export const MoreEventsSection = (props: IProps) => {
               }}
             >
               <div className="dot-custom" />
-              <p className="text-xs font-semibold z-10 uppercase">ponentes - 2024</p>
+              <p className="text-xs font-semibold z-10 uppercase">#ponentes - 2024</p>
             </motion.div>
             <motion.div
               className="w-full"
