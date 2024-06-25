@@ -5,6 +5,8 @@ import { IconCalendarEvent } from '@tabler/icons-react'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { formatConferenceDate } from '@/utils/functions'
+import infoData from '@/utils/json/infoConiap.json'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -32,6 +34,10 @@ export const BannerHome = () => {
   const handleVideoLoaded = () => {
     setVideoLoaded(true)
   }
+
+  const conferenceDate = formatConferenceDate(
+    infoData.data.dates['date-conference']
+  )
 
   return (
     <section
@@ -68,9 +74,7 @@ export const BannerHome = () => {
               stroke={1}
               color="#fff"
             />
-            <h3 className="text-white sm:text-lg max-w-48">
-              Del 13 al 15 de noviembre de 2024
-            </h3>
+            <h3 className="text-white sm:text-lg max-w-48">{conferenceDate}</h3>
           </div>
           <div className="w-full flex items-center gap-3">
             <Button

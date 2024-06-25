@@ -9,6 +9,7 @@ import {
 } from '@tabler/icons-react'
 import Link from 'next/link'
 import dataInfo from '@/utils/json/infoConiap.json'
+import { formatConferenceDate } from '@/utils/functions'
 
 const mapSite = [
   {
@@ -67,14 +68,9 @@ export const Footer = () => {
   const rangeDate = dataInfo.data.dates['date-conference']
 
   //getStar Day
-  const startDay = new Date(rangeDate.start).getDate()
-  const endDay = new Date(rangeDate.end).getDate()
+  const dateRange = formatConferenceDate(rangeDate)
 
-  const month = new Date(rangeDate.start).toLocaleString('default', {
-    month: 'long',
-  })
-
-  const year = new Date(rangeDate.start).getFullYear()
+  const year = rangeDate.start.split('-')[0]
 
   const modality = dataInfo.data.modalidad
 
@@ -101,7 +97,7 @@ export const Footer = () => {
                   </p>
                 </div>
                 <div>
-                  <p>Del {`${startDay} al ${endDay} de ${month} ${year}`}</p>
+                  <p>{dateRange}</p>
                   <p className="font-bold text-zinc-400">{modality}</p>
                 </div>
                 <div className="space-y-3">
