@@ -1,10 +1,10 @@
 'use client'
+import { useState } from 'react'
 import { Button, Image } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState } from 'react'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -60,6 +60,7 @@ export const BannerHome = () => {
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
+            (CONIAP)
           </h1>
           <div className="flex items-center gap-2">
             <IconCalendarEvent
