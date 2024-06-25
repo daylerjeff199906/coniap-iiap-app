@@ -117,8 +117,8 @@ export const AboutUsSection = () => {
             }}
           >
             <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
-              Por un Futuro Verde:
-              <b>CONIAP</b> y la transformación de la <b>Amazonía</b>
+              Por un Futuro Verde: <b> CONIAP</b> y la transformación de la{' '}
+              <b>Amazonía</b>
             </h2>
             <h3 className="text-lg">
               Fomentando un diálogo multidisciplinario para el avance sostenible
