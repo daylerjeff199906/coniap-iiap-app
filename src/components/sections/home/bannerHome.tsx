@@ -1,7 +1,6 @@
 'use client'
 import { Button, Image } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
-import infoConiap from '@/utils/json/infoConiap.json'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -59,7 +58,7 @@ export const BannerHome = () => {
           }}
         >
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
-            Bienvenidos al III Congreso Internacional de la{' '}
+            Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
           </h1>
           <div className="flex items-center gap-2">
@@ -143,16 +142,6 @@ export const BannerHome = () => {
           </div>
         </motion.div>
       </div>
-      {/* {videoLoaded === false && (
-        <Image
-          src={bgImage.src}
-          alt="Banner Home"
-          className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
-          removeWrapper
-          radius="none"
-        />
-      )} */}
-
       <video
         autoPlay
         muted
