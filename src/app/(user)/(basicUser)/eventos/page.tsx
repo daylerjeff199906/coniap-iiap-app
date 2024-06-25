@@ -1,5 +1,4 @@
 import { BannerStatic, ListEventsPage } from '@/components'
-import { FrmContactUs } from '@/modules/user'
 
 export default function Page() {
   return (
@@ -13,7 +12,6 @@ export default function Page() {
       <main className="container">
         <ListEventsPage />
       </main>
-      <FrmContactUs />
     </>
   )
 }
