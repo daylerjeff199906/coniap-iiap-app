@@ -64,6 +64,18 @@ const socialMedia = [
 ]
 
 export const Footer = () => {
+  const rangeDate = dataInfo.data.dates['date-conference']
+
+  //getStar Day
+  const startDay = new Date(rangeDate.start).getDate()
+  const endDay = new Date(rangeDate.end).getDate()
+
+  const month = new Date(rangeDate.start).toLocaleString('default', {
+    month: 'long',
+  })
+
+  const year = new Date(rangeDate.start).getFullYear()
+
   return (
     <>
       <footer className="">
@@ -87,7 +99,7 @@ export const Footer = () => {
                   </p>
                 </div>
                 <div>
-                  <p>13 - 14 - 15 de noviembre de 2024</p>
+                  <p>Del {`${startDay} al ${endDay} de ${month} ${year}`}</p>
                   <p className="font-bold text-zinc-400">Virtual</p>
                 </div>
                 <div className="space-y-3">
