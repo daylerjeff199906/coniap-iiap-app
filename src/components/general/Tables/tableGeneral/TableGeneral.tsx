@@ -16,6 +16,7 @@ import {
   DropdownTrigger,
   DropdownItem,
   DropdownMenu,
+  Chip,
 } from '@nextui-org/react'
 import { IColumns, IRows, IActions } from '@/types'
 import { IconSearch, IconDots } from '@tabler/icons-react'
@@ -108,18 +109,14 @@ export const TableGeneral = (props: IProps) => {
         )
       case 'status':
         return (
-          <>
-            <Switch
-              isSelected={value as boolean}
-              onValueChange={
-                onValueStatusChange &&
-                (() => onValueStatusChange(item.key, !value))
-              }
-              size="sm"
-            >
-              {value ? 'Activo' : 'Inactivo'}
-            </Switch>
-          </>
+          <Chip
+            color={value ? 'success' : 'danger'}
+            variant="flat"
+            radius="sm"
+            size="sm"
+          >
+            {value ? 'Activo' : 'Inactivo'}
+          </Chip>
         )
       default:
         return value
