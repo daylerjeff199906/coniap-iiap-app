@@ -95,9 +95,6 @@ export const ListParticipants = (prop: IProps) => {
       <TableGeneral
         loading={editLoading}
         columns={columns}
-        onValueStatusChange={(key: string | number, value: boolean) => {
-          handleStatusChange(String(key), value)
-        }}
         onSearch={handleQuery}
         searchValue={query}
         rows={persons}

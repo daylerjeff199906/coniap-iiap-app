@@ -35,6 +35,11 @@ const optionsActions: Array<IActions> = [
     label: 'Detalles',
     key: '',
   },
+  {
+    id: 3,
+    label: 'Estado',
+    key: 'status',
+  },
 ]
 
 interface IProps {
@@ -43,7 +48,6 @@ interface IProps {
   rows: Array<IRows>
   loading?: boolean
   selectionMode?: 'single' | 'multiple' | 'none'
-  onValueStatusChange?: (key: string | number, value: boolean) => void
   onSelectionChange?: (row: IRows) => void
   //For the search input
   onSearch?: (value: string) => void
@@ -54,7 +58,6 @@ export const TableGeneral = (props: IProps) => {
   const {
     columns,
     rows,
-    onValueStatusChange,
     onSelectionChange,
     selectionMode,
     onSearch,
