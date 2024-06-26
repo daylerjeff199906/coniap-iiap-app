@@ -12,17 +12,19 @@ import {
   cn,
 } from '@nextui-org/react'
 import { useFiles } from '@/hooks/admin'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface IProps {
   isOpen: boolean
   id: string
-  status: boolean
 }
 
 export const DialogStatus = (props: IProps) => {
-  const [newStatus, setNewStatus] = useState<boolean>(props.status)
-  const { isOpen, id, status } = props
+  const searchParams = useSearchParams()
+  const status = searchParams.get('status') === 'true'
+
+  const { isOpen, id } = props
+  const [newStatus, setNewStatus] = useState<boolean>(status)
   const { editField, loading } = useFiles()
   const router = useRouter()
 

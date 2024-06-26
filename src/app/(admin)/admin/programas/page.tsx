@@ -1,10 +1,10 @@
 'use client'
-import { ListProgramsSection } from '@/components'
 import { HeaderSection } from '@/modules/core'
+import { ListPrograms } from '@/modules/admin'
 
 export default function Page() {
   return (
-    <main className='flex flex-col gap-5'>
+    <main className="flex flex-col gap-5">
       <HeaderSection
         title="Lista de programaciones"
         subtitle="Lista de programaciones registradas en la base de datos"
@@ -12,7 +12,7 @@ export default function Page() {
         href="/admin/programas/nuevo"
         labelButton="Añadir programación"
       />
-      <ListProgramsSection />
+      <ListPrograms />
     </main>
   )
 }

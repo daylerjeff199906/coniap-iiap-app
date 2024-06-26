@@ -47,6 +47,7 @@ interface IProps {
   //For the search input
   onSearch?: (value: string) => void
   searchValue?: string
+  headerChildren?: React.ReactNode
 }
 
 export const TableGeneral = (props: IProps) => {
@@ -58,6 +59,7 @@ export const TableGeneral = (props: IProps) => {
     onSearch,
     searchValue,
     actionsList,
+    headerChildren,
   } = props
 
   const pathname = usePathname()
@@ -132,7 +134,7 @@ export const TableGeneral = (props: IProps) => {
 
   return (
     <main className="flex flex-col gap-3">
-      <section>
+      <section className="flex gap-2">
         <Input
           aria-label="Buscar"
           variant="bordered"
@@ -146,6 +148,7 @@ export const TableGeneral = (props: IProps) => {
           onValueChange={(value) => onSearch && onSearch(value)}
           startContent={<IconSearch size={16} />}
         />
+        {headerChildren}
       </section>
       <Table
         aria-label="TableGeneral"

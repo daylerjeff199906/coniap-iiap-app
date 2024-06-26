@@ -7,6 +7,7 @@ import { IActions, IColumns } from '@/types'
 import { usePrograms, useFiles } from '@/hooks/admin'
 import { useFilterFromUrl } from '@/modules/core'
 import { DialogStatus } from '@/modules/admin'
+import { FilterSection } from './filterSection'
 
 const columns: Array<IColumns> = [
   {
@@ -49,16 +50,14 @@ const actions: Array<IActions> = [
   },
 ]
 
-export const ListProgramsSection = () => {
-  const { getPrograms, programs, loading, updateFieldDataProgram } =
-    usePrograms()
+export const ListPrograms = () => {
+  const { getPrograms, programs, loading } = usePrograms()
   const { getParams } = useFilterFromUrl()
 
   const { loading: updateLoading } = useFiles()
   const [query, setQuery] = useState<string>('')
 
   const id = getParams('id', '')
-  const status = getParams('status', '')
 
   useEffect(() => {
     getPrograms(query)
@@ -89,12 +88,12 @@ export const ListProgramsSection = () => {
           searchValue={query}
           rows={rows}
           actionsList={actions}
+          headerChildren={<FilterSection />}
         />
       </Suspense>
       <DialogStatus
         isOpen={id !== ''}
         id={id}
-        status={status === 'true'}
       />
     </>
   )
