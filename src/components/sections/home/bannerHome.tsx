@@ -1,11 +1,12 @@
 'use client'
+import { useState } from 'react'
 import { Button, Image } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
-import infoConiap from '@/utils/json/infoConiap.json'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState } from 'react'
+import { formatConferenceDate } from '@/utils/functions'
+import infoData from '@/utils/json/infoConiap.json'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -34,6 +35,10 @@ export const BannerHome = () => {
     setVideoLoaded(true)
   }
 
+  const conferenceDate = formatConferenceDate(
+    infoData.data.dates['date-conference']
+  )
+
   return (
     <section
       id="banner-home"
@@ -59,8 +64,9 @@ export const BannerHome = () => {
           }}
         >
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
-            Bienvenidos al III Congreso Internacional de la{' '}
+            Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
+            (CONIAP)
           </h1>
           <div className="flex items-center gap-2">
             <IconCalendarEvent
@@ -68,9 +74,7 @@ export const BannerHome = () => {
               stroke={1}
               color="#fff"
             />
-            <h3 className="text-white sm:text-lg max-w-48">
-              Del 13 al 15 de noviembre de 2024
-            </h3>
+            <h3 className="text-white sm:text-lg max-w-48">{conferenceDate}</h3>
           </div>
           <div className="w-full flex items-center gap-3">
             <Button
@@ -143,16 +147,6 @@ export const BannerHome = () => {
           </div>
         </motion.div>
       </div>
-      {/* {videoLoaded === false && (
-        <Image
-          src={bgImage.src}
-          alt="Banner Home"
-          className="fixed w-full h-full max-h-screen object-cover  top-0 -z-50"
-          removeWrapper
-          radius="none"
-        />
-      )} */}
-
       <video
         autoPlay
         muted

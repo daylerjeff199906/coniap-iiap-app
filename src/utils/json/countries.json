@@ -126,15 +126,6 @@
     "phoneLength": 10
   },
   {
-    "country": "Bangladés",
-    "countryCode": 880,
-    "code": "BD",
-    "flag": "https://flagcdn.com/bd.svg",
-    "emoji": "🇧🇩",
-    "latinAmerica": false,
-    "phoneLength": 10
-  },
-  {
     "country": "Barbados",
     "countryCode": 1246,
     "code": "BB",

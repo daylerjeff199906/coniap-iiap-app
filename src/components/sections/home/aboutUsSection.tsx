@@ -117,17 +117,16 @@ export const AboutUsSection = () => {
             }}
           >
             <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
-              Por un Futuro Verde:
-              <b>CONIAP</b> y la transformación de la <b>Amazonía</b>
+              Por un Futuro Verde: <b> CONIAP</b> y la transformación de la{' '}
+              <b>Amazonía</b>
             </h2>
             <h3 className="text-lg">
-              Fomentando un Diálogo Multidisciplinario para el Avance Sostenible
-              Globalmente.
+              Fomentando un diálogo multidisciplinario para el avance sostenible
+              globalmente.
             </h3>
           </motion.div>
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 "
-            // variants={container}
             initial={{ opacity: 0 }}
             viewport={{
               once: false,

@@ -11,7 +11,6 @@ import {
   MoreEventsSection,
   AgendaSection,
 } from '@/components'
-import { FrmContactUs } from '@/modules/user'
 
 import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
 
@@ -87,7 +86,6 @@ export default async function Page() {
       <EventsSection events={dataEvents} />
       <InscriptionsSection />
       <SponsorSection sponsors={dataSponsors} />
-      <FrmContactUs />
     </main>
   )
 }

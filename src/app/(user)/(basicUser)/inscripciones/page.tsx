@@ -3,7 +3,7 @@ import { Button, Image } from '@nextui-org/react'
 import img_logo from '@/assets/svg/ISOTIPO - CONIAP.svg'
 import { imgSpeakerInscription } from '@/assets'
 import Link from 'next/link'
-import { FrmInscriptions, FrmContactUs } from '@/modules/user'
+import { FrmInscriptions } from '@/modules/user'
 
 export default function Page() {
   return (
@@ -66,7 +66,6 @@ export default function Page() {
             </div>
           </section>
         </article>
-        <FrmContactUs />
       </main>
     </>
   )

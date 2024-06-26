@@ -50,7 +50,7 @@ export const InfoAboutUs = () => {
                 duration: 1,
               }}
             >
-              Congreso <b>Internacional</b> de la <b>AMAZONÍA </b> Peruana
+              Congreso <b>Internacional</b> sobre <b>AMAZONÍA </b> Peruana
             </motion.h2>
             <motion.div
               className="w-full"

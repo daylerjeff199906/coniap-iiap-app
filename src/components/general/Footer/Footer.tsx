@@ -8,6 +8,8 @@ import {
   IconBrandLinkedin,
 } from '@tabler/icons-react'
 import Link from 'next/link'
+import dataInfo from '@/utils/json/infoConiap.json'
+import { formatConferenceDate } from '@/utils/functions'
 
 const mapSite = [
   {
@@ -32,7 +34,46 @@ const mapSite = [
   },
 ]
 
+const icons = {
+  facebook: <IconBrandFacebook size={24} />,
+  instagram: <IconBrandInstagram size={24} />,
+  youtube: <IconBrandYoutube size={24} />,
+  linkedin: <IconBrandLinkedin size={24} />,
+}
+
+const socialMedia = [
+  {
+    title: 'Facebook',
+    url: 'https://www.facebook.com/CONIAP2024',
+    icon: icons.facebook,
+  },
+  {
+    title: 'Instagram',
+    url: 'https://www.instagram.com/coniap2024/',
+    icon: icons.instagram,
+  },
+  {
+    title: 'Youtube',
+    url: 'https://www.youtube.com/channel/UCz2fX4Qd9QZVvXz6NvL0h6A',
+    icon: icons.youtube,
+  },
+  {
+    title: 'Linkedin',
+    url: 'https://www.linkedin.com/company/coniap2024',
+    icon: icons.linkedin,
+  },
+]
+
 export const Footer = () => {
+  const rangeDate = dataInfo.data.dates['date-conference']
+
+  //getStar Day
+  const dateRange = formatConferenceDate(rangeDate)
+
+  const year = rangeDate.start.split('-')[0]
+
+  const modality = dataInfo.data.modalidad
+
   return (
     <>
       <footer className="">
@@ -52,40 +93,26 @@ export const Footer = () => {
                 <div className="lg:col-span-2">
                   <h1 className="text-5xl font-bold">CONIAP</h1>
                   <p className="font-bold uppercase">
-                    Congreso Internacional sobre la Amazonía Peruana
+                    {dataInfo.data.title.es}
                   </p>
                 </div>
                 <div>
-                  <p>13 - 14 - 15 de noviembre de 2024</p>
-                  <p className="font-bold text-zinc-400">Virtual</p>
+                  <p>{dateRange}</p>
+                  <p className="font-bold text-zinc-400">{modality}</p>
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-lg">#CONIAP2024</h3>
+                  <h3 className="text-lg">#CONIAP{year}</h3>
                   <div className="flex gap-6">
-                    <Link
-                      href="https://www.facebook.com/CONIAP2024"
-                      target="_blank"
-                    >
-                      <IconBrandFacebook size={24} />
-                    </Link>
-                    <Link
-                      href="https://www.instagram.com/coniap2024/"
-                      target="_blank"
-                    >
-                      <IconBrandInstagram size={24} />
-                    </Link>
-                    <Link
-                      href="https://www.youtube.com/channel/UCz2fX4Qd9QZVvXz6NvL0h6A"
-                      target="_blank"
-                    >
-                      <IconBrandYoutube size={24} />
-                    </Link>
-                    <Link
-                      href="https://www.linkedin.com/company/coniap2024"
-                      target="_blank"
-                    >
-                      <IconBrandLinkedin size={24} />
-                    </Link>
+                    {socialMedia.map((item, index) => (
+                      <Link
+                        aria-label={item.title}
+                        key={index}
+                        href={item.url}
+                        target="_blank"
+                      >
+                        {item.icon}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -112,8 +139,8 @@ export const Footer = () => {
         <section className="bg-slate-900 py-2 space-y-3">
           <Divider className="bg-white" />
           <p className="text-white text-tiny text-center">
-            © {new Date().getFullYear()} All rights reserved. | Congreso
-            Inernacional de la Amazónia Peruana
+            © {new Date().getFullYear()} Todos los derechos reservados |{' '}
+            {dataInfo.data.title.es}
           </p>
         </section>
       </footer>
