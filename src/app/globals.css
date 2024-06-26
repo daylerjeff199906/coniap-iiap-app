@@ -30,7 +30,6 @@
   @apply bg-black text-white;
 }
 
-/* styles/globals.css */
 .custom-quill {
   h1 {
     @apply text-4xl font-bold;

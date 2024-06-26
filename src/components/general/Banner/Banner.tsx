@@ -37,7 +37,7 @@ const bannerData = [
     title: 'Expositores',
     subtitle: 'Conectando a las personas',
     description:
-      'Somos una comunidad de expertos en diferentes áreas de conocimiento y esperamos que puedas aprender de ellos.',
+      'Presentamos a los ponentes y ponentes magistrales que estarán presentes en el congreso.',
     urlImage:
       'https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2',
   },
@@ -47,7 +47,7 @@ const bannerData = [
     title: 'Inscripciones',
     subtitle: 'Participa en el congreso',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Inscríbete en el congreso y participa en las actividades que tenemos preparadas para ti.',
     urlImage:
       'https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2',
   },
