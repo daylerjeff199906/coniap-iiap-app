@@ -188,7 +188,7 @@ export const TableGeneral = (props: IProps) => {
         removeWrapper
         isHeaderSticky
         classNames={{
-          th: ['font-bold', 'bg-black', 'text-white'],
+          th: ['font-semibold', 'bg-white', 'text-gray-800', 'border-b'],
           base: 'max-h-[calc(100vh-22rem)] overflow-y-auto bg-white',
           td: ['text-xs', 'font-medium'],
         }}
