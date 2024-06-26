@@ -23,6 +23,19 @@ import Link from 'next/link'
 import { LoadingPages } from '../..'
 import { usePathname } from 'next/navigation'
 
+const optionsActions: Array<IActions> = [
+  {
+    id: 1,
+    label: 'Editar',
+    key: 'edit',
+  },
+  {
+    id: 2,
+    label: 'Detalles',
+    key: '',
+  },
+]
+
 interface IProps {
   columns: Array<IColumns>
   actionsList?: Array<IActions>
@@ -50,94 +63,47 @@ export const TableGeneral = (props: IProps) => {
 
   const pathname = usePathname()
 
+  const options = actionsList || optionsActions
+
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
     const value = getKeyValue(item, columnKey as string)
     switch (columnKey) {
       case 'actions':
         return (
           <>
-            {actionsList ? (
-              <>
-                <Dropdown
+            <Dropdown
+              size="sm"
+              radius="sm"
+              showArrow
+              classNames={{
+                content: 'bg-white border border-gray-200 shadow-lg w-[200px]',
+                base: 'text-tiny w-[200px] ',
+              }}
+            >
+              <DropdownTrigger>
+                <Button
                   size="sm"
-                  radius="sm"
-                  showArrow
-                  classNames={{
-                    content:
-                      'bg-white border border-gray-200 shadow-lg w-[200px]',
-                    base: 'text-tiny w-[200px] ',
-                  }}
+                  variant="light"
+                  isIconOnly
                 >
-                  <DropdownTrigger>
-                    <Button
-                      size="sm"
-                      variant="light"
-                      isIconOnly
-                    >
-                      <IconDots
-                        stroke={1.5}
-                        className="text-gray-500"
-                      />
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="DropdownMenu">
-                    {actionsList.map((action, index) => (
-                      <DropdownItem
-                        key={index}
-                        as={Link}
-                        href={
-                          action?.label === 'Editar'
-                            ? `${pathname}/${item.key}/editar`
-                            : `${pathname}/${action.href}${item.key}`
-                        }
-                      >
-                        {action.label}
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </Dropdown>
-              </>
-            ) : (
-              <>
-                <Dropdown
-                  size="sm"
-                  radius="sm"
-                  showArrow
-                  classNames={{
-                    content:
-                      'bg-white border border-gray-200 shadow-lg w-[200px]',
-                    base: 'text-tiny w-[200px] ',
-                  }}
-                >
-                  <DropdownTrigger>
-                    <Button
-                      size="sm"
-                      variant="light"
-                      isIconOnly
-                    >
-                      <IconDots
-                        stroke={1.5}
-                        className="text-gray-500"
-                      />
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="DropdownMenu">
-                    <DropdownItem
-                      as={Link}
-                      href={`${pathname}/${item.key}/editar`}
-                    >
-                      Editar
-                    </DropdownItem>
-                    <DropdownItem
-                      as={Link}
-                      href={`${pathname}/${item.key}`}
-                    >
-                      Detalles
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </>
-            )}
+                  <IconDots
+                    stroke={1.5}
+                    className="text-gray-500"
+                  />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="DropdownMenu">
+                {options?.map((action, index) => (
+                  <DropdownItem
+                    key={index}
+                    as={Link}
+                    href={`${pathname}/${action.key}/${item.key}`}
+                  >
+                    {action.label}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
           </>
         )
       case 'status':

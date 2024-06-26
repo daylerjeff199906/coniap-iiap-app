@@ -23,7 +23,7 @@ const columns: Array<IColumns> = [
     align: 'start',
   },
   {
-    key: 'surnames',
+    key: 'surname',
     label: 'Apellidos',
     align: 'start',
   },
@@ -105,12 +105,3 @@ export const ListParticipants = (prop: IProps) => {
     </>
   )
 }
-
-// const RenderColumnName = (fullname: string, surname: string) => {
-//   return (
-//     <div className="flex flex-col">
-//       <p className="text-base font-bold">{fullname}</p>
-//       <p className="text-xs font-medium text-slate-500">{surname}</p>
-//     </div>
-//   )
-// }
