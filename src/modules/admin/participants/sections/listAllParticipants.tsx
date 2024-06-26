@@ -8,13 +8,23 @@ import { useFilterFromUrl } from '@/modules/core'
 
 const columns: Array<IColumns> = [
   {
+    key: 'id',
+    label: 'ID',
+    align: 'center',
+  },
+  {
     key: 'level',
     label: 'Tipo de participante',
     align: 'start',
   },
   {
     key: 'name',
-    label: 'Participante',
+    label: 'Nombres',
+    align: 'start',
+  },
+  {
+    key: 'surname',
+    label: 'Apellidos',
     align: 'start',
   },
   {
@@ -68,9 +78,11 @@ export const ListParticipants = (prop: IProps) => {
     dataList?.map((speaker) => {
       return {
         key: String(speaker?.id),
-        name: RenderColumnName(speaker?.name, speaker?.surName),
+        id: speaker?.id,
+        name: speaker?.name,
+        surname: speaker?.surName,
         email: speaker?.email,
-        phone: speaker?.phone,
+        phone: speaker?.phone || 'No registrado',
         institution: speaker?.institution,
         level: speaker?.typePerson,
         status: speaker?.isActived,
@@ -83,22 +95,10 @@ export const ListParticipants = (prop: IProps) => {
       <TableGeneral
         loading={editLoading}
         columns={columns}
-        onValueStatusChange={(key: string | number, value: boolean) => {
-          handleStatusChange(String(key), value)
-        }}
         onSearch={handleQuery}
         searchValue={query}
         rows={persons}
       />
     </>
-  )
-}
-
-const RenderColumnName = (fullname: string, surname: string) => {
-  return (
-    <div className="flex flex-col">
-      <p className="text-base font-bold">{fullname}</p>
-      <p className="text-xs font-medium text-slate-500">{surname}</p>
-    </div>
   )
 }
