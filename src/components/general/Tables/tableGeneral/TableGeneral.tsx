@@ -26,19 +26,14 @@ import { usePathname } from 'next/navigation'
 
 const optionsActions: Array<IActions> = [
   {
-    id: 1,
     label: 'Editar',
-    key: 'editar',
+    key: 'edit',
+    href: 'editar',
   },
   {
-    id: 2,
     label: 'Detalles',
-    key: '',
-  },
-  {
-    id: 3,
-    label: 'Estado',
-    key: 'status',
+    key: 'details',
+    href: '',
   },
 ]
 
@@ -67,7 +62,7 @@ export const TableGeneral = (props: IProps) => {
 
   const pathname = usePathname()
 
-  const options = actionsList || optionsActions
+  const options = [...(actionsList || []), ...optionsActions]
 
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
     const value = getKeyValue(item, columnKey as string)
@@ -101,7 +96,11 @@ export const TableGeneral = (props: IProps) => {
                   <DropdownItem
                     key={index}
                     as={Link}
-                    href={`${pathname}/${item.key}/${action.key}`}
+                    href={
+                      action?.key === 'status'
+                        ? `${pathname}/${action.href}${item?.id}`
+                        : `${pathname}/${item?.key}/${action.href}`
+                    }
                   >
                     {action.label}
                   </DropdownItem>
