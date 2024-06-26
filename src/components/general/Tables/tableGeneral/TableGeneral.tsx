@@ -28,7 +28,7 @@ const optionsActions: Array<IActions> = [
   {
     id: 1,
     label: 'Editar',
-    key: 'edit',
+    key: 'editar',
   },
   {
     id: 2,
@@ -101,7 +101,7 @@ export const TableGeneral = (props: IProps) => {
                   <DropdownItem
                     key={index}
                     as={Link}
-                    href={`${pathname}/${action.key}/${item.key}`}
+                    href={`${pathname}/${item.key}/${action.key}`}
                   >
                     {action.label}
                   </DropdownItem>
