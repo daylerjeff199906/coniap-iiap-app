@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { IActions, IColumns } from '@/types'
 
 import { usePrograms, useFiles } from '@/hooks/admin'
+import { useFilterFromUrl } from '@/modules/core'
+import { DialogStatus } from '@/modules/admin'
 
 const columns: Array<IColumns> = [
   {
@@ -43,24 +45,24 @@ const actions: Array<IActions> = [
   {
     label: 'Cambiar estado',
     key: 'status',
-    href: '?status=',
+    href: '?id=',
   },
 ]
 
 export const ListProgramsSection = () => {
   const { getPrograms, programs, loading, updateFieldDataProgram } =
     usePrograms()
+  const { getParams } = useFilterFromUrl()
+
   const { loading: updateLoading } = useFiles()
   const [query, setQuery] = useState<string>('')
 
+  const id = getParams('id', '')
+  const status = getParams('status', '')
+
   useEffect(() => {
     getPrograms(query)
-  }, [query])
-
-  // const handleStatusChange = async (key: string, value: boolean) => {
-  //   await updateFieldDataProgram(key, 'isActived', value ? 'TRUE' : 'FALSE')
-  //   getPrograms('')
-  // }
+  }, [query, id])
 
   const rows =
     programs !== null
@@ -79,13 +81,20 @@ export const ListProgramsSection = () => {
 
   return (
     <>
-      <TableGeneral
-        loading={loading || updateLoading}
-        columns={columns}
-        onSearch={(value) => setQuery(value)}
-        searchValue={query}
-        rows={rows}
-        actionsList={actions}
+      <Suspense fallback={<div>Loading...</div>}>
+        <TableGeneral
+          loading={loading || updateLoading}
+          columns={columns}
+          onSearch={(value) => setQuery(value)}
+          searchValue={query}
+          rows={rows}
+          actionsList={actions}
+        />
+      </Suspense>
+      <DialogStatus
+        isOpen={id !== ''}
+        id={id}
+        status={status === 'true'}
       />
     </>
   )

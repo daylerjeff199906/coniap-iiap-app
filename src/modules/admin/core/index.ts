@@ -1,3 +1,1 @@
-import { DialogStatus } from './DialogStatus/DialogStatus'
-
-export { DialogStatus }
+export * from './components'

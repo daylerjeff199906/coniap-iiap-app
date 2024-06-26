@@ -98,7 +98,7 @@ export const TableGeneral = (props: IProps) => {
                     as={Link}
                     href={
                       action?.key === 'status'
-                        ? `${pathname}/${action.href}${item?.id}`
+                        ? `${pathname}/${action.href}${item?.id}&status=${item?.status}`
                         : `${pathname}/${item?.key}/${action.href}`
                     }
                   >
