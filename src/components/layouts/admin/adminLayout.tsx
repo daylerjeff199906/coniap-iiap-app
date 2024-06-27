@@ -7,6 +7,7 @@ import {
   IconFlag3,
   IconPresentationAnalytics,
   IconStack3,
+  IconUserCog,
 } from '@tabler/icons-react'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 
@@ -102,6 +103,14 @@ export const menuAside: IMenuAside[] = [
     titleOption: null,
     hrefLink: '/admin/tematicas',
     icon: <IconStack3 stroke={stroke} />,
+    subItems: null,
+  },
+  {
+    id: '7',
+    nameOption: 'Usuarios',
+    titleOption: null,
+    hrefLink: '/admin/users',
+    icon: <IconUserCog stroke={stroke} />,
     subItems: null,
   },
 ]

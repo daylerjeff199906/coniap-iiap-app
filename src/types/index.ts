@@ -2,7 +2,6 @@ import { ISponsor } from './ISponsors'
 import { IProgram } from './IProgram'
 import { IMenuAside } from './IMenuAside'
 import { IColumns } from './table/IColumns'
-import { IUser } from './IUser'
 import { ITopic } from './ITopics'
 import { IGeneralInfo } from './IGeneralInfo'
 import { IRows } from './table/IRows'
@@ -16,7 +15,6 @@ export type {
   IProgram,
   IMenuAside,
   IColumns,
-  IUser,
   ITopic,
   IGeneralInfo,
   IRows,
@@ -31,3 +29,4 @@ export * from './IRooms'
 export * from './Person'
 export * from './Auth'
 export * from './Res'
+export * from './User'
