@@ -34,14 +34,20 @@ export async function updateTopic(id: number, props: ITopic) {
   }
 }
 
-export async function fetchTopics(query: string) {
+export async function fetchTopics(
+  query: string,
+  filters?: {
+    isActived?: string
+  }
+) {
   const supabase = createClient()
+  let request = supabase.from('topics').select('*').ilike('name', `%${query}%`)
+  if (filters?.isActived) {
+    request = request.eq('isActived', filters.isActived)
+  }
 
-  const { data, error } = await supabase
-    .from('topics')
-    .select('*')
-    .order('id', { ascending: true })
-    .ilike('name', `%${query}%`)
+  const { data, error } = await request
+
   if (error) {
     return error
   } else {

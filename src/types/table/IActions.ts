@@ -1,5 +1,5 @@
 export interface IActions {
-  href: string
-  //   icon: string
+  key: string
   label: string
+  href?: string
 }

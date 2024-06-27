@@ -1,9 +1,9 @@
-import { FrmAddProgram } from '@/components'
+import { FrmProgramEditor } from '@/modules/admin'
 
 export default function Page() {
   return (
     <section className="flex flex-col w-full justify-center items-center">
-      <FrmAddProgram />
+      <FrmProgramEditor />
     </section>
   )
 }

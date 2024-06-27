@@ -16,6 +16,7 @@ import {
   DropdownTrigger,
   DropdownItem,
   DropdownMenu,
+  Chip,
 } from '@nextui-org/react'
 import { IColumns, IRows, IActions } from '@/types'
 import { IconSearch, IconDots } from '@tabler/icons-react'
@@ -23,32 +24,47 @@ import Link from 'next/link'
 import { LoadingPages } from '../..'
 import { usePathname } from 'next/navigation'
 
+const optionsActions: Array<IActions> = [
+  {
+    label: 'Editar',
+    key: 'edit',
+    href: 'editar',
+  },
+  {
+    label: 'Detalles',
+    key: 'details',
+    href: '',
+  },
+]
+
 interface IProps {
   columns: Array<IColumns>
   actionsList?: Array<IActions>
   rows: Array<IRows>
   loading?: boolean
   selectionMode?: 'single' | 'multiple' | 'none'
-  onValueStatusChange?: (key: string | number, value: boolean) => void
   onSelectionChange?: (row: IRows) => void
   //For the search input
   onSearch?: (value: string) => void
   searchValue?: string
+  headerChildren?: React.ReactNode
 }
 
 export const TableGeneral = (props: IProps) => {
   const {
     columns,
     rows,
-    onValueStatusChange,
     onSelectionChange,
     selectionMode,
     onSearch,
     searchValue,
     actionsList,
+    headerChildren,
   } = props
 
   const pathname = usePathname()
+
+  const options = [...(actionsList || []), ...optionsActions]
 
   const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
     const value = getKeyValue(item, columnKey as string)
@@ -56,104 +72,55 @@ export const TableGeneral = (props: IProps) => {
       case 'actions':
         return (
           <>
-            {actionsList ? (
-              <>
-                <Dropdown
+            <Dropdown
+              size="sm"
+              radius="sm"
+              showArrow
+              classNames={{
+                content: 'bg-white border border-gray-200 shadow-lg w-[200px]',
+                base: 'text-tiny w-[200px] ',
+              }}
+            >
+              <DropdownTrigger>
+                <Button
                   size="sm"
-                  radius="sm"
-                  showArrow
-                  classNames={{
-                    content:
-                      'bg-white border border-gray-200 shadow-lg w-[200px]',
-                    base: 'text-tiny w-[200px] ',
-                  }}
+                  variant="light"
+                  isIconOnly
                 >
-                  <DropdownTrigger>
-                    <Button
-                      size="sm"
-                      variant="light"
-                      isIconOnly
-                    >
-                      <IconDots
-                        stroke={1.5}
-                        className="text-gray-500"
-                      />
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="DropdownMenu">
-                    {actionsList.map((action, index) => (
-                      <DropdownItem
-                        key={index}
-                        as={Link}
-                        href={
-                          action?.label === 'Editar'
-                            ? `${pathname}/${item.key}/editar`
-                            : `${pathname}/${action.href}${item.key}`
-                        }
-                      >
-                        {action.label}
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </Dropdown>
-              </>
-            ) : (
-              <>
-                <Dropdown
-                  size="sm"
-                  radius="sm"
-                  showArrow
-                  classNames={{
-                    content:
-                      'bg-white border border-gray-200 shadow-lg w-[200px]',
-                    base: 'text-tiny w-[200px] ',
-                  }}
-                >
-                  <DropdownTrigger>
-                    <Button
-                      size="sm"
-                      variant="light"
-                      isIconOnly
-                    >
-                      <IconDots
-                        stroke={1.5}
-                        className="text-gray-500"
-                      />
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="DropdownMenu">
-                    <DropdownItem
-                      as={Link}
-                      href={`${pathname}/${item.key}/editar`}
-                    >
-                      Editar
-                    </DropdownItem>
-                    <DropdownItem
-                      as={Link}
-                      href={`${pathname}/${item.key}`}
-                    >
-                      Detalles
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </>
-            )}
+                  <IconDots
+                    stroke={1.5}
+                    className="text-gray-500"
+                  />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="DropdownMenu">
+                {options?.map((action, index) => (
+                  <DropdownItem
+                    key={index}
+                    as={Link}
+                    href={
+                      action?.key === 'status'
+                        ? `${pathname}/${action.href}${item?.id}&status=${item?.status}`
+                        : `${pathname}/${item?.key}/${action.href}`
+                    }
+                  >
+                    {action.label}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
           </>
         )
       case 'status':
         return (
-          <>
-            <Switch
-              isSelected={value as boolean}
-              onValueChange={
-                onValueStatusChange &&
-                (() => onValueStatusChange(item.key, !value))
-              }
-              size="sm"
-            >
-              {value ? 'Activo' : 'Inactivo'}
-            </Switch>
-          </>
+          <Chip
+            color={value ? 'success' : 'danger'}
+            variant="flat"
+            radius="sm"
+            size="sm"
+          >
+            {value ? 'Activo' : 'Inactivo'}
+          </Chip>
         )
       default:
         return value
@@ -167,20 +134,19 @@ export const TableGeneral = (props: IProps) => {
 
   return (
     <main className="flex flex-col gap-3">
-      <section>
-        <Input
-          aria-label="Buscar"
-          variant="bordered"
-          placeholder="Type to search..."
-          radius="sm"
-          classNames={{
-            input: ['max-w-[300px]'],
-            inputWrapper: ['w-full max-w-[300px]'],
-          }}
-          value={searchValue}
-          onValueChange={(value) => onSearch && onSearch(value)}
-          startContent={<IconSearch size={16} />}
-        />
+      <section className="flex gap-2 items-start">
+        <div className="flex gap-2 w-full max-w-[300px]">
+          <Input
+            aria-label="Buscar"
+            variant="bordered"
+            placeholder="Type to search..."
+            radius="sm"
+            value={searchValue}
+            onValueChange={(value) => onSearch && onSearch(value)}
+            startContent={<IconSearch size={16} />}
+          />
+        </div>
+        {headerChildren}
       </section>
       <Table
         aria-label="TableGeneral"
@@ -188,7 +154,7 @@ export const TableGeneral = (props: IProps) => {
         removeWrapper
         isHeaderSticky
         classNames={{
-          th: ['font-bold', 'bg-black', 'text-white'],
+          th: ['font-semibold', 'bg-white', 'text-gray-800', 'border-b'],
           base: 'max-h-[calc(100vh-22rem)] overflow-y-auto bg-white',
           td: ['text-xs', 'font-medium'],
         }}

@@ -52,7 +52,8 @@ export async function fetchPerson(query: string) {
 export async function fetchPersons(
   query: string,
   typePerson: string,
-  isNot?: string
+  isNot?: string,
+  status?: string
 ) {
   const supabase = createClient()
 
@@ -71,6 +72,10 @@ export async function fetchPersons(
   // Agregamos la condición solo si isNot no está vacío
   if (isNot) {
     queryBuilder = queryBuilder.not('typePerson', 'eq', isNot)
+  }
+
+  if (status) {
+    queryBuilder = queryBuilder.eq('isActived', status)
   }
 
   // Ejecutamos la consulta

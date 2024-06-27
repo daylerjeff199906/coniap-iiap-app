@@ -37,13 +37,6 @@ const columns: Array<IColumns> = [
   },
 ]
 
-const actions: IActions[] = [
-  {
-    label: 'Editar',
-    href: '/admin/tematicas/',
-  },
-]
-
 export const ListTopicsSections = () => {
   const { getTopics, topics, loading } = useTopics()
   const { editField, loading: loadingFile } = useFiles()
@@ -63,10 +56,6 @@ export const ListTopicsSections = () => {
       <TableGeneral
         loading={loading || loadingFile}
         columns={columns}
-        actionsList={actions}
-        onValueStatusChange={(key: string | number, value: boolean) => {
-          handleStatusChange(String(key), value)
-        }}
         rows={
           topics
             ? topics?.map((topic) => {

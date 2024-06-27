@@ -1,4 +1,4 @@
-import { fetchPerson, fetchPersonById } from '@/api'
+import { fetchPersonById } from '@/api'
 import { FrmParticipantEditor } from '@/modules/admin'
 import { IPerson } from '@/types'
 

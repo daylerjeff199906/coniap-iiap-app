@@ -17,7 +17,7 @@ export const FrmDetailSummary = (props: IProps) => {
   const handelApprove = async () => {
     const res = await approveSummary(summary.id)
     if (res) {
-      router.push('/admin/participantes/resumenes?status=approved')
+      router.back()
     }
   }
   return (
@@ -41,7 +41,9 @@ export const FrmDetailSummary = (props: IProps) => {
           </section>
           <section>
             <h3 className=" font-semibold">Linea temática</h3>
-            <h1 className='text-lg text-gray-500'>{summary?.topic?.name || 'No tiene temática asignada'}</h1>
+            <h1 className="text-lg text-gray-500">
+              {summary?.topic?.name || 'No tiene temática asignada'}
+            </h1>
           </section>
           <h1 className="font-semibold">Autor | Ponente</h1>
           <Divider />

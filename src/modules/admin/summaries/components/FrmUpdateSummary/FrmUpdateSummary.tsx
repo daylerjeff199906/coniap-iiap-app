@@ -17,11 +17,11 @@ import {
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
-import { SpeakerSection } from './speakerSection'
 import { MultimediaSection } from './multimediaSection'
 import { useSummaries, useFiles } from '@/hooks/admin'
 import { LoadingPages } from '@/components'
 import { TopicSection } from './TopicSection'
+import { SpeakerSection } from './speakerSection'
 
 interface IProps {
   summary: ISummary
@@ -56,15 +56,7 @@ export const FrmUpdateSummary = (props: IProps) => {
       }
 
       await updateDataSummary(summary.id, newData)
-      if (summary?.isApproved) {
-        router.push('/admin/participantes/resumenes?status=approved', {
-          scroll: true,
-        })
-      } else {
-        router.push('/admin/participantes/resumenes?status=pending', {
-          scroll: true,
-        })
-      }
+      handleCancel()
     } else {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]
@@ -78,9 +70,7 @@ export const FrmUpdateSummary = (props: IProps) => {
       const summary = await createDataSummary(newData)
 
       if (!summary.message) {
-        router.push('/admin/participantes/resumenes?status=pending', {
-          scroll: true,
-        })
+        handleCancel()
       }
     }
   }
