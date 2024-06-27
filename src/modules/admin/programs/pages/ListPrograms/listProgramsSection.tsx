@@ -58,21 +58,22 @@ export const ListPrograms = () => {
   const [query, setQuery] = useState<string>('')
 
   const id = getParams('id', '')
+  const date = getParams('date', '')
 
   useEffect(() => {
-    getPrograms(query)
-  }, [query, id])
+    getPrograms(query, undefined, date)
+  }, [query, date, id])
 
   const rows =
-    programs !== null
-      ? programs.map((program) => {
+    programs && programs.length > 0
+      ? programs?.map((program) => {
           return {
-            key: program.id,
-            id: program.id,
-            title: program.title,
-            description: program.shortDescription,
-            date: program.date,
-            status: program.isActived,
+            key: program?.id,
+            id: program?.id,
+            title: program?.title,
+            description: program?.shortDescription,
+            date: program?.date,
+            status: program?.isActived,
             actions: 'actions',
           }
         })

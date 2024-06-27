@@ -13,13 +13,15 @@ export const FilterSection = () => {
 
   return (
     <>
-      <Input
-        type="date"
-        radius="sm"
-        variant="bordered"
-        value={date}
-        onValueChange={handleDate}
-      />
+      <div className="flex gap-2 w-full max-w-[180px]">
+        <Input
+          type="date"
+          radius="sm"
+          variant="bordered"
+          value={date}
+          onValueChange={handleDate}
+        />
+      </div>
     </>
   )
 }

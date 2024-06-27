@@ -135,19 +135,17 @@ export const TableGeneral = (props: IProps) => {
   return (
     <main className="flex flex-col gap-3">
       <section className="flex gap-2">
-        <Input
-          aria-label="Buscar"
-          variant="bordered"
-          placeholder="Type to search..."
-          radius="sm"
-          classNames={{
-            input: ['max-w-[300px]'],
-            inputWrapper: ['w-full max-w-[300px]'],
-          }}
-          value={searchValue}
-          onValueChange={(value) => onSearch && onSearch(value)}
-          startContent={<IconSearch size={16} />}
-        />
+        <div className="flex gap-2 w-full max-w-[300px]">
+          <Input
+            aria-label="Buscar"
+            variant="bordered"
+            placeholder="Type to search..."
+            radius="sm"
+            value={searchValue}
+            onValueChange={(value) => onSearch && onSearch(value)}
+            startContent={<IconSearch size={16} />}
+          />
+        </div>
         {headerChildren}
       </section>
       <Table
