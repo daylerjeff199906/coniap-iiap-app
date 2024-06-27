@@ -1,7 +1,7 @@
 export function convertDate(dateString: string): string {
   const date = new Date(dateString)
-  const formattedDate = `F:${
+  const formattedDate = `Fecha: ${
     date.getMonth() + 1
-  }-${date.getDate()}-${date.getFullYear()} H:${date.getHours()}:${date.getMinutes()}`
+  }/${date.getDate()}/${date.getFullYear()} Hora: ${date.getHours()}:${date.getMinutes()}`
   return formattedDate
 }
