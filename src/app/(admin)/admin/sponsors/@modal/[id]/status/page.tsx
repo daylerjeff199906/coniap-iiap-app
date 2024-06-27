@@ -29,6 +29,7 @@ export default async function Page(props: IProps) {
             <h2 className="text-lg font-semibold">Estado de colaborrador</h2>
           </div>
         }
+        size="lg"
       >
         <DialogStatus
           id={id}

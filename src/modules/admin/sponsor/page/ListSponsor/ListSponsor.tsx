@@ -6,8 +6,7 @@ import { Image } from '@nextui-org/react'
 import { TableGeneral } from '@/components'
 import { IActions, IColumns } from '@/types'
 
-import { useSponsors } from '@/hooks/admin'
-import { useFiles } from '@/hooks/admin'
+import { useSponsors, useFiles } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
   {
