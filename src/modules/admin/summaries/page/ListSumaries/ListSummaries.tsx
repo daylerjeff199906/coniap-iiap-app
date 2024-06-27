@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
-import { Chip } from '@nextui-org/react'
+import { Chip, Spinner } from '@nextui-org/react'
 import { FiltersSection } from './sections'
 
 const columns: Array<IColumns> = [
@@ -58,6 +58,7 @@ export const ListSummaries = () => {
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
   const aproved = searchParams.get('aproved')
+  const date = searchParams.get('date')
 
   useEffect(() => {
     getSummaries(query, {
@@ -69,8 +70,9 @@ export const ListSummaries = () => {
           : aproved === 'pending'
           ? false
           : undefined,
+      created_at: date || undefined,
     })
-  }, [query, status, aproved])
+  }, [query, status, aproved, date])
 
   const rows: IRows[] =
     summaries !== null
@@ -89,7 +91,13 @@ export const ListSummaries = () => {
       : []
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-full">
+          <Spinner />
+        </div>
+      }
+    >
       <TableGeneral
         columns={columns}
         loading={loading}
@@ -98,7 +106,7 @@ export const ListSummaries = () => {
         rows={rows}
         headerChildren={<FiltersSection />}
       />
-    </>
+    </Suspense>
   )
 }
 

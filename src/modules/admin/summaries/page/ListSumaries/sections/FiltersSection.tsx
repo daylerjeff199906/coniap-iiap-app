@@ -1,6 +1,6 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Select, SelectItem, Selection } from '@nextui-org/react'
+import { Input, Select, SelectItem, Selection } from '@nextui-org/react'
 
 const activeStatus = [
   { value: 'all', label: 'Todos' },
@@ -38,8 +38,13 @@ export const FiltersSection = () => {
     }
   }
 
+  const handleDate = (val: string) => {
+    updateFilter('date', val)
+  }
+
   return (
     <>
+      {/* opciones de estado de revisión  */}
       <div className="flex gap-2 w-full max-w-[210px]">
         <Select
           aria-label="Estado"
@@ -63,6 +68,7 @@ export const FiltersSection = () => {
           ))}
         </Select>
       </div>
+      {/* opciones de estado del resumen */}
       <div className="flex gap-2 w-full max-w-[210px]">
         <Select
           aria-label="Estado"
@@ -85,6 +91,17 @@ export const FiltersSection = () => {
             </SelectItem>
           ))}
         </Select>
+      </div>
+      {/* fecha de creación */}
+      <div>
+        <Input
+          type="date"
+          variant="bordered"
+          radius="sm"
+          description="Fecha de creación"
+          value={getParams('date', '')}
+          onValueChange={(val) => handleDate(val)}
+        />
       </div>
     </>
   )
