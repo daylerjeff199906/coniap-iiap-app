@@ -1,5 +1,5 @@
 import { fetchPersonById } from '@/api'
-import { FrmParticipantEditor } from '@/modules/admin'
+import { DetailsParticipant } from '@/modules/admin'
 import { IPerson } from '@/types'
 
 interface IProps {
@@ -17,9 +17,11 @@ export default async function Page(props: IProps) {
 
   if (person) {
     return (
-      <section className="flex flex-col w-full justify-center items-center">
-        <FrmParticipantEditor dataDefault={person} />
-      </section>
+      <main className="w-full flex flex-col justify-center items-center">
+        <section className="flex flex-col w-full justify-center items-center max-w-5xl">
+          <DetailsParticipant data={person} />
+        </section>
+      </main>
     )
   }
 

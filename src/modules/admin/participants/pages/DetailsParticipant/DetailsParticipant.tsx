@@ -1,3 +1,4 @@
+'use client'
 import { IPerson } from '@/types'
 import { Image, Chip } from '@nextui-org/react'
 
@@ -39,14 +40,14 @@ export const DetailsParticipant = (props: IProps) => {
       </section>
       <section>
         <h4 className="font-bold mt-4 text-gray-500">Presentación</h4>
-        <p className="text-sm">{data?.presentation}</p>
+        <p className="text-sm">{data?.presentation || 'No hay presentación'}</p>
       </section>
       <section className="flex flex-col gap-2">
         <h4 className="font-bold mt-4 text-gray-500">Otros datos</h4>
         <div>
           <p>Institución: {data?.institution}</p>
+          <p>Rol: {data?.job}</p>
           <p>País: {data?.location}</p>
-          <p>Área de conocimiento: {data?.job}</p>
         </div>
       </section>
     </main>
