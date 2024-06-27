@@ -1,5 +1,5 @@
-import { ListParticipants } from './listAllParticipants'
+// import { ListParticipants } from './listAllParticipants'
 import { ListSummaries } from './listSummaries'
 import { DetailsParticipant } from './detailsParticipant'
 
-export { ListParticipants, ListSummaries, DetailsParticipant }
+export { ListSummaries, DetailsParticipant }
