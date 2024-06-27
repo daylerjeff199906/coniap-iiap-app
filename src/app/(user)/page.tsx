@@ -62,7 +62,7 @@ export default async function Page() {
   const dataSponsors: ISponsor[] | undefined = sponsors?.map(
     (sponsor: ISponsor) => ({
       ...sponsor,
-      created_at: new Date(sponsor?.created_at),
+      created_at: sponsor?.created_at,
     })
   )
 
