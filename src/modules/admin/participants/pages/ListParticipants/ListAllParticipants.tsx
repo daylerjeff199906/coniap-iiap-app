@@ -5,6 +5,7 @@ import { TableGeneral } from '@/components'
 import { IActions, IColumns, IPerson } from '@/types'
 import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
+import { convertDate } from '@/utils/functions'
 
 const columns: Array<IColumns> = [
   {
@@ -85,7 +86,7 @@ export const ListParticipants = (prop: IProps) => {
           return {
             key: String(speaker?.id),
             id: speaker?.id,
-            date: speaker?.created_at,
+            date: convertDate(speaker?.created_at),
             name: speaker?.name,
             surname: speaker?.surName,
             email: speaker?.email,
