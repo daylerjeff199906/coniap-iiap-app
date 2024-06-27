@@ -1,2 +1,3 @@
-import { ListTopics } from './ListTopics/listTopics'
+import { ListTopics } from './ListTopics/ListTopics'
+
 export { ListTopics }
