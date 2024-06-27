@@ -5,7 +5,6 @@ import { TableGeneral } from '@/components'
 import { IActions, IColumns, IPerson } from '@/types'
 import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
-import { DialogStatus } from '@/modules/admin'
 
 const columns: Array<IColumns> = [
   {
@@ -62,7 +61,7 @@ const actions: Array<IActions> = [
   {
     label: 'Cambiar estado',
     key: 'status',
-    href: '?id=',
+    href: 'status',
   },
 ]
 export const ListParticipants = (prop: IProps) => {
@@ -70,7 +69,6 @@ export const ListParticipants = (prop: IProps) => {
   const { getParams, updateFilter } = useFilterFromUrl()
 
   const query = getParams('query', '')
-  const id = getParams('id', '')
 
   const handleQuery = (value: string) => {
     updateFilter('query', value)
@@ -106,11 +104,6 @@ export const ListParticipants = (prop: IProps) => {
           actionsList={actions}
         />
       </Suspense>
-      <DialogStatus
-        isOpen={Boolean(id)}
-        id={id}
-        path="persons"
-      />
     </>
   )
 }
