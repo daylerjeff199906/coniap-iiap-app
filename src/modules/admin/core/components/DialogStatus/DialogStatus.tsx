@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Button,
   Divider,
@@ -20,13 +20,18 @@ interface IProps {
 }
 
 export const DialogStatus = (props: IProps) => {
+  const [newStatus, setNewStatus] = useState<boolean>()
+
   const searchParams = useSearchParams()
   const status = searchParams.get('status') === 'true'
 
   const { isOpen, id } = props
-  const [newStatus, setNewStatus] = useState<boolean>(status)
   const { editField, loading } = useFiles()
   const router = useRouter()
+
+  useEffect(() => {
+    setNewStatus(status)
+  }, [status])
 
   const handleStatusChange = async (id: string, value: boolean) => {
     await editField(id, 'programs', 'isActived', value ? 'TRUE' : 'FALSE')
