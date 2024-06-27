@@ -61,7 +61,7 @@ export async function fetchSummaries(
     request = request.eq('topic_id', filters.topic_id)
   }
   if (filters?.created_at) {
-    request = request.eq('created_at', filters.created_at)
+    request = request.ilike('created_at', `${filters.created_at}%`)
   }
 
   const { data, error } = await request

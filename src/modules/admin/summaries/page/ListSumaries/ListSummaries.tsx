@@ -10,6 +10,11 @@ import { FiltersSection } from './sections'
 
 const columns: Array<IColumns> = [
   {
+    key: 'id',
+    label: 'ID',
+    align: 'center',
+  },
+  {
     key: 'title',
     label: 'Título',
     align: 'start',
@@ -59,6 +64,7 @@ export const ListSummaries = () => {
   const status = searchParams.get('status')
   const aproved = searchParams.get('aproved')
   const date = searchParams.get('date')
+  const topic = searchParams.get('topic')
 
   useEffect(() => {
     getSummaries(query, {
@@ -71,14 +77,16 @@ export const ListSummaries = () => {
           ? false
           : undefined,
       created_at: date || undefined,
+      topic_id: topic || undefined,
     })
-  }, [query, status, aproved, date])
+  }, [query, status, aproved, date, topic])
 
   const rows: IRows[] =
-    summaries !== null
+    summaries !== null && summaries?.length > 0
       ? summaries?.map((summary) => {
           return {
             key: String(summary.id),
+            id: summary.id,
             title: summary.title,
             created_at: summary.created_at,
             person: summary.person?.name + ' ' + summary.person?.surName,

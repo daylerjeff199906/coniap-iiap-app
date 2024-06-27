@@ -56,15 +56,7 @@ export const FrmUpdateSummary = (props: IProps) => {
       }
 
       await updateDataSummary(summary.id, newData)
-      if (summary?.isApproved) {
-        router.push('/admin/participantes/resumenes?status=approved', {
-          scroll: true,
-        })
-      } else {
-        router.push('/admin/participantes/resumenes?status=pending', {
-          scroll: true,
-        })
-      }
+      handleCancel()
     } else {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]

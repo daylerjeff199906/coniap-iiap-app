@@ -10,9 +10,14 @@ export function useTopics() {
   const [topics, setTopics] = useState<ITopic[] | null>(null)
   const [topic, setTopic] = useState<ITopic | null>(null)
 
-  const getTopics = async (query: string) => {
+  const getTopics = async (
+    query: string,
+    filters?: {
+      isActived?: string
+    }
+  ) => {
     setLoading(true)
-    const data = await fetchTopics(query)
+    const data = await fetchTopics(query, filters)
       .then((res) => res)
       .catch((err) => err)
     setTopics(data)
