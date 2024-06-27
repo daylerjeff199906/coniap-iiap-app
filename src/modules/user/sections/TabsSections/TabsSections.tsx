@@ -27,35 +27,57 @@ export const TabsSections = () => {
   const pathname = usePathname()
   return (
     <>
-      <header className="py-2">
-        <main className="">
-          <Tabs
-            size="lg"
-            radius="sm"
-            variant="solid"
-            // color="primary"
-            selectedKey={pathname}
-            classNames={{
-              tab: 'gap-4 py-12 px-4 sm:px-6 text-sm',
-            }}
-            isVertical={true}
-          >
-            {dataTabs.map((tab) => (
-              <Tab
-                key={tab.href}
-                title={
-                  <div className="flex flex-col items-center gap-2">
-                    {tab.icon}
-                    <span>{tab.title}</span>
-                  </div>
-                }
-                as={Link}
-                href={tab.href}
-              />
-            ))}
-          </Tabs>
-        </main>
-      </header>
+      <aside className="hidden sm:block">
+        <header className="py-2">
+          <main className="">
+            <Tabs
+              size="lg"
+              radius="sm"
+              variant="solid"
+              selectedKey={pathname}
+              classNames={{
+                tab: 'gap-4 py-12 px-4 sm:px-6 text-sm',
+              }}
+              isVertical={true}
+            >
+              {dataTabs.map((tab) => (
+                <Tab
+                  key={tab.href}
+                  title={
+                    <div className="flex flex-col items-center gap-2">
+                      {tab.icon}
+                      <span>{tab.title}</span>
+                    </div>
+                  }
+                  as={Link}
+                  href={tab.href}
+                />
+              ))}
+            </Tabs>
+          </main>
+        </header>
+      </aside>
+      <section>
+        <Tabs
+          size="sm"
+          radius="sm"
+          variant="underlined"
+          selectedKey={pathname}
+        >
+          {dataTabs.map((tab) => (
+            <Tab
+              key={tab.href}
+              title={
+                <div className="flex items-center gap-2">
+                  <span>{tab.title}</span>
+                </div>
+              }
+              as={Link}
+              href={tab.href}
+            />
+          ))}
+        </Tabs>
+      </section>
     </>
   )
 }
