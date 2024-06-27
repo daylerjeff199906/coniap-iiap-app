@@ -1,15 +1,41 @@
 'use client'
-import { IPerson } from '@/types'
-import { Image, Chip } from '@nextui-org/react'
+import { IPerson, ISummary } from '@/types'
+import { Image, Chip, Button } from '@nextui-org/react'
+import { useRouter } from 'next/navigation'
+import { IconArrowNarrowLeft } from '@tabler/icons-react'
 
 interface IProps {
   data: IPerson
+  summaries?: ISummary[] | null
 }
 
 export const DetailsParticipant = (props: IProps) => {
-  const { data } = props
+  const { data, summaries } = props
+  const router = useRouter()
+
+  const handleExit = () => {
+    router.back()
+  }
+
   return (
     <main className="flex flex-col gap-4 w-full p-6 border rounded-xl">
+      <section>
+        <Button
+          onPress={handleExit}
+          size="sm"
+          variant="light"
+          radius="sm"
+          startContent={
+            <IconArrowNarrowLeft
+              size={20}
+              stroke={1.5}
+              className="text-gray-500"
+            />
+          }
+        >
+          Atras
+        </Button>
+      </section>
       <section className="flex items-center gap-4">
         <div className="w-fit">
           <Image
@@ -50,6 +76,30 @@ export const DetailsParticipant = (props: IProps) => {
           <p>País: {data?.location}</p>
         </div>
       </section>
+      {summaries && summaries?.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <h4 className="font-bold mt-4 text-gray-500">Resúmenes adjuntos</h4>
+          <div>
+            {props.summaries?.map((summary) => (
+              <div
+                key={summary.id}
+                className="flex flex-col gap-2 border rounded-lg p-4 bg-gray-100"
+              >
+                <Chip
+                  size="sm"
+                  radius="sm"
+                  variant="dot"
+                >
+                  Año: {summary.created_at.split('-')[0]}
+                </Chip>
+                <h5 className="font-bold uppercase">{summary.title}</h5>
+                <p>Línea temática</p>
+                <p className="text-sm text-gray-500">{summary.topic?.name}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   )
 }
