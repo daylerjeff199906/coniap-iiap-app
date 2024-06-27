@@ -10,7 +10,8 @@ import {
 } from '@tabler/icons-react'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 
-import { NavBar, AsideMenu } from '@/components'
+import { NavBar } from '@/components'
+import { AsideMenu } from '@/modules/admin'
 
 import { IMenuAside } from '@/types'
 
@@ -157,7 +158,9 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </Breadcrumbs>
           )}
         </section>
-        <main className="w-full max-w-[1920px] mx-auto px-4 sm:px-6">{children}</main>
+        <main className="w-full max-w-[1920px] mx-auto px-4 sm:px-6">
+          {children}
+        </main>
         <footer className="w-full  p-4 text-center">
           <h3 className="text-sm">
             Realizado con ❤️ por el equipo de desarrollo de GESCON | Todos los
