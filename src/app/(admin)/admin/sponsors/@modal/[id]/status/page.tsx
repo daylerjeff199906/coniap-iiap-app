@@ -1,5 +1,5 @@
 import { fetchSponsor } from '@/api'
-import { DialogStatus, FrmSponsorEditor, ModalRender } from '@/modules/admin'
+import { DialogStatus, ModalRender } from '@/modules/admin'
 import { ISponsor } from '@/types'
 interface IProps {
   params: {

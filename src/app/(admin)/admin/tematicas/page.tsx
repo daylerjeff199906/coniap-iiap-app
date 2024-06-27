@@ -1,7 +1,6 @@
-'use client'
 import { Button } from '@nextui-org/react'
-import { ListTopicsSections } from '@/components/sections/admin/tematicas'
 import Link from 'next/link'
+import { ListTopics } from '@/modules/admin'
 
 export default function Page() {
   return (
@@ -18,7 +17,7 @@ export default function Page() {
         </Button>
       </section>
       <section className="py-6">
-        <ListTopicsSections />
+        <ListTopics />
       </section>
     </>
   )
