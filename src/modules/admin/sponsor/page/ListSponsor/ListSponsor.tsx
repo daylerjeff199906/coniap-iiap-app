@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { TableGeneral } from '@/components'
-import { IColumns } from '@/types'
+import { IActions, IColumns } from '@/types'
 
 import { useSponsors } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
@@ -41,6 +41,15 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
+
+const listActions: Array<IActions> = [
+  {
+    label: 'Cambiar estado',
+    key: 'status',
+    href: 'status',
+  },
+]
+
 export const ListSponsors = () => {
   const { getSponsors, sponsors, loading } = useSponsors()
   const { editField, loading: loadingFile } = useFiles()
@@ -57,6 +66,7 @@ export const ListSponsors = () => {
         key: sponsor.id,
         image: RenderImage(sponsor.image),
         createdAt: sponsor?.created_at,
+        name: sponsor.name,
         status: sponsor.isActived,
         actions: 'actions',
       }
@@ -68,6 +78,7 @@ export const ListSponsors = () => {
         loading={loading || loadingFile}
         columns={columns}
         rows={rows}
+        actionsList={listActions}
       />
     </>
   )
