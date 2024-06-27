@@ -70,9 +70,7 @@ export const FrmUpdateSummary = (props: IProps) => {
       const summary = await createDataSummary(newData)
 
       if (!summary.message) {
-        router.push('/admin/participantes/resumenes?status=pending', {
-          scroll: true,
-        })
+        handleCancel()
       }
     }
   }
