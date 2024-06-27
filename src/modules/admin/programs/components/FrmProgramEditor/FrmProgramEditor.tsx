@@ -17,7 +17,7 @@ interface IProps {
   program?: IProgram
 }
 
-export const FrmAddProgram = (props: IProps) => {
+export const FrmProgramEditor = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
 
   const router = useRouter()

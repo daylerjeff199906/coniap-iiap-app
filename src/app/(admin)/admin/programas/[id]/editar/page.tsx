@@ -1,5 +1,5 @@
 import { fetchProgram } from '@/api'
-import { FrmAddProgram } from '@/components'
+import { FrmProgramEditor } from '@/modules/admin'
 import { IProgram } from '@/types'
 
 interface IProps {
@@ -18,7 +18,7 @@ export default async function Page(props: IProps) {
   if (program) {
     return (
       <section className="flex flex-col w-full justify-center items-center">
-        <FrmAddProgram program={program} />
+        <FrmProgramEditor program={program} />
       </section>
     )
   }

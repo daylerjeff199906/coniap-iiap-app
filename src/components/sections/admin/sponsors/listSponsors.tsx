@@ -60,9 +60,6 @@ export const ListSponsorsSections = () => {
       <TableGeneral
         loading={loading || loadingFile}
         columns={columns}
-        onValueStatusChange={(key: string | number, value: boolean) => {
-          handleStatusChange(String(key), value)
-        }}
         rows={
           sponsors
             ? sponsors?.map((sponsor) => {
