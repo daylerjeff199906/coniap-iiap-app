@@ -17,6 +17,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 interface IProps {
   isOpen: boolean
   id: string
+  path: string
 }
 
 export const DialogStatus = (props: IProps) => {
@@ -25,7 +26,7 @@ export const DialogStatus = (props: IProps) => {
   const searchParams = useSearchParams()
   const status = searchParams.get('status') === 'true'
 
-  const { isOpen, id } = props
+  const { isOpen, id, path } = props
   const { editField, loading } = useFiles()
   const router = useRouter()
 
@@ -34,7 +35,7 @@ export const DialogStatus = (props: IProps) => {
   }, [status])
 
   const handleStatusChange = async (id: string, value: boolean) => {
-    await editField(id, 'programs', 'isActived', value ? 'TRUE' : 'FALSE')
+    await editField(id, `${path}`, 'isActived', value ? 'TRUE' : 'FALSE')
     handleExit()
   }
 

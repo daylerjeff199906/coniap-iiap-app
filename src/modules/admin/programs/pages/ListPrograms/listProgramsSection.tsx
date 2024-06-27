@@ -95,6 +95,7 @@ export const ListPrograms = () => {
       <DialogStatus
         isOpen={id !== ''}
         id={id}
+        path='programs'
       />
     </>
   )

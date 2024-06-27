@@ -103,11 +103,7 @@ export const ListSummaries = () => {
       <TableGeneral
         loading={loading || editLoading}
         columns={columns}
-        onValueStatusChange={(key: string | number, value: boolean) => {
-          handleStatusChange(String(key), value)
-        }}
         onSearch={(value) => setQuery(value)}
-        actionsList={actionsList}
         searchValue={query}
         rows={rows}
       />

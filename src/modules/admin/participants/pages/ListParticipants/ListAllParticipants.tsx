@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { Suspense } from 'react'
 import { TableGeneral } from '@/components'
 import { IColumns, IPerson } from '@/types'
-
 import { useFiles } from '@/hooks/admin'
 import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
-import { Suspense } from 'react'
+import { DialogStatus } from '@/modules/admin'
 
 const columns: Array<IColumns> = [
   {
@@ -66,6 +66,8 @@ export const ListParticipants = (prop: IProps) => {
   const { editField, loading: editLoading } = useFiles()
 
   const query = getParams('query', '')
+  const id = getParams('id', '')
+  const status = getParams('status', '')
 
   const handleStatusChange = async (key: string, value: boolean) => {
     await editField(key, 'persons', 'isActived', value)
@@ -106,6 +108,11 @@ export const ListParticipants = (prop: IProps) => {
           headerChildren={<FiltersSection />}
         />
       </Suspense>
+      <DialogStatus
+        isOpen={Boolean(id)}
+        id={id}
+        path="persons"
+      />
     </>
   )
 }
