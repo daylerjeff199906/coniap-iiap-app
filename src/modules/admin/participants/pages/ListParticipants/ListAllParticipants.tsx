@@ -5,6 +5,8 @@ import { IColumns, IPerson } from '@/types'
 
 import { useFiles } from '@/hooks/admin'
 import { useFilterFromUrl } from '@/modules/core'
+import { FiltersSection } from './sections'
+import { Suspense } from 'react'
 
 const columns: Array<IColumns> = [
   {
@@ -75,30 +77,35 @@ export const ListParticipants = (prop: IProps) => {
   }
 
   const persons =
-    dataList?.map((speaker) => {
-      return {
-        key: String(speaker?.id),
-        id: speaker?.id,
-        name: speaker?.name,
-        surname: speaker?.surName,
-        email: speaker?.email,
-        phone: speaker?.phone || 'No registrado',
-        institution: speaker?.institution,
-        level: speaker?.typePerson,
-        status: speaker?.isActived,
-        actions: 'actions',
-      }
-    }) || []
+    dataList && dataList.length > 0
+      ? dataList?.map((speaker) => {
+          return {
+            key: String(speaker?.id),
+            id: speaker?.id,
+            name: speaker?.name,
+            surname: speaker?.surName,
+            email: speaker?.email,
+            phone: speaker?.phone || 'No registrado',
+            institution: speaker?.institution,
+            level: speaker?.typePerson,
+            status: speaker?.isActived,
+            actions: 'actions',
+          }
+        })
+      : []
 
   return (
     <>
-      <TableGeneral
-        loading={editLoading}
-        columns={columns}
-        onSearch={handleQuery}
-        searchValue={query}
-        rows={persons}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <TableGeneral
+          loading={editLoading}
+          columns={columns}
+          onSearch={handleQuery}
+          searchValue={query}
+          rows={persons}
+          headerChildren={<FiltersSection />}
+        />
+      </Suspense>
     </>
   )
 }

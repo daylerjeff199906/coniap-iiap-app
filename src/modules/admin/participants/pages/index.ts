@@ -1,3 +1,3 @@
-import { ListParticipants } from './ListParticipants/listAllParticipants'
+import { ListParticipants } from './ListParticipants/ListAllParticipants'
 
 export { ListParticipants }
