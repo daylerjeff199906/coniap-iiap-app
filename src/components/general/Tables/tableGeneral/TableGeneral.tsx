@@ -134,7 +134,7 @@ export const TableGeneral = (props: IProps) => {
 
   return (
     <main className="flex flex-col gap-3">
-      <section className="flex gap-2">
+      <section className="flex gap-2 items-start">
         <div className="flex gap-2 w-full max-w-[300px]">
           <Input
             aria-label="Buscar"
