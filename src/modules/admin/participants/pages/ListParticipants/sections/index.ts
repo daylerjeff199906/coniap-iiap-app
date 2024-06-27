@@ -1,3 +1,3 @@
-import { FiltersSection } from './filtersSection'
+import { FiltersSection } from './FiltersSection'
 
 export { FiltersSection }
