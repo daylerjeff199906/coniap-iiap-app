@@ -31,14 +31,41 @@ export async function updateSummary(id: string, props: ISummary) {
   }
 }
 
-export async function fetchSummaries(query: string) {
+export async function fetchSummaries(
+  query: string,
+  filters?: {
+    isApproved?: boolean
+    isActived?: boolean
+    person_id?: string
+    topic_id?: string
+    created_at?: string
+  }
+) {
   const supabase = createClient()
 
-  const { data, error } = await supabase
+  let request = supabase
     .from('summaries')
     .select('*,person:person_id(*), topic:topic_id(*)')
-    .order('title', { ascending: true })
     .ilike('title', `%${query}%`)
+
+  if (filters?.isApproved) {
+    request = request.eq('isApproved', filters.isApproved)
+  }
+  if (filters?.isActived) {
+    request = request.eq('isActived', filters.isActived)
+  }
+  if (filters?.person_id) {
+    request = request.eq('person_id', filters.person_id)
+  }
+  if (filters?.topic_id) {
+    request = request.eq('topic_id', filters.topic_id)
+  }
+  if (filters?.created_at) {
+    request = request.eq('created_at', filters.created_at)
+  }
+
+  const { data, error } = await request
+
   if (error) {
     return error
   } else {

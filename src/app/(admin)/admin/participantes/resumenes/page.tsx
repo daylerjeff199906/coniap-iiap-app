@@ -1,8 +1,6 @@
 'use client'
 import { ListSummaries } from '@/modules/admin'
 import { HeaderSection } from '@/modules/core'
-import { Button, Tab, Tabs } from '@nextui-org/react'
-import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const listTabs = [
@@ -39,7 +37,7 @@ export default function Page() {
 
   return (
     <main className="flex flex-col gap-3">
-      <Tabs
+      {/* <Tabs
         size="sm"
         variant="underlined"
         selectedKey={status}
@@ -51,7 +49,7 @@ export default function Page() {
             title={tab.label}
           />
         ))}
-      </Tabs>
+      </Tabs> */}
 
       <HeaderSection
         title="Temas (Resúmenes)"

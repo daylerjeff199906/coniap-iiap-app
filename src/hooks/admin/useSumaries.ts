@@ -47,9 +47,18 @@ export function useSummaries() {
     return res
   }
 
-  const getSummaries = async (query: string) => {
+  const getSummaries = async (
+    query: string,
+    filters?: {
+      isApproved?: boolean
+      isActived?: boolean
+      person_id?: string
+      topic_id?: string
+      created_at?: string
+    }
+  ) => {
     setLoading(true)
-    const data = await fetchSummaries(query)
+    const data = await fetchSummaries(query, filters)
       .then((res) => res)
       .catch((err) => err)
     setSummaries(data)
