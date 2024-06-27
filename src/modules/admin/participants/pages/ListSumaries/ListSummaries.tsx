@@ -118,6 +118,7 @@ const RenderColumnAproved = (value: boolean) => {
         color={value ? 'success' : 'warning'}
         variant="flat"
         size="sm"
+        radius="sm"
       >
         {value ? 'Aprobado' : 'Pendiente'}
       </Chip>
