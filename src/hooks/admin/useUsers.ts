@@ -9,22 +9,44 @@ import {
   DocumentReference,
   getDoc,
 } from 'firebase/firestore'
+import { IUser } from '@/types'
+
+const convertDataToUser = (data: DocumentData[]): IUser[] => {
+  return data?.map((user) => {
+    const { email, photo, role, userName } = user
+    const id = user?.id
+    return {
+      id: id,
+      email,
+      photo,
+      userName,
+      role,
+    }
+  })
+}
 
 export function useUsers() {
   const [loading, setLoading] = useState<boolean>(false)
+  const [users, setUsers] = useState<IUser[] | null>(null)
 
-  const geListUsers = async () => {
+  const getListUsers = async () => {
     setLoading(true)
     try {
       const usersCollection = collection(db, 'users')
       const usersSnapshot = await getDocs(usersCollection)
 
       const usersList: DocumentData[] = []
+
       usersSnapshot.forEach((doc) => {
         usersList.push(doc.data())
       })
 
-      console.log(usersList)
+      const users = usersSnapshot?.docs?.map((doc) => ({
+        id: doc.id.toString(),
+        ...doc.data(),
+      }))
+
+      setUsers(convertDataToUser(users))
     } catch (error) {
       console.error(error)
     }
@@ -34,5 +56,7 @@ export function useUsers() {
 
   return {
     loading,
+    users,
+    getListUsers,
   }
 }
