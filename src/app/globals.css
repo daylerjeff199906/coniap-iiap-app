@@ -30,7 +30,7 @@
   @apply bg-black text-white;
 }
 
-.custom-quill {
+/* .custom-quill {
   h1 {
     @apply text-4xl font-bold;
   }
@@ -53,4 +53,4 @@
   strong {
     @apply font-bold;
   }
-}
+} */
