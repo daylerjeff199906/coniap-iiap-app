@@ -57,7 +57,7 @@ export const TabsSections = () => {
           </main>
         </header>
       </aside>
-      <section>
+      <section className="block sm:hidden">
         <Tabs
           size="sm"
           radius="sm"
