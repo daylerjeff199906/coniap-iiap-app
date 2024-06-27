@@ -45,7 +45,7 @@ const actions: Array<IActions> = [
   {
     label: 'Cambiar estado',
     key: 'status',
-    href: '?id=',
+    href: 'status',
   },
 ]
 
