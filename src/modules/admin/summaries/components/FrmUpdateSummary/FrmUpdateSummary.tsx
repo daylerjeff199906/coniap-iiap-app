@@ -17,11 +17,11 @@ import {
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
-import { SpeakerSection } from './speakerSection'
 import { MultimediaSection } from './multimediaSection'
 import { useSummaries, useFiles } from '@/hooks/admin'
 import { LoadingPages } from '@/components'
 import { TopicSection } from './TopicSection'
+import { SpeakerSection } from './speakerSection'
 
 interface IProps {
   summary: ISummary
