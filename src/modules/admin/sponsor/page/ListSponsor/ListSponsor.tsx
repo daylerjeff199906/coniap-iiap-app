@@ -4,15 +4,20 @@ import { useEffect, useState } from 'react'
 import { Image } from '@nextui-org/react'
 
 import { TableGeneral } from '@/components'
-import { IColumns } from '@/types'
+import { IActions, IColumns } from '@/types'
 
-import { useSponsors } from '@/hooks/admin'
-import { useFiles } from '@/hooks/admin'
+import { useSponsors, useFiles } from '@/hooks/admin'
+import { convertDate } from '@/utils/functions'
 
 const columns: Array<IColumns> = [
   {
     key: 'key',
     label: 'ID',
+    align: 'center',
+  },
+  {
+    key: 'createdAt',
+    label: 'Fecha de creación',
     align: 'center',
   },
   {
@@ -36,44 +41,44 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
-export const ListSponsorsSections = () => {
+
+const listActions: Array<IActions> = [
+  {
+    label: 'Cambiar estado',
+    key: 'status',
+    href: 'status',
+  },
+]
+
+export const ListSponsors = () => {
   const { getSponsors, sponsors, loading } = useSponsors()
   const { editField, loading: loadingFile } = useFiles()
 
   const [query, setQuery] = useState<string>('')
 
-  // const searchParams = useSearchParams()
-
-  // const isEdit = searchParams.get('edit') !== null
-
   useEffect(() => {
     getSponsors(query)
   }, [query])
 
-  const handleStatusChange = async (key: string, value: boolean) => {
-    await editField(key, 'sponsors', 'isActived', value)
-    getSponsors('')
-  }
+  const rows =
+    sponsors?.map((sponsor) => {
+      return {
+        key: sponsor.id,
+        image: RenderImage(sponsor.image),
+        createdAt: convertDate(sponsor?.created_at),
+        name: sponsor.name,
+        status: sponsor.isActived,
+        actions: 'actions',
+      }
+    }) || []
 
   return (
     <>
       <TableGeneral
         loading={loading || loadingFile}
         columns={columns}
-        rows={
-          sponsors
-            ? sponsors?.map((sponsor) => {
-                return {
-                  key: sponsor.id,
-                  id: sponsor.id,
-                  image: RenderImage(sponsor.image),
-                  name: sponsor.name,
-                  status: sponsor.isActived,
-                  actions: 'actions',
-                }
-              })
-            : []
-        }
+        rows={rows}
+        actionsList={listActions}
       />
     </>
   )

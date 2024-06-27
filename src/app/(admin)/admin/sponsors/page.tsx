@@ -1,5 +1,5 @@
-import { ListSponsorsSections } from '@/components'
 import { HeaderSection } from '@/modules/core'
+import { ListSponsors } from '@/modules/admin'
 
 export default function SponsorPage() {
   return (
@@ -11,7 +11,7 @@ export default function SponsorPage() {
         href="/admin/sponsors/nuevo"
         labelButton="Añadir colaborador"
       />
-      <ListSponsorsSections />
+      <ListSponsors />
     </main>
   )
 }

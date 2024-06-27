@@ -37,7 +37,7 @@ const columns: Array<IColumns> = [
   },
 ]
 
-export const ListTopicsSections = () => {
+export const ListTopics = () => {
   const { getTopics, topics, loading } = useTopics()
   const { editField, loading: loadingFile } = useFiles()
   const [query, setQuery] = useState<string>('')

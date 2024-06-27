@@ -5,13 +5,18 @@ import { TableGeneral } from '@/components'
 import { IActions, IColumns, IPerson } from '@/types'
 import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
-import { DialogStatus } from '@/modules/admin'
+import { convertDate } from '@/utils/functions'
 
 const columns: Array<IColumns> = [
   {
     key: 'id',
     label: 'ID',
     align: 'center',
+  },
+  {
+    key: 'date',
+    label: 'Fecha de registro',
+    align: 'start',
   },
   {
     key: 'level',
@@ -62,7 +67,7 @@ const actions: Array<IActions> = [
   {
     label: 'Cambiar estado',
     key: 'status',
-    href: '?id=',
+    href: 'status',
   },
 ]
 export const ListParticipants = (prop: IProps) => {
@@ -70,7 +75,6 @@ export const ListParticipants = (prop: IProps) => {
   const { getParams, updateFilter } = useFilterFromUrl()
 
   const query = getParams('query', '')
-  const id = getParams('id', '')
 
   const handleQuery = (value: string) => {
     updateFilter('query', value)
@@ -82,6 +86,7 @@ export const ListParticipants = (prop: IProps) => {
           return {
             key: String(speaker?.id),
             id: speaker?.id,
+            date: convertDate(speaker?.created_at),
             name: speaker?.name,
             surname: speaker?.surName,
             email: speaker?.email,
@@ -106,11 +111,6 @@ export const ListParticipants = (prop: IProps) => {
           actionsList={actions}
         />
       </Suspense>
-      <DialogStatus
-        isOpen={Boolean(id)}
-        id={id}
-        path="persons"
-      />
     </>
   )
 }

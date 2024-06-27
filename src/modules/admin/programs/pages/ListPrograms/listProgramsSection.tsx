@@ -6,7 +6,6 @@ import { IActions, IColumns } from '@/types'
 
 import { usePrograms, useFiles } from '@/hooks/admin'
 import { useFilterFromUrl } from '@/modules/core'
-import { DialogStatus } from '@/modules/admin'
 import { FilterSection } from './filterSection'
 
 const columns: Array<IColumns> = [
@@ -46,7 +45,7 @@ const actions: Array<IActions> = [
   {
     label: 'Cambiar estado',
     key: 'status',
-    href: '?id=',
+    href: 'status',
   },
 ]
 
@@ -57,12 +56,11 @@ export const ListPrograms = () => {
   const { loading: updateLoading } = useFiles()
   const [query, setQuery] = useState<string>('')
 
-  const id = getParams('id', '')
   const date = getParams('date', '')
 
   useEffect(() => {
     getPrograms(query, undefined, date)
-  }, [query, date, id])
+  }, [query, date])
 
   const rows =
     programs && programs.length > 0
@@ -92,11 +90,6 @@ export const ListPrograms = () => {
           headerChildren={<FilterSection />}
         />
       </Suspense>
-      <DialogStatus
-        isOpen={id !== ''}
-        id={id}
-        path='programs'
-      />
     </>
   )
 }

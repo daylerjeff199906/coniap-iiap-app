@@ -48,7 +48,7 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
           institution: '',
           job: '',
           created_at: new Date().toISOString(),
-          isActived: true,
+          isActived: false,
           location: '',
           phone: '',
           presentation: '',

@@ -1,5 +1,4 @@
 'use client'
-
 import { DataNotFound, CardEvent } from '@/components'
 import { IEvent, IProgram } from '@/types'
 import { formatDateToDDMMM } from '@/utils/functions'

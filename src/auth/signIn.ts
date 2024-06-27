@@ -60,7 +60,7 @@ export const signInWithCredentials = async (
             typePerson: 'speaker',
             institution: '',
             presentation: '',
-            isActived: true,
+            isActived: false,
             location: '',
             phone: '',
             job: '',

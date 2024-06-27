@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createClient } from '@/utils/supabase/server'
-import { ListShedule, OtherEventsSection } from '@/components'
+import { OtherEventsSection } from '@/components'
 import { DataNotFound } from '@/components'
 import { IEvent, IProgram } from '@/types'
+import { ListShedule } from '@/modules/user'
 
 export default async function Page() {
   const supabase = createClient()
