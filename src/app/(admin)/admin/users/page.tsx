@@ -3,7 +3,7 @@ import { HeaderSection } from '@/modules/core'
 
 export default function Page() {
   return (
-    <>
+    <main className="flex flex-col gap-3">
       <HeaderSection
         title="Usuarios"
         subtitle="Lista de usuarios"
@@ -11,7 +11,9 @@ export default function Page() {
         href="/admin/users/nuevo"
         labelButton="Nuevo usuario"
       />
-      <ListUsers />
-    </>
+      <section>
+        <ListUsers />
+      </section>
+    </main>
   )
 }
