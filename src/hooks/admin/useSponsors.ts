@@ -12,7 +12,6 @@ import {
 
 export function useSponsors() {
   const [loading, setLoading] = useState<boolean>(false)
-  //   const [speakers, setSpeakers] = useState<ISpeaker[] | null>(null)
   const [sponsors, setSponsors] = useState<ISponsor[] | null>(null)
   const [sponsor, setSponsor] = useState<ISponsor | null>(null)
 

@@ -1,1 +1,0 @@
-export { ListSponsorsSections } from './listSponsors'

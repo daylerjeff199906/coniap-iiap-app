@@ -16,6 +16,11 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
   {
+    key: 'createdAt',
+    label: 'Fecha de creación',
+    align: 'center',
+  },
+  {
     key: 'image',
     label: 'Imagen',
     align: 'center',
@@ -36,44 +41,33 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
 ]
-export const ListSponsorsSections = () => {
+export const ListSponsors = () => {
   const { getSponsors, sponsors, loading } = useSponsors()
   const { editField, loading: loadingFile } = useFiles()
 
   const [query, setQuery] = useState<string>('')
 
-  // const searchParams = useSearchParams()
-
-  // const isEdit = searchParams.get('edit') !== null
-
   useEffect(() => {
     getSponsors(query)
   }, [query])
 
-  const handleStatusChange = async (key: string, value: boolean) => {
-    await editField(key, 'sponsors', 'isActived', value)
-    getSponsors('')
-  }
+  const rows =
+    sponsors?.map((sponsor) => {
+      return {
+        key: sponsor.id,
+        image: RenderImage(sponsor.image),
+        createdAt: sponsor?.created_at,
+        status: sponsor.isActived,
+        actions: 'actions',
+      }
+    }) || []
 
   return (
     <>
       <TableGeneral
         loading={loading || loadingFile}
         columns={columns}
-        rows={
-          sponsors
-            ? sponsors?.map((sponsor) => {
-                return {
-                  key: sponsor.id,
-                  id: sponsor.id,
-                  image: RenderImage(sponsor.image),
-                  name: sponsor.name,
-                  status: sponsor.isActived,
-                  actions: 'actions',
-                }
-              })
-            : []
-        }
+        rows={rows}
       />
     </>
   )

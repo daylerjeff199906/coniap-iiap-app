@@ -3,5 +3,5 @@ export interface ISponsor {
   name: string
   image: string
   isActived: boolean
-  created_at: Date
+  created_at: string
 }
