@@ -2,8 +2,7 @@
 'use client'
 import { Suspense } from 'react'
 import { TableGeneral } from '@/components'
-import { IColumns, IPerson } from '@/types'
-import { useFiles } from '@/hooks/admin'
+import { IActions, IColumns, IPerson } from '@/types'
 import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
 import { DialogStatus } from '@/modules/admin'
@@ -59,20 +58,19 @@ const columns: Array<IColumns> = [
 interface IProps {
   dataList: IPerson[]
 }
-
+const actions: Array<IActions> = [
+  {
+    label: 'Cambiar estado',
+    key: 'status',
+    href: '?id=',
+  },
+]
 export const ListParticipants = (prop: IProps) => {
   const { dataList } = prop
   const { getParams, updateFilter } = useFilterFromUrl()
-  const { editField, loading: editLoading } = useFiles()
 
   const query = getParams('query', '')
   const id = getParams('id', '')
-  const status = getParams('status', '')
-
-  const handleStatusChange = async (key: string, value: boolean) => {
-    await editField(key, 'persons', 'isActived', value)
-    // getPersons('')
-  }
 
   const handleQuery = (value: string) => {
     updateFilter('query', value)
@@ -100,12 +98,12 @@ export const ListParticipants = (prop: IProps) => {
     <>
       <Suspense fallback={<div>Loading...</div>}>
         <TableGeneral
-          loading={editLoading}
           columns={columns}
           onSearch={handleQuery}
           searchValue={query}
           rows={persons}
           headerChildren={<FiltersSection />}
+          actionsList={actions}
         />
       </Suspense>
       <DialogStatus
