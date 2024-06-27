@@ -13,6 +13,11 @@ const columns: Array<IColumns> = [
     align: 'center',
   },
   {
+    key: 'date',
+    label: 'Fecha de registro',
+    align: 'start',
+  },
+  {
     key: 'level',
     label: 'Tipo de participante',
     align: 'start',
@@ -80,6 +85,7 @@ export const ListParticipants = (prop: IProps) => {
           return {
             key: String(speaker?.id),
             id: speaker?.id,
+            date: speaker?.created_at,
             name: speaker?.name,
             surname: speaker?.surName,
             email: speaker?.email,
