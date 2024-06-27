@@ -11,15 +11,23 @@ interface IProps {
 
 export default async function Page(props: IProps) {
   const { searchParams } = props
-  const { query } = searchParams
+  const { query, status } = searchParams
 
   const search = query ? String(query) : ''
   const isNot = 'participant'
+  const statusPerson = status ? String(status) : ''
+  const statusValue =
+    statusPerson === 'active'
+      ? 'TRUE'
+      : statusPerson === 'inactive'
+      ? 'FALSE'
+      : ''
 
   const persons: IPerson[] = (await fetchPersons(
     search,
     '',
-    isNot
+    isNot,
+    statusValue
   )) as IPerson[]
 
   return (
