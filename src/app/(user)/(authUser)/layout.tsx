@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           title="Mi perfil"
           urlImage=""
           subtitle="¡Bienvenido!"
-          description="Aquí puedes ver y editar tu perfil."
+          description="Puedes realizar seguimiento de tus resumenes y  perfil registrado"
         />
         <section className="container flex flex-col sm:flex-row gap-4 py-4">
           <TabsSections />
