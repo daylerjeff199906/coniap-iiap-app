@@ -1,33 +1,25 @@
 'use client'
 import {
   Button,
-  Listbox,
-  ListboxItem,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  User,
 } from '@nextui-org/react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
+import { useAuthContext } from '@/provider'
 import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
-
-import { useAuthContext } from '@/provider'
+import { ProfilePopover } from '@/modules/core'
 
 export const NavBarUser = () => {
-  const { user, logout } = useAuthContext()
+  const { user, logout, loading } = useAuthContext()
 
   const pathname = usePathname()
-  const router = useRouter()
 
   const { scrollY } = useScroll()
   const navbarY = useTransform(scrollY, [0, 20], [-100, 0])
@@ -40,7 +32,6 @@ export const NavBarUser = () => {
 
   const handleLogout = () => {
     logout()
-    router.push('/')
   }
 
   return (
@@ -112,50 +103,33 @@ export const NavBarUser = () => {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem>
-              {user?.id ? (
-                <Popover
-                  placement="bottom"
-                  showArrow
-                >
-                  <PopoverTrigger>
-                    <User
-                      as={Button}
-                      variant="light"
-                      size="sm"
-                      name={user?.userName}
-                      description={user?.email}
-                      avatarProps={{
-                        src: user?.photo,
-                        size: 'sm',
-                      }}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <Listbox
-                      variant="faded"
-                      aria-label="Menu"
-                    >
-                      <ListboxItem
-                        aria-label="Cerrar Sesión"
-                        key="out"
-                        onPress={handleLogout}
-                      >
-                        Cerrar Sesión
-                      </ListboxItem>
-                    </Listbox>
-                  </PopoverContent>
-                </Popover>
-              ) : (
-                <Button
-                  as={Link}
-                  href="/inscripciones"
-                  // variant="solid"
-                  radius="full"
-                  size="sm"
-                  className="bg-transparent hover:bg-[#002D61] text-white hover:text-white border-white border"
-                >
-                  ¡Inscríbete ya!
-                </Button>
+              <ProfilePopover
+                user={user}
+                logout={handleLogout}
+                loading={loading}
+              />
+              {!user?.id && (
+                <section className="flex gap-2 items-center">
+                  <Button
+                    as={Link}
+                    href="/login"
+                    variant="light"
+                    radius="full"
+                    size="sm"
+                    className="text-white "
+                  >
+                    Ya tengo cuenta
+                  </Button>
+                  <Button
+                    as={Link}
+                    href="/inscripciones"
+                    radius="full"
+                    size="sm"
+                    className="bg-transparent hover:bg-[#002D61] text-white hover:text-white border-white border"
+                  >
+                    ¡Inscríbete ya!
+                  </Button>
+                </section>
               )}
             </NavbarItem>
           </NavbarContent>
@@ -209,50 +183,35 @@ export const NavBarUser = () => {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem>
-              {user?.id ? (
-                <Popover
-                  placement="bottom"
-                  showArrow
-                >
-                  <PopoverTrigger>
-                    <User
-                      as={Button}
-                      variant="light"
-                      size="sm"
-                      name={user?.userName}
-                      description={user?.email}
-                      avatarProps={{
-                        src: user?.photo,
-                        size: 'sm',
-                      }}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <Listbox
-                      variant="faded"
-                      aria-label="Menu"
-                    >
-                      <ListboxItem
-                        aria-label="Cerrar Sesión"
-                        key="out"
-                        onPress={handleLogout}
-                      >
-                        Cerrar Sesión
-                      </ListboxItem>
-                    </Listbox>
-                  </PopoverContent>
-                </Popover>
-              ) : (
-                <Button
-                  as={Link}
-                  color="danger"
-                  href="/inscripciones"
-                  variant="solid"
-                  radius="full"
-                  size="sm"
-                >
-                  ¡Inscríbete ya!
-                </Button>
+              <ProfilePopover
+                user={user}
+                logout={handleLogout}
+                loading={loading}
+              />
+
+              {!user?.id && (
+                <section className="flex gap-2 items-center">
+                  <Button
+                    as={Link}
+                    href="/login"
+                    variant="light"
+                    radius="full"
+                    size="sm"
+                    className="text-white "
+                  >
+                    Ya tengo cuenta
+                  </Button>
+                  <Button
+                    as={Link}
+                    color="danger"
+                    href="/inscripciones"
+                    variant="solid"
+                    radius="full"
+                    size="sm"
+                  >
+                    ¡Inscríbete ya!
+                  </Button>
+                </section>
               )}
             </NavbarItem>
           </NavbarContent>

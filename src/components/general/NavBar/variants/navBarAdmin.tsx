@@ -1,67 +1,30 @@
 'use client'
-import {
-  Button,
-  Navbar,
-  NavbarContent,
-  NavbarItem,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  User,
-  Listbox,
-  ListboxItem,
-} from '@nextui-org/react'
+import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/react'
 
-import { useRouter } from 'next/navigation'
 import { useAuthContext } from '@/provider'
+import { ProfilePopover } from '@/modules/core'
 export const NavBarAdmin = () => {
-  const { user, logout } = useAuthContext()
-
-  const router = useRouter()
+  const { user, logout, loading } = useAuthContext()
 
   const handleLogout = async () => {
     logout()
-    router.push('/')
   }
 
   return (
-    <Navbar maxWidth="full">
+    <Navbar
+      maxWidth="full"
+      isBlurred
+      // height={64}
+    >
       {/* <NavbarBrand>Admin</NavbarBrand> */}
       <NavbarContent justify="end">
-        {user && (
-          <NavbarItem>
-            <Popover
-              placement="bottom"
-              showArrow
-            >
-              <PopoverTrigger>
-                <User
-                  as={Button}
-                  variant="light"
-                  name={user?.userName}
-                  description={user?.email}
-                  avatarProps={{
-                    src: user?.photo,
-                  }}
-                />
-              </PopoverTrigger>
-              <PopoverContent>
-                <Listbox
-                  variant="faded"
-                  aria-label="Menu"
-                >
-                  <ListboxItem
-                    aria-label="Cerrar Sesión"
-                    key="out"
-                    onPress={handleLogout}
-                  >
-                    Cerrar Sesión
-                  </ListboxItem>
-                </Listbox>
-              </PopoverContent>
-            </Popover>
-          </NavbarItem>
-        )}
+        <NavbarItem>
+          <ProfilePopover
+            user={user}
+            logout={handleLogout}
+            loading={loading}
+          />
+        </NavbarItem>
       </NavbarContent>
     </Navbar>
   )
