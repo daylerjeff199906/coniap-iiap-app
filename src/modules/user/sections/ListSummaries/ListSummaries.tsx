@@ -2,7 +2,7 @@
 'use client'
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { Button, Chip } from '@nextui-org/react'
+import { Button, Chip, Link as UILink } from '@nextui-org/react'
 import { useAuth } from '../..'
 import Link from 'next/link'
 import { useSummaries } from '@/hooks/admin'
@@ -66,20 +66,34 @@ export const ListSummaries = () => {
             key={summary.id}
             className="p-6 bg-gray-100 rounded-lg flex flex-col gap-4"
           >
-            <Chip>
+            <Chip
+              radius="sm"
+              size="sm"
+              color={summary.isApproved ? 'success' : 'default'}
+              variant="flat"
+            >
               {summary.isApproved ? 'Aprobado' : 'Pendiente de aprobación'}
             </Chip>
-            <h1 className="font-bold text-xl">{summary.title}</h1>
-            <p>{summary.topic?.name}</p>
+            <section className="flex flex-col gap-1">
+              <p className="text-tiny text-gray-500">
+                subido el {new Date(summary?.created_at).toLocaleDateString()} a
+                las {new Date(summary?.created_at).toLocaleTimeString()}
+              </p>
+              <h1 className="font-bold text-xl uppercase">
+                Tema: {summary.title}
+              </h1>
+              <p className="text-xs ">Línea temática: {summary.topic?.name}</p>
+            </section>
             <div className="flex flex-row gap-4">
-              <Button
-                as={Link}
-                href={`/dashboard/files/${summary.id}`}
-                color="primary"
-                variant="solid"
+              <UILink
+                href={`${summary.file}`}
+                download
+                target="_blank"
+                size="sm"
+                showAnchorIcon
               >
-                Ver
-              </Button>
+                Ver resumen
+              </UILink>
             </div>
           </div>
         ))}

@@ -1,7 +1,7 @@
 import { FrmUploadFile } from '@/modules/user'
 import { getCookie } from '@/lib'
 import { IPerson, IResCookie, ISummary } from '@/types'
-// import { fetchPersonById } from '@/api'
+import { fetchPersonByEmail } from '@/api'
 
 export default async function Page() {
   const res = (await getCookie('user')) as IResCookie
@@ -9,10 +9,9 @@ export default async function Page() {
     return null
   }
   const user = JSON.parse(res.value)
-  const id_person = user.id
-  // const person: IPerson = await fetchPersonById(id_person)
+
+  const person: IPerson = (await fetchPersonByEmail(user.email)) as IPerson
   const summary = {} as ISummary
-  const person = {} as IPerson
 
   return (
     <>
@@ -21,7 +20,7 @@ export default async function Page() {
           ...summary,
           person: {
             ...person,
-            id: id_person,
+            id: person.id,
           },
         }}
       />

@@ -10,6 +10,7 @@ export interface ISummary {
   created_at: string
   isActived: boolean
   isApproved: boolean
+  isExternal: boolean
   file: string
   title: string
 }

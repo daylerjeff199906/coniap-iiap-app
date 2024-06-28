@@ -16,7 +16,15 @@ import {
 } from './sections'
 import { registerAndSendEmailVerification } from '@/auth'
 
-import data from '@/utils/json/infoConiap.json'
+import infoData from '@/utils/json/infoConiap.json'
+
+function parseDate(date: string) {
+  return new Date(date).toLocaleDateString('es-PE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 export const FrmInscriptions = () => {
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
@@ -25,7 +33,11 @@ export const FrmInscriptions = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
-  const methods = useForm<IInscription>()
+  const methods = useForm<IInscription>({
+    defaultValues: {
+      typePerson: 'participant',
+    },
+  })
 
   const typePerson = methods.watch('typePerson')
   const email = methods.watch('email')
@@ -37,8 +49,8 @@ export const FrmInscriptions = () => {
     ) : (
       <div className="text-sm">
         <p>
-          Se enviará un mensaje de confirmación a tu correo
-          <b>{email}</b>, ¿Estás seguro de enviar tu inscripción?
+          Se enviará un mensaje de confirmación a tu correo <b>{email}</b>,
+          ¿Estás seguro de realizar la inscripción?
         </p>
       </div>
     )
@@ -108,39 +120,65 @@ export const FrmInscriptions = () => {
     methods.setValue('email', '')
   }
 
+  const date = infoData.data.dates['date-conference'].start
+  const dateSpeaker = infoData.data.dates.summary.end
+
+  const dateFormatted = parseDate(date)
+  const dateFormattedSpeaker = parseDate(dateSpeaker)
+
+  const isBefore = new Date(date) > new Date()
+  const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
+
   return (
-    <>
-      <FormProvider {...methods}>
-        <form
-          className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <div className="col-span-2">
-            <h3 className="text-sm">
-              <b>Regístrate para participar</b> Participa como asistente a los
-              eventos, o si deseas presentar tu trabajo de investigación, puedes
-              hacerlo como ponente.
-            </h3>
-          </div>
-          <InfoData />
-          <JobData />
-          <CountryData />
-          <ContactData />
-          <RoleData />
-          <div className="col-span-2">
-            <Button
-              radius="full"
-              color="primary"
-              type="submit"
-              size="lg"
-              isLoading={loading}
-              isDisabled={loading}
-            >
-              Enviar inscripción
-            </Button>
-          </div>
-        </form>
-      </FormProvider>
+    <article className="w-full flex flex-col gap-5">
+      <section
+        className={`p-4 border rounded-lg font-medium flex flex-col gap-2 mx-4 ${
+          isBefore
+            ? 'border-warning-500 bg-warning-100 text-warning-700'
+            : 'bg-danger-100 border-danger-500 text-danger-700'
+        }`}
+      >
+        <p className="text-sm ">
+          <strong>Nota:</strong> La fecha límite para inscripciones como
+          participante es {dateFormatted}.{' '}
+          {isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'}
+        </p>
+        {isBeforeSpeaker && (
+          <p className="text-sm ">
+            <strong>Nota:</strong> La fecha límite para enviar propuestas como
+            ponente es {dateFormattedSpeaker}.{' '}
+            {isBeforeSpeaker
+              ? '¡Aún tienes tiempo!'
+              : '¡Ya pasó la fecha límite!'}
+          </p>
+        )}
+      </section>
+      {isBefore && (
+        <FormProvider {...methods}>
+          <form
+            className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6"
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <InfoData />
+            <JobData />
+            <CountryData />
+            <ContactData />
+            {isBeforeSpeaker && <RoleData />}
+            <div className="col-span-2">
+              <Button
+                radius="full"
+                color="primary"
+                type="submit"
+                size="lg"
+                isLoading={loading}
+                isDisabled={loading}
+              >
+                Enviar inscripción
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
+      )}
       <ModalAction
         isOpen={isOpenAction}
         setOpen={setIsOpenAction}
@@ -148,6 +186,6 @@ export const FrmInscriptions = () => {
         bodyMessage={message}
         onPress={methods.handleSubmit(handleOnSubmit)}
       />
-    </>
+    </article>
   )
 }
