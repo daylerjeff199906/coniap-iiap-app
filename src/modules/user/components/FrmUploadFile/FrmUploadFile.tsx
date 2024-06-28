@@ -16,6 +16,8 @@ import { TopicSection } from './TopicSection'
 import { InfoSection } from './InfoSection'
 import { useFiles, useSummaries } from '@/hooks/admin'
 
+import infoData from '@/utils/json/infoConiap.json'
+
 interface IProps {
   summary?: ISummary
 }
@@ -29,6 +31,15 @@ export const FrmUploadFile = (props: IProps) => {
   const { updateDataSummary, createDataSummary, loading } = useSummaries()
   const { uploadImage, loading: loadingFile, deleteImage } = useFiles()
   const router = useRouter()
+
+  const date = infoData.data.dates.summary.end
+  const dateFormatted = new Date(date).toLocaleDateString('es-PE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+
+  const isBefore = new Date(date) > new Date()
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, ...rest } = data
@@ -108,6 +119,21 @@ export const FrmUploadFile = (props: IProps) => {
                 className="w-full flex flex-col gap-3"
                 onSubmit={methods.handleSubmit(handleFormSubmit)}
               >
+                <section
+                  className={`p-4 border rounded-lg ${
+                    isBefore
+                      ? 'border-warning-500 bg-warning-100 text-warning-700'
+                      : 'bg-danger-100 border-danger-500 text-danger-700'
+                  }`}
+                >
+                  <p className="text-sm ">
+                    <strong>Nota:</strong> La fecha límite para enviar resúmenes
+                    es {dateFormatted}.{' '}
+                    {isBefore
+                      ? '¡Aún tienes tiempo!'
+                      : '¡Ya pasó la fecha límite!'}
+                  </p>
+                </section>
                 <InfoSection />
                 <MultimediaSection />
                 <TopicSection />
@@ -116,7 +142,7 @@ export const FrmUploadFile = (props: IProps) => {
                     radius="sm"
                     type="submit"
                     isLoading={loading || loadingFile}
-                    isDisabled={loading || loadingFile}
+                    isDisabled={loading || loadingFile || !isBefore}
                     className="button-dark"
                   >
                     Guardar
