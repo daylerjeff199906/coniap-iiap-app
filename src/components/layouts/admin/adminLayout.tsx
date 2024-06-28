@@ -11,7 +11,7 @@ import {
 } from '@tabler/icons-react'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 
-import { NavBar } from '@/components'
+import { NavBar } from '@/modules/core'
 import { AsideMenu } from '@/modules/admin'
 
 import { IMenuAside } from '@/types'
