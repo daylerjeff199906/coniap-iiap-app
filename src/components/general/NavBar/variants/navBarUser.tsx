@@ -1,16 +1,10 @@
 'use client'
 import {
   Button,
-  Listbox,
-  ListboxItem,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  User,
 } from '@nextui-org/react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
@@ -109,23 +103,33 @@ export const NavBarUser = () => {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem>
-              {user?.id ? (
-                <ProfilePopover
-                  user={user}
-                  logout={handleLogout}
-                  loading={loading}
-                />
-              ) : (
-                <Button
-                  as={Link}
-                  href="/inscripciones"
-                  // variant="solid"
-                  radius="full"
-                  size="sm"
-                  className="bg-transparent hover:bg-[#002D61] text-white hover:text-white border-white border"
-                >
-                  ¡Inscríbete ya!
-                </Button>
+              <ProfilePopover
+                user={user}
+                logout={handleLogout}
+                loading={loading}
+              />
+              {!user?.id && (
+                <section className="flex gap-2 items-center">
+                  <Button
+                    as={Link}
+                    href="/login"
+                    variant="light"
+                    radius="full"
+                    size="sm"
+                    className="text-white "
+                  >
+                    Ya tengo cuenta
+                  </Button>
+                  <Button
+                    as={Link}
+                    href="/inscripciones"
+                    radius="full"
+                    size="sm"
+                    className="bg-transparent hover:bg-[#002D61] text-white hover:text-white border-white border"
+                  >
+                    ¡Inscríbete ya!
+                  </Button>
+                </section>
               )}
             </NavbarItem>
           </NavbarContent>
@@ -186,16 +190,28 @@ export const NavBarUser = () => {
               />
 
               {!user?.id && (
-                <Button
-                  as={Link}
-                  color="danger"
-                  href="/inscripciones"
-                  variant="solid"
-                  radius="full"
-                  size="sm"
-                >
-                  ¡Inscríbete ya!
-                </Button>
+                <section className="flex gap-2 items-center">
+                  <Button
+                    as={Link}
+                    href="/login"
+                    variant="light"
+                    radius="full"
+                    size="sm"
+                    className="text-white "
+                  >
+                    Ya tengo cuenta
+                  </Button>
+                  <Button
+                    as={Link}
+                    color="danger"
+                    href="/inscripciones"
+                    variant="solid"
+                    radius="full"
+                    size="sm"
+                  >
+                    ¡Inscríbete ya!
+                  </Button>
+                </section>
               )}
             </NavbarItem>
           </NavbarContent>
