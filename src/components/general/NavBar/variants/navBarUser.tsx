@@ -15,19 +15,16 @@ import {
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
+import { useAuthContext } from '@/provider'
 import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
-
-import { useAuthContext } from '@/provider'
 
 export const NavBarUser = () => {
   const { user, logout } = useAuthContext()
 
   const pathname = usePathname()
-  const router = useRouter()
 
   const { scrollY } = useScroll()
   const navbarY = useTransform(scrollY, [0, 20], [-100, 0])
@@ -40,7 +37,6 @@ export const NavBarUser = () => {
 
   const handleLogout = () => {
     logout()
-    router.push('/')
   }
 
   return (

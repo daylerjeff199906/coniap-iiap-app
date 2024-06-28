@@ -27,7 +27,7 @@ export const FrmLogin = () => {
     setLoading(true)
     const res = await signInWithCredentials(data)
     await createCookie('user', JSON.stringify(res))
-    await createLocalStorage('user', res)
+    // await createLocalStorage('user', res)
 
     if (res !== null) {
       await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -50,7 +50,7 @@ export const FrmLogin = () => {
     const res = await SignInWithGoogle()
 
     await createCookie('user', JSON.stringify(res))
-    await createLocalStorage('user', res)
+    // await createLocalStorage('user', res)
 
     if (res !== null) {
       if (res?.role === 'admin') {

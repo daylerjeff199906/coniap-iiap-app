@@ -7,17 +7,27 @@ import { IUser } from '@/types'
 export const AuthContext = createContext({
   user: null as IUser | null,
   logout: () => {},
+  loading: false,
 })
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user, logout } = useAuth()
-  const [auth, setAuth] = useState({ user, logout })
+  const { user, logout, loading, getUser } = useAuth()
 
   useEffect(() => {
-    setAuth({ user, logout })
-  }, [user])
+    getUser()
+  }, [])
 
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider
+      value={{
+        user: user,
+        logout: logout,
+        loading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuthContext = () => useContext(AuthContext)
