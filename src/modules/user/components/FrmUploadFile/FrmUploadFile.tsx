@@ -62,13 +62,14 @@ export const FrmUploadFile = (props: IProps) => {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]
         const url = await uploadImage('files', fileUp[0])
-
+        console.log('url', url)
         newData = {
           ...rest,
           person_id: person?.id || '',
           file: url,
           isActived: false,
           isApproved: false,
+          isExternal: true,
         }
       } else {
         newData = {
@@ -77,6 +78,7 @@ export const FrmUploadFile = (props: IProps) => {
           file: '',
           isActived: false,
           isApproved: false,
+          isExternal: true,
         }
       }
 

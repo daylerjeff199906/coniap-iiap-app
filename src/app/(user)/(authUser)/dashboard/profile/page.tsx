@@ -1,16 +1,10 @@
 import { ProfileSection } from '@/modules/user'
 import { fetchPersonByEmail } from '@/api'
 import { getCookie } from '@/lib'
-import { IUser } from '@/types'
-
-interface ICookieRes {
-  name: string
-  path: string
-  value: string
-}
+import { IUser, IResCookie } from '@/types'
 
 export default async function Page() {
-  const user: ICookieRes = (await getCookie('user')) as unknown as ICookieRes
+  const user: IResCookie = (await getCookie('user')) as unknown as IResCookie
   const dataParse: IUser = await JSON.parse(user.value as unknown as string)
 
   const res = await fetchPersonByEmail(dataParse.email)
