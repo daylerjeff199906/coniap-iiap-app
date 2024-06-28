@@ -24,10 +24,10 @@ export const FrmLogin = () => {
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
     const res = await signInWithCredentials(data)
-    setUserData(res)
 
     if (res !== null) {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await setUserData(res)
+      toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
       if (res?.role === 'admin') {
         router.push('/admin')
       } else if (res?.role !== 'participant') {
@@ -44,9 +44,10 @@ export const FrmLogin = () => {
   const handleGoogle = async () => {
     setLoading(true)
     const res = await SignInWithGoogle()
-    setUserData(res)
 
     if (res !== null) {
+      toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
+      await setUserData(res)
       if (res?.role === 'admin') {
         router.push('/admin')
       } else if (res?.role !== 'participant') {
