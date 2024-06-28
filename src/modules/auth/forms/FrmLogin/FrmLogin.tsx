@@ -7,10 +7,8 @@ import { useRouter } from 'next/navigation'
 
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
-import { createCookie, createLocalStorage } from '@/lib'
 import { toast } from 'sonner'
-
-import { useAuth } from '@/hooks/auth'
+import { useAuthContext } from '@/provider'
 
 interface ILogin {
   email: string
@@ -19,19 +17,17 @@ interface ILogin {
 
 export const FrmLogin = () => {
   const [loading, setLoading] = useState(false)
+  const { setUserData } = useAuthContext()
   const methods = useForm<ILogin>()
   const router = useRouter()
-  const { getUser } = useAuth()
 
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
     const res = await signInWithCredentials(data)
-    await createCookie('user', JSON.stringify(res))
-    // await createLocalStorage('user', res)
+    setUserData(res)
 
     if (res !== null) {
       await new Promise((resolve) => setTimeout(resolve, 1000))
-      getUser()
       if (res?.role === 'admin') {
         router.push('/admin')
       } else if (res?.role !== 'participant') {
@@ -48,9 +44,7 @@ export const FrmLogin = () => {
   const handleGoogle = async () => {
     setLoading(true)
     const res = await SignInWithGoogle()
-
-    await createCookie('user', JSON.stringify(res))
-    // await createLocalStorage('user', res)
+    setUserData(res)
 
     if (res !== null) {
       if (res?.role === 'admin') {

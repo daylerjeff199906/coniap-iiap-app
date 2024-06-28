@@ -23,15 +23,13 @@ export const ProfilePopover = (props: IProps) => {
   return (
     <>
       {loading ? (
-        <>
-          <section className="flex gap-3">
-            <Skeleton className="w-20 h-20 rounded-full" />
-            <div>
-              <Skeleton className="w-20 h-4 rounded-sm" />
-              <Skeleton className="w-10 h-4 rounded-sm" />
-            </div>
-          </section>
-        </>
+        <section className="flex gap-3 w-full max-w-xl items-start">
+          <Skeleton className="w-14 h-14 rounded-full" />
+          <div className="flex flex-col gap-1 w-full">
+            <Skeleton className="w-40 h-4 rounded-sm" />
+            <Skeleton className="w-20 h-2 rounded-sm" />
+          </div>
+        </section>
       ) : (
         <>
           {user ? (
@@ -49,6 +47,10 @@ export const ProfilePopover = (props: IProps) => {
                   avatarProps={{
                     src: user?.photo,
                     size: 'sm',
+                  }}
+                  classNames={{
+                    name: 'text-xs',
+                    description: 'text-tiny',
                   }}
                 />
               </PopoverTrigger>

@@ -11,7 +11,11 @@ export const NavBarAdmin = () => {
   }
 
   return (
-    <Navbar maxWidth="full">
+    <Navbar
+      maxWidth="full"
+      isBlurred
+      // height={64}
+    >
       {/* <NavbarBrand>Admin</NavbarBrand> */}
       <NavbarContent justify="end">
         <NavbarItem>

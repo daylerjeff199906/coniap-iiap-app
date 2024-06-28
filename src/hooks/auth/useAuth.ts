@@ -24,5 +24,5 @@ export const useAuth = () => {
     router.push('/')
   }
 
-  return { user, logout, getUser, loading }
+  return { user, logout, getUser, loading, setUser }
 }
