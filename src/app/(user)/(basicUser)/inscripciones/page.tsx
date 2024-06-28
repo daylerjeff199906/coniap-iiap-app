@@ -10,14 +10,44 @@ export default function Page() {
     <>
       <main className="w-full">
         <section className="container section py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-          <div className=" col-span-2">
+          <div className=" col-span-2 flex flex-col gap-2">
             <h1 className="text-2xl sm:text-3xl lg:text-5xl">
               PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
             </h1>
-            <p className="text-sm sm:text-base lg:text-lg">
-              <b>¡Inscríbete ya!</b> Llena el formulario para participar de las
-              presentaciones del congreso CONIAP - 2024.
-            </p>
+            <section className="flex flex-col gap-3">
+              <p className="sm:text-lg">
+                <b>Ten en cuenta </b> lo siguiente para participar en el
+                congreso:
+              </p>
+              <ul className="text-sm list-disc flex flex-col gap-2">
+                <li>
+                  Si deseas participar como asistente, registra tus datos
+                  personales en el formulario de inscripción y <b>¡Listo!</b>
+                </li>
+                <li>
+                  Si deseas participar como ponente, completa tus datos,
+                  selecciona participar como ponente y crea una contraseña, al
+                  finalizar{' '}
+                  <Link
+                    href="/login"
+                    className="text-primary hover:underline"
+                  >
+                    Inicia sesión {` `}
+                  </Link>{' '}
+                  y envía tu propuesta.
+                </li>
+                <li>
+                  Si ya estás registrado,{' '}
+                  <Link
+                    href="/login"
+                    className="text-primary hover:underline"
+                  >
+                    Inicia sesión {` `}
+                  </Link>
+                  y envía tu propuesta.
+                </li>
+              </ul>
+            </section>
             <Image
               src={img_logo.src}
               alt="logo"
