@@ -108,7 +108,7 @@ export const NavBarUser = () => {
                 logout={handleLogout}
                 loading={loading}
               />
-              {!user?.id && (
+              {!user?.id && !loading && (
                 <section className="flex gap-2 items-center">
                   <Button
                     as={Link}
@@ -189,7 +189,7 @@ export const NavBarUser = () => {
                 loading={loading}
               />
 
-              {!user?.id && (
+              {!user?.id && !loading && (
                 <section className="flex gap-2 items-center">
                   <Button
                     as={Link}
