@@ -7,6 +7,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Skeleton,
   User,
 } from '@nextui-org/react'
 
@@ -17,42 +18,58 @@ interface IProps {
 }
 
 export const ProfilePopover = (props: IProps) => {
-  const { user, logout } = props
+  const { user, logout, loading } = props
 
   return (
     <>
-      <Popover
-        placement="bottom"
-        showArrow
-      >
-        <PopoverTrigger>
-          <User
-            as={Button}
-            variant="light"
-            size="sm"
-            name={user?.userName}
-            description={user?.email}
-            avatarProps={{
-              src: user?.photo,
-              size: 'sm',
-            }}
-          />
-        </PopoverTrigger>
-        <PopoverContent>
-          <Listbox
-            variant="faded"
-            aria-label="Menu"
-          >
-            <ListboxItem
-              aria-label="Cerrar Sesión"
-              key="out"
-              onPress={logout}
+      {loading ? (
+        <>
+          <section className="flex gap-3">
+            <Skeleton className="w-20 h-20 rounded-full" />
+            <div>
+              <Skeleton className="w-20 h-4 rounded-sm" />
+              <Skeleton className="w-10 h-4 rounded-sm" />
+            </div>
+          </section>
+        </>
+      ) : (
+        <>
+          {user ? (
+            <Popover
+              placement="bottom"
+              showArrow
             >
-              Cerrar Sesión
-            </ListboxItem>
-          </Listbox>
-        </PopoverContent>
-      </Popover>
+              <PopoverTrigger>
+                <User
+                  as={Button}
+                  variant="light"
+                  size="sm"
+                  name={user?.userName}
+                  description={user?.email}
+                  avatarProps={{
+                    src: user?.photo,
+                    size: 'sm',
+                  }}
+                />
+              </PopoverTrigger>
+              <PopoverContent>
+                <Listbox
+                  variant="faded"
+                  aria-label="Menu"
+                >
+                  <ListboxItem
+                    aria-label="Cerrar Sesión"
+                    key="out"
+                    onPress={logout}
+                  >
+                    Cerrar Sesión
+                  </ListboxItem>
+                </Listbox>
+              </PopoverContent>
+            </Popover>
+          ) : null}
+        </>
+      )}
     </>
   )
 }

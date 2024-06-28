@@ -179,13 +179,13 @@ export const NavBarUser = () => {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem>
-              {user?.id ? (
-                <ProfilePopover
-                  user={user}
-                  logout={handleLogout}
-                  loading={loading}
-                />
-              ) : (
+              <ProfilePopover
+                user={user}
+                logout={handleLogout}
+                loading={loading}
+              />
+
+              {!user?.id && (
                 <Button
                   as={Link}
                   color="danger"
