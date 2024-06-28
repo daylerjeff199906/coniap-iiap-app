@@ -18,10 +18,10 @@ export const useAuth = () => {
     setLoading(false)
   }
 
-  const logout = () => {
-    router.push('/')
-    deleteCookie('user')
+  const logout = async () => {
+    await deleteCookie('user')
     setUser(null)
+    router.push('/')
   }
 
   return { user, logout, getUser, loading, setUser }
