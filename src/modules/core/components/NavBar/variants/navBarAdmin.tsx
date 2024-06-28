@@ -23,6 +23,7 @@ export const NavBarAdmin = () => {
             user={user}
             logout={handleLogout}
             loading={loading}
+            isAdmin
           />
         </NavbarItem>
       </NavbarContent>

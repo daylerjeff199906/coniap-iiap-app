@@ -19,9 +19,9 @@ export const useAuth = () => {
   }
 
   const logout = () => {
+    router.push('/')
     deleteCookie('user')
     setUser(null)
-    router.push('/')
   }
 
   return { user, logout, getUser, loading, setUser }
