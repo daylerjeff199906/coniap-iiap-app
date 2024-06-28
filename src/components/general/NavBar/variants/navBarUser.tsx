@@ -20,9 +20,10 @@ import { useAuthContext } from '@/provider'
 import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
+import { ProfilePopover } from '@/modules/core'
 
 export const NavBarUser = () => {
-  const { user, logout } = useAuthContext()
+  const { user, logout, loading } = useAuthContext()
 
   const pathname = usePathname()
 
@@ -109,38 +110,11 @@ export const NavBarUser = () => {
           <NavbarContent justify="end">
             <NavbarItem>
               {user?.id ? (
-                <Popover
-                  placement="bottom"
-                  showArrow
-                >
-                  <PopoverTrigger>
-                    <User
-                      as={Button}
-                      variant="light"
-                      size="sm"
-                      name={user?.userName}
-                      description={user?.email}
-                      avatarProps={{
-                        src: user?.photo,
-                        size: 'sm',
-                      }}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <Listbox
-                      variant="faded"
-                      aria-label="Menu"
-                    >
-                      <ListboxItem
-                        aria-label="Cerrar Sesión"
-                        key="out"
-                        onPress={handleLogout}
-                      >
-                        Cerrar Sesión
-                      </ListboxItem>
-                    </Listbox>
-                  </PopoverContent>
-                </Popover>
+                <ProfilePopover
+                  user={user}
+                  logout={handleLogout}
+                  loading={loading}
+                />
               ) : (
                 <Button
                   as={Link}
@@ -206,38 +180,11 @@ export const NavBarUser = () => {
           <NavbarContent justify="end">
             <NavbarItem>
               {user?.id ? (
-                <Popover
-                  placement="bottom"
-                  showArrow
-                >
-                  <PopoverTrigger>
-                    <User
-                      as={Button}
-                      variant="light"
-                      size="sm"
-                      name={user?.userName}
-                      description={user?.email}
-                      avatarProps={{
-                        src: user?.photo,
-                        size: 'sm',
-                      }}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <Listbox
-                      variant="faded"
-                      aria-label="Menu"
-                    >
-                      <ListboxItem
-                        aria-label="Cerrar Sesión"
-                        key="out"
-                        onPress={handleLogout}
-                      >
-                        Cerrar Sesión
-                      </ListboxItem>
-                    </Listbox>
-                  </PopoverContent>
-                </Popover>
+                <ProfilePopover
+                  user={user}
+                  logout={handleLogout}
+                  loading={loading}
+                />
               ) : (
                 <Button
                   as={Link}

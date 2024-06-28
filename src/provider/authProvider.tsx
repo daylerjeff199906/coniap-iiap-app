@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useAuth } from '@/hooks/auth'
 import { IUser } from '@/types'
 
