@@ -7,11 +7,15 @@ export const PreviewDoc = () => {
   const value = watch('file')
   const file = value ? value[0] : null
 
+  const isString = typeof file === 'string'
+
+  const src = isString ? value : URL.createObjectURL(file as unknown as Blob)
+
   return (
     <section className="w-full h-full">
       {file && (
         <iframe
-          src={URL.createObjectURL(file as unknown as Blob)}
+          src={src}
           width="100%"
           className="h-screen max-h-[calc(100vh-11rem)]"
           title="file"
