@@ -1,3 +1,4 @@
+'use client'
 import { ISummary } from '@/types'
 import { Avatar, Button, Chip, Divider } from '@nextui-org/react'
 import { IconCheck } from '@tabler/icons-react'
@@ -5,6 +6,9 @@ import Link from 'next/link'
 import { useSummaries } from '@/hooks/admin'
 import { useRouter } from 'next/navigation'
 import { LoadingPages } from '@/components'
+import { FormProvider, useForm } from 'react-hook-form'
+import { InfoDataSummary } from './InfoDataSummary'
+import { PreviewDoc } from './PreviewDoc'
 
 interface IProps {
   summary: ISummary
@@ -14,6 +18,10 @@ export const FrmDetailSummary = (props: IProps) => {
   const { approveSummary, loading } = useSummaries()
   const router = useRouter()
 
+  const methods = useForm<ISummary>({
+    defaultValues: summary,
+  })
+
   const handelApprove = async () => {
     const res = await approveSummary(summary.id)
     if (res) {
@@ -22,8 +30,22 @@ export const FrmDetailSummary = (props: IProps) => {
   }
   return (
     <>
-      <div className="px-4 py-6">
-        <div className="flex flex-col gap-5">
+      <FormProvider {...methods}>
+        <main className="flex flex-col sm:flex-row gap-2 f-full">
+          <section className="w-full max-w-lg h-full max-h-[calc(100vh-11rem)] overflow-y-auto">
+            <form
+              onSubmit={methods.handleSubmit(handelApprove)}
+              className="w-full p-4 rounded-lg border flex flex-col gap-3"
+            >
+              <InfoDataSummary />
+            </form>
+          </section>
+          <article className="w-full">
+            <PreviewDoc />
+          </article>
+        </main>
+      </FormProvider>
+      {/* <div className="flex flex-col gap-5">
           <section className="flex flex-col gap-1">
             <Chip
               size="sm"
@@ -91,8 +113,7 @@ export const FrmDetailSummary = (props: IProps) => {
               {summary?.isApproved ? 'Aprobado' : 'Aprobar'}
             </Button>
           </div>
-        </div>
-      </div>
+        </div> */}
       <LoadingPages isOpen={loading} />
     </>
   )
