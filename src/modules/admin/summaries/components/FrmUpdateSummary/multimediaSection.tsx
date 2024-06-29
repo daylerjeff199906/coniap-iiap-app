@@ -10,7 +10,13 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
 
   return (
     <section className="space-y-3 w-full ">
-      <h3 className="text-sm">Subir archivo</h3>
+      <div>
+        <h3 className="text-sm">Subir archivo</h3>
+        <p className="text-gray-500 text-xs">
+          Sube un archivo en formato PDF o Word para adjuntar al resumen. Máximo
+          2 hojas.
+        </p>
+      </div>
       <div>
         <Controller
           name="file"
