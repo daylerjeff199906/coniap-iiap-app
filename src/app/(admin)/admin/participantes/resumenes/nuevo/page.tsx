@@ -1,5 +1,11 @@
 'use client'
-import { FrmUpdateSummary } from '@/modules/admin'
+import dynamic from 'next/dynamic'
+const FrmUpdateSummary = dynamic(
+  () => import('@/modules/admin').then((mod) => mod.FrmUpdateSummary),
+  {
+    ssr: false,
+  }
+)
 
 export default function Page() {
   return (
