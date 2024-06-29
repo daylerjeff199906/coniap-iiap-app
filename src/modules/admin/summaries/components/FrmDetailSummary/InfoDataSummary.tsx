@@ -18,6 +18,7 @@ export const InfoDataSummary = () => {
 
   return (
     <>
+      {/* Cabecera */}
       <header>
         <div className="flex flex-col gap-1">
           <div>
@@ -39,12 +40,14 @@ export const InfoDataSummary = () => {
           </div>
         </div>
       </header>
+      {/* Tematica */}
       <section className="flex flex-col gap-2">
         <h3 className=" font-semibold">Linea temática</h3>
         <h1 className="text-sm font-medium text-gray-500">
           {tematica?.name || 'No tiene temática asignada'}
         </h1>
       </section>
+      {/* Ponente o Creador */}
       <section className="flex flex-col gap-2">
         <h3 className=" font-semibold">
           {isExternal ? 'Creado por' : 'Ponente'}
@@ -65,6 +68,7 @@ export const InfoDataSummary = () => {
           </div>
         </section>
       </section>
+      {/* Co autores */}
       {authors && authors.length > 0 && (
         <section className="flex flex-col gap-2">
           <h3 className=" font-semibold">Co-autores</h3>
