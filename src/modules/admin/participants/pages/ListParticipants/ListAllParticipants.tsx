@@ -6,6 +6,7 @@ import { IActions, IColumns, IPerson } from '@/types'
 import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
+import { getTypePerson } from '@/modules/admin'
 
 const columns: Array<IColumns> = [
   {
@@ -92,7 +93,7 @@ export const ListParticipants = (prop: IProps) => {
             email: speaker?.email,
             phone: speaker?.phone || 'No registrado',
             institution: speaker?.institution,
-            level: speaker?.typePerson,
+            level: getTypePerson(speaker?.typePerson),
             status: speaker?.isActived,
             actions: 'actions',
           }

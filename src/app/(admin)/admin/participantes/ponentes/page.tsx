@@ -1,5 +1,5 @@
 import { fetchPersons } from '@/api'
-import { ListParticipants } from '@/modules/admin'
+import { ExportExcel, ListParticipants } from '@/modules/admin'
 import { HeaderSection } from '@/modules/core'
 import { IPerson } from '@/types'
 
@@ -32,17 +32,16 @@ export default async function Page(props: IProps) {
   )) as IPerson[]
 
   return (
-    <>
+    <main className="flex flex-col gap-4">
       <HeaderSection
         title="Lista de expositores"
         subtitle="Lista de participantes que participan en el congreso como expositores, ponentes y ponentes magistrales"
         isButtonVisible
         labelButton="Agregar Participante"
         href="/admin/participantes/ponentes/nuevo"
+        rigthContent={<ExportExcel dataList={persons} />}
       />
-      <section className="py-6">
-        <ListParticipants dataList={persons} />
-      </section>
-    </>
+      <ListParticipants dataList={persons} />
+    </main>
   )
 }
