@@ -150,24 +150,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       </aside>
       <main className="w-full">
         <NavBar variant="admin" />
-        <section className="py-4 sticky top-16 bg-white z-30 w-full max-w-[1920px] mx-auto px-4 sm:px-6">
-          {pathname !== null && (
-            <Breadcrumbs
-              className="text-sm"
-              color="primary"
-              size="sm"
-            >
-              <BreadcrumbItem
-                href="/admin"
-                key={'home'}
-              >
-                Inicio
-              </BreadcrumbItem>
-              {generateBreadcrumbItems(pathname)}
-            </Breadcrumbs>
-          )}
-        </section>
-        <main className="w-full max-w-[1920px] mx-auto px-4 sm:px-6">
+        <main className="w-full max-w-[1920px] mx-auto p-4 sm:p-6">
           {children}
         </main>
         <footer className="w-full  p-4 text-center">

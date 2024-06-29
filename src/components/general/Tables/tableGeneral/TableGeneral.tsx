@@ -155,7 +155,7 @@ export const TableGeneral = (props: IProps) => {
         isHeaderSticky
         classNames={{
           th: ['font-semibold', 'bg-white', 'text-gray-800', 'border-b'],
-          base: 'max-h-[calc(100vh-22rem)] overflow-y-auto bg-white',
+          base: 'max-h-[calc(100vh-20rem)] overflow-y-auto bg-white',
           td: ['text-xs', 'font-medium'],
         }}
         selectionMode={selectionMode}

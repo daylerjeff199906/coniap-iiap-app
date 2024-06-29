@@ -31,7 +31,7 @@ export default async function Page(props: IProps) {
   )) as IPerson[]
 
   return (
-    <>
+    <main className="flex flex-col gap-4">
       <HeaderSection
         title="Participantes"
         subtitle="Lista de participantes incluyendo ponentes, ponentes magistrales y asistentes"
@@ -40,9 +40,7 @@ export default async function Page(props: IProps) {
         href="/admin/participantes/nuevo"
         rigthContent={<ExportExcel dataList={persons} />}
       />
-      <section className="py-6">
-        <ListParticipants dataList={persons} />
-      </section>
-    </>
+      <ListParticipants dataList={persons} />
+    </main>
   )
 }

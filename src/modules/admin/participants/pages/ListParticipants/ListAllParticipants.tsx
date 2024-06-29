@@ -102,18 +102,16 @@ export const ListParticipants = (prop: IProps) => {
 
   return (
     <>
-      <section className="py-6">
-        <Suspense fallback={<div>Loading...</div>}>
-          <TableGeneral
-            columns={columns}
-            onSearch={handleQuery}
-            searchValue={query}
-            rows={persons}
-            headerChildren={<FiltersSection />}
-            actionsList={actions}
-          />
-        </Suspense>
-      </section>
+      <Suspense fallback={<div>Loading...</div>}>
+        <TableGeneral
+          columns={columns}
+          onSearch={handleQuery}
+          searchValue={query}
+          rows={persons}
+          headerChildren={<FiltersSection />}
+          actionsList={actions}
+        />
+      </Suspense>
     </>
   )
 }
