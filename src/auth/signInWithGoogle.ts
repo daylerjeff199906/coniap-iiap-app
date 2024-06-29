@@ -12,7 +12,7 @@ import { IPerson, IUser } from '@/types'
 import { IError } from './types'
 import { toast } from 'sonner'
 
-import { fetchPersonByEmail, createPerson } from '@/api'
+import { fetchPersonByEmail } from '@/api'
 import { getErrors } from './getErrors'
 
 export const SignInWithGoogle = async (): Promise<IUser | null> => {
@@ -27,58 +27,32 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
     const q = query(usersRef, where('email', '==', user.email))
     const querySnapshot = await getDocs(q)
 
+    //Se busca si existe la persona en la tabla person
+    const person: IPerson = (await fetchPersonByEmail(
+      user.email as string
+    )) as IPerson
+
+    let userData: IUser | null = null
     if (querySnapshot.empty) {
-      const person = await fetchPersonByEmail(user.email as string)
-      if (person) {
-        const userData: IUser = {
-          id: person.id as string,
-          email: user.email || '',
-          userName: person.name || '',
-          photo: person.image || '',
-          role: person.typePerson || '',
-        }
-        return userData
-      } else {
-        const newPerson: IPerson = {
-          email: user.email || '',
-          name: user.displayName || '',
-          surName: '',
-          image: user.photoURL || '',
-          typePerson: 'speaker',
-          institution: '',
-          job: '',
-          created_at: new Date().toISOString(),
-          isActived: false,
-          location: '',
-          phone: '',
-          presentation: '',
-        }
-        await createPerson(newPerson)
-        const userData: IUser = {
-          id: user.uid,
-          email: user.email || '',
-          userName: user.displayName || '',
-          photo: user.photoURL || '',
-          role: 'speaker',
-        }
-        return userData
+      userData = {
+        id: person.id as string,
+        userName: person.name || '',
+        email: user.email || '',
+        photo: person.image || '',
+        role: null,
+        person: person,
       }
     } else {
-      let userData: IUser | null = null
-      for (const doc of querySnapshot.docs) {
-        const data = doc.data()
-        userData = {
-          id: doc.id,
-          email: user.email || '',
-          userName: user.displayName || '',
-          photo: user.photoURL || '',
-          role: data.role || '',
-        }
-        break // Solo necesitamos el primer documento
+      userData = {
+        id: querySnapshot.docs[0].id,
+        userName: user.displayName || '',
+        email: user.email || '',
+        photo: user.photoURL || '',
+        role: querySnapshot.docs[0].data().role || '',
+        person: person,
       }
-      new Promise((resolve) => setTimeout(resolve, 1000))
-      return userData
     }
+    return userData
   } catch (error) {
     const err = error as unknown as IError
     toast.error(getErrors(err))
