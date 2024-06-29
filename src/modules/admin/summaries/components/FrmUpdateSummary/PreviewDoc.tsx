@@ -8,7 +8,7 @@ export const PreviewDoc = () => {
   const file = value ? value[0] : null
 
   return (
-    <section className="w-full ">
+    <section className="w-full h-full">
       {file && (
         <iframe
           src={URL.createObjectURL(file as unknown as Blob)}

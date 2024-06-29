@@ -23,6 +23,7 @@ import { LoadingPages } from '@/components'
 import { TopicSection } from './TopicSection'
 import { SpeakerSection } from './speakerSection'
 import { PreviewDoc } from './PreviewDoc'
+import { AuthorsSection } from './AuthorsSection'
 
 interface IProps {
   summary: ISummary
@@ -83,8 +84,8 @@ export const FrmUpdateSummary = (props: IProps) => {
   return (
     <>
       <FormProvider {...methods}>
-        <main className="flex gap-2 f-full">
-          <section className="w-full max-w-lg border-r">
+        <main className="flex flex-col sm:flex-row gap-2 f-full">
+          <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-11rem)] overflow-y-auto">
             <form
               onSubmit={methods.handleSubmit(handleFormSubmit)}
               className="pr-4 flex flex-col gap-3"
@@ -119,22 +120,22 @@ export const FrmUpdateSummary = (props: IProps) => {
               />
 
               <SpeakerSection loading={loading || loadingFile} />
+              <AuthorsSection />
               <MultimediaSection loading={loading || loadingFile} />
 
-              <footer>
+              <footer className="pt-4">
                 <div className="flex items-center justify-end gap-3">
                   <Button
                     type="submit"
-                    size="sm"
                     radius="sm"
                     color="primary"
                     isLoading={loading || loadingFile}
                     isDisabled={loading || loadingFile}
+                    className="button-dark"
                   >
                     {summary.id ? 'Actualizar' : 'Guardar'}
                   </Button>
                   <Button
-                    size="sm"
                     radius="sm"
                     type="reset"
                     onPress={handleCancel}

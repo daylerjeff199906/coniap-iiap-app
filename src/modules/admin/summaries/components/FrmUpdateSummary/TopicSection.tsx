@@ -20,8 +20,8 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
 
   const datalist = topics ? topics : []
   const placeholder = loadingList
-    ? 'Cargando categorias...'
-    : 'Selecciona una categoria'
+    ? 'Cargando lìneas temáticas'
+    : 'Selecciona una línea temática'
 
   return (
     <>
@@ -40,8 +40,8 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
               onChange(value)
             }}
             radius="sm"
-            isInvalid={errors.topic !== undefined}
-            errorMessage={errors.topic?.message as string}
+            isInvalid={errors.topic_id !== undefined}
+            errorMessage={errors.topic_id?.message as string}
             isLoading={loadingList || loading}
             isDisabled={loadingList || loading}
           >
