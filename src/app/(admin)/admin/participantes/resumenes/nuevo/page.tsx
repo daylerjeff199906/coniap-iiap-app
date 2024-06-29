@@ -1,3 +1,4 @@
+'use client'
 import { FrmUpdateSummary } from '@/modules/admin'
 import { ISummary } from '@/types'
 
