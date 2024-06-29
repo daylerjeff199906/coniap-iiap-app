@@ -82,7 +82,7 @@ export default function Page() {
                   href="/login"
                   color="danger"
                 >
-                  Enviar propuesta
+                  Enviar resúmen
                 </Button>
               </div>
             </div>

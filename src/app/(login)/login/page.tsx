@@ -1,5 +1,6 @@
+'use client'
 import { FrmLogin } from '@/modules/auth'
 
-export default async function LoginPage() {
+export default function LoginPage() {
   return <FrmLogin />
 }

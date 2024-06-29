@@ -7,7 +7,7 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore'
-import { fetchPersonByEmail, createPerson } from '@/api'
+import { fetchPersonByEmail } from '@/api'
 import { IError } from './types'
 
 import { IPerson, IUser } from '@/types'
@@ -34,71 +34,37 @@ export const signInWithCredentials = async (
       password
     )
     if (userCredential.user.emailVerified) {
+      //Busco en la tabla users si existe el usuario
       const usersRef = collection(firestore, 'users')
       const q = query(usersRef, where('email', '==', userCredential.user.email))
       const querySnapshot = await getDocs(q)
 
+      //Se busca si existe la persona en la tabla person
+      const person: IPerson = (await fetchPersonByEmail(
+        userCredential.user.email as string
+      )) as IPerson
+
+      let userData: IUser | null = null
       if (querySnapshot.empty) {
-        const person: IPerson = (await fetchPersonByEmail(
-          userCredential.user.email as string
-        )) as IPerson
-        if (person) {
-          const userData: IUser = {
-            id: person.id as string,
-            email: userCredential.user.email || '',
-            userName: person.name || '',
-            photo: person.image || '',
-            role: person.typePerson || '',
-          }
-          return userData
-        } else {
-          const newPerson: IPerson = {
-            email: userCredential.user.email || '',
-            name: userCredential.user.displayName || '',
-            surName: '',
-            image: userCredential.user.photoURL || '',
-            typePerson: 'speaker',
-            institution: '',
-            presentation: '',
-            isActived: false,
-            location: '',
-            phone: '',
-            job: '',
-            created_at: new Date().toISOString(),
-          }
-          const personCreated = await createPerson(newPerson)
-            .then((res) => res)
-            .catch((err) => err)
-          if (personCreated) {
-            const userData: IUser = {
-              id: personCreated[0].id,
-              email: userCredential.user.email || '',
-              userName: userCredential.user.displayName || '',
-              photo: userCredential.user.photoURL || '',
-              role: 'speaker',
-            }
-            return userData
-          } else {
-            toast.error('No se pudo crear el usuario')
-            return null
-          }
+        userData = {
+          id: person.id as string,
+          userName: person.name || '',
+          email: userCredential.user.email || '',
+          photo: person.image || '',
+          role: null,
+          person: person,
         }
       } else {
-        let userData: IUser | null = null
-        for (const doc of querySnapshot.docs) {
-          const data = doc.data()
-          userData = {
-            id: doc.id,
-            email: userCredential.user.email || '',
-            userName: userCredential.user.displayName || '',
-            photo: userCredential.user.photoURL || '',
-            role: data.role || '',
-          }
-          break // Solo necesitamos el primer documento
+        userData = {
+          id: querySnapshot.docs[0].id,
+          userName: userCredential.user.displayName || '',
+          email: userCredential.user.email || '',
+          photo: userCredential.user.photoURL || '',
+          role: querySnapshot.docs[0].data().role || '',
+          person: person,
         }
-        new Promise((resolve) => setTimeout(resolve, 1000))
-        return userData as IUser
       }
+      return userData
     } else {
       console.log(userCredential.user.emailVerified)
       toast.error('Revise su correo electrónico para verificar su cuenta', {

@@ -108,13 +108,26 @@ const NavSection = (props: IProps) => {
             })}
           </div>
 
-          <div className="pt-4">
+          <div className="pt-4 flex flex-col gap-2">
+            <Button
+              size="lg"
+              variant="light"
+              radius="full"
+              fullWidth
+              as={Link}
+              href="/login"
+              className="text-white"
+            >
+              Ya tengo mi cuenta
+            </Button>
             <Button
               size="lg"
               variant="solid"
               color="danger"
               radius="full"
               fullWidth
+              as={Link}
+              href="/inscripciones"
             >
               ¡Inscríbete ya!
             </Button>

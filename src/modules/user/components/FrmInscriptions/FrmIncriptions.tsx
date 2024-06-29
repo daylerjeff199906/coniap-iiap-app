@@ -132,7 +132,7 @@ export const FrmInscriptions = () => {
   return (
     <article className="w-full flex flex-col gap-5">
       <section
-        className={`p-4 border rounded-lg font-medium flex flex-col gap-2 mx-4 ${
+        className={`p-4 border rounded-lg font-medium flex flex-col gap-2 sm:mx-4 ${
           isBefore
             ? 'border-warning-500 bg-warning-100 text-warning-700'
             : 'bg-danger-100 border-danger-500 text-danger-700'

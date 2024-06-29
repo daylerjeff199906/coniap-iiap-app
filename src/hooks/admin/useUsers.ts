@@ -1,14 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { db } from '@/firebase/firebase'
-import {
-  collection,
-  getDocs,
-  DocumentData,
-  doc,
-  DocumentReference,
-  getDoc,
-} from 'firebase/firestore'
+import { collection, getDocs, DocumentData } from 'firebase/firestore'
 import { IUser } from '@/types'
 
 const convertDataToUser = (data: DocumentData[]): IUser[] => {
@@ -21,6 +14,7 @@ const convertDataToUser = (data: DocumentData[]): IUser[] => {
       photo,
       userName,
       role,
+      person: user?.person,
     }
   })
 }

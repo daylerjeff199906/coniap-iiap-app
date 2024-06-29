@@ -1,10 +1,8 @@
 'use client'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Divider, Input } from '@nextui-org/react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-
 import { useRouter } from 'next/navigation'
-
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 import { toast } from 'sonner'
@@ -25,16 +23,17 @@ export const FrmLogin = () => {
     setLoading(true)
     const res = await signInWithCredentials(data)
 
-    if (res !== null) {
-      await setUserData(res)
+    if (res) {
       toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
-      if (res?.role === 'admin') {
+      await setUserData(res)
+      if (res.role === 'admin') {
         router.push('/admin')
-      } else if (res?.role !== 'participant') {
-        toast.success('Bienvenido', { position: 'top-right' })
+      } else if (
+        res.role === null &&
+        res.person?.typePerson !== 'participant'
+      ) {
         router.push('/dashboard')
       } else {
-        toast.success('Bienvenido', { position: 'top-right' })
         router.push('/')
       }
     }
@@ -44,13 +43,15 @@ export const FrmLogin = () => {
   const handleGoogle = async () => {
     setLoading(true)
     const res = await SignInWithGoogle()
-
-    if (res !== null) {
+    if (res) {
       toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
       await setUserData(res)
-      if (res?.role === 'admin') {
+      if (res.role === 'admin') {
         router.push('/admin')
-      } else if (res?.role !== 'participant') {
+      } else if (
+        res.role === null &&
+        res.person?.typePerson !== 'participant'
+      ) {
         router.push('/dashboard')
       } else {
         router.push('/')
@@ -109,14 +110,6 @@ export const FrmLogin = () => {
             )}
           />
         </section>
-        {/* <section className="pt-2 flex justify-end">
-          <Link
-            href="/forgotPassword"
-            className="text-primary-500 hover:text-primary-800 cursor-pointer text-xs text-end pb-2 underline"
-          >
-            ¿Olvidaste tu contraseña?
-          </Link>
-        </section> */}
         <Button
           variant="solid"
           color="primary"
@@ -130,14 +123,6 @@ export const FrmLogin = () => {
           Iniciar sesión
         </Button>
       </form>
-      {/* <section className="pt-3 flex flxe-col justify-center items-center pb-3">
-        <Link
-          href="/singIn"
-          className="text-center text-sm text-primary-500 hover:text-primary-800 cursor-pointer"
-        >
-          ¿ No tienes cuenta? <span className="font-bold">Regístrate</span>
-        </Link>
-      </section> */}
       <Divider />
       <section className="pt-6 ">
         <Button
