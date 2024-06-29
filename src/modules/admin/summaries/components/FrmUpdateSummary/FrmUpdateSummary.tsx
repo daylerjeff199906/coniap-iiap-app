@@ -18,7 +18,7 @@ import { PreviewDoc } from './PreviewDoc'
 import { AuthorsSection } from './AuthorsSection'
 
 interface IProps {
-  summary: ISummary
+  summary?: ISummary
 }
 
 export const FrmUpdateSummary = (props: IProps) => {
@@ -36,20 +36,20 @@ export const FrmUpdateSummary = (props: IProps) => {
     const { file, person, topic, ...rest } = data
     let newData: ISummary
 
-    if (summary.id) {
+    if (summary?.id) {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]
 
-        if (summary.file) {
-          await deleteImage(summary.file)
+        if (summary?.file) {
+          await deleteImage(summary?.file)
         }
         const url = await uploadImage('files', fileUp[0])
         newData = { ...rest, file: url }
       } else {
-        newData = { ...rest, file: summary.file }
+        newData = { ...rest, file: summary?.file }
       }
 
-      await updateDataSummary(summary.id, newData)
+      await updateDataSummary(summary?.id, newData)
       handleCancel()
     } else {
       if (file?.length > 0) {
@@ -85,7 +85,7 @@ export const FrmUpdateSummary = (props: IProps) => {
               {loadingFile && (
                 <div className="py-1">
                   <h2 className="text-sm text-gray-500 animate-pulse">
-                    {summary.id ? 'Actualizando resumen' : 'Guardando resumen'}
+                    {summary?.id ? 'Actualizando resumen' : 'Guardando resumen'}
                   </h2>
                 </div>
               )}
@@ -125,7 +125,7 @@ export const FrmUpdateSummary = (props: IProps) => {
                     isDisabled={loading || loadingFile}
                     className="button-dark"
                   >
-                    {summary.id ? 'Actualizar' : 'Guardar'}
+                    {summary?.id ? 'Actualizar' : 'Guardar'}
                   </Button>
                   <Button
                     radius="sm"
