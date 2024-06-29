@@ -7,12 +7,12 @@ const routePermissions: Record<string, string[]> = {
   '/dashboard': ['speaker', 'speaker_mg'],
 }
 
-const roleRedirects: Record<string, string> = {
-  admin: '/admin',
-  editor: '/admin',
-  speaker: '/dashboard',
-  speaker_mg: '/dashboard',
-}
+// const roleRedirects: Record<string, string> = {
+//   admin: '/admin',
+//   editor: '/admin',
+//   speaker: '/dashboard',
+//   speaker_mg: '/dashboard',
+// }
 
 export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get('user')?.value
@@ -22,13 +22,13 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = currentUser !== undefined
   const { pathname } = request.nextUrl
 
-  if (pathname === '/login' && isAuthenticated) {
-    const userRole = user?.role || user?.person?.typePerson
-    const redirectPath = roleRedirects[userRole as string]
-    if (redirectPath) {
-      return NextResponse.redirect(new URL(redirectPath, request.url))
-    }
-  }
+  //   if (pathname === '/login' && isAuthenticated) {
+  //     const userRole = user?.role || user?.person?.typePerson
+  //     const redirectPath = roleRedirects[userRole as string]
+  //     if (redirectPath) {
+  //       return NextResponse.redirect(new URL(redirectPath, request.url))
+  //     }
+  //   }
 
   if (!isAuthenticated) {
     return NextResponse.redirect(new URL('/login', request.url))
@@ -50,5 +50,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/dashboard/:path*', '/login'],
+  matcher: ['/admin/:path*', '/dashboard/:path*'],
 }
