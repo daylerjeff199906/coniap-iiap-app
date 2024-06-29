@@ -97,7 +97,7 @@ export const ListSummaries = () => {
                   href={`/dashboard/files/${summary.id}`}
                   radius="sm"
                   size="sm"
-                  className='button-dark'
+                  className="button-dark"
                 >
                   Editar resumen
                 </Button>
@@ -108,8 +108,9 @@ export const ListSummaries = () => {
                 target="_blank"
                 size="sm"
                 showAnchorIcon
+                isDisabled={!summary.file}
               >
-                Ver resumen
+                {summary.file ? 'Ver resumen' : 'Sin resumen'}
               </UILink>
             </div>
           </div>
