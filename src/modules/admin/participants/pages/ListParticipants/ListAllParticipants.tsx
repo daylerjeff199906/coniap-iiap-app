@@ -3,7 +3,7 @@
 import { Suspense } from 'react'
 import { TableGeneral } from '@/components'
 import { IActions, IColumns, IPerson } from '@/types'
-import { HeaderSection, useFilterFromUrl } from '@/modules/core'
+import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
 import { getTypePerson } from '@/modules/admin'
@@ -102,13 +102,6 @@ export const ListParticipants = (prop: IProps) => {
 
   return (
     <>
-      <HeaderSection
-        title="Participantes"
-        subtitle="Lista de participantes incluyendo ponentes, ponentes magistrales y asistentes"
-        isButtonVisible
-        labelButton="Agregar Participante"
-        href="/admin/participantes/nuevo"
-      />
       <section className="py-6">
         <Suspense fallback={<div>Loading...</div>}>
           <TableGeneral
