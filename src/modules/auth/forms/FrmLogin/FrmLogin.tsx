@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import { Button, Divider, Input } from '@nextui-org/react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
