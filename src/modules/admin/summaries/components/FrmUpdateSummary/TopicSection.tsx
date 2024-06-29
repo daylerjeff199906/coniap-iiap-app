@@ -20,8 +20,8 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
 
   const datalist = topics ? topics : []
   const placeholder = loadingList
-    ? 'Cargando categorias...'
-    : 'Selecciona una categoria'
+    ? 'Cargando lìneas temáticas'
+    : 'Selecciona una línea temática'
 
   return (
     <>
@@ -31,17 +31,17 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
         rules={{ required: 'Este campo es requerido' }}
         render={({ field: { onChange, value } }) => (
           <Select
-            label="Categoria"
+            label="Línea temática"
             labelPlacement="outside"
             placeholder={placeholder}
-            description="Seleccione la categoria a la que pertenece el resumen"
+            description="Seleccione una línea temática"
             selectedKeys={value ? [value] : []}
             onChange={(value) => {
               onChange(value)
             }}
             radius="sm"
-            isInvalid={errors.topic !== undefined}
-            errorMessage={errors.topic?.message as string}
+            isInvalid={errors.topic_id !== undefined}
+            errorMessage={errors.topic_id?.message as string}
             isLoading={loadingList || loading}
             isDisabled={loadingList || loading}
           >

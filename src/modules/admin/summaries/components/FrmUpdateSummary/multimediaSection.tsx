@@ -2,14 +2,21 @@
 import { FilePond, registerPlugin } from 'react-filepond'
 import { useFormContext, Controller } from 'react-hook-form'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import { ISummary } from '@/types'
 registerPlugin(FilePondPluginFileValidateType)
 
 export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext<ISummary>()
 
   return (
     <section className="space-y-3 w-full ">
-      <h3 className="text-sm">Subir archivo</h3>
+      <div>
+        <h3 className="text-sm">Subir archivo</h3>
+        <p className="text-gray-500 text-xs">
+          Sube un archivo en formato PDF o Word para adjuntar al resumen. Máximo
+          2 hojas.
+        </p>
+      </div>
       <div>
         <Controller
           name="file"
@@ -20,7 +27,7 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
               disabled={loading}
               // onupdatefiles={onChange}
               instantUpload={false}
-              acceptedFileTypes={['doc/*', 'pdf/*']}
+              acceptedFileTypes={['application/pdf', 'application/msword']}
               server={{
                 process: (
                   fieldName: any,
@@ -42,6 +49,11 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
             />
           )}
         />
+        {watch('file') && (
+          <p className="text-sm font-medium">
+            Si sube un resumen reemplazará el actual.
+          </p>
+        )}
       </div>
     </section>
   )

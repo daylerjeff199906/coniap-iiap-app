@@ -17,6 +17,8 @@ import { InfoSection } from './InfoSection'
 import { useFiles, useSummaries } from '@/hooks/admin'
 
 import infoData from '@/utils/json/infoConiap.json'
+import { AuthorsSection } from './AuthorsSection'
+import { ActionsSummary } from './ActionsSummary'
 
 interface IProps {
   summary?: ISummary
@@ -43,9 +45,11 @@ export const FrmUploadFile = (props: IProps) => {
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, ...rest } = data
+    const fileIsArray = Array.isArray(file)
+
     let newData: ISummary
     if (summary?.id) {
-      if (file?.length > 0) {
+      if (file?.length > 0 && fileIsArray) {
         const fileUp = file as unknown as File[]
 
         if (summary.file) {
@@ -57,7 +61,10 @@ export const FrmUploadFile = (props: IProps) => {
         newData = { ...rest, person_id: person?.id || '', file: summary.file }
       }
 
-      await updateDataSummary(summary.id, newData)
+      const resData = await updateDataSummary(summary.id, newData)
+      if (!resData.message) {
+        handleExit()
+      }
     } else {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]
@@ -85,17 +92,13 @@ export const FrmUploadFile = (props: IProps) => {
       const resData = await createDataSummary(newData)
 
       if (!resData.message) {
-        router.push('/dashboard/files', {
-          scroll: true,
-        })
+        handleExit()
       }
     }
   }
 
   const handleExit = () => {
-    router.push('/dashboard/files', {
-      scroll: true,
-    })
+    router.push('/dashboard/files')
   }
 
   return (
@@ -105,6 +108,7 @@ export const FrmUploadFile = (props: IProps) => {
         onClose={handleExit}
         size="2xl"
         radius="sm"
+        scrollBehavior="inside"
       >
         <ModalContent>
           <ModalHeader>
@@ -136,9 +140,11 @@ export const FrmUploadFile = (props: IProps) => {
                       : '¡Ya pasó la fecha límite!'}
                   </p>
                 </section>
-                <InfoSection />
-                <MultimediaSection />
                 <TopicSection />
+                <InfoSection />
+                <AuthorsSection />
+                <ActionsSummary />
+                <MultimediaSection />
                 <footer className="flex gap-3 items-center justify-end">
                   <Button
                     radius="sm"

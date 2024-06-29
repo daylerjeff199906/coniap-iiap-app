@@ -27,7 +27,7 @@ export function useSummaries() {
         description: res.message,
       })
     } else {
-      toast.success('Resumen añadido con éxito')
+      toast.success('Tema de resumen añadido con éxito')
     }
     setLoading(false)
     return res
@@ -37,11 +37,11 @@ export function useSummaries() {
     setLoading(true)
     const res: IRes = (await updateSummary(id, data)) as IRes
     if (res.message) {
-      toast.error('Error al actualizar el evento', {
+      toast.error('Error al actualizar el resúmen', {
         description: res.message,
       })
     } else {
-      toast.success('Evento actualizado con exito')
+      toast.success('Tema de resumen actualizado con éxito')
     }
     setLoading(false)
     return res

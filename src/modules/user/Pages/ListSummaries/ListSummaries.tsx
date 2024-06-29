@@ -83,16 +83,34 @@ export const ListSummaries = () => {
                 Tema: {summary.title}
               </h1>
               <p className="text-xs ">Línea temática: {summary.topic?.name}</p>
+              {summary?.authors && summaries?.length > 0 && (
+                <p className="text-xs">
+                  Co-autores:{' '}
+                  {summary.authors.map((author) => author).join(', ')}
+                </p>
+              )}
             </section>
             <div className="flex flex-row gap-4">
+              {!summary?.isApproved && (
+                <Button
+                  as={Link}
+                  href={`/dashboard/files/${summary.id}`}
+                  radius="sm"
+                  size="sm"
+                  className="button-dark"
+                >
+                  Editar resumen
+                </Button>
+              )}
               <UILink
                 href={`${summary.file}`}
                 download
                 target="_blank"
                 size="sm"
                 showAnchorIcon
+                isDisabled={!summary.file}
               >
-                Ver resumen
+                {summary.file ? 'Ver resumen' : 'Sin resumen'}
               </UILink>
             </div>
           </div>

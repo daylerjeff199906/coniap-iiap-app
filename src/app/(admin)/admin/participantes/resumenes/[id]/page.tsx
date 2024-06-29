@@ -1,5 +1,5 @@
 import { fetchSummaryById } from '@/api'
-import { ModalDetails } from '../modal'
+import { FrmDetailSummary } from '@/modules/admin'
 import { ISummary } from '@/types'
 
 interface IProps {
@@ -13,10 +13,7 @@ export default async function Page(params: IProps) {
 
   return (
     <>
-      <ModalDetails
-        summary={data}
-        isEdit={false}
-      />
+      <FrmDetailSummary summary={data} />
     </>
   )
 }
