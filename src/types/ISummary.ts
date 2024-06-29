@@ -13,4 +13,5 @@ export interface ISummary {
   isExternal: boolean
   file: string
   title: string
+  authors: string[] | null
 }

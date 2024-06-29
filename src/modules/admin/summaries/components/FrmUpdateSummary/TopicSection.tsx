@@ -31,10 +31,10 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
         rules={{ required: 'Este campo es requerido' }}
         render={({ field: { onChange, value } }) => (
           <Select
-            label="Categoria"
+            label="Línea temática"
             labelPlacement="outside"
             placeholder={placeholder}
-            description="Seleccione la categoria a la que pertenece el resumen"
+            description="Seleccione una línea temática"
             selectedKeys={value ? [value] : []}
             onChange={(value) => {
               onChange(value)

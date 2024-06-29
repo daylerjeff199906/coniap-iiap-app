@@ -2,10 +2,11 @@
 import { FilePond, registerPlugin } from 'react-filepond'
 import { useFormContext, Controller } from 'react-hook-form'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import { ISummary } from '@/types'
 registerPlugin(FilePondPluginFileValidateType)
 
 export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
-  const { control } = useFormContext()
+  const { control } = useFormContext<ISummary>()
 
   return (
     <section className="space-y-3 w-full ">
@@ -20,7 +21,7 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
               disabled={loading}
               // onupdatefiles={onChange}
               instantUpload={false}
-              acceptedFileTypes={['doc/*', 'pdf/*']}
+              acceptedFileTypes={['application/pdf', 'application/msword']}
               server={{
                 process: (
                   fieldName: any,

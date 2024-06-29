@@ -33,6 +33,7 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
           <Input
             aria-label="Speakers"
             label="Ponente"
+            radius="sm"
             labelPlacement="outside"
             placeholder="Seleccionar ponente"
             value={value?.name}

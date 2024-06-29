@@ -22,6 +22,7 @@ import { useSummaries, useFiles } from '@/hooks/admin'
 import { LoadingPages } from '@/components'
 import { TopicSection } from './TopicSection'
 import { SpeakerSection } from './speakerSection'
+import { PreviewDoc } from './PreviewDoc'
 
 interface IProps {
   summary: ISummary
@@ -81,85 +82,74 @@ export const FrmUpdateSummary = (props: IProps) => {
 
   return (
     <>
-      <Modal
-        isOpen={true}
-        onClose={handleCancel}
-        size="3xl"
-      >
-        <ModalContent>
-          <ModalHeader>
-            <h2 className="text-xl font-bold">
-              {summary.id ? 'Actualizar resumen' : 'Agrega resumen'}
-            </h2>
-          </ModalHeader>
-          <Divider />
-          <ModalBody>
-            <FormProvider {...methods}>
-              <form
-                onSubmit={methods.handleSubmit(handleFormSubmit)}
-                className="p-4 flex flex-col gap-3"
-              >
-                {loadingFile && (
-                  <div className="py-1">
-                    <h2 className="text-sm text-gray-500 animate-pulse">
-                      {summary.id
-                        ? 'Actualizando resumen'
-                        : 'Guardando resumen'}
-                    </h2>
-                  </div>
+      <FormProvider {...methods}>
+        <main className="flex gap-2 f-full">
+          <section className="w-full max-w-lg border-r">
+            <form
+              onSubmit={methods.handleSubmit(handleFormSubmit)}
+              className="pr-4 flex flex-col gap-3"
+            >
+              {loadingFile && (
+                <div className="py-1">
+                  <h2 className="text-sm text-gray-500 animate-pulse">
+                    {summary.id ? 'Actualizando resumen' : 'Guardando resumen'}
+                  </h2>
+                </div>
+              )}
+              <TopicSection loading={loading || loadingFile} />
+
+              <Controller
+                name="title"
+                control={methods.control}
+                rules={{ required: 'Este campo es requerido' }}
+                render={({ field: { value, onChange } }) => (
+                  <Input
+                    aria-label="Título del resumen"
+                    label="Título del tema del resumen"
+                    labelPlacement="outside"
+                    placeholder="Título"
+                    value={value}
+                    onChange={onChange}
+                    radius="sm"
+                    isInvalid={methods.formState.errors?.title !== undefined}
+                    errorMessage={methods.formState.errors?.title?.message}
+                    isDisabled={loading || loadingFile}
+                  />
                 )}
-                <TopicSection loading={loading || loadingFile} />
+              />
 
-                <Controller
-                  name="title"
-                  control={methods.control}
-                  rules={{ required: 'Este campo es requerido' }}
-                  render={({ field: { value, onChange } }) => (
-                    <Input
-                      aria-label="Título del resumen"
-                      label="Título del tema del resumen"
-                      labelPlacement="outside"
-                      placeholder="Título"
-                      value={value}
-                      onChange={onChange}
-                      radius="sm"
-                      isInvalid={methods.formState.errors?.title !== undefined}
-                      errorMessage={methods.formState.errors?.title?.message}
-                      isDisabled={loading || loadingFile}
-                    />
-                  )}
-                />
+              <SpeakerSection loading={loading || loadingFile} />
+              <MultimediaSection loading={loading || loadingFile} />
 
-                <SpeakerSection loading={loading || loadingFile} />
-                <MultimediaSection loading={loading || loadingFile} />
-
-                <footer>
-                  <div className="flex items-center justify-end gap-3">
-                    <Button
-                      type="submit"
-                      size="sm"
-                      radius="sm"
-                      color="primary"
-                      isLoading={loading || loadingFile}
-                      isDisabled={loading || loadingFile}
-                    >
-                      {summary.id ? 'Actualizar' : 'Guardar'}
-                    </Button>
-                    <Button
-                      size="sm"
-                      radius="sm"
-                      type="reset"
-                      onPress={handleCancel}
-                    >
-                      Cancelar
-                    </Button>
-                  </div>
-                </footer>
-              </form>
-            </FormProvider>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+              <footer>
+                <div className="flex items-center justify-end gap-3">
+                  <Button
+                    type="submit"
+                    size="sm"
+                    radius="sm"
+                    color="primary"
+                    isLoading={loading || loadingFile}
+                    isDisabled={loading || loadingFile}
+                  >
+                    {summary.id ? 'Actualizar' : 'Guardar'}
+                  </Button>
+                  <Button
+                    size="sm"
+                    radius="sm"
+                    type="reset"
+                    onPress={handleCancel}
+                  >
+                    Cancelar
+                  </Button>
+                </div>
+              </footer>
+            </form>
+          </section>
+          <article className="w-full">
+            <PreviewDoc />
+          </article>
+        </main>
+      </FormProvider>
       <LoadingPages isOpen={loading || loadingFile} />
     </>
   )
