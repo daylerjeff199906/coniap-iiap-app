@@ -17,6 +17,8 @@ import { InfoSection } from './InfoSection'
 import { useFiles, useSummaries } from '@/hooks/admin'
 
 import infoData from '@/utils/json/infoConiap.json'
+import { AuthorsSection } from './AuthorsSection'
+import { ActionsSummary } from './ActionsSummary'
 
 interface IProps {
   summary?: ISummary
@@ -105,6 +107,7 @@ export const FrmUploadFile = (props: IProps) => {
         onClose={handleExit}
         size="2xl"
         radius="sm"
+        scrollBehavior="inside"
       >
         <ModalContent>
           <ModalHeader>
@@ -136,9 +139,11 @@ export const FrmUploadFile = (props: IProps) => {
                       : '¡Ya pasó la fecha límite!'}
                   </p>
                 </section>
-                <InfoSection />
-                <MultimediaSection />
                 <TopicSection />
+                <InfoSection />
+                <AuthorsSection />
+                <ActionsSummary />
+                <MultimediaSection />
                 <footer className="flex gap-3 items-center justify-end">
                   <Button
                     radius="sm"

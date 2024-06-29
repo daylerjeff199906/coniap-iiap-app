@@ -6,7 +6,7 @@ import { ISummary } from '@/types'
 registerPlugin(FilePondPluginFileValidateType)
 
 export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
-  const { control } = useFormContext<ISummary>()
+  const { control, watch } = useFormContext<ISummary>()
 
   return (
     <section className="space-y-3 w-full ">
@@ -49,6 +49,11 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
             />
           )}
         />
+        {watch('file') && (
+          <p className="text-sm font-medium">
+            Si sube un resumen reemplazará el actual.
+          </p>
+        )}
       </div>
     </section>
   )

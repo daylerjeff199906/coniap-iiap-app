@@ -8,8 +8,19 @@ import { IActions, IColumns } from '@/types'
 
 import { useTopics } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
+import { convertDate } from '@/utils/functions'
 
 const columns: Array<IColumns> = [
+  {
+    key: 'key',
+    label: 'Id',
+    align: 'start',
+  },
+  {
+    key: 'createdAt',
+    label: 'Creado',
+    align: 'start',
+  },
   {
     key: 'image',
     label: 'Imagen',
@@ -51,25 +62,26 @@ export const ListTopics = () => {
     getTopics('')
   }
 
+  const rows = topics
+    ? topics?.map((topic) => {
+        return {
+          key: topic?.id,
+          createdAt: convertDate(topic?.created_at),
+          image: RenderImage(topic?.image),
+          name: topic?.name,
+          description: topic?.description,
+          status: topic?.isActived,
+          actions: 'actions',
+        }
+      })
+    : []
+
   return (
     <>
       <TableGeneral
         loading={loading || loadingFile}
         columns={columns}
-        rows={
-          topics
-            ? topics?.map((topic) => {
-                return {
-                  key: topic.id,
-                  image: RenderImage(topic.image),
-                  name: topic.name,
-                  description: topic.description,
-                  status: topic.isActived,
-                  actions: 'actions',
-                }
-              })
-            : []
-        }
+        rows={rows}
       />
     </>
   )
