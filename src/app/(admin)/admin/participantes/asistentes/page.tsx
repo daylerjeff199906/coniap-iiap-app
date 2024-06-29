@@ -1,5 +1,5 @@
 import { fetchPersons } from '@/api'
-import { ListParticipants } from '@/modules/admin'
+import { ExportExcel, ListParticipants } from '@/modules/admin'
 import { HeaderSection } from '@/modules/core'
 import { IPerson } from '@/types'
 
@@ -38,6 +38,7 @@ export default async function Page(props: IProps) {
         isButtonVisible
         labelButton="Agregar Participante"
         href="/admin/participantes/asistentes/nuevo"
+        rigthContent={<ExportExcel dataList={persons} />}
       />
       <section className="py-6">
         <ListParticipants dataList={persons} />
