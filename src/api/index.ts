@@ -54,6 +54,7 @@ import {
 } from './fetchSummaries'
 
 import { fetchSalas } from './fetchSalas'
+import { fetchTotalPersons } from './fetchDashboard'
 
 export {
   //Events crud
@@ -103,4 +104,6 @@ export {
   fetchSummaryByIdPerson,
   //Salas
   fetchSalas,
+  //Dashboard
+  fetchTotalPersons,
 }
