@@ -74,7 +74,6 @@ export default async function Page() {
   return (
     <main className="h-ful">
       <BannerHome />
-      <TimeSection />
       <AboutUsSection />
       <SpeakersSection persons={dataPersons} />
       <TopicsSection topics={dataTopics} />
