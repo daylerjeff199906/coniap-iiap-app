@@ -9,7 +9,11 @@ export const PreviewDoc = () => {
 
   const isString = typeof file === 'string'
 
-  const src = isString ? value : URL.createObjectURL(file as unknown as Blob)
+  console.log('value', value)
+  console.log('isString', isString)
+  console.log('file', file)
+
+  const src = isString ? value : file ? URL.createObjectURL(file) : ''
 
   return (
     <section className="w-full h-full">
