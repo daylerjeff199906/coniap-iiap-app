@@ -53,7 +53,7 @@ export const TimeSection = () => {
 
   const days = Math.floor(
     timeRemaining !== null ? timeRemaining / (1000 * 60 * 60 * 24) : 0
-  )
+  ) 
   const hours = Math.floor(
     (timeRemaining !== null ? timeRemaining % (1000 * 60 * 60 * 24) : 0) /
       (1000 * 60 * 60)

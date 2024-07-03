@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
-import img_logo from '@/assets/svg/IMAGOTIPO - CONIAP.svg'
-import { Image } from '@nextui-org/react'
+import { imgImagoTipoConiap } from '@/assets'
+import Image from 'next/image'
 
 export const InfoAboutUs = () => {
   return (
@@ -24,9 +24,10 @@ export const InfoAboutUs = () => {
             }}
           >
             <Image
-              src={img_logo.src}
+              src={imgImagoTipoConiap.src}
               alt="CONIAP 2024"
-              removeWrapper
+              width={420}
+              height={520}
               className="w-full h-full max-h-[520px] rounded-xl"
             />
           </motion.div>

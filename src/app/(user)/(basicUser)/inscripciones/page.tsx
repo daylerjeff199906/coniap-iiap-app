@@ -62,17 +62,17 @@ export default function Page() {
         <article className="bg-gray-100">
           <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
             <div className="lg:col-span-3 flex flex-col gap-3">
-              <div className=" col-span-2 flex flex-col gap-1">
+              <div className=" col-span-2 flex flex-col gap-3">
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl">
                   PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
                 </h1>
-                <p className="text-sm sm:text-base lg:text-lg">
+                {/* <p className="text-sm sm:text-base lg:text-lg">
                   Si deseas
                   <b> participar como ponente </b>y ya estás registrado,
                   envíanos tu propuesta de presentación. Si aún no estás
                   registrado, inscríbete (Formulario arríba) y luego envía tu
                   propuesta, Iniciando sesión.
-                </p>
+                </p> */}
               </div>
               <div>
                 <Button
