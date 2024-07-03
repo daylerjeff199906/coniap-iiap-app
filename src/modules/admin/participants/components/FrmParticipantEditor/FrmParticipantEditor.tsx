@@ -137,12 +137,14 @@ export const FrmParticipantEditor = (props: IProps) => {
               color="primary"
               isDisabled={loading || loadFile}
               isLoading={loading || loadFile}
+              radius="sm"
             >
               Guardar
             </Button>
             <Button
               type="reset"
               onPress={handleBack}
+              radius="sm"
             >
               Cancelar
             </Button>
