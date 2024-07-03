@@ -41,6 +41,9 @@ export const FrmInscriptions = () => {
 
   const typePerson = methods.watch('typePerson')
   const email = methods.watch('email')
+
+  const isSpeaker = typePerson === 'speaker'
+
   const message =
     typePerson === 'participant' ? (
       <>
@@ -143,15 +146,6 @@ export const FrmInscriptions = () => {
           participante es {dateFormatted}.{' '}
           {isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'}
         </p>
-        {isBeforeSpeaker && (
-          <p className="text-sm ">
-            <strong>Nota:</strong> La fecha límite para enviar propuestas como
-            ponente es {dateFormattedSpeaker}.{' '}
-            {isBeforeSpeaker
-              ? '¡Aún tienes tiempo!'
-              : '¡Ya pasó la fecha límite!'}
-          </p>
-        )}
       </section>
       {isBefore && (
         <FormProvider {...methods}>
@@ -163,6 +157,23 @@ export const FrmInscriptions = () => {
             <JobData />
             <CountryData />
             <ContactData />
+            {isBeforeSpeaker && isSpeaker && (
+              <section
+                className={`p-4 border rounded-lg font-medium flex flex-col gap-2 col-span-2 ${
+                  isBefore
+                    ? 'border-warning-500 bg-warning-100 text-warning-700'
+                    : 'bg-danger-100 border-danger-500 text-danger-700'
+                }`}
+              >
+                <p className="text-sm ">
+                  <strong>Nota:</strong> La fecha límite para enviar propuestas
+                  como ponente es {dateFormattedSpeaker}.{' '}
+                  {isBeforeSpeaker
+                    ? '¡Aún tienes tiempo!'
+                    : '¡Ya pasó la fecha límite!'}
+                </p>
+              </section>
+            )}
             {isBeforeSpeaker && <RoleData />}
             <div className="col-span-2">
               <Button

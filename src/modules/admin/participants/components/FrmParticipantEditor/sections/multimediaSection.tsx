@@ -1,6 +1,11 @@
 'use client'
 import { FilePond, registerPlugin } from 'react-filepond'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+
+registerPlugin(FilePondPluginImagePreview)
 registerPlugin(FilePondPluginFileValidateType)
 interface IProps {
   files: any[]
@@ -23,13 +28,15 @@ export const MultimediaSection = (props: IProps) => {
         <FilePond
           allowMultiple={false}
           acceptedFileTypes={['image/*']}
-          labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
           files={files}
           onupdatefiles={handleUpdateFiles}
           stylePanelLayout={'compact circle'}
           styleLoadIndicatorPosition="center bottom"
           styleProgressIndicatorPosition="right bottom"
           styleButtonRemoveItemPosition="left bottom"
+          labelIdle='Arrastra y suelta tu archivo o <span class="filepond--label-action"> busca </span>'
+          imagePreviewHeight={100}
+          styleButtonProcessItemPosition="right bottom"
         />
       </div>
     </section>

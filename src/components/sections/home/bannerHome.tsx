@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { formatConferenceDate } from '@/utils/functions'
 import infoData from '@/utils/json/infoConiap.json'
+import { TimeSection } from './timeSection'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -113,7 +114,7 @@ export const BannerHome = () => {
               <Image
                 src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
                 alt="Banner Home"
-                className="w-52 h-60 object-cover "
+                className="w-52 h-56 object-cover "
                 radius="sm"
                 removeWrapper
               />
@@ -123,17 +124,17 @@ export const BannerHome = () => {
                 src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede"
                 alt="Tejido-iiap"
                 radius="sm"
-                className="w-52 h-60 object-cover"
+                className="w-52 h-56 object-cover"
               />
             </motion.div>
           </div>
-          <div className="space-y-3 pt-14">
+          <div className="space-y-3 pt-8">
             <motion.div variants={item}>
               <Image
                 src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
                 alt="expoIIAP"
                 radius="sm"
-                className="w-64 h-72 object-cover"
+                className="w-48 h-52 object-cover"
               />
             </motion.div>
             <motion.div variants={item}>
@@ -141,11 +142,14 @@ export const BannerHome = () => {
                 src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2"
                 alt="Banner Home"
                 radius="sm"
-                className="h-56 object-cover"
+                className="h-48 object-cover"
               />
             </motion.div>
           </div>
         </motion.div>
+        <section className="absolute right-0 left-0 bottom-0 flex flex-col items-center ">
+          <TimeSection />
+        </section>
       </div>
       <video
         autoPlay

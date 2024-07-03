@@ -44,7 +44,17 @@ export const NavBarUser = () => {
         transition={{ duration: 1 }}
       >
         <div className="z-50">
-          <Link href={'/'}>
+          <Link
+            href={'/'}
+            className="flex gap-2"
+          >
+            <Image
+              src="/minamf.webp"
+              alt="Logo"
+              width={120}
+              height={90}
+              priority
+            />
             <Image
               src="/logo_coniap.webp"
               alt="Logo"
@@ -74,7 +84,15 @@ export const NavBarUser = () => {
             <NavbarBrand
               as={Link}
               href={'/'}
+              className="flex gap-2"
             >
+              <Image
+                src="/minamf.webp"
+                alt="Logo"
+                width={120}
+                height={90}
+                priority
+              />
               <Image
                 src="/logo_coniap.webp"
                 alt="Logo"
@@ -154,7 +172,15 @@ export const NavBarUser = () => {
             <NavbarBrand
               as={Link}
               href={'/'}
+              className="flex gap-2"
             >
+              <Image
+                src="/minamf.webp"
+                alt="Logo"
+                width={120}
+                height={90}
+                priority
+              />
               <Image
                 src="/logo_coniap.webp"
                 alt="Logo"
