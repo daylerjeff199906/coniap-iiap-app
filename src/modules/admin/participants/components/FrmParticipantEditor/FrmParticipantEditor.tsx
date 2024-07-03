@@ -43,14 +43,14 @@ export const FrmParticipantEditor = (props: IProps) => {
     setOpen(true)
   }
 
-  console.log('dataDefault', dataDefault)
-
   const handleFormSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
     setOpen(false)
 
+    const { imageFile, ...rest } = data
+
     const newData: IPerson = {
-      ...data,
-      image: '',
+      ...rest,
+      image: dataDefault?.id ? dataDefault.image : '',
       isActived: dataDefault?.id ? dataDefault.isActived : false,
     }
 

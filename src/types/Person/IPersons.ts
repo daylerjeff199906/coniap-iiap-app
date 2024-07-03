@@ -4,6 +4,7 @@ export interface IPerson {
   surName: string
   phone?: string
   job: string
+  imageFile?: File
   image: string
   email: string
   location?: string
