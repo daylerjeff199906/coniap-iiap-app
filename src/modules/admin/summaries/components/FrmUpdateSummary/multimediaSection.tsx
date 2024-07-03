@@ -2,6 +2,8 @@
 import { FilePond, registerPlugin } from 'react-filepond'
 import { useFormContext, Controller } from 'react-hook-form'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import 'filepond/dist/filepond.min.css'
+
 import { ISummary } from '@/types'
 registerPlugin(FilePondPluginFileValidateType)
 
@@ -25,7 +27,6 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
             <FilePond
               allowMultiple={false}
               disabled={loading}
-              // onupdatefiles={onChange}
               instantUpload={false}
               acceptedFileTypes={['application/pdf', 'application/msword']}
               server={{
