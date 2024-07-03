@@ -1,5 +1,4 @@
 'use client'
-import { usePathname } from 'next/navigation'
 import {
   IconLayoutDashboard,
   IconCalendarEvent,
@@ -9,7 +8,6 @@ import {
   IconStack3,
   IconUserCog,
 } from '@tabler/icons-react'
-import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 
 import { NavBar } from '@/modules/core'
 import { AsideMenu } from '@/modules/admin'
@@ -115,34 +113,7 @@ export const menuAside: IMenuAside[] = [
   },
 ]
 
-const generateBreadcrumbItems = (pathname: string) => {
-  const pathParts = pathname?.split('/').filter(Boolean)
-
-  if (pathParts.length === 0) {
-    return null
-  }
-
-  const capitalizeAndReplace = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ')
-  }
-
-  // Si la ruta actual es /admin, excluimos ese elemento y los siguientes
-  const startIndex =
-    pathParts.indexOf('admin') === -1 ? 0 : pathParts.indexOf('admin') + 1
-
-  return pathParts.slice(startIndex).map((item, index) => (
-    <BreadcrumbItem
-      href={`/${pathParts.slice(0, startIndex + index + 1).join('/')}`}
-      key={index}
-      className="capitalize"
-    >
-      {capitalizeAndReplace(item)}
-    </BreadcrumbItem>
-  ))
-}
-
 export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname()
   return (
     <div className="flex w-full">
       <aside className="w-60 min-w-60 max-w-60 bg-gray-100 h-screen sticky top-0 overflow-y-auto">

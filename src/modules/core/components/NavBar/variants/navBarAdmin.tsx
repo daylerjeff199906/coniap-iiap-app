@@ -54,7 +54,7 @@ export const NavBarAdmin = () => {
     >
       {/* <NavbarBrand>Admin</NavbarBrand> */}
       <NavbarContent justify="start">
-        <section className="py-4 sticky top-16 bg-white z-30 w-full max-w-[1920px] mx-auto px-4 sm:px-6">
+        <section className="py-4 sticky top-16 z-30 w-full max-w-[1920px] mx-auto px-4 sm:px-6">
           {pathname !== null && (
             <Breadcrumbs
               className="text-sm"
