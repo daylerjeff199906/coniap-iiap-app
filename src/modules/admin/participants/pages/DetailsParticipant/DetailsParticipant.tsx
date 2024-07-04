@@ -4,6 +4,8 @@ import { Image, Chip, Button } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
 
+// import 
+
 interface IProps {
   data: IPerson
   summaries?: ISummary[] | null
@@ -76,6 +78,7 @@ export const DetailsParticipant = (props: IProps) => {
           <p>País: {data?.location}</p>
         </div>
       </section>
+      {/* Section de resumenes */}
       {summaries && summaries?.length > 0 && (
         <section className="flex flex-col gap-2">
           <h4 className="font-bold mt-4 text-gray-500">Resúmenes adjuntos</h4>
@@ -100,6 +103,7 @@ export const DetailsParticipant = (props: IProps) => {
           </div>
         </section>
       )}
+      {/* Section de usuario */}
     </main>
   )
 }
