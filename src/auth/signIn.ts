@@ -7,10 +7,10 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore'
-import { fetchPersonByEmail } from '@/api'
+import { fetchUserByEmail } from '@/api'
 import { IError } from './types'
 
-import { IPerson, IUser } from '@/types'
+import { IUser } from '@/types'
 // import { createCookie, createLocalStorage } from '@/lib'
 import { toast } from 'sonner'
 import { getErrors } from './getErrors'
@@ -34,36 +34,36 @@ export const signInWithCredentials = async (
       password
     )
     if (userCredential.user.emailVerified) {
-      //Busco en la tabla users si existe el usuario
-      const usersRef = collection(firestore, 'users')
-      const q = query(usersRef, where('email', '==', userCredential.user.email))
-      const querySnapshot = await getDocs(q)
+      // //Busco en la tabla users si existe el usuario
+      // const usersRef = collection(firestore, 'users')
+      // const q = query(usersRef, where('email', '==', userCredential.user.email))
+      // const querySnapshot = await getDocs(q)
 
       //Se busca si existe la persona en la tabla person
-      const person: IPerson = (await fetchPersonByEmail(
+      const user: IUser | null = (await fetchUserByEmail(
         userCredential.user.email as string
-      )) as IPerson
+      )) as IUser | null
 
       let userData: IUser | null = null
-      if (querySnapshot.empty) {
-        userData = {
-          id: person.id as string,
-          userName: person.name || '',
-          email: userCredential.user.email || '',
-          photo: person.image || '',
-          role: null,
-          person: person,
-        }
-      } else {
-        userData = {
-          id: querySnapshot.docs[0].id,
-          userName: userCredential.user.displayName || '',
-          email: userCredential.user.email || '',
-          photo: userCredential.user.photoURL || '',
-          role: querySnapshot.docs[0].data().role || '',
-          person: person,
-        }
-      }
+      // if (querySnapshot.empty) {
+      //   userData = {
+      //     id: person.id as string,
+      //     userName: person.name || '',
+      //     email: userCredential.user.email || '',
+      //     photo: person.image || '',
+      //     role: null,
+      //     person: person,
+      //   }
+      // } else {
+      //   userData = {
+      //     id: querySnapshot.docs[0].id,
+      //     userName: userCredential.user.displayName || '',
+      //     email: userCredential.user.email || '',
+      //     photo: userCredential.user.photoURL || '',
+      //     role: querySnapshot.docs[0].data().role || '',
+      //     person: person,
+      //   }
+      // }
       return userData
     } else {
       console.log(userCredential.user.emailVerified)
