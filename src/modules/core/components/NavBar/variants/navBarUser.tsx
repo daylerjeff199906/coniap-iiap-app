@@ -56,7 +56,7 @@ export const NavBarUser = () => {
               priority
             />
             <Image
-              src="/logo_coniap.webp"
+              src="/logo_iiap.webp"
               alt="Logo"
               width={120}
               height={90}
@@ -94,7 +94,7 @@ export const NavBarUser = () => {
                 priority
               />
               <Image
-                src="/logo_coniap.webp"
+                src="/logo_iiap.webp"
                 alt="Logo"
                 width={120}
                 height={90}
@@ -182,7 +182,7 @@ export const NavBarUser = () => {
                 priority
               />
               <Image
-                src="/logo_coniap.webp"
+                src="/logo_iiap.webp"
                 alt="Logo"
                 width={120}
                 height={90}

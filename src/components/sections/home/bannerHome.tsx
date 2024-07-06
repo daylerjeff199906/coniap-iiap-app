@@ -8,6 +8,8 @@ import Link from 'next/link'
 import { formatConferenceDate } from '@/utils/functions'
 import infoData from '@/utils/json/infoConiap.json'
 import { TimeSection } from './timeSection'
+import { lotScrollDown } from '@/assets'
+import Lottie from 'lottie-react'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -147,6 +149,15 @@ export const BannerHome = () => {
         </motion.div>
         <section className="absolute right-0 left-0 bottom-0 flex flex-col items-center ">
           <TimeSection />
+        </section>
+        <section className="absolute left-0 lg:left-auto right-0 z-30 bottom-24 sm:bottom-32 lg:bottom-0 lg:p-6 flex flex-col items-center">
+          <Lottie
+            aria-label="scroll-down"
+            animationData={lotScrollDown}
+            loop
+            autoplay
+            className="w-10 h-10 sm:w-12 sm:h-12"
+          />
         </section>
       </div>
       <video

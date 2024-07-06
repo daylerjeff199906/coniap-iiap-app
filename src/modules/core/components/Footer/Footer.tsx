@@ -10,6 +10,7 @@ import {
 import Link from 'next/link'
 import dataInfo from '@/utils/json/infoConiap.json'
 import { formatConferenceDate } from '@/utils/functions'
+import countries from '@/utils/json/countries.json'
 
 const mapSite = [
   {
@@ -76,8 +77,8 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="border-t-1">
-        <section className="py-4 sm:pt-8 lg:pt-16 bg-white">
+      <footer className="border-t-1 bg-gray-200">
+        <section className="py-4 sm:pt-8 lg:pt-16">
           <div className="grid grid-cols-1 gap-3 container">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
@@ -98,7 +99,7 @@ export const Footer = () => {
                 </div>
                 <div>
                   <p>{dateRange}</p>
-                  <p className="font-bold text-zinc-400">{modality}</p>
+                  <p className="font-bold">{modality}</p>
                 </div>
                 <div className="space-y-3">
                   <h3 className="text-lg">#CONIAP{year}</h3>
