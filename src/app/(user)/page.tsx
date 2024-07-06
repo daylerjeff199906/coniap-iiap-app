@@ -2,13 +2,11 @@ import { createClient } from '@/utils/supabase/server'
 import {
   AboutUsSection,
   BannerHome,
-  TimeSection,
   SpeakersSection,
   TopicsSection,
   SponsorSection,
   EventsSection,
   InscriptionsSection,
-  MoreEventsSection,
   AgendaSection,
 } from '@/components'
 
@@ -81,9 +79,8 @@ export default async function Page() {
         events={eventSpeakers}
         programs={programs}
       />
-      <MoreEventsSection events={eventSpeakers} />
-      <EventsSection events={dataEvents} />
       <InscriptionsSection />
+      <EventsSection events={dataEvents} />
       <SponsorSection sponsors={dataSponsors} />
     </main>
   )
