@@ -6,7 +6,7 @@ export async function fetchUserByEmail(email: string): Promise<IUser | null> {
   const client = createClient()
   const { data, error } = await client
     .from('users')
-    .select('*')
+    .select('*, person(*)')
     .eq('email', email)
     .single()
 

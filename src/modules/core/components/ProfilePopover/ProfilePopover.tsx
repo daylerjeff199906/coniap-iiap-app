@@ -23,7 +23,13 @@ export const ProfilePopover = (props: IProps) => {
   const { user, logout, loading, isAdmin } = props
 
   const rol = user?.role
-  const isAdm = rol === 'admin'
+  const isSuperAdmin = rol?.includes('superadmin')
+  const includeAdmin = rol?.includes('admin')
+  const isEditor = rol?.includes('editor')
+  const isSpeaker = rol?.includes('speaker')
+
+  const speaker = !isSuperAdmin && !includeAdmin && !isEditor
+  const admin = isSuperAdmin || includeAdmin || isEditor
 
   return (
     <>
@@ -101,9 +107,18 @@ export const ProfilePopover = (props: IProps) => {
                   <DropdownItem
                     key="profile"
                     as={Link}
-                    href={isAdm ? '/admin' : '/dashboard'}
+                    href="/dashboard"
+                    className={speaker ? 'hidden' : ''}
                   >
-                    {isAdm ? 'Dashboard' : 'Panel de Usuario'}
+                    Mi perfil
+                  </DropdownItem>
+                  <DropdownItem
+                    key="profile"
+                    as={Link}
+                    href="/admin"
+                    className={admin ? 'hidden' : ''}
+                  >
+                    Panel de administración
                   </DropdownItem>
                 </DropdownSection>
                 <DropdownSection>
