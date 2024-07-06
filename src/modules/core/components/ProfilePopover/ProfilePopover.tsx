@@ -28,7 +28,6 @@ export const ProfilePopover = (props: IProps) => {
   const isEditor = rol?.includes('editor')
   const isSpeaker = rol?.includes('speaker')
 
-  const speaker = !isSuperAdmin && !includeAdmin && !isEditor
   const admin = isSuperAdmin || includeAdmin || isEditor
 
   return (
@@ -108,7 +107,7 @@ export const ProfilePopover = (props: IProps) => {
                     key="profile"
                     as={Link}
                     href="/dashboard"
-                    className={speaker ? 'hidden' : ''}
+                    className={!isSpeaker ? 'hidden' : ''}
                   >
                     Mi perfil
                   </DropdownItem>
@@ -116,7 +115,7 @@ export const ProfilePopover = (props: IProps) => {
                     key="profile"
                     as={Link}
                     href="/admin"
-                    className={admin ? 'hidden' : ''}
+                    className={!admin ? 'hidden' : ''}
                   >
                     Panel de administración
                   </DropdownItem>
