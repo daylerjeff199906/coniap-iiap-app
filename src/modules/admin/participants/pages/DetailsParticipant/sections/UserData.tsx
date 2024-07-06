@@ -11,7 +11,7 @@ import {
 } from '@nextui-org/react'
 import { useUsers } from '@/hooks/admin'
 import { createUser, updateUser } from '@/api'
-import { registerWithEmail } from '@/auth'
+import { registerAndSendEmailVerification } from '@/auth'
 
 import {
   useForm,
@@ -67,7 +67,7 @@ export const UserData = (props: IProps) => {
       })
       toast.success('Usuario actualizado correctamente')
     } else {
-      const userCreated = await registerWithEmail({
+      const userCreated = await registerAndSendEmailVerification({
         email: data.email,
         password: password_default ? password_default : 'coniap@2024_',
       })

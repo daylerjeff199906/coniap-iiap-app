@@ -27,7 +27,7 @@ export const signInWithCredentials = async (
     )
     if (userCredential.user.emailVerified) {
       //Se busca si existe la persona en la tabla person
-      let user: IUser | null = (await fetchUserByEmail(
+      const user: IUser | null = (await fetchUserByEmail(
         userCredential.user.email as string
       )) as IUser | null
 
@@ -44,13 +44,20 @@ export const signInWithCredentials = async (
           person: Number(person?.id),
         }
 
-        user = await createUser(newUser)
-        if (user) {
-          user = { ...user, person: person }
+        const newUserRes = await createUser(newUser)
+        if (newUserRes && person) {
+          return {
+            ...newUser,
+            person: person,
+          }
+        } else {
+          return null
         }
-        return user
       } else if (user !== null) {
-        return user
+        return {
+          ...user,
+          person,
+        }
       } else {
         return null
       }
