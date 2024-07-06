@@ -1,3 +1,4 @@
+'use client'
 import { Input, Textarea } from '@nextui-org/react'
 import { useFormContext, Controller } from 'react-hook-form'
 import { CountrySection } from './countrySection'
