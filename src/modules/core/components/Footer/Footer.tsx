@@ -76,8 +76,8 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="border-t-1">
-        <section className="py-4 sm:pt-8 lg:pt-16 bg-white">
+      <footer className="border-t-1 bg-gray-200">
+        <section className="py-4 sm:pt-8 lg:pt-16">
           <div className="grid grid-cols-1 gap-3 container">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
