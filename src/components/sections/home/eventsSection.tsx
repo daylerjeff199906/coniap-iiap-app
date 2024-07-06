@@ -17,7 +17,7 @@ export const EventsSection = (props: IProps) => {
   const { events } = props
   return (
     <>
-      <section className="bg-white section-home w-full">
+      <section className="bg-gray-100 section-home w-full">
         <div className="container space-y-6 py-4">
           <motion.header
             initial={{ opacity: 0, x: -15 }}
@@ -32,11 +32,13 @@ export const EventsSection = (props: IProps) => {
           >
             <div className="flex items-center gap-3 pb-3">
               <div className="dot-custom" />
-              <p className="text-xs font-semibold z-10 uppercase">#eventos - 2024</p>
+              <p className="text-xs font-semibold z-10 uppercase">
+                #coniap - 2024
+              </p>
             </div>
             <div className="w-full max-w-4xl">
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
-                Próximos <b>eventos</b>
+                Cursos <b>post</b> congreso
               </h2>
             </div>
           </motion.header>
