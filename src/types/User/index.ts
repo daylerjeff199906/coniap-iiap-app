@@ -1,3 +1,3 @@
-import { IUser } from './IUser'
+import { IUser, IUserCreate, IUserCreated } from './IUser'
 
-export type { IUser }
+export type { IUser, IUserCreate, IUserCreated }

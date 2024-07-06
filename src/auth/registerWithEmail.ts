@@ -37,7 +37,6 @@ export async function registerAndSendEmailVerification(props: ICrendentials) {
 
 export async function registerWithEmail(props: ICrendentials) {
   const { email, password } = props
-
   try {
     // Crear usuario con correo y contraseña
     const userCredential = await createUserWithEmailAndPassword(

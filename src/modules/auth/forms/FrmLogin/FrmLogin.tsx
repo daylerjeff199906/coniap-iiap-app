@@ -26,13 +26,16 @@ export const FrmLogin = () => {
     if (res) {
       toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
       await setUserData(res)
-      if (res.role === 'admin') {
-        router.push('/admin')
-      } else if (
-        res.role === null &&
-        res.person?.typePerson !== 'participant'
-      ) {
-        router.push('/dashboard')
+      if (res.role) {
+        if (res.role.includes('admin')) {
+          router.push('/admin')
+        } else if (res.role.includes('superadmin')) {
+          router.push('/admin')
+        } else if (res.role.includes('editor')) {
+          router.push('/admin')
+        } else if (res.role.includes('speaker')) {
+          router.push('/dashboard')
+        }
       } else {
         router.push('/')
       }
@@ -46,16 +49,21 @@ export const FrmLogin = () => {
     if (res) {
       toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
       await setUserData(res)
-      if (res.role === 'admin') {
-        router.push('/admin')
-      } else if (
-        res.role === null &&
-        res.person?.typePerson !== 'participant'
-      ) {
-        router.push('/dashboard')
+      if (res.role) {
+        if (res.role.includes('admin')) {
+          router.push('/admin')
+        } else if (res.role.includes('superadmin')) {
+          router.push('/admin')
+        } else if (res.role.includes('editor')) {
+          router.push('/admin')
+        } else if (res.role.includes('speaker')) {
+          router.push('/dashboard')
+        }
       } else {
         router.push('/')
       }
+    } else {
+      toast.error('Error al iniciar sesión', { position: 'top-right' })
     }
     setLoading(false)
   }
