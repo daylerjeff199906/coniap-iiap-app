@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
   return {
-    title: person?.name + person?.surName,
+    title: person?.name + person?.surName + ' | CONIAP 2024',
     description: person.presentation?.slice(0, 160),
     openGraph: {
       images: [{ url: person.image }],
