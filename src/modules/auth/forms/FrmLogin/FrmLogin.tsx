@@ -46,7 +46,6 @@ export const FrmLogin = () => {
   const handleGoogle = async () => {
     setLoading(true)
     const res = await SignInWithGoogle()
-    console.log(res)
     if (res) {
       toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
       await setUserData(res)
