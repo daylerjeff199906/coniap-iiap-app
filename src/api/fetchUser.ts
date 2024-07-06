@@ -61,12 +61,16 @@ export async function deleteUser(id: string): Promise<boolean> {
   return true
 }
 
-export async function fetchUsers(): Promise<IUser[] | null> {
+export async function fetchUsers(query?: string): Promise<IUser[] | null> {
   const client = createClient()
-  const { data, error } = await client
-    .from('users')
-    .select('*, person(*)')
-    .order('id', { ascending: true })
+
+  let users = client.from('users').select('*, person(*)')
+
+  if (query) {
+    users = users.textSearch('userName', query)
+  }
+
+  const { data, error } = await users
 
   if (error) {
     return null

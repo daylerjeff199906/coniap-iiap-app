@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { useUsers } from '@/hooks/admin'
 import { IColumns } from '@/types'
-import { useEffect } from 'react'
+import { convertDate } from '@/utils/functions'
 
 const columns: IColumns[] = [
   {
@@ -40,20 +41,23 @@ const columns: IColumns[] = [
 
 export const ListUsers = () => {
   const { getListUsers, loading, users } = useUsers()
+  const [query, setQuery] = useState<string>('')
 
   useEffect(() => {
     getListUsers()
-  }, [])
+  }, [query])
 
   const rows =
     users?.map((user) => {
       return {
         key: String(user.id),
         num: user.id,
-        created_at: user.created_at,
+        created_at: user?.created_at
+          ? convertDate(user.created_at)
+          : 'No asignado',
         userName: user.userName,
         email: user.email,
-        role: user.role,
+        role: user.role ? user.role.join(', ') : 'No asignados',
         person: user?.person ? user.person.name : 'No asignado',
       }
     }) || []
@@ -64,6 +68,8 @@ export const ListUsers = () => {
         columns={columns}
         rows={rows}
         loading={loading}
+        onSearch={setQuery}
+        searchValue={query}
       />
     </>
   )

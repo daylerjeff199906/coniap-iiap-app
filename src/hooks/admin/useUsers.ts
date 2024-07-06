@@ -7,9 +7,9 @@ export function useUsers() {
   const [loading, setLoading] = useState<boolean>(false)
   const [users, setUsers] = useState<IUser[] | null>(null)
 
-  const getListUsers = async () => {
+  const getListUsers = async (query?: string) => {
     setLoading(true)
-    const users = await fetchUsers()
+    const users = await fetchUsers(query)
 
     if (users) {
       setUsers(users)
