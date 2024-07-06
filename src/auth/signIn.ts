@@ -1,17 +1,10 @@
 'use client'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-// import {
-//   getFirestore,
-//   collection,
-//   query,
-//   where,
-//   getDocs,
-// } from 'firebase/firestore'
-import { fetchUserByEmail } from '@/api'
+
+import { fetchUserByEmail, fetchPersonByEmail, createUser } from '@/api'
 import { IError } from './types'
 
-import { IUser } from '@/types'
-// import { createCookie, createLocalStorage } from '@/lib'
+import { IUser, IPerson } from '@/types'
 import { toast } from 'sonner'
 import { getErrors } from './getErrors'
 
@@ -34,11 +27,33 @@ export const signInWithCredentials = async (
     )
     if (userCredential.user.emailVerified) {
       //Se busca si existe la persona en la tabla person
-      const user: IUser | null = (await fetchUserByEmail(
+      let user: IUser | null = (await fetchUserByEmail(
         userCredential.user.email as string
       )) as IUser | null
 
-      return user
+      const person: IPerson | null = (await fetchPersonByEmail(
+        userCredential.user.email as string
+      )) as IPerson | null
+
+      if (person !== null && user === null) {
+        const newUser = {
+          userName: person.name,
+          email: userCredential.user.email as string,
+          photo: '',
+          role: person.typePerson !== 'participant' ? ['speaker'] : null,
+          person: Number(person?.id),
+        }
+
+        user = await createUser(newUser)
+        if (user) {
+          user = { ...user, person: person }
+        }
+        return user
+      } else if (user !== null) {
+        return user
+      } else {
+        return null
+      }
     } else {
       console.log(userCredential.user.emailVerified)
       toast.error('Revise su correo electrónico para verificar su cuenta', {

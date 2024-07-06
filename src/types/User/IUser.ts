@@ -1,7 +1,7 @@
 import { IPerson } from '../Person'
 
 export interface IUser {
-  id: string
+  id?: string
   userName: string
   email: string
   photo: string

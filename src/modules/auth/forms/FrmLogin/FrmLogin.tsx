@@ -22,6 +22,7 @@ export const FrmLogin = () => {
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
     const res = await signInWithCredentials(data)
+    console.log(res)
 
     if (res) {
       toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
