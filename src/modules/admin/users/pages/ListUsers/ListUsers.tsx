@@ -7,6 +7,16 @@ import { useEffect } from 'react'
 
 const columns: IColumns[] = [
   {
+    key: 'num',
+    label: '#',
+    align: 'start',
+  },
+  {
+    key: 'created_at',
+    label: 'F. Creación',
+    align: 'start',
+  },
+  {
     key: 'userName',
     label: 'User Name',
     align: 'start',
@@ -17,14 +27,19 @@ const columns: IColumns[] = [
     align: 'start',
   },
   {
+    key: 'person',
+    label: 'Persona',
+    align: 'start',
+  },
+  {
     key: 'role',
-    label: 'Role',
+    label: 'Roles',
     align: 'start',
   },
 ]
 
 export const ListUsers = () => {
-  const { getListUsers, users, loading } = useUsers()
+  const { getListUsers, loading, users } = useUsers()
 
   useEffect(() => {
     getListUsers()
@@ -33,10 +48,13 @@ export const ListUsers = () => {
   const rows =
     users?.map((user) => {
       return {
-        key: user.id,
+        key: String(user.id),
+        num: user.id,
+        created_at: user.created_at,
         userName: user.userName,
         email: user.email,
         role: user.role,
+        person: user?.person ? user.person.name : 'No asignado',
       }
     }) || []
 
@@ -45,6 +63,7 @@ export const ListUsers = () => {
       <TableGeneral
         columns={columns}
         rows={rows}
+        loading={loading}
       />
     </>
   )

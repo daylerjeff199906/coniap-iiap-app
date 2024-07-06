@@ -50,3 +50,26 @@ export async function updateUser(user: IUser): Promise<IUser | null> {
   }
   return data
 }
+
+export async function deleteUser(id: string): Promise<boolean> {
+  const client = createClient()
+  const { error } = await client.from('users').delete().eq('id', id)
+
+  if (error) {
+    return false
+  }
+  return true
+}
+
+export async function fetchUsers(): Promise<IUser[] | null> {
+  const client = createClient()
+  const { data, error } = await client
+    .from('users')
+    .select('*, person(*)')
+    .order('id', { ascending: true })
+
+  if (error) {
+    return null
+  }
+  return data
+}
