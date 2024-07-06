@@ -3,7 +3,7 @@ import { IPerson, ISummary } from '@/types'
 import { Button } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
-import { InfoData } from './sections'
+import { InfoData, UserData } from './sections'
 
 interface IProps {
   data: IPerson
@@ -41,6 +41,7 @@ export const DetailsParticipant = (props: IProps) => {
         data={data}
         summaries={summaries}
       />
+      <UserData data={data} />
     </main>
   )
 }

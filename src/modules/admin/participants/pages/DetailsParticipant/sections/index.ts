@@ -1,3 +1,4 @@
 import { InfoData } from './InfoData'
+import { UserData } from './UserData'
 
-export { InfoData }
+export { InfoData, UserData }
