@@ -21,3 +21,12 @@ export interface IUserCreate {
   password?: string
   password_confirmation?: string
 }
+
+export interface IUserCreated {
+  id?: string
+  userName: string
+  email: string
+  photo: string
+  role: string[] | null
+  person: number | null
+}

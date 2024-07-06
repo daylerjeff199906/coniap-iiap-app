@@ -1,6 +1,6 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { IUser } from '@/types'
+import { IUser, IUserCreated } from '@/types'
 
 export async function fetchUserByEmail(email: string): Promise<IUser | null> {
   const client = createClient()
@@ -14,15 +14,6 @@ export async function fetchUserByEmail(email: string): Promise<IUser | null> {
     return null
   }
   return data
-}
-
-interface IUserCreated {
-  id?: string
-  userName: string
-  email: string
-  photo: string
-  role: string[] | null
-  person: number | null
 }
 
 export async function createUser(user: IUserCreated): Promise<IUser | null> {

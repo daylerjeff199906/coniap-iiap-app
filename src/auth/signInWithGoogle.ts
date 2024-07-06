@@ -1,7 +1,7 @@
 'use client'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
-import { IUser } from '@/types'
+import { IUser, IUserCreated } from '@/types'
 import { IError } from './types'
 import { toast } from 'sonner'
 
@@ -30,7 +30,7 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
           userName: user.displayName as string,
           role: null,
         }
-        const newUser = await createUser(userData as IUser)
+        const newUser = await createUser(userData as IUserCreated)
 
         if (!newUser) {
           toast.error('Error al crear el usuario')
