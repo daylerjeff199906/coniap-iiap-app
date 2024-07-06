@@ -47,6 +47,8 @@ export const UserData = (props: IProps) => {
     },
   })
 
+  const isDirty = methods.formState.isDirty
+
   useEffect(() => {
     getUserByEmail(data.email)
   }, [data.email])
@@ -59,14 +61,11 @@ export const UserData = (props: IProps) => {
     setOpen(false)
     setLoadSave(true)
     if (user) {
-      const userUpdated = await updateUser({
+      await updateUser({
         ...user,
         role: data?.role && data.role.length > 0 ? data.role : null,
       })
-      if (userUpdated) {
-        setOpen(false)
-        toast.success('Usuario actualizado correctamente')
-      }
+      toast.success('Usuario actualizado correctamente')
     } else {
       const userCreated = await registerWithEmail({
         email: data.email,
@@ -108,10 +107,11 @@ export const UserData = (props: IProps) => {
                   <p className="text-xs text-gray-500">
                     Información del usuario
                   </p>
-                  <p>Usuario registrado: {user?.userName}</p>
-                  <p>Correo: {user?.email}</p>
+                  <div className="flex gap-2 text-sm font-medium">
+                    <p>Usuario registrado: {user?.userName}</p>
+                    <p>Correo: {user?.email}</p>
+                  </div>
                 </header>
-                <Divider />
               </section>
             ) : (
               <section className="flex flex-col gap-2 ">
@@ -156,13 +156,18 @@ export const UserData = (props: IProps) => {
                 )}
               />
               <footer className="flex items-center justify-end gap-2 w-full">
-                <Button radius="sm">Cancelar</Button>
+                <Button
+                  radius="sm"
+                  onPress={() => methods.reset()}
+                >
+                  Cancelar
+                </Button>
                 <Button
                   radius="sm"
                   className="button-dark"
                   type="submit"
                   isLoading={loadSave}
-                  isDisabled={loadSave}
+                  isDisabled={loadSave || !isDirty}
                 >
                   Crear usuario
                 </Button>
