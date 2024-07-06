@@ -1,7 +1,6 @@
 'use client'
-import { Accordion, AccordionItem, Image } from '@nextui-org/react'
+import { Image } from '@nextui-org/react'
 import { motion } from 'framer-motion'
-import { IconPlus } from '@tabler/icons-react'
 import svgAddorm from '@/assets/svg/patron-fino.svg'
 
 const data = [
@@ -74,8 +73,8 @@ export const OrganizationSection = () => {
   return (
     <>
       <section className="py-10 sm:py-20">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
-          <div>
+        <div className="grid grid-cols-1 gap-3 sm:gap-5">
+          <header>
             <motion.div
               className="flex items-center gap-3 pb-3"
               initial={{ opacity: 0 }}
@@ -103,35 +102,58 @@ export const OrganizationSection = () => {
               removeWrapper
               className="w-full max-w-lg"
             />
-          </div>
-          <div className="sm:p-4 lg:p-6">
-            <Accordion
-              isCompact
-              defaultExpandedKeys={['1']}
-            >
-              {data?.map((item) => (
-                <AccordionItem
-                  key={item.id}
-                  title={item.type}
-                  classNames={{
-                    title: 'font-semibold underline text-primary-500',
-                  }}
-                  indicator={
-                    <IconPlus
-                      size={20}
-                      className="text-primary-500"
-                    />
-                  }
-                >
-                  <ul className="list-disc">
-                    {item.persons.map((person, index) => (
-                      <li key={index}>{person}</li>
+          </header>
+          <section className="sm:p-4 lg:p-6 grid grid-cols-1 sm:grid-cols-3">
+            {data.map((item) => (
+              <div
+                key={item.id}
+                className="mb-5"
+              >
+                <h3 className="text-lg font-semibold pb-3">{item.type}</h3>
+                {item.persons.length > 15 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-500">
+                    {/* Dividir la lista en dos columnas */}
+                    <ul className="list-disc pl-6">
+                      {item.persons
+                        .slice(0, Math.ceil(item.persons.length / 2))
+                        .map((person) => (
+                          <li
+                            key={person}
+                            className="text-sm sm:text-base"
+                          >
+                            {person}
+                          </li>
+                        ))}
+                    </ul>
+                    <ul className="list-disc pl-6">
+                      {item.persons
+                        .slice(Math.ceil(item.persons.length / 2))
+                        .map((person) => (
+                          <li
+                            key={person}
+                            className="text-sm sm:text-base"
+                          >
+                            {person}
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <ul className="list-disc pl-6 text-gray-500">
+                    {/* Si hay 15 o menos elementos, mostrar en una sola columna */}
+                    {item.persons.map((person) => (
+                      <li
+                        key={person}
+                        className="text-sm sm:text-base"
+                      >
+                        {person}
+                      </li>
                     ))}
                   </ul>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+                )}
+              </div>
+            ))}
+          </section>
         </div>
       </section>
     </>
