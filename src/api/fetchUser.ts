@@ -22,7 +22,7 @@ interface IUserCreated {
   email: string
   photo: string
   role: string[] | null
-  person: number
+  person: number | null
 }
 
 export async function createUser(user: IUserCreated): Promise<IUser | null> {

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { IPerson, IUser } from '@/types'
 import {
   Button,
@@ -10,16 +10,23 @@ import {
   Skeleton,
 } from '@nextui-org/react'
 import { useUsers } from '@/hooks/admin'
+import { createUser, updateUser } from '@/api'
+import { registerWithEmail } from '@/auth'
+
 import {
   useForm,
   FormProvider,
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
+import { ModalAction } from '@/components'
+import { toast } from 'sonner'
 
 interface IProps {
   data: IPerson
 }
+
+const password_default = process.env.PASSWORD
 
 const roles = [
   { value: 'admin', label: 'Administrador' },
@@ -28,6 +35,8 @@ const roles = [
 ]
 
 export const UserData = (props: IProps) => {
+  const [isOpen, setOpen] = useState(false)
+  const [loadSave, setLoadSave] = useState(false)
   const { getUserByEmail, user, loading } = useUsers()
   const { data } = props
 
@@ -42,8 +51,41 @@ export const UserData = (props: IProps) => {
     getUserByEmail(data.email)
   }, [data.email])
 
-  const onSubmit: SubmitHandler<IUser> = (data) => {
-    console.log(data)
+  const onSubmit = () => {
+    setOpen(true)
+  }
+
+  const handleeSubmit: SubmitHandler<IUser> = async (data: IUser) => {
+    setOpen(false)
+    setLoadSave(true)
+    if (user) {
+      const userUpdated = await updateUser({
+        ...user,
+        role: data?.role && data.role.length > 0 ? data.role : null,
+      })
+      if (userUpdated) {
+        setOpen(false)
+        toast.success('Usuario actualizado correctamente')
+      }
+    } else {
+      const userCreated = await registerWithEmail({
+        email: data.email,
+        password: password_default ? password_default : 'coniap@2024_',
+      })
+      if (userCreated) {
+        await createUser({
+          email: data.email,
+          role: data?.role && data.role.length > 0 ? data.role : null,
+          userName: data.email.split('@')[0],
+          photo: '',
+          person: data?.id ? Number(data.id) : null,
+        })
+        setOpen(false)
+        toast.success('Usuario creado correctamente')
+      }
+      getUserByEmail(data.email)
+    }
+    setLoadSave(false)
   }
 
   return (
@@ -81,6 +123,10 @@ export const UserData = (props: IProps) => {
                     No se encontraron datos de usuario, si desea cree un usuario
                     y asigne los roles.
                   </p>
+                  <p className="text-gray-500 text-xs">
+                    Al crear un usuario, el usuario por defecto sera el correo
+                    electronico y la contraseña sera coniap@2024
+                  </p>
                 </header>
               </section>
             )}
@@ -93,7 +139,7 @@ export const UserData = (props: IProps) => {
                   <CheckboxGroup
                     aria-label="Roles"
                     description="Selecciona los roles que deseas asignar. Si no seleccionas ninguno, el usuario no tendrá acceso a la plataforma."
-                    label="Asignar roles"
+                    label="Asignar roles (Opcional)"
                     orientation="horizontal"
                     value={value || []}
                     onValueChange={(value) => onChange(value)}
@@ -115,6 +161,8 @@ export const UserData = (props: IProps) => {
                   radius="sm"
                   className="button-dark"
                   type="submit"
+                  isLoading={loadSave}
+                  isDisabled={loadSave}
                 >
                   Crear usuario
                 </Button>
@@ -123,6 +171,13 @@ export const UserData = (props: IProps) => {
           </form>
         </FormProvider>
       )}
+      <ModalAction
+        isOpen={isOpen}
+        setOpen={setOpen}
+        title="Guardar cambios"
+        message="¿Estás seguro de guardar los cambios?"
+        onPress={() => methods.handleSubmit(handleeSubmit)()}
+      />
     </>
   )
 }
