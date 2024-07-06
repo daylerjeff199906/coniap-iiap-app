@@ -24,7 +24,7 @@ export const SponsorSection = (props: IProps) => {
   return (
     <>
       <section className="bg-white section-home">
-        <div className="container space-y-6">
+        <div className="container space-y-6 flex flex-col sm:flex-row gap-3">
           <motion.header
             initial={{ opacity: 0 }}
             viewport={{ once: false }}
@@ -34,6 +34,7 @@ export const SponsorSection = (props: IProps) => {
                 duration: 1,
               },
             }}
+            className="w-full max-w-lg"
           >
             <div className="flex items-center gap-3 pb-3">
               <div className="dot-custom" />
@@ -43,6 +44,12 @@ export const SponsorSection = (props: IProps) => {
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
                 Nuestros <b>colaboradores</b>
               </h2>
+            </div>
+            <div>
+              <p className="text-sm">
+                Gracias a nuestros colaboradores por hacer posible la
+                realización de este evento.
+              </p>
             </div>
           </motion.header>
           <motion.div
@@ -54,6 +61,7 @@ export const SponsorSection = (props: IProps) => {
                 duration: 1,
               },
             }}
+            className="w-full"
           >
             {sponsors && (
               <>
@@ -69,11 +77,11 @@ export const SponsorSection = (props: IProps) => {
                       spaceBetween: 20,
                     },
                     768: {
-                      slidesPerView: 4,
+                      slidesPerView: 3,
                       spaceBetween: 40,
                     },
                     1024: {
-                      slidesPerView: 5,
+                      slidesPerView: 3,
                       spaceBetween: 50,
                     },
                   }}
@@ -81,11 +89,15 @@ export const SponsorSection = (props: IProps) => {
                   className="mySwiper"
                 >
                   {sponsors?.map((sponsor) => (
-                    <SwiperSlide key={sponsor.id}>
+                    <SwiperSlide
+                      key={sponsor.id}
+                      className="flex justify-center items-center w-full h-full"
+                    >
                       <Image
                         src={sponsor.image}
                         alt={sponsor.name}
                         removeWrapper
+                        className="w-full h-full"
                       />
                     </SwiperSlide>
                   ))}
