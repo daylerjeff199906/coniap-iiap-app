@@ -38,7 +38,7 @@ export const AsideMenu = (props: IProps) => {
         </div>
         <Divider />
       </header>
-      <div className="w-full py-4 px-4">
+      <div className="w-full py-4 px-2">
         {menuAside?.map((item) =>
           item?.subItems !== null ? (
             <Accordion
