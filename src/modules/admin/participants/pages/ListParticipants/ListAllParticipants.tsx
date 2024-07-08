@@ -7,6 +7,7 @@ import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
+import { usePathname } from 'next/navigation'
 
 import { usePersons } from '@/hooks/admin'
 
@@ -73,6 +74,9 @@ const actions: Array<IActions> = [
 export const ListParticipants = () => {
   const { getParams, updateFilter } = useFilterFromUrl()
   const { getPersons, loading, persons } = usePersons()
+  const pathname = usePathname()
+
+  const isParticipantes = pathname === '/admin/participantes'
 
   const query = getParams('query', '')
   const type = getParams('typePerson', '')
