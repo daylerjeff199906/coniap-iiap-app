@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { Suspense, useEffect } from 'react'
 import { TableGeneral } from '@/components'
