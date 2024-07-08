@@ -21,6 +21,7 @@ export const ListParticipants = () => {
       subtitle:
         'Lista general de participantes (Incluye ponentes, ponentes magistrales y asistentes)',
       title: 'Participantes',
+      href: '/admin/participantes/nuevo',
       isNot: undefined,
     },
     '/admin/participantes/ponentes': {
@@ -28,12 +29,14 @@ export const ListParticipants = () => {
       subtitle: 'Lista de ponentes (Ponentes magistrales y ponentes)',
       title: 'Ponentes',
       isNot: 'participant',
+      href: '/admin/participantes/ponentes/nuevo',
     },
     '/admin/participantes/asistentes': {
       type: 'participant',
       subtitle: 'Lista solo de participantes al congreso',
       title: 'Asistentes',
       isNot: undefined,
+      href: '/admin/participantes/asistentes/nuevo',
     },
   }
 
@@ -69,19 +72,17 @@ export const ListParticipants = () => {
       actions: 'actions',
     })) || []
 
+  const dataExcel = persons && persons.length > 0 ? persons : []
+
   return (
     <>
       <HeaderSection
         title={title}
         subtitle={subtitle}
         isButtonVisible
-        labelButton="Agregar Participante"
+        labelButton="Agregar"
         href="/admin/participantes/nuevo"
-        rigthContent={
-          <ExportExcel
-            dataList={persons && persons.length > 0 ? persons : []}
-          />
-        }
+        rigthContent={<ExportExcel dataList={dataExcel} />}
       />
       <Suspense fallback={<div>Loading...</div>}>
         <TableGeneral
