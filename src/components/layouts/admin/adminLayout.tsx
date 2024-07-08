@@ -150,9 +150,28 @@ export const menuAside: IMenuAside[] = [
 ]
 
 export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+  const handleCloseMenu = () => {
+    const asideMenu = document.getElementById('aside-menu')
+    const backdrop = document.getElementById('backdrop')
+    if (asideMenu) {
+      asideMenu.classList.add('hidden')
+    }
+    if (backdrop) {
+      backdrop.classList.add('hidden')
+    }
+  }
+
   return (
     <div className="flex w-full">
-      <aside className="w-52 min-w-52 max-w-52 bg-gray-100 h-screen sticky top-0 overflow-y-auto">
+      <div
+        id="backdrop"
+        className="bg-black/20 w-full h-full fixed top-0 left-0 z-50 bottom-0 hidden"
+        onClick={handleCloseMenu}
+      />
+      <aside
+        className="w-52 min-w-52 max-w-52 bg-gray-100 h-screen fixed z-50 lg:sticky top-0 overflow-y-auto hidden lg:block"
+        id="aside-menu"
+      >
         <AsideMenu menuAside={menuAside} />
       </aside>
       <main className="w-full">
