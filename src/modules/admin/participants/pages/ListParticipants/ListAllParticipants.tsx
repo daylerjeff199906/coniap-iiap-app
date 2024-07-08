@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { TableGeneral } from '@/components'
 import { IActions, IColumns, IPerson } from '@/types'
-import { useFilterFromUrl } from '@/modules/core'
+import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
-import { getTypePerson } from '@/modules/admin'
+import { ExportExcel, getTypePerson } from '@/modules/admin'
+
+import { usePersons } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
   {
@@ -61,9 +63,6 @@ const columns: Array<IColumns> = [
   },
 ]
 
-interface IProps {
-  dataList: IPerson[]
-}
 const actions: Array<IActions> = [
   {
     label: 'Cambiar estado',
@@ -71,19 +70,31 @@ const actions: Array<IActions> = [
     href: 'status',
   },
 ]
-export const ListParticipants = (prop: IProps) => {
-  const { dataList } = prop
+export const ListParticipants = () => {
   const { getParams, updateFilter } = useFilterFromUrl()
+  const { getPersons, loading, persons } = usePersons()
 
   const query = getParams('query', '')
+  const type = getParams('typePerson', '')
+  const statusPerson = getParams('status', '')
+  const statusValue =
+    statusPerson === 'active'
+      ? 'TRUE'
+      : statusPerson === 'inactive'
+      ? 'FALSE'
+      : ''
+
+  useEffect(() => {
+    getPersons(query, type, undefined, statusValue)
+  }, [query, type, statusValue])
 
   const handleQuery = (value: string) => {
     updateFilter('query', value)
   }
 
-  const persons =
-    dataList && dataList.length > 0
-      ? dataList?.map((speaker) => {
+  const listPerson =
+    persons && persons.length > 0
+      ? persons?.map((speaker) => {
           return {
             key: String(speaker?.id),
             id: speaker?.id,
@@ -102,14 +113,27 @@ export const ListParticipants = (prop: IProps) => {
 
   return (
     <>
+      <HeaderSection
+        title="Participantes"
+        subtitle="Lista de participantes incluyendo ponentes, ponentes magistrales y asistentes"
+        isButtonVisible
+        labelButton="Agregar Participante"
+        href="/admin/participantes/nuevo"
+        rigthContent={
+          <ExportExcel
+            dataList={persons && persons.length > 0 ? persons : []}
+          />
+        }
+      />
       <Suspense fallback={<div>Loading...</div>}>
         <TableGeneral
           columns={columns}
           onSearch={handleQuery}
           searchValue={query}
-          rows={persons}
+          rows={listPerson}
           headerChildren={<FiltersSection />}
           actionsList={actions}
+          loading={loading}
         />
       </Suspense>
     </>
