@@ -1,15 +1,20 @@
 'use client'
+import { useState } from 'react'
 import { IUser } from '@/types'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { PersonData, UserData, UserRoles } from './sections'
 import { HeaderSection } from '@/modules/core'
 
+import { useUsers } from '@/hooks/admin'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { ModalAction } from '@/components'
 interface IProps {
   user?: IUser
 }
 
 export const FrmUserEditor = (props: IProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { user } = props
 
   const methods = useForm<IUser>({
@@ -19,7 +24,11 @@ export const FrmUserEditor = (props: IProps) => {
     },
   })
 
-  const onSubmit: SubmitHandler<IUser> = async (data: IUser) => {
+  const onSubmit = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleSubmit: SubmitHandler<IUser> = async (data: IUser) => {
     console.log(data)
   }
 
@@ -51,6 +60,13 @@ export const FrmUserEditor = (props: IProps) => {
           </footer>
         </form>
       </FormProvider>
+      <ModalAction
+        isOpen={isModalOpen}
+        title="Usuario"
+        message="¿Estás seguro de guardar los cambios?"
+        setOpen={setIsModalOpen}
+        onPress={() => methods.handleSubmit(handleSubmit)()}
+      />
     </>
   )
 }
