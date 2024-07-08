@@ -76,10 +76,12 @@ export const ListParticipants = () => {
   const { getPersons, loading, persons } = usePersons()
   const pathname = usePathname()
 
-  const isParticipantes = pathname === '/admin/participantes'
+  const isAllPersons = pathname === '/admin/participantes'
+  const isSpeakers = pathname === '/admin/participantes/ponentes'
+  const isParticipants = pathname === '/admin/participantes/asistenetes'
 
   const query = getParams('query', '')
-  const type = getParams('typePerson', '')
+  const type = !isParticipants ? getParams('typePerson', '') : 'participant'
   const statusPerson = getParams('status', '')
   const statusValue =
     statusPerson === 'active'
@@ -88,8 +90,16 @@ export const ListParticipants = () => {
       ? 'FALSE'
       : ''
 
+  const isNot = isAllPersons
+    ? undefined
+    : isSpeakers
+    ? 'participant'
+    : isParticipants
+    ? undefined
+    : undefined
+
   useEffect(() => {
-    getPersons(query, type, undefined, statusValue)
+    getPersons(query, type, isNot, statusValue)
   }, [query, type, statusValue])
 
   const handleQuery = (value: string) => {
