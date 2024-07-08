@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { Suspense, useEffect } from 'react'
 import { TableGeneral } from '@/components'
-import { IActions, IColumns, IPerson } from '@/types'
 import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
@@ -10,78 +8,38 @@ import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { usePathname } from 'next/navigation'
 
 import { usePersons } from '@/hooks/admin'
+import { columns, actions } from './columns'
 
-const columns: Array<IColumns> = [
-  {
-    key: 'id',
-    label: 'ID',
-    align: 'center',
-  },
-  {
-    key: 'date',
-    label: 'Fecha de registro',
-    align: 'start',
-  },
-  {
-    key: 'level',
-    label: 'Tipo de participante',
-    align: 'start',
-  },
-  {
-    key: 'name',
-    label: 'Nombres',
-    align: 'start',
-  },
-  {
-    key: 'surname',
-    label: 'Apellidos',
-    align: 'start',
-  },
-  {
-    key: 'email',
-    label: 'Email',
-    align: 'start',
-  },
-  {
-    key: 'phone',
-    label: 'Teléfono',
-    align: 'start',
-  },
-  {
-    key: 'institution',
-    label: 'Institución',
-    align: 'start',
-  },
-  {
-    key: 'status',
-    label: 'Estado',
-    align: 'center',
-  },
-  {
-    key: 'actions',
-    label: 'Acciones',
-    align: 'center',
-  },
-]
-
-const actions: Array<IActions> = [
-  {
-    label: 'Cambiar estado',
-    key: 'status',
-    href: 'status',
-  },
-]
 export const ListParticipants = () => {
   const { getParams, updateFilter } = useFilterFromUrl()
   const { getPersons, loading, persons } = usePersons()
   const pathname = usePathname()
 
-  const isAllPersons = pathname === '/admin/participantes'
-  const isSpeakers = pathname === '/admin/participantes/ponentes'
-  const isParticipants = pathname === '/admin/participantes/asistenetes'
+  const routes = {
+    '/admin/participantes': {
+      type: getParams('typePerson', ''),
+      subtitle:
+        'Lista general de participantes (Incluye ponentes, ponentes magistrales y asistentes)',
+      title: 'Participantes',
+      isNot: undefined,
+    },
+    '/admin/participantes/ponentes': {
+      type: getParams('typePerson', ''),
+      subtitle: 'Lista de ponentes (Ponentes magistrales y ponentes)',
+      title: 'Ponentes',
+      isNot: 'participant',
+    },
+    '/admin/participantes/asistentes': {
+      type: 'participant',
+      subtitle: 'Lista solo de participantes al congreso',
+      title: 'Asistentes',
+      isNot: undefined,
+    },
+  }
 
+  const { type, isNot, subtitle, title } =
+    routes[pathname as keyof typeof routes] || {}
   const query = getParams('query', '')
-  const type = !isParticipants ? getParams('typePerson', '') : 'participant'
   const statusPerson = getParams('status', '')
   const statusValue =
     statusPerson === 'active'
@@ -90,46 +48,32 @@ export const ListParticipants = () => {
       ? 'FALSE'
       : ''
 
-  const isNot = isAllPersons
-    ? undefined
-    : isSpeakers
-    ? 'participant'
-    : isParticipants
-    ? undefined
-    : undefined
-
   useEffect(() => {
     getPersons(query, type, isNot, statusValue)
-  }, [query, type, statusValue])
+  }, [query, type, isNot, statusValue])
 
-  const handleQuery = (value: string) => {
-    updateFilter('query', value)
-  }
+  const handleQuery = (value: string) => updateFilter('query', value)
 
   const listPerson =
-    persons && persons.length > 0
-      ? persons?.map((speaker) => {
-          return {
-            key: String(speaker?.id),
-            id: speaker?.id,
-            date: convertDate(speaker?.created_at),
-            name: speaker?.name,
-            surname: speaker?.surName,
-            email: speaker?.email,
-            phone: speaker?.phone || 'No registrado',
-            institution: speaker?.institution,
-            level: getTypePerson(speaker?.typePerson),
-            status: speaker?.isActived,
-            actions: 'actions',
-          }
-        })
-      : []
+    persons?.map((speaker) => ({
+      key: String(speaker?.id),
+      id: speaker?.id,
+      date: convertDate(speaker?.created_at),
+      name: speaker?.name,
+      surname: speaker?.surName,
+      email: speaker?.email,
+      phone: speaker?.phone || 'No registrado',
+      institution: speaker?.institution,
+      level: getTypePerson(speaker?.typePerson),
+      status: speaker?.isActived,
+      actions: 'actions',
+    })) || []
 
   return (
     <>
       <HeaderSection
-        title="Participantes"
-        subtitle="Lista de participantes incluyendo ponentes, ponentes magistrales y asistentes"
+        title={title}
+        subtitle={subtitle}
         isButtonVisible
         labelButton="Agregar Participante"
         href="/admin/participantes/nuevo"
