@@ -1,13 +1,13 @@
 'use client'
 import { useState } from 'react'
-import { IUser } from '@/types'
+import { IUser, IUserCreate } from '@/types'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { PersonData, UserData, UserRoles } from './sections'
 import { HeaderSection } from '@/modules/core'
 
 import { useUsers } from '@/hooks/admin'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { ModalAction } from '@/components'
 interface IProps {
   user?: IUser
@@ -17,7 +17,7 @@ export const FrmUserEditor = (props: IProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { user } = props
 
-  const methods = useForm<IUser>({
+  const methods = useForm<IUserCreate>({
     defaultValues: {
       email: user?.email || '',
       role: user?.role || [],
@@ -28,8 +28,20 @@ export const FrmUserEditor = (props: IProps) => {
     setIsModalOpen(true)
   }
 
-  const handleSubmit: SubmitHandler<IUser> = async (data: IUser) => {
-    console.log(data)
+  const handleSubmit: SubmitHandler<IUserCreate> = async (
+    data: IUserCreate
+  ) => {
+    const auth = getAuth()
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data?.password || ''
+      )
+      console && console.log(userCredential)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
