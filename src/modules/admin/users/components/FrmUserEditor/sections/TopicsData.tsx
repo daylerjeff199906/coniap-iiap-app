@@ -1,8 +1,15 @@
 'use client'
 import { IUserCreate } from '@/types'
 import { useFormContext, Controller } from 'react-hook-form'
-import { Select, SelectItem } from '@nextui-org/react'
+import {
+  Checkbox,
+  CheckboxGroup,
+  Select,
+  SelectItem,
+  Selection,
+} from '@nextui-org/react'
 import { useTopics } from '@/hooks/admin'
+import { useEffect } from 'react'
 
 export const TopicsData = () => {
   const { topics, getTopics, loading } = useTopics()
@@ -13,14 +20,16 @@ export const TopicsData = () => {
   } = useFormContext<IUserCreate>()
 
   const isReviser = watch('role')?.includes('revisor')
-  const topicsSelected = watch('topics') || []
+
   const listTopics = topics || []
 
-  const handleGetTopics = async () => {
-    await getTopics('', {
-      isActived: 'TRUE',
-    })
-  }
+  useEffect(() => {
+    if (isReviser) {
+      getTopics('', {
+        isActived: 'TRUE',
+      })
+    }
+  }, [isReviser])
 
   return (
     <>
@@ -38,39 +47,29 @@ export const TopicsData = () => {
               },
             }}
             render={({ field: { value, onChange } }) => (
-              <Select
-                aria-label="topics"
-                selectedKeys={value || []}
-                onClick={() => {
-                  if (!listTopics.length) {
-                    handleGetTopics()
-                  }
-                }}
-                disallowEmptySelection
-                variant="bordered"
+              <CheckboxGroup
+                name="topics"
+                label="Líneas temáticas"
+                description="Selecciona las líneas temáticas que deseas revisar"
+                size="sm"
+                value={value}
                 onChange={onChange}
-                placeholder="Seleccione los temas de interés"
-                radius="sm"
-                labelPlacement="outside"
-                selectionMode="multiple"
-                isLoading={loading}
-                isInvalid={errors.topics !== undefined}
                 errorMessage={errors.topics?.message}
               >
                 {listTopics.map((topic) => (
-                  <SelectItem
+                  <Checkbox
                     key={topic.id}
                     value={topic.id}
                   >
                     {topic.name}
-                  </SelectItem>
+                  </Checkbox>
                 ))}
-              </Select>
+              </CheckboxGroup>
             )}
           />
-          {watch('topics') !== undefined && (
+          {/* {watch('topics') !== undefined && (
             <p>Temas seleccionados: {watch('topics')?.length || 0}</p>
-          )}
+          )} */}
         </section>
       )}
     </>
