@@ -25,6 +25,7 @@ export const signInWithCredentials = async (
       email,
       password
     )
+    console.log(userCredential)
     if (userCredential.user.emailVerified) {
       //Se busca si existe la persona en la tabla person
       const user: IUser | null = (await fetchUserByEmail(

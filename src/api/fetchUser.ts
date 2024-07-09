@@ -16,6 +16,20 @@ export async function fetchUserByEmail(email: string): Promise<IUser | null> {
   return data
 }
 
+export async function fetchUserById(id: number): Promise<IUser | null> {
+  const client = createClient()
+  const { data, error } = await client
+    .from('users')
+    .select('*, person(*)')
+    .eq('id', id)
+    .single()
+
+  if (error) {
+    return null
+  }
+  return data
+}
+
 export async function createUser(user: IUserCreated): Promise<IUser | null> {
   const client = createClient()
   const { data, error } = await client.from('users').insert(user).single()
