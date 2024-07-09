@@ -9,7 +9,7 @@ import { HeaderSection } from '@/modules/core'
 import { ModalAction } from '@/components'
 import { getErrors, registerAndSendEmailVerification } from '@/auth'
 import { toast } from 'sonner'
-import { createUser } from '@/api'
+import { createUser, updateUser } from '@/api'
 import { useRouter } from 'next/navigation'
 interface IProps {
   user?: IUser
@@ -39,23 +39,37 @@ export const FrmUserEditor = (props: IProps) => {
     setIsModalOpen(false)
     setIsLoading(true)
     try {
-      const userCredential = await registerAndSendEmailVerification({
-        email: data.email,
-        password: data.password || '123456789',
-      })
-      if (typeof userCredential === 'string') {
-        toast.error(userCredential as string)
-      } else {
-        await createUser({
-          email: data.email,
-          person: null,
-          role: data.role,
+      if (data?.id) {
+        await updateUser({
+          id: data.id,
           userName: data.userName,
+          email: data.email,
+          role: data.role,
+          person: null,
           photo: '',
-          emailVerified: userCredential.emailVerified,
+          emailVerified: true,
         })
-        toast.success('Usuario creado')
+        toast.success('Usuario actualizado')
         router.push('/admin/users')
+      } else {
+        const userCredential = await registerAndSendEmailVerification({
+          email: data.email,
+          password: data.password || '123456789',
+        })
+        if (typeof userCredential === 'string') {
+          toast.error(userCredential as string)
+        } else {
+          await createUser({
+            email: data.email,
+            person: null,
+            role: data.role,
+            userName: data.userName,
+            photo: '',
+            emailVerified: userCredential.emailVerified,
+          })
+          toast.success('Usuario creado')
+          router.push('/admin/users')
+        }
       }
     } catch (error) {
       toast.error(getErrors(error as IError))
