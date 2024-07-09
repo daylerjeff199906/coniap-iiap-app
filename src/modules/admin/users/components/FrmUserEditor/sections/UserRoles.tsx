@@ -32,7 +32,12 @@ export const UserRoles = () => {
               label="Asignar roles (Opcional)"
               orientation="horizontal"
               value={value || []}
-              onValueChange={(value) => onChange(value)}
+              onValueChange={(value) => {
+                onChange(value)
+                if (!value.includes('revisor')) {
+                  methods.setValue('topics', undefined)
+                }
+              }}
               isInvalid={methods.formState.errors.role !== undefined}
               errorMessage={methods.formState.errors.role?.message}
             >

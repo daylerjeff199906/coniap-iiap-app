@@ -21,6 +21,7 @@ export interface IUserCreate {
   person: number | null
   password?: string
   password_confirmation?: string
+  topics?: string[]
 }
 
 export interface IUserCreated {

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { IError, IUser, IUserCreate } from '@/types'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { PersonData, UserData, UserRoles } from './sections'
+import { PersonData, TopicsData, UserData, UserRoles } from './sections'
 import { HeaderSection } from '@/modules/core'
 
 import { ModalAction } from '@/components'
@@ -93,6 +93,7 @@ export const FrmUserEditor = (props: IProps) => {
             <UserData />
             <PersonData />
             <UserRoles />
+            <TopicsData />
           </main>
           <footer className="flex justify-end gap-2 mt-4">
             <Button
