@@ -55,57 +55,62 @@ export const UserData = () => {
               isInvalid={errors.email !== undefined}
               errorMessage={errors.email?.message}
               description="El correo electrónico debe ser válido, se enviará un mensaje para confirmar la creación de la cuenta."
+              isDisabled={watch('id') !== undefined}
             />
           )}
         />
-        <Controller
-          control={control}
-          name="password"
-          rules={{
-            required: 'La contraseña es requerida',
-            minLength: {
-              value: 8,
-              message: 'La contraseña debe tener al menos 8 caracteres',
-            },
-          }}
-          render={({ field: { value, onChange } }) => (
-            <Input
-              aria-label="password"
-              value={value}
-              onValueChange={onChange}
-              label="Password"
-              placeholder="********"
-              radius="sm"
-              variant="bordered"
-              labelPlacement="outside"
-              isInvalid={errors.password !== undefined}
-              errorMessage={errors.password?.message}
+        {!watch('id') && (
+          <>
+            <Controller
+              control={control}
+              name="password"
+              rules={{
+                required: 'La contraseña es requerida',
+                minLength: {
+                  value: 8,
+                  message: 'La contraseña debe tener al menos 8 caracteres',
+                },
+              }}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  aria-label="password"
+                  value={value}
+                  onValueChange={onChange}
+                  label="Password"
+                  placeholder="********"
+                  radius="sm"
+                  variant="bordered"
+                  labelPlacement="outside"
+                  isInvalid={errors.password !== undefined}
+                  errorMessage={errors.password?.message}
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          control={control}
-          name="password_confirmation"
-          rules={{
-            required: 'La confirmación de la contraseña es requerida',
-            validate: (value) =>
-              value === watch('password') || 'Las contraseñas no coinciden',
-          }}
-          render={({ field: { value, onChange } }) => (
-            <Input
-              aria-label="password_confirmation"
-              value={value}
-              onValueChange={onChange}
-              label="Confirmar password"
-              placeholder="********"
-              radius="sm"
-              variant="bordered"
-              labelPlacement="outside"
-              isInvalid={errors.password_confirmation !== undefined}
-              errorMessage={errors.password_confirmation?.message}
+            <Controller
+              control={control}
+              name="password_confirmation"
+              rules={{
+                required: 'La confirmación de la contraseña es requerida',
+                validate: (value) =>
+                  value === watch('password') || 'Las contraseñas no coinciden',
+              }}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  aria-label="password_confirmation"
+                  value={value}
+                  onValueChange={onChange}
+                  label="Confirmar password"
+                  placeholder="********"
+                  radius="sm"
+                  variant="bordered"
+                  labelPlacement="outside"
+                  isInvalid={errors.password_confirmation !== undefined}
+                  errorMessage={errors.password_confirmation?.message}
+                />
+              )}
             />
-          )}
-        />
+          </>
+        )}
       </section>
     </>
   )

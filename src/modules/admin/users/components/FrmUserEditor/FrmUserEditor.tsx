@@ -23,6 +23,7 @@ export const FrmUserEditor = (props: IProps) => {
 
   const methods = useForm<IUserCreate>({
     defaultValues: {
+      id: user?.id,
       userName: user?.userName || '',
       email: user?.email || '',
       role: user?.role || [],
