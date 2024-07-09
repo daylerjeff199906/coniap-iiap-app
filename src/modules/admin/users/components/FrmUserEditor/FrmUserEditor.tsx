@@ -3,13 +3,13 @@ import { useState } from 'react'
 import { IError, IUser, IUserCreate } from '@/types'
 import { Button } from '@nextui-org/react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { PersonData, UserData, UserRoles } from './sections'
+import { PersonData, TopicsData, UserData, UserRoles } from './sections'
 import { HeaderSection } from '@/modules/core'
 
 import { ModalAction } from '@/components'
 import { getErrors, registerAndSendEmailVerification } from '@/auth'
 import { toast } from 'sonner'
-import { createUser } from '@/api'
+import { createUser, updateUser } from '@/api'
 import { useRouter } from 'next/navigation'
 interface IProps {
   user?: IUser
@@ -23,11 +23,14 @@ export const FrmUserEditor = (props: IProps) => {
 
   const methods = useForm<IUserCreate>({
     defaultValues: {
+      id: user?.id,
       userName: user?.userName || '',
       email: user?.email || '',
       role: user?.role || [],
+      topics: user?.topics || [],
     },
   })
+  // console.log('user', user)
 
   const onSubmit = () => {
     setIsModalOpen(true)
@@ -39,23 +42,38 @@ export const FrmUserEditor = (props: IProps) => {
     setIsModalOpen(false)
     setIsLoading(true)
     try {
-      const userCredential = await registerAndSendEmailVerification({
-        email: data.email,
-        password: data.password || '123456789',
-      })
-      if (typeof userCredential === 'string') {
-        toast.error(userCredential as string)
-      } else {
-        await createUser({
-          email: data.email,
-          person: null,
-          role: data.role,
+      if (data?.id) {
+        await updateUser({
+          id: data.id,
           userName: data.userName,
+          email: data.email,
+          role: data.role,
+          topics: data.topics || null,
+          person: null,
           photo: '',
-          emailVerified: userCredential.emailVerified,
+          emailVerified: true,
         })
-        toast.success('Usuario creado')
+        toast.success('Usuario actualizado')
         router.push('/admin/users')
+      } else {
+        const userCredential = await registerAndSendEmailVerification({
+          email: data.email,
+          password: data.password || '123456789',
+        })
+        if (typeof userCredential === 'string') {
+          toast.error(userCredential as string)
+        } else {
+          await createUser({
+            email: data.email,
+            person: null,
+            role: data.role,
+            userName: data.userName,
+            photo: '',
+            emailVerified: userCredential.emailVerified,
+          })
+          toast.success('Usuario creado')
+          router.push('/admin/users')
+        }
       }
     } catch (error) {
       toast.error(getErrors(error as IError))
@@ -78,6 +96,7 @@ export const FrmUserEditor = (props: IProps) => {
             <UserData />
             <PersonData />
             <UserRoles />
+            <TopicsData />
           </main>
           <footer className="flex justify-end gap-2 mt-4">
             <Button

@@ -42,6 +42,11 @@ const columns: IColumns[] = [
     label: 'Roles',
     align: 'start',
   },
+  {
+    key: 'actions',
+    label: 'Acciones',
+    align: 'center',
+  },
 ]
 
 export const ListUsers = () => {
