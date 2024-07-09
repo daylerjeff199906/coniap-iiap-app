@@ -15,6 +15,7 @@ import { AsideMenu } from '@/modules/admin'
 import { IMenuAside } from '@/types'
 
 const stroke = 1.5
+const size = 18
 
 export const menuAside: IMenuAside[] = [
   {
@@ -22,7 +23,12 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Dashboard',
     titleOption: null,
     hrefLink: '/admin',
-    icon: <IconLayoutDashboard stroke={stroke} />,
+    icon: (
+      <IconLayoutDashboard
+        stroke={stroke}
+        size={size}
+      />
+    ),
     subItems: null,
   },
   {
@@ -30,7 +36,12 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Programas',
     titleOption: null,
     hrefLink: '/admin/programas',
-    icon: <IconCalendarEvent stroke={stroke} />,
+    icon: (
+      <IconCalendarEvent
+        stroke={stroke}
+        size={size}
+      />
+    ),
     subItems: null,
   },
   {
@@ -38,7 +49,12 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Eventos',
     titleOption: null,
     hrefLink: null,
-    icon: <IconPresentationAnalytics stroke={stroke} />,
+    icon: (
+      <IconPresentationAnalytics
+        stroke={stroke}
+        size={size}
+      />
+    ),
     subItems: [
       {
         id: 'all',
@@ -59,7 +75,12 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Participantes',
     titleOption: null,
     hrefLink: null,
-    icon: <IconUsers stroke={stroke} />,
+    icon: (
+      <IconUsers
+        stroke={stroke}
+        size={size}
+      />
+    ),
     subItems: [
       {
         id: 'all',
@@ -92,7 +113,12 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Sponsors',
     titleOption: null,
     hrefLink: '/admin/sponsors',
-    icon: <IconFlag3 stroke={stroke} />,
+    icon: (
+      <IconFlag3
+        stroke={stroke}
+        size={size}
+      />
+    ),
     subItems: null,
   },
   {
@@ -100,7 +126,12 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Temáticas',
     titleOption: null,
     hrefLink: '/admin/tematicas',
-    icon: <IconStack3 stroke={stroke} />,
+    icon: (
+      <IconStack3
+        stroke={stroke}
+        size={size}
+      />
+    ),
     subItems: null,
   },
   {
@@ -108,15 +139,39 @@ export const menuAside: IMenuAside[] = [
     nameOption: 'Usuarios',
     titleOption: null,
     hrefLink: '/admin/users',
-    icon: <IconUserCog stroke={stroke} />,
+    icon: (
+      <IconUserCog
+        stroke={stroke}
+        size={size}
+      />
+    ),
     subItems: null,
   },
 ]
 
 export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+  const handleCloseMenu = () => {
+    const asideMenu = document.getElementById('aside-menu')
+    const backdrop = document.getElementById('backdrop')
+    if (asideMenu) {
+      asideMenu.classList.add('hidden')
+    }
+    if (backdrop) {
+      backdrop.classList.add('hidden')
+    }
+  }
+
   return (
     <div className="flex w-full">
-      <aside className="w-60 min-w-60 max-w-60 bg-gray-100 h-screen sticky top-0 overflow-y-auto">
+      <div
+        id="backdrop"
+        className="bg-black/20 w-full h-full fixed top-0 left-0 z-50 bottom-0 hidden"
+        onClick={handleCloseMenu}
+      />
+      <aside
+        className="w-52 min-w-52 max-w-52 bg-gray-100 h-screen fixed z-50 lg:sticky top-0 overflow-y-auto hidden lg:block"
+        id="aside-menu"
+      >
         <AsideMenu menuAside={menuAside} />
       </aside>
       <main className="w-full">

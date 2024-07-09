@@ -15,6 +15,25 @@ export const UserData = () => {
       <section className="flex flex-col gap-3">
         <Controller
           control={control}
+          name="userName"
+          rules={{ required: 'El nombre de usuario es requerido' }}
+          render={({ field: { value, onChange } }) => (
+            <Input
+              aria-label="userName"
+              value={value}
+              onValueChange={onChange}
+              label="Nombre de usuario"
+              placeholder="Ejemplo: johndoe"
+              radius="sm"
+              variant="bordered"
+              labelPlacement="outside"
+              isInvalid={errors.userName !== undefined}
+              errorMessage={errors.userName?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
           name="email"
           rules={{
             required: 'El correo es requerido',

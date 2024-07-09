@@ -8,6 +8,7 @@ export interface IUser {
   photo: string
   role: string[] | null
   person: IPerson | null
+  emailVerified?: boolean
 }
 
 export interface IUserCreate {
@@ -29,4 +30,5 @@ export interface IUserCreated {
   photo: string
   role: string[] | null
   person: number | null
+  emailVerified?: boolean
 }

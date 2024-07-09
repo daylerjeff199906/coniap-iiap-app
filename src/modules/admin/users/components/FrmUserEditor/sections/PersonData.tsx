@@ -1,3 +1,4 @@
+'use client'
 import { IUser } from '@/types'
 import { useFormContext, Controller } from 'react-hook-form'
 

@@ -2,6 +2,7 @@
 import {
   BreadcrumbItem,
   Breadcrumbs,
+  Button,
   Navbar,
   NavbarContent,
   NavbarItem,
@@ -10,6 +11,7 @@ import {
 import { useAuthContext } from '@/provider'
 import { ProfilePopover } from '@/modules/core'
 import { usePathname } from 'next/navigation'
+import { IconMenu2 } from '@tabler/icons-react'
 
 const generateBreadcrumbItems = (pathname: string) => {
   const pathParts = pathname?.split('/').filter(Boolean)
@@ -45,6 +47,17 @@ export const NavBarAdmin = () => {
   }
   const pathname = usePathname()
 
+  const handleOpenMenu = () => {
+    const asideMenu = document.getElementById('aside-menu')
+    const asideMenuBackdrop = document.getElementById('backdrop')
+    if (asideMenu) {
+      asideMenu.classList.toggle('hidden')
+    }
+    if (asideMenuBackdrop) {
+      asideMenuBackdrop.classList.toggle('hidden')
+    }
+  }
+
   return (
     <Navbar
       maxWidth="full"
@@ -52,8 +65,24 @@ export const NavBarAdmin = () => {
       isBordered
       // height={64}
     >
-      {/* <NavbarBrand>Admin</NavbarBrand> */}
-      <NavbarContent justify="start">
+      <NavbarContent
+        justify="start"
+        className="flex lg:hidden"
+      >
+        <Button
+          isIconOnly
+          size="sm"
+          radius="sm"
+          variant="light"
+          onPress={handleOpenMenu}
+        >
+          <IconMenu2 size={24} />
+        </Button>
+      </NavbarContent>
+      <NavbarContent
+        justify="start"
+        className="hidden lg:flex"
+      >
         <section className="py-4 sticky top-16 z-30 w-full max-w-[1920px] mx-auto px-4 sm:px-6">
           {pathname !== null && (
             <Breadcrumbs

@@ -40,6 +40,7 @@ export const ExportExcelButton = <T extends Record<string, any>>(
         size="sm"
         startContent={<IconDownload size={16} />}
         className="bg-success-700 text-white hover:bg-success-600"
+        isDisabled={dataList.length === 0}
       >
         Exportar a Excel
       </Button>

@@ -4,7 +4,6 @@ import {
   createPerson,
   fetchPersonById,
   updatePerson,
-  fetchPerson,
   fetchPersonsInEvent,
   fetchPersonsNotInEvent,
   fetchPersons,
@@ -70,11 +69,12 @@ export function usePersons() {
 
   const getPersons = async (
     query: string,
-    typePerson: string,
-    isNot?: string
+    typePerson = '',
+    isNot?: string,
+    status?: string
   ) => {
     setLoading(true)
-    const data = await fetchPersons(query, '', isNot)
+    const data = await fetchPersons(query, typePerson, isNot, status)
       .then((res) => res)
       .catch((err) => err)
     setPersons(data)

@@ -1,5 +1,6 @@
 import { SignInWithGoogle } from './signInWithGoogle'
 import { signInWithCredentials } from './signIn'
+import { getErrors } from './getErrors'
 import {
   registerAndSendEmailVerification,
   registerWithEmail,
@@ -10,4 +11,5 @@ export {
   signInWithCredentials,
   registerAndSendEmailVerification,
   registerWithEmail,
+  getErrors,
 }

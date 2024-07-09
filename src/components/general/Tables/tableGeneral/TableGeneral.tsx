@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback } from 'react'
+import { IconDatabaseOff } from '@tabler/icons-react'
 
 import {
   Table,
@@ -173,9 +174,21 @@ export const TableGeneral = (props: IProps) => {
           )}
         </TableHeader>
         <TableBody
-          emptyContent={'No users found'}
+          emptyContent={
+            <main>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <IconDatabaseOff
+                  size={40}
+                  className="text-gray-400"
+                />
+                <p className="text-sm font-medium text-gray-600">
+                  No se encontraron resultados
+                </p>
+              </div>
+            </main>
+          }
           items={rows}
-          isLoading={true}
+          isLoading={props.loading}
         >
           {(item) => (
             <TableRow key={item?.key}>
