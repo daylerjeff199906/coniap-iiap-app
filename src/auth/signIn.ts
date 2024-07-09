@@ -42,6 +42,7 @@ export const signInWithCredentials = async (
           photo: '',
           role: person.typePerson !== 'participant' ? ['speaker'] : null,
           person: Number(person?.id),
+          emailVerified: userCredential.user.emailVerified,
         }
 
         const newUserRes = await createUser(newUser)

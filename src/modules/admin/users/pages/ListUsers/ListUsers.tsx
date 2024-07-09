@@ -33,6 +33,11 @@ const columns: IColumns[] = [
     align: 'start',
   },
   {
+    key: 'emailVerified',
+    label: 'Email Verificado',
+    align: 'center',
+  },
+  {
     key: 'role',
     label: 'Roles',
     align: 'start',
@@ -58,6 +63,7 @@ export const ListUsers = () => {
         userName: user.userName,
         email: user.email,
         role: user.role ? user.role.join(', ') : 'No asignados',
+        emailVerified: user.emailVerified ? 'Si' : 'No',
         person: user?.person ? user.person.name : 'No asignado',
       }
     }) || []

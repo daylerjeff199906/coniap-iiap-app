@@ -17,6 +17,14 @@ export const UserRoles = () => {
         <Controller
           control={methods.control}
           name="role"
+          rules={{
+            validate: (value) => {
+              if (value?.length === 0) {
+                return 'Debes asignar al menos un rol'
+              }
+              return true
+            },
+          }}
           render={({ field: { value, onChange } }) => (
             <CheckboxGroup
               aria-label="Roles"
@@ -25,6 +33,8 @@ export const UserRoles = () => {
               orientation="horizontal"
               value={value || []}
               onValueChange={(value) => onChange(value)}
+              isInvalid={methods.formState.errors.role !== undefined}
+              errorMessage={methods.formState.errors.role?.message}
             >
               {roles.map((role) => (
                 <Checkbox
