@@ -1,13 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { IUserCreate } from '@/types'
 import { useFormContext, Controller } from 'react-hook-form'
-import {
-  Checkbox,
-  CheckboxGroup,
-  Select,
-  SelectItem,
-  Selection,
-} from '@nextui-org/react'
+import { Checkbox, CheckboxGroup } from '@nextui-org/react'
 import { useTopics } from '@/hooks/admin'
 import { useEffect } from 'react'
 
@@ -39,6 +34,7 @@ export const TopicsData = () => {
             control={control}
             name="topics"
             rules={{
+              required: isReviser,
               validate: (value) => {
                 if (value?.length === 0 && isReviser) {
                   return 'Debes seleccionar al menos un tema'
@@ -52,9 +48,11 @@ export const TopicsData = () => {
                 label="Líneas temáticas"
                 description="Selecciona las líneas temáticas que deseas revisar"
                 size="sm"
-                value={value}
+                value={value || []}
                 onChange={onChange}
                 errorMessage={errors.topics?.message}
+                isInvalid={errors.topics !== undefined}
+                isDisabled={loading}
               >
                 {listTopics.map((topic) => (
                   <Checkbox
@@ -67,9 +65,6 @@ export const TopicsData = () => {
               </CheckboxGroup>
             )}
           />
-          {/* {watch('topics') !== undefined && (
-            <p>Temas seleccionados: {watch('topics')?.length || 0}</p>
-          )} */}
         </section>
       )}
     </>

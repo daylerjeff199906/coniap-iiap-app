@@ -27,8 +27,10 @@ export const FrmUserEditor = (props: IProps) => {
       userName: user?.userName || '',
       email: user?.email || '',
       role: user?.role || [],
+      topics: user?.topics || [],
     },
   })
+  // console.log('user', user)
 
   const onSubmit = () => {
     setIsModalOpen(true)
@@ -46,6 +48,7 @@ export const FrmUserEditor = (props: IProps) => {
           userName: data.userName,
           email: data.email,
           role: data.role,
+          topics: data.topics || null,
           person: null,
           photo: '',
           emailVerified: true,

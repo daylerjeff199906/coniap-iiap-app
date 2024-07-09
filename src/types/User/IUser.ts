@@ -9,6 +9,7 @@ export interface IUser {
   role: string[] | null
   person: IPerson | null
   emailVerified?: boolean
+  topics?: string[] | null
 }
 
 export interface IUserCreate {
