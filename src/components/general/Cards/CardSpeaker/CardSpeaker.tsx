@@ -46,17 +46,24 @@ export const CardSpeaker = (props: IProps) => {
         />
         <CardBody className="bg-transparent px-0">
           <div className="flex flex-col space-y-2">
-            <div className="flex gap-3">
-              <Avatar
-                src={country?.flag || ''}
-                className="w-6 h-6 rounded-sm"
-              />
+            <div className="flex flex-col gap-1">
               <h3 className="font-bold text-lg sm:text-xl line-clamp-1">
                 {speaker.name + ' ' + speaker.surName}
               </h3>
             </div>
-
-            <p className="text-tiny sm:text-medium ">{speaker.institution}</p>
+            <div className="flex gap-3">
+              <div>
+                <Avatar
+                  src={country?.flag || ''}
+                  className="w-7 h-5 rounded-sm mt-2"
+                />
+              </div>
+              <div>
+                <p className="text-tiny sm:text-sm ">
+                  {speaker.institution}
+                </p>
+              </div>
+            </div>
           </div>
         </CardBody>
       </Card>
