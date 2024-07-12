@@ -51,11 +51,11 @@ export const CardSpeaker = (props: IProps) => {
                 {speaker.name + ' ' + speaker.surName}
               </h3>
             </div>
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
               <div>
                 <Avatar
                   src={country?.flag || ''}
-                  className="w-7 h-5 rounded-sm mt-2"
+                  className="w-7 h-5 rounded-sm"
                 />
               </div>
               <div>
