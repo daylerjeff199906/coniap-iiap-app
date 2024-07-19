@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { ModalAction } from '@/components'
 import { IInscription, IPerson } from '@/types'
 import { usePersons } from '@/hooks/admin'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import {
   ContactData,

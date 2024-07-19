@@ -11,7 +11,7 @@ import {
 import { useFiles } from './useFiles'
 
 import { IRes, ISummary } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 export function useSummaries() {
   const [loading, setLoading] = useState<boolean>(false)

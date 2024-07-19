@@ -8,7 +8,7 @@ import { HeaderSection } from '@/modules/core'
 
 import { ModalAction } from '@/components'
 import { getErrors, registerAndSendEmailVerification } from '@/auth'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 import { createUser, updateUser } from '@/api'
 import { useRouter } from 'next/navigation'
 interface IProps {

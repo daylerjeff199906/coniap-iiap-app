@@ -7,7 +7,7 @@ import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import { IEvent, IEventRes, IRes } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(false)

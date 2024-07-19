@@ -20,7 +20,7 @@ import {
   Controller,
 } from 'react-hook-form'
 import { ModalAction } from '@/components'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 interface IProps {
   data: IPerson

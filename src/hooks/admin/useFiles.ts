@@ -11,7 +11,7 @@ import {
   deleteObject,
 } from 'firebase/storage'
 
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 export function useFiles() {
   const [loading, setLoading] = useState<boolean>(false)

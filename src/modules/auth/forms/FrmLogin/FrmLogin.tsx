@@ -5,8 +5,8 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
-import { toast } from 'sonner'
 import { useAuthContext } from '@/provider'
+import { toast } from 'react-toastify'
 
 interface ILogin {
   email: string
@@ -24,7 +24,7 @@ export const FrmLogin = () => {
     const res = await signInWithCredentials(data)
 
     if (res) {
-      toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
+      toast.success('Bienvenido ' + res?.userName)
       await setUserData(res)
       if (res.role) {
         if (res.role.includes('admin')) {
@@ -47,7 +47,7 @@ export const FrmLogin = () => {
     setLoading(true)
     const res = await SignInWithGoogle()
     if (res) {
-      toast.success('Bienvenido ' + res?.userName, { position: 'top-right' })
+      toast.success('Bienvenido ' + res?.userName)
       await setUserData(res)
       if (res.role) {
         if (res.role.includes('admin')) {
@@ -63,7 +63,7 @@ export const FrmLogin = () => {
         router.push('/')
       }
     } else {
-      toast.error('Error al iniciar sesión', { position: 'top-right' })
+      toast.error('Error al iniciar sesión')
     }
     setLoading(false)
   }

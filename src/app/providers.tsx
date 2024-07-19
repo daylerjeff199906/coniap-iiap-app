@@ -1,7 +1,6 @@
 // app/providers.tsx
 'use client'
 import { NextUIProvider } from '@nextui-org/react'
-import { Toaster } from 'sonner'
 import { AuthProvider } from '@/provider'
 import { ToastContainer } from 'react-toastify'
 
@@ -11,7 +10,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
       <AuthProvider>
-        <ToastContainer />
+        <ToastContainer
+          position="top-right"
+          theme="colored"
+        />
         {children}
       </AuthProvider>
     </NextUIProvider>

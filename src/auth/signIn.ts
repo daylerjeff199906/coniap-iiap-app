@@ -5,7 +5,7 @@ import { fetchUserByEmail, fetchPersonByEmail, createUser } from '@/api'
 import { IError } from './types'
 
 import { IUser, IPerson } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 import { getErrors } from './getErrors'
 
 interface ILogin {

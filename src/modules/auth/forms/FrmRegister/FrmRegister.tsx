@@ -5,7 +5,7 @@ import { svgIsotipoConiap } from '@/assets'
 import Link from 'next/link'
 import { FormProvider, Controller, useForm } from 'react-hook-form'
 import { registerAndSendEmailVerification, SignInWithGoogle } from '@/auth'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 
 interface ICredentials {

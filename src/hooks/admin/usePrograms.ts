@@ -8,7 +8,7 @@ import {
   updateFieldProgram,
   createProgram,
 } from '@/api'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 export function usePrograms() {
   const [loading, setLoading] = useState<boolean>(false)
