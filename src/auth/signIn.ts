@@ -25,7 +25,6 @@ export const signInWithCredentials = async (
       email,
       password
     )
-    console.log(userCredential)
     if (userCredential.user.emailVerified) {
       //Se busca si existe la persona en la tabla person
       const user: IUser | null = (await fetchUserByEmail(
@@ -64,7 +63,6 @@ export const signInWithCredentials = async (
         return null
       }
     } else {
-      console.log(userCredential.user.emailVerified)
       toast.error('Revise su correo electrónico para verificar su cuenta', {
         position: 'top-right',
       })
