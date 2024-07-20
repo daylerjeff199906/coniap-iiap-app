@@ -62,15 +62,17 @@ export const FrmLogin = () => {
           router.push('/admin')
         } else if (res.role.includes('speaker')) {
           router.push('/dashboard')
-        } else if (res.role.includes('participant')) {
-          router.push('/info')
         }
       } else {
-        router.push(
-          `/next-steps?email=${encryptString(res.email)}&name=${encryptString(
-            res.userName
-          )}&photo=${encryptString(res.photo)}`
-        )
+        if (res.person && res.person.typePerson === 'participant') {
+          router.push('/inscripciones/info')
+        } else {
+          router.push(
+            `/next-steps?email=${encryptString(res.email)}&name=${encryptString(
+              res.userName
+            )}&photo=${encryptString(res.photo)}`
+          )
+        }
       }
     } else {
       toast.error('Error al iniciar sesión')
