@@ -8,6 +8,7 @@ import {
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 interface IProps {
   id: string
@@ -41,8 +42,20 @@ export const DialogStatus = (props: IProps) => {
   })
 
   const handleStatusChange = async (id: string, value: boolean) => {
-    await editField(id, `${path}`, 'isActived', value ? 'TRUE' : 'FALSE')
-    handleExit()
+    const res = await editField(
+      id,
+      `${path}`,
+      'isActived',
+      value ? 'TRUE' : 'FALSE',
+      true
+    )
+
+    if (res) {
+      toast.success('Estado actualizado correctamente')
+      handleExit()
+    } else {
+      toast.error('Error al actualizar estado')
+    }
   }
 
   const onSubmit: SubmitHandler<{ status: boolean }> = (data) => {

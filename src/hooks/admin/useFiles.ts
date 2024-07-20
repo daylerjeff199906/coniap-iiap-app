@@ -20,14 +20,17 @@ export function useFiles() {
     id: string,
     namePath: string,
     fieldToUpdate: string,
-    value: any
+    value: any,
+    disableToast?: boolean
   ) => {
     setLoading(true)
     const response = await updateField(namePath, id, fieldToUpdate, value)
-    if (response) {
-      toast.success('Campo actualizado correctamente')
-    } else {
-      toast.error('Error al actualizar campo')
+    if (!disableToast) {
+      if (response) {
+        toast.success('Campo actualizado correctamente')
+      } else {
+        toast.error('Error al actualizar campo')
+      }
     }
     setLoading(false)
     return response
