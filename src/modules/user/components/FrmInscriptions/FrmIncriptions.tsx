@@ -7,6 +7,7 @@ import { IInscription, IPerson } from '@/types'
 import { usePersons } from '@/hooks/admin'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
+
 import {
   ContactData,
   CountryData,

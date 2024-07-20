@@ -66,13 +66,6 @@ export default function Page() {
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl">
                   PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
                 </h1>
-                {/* <p className="text-sm sm:text-base lg:text-lg">
-                  Si deseas
-                  <b> participar como ponente </b>y ya estás registrado,
-                  envíanos tu propuesta de presentación. Si aún no estás
-                  registrado, inscríbete (Formulario arríba) y luego envía tu
-                  propuesta, Iniciando sesión.
-                </p> */}
               </div>
               <div>
                 <Button
