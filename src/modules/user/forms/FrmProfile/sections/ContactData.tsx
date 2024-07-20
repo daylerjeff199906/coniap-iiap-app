@@ -10,8 +10,6 @@ export const ContactData = () => {
     formState: { errors },
   } = useFormContext<IPerson>()
 
-  const isPerson = watch('id')
-
   return (
     <>
       <div>
@@ -36,7 +34,7 @@ export const ContactData = () => {
             onValueChange={onChange}
             isInvalid={errors.email !== undefined}
             errorMessage={errors.email?.message}
-            isDisabled={isPerson !== ''}
+            isDisabled
             radius="sm"
           />
         )}

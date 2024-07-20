@@ -1,13 +1,20 @@
 import { ProfileSection } from '@/modules/user'
 import { fetchPersonByEmail } from '@/api'
 import { getCookie } from '@/lib'
-import { IUser, IResCookie } from '@/types'
+import { IUser, IResCookie, IPerson } from '@/types'
 
 export default async function Page() {
   const user: IResCookie = (await getCookie('user')) as unknown as IResCookie
   const dataParse: IUser = await JSON.parse(user.value as unknown as string)
 
   const res = await fetchPersonByEmail(dataParse.email)
+
+  const person: IPerson = res
+    ? res
+    : ({
+        ...res,
+        email: dataParse.email,
+      } as IPerson)
 
   return (
     <>
@@ -19,7 +26,7 @@ export default async function Page() {
           </p>
         </section>
         <section>
-          <ProfileSection person={res} />
+          <ProfileSection person={person} />
         </section>
       </main>
     </>
