@@ -41,6 +41,7 @@ export const FrmInscriptionSteps = (props: IProps) => {
 
   const methods = useForm<IPerson>({
     defaultValues: {
+      typePerson: 'participant',
       email,
       image: photo,
     },
@@ -93,22 +94,21 @@ export const FrmInscriptionSteps = (props: IProps) => {
         router.push('/inscripciones/info')
       }
     } else {
-      const res = await createPerson(resData)
-      if (res) {
-        toast.success('Inscripción realizada correctamente')
-        router.push('/inscripciones/success')
-
+      const resPerson = await createPerson(resData)
+      if (resPerson) {
         const userApi: IUser | null = (await fetchUserByEmail(
           resData.email as string
         )) as IUser | null
 
-        if (userApi && userApi.person === null && res) {
+        if (userApi && userApi.person === null && resPerson) {
           await updateUser({
             ...userApi,
-            person: res.id,
+            person: resPerson.id,
             role: ['speaker'],
           })
         }
+        toast.success('Inscripción realizada correctamente')
+        router.push('/inscripciones/success')
       }
     }
 
