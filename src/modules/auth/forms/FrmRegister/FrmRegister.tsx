@@ -5,7 +5,7 @@ import { svgIsotipoConiap } from '@/assets'
 import Link from 'next/link'
 import { FormProvider, Controller, useForm } from 'react-hook-form'
 import { registerAndSendEmailVerification, SignInWithGoogle } from '@/auth'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 
 interface ICredentials {
@@ -27,18 +27,15 @@ export const FrmRegister = () => {
     setLoading(true)
     const res = await registerAndSendEmailVerification(data)
     if (res === 'El correo ya está en uso') {
-      toast.error('El correo ya está en uso', {
-        description: 'Intenta con otro correo, o intenta iniciar sesión',
-      })
+      toast.error(`El correo ${data.email} ya está en uso`)
     } else if (res === 'El correo no es válido') {
       toast.error('El correo no es válido')
     } else if (res === 'La contraseña es débil') {
       toast.error('La contraseña es débil')
     } else {
-      toast.success('Usuario creado con éxito', {
-        description:
-          'Se ha enviado un correo de verificación,Confirme su correo, Inicia sesión para continuar',
-      })
+      toast.success(
+        `Usuario creado con exito. Se ha enviado un correo de verificación a ${data.email}`
+      )
       methods.reset()
       router.push('/login')
     }

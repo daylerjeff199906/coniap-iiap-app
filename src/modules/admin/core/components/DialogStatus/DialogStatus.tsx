@@ -1,6 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { Button, Divider, Switch, cn } from '@nextui-org/react'
+import { Button, Divider, Radio, RadioGroup, cn } from '@nextui-org/react'
 import { useFiles } from '@/hooks/admin'
 import { useRouter } from 'next/navigation'
 import {
@@ -9,12 +8,27 @@ import {
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 interface IProps {
   id: string
   path: string
   status: boolean
 }
+
+const optValues = [
+  {
+    value: 'TRUE',
+    label: 'Activo',
+    description:
+      'Cualquiera dentro y fuera del sistema podrán ver tu publicación',
+  },
+  {
+    value: 'FALSE',
+    label: 'Inactivo',
+    description: 'Será ocultado para el público, visible solo en el sistema',
+  },
+]
 
 export const DialogStatus = (props: IProps) => {
   const { id, path, status } = props
@@ -28,8 +42,20 @@ export const DialogStatus = (props: IProps) => {
   })
 
   const handleStatusChange = async (id: string, value: boolean) => {
-    await editField(id, `${path}`, 'isActived', value ? 'TRUE' : 'FALSE')
-    handleExit()
+    const res = await editField(
+      id,
+      `${path}`,
+      'isActived',
+      value ? 'TRUE' : 'FALSE',
+      true
+    )
+
+    if (res) {
+      toast.success('Estado actualizado correctamente')
+      handleExit()
+    } else {
+      toast.error('Error al actualizar estado')
+    }
   }
 
   const onSubmit: SubmitHandler<{ status: boolean }> = (data) => {
@@ -44,48 +70,44 @@ export const DialogStatus = (props: IProps) => {
     <>
       <FormProvider {...methods}>
         <form
-          className="flex flex-col gap-3 w-full rounded-lg border p-4 max-w-xl "
+          className="flex flex-col gap-4 w-full rounded-lg border p-4 max-w-xl "
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <header className="w-full">
-            <h1 className="font-bold">Cambiar estado</h1>
+            <h1 className="font-bold">Configuración de privacidad</h1>
+            <p className="text-xs">
+              Cambia la configuración de privacidad para controlar quién puede
+              ver tu publicación en la seccion de blog (o publicaciones)
+            </p>
           </header>
-          <Divider />
-          <main className="py-4 w-full">
+          <main className="w-full">
             <Controller
               control={methods.control}
               name="status"
               render={({ field: { value, onChange } }) => (
-                <Switch
-                  classNames={{
-                    base: cn(
-                      'inline-flex flex-row-reverse w-full max-w-xl bg-content1 hover:bg-content2 items-center',
-                      'justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
-                      'data-[selected=true]:border-primary'
-                    ),
-                    wrapper: 'p-0 h-4 overflow-visible',
-                    thumb: cn(
-                      'w-6 h-6 border-2 shadow-lg',
-                      'group-data-[hover=true]:border-primary',
-                      //selected
-                      'group-data-[selected=true]:ml-6',
-                      // pressed
-                      'group-data-[pressed=true]:w-7',
-                      'group-data-[selected]:group-data-[pressed]:ml-4'
-                    ),
-                  }}
-                  isSelected={value}
-                  onChange={(e) => {
-                    onChange(e)
-                  }}
+                <RadioGroup
+                  value={value ? 'TRUE' : 'FALSE'}
+                  onValueChange={(value) => onChange(value === 'TRUE')}
+                  size="sm"
                 >
-                  <div className="flex flex-col gap-1">
-                    <p className="text-medium">Activar </p>
-                    <p className="text-tiny text-default-400">
-                      Se activará el programa y será visible para los usuarios
-                    </p>
-                  </div>
-                </Switch>
+                  {optValues.map((opt, index) => (
+                    <Radio
+                      key={index}
+                      value={opt.value}
+                      classNames={{
+                        base: cn(
+                          'm-0 bg-content1 hover:bg-content2 items-center',
+                          'cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent min-w-full',
+                          'data-[selected=true]:border-primary'
+                        ),
+                        label: cn('font-semibold'),
+                      }}
+                      description={opt.description}
+                    >
+                      {opt.label}
+                    </Radio>
+                  ))}
+                </RadioGroup>
               )}
             />
           </main>
@@ -112,3 +134,27 @@ export const DialogStatus = (props: IProps) => {
     </>
   )
 }
+
+// export const CustomRadio = (props: {
+//   children: React.ReactNode
+//   value: string
+//   selected: boolean
+//   onClick: () => void
+// }) => {
+//   const { children, ...otherProps } = props
+
+//   return (
+//     <Radio
+//       {...otherProps}
+//       classNames={{
+//         base: cn(
+//           'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
+//           'flex-row-reverse max-w-[300px] cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent',
+//           'data-[selected=true]:border-primary'
+//         ),
+//       }}
+//     >
+//       {children}
+//     </Radio>
+//   )
+// }

@@ -9,7 +9,7 @@ import {
   fetchPersons,
 } from '@/api'
 import { IPerson, IRes } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 const message =
   'duplicate key value violates unique constraint "persons_email_key"'
@@ -34,9 +34,7 @@ export function usePersons() {
       if (res.message === message) {
         toast.error('El correo ya esta registrado')
       } else {
-        toast.error('Error al crear persona', {
-          description: res.message,
-        })
+        toast.error(`Error al crear persona: ${res.message}`)
       }
       setLoading(false)
       return null
@@ -57,7 +55,7 @@ export function usePersons() {
     const res: IRes = (await updatePerson(id, data)) as IRes
 
     if (res.message) {
-      toast.error('Error al actualizar persona', { description: res.message })
+      toast.error(`Error al actualizar persona: ${res.message}`)
       setLoading(false)
       return res
     } else {

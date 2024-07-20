@@ -8,7 +8,7 @@ import {
   updateFieldProgram,
   createProgram,
 } from '@/api'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 export function usePrograms() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -33,9 +33,7 @@ export function usePrograms() {
     const res: IRes = (await createProgram(data)) as IRes
 
     if (res.message) {
-      toast.error('Error al crear el programa', {
-        description: res.message,
-      })
+      toast.error(`Error al crear el programa: ${res.message}`)
     } else {
       toast.success('Programa creado con exito')
     }
@@ -47,9 +45,7 @@ export function usePrograms() {
     setLoading(true)
     const res: IRes = (await updateProgram(id, data)) as IRes
     if (res.message) {
-      toast.error('Error al actualizar el programa', {
-        description: res.message,
-      })
+      toast.error(`Error al actualizar el programa: ${res.message}`)
     } else {
       toast.success('Programa actualizado con exito')
     }

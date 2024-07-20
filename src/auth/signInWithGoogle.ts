@@ -3,7 +3,7 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 import { IUser, IUserCreated } from '@/types'
 import { IError } from './types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 import { fetchUserByEmail, createUser } from '@/api'
 import { getErrors } from './getErrors'
