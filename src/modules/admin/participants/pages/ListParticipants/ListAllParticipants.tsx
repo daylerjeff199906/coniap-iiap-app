@@ -94,6 +94,7 @@ export const ListParticipants = () => {
           headerChildren={<FiltersSection />}
           actionsList={actions}
           loading={loading}
+          selectionMode="single"
         />
       </Suspense>
     </>

@@ -155,9 +155,26 @@ export const TableGeneral = (props: IProps) => {
         removeWrapper
         isHeaderSticky
         classNames={{
-          th: ['font-semibold', 'bg-white', 'text-gray-800', 'border-b'],
           base: 'max-h-[calc(100vh-20rem)] overflow-y-auto bg-white',
-          td: ['text-xs', 'font-medium'],
+          th: [
+            'bg-white',
+            'text-default-500',
+            'font-semibold',
+            'rounded-none',
+            'shadow-none',
+          ],
+          table: ['border-divider', 'bg-white'],
+          td: [
+            'text-xs',
+            'font-medium',
+            'group-data-[first=true]:first:before:rounded-none',
+            'group-data-[first=true]:last:before:rounded-none',
+            // middle
+            'group-data-[middle=true]:before:rounded-none',
+            // last
+            'group-data-[last=true]:first:before:rounded-none',
+            'group-data-[last=true]:last:before:rounded-none',
+          ],
         }}
         selectionMode={selectionMode}
         onRowAction={onRowAction}
