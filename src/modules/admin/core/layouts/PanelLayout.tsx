@@ -32,8 +32,7 @@ export const PanelLayout = (props: IProps) => {
       />
 
       <AsideMenu menuAside={menuAside} />
-      {/* article class="w-full flex flex-col bg-baground"> */}
-      <article className="w-full flex flex-col bg-slate-50">
+      <article className="w-full flex flex-col bg-slate-50 max-w-[calc(100%-240px)]">
         <NavBar variant="admin" />
         <main className="w-full max-w-[1920px] mx-auto p-4 sm:p-6">
           {children}
