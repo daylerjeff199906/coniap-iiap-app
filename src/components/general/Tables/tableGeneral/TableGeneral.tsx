@@ -154,12 +154,13 @@ export const TableGeneral = (props: IProps) => {
         aria-labelledby="TableGeneral"
         removeWrapper
         isHeaderSticky
+        className=' rounded-xl'
         classNames={{
           base: 'max-h-[calc(100vh-20rem)] overflow-y-auto bg-white',
           th: [
             'bg-white',
             'text-default-500',
-            'font-semibold',
+            'font-bold',
             'rounded-none',
             'shadow-none',
           ],
