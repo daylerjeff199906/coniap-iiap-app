@@ -1,18 +1,11 @@
 'use client'
 import Link from 'next/link'
-import Fireworks from 'react-canvas-confetti/dist/presets/fireworks'
 import { NextSteps } from '@/modules/user'
 
 export default function Page() {
   return (
     <>
       <main className="section-page bg-gray-100">
-        <Fireworks
-          autorun={{
-            speed: 3,
-            duration: 3000,
-          }}
-        />
         <section className="flex flex-col section-page justify-center items-center gap-6 h-full bg-white rounded-lg border container w-full max-w-3xl">
           <div className="w-full">
             <h1 className="text-xl sm:text-2xl font-bold text-center">

@@ -58,12 +58,14 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
 
         return userApi
       } else {
-        let userApiUpdated: IUser | null = null
-
         if (userApi?.person === null && personApi?.id) {
-          userApiUpdated = await updateUser({
-            ...userApi,
-            person: personApi,
+          const userApiUpdated = await updateUser({
+            email: user.email as string,
+            photo: user.photoURL as string,
+            userName: user.displayName as string,
+            role: personApi.typePerson !== 'participant' ? ['speaker'] : null,
+            emailVerified: user.emailVerified,
+            person: personApi.id ? Number(personApi.id) : null,
           })
 
           if (!userApiUpdated) {

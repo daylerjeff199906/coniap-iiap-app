@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client '
-import { useEffect, useState } from 'react'
 import { Avatar } from '@nextui-org/react'
 import { useSearchParams } from 'next/navigation'
 import { FrmInscriptionSteps } from '@/modules/user'
@@ -12,16 +11,6 @@ function desencryptString(value: string) {
 }
 
 export const NextSteps = () => {
-  //   const [data, setData] = useState<{
-  //     email: string
-  //     name: string
-  //     photo: string
-  //   }>({
-  //     email: '',
-  //     name: '',
-  //     photo: '',
-  //   })
-
   const searchParams = useSearchParams()
 
   const emailEncrypt = searchParams.get('email')
@@ -32,12 +21,6 @@ export const NextSteps = () => {
 
   const photoEncrypt = searchParams.get('photo')
   const photo = desencryptString(photoEncrypt || '')
-
-  //   useEffect(() => {
-  //     if (email && name && photo) {
-  //       setData({ email, name, photo })
-  //     }
-  //   }, [email])
 
   return (
     <>

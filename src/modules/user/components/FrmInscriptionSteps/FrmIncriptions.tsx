@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { Button } from '@nextui-org/react'
 import { ModalAction } from '@/components'
-import { IInscription, IPerson, IUser } from '@/types'
-import { usePersons } from '@/hooks/admin'
+import { IPerson, IUser } from '@/types'
 import { toast } from 'react-toastify'
 import { IconAlertTriangleFilled } from '@tabler/icons-react'
 import { useRouter } from 'next/navigation'
@@ -37,7 +36,6 @@ export const FrmInscriptionSteps = (props: IProps) => {
   const { email, photo } = props
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const { addPerson } = usePersons()
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
@@ -77,11 +75,9 @@ export const FrmInscriptionSteps = (props: IProps) => {
     const { imageFile, ...resData } = data
 
     if (data?.typePerson === 'participant') {
-      const res = await createPerson(resData)
-      if (res) {
-        toast.success('Inscripción realizada correctamente')
-        router.push('/inscripciones/info')
+      const res: IPerson | null = await createPerson(resData)
 
+      if (res) {
         const userApi: IUser | null = (await fetchUserByEmail(
           resData.email as string
         )) as IUser | null
@@ -89,13 +85,15 @@ export const FrmInscriptionSteps = (props: IProps) => {
         if (userApi && userApi.person === null && res) {
           await updateUser({
             ...userApi,
-            person: res as unknown as IPerson,
+            person: res?.id ? Number(res?.id) : null,
             role: null,
           })
         }
+        toast.success('Inscripción realizada correctamente')
+        router.push('/inscripciones/info')
       }
     } else {
-      const res = await addPerson(resData)
+      const res = await createPerson(resData)
       if (res) {
         toast.success('Inscripción realizada correctamente')
         router.push('/inscripciones/success')
@@ -107,7 +105,7 @@ export const FrmInscriptionSteps = (props: IProps) => {
         if (userApi && userApi.person === null && res) {
           await updateUser({
             ...userApi,
-            person: res as unknown as IPerson,
+            person: res.id,
             role: ['speaker'],
           })
         }

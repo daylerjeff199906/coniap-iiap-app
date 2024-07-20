@@ -9,6 +9,8 @@ export async function createPerson(props: IPerson) {
     .from('persons')
     .insert([props])
     .select('*')
+    .single()
+
   if (error) {
     return error
   } else {
