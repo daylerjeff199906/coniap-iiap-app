@@ -27,12 +27,12 @@ export const PanelLayout = (props: IProps) => {
     <main className="flex">
       <div
         id="backdrop"
-        className="bg-black/20 w-full h-full fixed top-0 left-0 z-50 bottom-0 hidden"
+        className="bg-black/20 w-full h-full fixed top-0 left-0 z-40 bottom-0 hidden"
         onClick={handleCloseMenu}
       />
 
       <AsideMenu menuAside={menuAside} />
-      <article className="w-full flex flex-col bg-slate-50 max-w-[calc(100%-240px)]">
+      <article className="w-full flex flex-col bg-slate-50 lg:max-w-[calc(100%-240px)]">
         <NavBar variant="admin" />
         <main className="w-full max-w-[1920px] mx-auto p-4 sm:p-6">
           {children}

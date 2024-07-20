@@ -41,7 +41,7 @@ export const AsideMenu = (props: IProps) => {
 
   return (
     <aside
-      className="sticky top-0 w-60 lg:hidden  max-w-60 min-w-60 flex-col flex-shrink-0 font-normal bg-white dark:bg-gray-800 h-screen border-r border-gray-200 dark:border-gray-700 transition-width duration-75"
+      className="fixed lg:sticky top-0 z-50 w-60 hidden lg:flex  max-w-60 min-w-60 flex-col flex-shrink-0 font-normal bg-white dark:bg-gray-800 h-screen border-r border-gray-200 dark:border-gray-700 transition-width duration-75"
       id="aside-menu"
     >
       <header className="w-full">
