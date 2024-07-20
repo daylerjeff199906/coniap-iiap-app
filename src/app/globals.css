@@ -34,10 +34,12 @@
   @apply border border-gray-200 p-4 rounded-md bg-white;
 }
 
-/* .custom-quill {
+/* styles/globals.css */
+.custom-quill {
   h1 {
     @apply text-4xl font-bold;
   }
+
   h2 {
     @apply text-3xl font-semibold;
   }
@@ -57,4 +59,4 @@
   strong {
     @apply font-bold;
   }
-} */
+}
