@@ -31,6 +31,7 @@ export const PersonData = () => {
             onValueChange={onChange}
             isInvalid={errors.name !== undefined}
             errorMessage={errors.name?.message}
+            radius="sm"
           />
         )}
       />
@@ -47,6 +48,7 @@ export const PersonData = () => {
             onValueChange={onChange}
             isInvalid={errors.surName !== undefined}
             errorMessage={errors.surName?.message}
+            radius="sm"
           />
         )}
       />
@@ -62,6 +64,7 @@ export const PersonData = () => {
             description="Ejemplo: Desarrollador de software"
             value={value}
             onValueChange={onChange}
+            radius='sm'
           />
         )}
       />
@@ -75,6 +78,7 @@ export const PersonData = () => {
             labelPlacement="outside"
             value={value}
             onValueChange={onChange}
+            radius='sm'
           />
         )}
       />
@@ -88,6 +92,7 @@ export const PersonData = () => {
             labelPlacement="outside"
             value={value}
             onValueChange={onChange}
+            radius='sm'
           />
         )}
       />

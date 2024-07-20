@@ -28,8 +28,8 @@ export const FrmProfile = (props: IFrmProfileProps) => {
       return null
     } else {
       router.push('/dashboard/profile')
-      const dataDefault: IPerson[] = res as unknown as IPerson[]
-      methods.reset(dataDefault[0])
+      const dataDefault: IPerson = res as unknown as IPerson
+      methods.reset(dataDefault)
       getUser()
     }
   }

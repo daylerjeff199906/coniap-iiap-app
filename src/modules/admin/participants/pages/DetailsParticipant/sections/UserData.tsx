@@ -62,7 +62,13 @@ export const UserData = (props: IProps) => {
     setLoadSave(true)
     if (user) {
       await updateUser({
-        ...user,
+        id: user.id,
+        email: data.email,
+        person: data?.id ? Number(data.id) : null,
+        photo: user.photo,
+        userName: user.userName,
+        emailVerified: user.emailVerified,
+        topics: user.topics,
         role: data?.role && data.role.length > 0 ? data.role : null,
       })
       toast.success('Usuario actualizado correctamente')

@@ -12,10 +12,9 @@ const steps = [
     link: null,
   },
   {
-    title: 'Inicia sesión',
-    content:
-      'Si te inscribiste como ponente, inicia sesión para enviar tu resumen',
-    link: '/login',
+    title: 'Ya estás registrado como asistente',
+    content: 'Si deseas enviar un resumen, contactanos al correo',
+    link: null,
   },
 ]
 

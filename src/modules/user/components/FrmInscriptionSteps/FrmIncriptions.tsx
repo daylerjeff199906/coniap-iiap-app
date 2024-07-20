@@ -1,11 +1,11 @@
 'use client'
+import { useState } from 'react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { Button } from '@nextui-org/react'
-import { useState } from 'react'
 import { ModalAction } from '@/components'
-import { IInscription, IPerson } from '@/types'
-import { usePersons } from '@/hooks/admin'
+import { IPerson, IUser } from '@/types'
 import { toast } from 'react-toastify'
+import { IconAlertTriangleFilled } from '@tabler/icons-react'
 import { useRouter } from 'next/navigation'
 
 import {
@@ -15,7 +15,7 @@ import {
   JobData,
   RoleData,
 } from './sections'
-import { registerAndSendEmailVerification } from '@/auth'
+import { createPerson, updateUser, fetchUserByEmail } from '@/api'
 
 import infoData from '@/utils/json/infoConiap.json'
 
@@ -27,21 +27,28 @@ function parseDate(date: string) {
   })
 }
 
-export const FrmInscriptions = () => {
+interface IProps {
+  email?: string
+  photo?: string
+}
+
+export const FrmInscriptionSteps = (props: IProps) => {
+  const { email, photo } = props
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
 
-  const { addPerson } = usePersons()
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
-  const methods = useForm<IInscription>({
+  const methods = useForm<IPerson>({
     defaultValues: {
       typePerson: 'participant',
+      email,
+      image: photo,
     },
   })
 
   const typePerson = methods.watch('typePerson')
-  const email = methods.watch('email')
+  // const email = methods.watch('email')
 
   const isSpeaker = typePerson === 'speaker'
 
@@ -63,61 +70,49 @@ export const FrmInscriptions = () => {
     setIsOpenAction(true)
   }
 
-  const handleOnSubmit: SubmitHandler<IInscription> = async (
-    data: IInscription
-  ) => {
+  const handleOnSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
     setIsOpenAction(false)
     setLoading(true)
-    const { password, password_confirmation, ...resData } = data
+    const { imageFile, ...resData } = data
 
-    if (data?.typePerson !== 'participant') {
-      const res = await registerAndSendEmailVerification({
-        email: resData.email,
-        password,
-      })
-      if (typeof res === 'string') {
-        toast.error(res)
-        return setLoading(false)
-      } else {
-        const newData: IPerson = {
-          ...resData,
-          typePerson: 'speaker',
-          isActived: false,
-          image: '',
+    if (data?.typePerson === 'participant') {
+      const res: IPerson | null = await createPerson(resData)
+
+      if (res) {
+        const userApi: IUser | null = (await fetchUserByEmail(
+          resData.email as string
+        )) as IUser | null
+
+        if (userApi && userApi.person === null && res) {
+          await updateUser({
+            ...userApi,
+            person: res?.id ? Number(res?.id) : null,
+            role: null,
+          })
         }
-        const res: IPerson = await addPerson(newData)
-        if (res !== null) {
-          resetForm()
-          toast.success(
-            `Datos registrados con éxito, se ha enviado un correo de verificación a ${resData.email}`
-          )
-          router.push('/inscripciones/success')
-        }
+        toast.success('Inscripción realizada correctamente')
+        router.push('/inscripciones/info')
       }
     } else {
-      const newData: IPerson = {
-        ...resData,
-        typePerson: 'participant',
-        isActived: false,
-        image: '',
-      }
-      const res: IPerson = await addPerson(newData)
-      if (res !== null) {
-        resetForm()
-        toast.success(`Datos registrados con éxito. ¡Gracias por inscribirte!`)
+      const resPerson = await createPerson(resData)
+      if (resPerson) {
+        const userApi: IUser | null = (await fetchUserByEmail(
+          resData.email as string
+        )) as IUser | null
+
+        if (userApi && userApi.person === null && resPerson) {
+          await updateUser({
+            ...userApi,
+            person: resPerson.id,
+            role: ['speaker'],
+          })
+        }
+        toast.success('Inscripción realizada correctamente')
         router.push('/inscripciones/success')
       }
     }
-    setLoading(false)
-  }
 
-  const resetForm = () => {
-    methods.setValue('name', '')
-    methods.setValue('surName', '')
-    methods.setValue('job', '')
-    methods.setValue('institution', '')
-    methods.setValue('location', '')
-    methods.setValue('email', '')
+    setLoading(false)
   }
 
   const date = infoData.data.dates['date-conference'].start
@@ -132,12 +127,15 @@ export const FrmInscriptions = () => {
   return (
     <article className="w-full flex flex-col gap-5">
       <section
-        className={`p-4 border rounded-lg font-medium flex flex-col gap-2 sm:mx-4 ${
+        className={`p-4 rounded-sm font-medium flex gap-2 sm:mx-4 ${
           isBefore
-            ? 'border-warning-500 bg-warning-100 text-warning-700'
-            : 'bg-danger-100 border-danger-500 text-danger-700'
+            ? 'border-warning-500 bg-warning-50 text-warning-700 border-l-8'
+            : 'bg-danger-50 border-danger-500 text-danger-700 border-l-8'
         }`}
       >
+        <div>
+          <IconAlertTriangleFilled size={24} />
+        </div>
         <p className="text-sm ">
           <strong>Nota:</strong> La fecha límite para inscripciones como
           participante es {dateFormatted}.{' '}
@@ -150,18 +148,23 @@ export const FrmInscriptions = () => {
             className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <InfoData />
-            <JobData />
-            <CountryData />
-            <ContactData />
+            <div className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4 col-span-2 border p-4 rounded-md">
+              <InfoData />
+              <JobData />
+              <CountryData />
+              <ContactData />
+            </div>
             {isBeforeSpeaker && isSpeaker && (
               <section
-                className={`p-4 border rounded-lg font-medium flex flex-col gap-2 col-span-2 ${
+                className={`p-4 rounded-sm font-medium flex col-span-2 gap-2 ${
                   isBefore
-                    ? 'border-warning-500 bg-warning-100 text-warning-700'
-                    : 'bg-danger-100 border-danger-500 text-danger-700'
+                    ? 'border-warning-500 bg-warning-50 text-warning-700 border-l-8'
+                    : 'bg-danger-50 border-danger-500 text-danger-700 border-l-8'
                 }`}
               >
+                <div>
+                  <IconAlertTriangleFilled size={24} />
+                </div>
                 <p className="text-sm ">
                   <strong>Nota:</strong> La fecha límite para enviar propuestas
                   como ponente es {dateFormattedSpeaker}.{' '}
@@ -172,12 +175,11 @@ export const FrmInscriptions = () => {
               </section>
             )}
             {isBeforeSpeaker && <RoleData />}
-            <div className="col-span-2">
+            <div className="col-span-2 pt-3">
               <Button
-                radius="full"
+                radius="sm"
                 color="primary"
                 type="submit"
-                size="lg"
                 isLoading={loading}
                 isDisabled={loading}
               >

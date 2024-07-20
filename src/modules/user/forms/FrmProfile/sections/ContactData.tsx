@@ -34,6 +34,7 @@ export const ContactData = () => {
             isInvalid={errors.email !== undefined}
             errorMessage={errors.email?.message}
             isDisabled
+            radius='sm'
           />
         )}
       />
@@ -47,6 +48,7 @@ export const ContactData = () => {
             labelPlacement="outside"
             value={value}
             onValueChange={onChange}
+            radius='sm'
           />
         )}
       />

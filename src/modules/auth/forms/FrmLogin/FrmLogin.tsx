@@ -8,6 +8,10 @@ import { LoadingPages } from '@/components'
 import { useAuthContext } from '@/provider'
 import { toast } from 'react-toastify'
 
+function encryptString(value: string) {
+  return btoa(value)
+}
+
 interface ILogin {
   email: string
   password: string
@@ -60,7 +64,15 @@ export const FrmLogin = () => {
           router.push('/dashboard')
         }
       } else {
-        router.push('/')
+        if (res.person && res.person.typePerson === 'participant') {
+          router.push('/inscripciones/info')
+        } else {
+          router.push(
+            `/next-steps?email=${encryptString(res.email)}&name=${encryptString(
+              res.userName
+            )}&photo=${encryptString(res.photo)}`
+          )
+        }
       }
     } else {
       toast.error('Error al iniciar sesión')
