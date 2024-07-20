@@ -23,9 +23,7 @@ export function useSummaries() {
     const res: IRes = (await createSummary(data)) as IRes
 
     if (res.message) {
-      toast.error('Error al crear el resumen', {
-        description: res.message,
-      })
+      toast.error(`Error al crear el resúmen ${res.message}`)
     } else {
       toast.success('Tema de resumen añadido con éxito')
     }
@@ -37,9 +35,7 @@ export function useSummaries() {
     setLoading(true)
     const res: IRes = (await updateSummary(id, data)) as IRes
     if (res.message) {
-      toast.error('Error al actualizar el resúmen', {
-        description: res.message,
-      })
+      toast.error(`Error al actualizar el resumen ${res.message}`)
     } else {
       toast.success('Tema de resumen actualizado con éxito')
     }

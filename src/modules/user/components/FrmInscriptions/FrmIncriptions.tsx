@@ -87,10 +87,9 @@ export const FrmInscriptions = () => {
         const res: IPerson = await addPerson(newData)
         if (res !== null) {
           resetForm()
-          toast.success('Datos registrados con éxito', {
-            description: 'Enviaremos un mensaje de confirmación a tu correo',
-            position: 'top-right',
-          })
+          toast.success(
+            `Datos registrados con éxito, se ha enviado un correo de verificación a ${resData.email}`
+          )
           router.push('/inscripciones/success')
         }
       }
@@ -104,10 +103,7 @@ export const FrmInscriptions = () => {
       const res: IPerson = await addPerson(newData)
       if (res !== null) {
         resetForm()
-        toast.success('Datos registrados con éxito', {
-          description:
-            'Mantente atento a tu correo, te enviaremos más información',
-        })
+        toast.success(`Datos registrados con éxito. ¡Gracias por inscribirte!`)
         router.push('/inscripciones/success')
       }
     }
