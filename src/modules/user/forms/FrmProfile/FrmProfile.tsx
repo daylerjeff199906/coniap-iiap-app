@@ -16,21 +16,33 @@ export const FrmProfile = (props: IFrmProfileProps) => {
   const { person } = props
   const router = useRouter()
   const { myPerson, getUser } = useAuth()
-  const { updatePersonData, loading } = usePersons()
+  const { updatePersonData, addPerson, loading } = usePersons()
 
   const methods = useForm<IPerson>({
     defaultValues: person,
   })
 
   const onSubmit: SubmitHandler<IPerson> = async (data: IPerson) => {
-    const res = await updatePersonData(String(myPerson?.id), data)
-    if (res.message) {
-      return null
+    if (data?.id) {
+      const res = await updatePersonData(String(myPerson?.id), data)
+      if (res.message) {
+        return null
+      } else {
+        router.push('/dashboard/profile')
+        const dataDefault: IPerson = res as unknown as IPerson
+        methods.reset(dataDefault)
+        getUser()
+      }
     } else {
-      router.push('/dashboard/profile')
-      const dataDefault: IPerson = res as unknown as IPerson
-      methods.reset(dataDefault)
-      getUser()
+      const res = await addPerson(data)
+      if (res) {
+        router.push('/dashboard/files')
+        const dataDefault: IPerson = res as unknown as IPerson
+        methods.reset(dataDefault)
+        getUser()
+      } else {
+        return null
+      }
     }
   }
 

@@ -6,8 +6,11 @@ import { Controller, useFormContext } from 'react-hook-form'
 export const ContactData = () => {
   const {
     control,
+    watch,
     formState: { errors },
   } = useFormContext<IPerson>()
+
+  const isPerson = watch('id')
 
   return (
     <>
@@ -33,8 +36,8 @@ export const ContactData = () => {
             onValueChange={onChange}
             isInvalid={errors.email !== undefined}
             errorMessage={errors.email?.message}
-            isDisabled
-            radius='sm'
+            isDisabled={isPerson !== ''}
+            radius="sm"
           />
         )}
       />
@@ -48,7 +51,7 @@ export const ContactData = () => {
             labelPlacement="outside"
             value={value}
             onValueChange={onChange}
-            radius='sm'
+            radius="sm"
           />
         )}
       />

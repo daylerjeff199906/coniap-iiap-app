@@ -5,7 +5,6 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownSection,
   DropdownTrigger,
   Skeleton,
   User,
@@ -19,16 +18,62 @@ interface IProps {
   isAdmin?: boolean
 }
 
+const optionMenu = [
+  {
+    label: 'Ver página de inicio',
+    key: 'portal',
+    href: '/',
+    show: true,
+    role: 'all',
+    color: 'default',
+    onClick: false,
+  },
+  {
+    label: 'Mi perfil',
+    key: 'profile',
+    href: '/dashboard',
+    show: true,
+    role: 'speaker',
+    color: 'default',
+    onClick: false,
+  },
+  {
+    label: 'Panel de administración',
+    href: '/admin',
+    show: true,
+    role: 'admin',
+    color: 'default',
+    onClick: false,
+  },
+  {
+    label: 'Cerrar Sesión',
+    href: null,
+    show: true,
+    role: 'all',
+    color: 'danger',
+    onClick: true,
+  },
+]
+
+const filterOptionsByRole = (roles: string[]): typeof optionMenu => {
+  if (roles.includes('admin')) {
+    return optionMenu.filter(
+      (option) => option.role === 'admin' || option.role === 'all'
+    )
+  } else if (roles.includes('speaker')) {
+    return optionMenu.filter(
+      (option) => option.role === 'speaker' || option.role === 'all'
+    )
+  } else {
+    return optionMenu.filter((option) => option.role === 'all')
+  }
+}
+
 export const ProfilePopover = (props: IProps) => {
   const { user, logout, loading, isAdmin } = props
 
   const rol = user?.role
-  const isSuperAdmin = rol?.includes('superadmin')
-  const includeAdmin = rol?.includes('admin')
-  const isEditor = rol?.includes('editor')
-  const isSpeaker = rol?.includes('speaker')
-
-  const admin = isSuperAdmin || includeAdmin || isEditor
+  const options = filterOptionsByRole(rol || [])
 
   return (
     <>
@@ -52,6 +97,7 @@ export const ProfilePopover = (props: IProps) => {
         <>
           {user ? (
             <Dropdown
+              aria-label="Profile"
               radius="sm"
               showArrow
               classNames={{
@@ -63,10 +109,10 @@ export const ProfilePopover = (props: IProps) => {
                 <User
                   as={Button}
                   variant="light"
-                  size="sm"
                   name={user?.userName}
                   description={user?.email}
                   avatarProps={{
+                    isBordered: true,
                     src: user?.photo,
                     size: 'sm',
                   }}
@@ -78,56 +124,26 @@ export const ProfilePopover = (props: IProps) => {
               </DropdownTrigger>
               <DropdownMenu
                 aria-label="Custom item styles"
-                className="p-3"
+                variant="flat"
+                className="p-2"
                 itemClasses={{
-                  base: [
-                    'rounded-md',
-                    'text-default-500',
-                    'transition-opacity',
-                    'data-[hover=true]:text-foreground',
-                    'data-[hover=true]:bg-default-100',
-                    'dark:data-[hover=true]:bg-default-50',
-                    'data-[selectable=true]:focus:bg-default-50',
-                    'data-[pressed=true]:opacity-70',
-                    'data-[focus-visible=true]:ring-default-500',
-                  ],
+                  base: 'hover:bg-default-200 text-xs',
+                  title: 'text-xs font-medium',
                 }}
               >
-                <DropdownSection showDivider>
+                {options.map((option, index) => (
                   <DropdownItem
-                    key="dashboard"
-                    as={Link}
-                    href="/"
+                    key={option.key}
+                    color={option.color as 'default' | 'danger'}
+                    {...(option.href && {
+                      href: option.href,
+                      as: Link,
+                    })}
+                    onClick={option.onClick ? logout : undefined}
                   >
-                    Ir al inicio
+                    {option.label}
                   </DropdownItem>
-                </DropdownSection>
-                <DropdownSection showDivider>
-                  <DropdownItem
-                    key="profile"
-                    as={Link}
-                    href="/dashboard"
-                    className={!isSpeaker ? 'hidden' : ''}
-                  >
-                    Mi perfil
-                  </DropdownItem>
-                  <DropdownItem
-                    key="profile"
-                    as={Link}
-                    href="/admin"
-                    className={!admin ? 'hidden' : ''}
-                  >
-                    Panel de administración
-                  </DropdownItem>
-                </DropdownSection>
-                <DropdownSection>
-                  <DropdownItem
-                    key="logout"
-                    onPress={logout}
-                  >
-                    Cerrar Sesión
-                  </DropdownItem>
-                </DropdownSection>
+                ))}
               </DropdownMenu>
             </Dropdown>
           ) : null}
