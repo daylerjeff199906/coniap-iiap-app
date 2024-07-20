@@ -81,6 +81,7 @@ export const ListUsers = () => {
         loading={loading}
         onSearch={setQuery}
         searchValue={query}
+        selectionMode="single"
       />
     </>
   )

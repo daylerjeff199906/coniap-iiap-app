@@ -174,6 +174,7 @@ export const TableGeneral = (props: IProps) => {
             // last
             'group-data-[last=true]:first:before:rounded-none',
             'group-data-[last=true]:last:before:rounded-none',
+            'rounded-lg',
           ],
         }}
         selectionMode={selectionMode}

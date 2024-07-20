@@ -82,6 +82,7 @@ export const ListTopics = () => {
         loading={loading || loadingFile}
         columns={columns}
         rows={rows}
+        selectionMode="single"
       />
     </>
   )
