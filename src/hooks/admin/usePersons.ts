@@ -26,10 +26,10 @@ export function usePersons() {
     const res = await createPerson(data)
       .then((res) => res)
       .catch((err) => err)
-    if (res[0]) {
+    if (res) {
       toast.success('Persona creada correctamente')
       setLoading(false)
-      return res[0]
+      return res
     } else {
       if (res.message === message) {
         toast.error('El correo ya esta registrado')
