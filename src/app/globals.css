@@ -30,6 +30,10 @@
   @apply bg-black text-white;
 }
 
+.section-admin {
+  @apply border border-gray-200 p-4 rounded-md;
+}
+
 /* .custom-quill {
   h1 {
     @apply text-4xl font-bold;

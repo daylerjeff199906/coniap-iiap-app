@@ -104,7 +104,7 @@ export const FrmEventEditor = (props: IProps) => {
             <InfoRoom />
           </div>
           <MoreDescription />
-          <div className="flex items-center gap-4 justify-end">
+          <footer className="flex items-center gap-4 justify-end">
             <Button
               color="primary"
               type="submit"
@@ -119,7 +119,7 @@ export const FrmEventEditor = (props: IProps) => {
             >
               Cancelar
             </Button>
-          </div>
+          </footer>
         </form>
       </FormProvider>
       <ModalAction

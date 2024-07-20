@@ -29,7 +29,7 @@ export const SummarySection = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-3 border p-4 rounded-lg w-full">
+      <section className="flex flex-col gap-3 w-full section-admin">
         <div className="w-full py-2 sm:pl-3">
           <Checkbox
             aria-label="Programs"
@@ -70,7 +70,7 @@ export const SummarySection = () => {
                   label="Resumen"
                   labelPlacement="outside"
                   placeholder="Seleccionar resumen"
-                  value={value}
+                  value={value || ''}
                   onChange={onChange}
                   description="Seleccione un tema para el evento"
                   isInvalid={errors.summary?.id !== undefined}

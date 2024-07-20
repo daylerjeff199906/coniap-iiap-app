@@ -23,7 +23,7 @@ export const InfoRoom = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-3 border p-4 rounded-lg w-full">
+      <section className="flex flex-col gap-3 w-full section-admin">
         <div className="w-full py-2 sm:pl-3">
           <Checkbox
             aria-label="Programs"
