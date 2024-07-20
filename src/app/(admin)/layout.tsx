@@ -8,9 +8,10 @@ const menu: IMenuSideBar[] = [
     items: [
       {
         id: 'home',
-        icon: 'home',
+        icon: 'dashboard',
         title: 'Dashboard',
         href: '/admin',
+        moreItems: [],
       },
     ],
   },
@@ -23,6 +24,7 @@ const menu: IMenuSideBar[] = [
         icon: 'calendar',
         title: 'Programas',
         href: '/admin/programas',
+        moreItems: [],
       },
       {
         id: 'events',
@@ -30,7 +32,7 @@ const menu: IMenuSideBar[] = [
         title: 'Eventos',
         moreItems: [
           {
-            id: 'all',
+            id: 'all-events',
             title: 'Lista',
             href: '/admin/eventos',
           },
@@ -53,7 +55,7 @@ const menu: IMenuSideBar[] = [
         title: 'Participantes',
         moreItems: [
           {
-            id: 'all',
+            id: 'all-participants',
             title: 'Todos',
             href: '/admin/participantes',
           },
@@ -74,6 +76,7 @@ const menu: IMenuSideBar[] = [
         icon: 'users',
         title: 'Resúmenes',
         href: '/admin/participantes/resumenes',
+        moreItems: [],
       },
     ],
   },
@@ -86,12 +89,14 @@ const menu: IMenuSideBar[] = [
         icon: 'flag-3',
         title: 'Sponsors',
         href: '/admin/sponsors',
+        moreItems: [],
       },
       {
         id: 'topics',
         icon: 'stack-3',
         title: 'Temáticas',
         href: '/admin/tematicas',
+        moreItems: [],
       },
     ],
   },
@@ -104,6 +109,7 @@ const menu: IMenuSideBar[] = [
         icon: 'user-cog',
         title: 'Usuarios',
         href: '/admin/users',
+        moreItems: [],
       },
     ],
   },

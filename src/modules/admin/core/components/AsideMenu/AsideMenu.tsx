@@ -8,23 +8,55 @@ import {
   Image,
 } from '@nextui-org/react'
 import logo from '@/assets/images/logo-admin.webp'
-import { IMenuSideBar } from '@/types'
+import { IMenuItem, IMenuSideBar } from '@/types'
 import Link from 'next/link'
+
+import {
+  IconLayoutDashboard,
+  IconCalendarEvent,
+  IconUsers,
+  IconFlag3,
+  IconPresentationAnalytics,
+  IconStack3,
+  IconUserCog,
+} from '@tabler/icons-react'
 
 interface IProps {
   menuAside: IMenuSideBar[]
 }
 
-// const findId = (url: string, menu: IMenuSideBar[]) => {
-//   const idMenu = menu?.find(
-//     (item) => item.subItems?.find((subItem) => subItem.url === url)?.id
-//   )
-//   return idMenu?.id ?? ''
-// }
+const icons = {
+  dashboard: <IconLayoutDashboard size={18} />,
+  calendar: <IconCalendarEvent size={18} />,
+  users: <IconUsers size={18} />,
+  sponsors: <IconFlag3 size={18} />,
+  summary: <IconPresentationAnalytics size={18} />,
+  topics: <IconStack3 size={18} />,
+  usersConfig: <IconUserCog size={18} />,
+}
+
+function getIcon(icon: string) {
+  return icons[icon as keyof typeof icons]
+}
 
 export const AsideMenu = (props: IProps) => {
   const { menuAside } = props
   const pathname = usePathname()
+
+  const filterSubItemsByMoreItems = (menu: IMenuSideBar[]): IMenuItem[] => {
+    const items: IMenuItem[] = []
+    menu.forEach((item) => {
+      item.items.forEach((subItem) => {
+        if (subItem.moreItems) {
+          items.push(subItem)
+        }
+      })
+    })
+    return items
+  }
+
+  const itemsToAccordion =
+    filterSubItemsByMoreItems(menuAside) || ([] as IMenuItem[])
 
   return (
     <div className="w-full">
@@ -39,59 +71,67 @@ export const AsideMenu = (props: IProps) => {
         <Divider />
       </header>
       <div className="w-full py-4 px-2">
-        {/* {menuAside?.map((item) =>
-          item?.subItems !== null ? (
-            <Accordion
-              isCompact
-              key={item.id}
-              defaultExpandedKeys={[findId(pathname, menuAside)]}
-              className="w-full pr-0"
-              itemClasses={{
-                base: 'py-0 px-0 w-full ',
-                title: 'font-normal text-sm  w-full',
-                content: 'w-full',
-                heading: 'px-1',
-              }}
-            >
-              <AccordionItem
-                key={item.id}
-                title={item?.nameOption}
-                startContent={item?.icon}
-              >
-                {item?.subItems?.map((subItem) => (
-                  <Button
-                    key={subItem.id}
-                    as={Link}
-                    href={subItem?.url ?? ''}
-                    className={`flex justify-start  rounded-xl  ml-5 ${
-                      subItem?.url !== pathname && 'text-slate-400'
-                    }`}
-                    variant={subItem?.url === pathname ? 'solid' : 'light'}
-                    color={subItem?.url === pathname ? 'primary' : 'default'}
-                    size="sm"
-                  >
-                    {subItem?.nameOption}
-                  </Button>
-                ))}
-              </AccordionItem>
-            </Accordion>
-          ) : (
-            <Button
-              key={item.id}
-              as={Link}
-              href={item?.hrefLink ?? ''}
-              fullWidth
-              variant="light"
-              className={`flex  text-sm justify-start rounded-lg first-letter:capitalize ${
-                item?.hrefLink === pathname && 'bg-gray-200 text-primary-500'
-              } `}
-              startContent={item?.icon}
-              size="sm"
-            >
-              {item?.nameOption}
-            </Button>
-          )
-        )} */}
+        <div className="flex flex-col flex-1 min-h-0 pt-0 dark:bg-gray-800">
+          <div className="py-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-200 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800">
+            {menuAside?.map((item) => (
+              <div key={item.id}>
+                <h3 className="px-4 text-xs text-stone-300 capitalize dark:text-gray-400">
+                  {item.section}
+                </h3>
+                <ul className="my-2">
+                  {item.items?.map((subItem) =>
+                    subItem?.moreItems && itemsToAccordion.length > 0 ? (
+                      <li
+                        className="px-4"
+                        key={subItem?.id}
+                      >
+                        <Accordion
+                          // value={subItem?.id}
+                          // defaultValue={
+                          //   subItem?.moreItems?.findIndex(
+                          //     (moreItem) => moreItem.href === pathname
+                          //   ) > -1
+                          //     ? subItem?.id
+                          //     : ''
+                          // }
+                        >
+                          {subItem?.moreItems?.map((moreItem) => (
+                            <Button
+                              key={moreItem.id}
+                              // href={subItem.href}
+                              title={subItem.title}
+                              // isActived={pathname === subItem.href}
+                            />
+                          ))}
+                        </Accordion>
+                      </li>
+                    ) : (
+                      <li
+                        className="px-4"
+                        key={subItem.id}
+                      >
+                        <Button
+                          radius="sm"
+                          size="sm"
+                          fullWidth
+                          className="flex items-center justify-start"
+                          startContent={<>{getIcon(subItem?.icon as string)}</>}
+                          as={Link}
+                          href={subItem.href ?? ''}
+                          variant={
+                            pathname === subItem.href ? 'solid' : 'light'
+                          }
+                        >
+                          {subItem.title}
+                        </Button>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

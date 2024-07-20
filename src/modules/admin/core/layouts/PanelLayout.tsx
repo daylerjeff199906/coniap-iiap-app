@@ -1,13 +1,4 @@
 'use client'
-import {
-  IconLayoutDashboard,
-  IconCalendarEvent,
-  IconUsers,
-  IconFlag3,
-  IconPresentationAnalytics,
-  IconStack3,
-  IconUserCog,
-} from '@tabler/icons-react'
 
 import { NavBar } from '@/modules/core'
 import { AsideMenu } from '@/modules/admin'
