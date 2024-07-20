@@ -1,11 +1,16 @@
 'use client'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
-import { IUser, IUserCreated } from '@/types'
+import { IPerson, IUser, IUserCreated } from '@/types'
 import { IError } from './types'
 import { toast } from 'react-toastify'
 
-import { fetchUserByEmail, createUser } from '@/api'
+import {
+  fetchUserByEmail,
+  createUser,
+  updateUser,
+  fetchPersonByEmail,
+} from '@/api'
 import { getErrors } from './getErrors'
 
 export const SignInWithGoogle = async (): Promise<IUser | null> => {
@@ -14,22 +19,32 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
   try {
     const result = await signInWithPopup(auth, provider)
     const user = result.user
-    //Se busca si existe la persona en la tabla person
     if (!user) {
       toast.error('Error al iniciar sesión')
       return null
     } else {
+      // Check if user exists in the database
       const userApi: IUser | null = (await fetchUserByEmail(
         user.email as string
       )) as IUser | null
 
+      const personApi = (await fetchPersonByEmail(
+        user.email as string
+      )) as IPerson | null
+
       if (userApi === null) {
-        const userData = {
+        const userData: IUserCreated = {
           email: user.email as string,
           photo: user.photoURL as string,
           userName: user.displayName as string,
-          role: null,
+          role: personApi?.id
+            ? personApi?.typePerson !== 'participant'
+              ? ['speaker']
+              : null
+            : null,
+          person: personApi?.id ? Number(personApi?.id) : null,
         }
+
         const newUser = await createUser(userData as IUserCreated)
 
         if (!newUser) {
@@ -42,8 +57,25 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
         )) as IUser | null
 
         return userApi
+      } else {
+        let userApiUpdated: IUser | null = null
+
+        if (userApi?.person === null && personApi?.id) {
+          userApiUpdated = await updateUser({
+            ...userApi,
+            person: personApi,
+          })
+
+          if (!userApiUpdated) {
+            toast.error('Error al actualizar el usuario')
+            return null
+          }
+
+          return userApiUpdated
+        } else {
+          return userApi
+        }
       }
-      return userApi
     }
   } catch (error) {
     const err = error as unknown as IError
