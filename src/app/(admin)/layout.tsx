@@ -28,7 +28,7 @@ const menu: IMenuSideBar[] = [
       },
       {
         id: 'events',
-        icon: 'presentation-analytics',
+        icon: 'cards',
         title: 'Eventos',
         moreItems: [
           {
@@ -73,7 +73,7 @@ const menu: IMenuSideBar[] = [
       },
       {
         id: 'summary',
-        icon: 'users',
+        icon: 'text',
         title: 'Resúmenes',
         href: '/admin/participantes/resumenes',
         moreItems: [],
@@ -86,14 +86,14 @@ const menu: IMenuSideBar[] = [
     items: [
       {
         id: 'sponsors',
-        icon: 'flag-3',
+        icon: 'sponsors',
         title: 'Sponsors',
         href: '/admin/sponsors',
         moreItems: [],
       },
       {
         id: 'topics',
-        icon: 'stack-3',
+        icon: 'categories',
         title: 'Temáticas',
         href: '/admin/tematicas',
         moreItems: [],
@@ -106,7 +106,7 @@ const menu: IMenuSideBar[] = [
     items: [
       {
         id: 'users',
-        icon: 'user-cog',
+        icon: 'userConfig',
         title: 'Usuarios',
         href: '/admin/users',
         moreItems: [],

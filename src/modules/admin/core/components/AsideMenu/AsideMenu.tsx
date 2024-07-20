@@ -16,9 +16,10 @@ import {
   IconCalendarEvent,
   IconUsers,
   IconFlag3,
-  IconPresentationAnalytics,
-  IconStack3,
   IconUserCog,
+  IconCards,
+  IconTextGrammar,
+  IconCategory2,
 } from '@tabler/icons-react'
 
 interface IProps {
@@ -28,10 +29,11 @@ interface IProps {
 const icons = {
   dashboard: <IconLayoutDashboard size={18} />,
   calendar: <IconCalendarEvent size={18} />,
+  cards: <IconCards size={18} />,
   users: <IconUsers size={18} />,
+  text: <IconTextGrammar size={18} />,
   sponsors: <IconFlag3 size={18} />,
-  summary: <IconPresentationAnalytics size={18} />,
-  topics: <IconStack3 size={18} />,
+  categories: <IconCategory2 size={18} />,
   usersConfig: <IconUserCog size={18} />,
 }
 
@@ -55,9 +57,6 @@ export const AsideMenu = (props: IProps) => {
     return items
   }
 
-  const itemsToAccordion =
-    filterSubItemsByMoreItems(menuAside) || ([] as IMenuItem[])
-
   return (
     <div className="w-full">
       <header className="w-full">
@@ -80,29 +79,56 @@ export const AsideMenu = (props: IProps) => {
                 </h3>
                 <ul className="my-2">
                   {item.items?.map((subItem) =>
-                    subItem?.moreItems && itemsToAccordion.length > 0 ? (
+                    subItem?.moreItems && subItem?.moreItems.length > 0 ? (
                       <li
                         className="px-4"
                         key={subItem?.id}
                       >
                         <Accordion
-                          // value={subItem?.id}
-                          // defaultValue={
-                          //   subItem?.moreItems?.findIndex(
-                          //     (moreItem) => moreItem.href === pathname
-                          //   ) > -1
-                          //     ? subItem?.id
-                          //     : ''
-                          // }
+                          variant="light"
+                          isCompact
+                          className="w-full min-w-full px-0"
+                          itemClasses={{
+                            base: 'text-xs w-full px-0',
+                            title:
+                              'text-xs mx-2 font-medium px-0 w-full min-w-full',
+                            content: 'w-full',
+                            trigger:
+                              'hover:bg-default-200 rounded-lg w-full min-w-full px-0',
+                            // titleWrapper: 'w-full min-w-full px-0 mx-2',
+                          }}
                         >
-                          {subItem?.moreItems?.map((moreItem) => (
-                            <Button
-                              key={moreItem.id}
-                              // href={subItem.href}
-                              title={subItem.title}
-                              // isActived={pathname === subItem.href}
-                            />
-                          ))}
+                          <AccordionItem
+                            title={subItem.title}
+                            startContent={
+                              <>{getIcon(subItem?.icon as string)}</>
+                            }
+                          >
+                            <ul>
+                              {subItem.moreItems.map((moreItem) => (
+                                <li key={moreItem.id}>
+                                  <Button
+                                    radius="sm"
+                                    size="sm"
+                                    fullWidth
+                                    className="flex items-center justify-start"
+                                    startContent={
+                                      <>{getIcon(moreItem?.icon as string)}</>
+                                    }
+                                    as={Link}
+                                    href={moreItem.href ?? ''}
+                                    variant={
+                                      pathname === moreItem.href
+                                        ? 'solid'
+                                        : 'light'
+                                    }
+                                  >
+                                    {moreItem.title}
+                                  </Button>
+                                </li>
+                              ))}
+                            </ul>
+                          </AccordionItem>
                         </Accordion>
                       </li>
                     ) : (
