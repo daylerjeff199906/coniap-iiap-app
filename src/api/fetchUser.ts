@@ -53,9 +53,6 @@ export async function updateUser(user: IUserCreated): Promise<IUser | null> {
     .select('*')
     .single()
 
-  console.log(data)
-  console.log(error)
-
   if (error) {
     return null
   }
