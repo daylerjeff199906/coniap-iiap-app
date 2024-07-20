@@ -31,7 +31,7 @@
 }
 
 .section-admin {
-  @apply border border-gray-200 p-4 rounded-md;
+  @apply border border-gray-200 p-4 rounded-md bg-white;
 }
 
 /* .custom-quill {

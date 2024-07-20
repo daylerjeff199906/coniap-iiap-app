@@ -174,7 +174,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <AsideMenu menuAside={menuAside} />
       </aside>
-      <main className="w-full">
+      <main className="w-full bg-slate-50">
         <NavBar variant="admin" />
         <main className="w-full max-w-[1920px] mx-auto p-4 sm:p-6">
           {children}
