@@ -1,5 +1,4 @@
 'use client'
-// import { useEffect, useState } from 'react'
 import { Button, Divider, Radio, RadioGroup, cn } from '@nextui-org/react'
 import { useFiles } from '@/hooks/admin'
 import { useRouter } from 'next/navigation'
