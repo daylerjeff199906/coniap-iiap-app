@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { Button } from '@nextui-org/react'
 import { ModalAction } from '@/components'
-import { IInscription, IPerson } from '@/types'
+import { IInscription, IPerson, IUser } from '@/types'
 import { usePersons } from '@/hooks/admin'
 import { toast } from 'react-toastify'
 import { IconAlertTriangleFilled } from '@tabler/icons-react'
@@ -16,7 +16,7 @@ import {
   JobData,
   RoleData,
 } from './sections'
-import { createPerson, updateUser } from '@/api'
+import { createPerson, updateUser, fetchUserByEmail } from '@/api'
 
 import infoData from '@/utils/json/infoConiap.json'
 
@@ -81,12 +81,36 @@ export const FrmInscriptionSteps = (props: IProps) => {
       if (res) {
         toast.success('Inscripción realizada correctamente')
         router.push('/inscripciones/info')
+
+        const userApi: IUser | null = (await fetchUserByEmail(
+          resData.email as string
+        )) as IUser | null
+
+        if (userApi && userApi.person === null && res) {
+          await updateUser({
+            ...userApi,
+            person: res as unknown as IPerson,
+            role: null,
+          })
+        }
       }
     } else {
       const res = await addPerson(resData)
       if (res) {
         toast.success('Inscripción realizada correctamente')
         router.push('/inscripciones/success')
+
+        const userApi: IUser | null = (await fetchUserByEmail(
+          resData.email as string
+        )) as IUser | null
+
+        if (userApi && userApi.person === null && res) {
+          await updateUser({
+            ...userApi,
+            person: res as unknown as IPerson,
+            role: ['speaker'],
+          })
+        }
       }
     }
 
