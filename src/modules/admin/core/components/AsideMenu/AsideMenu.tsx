@@ -8,19 +8,19 @@ import {
   Image,
 } from '@nextui-org/react'
 import logo from '@/assets/images/logo-admin.webp'
-import { IMenuAside } from '@/types'
+import { IMenuSideBar } from '@/types'
 import Link from 'next/link'
 
 interface IProps {
-  menuAside: IMenuAside[]
+  menuAside: IMenuSideBar[]
 }
 
-const findId = (url: string, menu: IMenuAside[]) => {
-  const idMenu = menu?.find(
-    (item) => item.subItems?.find((subItem) => subItem.url === url)?.id
-  )
-  return idMenu?.id ?? ''
-}
+// const findId = (url: string, menu: IMenuSideBar[]) => {
+//   const idMenu = menu?.find(
+//     (item) => item.subItems?.find((subItem) => subItem.url === url)?.id
+//   )
+//   return idMenu?.id ?? ''
+// }
 
 export const AsideMenu = (props: IProps) => {
   const { menuAside } = props
@@ -39,7 +39,7 @@ export const AsideMenu = (props: IProps) => {
         <Divider />
       </header>
       <div className="w-full py-4 px-2">
-        {menuAside?.map((item) =>
+        {/* {menuAside?.map((item) =>
           item?.subItems !== null ? (
             <Accordion
               isCompact
@@ -91,7 +91,7 @@ export const AsideMenu = (props: IProps) => {
               {item?.nameOption}
             </Button>
           )
-        )}
+        )} */}
       </div>
     </div>
   )
