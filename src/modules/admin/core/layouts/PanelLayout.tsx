@@ -18,58 +18,58 @@ const stroke = 1.5
 const size = 18
 
 export const menuAside: IMenuAside[] = [
-  {
-    id: '1',
-    nameOption: 'Dashboard',
-    titleOption: null,
-    hrefLink: '/admin',
-    icon: (
-      <IconLayoutDashboard
-        stroke={stroke}
-        size={size}
-      />
-    ),
-    subItems: null,
-  },
-  {
-    id: '6',
-    nameOption: 'Programas',
-    titleOption: null,
-    hrefLink: '/admin/programas',
-    icon: (
-      <IconCalendarEvent
-        stroke={stroke}
-        size={size}
-      />
-    ),
-    subItems: null,
-  },
-  {
-    id: '2',
-    nameOption: 'Eventos',
-    titleOption: null,
-    hrefLink: null,
-    icon: (
-      <IconPresentationAnalytics
-        stroke={stroke}
-        size={size}
-      />
-    ),
-    subItems: [
-      {
-        id: 'all',
-        nameOption: 'Lista',
-        titleOption: null,
-        url: '/admin/eventos',
-      },
-      {
-        id: 'calendar',
-        nameOption: 'Calendario',
-        titleOption: null,
-        url: '/admin/eventos/calendario',
-      },
-    ],
-  },
+//   {
+//     id: '1',
+//     nameOption: 'Dashboard',
+//     titleOption: null,
+//     hrefLink: '/admin',
+//     icon: (
+//       <IconLayoutDashboard
+//         stroke={stroke}
+//         size={size}
+//       />
+//     ),
+//     subItems: null,
+//   },
+//   {
+//     id: '6',
+//     nameOption: 'Programas',
+//     titleOption: null,
+//     hrefLink: '/admin/programas',
+//     icon: (
+//       <IconCalendarEvent
+//         stroke={stroke}
+//         size={size}
+//       />
+//     ),
+//     subItems: null,
+//   },
+//   {
+//     id: '2',
+//     nameOption: 'Eventos',
+//     titleOption: null,
+//     hrefLink: null,
+//     icon: (
+//       <IconPresentationAnalytics
+//         stroke={stroke}
+//         size={size}
+//       />
+//     ),
+//     subItems: [
+//       {
+//         id: 'all',
+//         nameOption: 'Lista',
+//         titleOption: null,
+//         url: '/admin/eventos',
+//       },
+//       {
+//         id: 'calendar',
+//         nameOption: 'Calendario',
+//         titleOption: null,
+//         url: '/admin/eventos/calendario',
+//       },
+//     ],
+//   },
   {
     id: '3',
     nameOption: 'Participantes',
