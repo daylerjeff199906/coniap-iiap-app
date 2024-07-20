@@ -22,6 +22,7 @@ export interface IUserCreate {
   person: number | null
   password?: string
   password_confirmation?: string
+  person_detail?: IPerson | null
   topics?: string[]
 }
 
@@ -33,4 +34,5 @@ export interface IUserCreated {
   role: string[] | null
   person: number | null
   emailVerified?: boolean
+  topics?: string[] | null
 }

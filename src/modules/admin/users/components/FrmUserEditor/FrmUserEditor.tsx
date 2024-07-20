@@ -28,6 +28,8 @@ export const FrmUserEditor = (props: IProps) => {
       email: user?.email || '',
       role: user?.role || [],
       topics: user?.topics || [],
+      person: Number(user?.person?.id) || null,
+      person_detail: user?.person || null,
     },
   })
   // console.log('user', user)
@@ -41,6 +43,7 @@ export const FrmUserEditor = (props: IProps) => {
   ) => {
     setIsModalOpen(false)
     setIsLoading(true)
+
     try {
       if (data?.id) {
         await updateUser({
