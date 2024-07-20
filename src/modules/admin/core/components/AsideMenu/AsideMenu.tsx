@@ -1,12 +1,6 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import {
-  Button,
-  Accordion,
-  AccordionItem,
-  Divider,
-  Image,
-} from '@nextui-org/react'
+import { Button, Accordion, AccordionItem, Image } from '@nextui-org/react'
 import logo from '@/assets/images/logo-admin.webp'
 import { IMenuItem, IMenuSideBar } from '@/types'
 import Link from 'next/link'
@@ -45,20 +39,11 @@ export const AsideMenu = (props: IProps) => {
   const { menuAside } = props
   const pathname = usePathname()
 
-  const filterSubItemsByMoreItems = (menu: IMenuSideBar[]): IMenuItem[] => {
-    const items: IMenuItem[] = []
-    menu.forEach((item) => {
-      item.items.forEach((subItem) => {
-        if (subItem.moreItems) {
-          items.push(subItem)
-        }
-      })
-    })
-    return items
-  }
-
   return (
-    <div className="w-full">
+    <aside
+      className="sticky top-0 w-60  max-w-60 min-w-60 flex-col flex-shrink-0 font-normal bg-white dark:bg-gray-800 h-screen border-r border-gray-200 dark:border-gray-700 transition-width duration-75"
+      id="aside-menu"
+    >
       <header className="w-full">
         <div className="px-4 py-3">
           <Image
@@ -67,9 +52,8 @@ export const AsideMenu = (props: IProps) => {
             removeWrapper
           />
         </div>
-        <Divider />
       </header>
-      <div className="w-full py-4 px-2">
+      <div className="w-full p-2">
         <div className="flex flex-col flex-1 min-h-0 pt-0 dark:bg-gray-800">
           <div className="py-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-200 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800">
             {menuAside?.map((item) => (
@@ -90,12 +74,10 @@ export const AsideMenu = (props: IProps) => {
                           className="w-full min-w-full px-0"
                           itemClasses={{
                             base: 'text-xs w-full px-0',
-                            title:
-                              'text-xs mx-2 font-medium px-0 w-full min-w-full',
+                            title: 'text-xs mx-0 font-medium px-0',
                             content: 'w-full',
                             trigger:
-                              'hover:bg-default-200 rounded-lg w-full min-w-full px-0',
-                            // titleWrapper: 'w-full min-w-full px-0 mx-2',
+                              'hover:bg-default-200 rounded-lg w-full px-3',
                           }}
                         >
                           <AccordionItem
@@ -159,6 +141,6 @@ export const AsideMenu = (props: IProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </aside>
   )
 }

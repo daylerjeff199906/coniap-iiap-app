@@ -24,19 +24,16 @@ export const PanelLayout = (props: IProps) => {
   }
 
   return (
-    <div className="flex w-full">
+    <main className="flex">
       <div
         id="backdrop"
         className="bg-black/20 w-full h-full fixed top-0 left-0 z-50 bottom-0 hidden"
         onClick={handleCloseMenu}
       />
-      <aside
-        className="w-52 min-w-52 max-w-52 bg-white h-screen fixed z-50 lg:sticky top-0 overflow-y-auto hidden lg:block"
-        id="aside-menu"
-      >
-        <AsideMenu menuAside={menuAside} />
-      </aside>
-      <main className="w-full bg-slate-50">
+
+      <AsideMenu menuAside={menuAside} />
+      {/* article class="w-full flex flex-col bg-baground"> */}
+      <article className="w-full flex flex-col bg-slate-50">
         <NavBar variant="admin" />
         <main className="w-full max-w-[1920px] mx-auto p-4 sm:p-6">
           {children}
@@ -47,7 +44,7 @@ export const PanelLayout = (props: IProps) => {
             derechos reservados © {new Date().getFullYear()}
           </h3>
         </footer>
-      </main>
-    </div>
+      </article>
+    </main>
   )
 }
