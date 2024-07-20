@@ -20,6 +20,7 @@ interface IProps {
 
 const optionMenu = [
   {
+    id: 'portal',
     label: 'Ver página de inicio',
     key: 'portal',
     href: '/',
@@ -29,6 +30,7 @@ const optionMenu = [
     onClick: false,
   },
   {
+    id: 'profile',
     label: 'Mi perfil',
     key: 'profile',
     href: '/dashboard',
@@ -38,6 +40,7 @@ const optionMenu = [
     onClick: false,
   },
   {
+    id: 'admin',
     label: 'Panel de administración',
     href: '/admin',
     show: true,
@@ -46,6 +49,7 @@ const optionMenu = [
     onClick: false,
   },
   {
+    id: 'logout',
     label: 'Cerrar Sesión',
     href: null,
     show: true,
@@ -131,9 +135,9 @@ export const ProfilePopover = (props: IProps) => {
                   title: 'text-xs font-medium',
                 }}
               >
-                {options.map((option, index) => (
+                {options.map((option) => (
                   <DropdownItem
-                    key={option.key}
+                    key={option.id}
                     color={option.color as 'default' | 'danger'}
                     {...(option.href && {
                       href: option.href,

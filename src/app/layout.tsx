@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: '/logo_coniap.webp',
+        url: 'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/logos%2Flogo_coniap.webp?alt=media&token=a173778f-a7cf-4ca0-b3c9-24269c571889',
         width: 720,
         height: 430,
         alt: 'CONIAP | Congreso Internacional sobre Amazonía Peruana',
