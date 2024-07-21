@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Button, Divider, Input, Image } from '@nextui-org/react'
+import { Button, Input, Image } from '@nextui-org/react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
@@ -81,7 +81,7 @@ export const FrmLogin = () => {
   }
 
   return (
-    <>
+    <main className="flex flex-col gap-3">
       <form
         className="w-full flex flex-col gap-6"
         onSubmit={methods.handleSubmit(onSubmit)}
@@ -143,8 +143,12 @@ export const FrmLogin = () => {
           Iniciar sesión
         </Button>
       </form>
-      <Divider />
-      <section className="pt-6 ">
+      <section className="flex items-center gap-3">
+        <hr className="w-full" />
+        <p>o</p>
+        <hr className="w-full" />
+      </section>
+      <section className="">
         <Button
           radius="sm"
           fullWidth
@@ -167,6 +171,6 @@ export const FrmLogin = () => {
       </section>
 
       <LoadingPages isOpen={loading} />
-    </>
+    </main>
   )
 }
