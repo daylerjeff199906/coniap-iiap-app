@@ -69,7 +69,8 @@ export function usePersons() {
     query: string,
     typePerson = '',
     isNot?: string,
-    status?: string
+    status?: string,
+    column?: string
   ) => {
     setLoading(true)
     const data = await fetchPersons(query, typePerson, isNot, status)

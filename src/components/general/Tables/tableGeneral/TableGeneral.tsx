@@ -11,7 +11,6 @@ import {
   TableCell,
   getKeyValue,
   Button,
-  Switch,
   Input,
   Dropdown,
   DropdownTrigger,
@@ -19,9 +18,9 @@ import {
   DropdownMenu,
   Chip,
 } from '@nextui-org/react'
+import Link from 'next/link'
 import { IColumns, IRows, IActions } from '@/types'
 import { IconSearch, IconDots } from '@tabler/icons-react'
-import Link from 'next/link'
 import { LoadingPages } from '../..'
 import { usePathname } from 'next/navigation'
 
@@ -49,6 +48,7 @@ interface IProps {
   onSearch?: (value: string) => void
   searchValue?: string
   headerChildren?: React.ReactNode
+  endInputSection?: React.ReactNode
 }
 
 export const TableGeneral = (props: IProps) => {
@@ -61,6 +61,7 @@ export const TableGeneral = (props: IProps) => {
     searchValue,
     actionsList,
     headerChildren,
+    endInputSection,
   } = props
 
   const pathname = usePathname()
@@ -140,11 +141,16 @@ export const TableGeneral = (props: IProps) => {
           <Input
             aria-label="Buscar"
             variant="bordered"
-            placeholder="Type to search..."
+            placeholder="Buscar ..."
             radius="sm"
             value={searchValue}
             onValueChange={(value) => onSearch && onSearch(value)}
-            startContent={<IconSearch size={16} />}
+            startContent={
+              <div>
+                <IconSearch size={16} />
+              </div>
+            }
+            endContent={endInputSection}
           />
         </div>
         {headerChildren}
@@ -154,7 +160,7 @@ export const TableGeneral = (props: IProps) => {
         aria-labelledby="TableGeneral"
         removeWrapper
         isHeaderSticky
-        className=' rounded-xl'
+        className=" rounded-xl"
         classNames={{
           base: 'max-h-[calc(100vh-20rem)] overflow-y-auto bg-white',
           th: [
@@ -220,6 +226,11 @@ export const TableGeneral = (props: IProps) => {
           )}
         </TableBody>
       </Table>
+      <footer>
+        <p className="text-xs text-gray-500 text-center">
+          Total de registros: {rows.length}
+        </p>
+      </footer>
       <LoadingPages isOpen={props.loading ?? false} />
     </main>
   )
