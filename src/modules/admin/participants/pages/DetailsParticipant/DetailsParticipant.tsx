@@ -1,5 +1,5 @@
 'use client'
-import { IPerson, ISummary } from '@/types'
+import { IPerson, ISummary, IUser } from '@/types'
 import { Button } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
@@ -8,10 +8,11 @@ import { InfoData, UserData } from './sections'
 interface IProps {
   data: IPerson
   summaries?: ISummary[] | null
+  user?: IUser | null
 }
 
 export const DetailsParticipant = (props: IProps) => {
-  const { data, summaries } = props
+  const { data, summaries, user } = props
   const router = useRouter()
 
   const handleExit = () => {
@@ -41,7 +42,7 @@ export const DetailsParticipant = (props: IProps) => {
         data={data}
         summaries={summaries}
       />
-      <UserData data={data} />
+      <UserData user={user} />
     </main>
   )
 }

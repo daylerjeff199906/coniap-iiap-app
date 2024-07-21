@@ -1,4 +1,8 @@
-import { fetchPersonById, fetchSummaryByIdPerson } from '@/api'
+import {
+  fetchPersonById,
+  fetchSummaryByIdPerson,
+  fetchUserByEmail,
+} from '@/api'
 import { DetailsParticipant } from '@/modules/admin'
 import { IPerson, ISummary } from '@/types'
 
@@ -19,6 +23,13 @@ export default async function Page(props: IProps) {
     .then((res) => res)
     .catch((err) => err)
 
+  let user = null
+  if (person) {
+    user = await fetchUserByEmail(person.email)
+      .then((res) => res)
+      .catch((err) => err)
+  }
+
   if (person) {
     return (
       <main className="w-full flex flex-col justify-center items-center">
@@ -26,6 +37,7 @@ export default async function Page(props: IProps) {
           <DetailsParticipant
             data={person}
             summaries={summaries}
+            user={user}
           />
         </section>
       </main>
