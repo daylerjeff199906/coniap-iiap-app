@@ -77,7 +77,7 @@ export const FrmUpdateSummary = (props: IProps) => {
     <>
       <FormProvider {...methods}>
         <main className="flex flex-col sm:flex-row gap-2 f-full">
-          <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-11rem)] overflow-y-auto">
+          <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-11rem)] overflow-y-auto bg-white">
             <form
               onSubmit={methods.handleSubmit(handleFormSubmit)}
               className="pr-4 flex flex-col gap-3"

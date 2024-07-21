@@ -1,2 +1,4 @@
 import { FiltersSection } from './FiltersSection'
-export { FiltersSection }
+import { TypesSearch } from './TypesSearch'
+
+export { FiltersSection, TypesSearch }

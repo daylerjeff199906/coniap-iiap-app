@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { Suspense, useEffect } from 'react'
-import { TableGeneral } from '@/components'
 import { HeaderSection, useFilterFromUrl } from '@/modules/core'
-import { FiltersSection } from './sections'
-import { convertDate } from '@/utils/functions'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
+import { FiltersSection, TypesSearch } from './sections'
+import { convertDate } from '@/utils/functions'
+import { Selection } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
-
-import { usePersons } from '@/hooks/admin'
 import { columns, actions } from './columns'
+import { TableGeneral } from '@/components'
+import { usePersons } from '@/hooks/admin'
 
 export const ListParticipants = () => {
   const { getParams, updateFilter } = useFilterFromUrl()
@@ -51,29 +51,43 @@ export const ListParticipants = () => {
       : statusPerson === 'inactive'
       ? 'FALSE'
       : ''
+  const typeSearch = getParams('qtype', 'name')
 
   useEffect(() => {
-    getPersons(query, type, isNot, statusValue)
+    getPersons(query, type, isNot, statusValue, typeSearch)
   }, [query, type, isNot, statusValue])
 
   const handleQuery = (value: string) => updateFilter('query', value)
 
   const listPerson =
-    persons?.map((speaker) => ({
-      key: String(speaker?.id),
-      id: speaker?.id,
-      date: convertDate(speaker?.created_at),
-      name: speaker?.name,
-      surname: speaker?.surName,
-      email: speaker?.email,
-      phone: speaker?.phone || 'No registrado',
-      institution: speaker?.institution,
-      level: getTypePerson(speaker?.typePerson),
-      status: speaker?.isActived,
-      actions: 'actions',
-    })) || []
+    (persons &&
+      persons.length > 0 &&
+      persons?.map((speaker) => ({
+        key: String(speaker?.id),
+        id: speaker?.id,
+        date: convertDate(speaker?.created_at),
+        name: speaker?.name,
+        surname: speaker?.surName,
+        email: speaker?.email,
+        phone: speaker?.phone || 'No registrado',
+        institution: speaker?.institution,
+        level: getTypePerson(speaker?.typePerson),
+        status: speaker?.isActived,
+        actions: 'actions',
+      }))) ||
+    []
 
   const dataExcel = persons && persons.length > 0 ? persons : []
+
+  //To type search
+  const handleTypeSearch = (val: Selection) => {
+    const value = Object.values(val)[0]
+    if (value === 'name') {
+      updateFilter('qtype', '')
+    } else {
+      updateFilter('qtype', value)
+    }
+  }
 
   return (
     <>
@@ -91,9 +105,16 @@ export const ListParticipants = () => {
           onSearch={handleQuery}
           searchValue={query}
           rows={listPerson}
-          headerChildren={<FiltersSection />}
           actionsList={actions}
           loading={loading}
+          selectionMode="single"
+          headerChildren={<FiltersSection />}
+          endInputSection={
+            <TypesSearch
+              selectedKey={typeSearch === 'name' ? ['name'] : [typeSearch]}
+              onSelectionChange={handleTypeSearch}
+            />
+          }
         />
       </Suspense>
     </>

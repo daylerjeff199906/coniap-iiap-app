@@ -88,6 +88,7 @@ export const ListPrograms = () => {
           rows={rows}
           actionsList={actions}
           headerChildren={<FilterSection />}
+          selectionMode="single"
         />
       </Suspense>
     </>

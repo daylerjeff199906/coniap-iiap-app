@@ -70,7 +70,7 @@ export const DialogStatus = (props: IProps) => {
     <>
       <FormProvider {...methods}>
         <form
-          className="flex flex-col gap-4 w-full rounded-lg border p-4 max-w-xl "
+          className="flex flex-col gap-4 w-full rounded-lg border p-4 max-w-xl bg-white"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <header className="w-full">

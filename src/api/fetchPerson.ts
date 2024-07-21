@@ -55,7 +55,8 @@ export async function fetchPersons(
   query: string,
   typePerson: string,
   isNot?: string,
-  status?: string
+  status?: string,
+  column?: string
 ) {
   const supabase = createClient()
 
@@ -64,7 +65,14 @@ export async function fetchPersons(
     .from('persons')
     .select('*')
     .order('name', { ascending: true })
-    .ilike('surName', `%${query}%`)
+
+  if (column === 'name') {
+    queryBuilder = queryBuilder.ilike('name', `%${query}%`)
+  } else if (column === 'surname') {
+    queryBuilder = queryBuilder.ilike('surName', `%${query}%`)
+  } else if (column === 'email') {
+    queryBuilder = queryBuilder.ilike('email', `%${query}% `)
+  }
 
   // Agregamos la condición solo si typePerson no está vacío
   if (typePerson) {
