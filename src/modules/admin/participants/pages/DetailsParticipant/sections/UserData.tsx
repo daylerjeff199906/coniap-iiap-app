@@ -40,6 +40,8 @@ export const UserData = (props: IProps) => {
   const { getUserByEmail, user, loading } = useUsers()
   const { data } = props
 
+  console.log(user)
+
   const methods = useForm<IUser>({
     defaultValues: {
       email: user?.email || data.email,

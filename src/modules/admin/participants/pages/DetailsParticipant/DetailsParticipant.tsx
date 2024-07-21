@@ -19,7 +19,7 @@ export const DetailsParticipant = (props: IProps) => {
   }
 
   return (
-    <main className="flex flex-col gap-4 w-full p-6 border rounded-xl">
+    <main className="flex flex-col gap-4 w-full p-6 border rounded-xl bg-white">
       <section>
         <Button
           onPress={handleExit}
