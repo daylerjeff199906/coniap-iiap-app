@@ -54,25 +54,28 @@ export const ListParticipants = () => {
   const typeSearch = getParams('qtype', 'name')
 
   useEffect(() => {
-    getPersons(query, type, isNot, statusValue)
+    getPersons(query, type, isNot, statusValue, typeSearch)
   }, [query, type, isNot, statusValue])
 
   const handleQuery = (value: string) => updateFilter('query', value)
 
   const listPerson =
-    persons?.map((speaker) => ({
-      key: String(speaker?.id),
-      id: speaker?.id,
-      date: convertDate(speaker?.created_at),
-      name: speaker?.name,
-      surname: speaker?.surName,
-      email: speaker?.email,
-      phone: speaker?.phone || 'No registrado',
-      institution: speaker?.institution,
-      level: getTypePerson(speaker?.typePerson),
-      status: speaker?.isActived,
-      actions: 'actions',
-    })) || []
+    (persons &&
+      persons.length > 0 &&
+      persons?.map((speaker) => ({
+        key: String(speaker?.id),
+        id: speaker?.id,
+        date: convertDate(speaker?.created_at),
+        name: speaker?.name,
+        surname: speaker?.surName,
+        email: speaker?.email,
+        phone: speaker?.phone || 'No registrado',
+        institution: speaker?.institution,
+        level: getTypePerson(speaker?.typePerson),
+        status: speaker?.isActived,
+        actions: 'actions',
+      }))) ||
+    []
 
   const dataExcel = persons && persons.length > 0 ? persons : []
 
