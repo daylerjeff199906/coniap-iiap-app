@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Button, Divider, Input } from '@nextui-org/react'
+import { Button, Divider, Input, Image } from '@nextui-org/react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
@@ -151,6 +151,16 @@ export const FrmLogin = () => {
           className="flex items-center justify-center space-x-2"
           variant="light"
           onPress={handleGoogle}
+          startContent={
+            <div>
+              <Image
+                width="24"
+                height="24"
+                src="https://img.icons8.com/color/48/google-logo.png"
+                alt="google-logo"
+              />
+            </div>
+          }
         >
           Sign in with Google
         </Button>
