@@ -77,27 +77,27 @@ export const FrmUpdateSummary = (props: IProps) => {
   return (
     <>
       <FormProvider {...methods}>
-        <section className="flex justify-start">
-          <Button
-            radius="sm"
-            variant="light"
-            onPress={handleCancel}
-            startContent={
-              <IconArrowNarrowLeft
-                size={16}
-                className="text-gray-600"
-              />
-            }
-            className="text-gray-600"
-          >
-            Regresar
-          </Button>
-        </section>
         <main className="flex flex-col sm:flex-row gap-2 f-full">
-          <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-11rem)] overflow-y-auto bg-white">
+          <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-11rem)] overflow-y-auto bg-white flex flex-col gap-3 p-2 lg:p-4 border rounded-md">
+            <section className="flex justify-start">
+              <Button
+                radius="sm"
+                variant="light"
+                onPress={handleCancel}
+                startContent={
+                  <IconArrowNarrowLeft
+                    size={16}
+                    className="text-gray-600"
+                  />
+                }
+                className="text-gray-600"
+              >
+                Regresar
+              </Button>
+            </section>  
             <form
               onSubmit={methods.handleSubmit(handleFormSubmit)}
-              className="pr-4 flex flex-col gap-3"
+              className="flex flex-col gap-3"
             >
               {loadingFile && (
                 <div className="py-1">
