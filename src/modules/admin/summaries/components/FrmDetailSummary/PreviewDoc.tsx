@@ -11,8 +11,6 @@ export const PreviewDoc = () => {
 
   return (
     <section className="w-full h-full">
-      {value}
-      <div>Tipo de archivo: {fileType}</div>
       {value && fileType === 'pdf' && (
         <iframe
           src={value}
