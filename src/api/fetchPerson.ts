@@ -56,7 +56,8 @@ export async function fetchPersons(
   typePerson: string,
   isNot?: string,
   status?: string,
-  column?: string
+  column?: string,
+  orderBy?: string
 ) {
   const supabase = createClient()
 
@@ -64,7 +65,7 @@ export async function fetchPersons(
   let queryBuilder = supabase
     .from('persons')
     .select('*')
-    .order('name', { ascending: true })
+    .order('created_at', { ascending: false })
 
   if (column === 'name') {
     queryBuilder = queryBuilder.ilike('name', `%${query}%`)

@@ -69,13 +69,24 @@ export async function deleteUser(id: string): Promise<boolean> {
   return true
 }
 
-export async function fetchUsers(query?: string): Promise<IUser[] | null> {
+interface IFilter {
+  query?: string
+  column?: 'userName' | 'email'
+}
+
+export async function fetchUsers(props: IFilter): Promise<IUser[] | null> {
+  const { query, column } = props
   const client = createClient()
 
-  let users = client.from('users').select('*, person(*)')
+  let users = client
+    .from('users')
+    .select('*, person(*)')
+    .order('created_at', { ascending: false })
 
-  if (query) {
-    users = users.textSearch('userName', query)
+  if (column === 'userName') {
+    users = users.ilike('userName', `%${query}%`)
+  } else if (column === 'email') {
+    users = users.ilike('email', `%${query}%`)
   }
 
   const { data, error } = await users
