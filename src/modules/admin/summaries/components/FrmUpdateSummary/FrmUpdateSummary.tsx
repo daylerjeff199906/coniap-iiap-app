@@ -16,6 +16,7 @@ import { TopicSection } from './TopicSection'
 import { SpeakerSection } from './speakerSection'
 import { PreviewDoc } from './PreviewDoc'
 import { AuthorsSection } from './AuthorsSection'
+import { IconArrowNarrowLeft } from '@tabler/icons-react'
 
 interface IProps {
   summary?: ISummary
@@ -76,6 +77,22 @@ export const FrmUpdateSummary = (props: IProps) => {
   return (
     <>
       <FormProvider {...methods}>
+        <section className="flex justify-start">
+          <Button
+            radius="sm"
+            variant="light"
+            onPress={handleCancel}
+            startContent={
+              <IconArrowNarrowLeft
+                size={16}
+                className="text-gray-600"
+              />
+            }
+            className="text-gray-600"
+          >
+            Regresar
+          </Button>
+        </section>
         <main className="flex flex-col sm:flex-row gap-2 f-full">
           <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-11rem)] overflow-y-auto bg-white">
             <form
