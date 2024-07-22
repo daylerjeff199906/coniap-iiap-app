@@ -7,8 +7,6 @@ export const PreviewDoc = () => {
   const value = watch('file')
   const file = value ? value[0] : null
 
-  console.log('file', file)
-
   const isString = typeof file === 'string'
 
   const src = isString ? value : file ? URL.createObjectURL(file) : ''
