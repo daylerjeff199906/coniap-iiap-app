@@ -1,6 +1,7 @@
 'use client'
 import { ISummary } from '@/types'
 import { useFormContext } from 'react-hook-form'
+import { getFileType } from '../../functions'
 
 export const PreviewDoc = () => {
   const { watch } = useFormContext<ISummary>()
@@ -9,25 +10,35 @@ export const PreviewDoc = () => {
 
   const isString = typeof file === 'string'
 
-  console.log('value', value)
-  console.log('isString', isString)
-  console.log('file', file)
-
   const src = isString ? value : file ? URL.createObjectURL(file) : ''
+
+  const fileType = getFileType(src)
 
   return (
     <section className="w-full h-full">
-      {file && (
+      {value}
+      <div>Tipo de archivo: {fileType}</div>
+      {value && fileType === 'pdf' && (
         <iframe
-          src={src}
+          src={value}
           width="100%"
           className="h-screen max-h-[calc(100vh-11rem)]"
-          title="file"
+          title="PDF file"
         ></iframe>
       )}
-      {!file && (
+      {value && fileType === 'word' && (
+        <iframe
+          src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+            value
+          )}`}
+          width="100%"
+          className="h-screen max-h-[calc(100vh-11rem)]"
+          title="Word file"
+        ></iframe>
+      )}
+      {!value && (
         <div className="flex items-center justify-center h-full">
-          <p className="text-sm text-gray-500">No hay archivo seleccionado</p>
+          <p className="text-sm text-gray-500">No hay documento para mostrar</p>
         </div>
       )}
     </section>

@@ -1,31 +1,7 @@
 'use client'
 import { ISummary } from '@/types'
 import { useFormContext } from 'react-hook-form'
-
-// const getFileType = (fileUrl: string) => {
-//   const extension = fileUrl.split('.').pop()?.toLowerCase()
-//   if (extension === 'pdf') return 'pdf'
-//   if (extension === 'doc' || extension === 'docx') return 'word'
-//   return 'unknown'
-// }
-
-const cleanUrl = (fileUrl: string) => fileUrl.split('?')[0]
-
-const getFileType = (fileUrl: string) => {
-  const cleanedUrl = cleanUrl(fileUrl)
-  // console.log('cleanedUrl', cleanedUrl)
-  const extension = cleanedUrl.split('.').pop()?.toLowerCase()
-  // console.log('extension', extension)
-  if (extension === 'pdf') {
-    const nameWithoutExt = cleanedUrl.substring(0, cleanedUrl.lastIndexOf('.'))
-    const originalExtension = nameWithoutExt.split('.').pop()?.toLowerCase()
-    if (originalExtension === 'doc' || originalExtension === 'docx') {
-      return 'word'
-    }
-    return 'pdf'
-  }
-  return 'unknown'
-}
+import { getFileType } from '../../functions'
 
 export const PreviewDoc = () => {
   const { watch } = useFormContext<ISummary>()
@@ -33,14 +9,10 @@ export const PreviewDoc = () => {
 
   const fileType = getFileType(value)
 
-  // console.log('fileType', fileType)
-
   return (
     <section className="w-full h-full">
       {value}
-      <div>
-        Tipo de archivo: {fileType}
-      </div>
+      <div>Tipo de archivo: {fileType}</div>
       {value && fileType === 'pdf' && (
         <iframe
           src={value}
