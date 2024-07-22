@@ -3,14 +3,23 @@ import { useState } from 'react'
 import { fetchUsers, fetchUserByEmail } from '@/api'
 import { IUser } from '@/types'
 
+interface IFilter {
+  column?: 'userName' | 'email'
+  query?: string
+}
+
 export function useUsers() {
   const [loading, setLoading] = useState<boolean>(false)
   const [users, setUsers] = useState<IUser[] | null>(null)
   const [user, setUser] = useState<IUser | null>(null)
 
-  const getListUsers = async (query?: string) => {
+  const getListUsers = async (props: IFilter) => {
+    const { query, column } = props
     setLoading(true)
-    const users = await fetchUsers(query)
+    const users = await fetchUsers({
+      column,
+      query,
+    })
 
     if (users) {
       setUsers(users)

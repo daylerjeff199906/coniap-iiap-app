@@ -16,6 +16,7 @@ export async function fetchEvents(props: IProps) {
     .select('*,summary:summary_id(*, person:person_id(*))')
     .eq('isActived', true)
     .ilike('name', `%${query}%`)
+    .order('created_at', { ascending: false })
 
   return event
 }
@@ -27,6 +28,7 @@ export async function fetchAllEvents(query: string, column?: string) {
     .from('events')
     .select(`${allSelect}, summary:summary_id(*, person:person_id(*))`)
     .ilike('name', `%${query}%`)
+    .order('created_at', { ascending: false })
 
   return event
 }

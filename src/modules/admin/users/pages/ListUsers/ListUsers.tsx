@@ -3,58 +3,21 @@
 import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { useUsers } from '@/hooks/admin'
-import { IColumns } from '@/types'
 import { convertDate } from '@/utils/functions'
-
-const columns: IColumns[] = [
-  {
-    key: 'num',
-    label: '#',
-    align: 'start',
-  },
-  {
-    key: 'created_at',
-    label: 'F. Creación',
-    align: 'start',
-  },
-  {
-    key: 'userName',
-    label: 'User Name',
-    align: 'start',
-  },
-  {
-    key: 'email',
-    label: 'Email',
-    align: 'start',
-  },
-  {
-    key: 'person',
-    label: 'Persona',
-    align: 'start',
-  },
-  {
-    key: 'emailVerified',
-    label: 'Email Verificado',
-    align: 'center',
-  },
-  {
-    key: 'role',
-    label: 'Roles',
-    align: 'start',
-  },
-  {
-    key: 'actions',
-    label: 'Acciones',
-    align: 'center',
-  },
-]
+import { TypesSearch } from './TypesSearch'
+import { Selection } from '@nextui-org/react'
+import { columns } from './columns'
 
 export const ListUsers = () => {
   const { getListUsers, loading, users } = useUsers()
   const [query, setQuery] = useState<string>('')
+  const [qtype, setQtype] = useState<string>('userName')
 
   useEffect(() => {
-    getListUsers()
+    getListUsers({
+      column: qtype as 'userName' | 'email',
+      query,
+    })
   }, [query])
 
   const rows =
@@ -73,6 +36,18 @@ export const ListUsers = () => {
       }
     }) || []
 
+  //To type search
+  const handleTypeSearch = (val: Selection) => {
+    const value = Object.values(val)[0]
+    if (value === 'userName') {
+      // updateFilter('qtype', '')
+      setQtype('')
+    } else {
+      // updateFilter('qtype', value)
+      setQtype(value)
+    }
+  }
+
   return (
     <>
       <TableGeneral
@@ -82,6 +57,12 @@ export const ListUsers = () => {
         onSearch={setQuery}
         searchValue={query}
         selectionMode="single"
+        endInputSection={
+          <TypesSearch
+            selectedKey={qtype === 'userName' ? ['userName'] : ['email']}
+            onSelectionChange={handleTypeSearch}
+          />
+        }
       />
     </>
   )

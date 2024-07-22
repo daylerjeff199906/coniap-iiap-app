@@ -14,6 +14,7 @@ export async function fetchPrograms(
     .from('programs')
     .select(allSelect)
     .ilike('title', `%${query}%`)
+    .order('created_at', { ascending: false })
 
   if (date) {
     request = request.eq('date', date)

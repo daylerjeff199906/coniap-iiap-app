@@ -47,6 +47,7 @@ interface IProps {
   //For the search input
   onSearch?: (value: string) => void
   searchValue?: string
+  disableInputSearch?: boolean
   headerChildren?: React.ReactNode
   endInputSection?: React.ReactNode
 }
@@ -62,6 +63,7 @@ export const TableGeneral = (props: IProps) => {
     actionsList,
     headerChildren,
     endInputSection,
+    disableInputSearch,
   } = props
 
   const pathname = usePathname()
@@ -138,20 +140,22 @@ export const TableGeneral = (props: IProps) => {
     <main className="flex flex-col gap-3 section-admin">
       <section className="flex gap-2 items-start">
         <div className="flex gap-2 w-full max-w-[300px]">
-          <Input
-            aria-label="Buscar"
-            variant="bordered"
-            placeholder="Buscar ..."
-            radius="sm"
-            value={searchValue}
-            onValueChange={(value) => onSearch && onSearch(value)}
-            startContent={
-              <div>
-                <IconSearch size={16} />
-              </div>
-            }
-            endContent={endInputSection}
-          />
+          {!disableInputSearch && (
+            <Input
+              aria-label="Buscar"
+              variant="bordered"
+              placeholder="Buscar ..."
+              radius="sm"
+              value={searchValue}
+              onValueChange={(value) => onSearch && onSearch(value)}
+              startContent={
+                <div>
+                  <IconSearch size={16} />
+                </div>
+              }
+              endContent={endInputSection}
+            />
+          )}
         </div>
         {headerChildren}
       </section>
