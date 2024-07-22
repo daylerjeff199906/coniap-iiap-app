@@ -7,6 +7,8 @@ import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 import { useAuthContext } from '@/provider'
 import { toast } from 'react-toastify'
+import Google from './GoogleIcon'
+import Link from 'next/link'
 
 function encryptString(value: string) {
   return btoa(value)
@@ -130,18 +132,26 @@ export const FrmLogin = () => {
             )}
           />
         </section>
-        <Button
-          variant="solid"
-          color="primary"
-          fullWidth
-          radius="sm"
-          type="submit"
-          isDisabled={loading}
-          isLoading={loading}
-          size="lg"
-        >
-          Iniciar sesión
-        </Button>
+        <div className="flex flex-col gap-3">
+          <Button
+            variant="solid"
+            color="primary"
+            fullWidth
+            radius="sm"
+            type="submit"
+            isDisabled={loading}
+            isLoading={loading}
+            size="lg"
+          >
+            Iniciar sesión
+          </Button>
+          <Link
+            href="/auth/forgot-password"
+            className="text-center text-xs text-primary-500 hover:underline"
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </div>
       </form>
       <section className="flex items-center gap-3">
         <hr className="w-full" />
@@ -156,14 +166,11 @@ export const FrmLogin = () => {
           variant="light"
           onPress={handleGoogle}
           startContent={
-            <div>
-              <Image
-                width="24"
-                height="24"
-                src="https://img.icons8.com/color/48/google-logo.png"
-                alt="google-logo"
-              />
-            </div>
+            <Google
+              width="20"
+              height="20"
+              fill="currentColor"
+            />
           }
         >
           Sign in with Google
