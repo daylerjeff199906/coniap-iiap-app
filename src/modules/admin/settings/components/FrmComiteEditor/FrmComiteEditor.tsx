@@ -6,14 +6,15 @@ import { ModalAction } from '@/components'
 import { updateRowInformation } from '@/api'
 import { toast } from 'react-toastify'
 import { ListComimte } from './ListComite'
+import { IPersonComite } from '@/types'
 
 interface IProps {
   typeComite: string
-  list?: string[]
+  list?: IPersonComite[]
 }
 
-interface IGeneralData {
-  list: string[]
+interface IListData {
+  list: IPersonComite[]
 }
 
 export const FrmComiteEditor = (props: IProps) => {
@@ -21,7 +22,7 @@ export const FrmComiteEditor = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const methods = useForm<IGeneralData>({
+  const methods = useForm<IListData>({
     defaultValues: {
       list,
     },
@@ -33,8 +34,8 @@ export const FrmComiteEditor = (props: IProps) => {
     setOpen(true)
   }
 
-  const handleFormSubmit: SubmitHandler<IGeneralData> = async (
-    data: IGeneralData
+  const handleFormSubmit: SubmitHandler<IListData> = async (
+    data: IListData
   ) => {
     setOpen(false)
     setLoading(true)
