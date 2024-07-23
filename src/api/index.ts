@@ -54,7 +54,7 @@ import {
 } from './fetchSummaries'
 
 import { fetchSalas } from './fetchSalas'
-import { fetchTotalPersons } from './fetchDashboard'
+import { fetchTotalPersons, fetchPersonStats } from './fetchDashboard'
 import {
   fetchUserByEmail,
   createUser,
@@ -120,6 +120,7 @@ export {
   fetchSalas,
   //Dashboard
   fetchTotalPersons,
+  fetchPersonStats,
   //User
   fetchUserByEmail,
   createUser,
