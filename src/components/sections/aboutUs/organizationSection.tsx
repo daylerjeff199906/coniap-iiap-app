@@ -2,67 +2,17 @@
 import { Image } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 import svgAddorm from '@/assets/svg/patron-fino.svg'
+import { IPersonComite } from '@/types'
 
-const data = [
-  {
-    id: '1',
-    type: 'COMITÉ ORGANIZADOR',
-    persons: [
-      'Carmen García',
-      'Ricardo Zárate',
-      'Tony Vizcarra',
-      'Kember Mejía',
-      'Américo Sanchez',
-      'Giussepe Gagliardi',
-      'Juan Bellido',
-      'Francisco Vásquez',
-    ],
-  },
-  {
-    id: '2',
-    type: 'COMITÉ CIENTÍFICO',
-    persons: [
-      'Carmen García',
-      'Christian Fernández',
-      'Werner Chota',
-      'Tony Vizcarra',
-      'Dennis del Castillo',
-      'Kember Mejía',
-      'Pedro Pérez',
-      'Manuel Martín',
-      'Margarita del Aguila',
-      'Guillain Estivals',
-      'Ricardo Zárate',
-      'Giuseppe Gagliardi',
-      'Lizardo Fachin',
-      'Nicolas Hubert',
-      'Rosa Ortiz',
-      'Mirbel Epiquien',
-      'Farah Carrasco',
-      'Alicia Bartra',
-      'Roger Ruiz',
-      'Luz M. Almanza',
-      'Sandra Ríos',
-      'Ana Rosa Sáenz',
-      'Andrea Tello',
-      'Cristina López',
-      'Vanessa Rodríguez',
-      'Hugo Dueñas',
-    ],
-  },
-  {
-    id: '3',
-    type: 'COMITÉ DE INFORMÁTICA Y DIFUSIÓN',
-    persons: [
-      '  Américo Sánchez (Coordinador de Informática)',
-      'Jhon Martinez (Desarrollador)',
-      'Jacker Ruiz',
-      'Salvador Tello',
-    ],
-  },
-]
+interface IProps {
+  comiteOrganizador: IPersonComite[]
+  comiteCientifico: IPersonComite[]
+  comiteInformatica: IPersonComite[]
+}
 
-export const OrganizationSection = () => {
+export const OrganizationSection = (props: IProps) => {
+  const { comiteOrganizador, comiteCientifico, comiteInformatica } = props
+
   return (
     <>
       <section className="py-10 sm:py-20">
@@ -97,55 +47,32 @@ export const OrganizationSection = () => {
             />
           </header>
           <section className="sm:p-4 lg:p-6 grid grid-cols-1 sm:grid-cols-3">
-            {data.map((item) => (
-              <div
-                key={item.id}
-                className="mb-5"
-              >
-                <h3 className="text-lg font-semibold pb-3">{item.type}</h3>
-                {item.persons.length > 15 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-500">
-                    {/* Dividir la lista en dos columnas */}
-                    <ul className="list-disc pl-6">
-                      {item.persons
-                        .slice(0, Math.ceil(item.persons.length / 2))
-                        .map((person) => (
-                          <li
-                            key={person}
-                            className="text-sm sm:text-base"
-                          >
-                            {person}
-                          </li>
-                        ))}
-                    </ul>
-                    <ul className="list-disc pl-6">
-                      {item.persons
-                        .slice(Math.ceil(item.persons.length / 2))
-                        .map((person) => (
-                          <li
-                            key={person}
-                            className="text-sm sm:text-base"
-                          >
-                            {person}
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <ul className="list-disc pl-6 text-gray-500">
-                    {/* Si hay 15 o menos elementos, mostrar en una sola columna */}
-                    {item.persons.map((person) => (
-                      <li
-                        key={person}
-                        className="text-sm sm:text-base"
-                      >
-                        {person}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+            <div>
+              <h3 className="text-lg font-semibold pb-3">Comité Organizador</h3>
+              <ul className="list-disc list-inside">
+                {comiteOrganizador?.map((person) => (
+                  <li key={person.order}>{person.name}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold pb-3">Comité Científico</h3>
+              <ul className="list-disc list-inside">
+                {comiteCientifico?.map((person) => (
+                  <li key={person.order}>{person.name}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold pb-3">
+                Comité de Informática
+              </h3>
+              <ul className="list-disc list-inside">
+                {comiteInformatica?.map((person) => (
+                  <li key={person.order}>{person.name}</li>
+                ))}
+              </ul>
+            </div>
           </section>
         </div>
       </section>

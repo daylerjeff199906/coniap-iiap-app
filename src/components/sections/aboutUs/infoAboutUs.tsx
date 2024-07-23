@@ -3,7 +3,12 @@ import { motion } from 'framer-motion'
 import { imgImagoTipoConiap } from '@/assets'
 import Image from 'next/image'
 
-export const InfoAboutUs = () => {
+interface IProps {
+  description: string
+}
+
+export const InfoAboutUs = (props: IProps) => {
+  const { description } = props
   return (
     <>
       <section className="">
@@ -61,28 +66,22 @@ export const InfoAboutUs = () => {
                 duration: 1,
               }}
             >
-              <p className="leading-relaxed">
-                El Congreso Internacional sobre Amazonia peruana: investigación
-                para el desarrollo, perspectivas y retos, que se realizará
-                anualmente, se constituye en un espacio de diálogo abierto de
-                investigadores nacionales y extranjeros de distintas
-                disciplinas, gestores de desarrollo, sectores públicos peruanos
-                y organismos no gubernamentales con el propósito de propiciar la
-                difusión y el Intercambio de conocimientos y experiencias;
-                favoreciendo la comunicación entre investigadores y decisores de
-                política para definir lineamientos y buscar consensos en temas
-                de cultura, desarrollo social y humano, uso sostenible y
-                conservación de los ecosistemas y recursos, tecnologías
-                alternativas y desarrollo económico, ordenamiento del territorio
-                y gestión de riesgos que contribuyan al desarrollo
-                socio-económico de la región amazónica peruana en el contexto de
-                cambio climático y el marco de los Objetivos del Desarrollo
-                Sostenible - ODS.
-              </p>
+              {RenderHtml(description || '')}
             </motion.div>
           </section>
         </main>
       </section>
+    </>
+  )
+}
+
+const RenderHtml = (html: string) => {
+  return (
+    <>
+      <div
+        className="custom-quill"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </>
   )
 }
