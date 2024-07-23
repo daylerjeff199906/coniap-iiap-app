@@ -6,10 +6,13 @@ import {
   registerWithEmail,
 } from './registerWithEmail'
 
+import { sendResetPasswordEmail } from './forgot-password'
+
 export {
   SignInWithGoogle,
   signInWithCredentials,
   registerAndSendEmailVerification,
   registerWithEmail,
   getErrors,
+  sendResetPasswordEmail,
 }
