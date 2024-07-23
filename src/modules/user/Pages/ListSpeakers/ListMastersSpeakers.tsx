@@ -10,7 +10,7 @@ export const ListMastersSpeakers = (props: IProps) => {
   return (
     <>
       {speakers && speakers.length > 0 ? (
-        <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
+        <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
           {speakers.map((speaker, index) => (
             <CardSpeaker
               speaker={speaker}
