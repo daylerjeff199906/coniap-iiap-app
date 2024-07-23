@@ -1,9 +1,17 @@
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
+import { Skeleton } from '@nextui-org/react'
 import dynamic from 'next/dynamic'
 
 //For the text field
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-ful">
+      <Skeleton className="max-h-52 w-full h-52 rounded-md" />
+    </div>
+  ),
+})
 import 'react-quill/dist/quill.snow.css'
 import { IEvent } from '@/types'
 

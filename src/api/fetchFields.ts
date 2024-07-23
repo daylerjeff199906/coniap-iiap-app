@@ -23,14 +23,10 @@ export async function updateField(
 }
 
 export async function addFileToBucket(file: File, path: string) {
-  console.log('file', file)
   const supabase = createClient()
   const { data, error } = await supabase.storage
     .from(`coniap-2024/${path}`)
     .upload(file.name, file)
-
-  console.log('data', data)
-  console.log('error', error)
 
   if (error) {
     return error
