@@ -17,6 +17,7 @@ import {
   DropdownItem,
   DropdownMenu,
   Chip,
+  Pagination,
 } from '@nextui-org/react'
 import Link from 'next/link'
 import { IColumns, IRows, IActions } from '@/types'
@@ -50,6 +51,11 @@ interface IProps {
   disableInputSearch?: boolean
   headerChildren?: React.ReactNode
   endInputSection?: React.ReactNode
+  //For the pagination
+  onPageChange?: (page: number) => void
+  page?: number
+  count?: number
+  disablePagination?: boolean
 }
 
 export const TableGeneral = (props: IProps) => {
@@ -64,6 +70,10 @@ export const TableGeneral = (props: IProps) => {
     headerChildren,
     endInputSection,
     disableInputSearch,
+    onPageChange,
+    page,
+    count,
+    disablePagination,
   } = props
 
   const pathname = usePathname()
@@ -230,10 +240,27 @@ export const TableGeneral = (props: IProps) => {
           )}
         </TableBody>
       </Table>
-      <footer>
-        <p className="text-xs text-gray-500 text-center">
-          Total de registros: {rows.length}
-        </p>
+      <footer className="flex gap-3 items-center">
+        {!disablePagination && (
+          <div className="flex justify-end gap-2">
+            {count && (
+              <Pagination
+                total={count}
+                initialPage={page}
+                onChange={onPageChange}
+                showControls
+                size="sm"
+                variant="bordered"
+                color="default"
+              />
+            )}
+          </div>
+        )}
+        <div>
+          <p className="text-xs text-gray-500 text-center">
+            Total de registros: {rows.length}
+          </p>
+        </div>
       </footer>
       <LoadingPages isOpen={props.loading ?? false} />
     </main>

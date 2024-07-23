@@ -57,14 +57,15 @@ export async function fetchPersons(
   isNot?: string,
   status?: string,
   column?: string,
-  orderBy?: string
+  isPagination?: boolean,
+  params?: { page: number; limit: number }
 ) {
   const supabase = createClient()
 
   // Comenzamos construyendo la consulta básica
   let queryBuilder = supabase
     .from('persons')
-    .select('*')
+    .select('*', { count: 'exact' })
     .order('created_at', { ascending: false })
 
   if (column === 'name') {
@@ -89,13 +90,20 @@ export async function fetchPersons(
     queryBuilder = queryBuilder.eq('isActived', status)
   }
 
+  if (isPagination && params) {
+    queryBuilder = queryBuilder.range(
+      (params.page - 1) * params.limit,
+      params.page * params.limit
+    )
+  }
+
   // Ejecutamos la consulta
-  const { data, error } = await queryBuilder
+  const { data, error, count } = await queryBuilder
 
   if (error) {
     return error
   } else {
-    return data
+    return { data, count }
   }
 }
 

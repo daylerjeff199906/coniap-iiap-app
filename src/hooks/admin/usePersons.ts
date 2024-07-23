@@ -17,7 +17,10 @@ const message =
 export function usePersons() {
   const [loading, setLoading] = useState<boolean>(false)
   const [person, setPerson] = useState<IPerson | null>(null)
-  const [persons, setPersons] = useState<IPerson[] | null>(null)
+  const [persons, setPersons] = useState<{
+    data: IPerson[]
+    count: number
+  } | null>(null)
   const [personInEvent, setPersonInEvent] = useState<IPerson[] | null>(null)
   const [asisstants, setAssistants] = useState<IPerson[] | null>(null)
 
@@ -70,10 +73,20 @@ export function usePersons() {
     typePerson = '',
     isNot?: string,
     status?: string,
-    column?: string
+    column?: string,
+    isPagination?: boolean,
+    params?: { page: number; limit: number }
   ) => {
     setLoading(true)
-    const data = await fetchPersons(query, typePerson, isNot, status, column)
+    const data = await fetchPersons(
+      query,
+      typePerson,
+      isNot,
+      status,
+      column,
+      isPagination,
+      params
+    )
       .then((res) => res)
       .catch((err) => err)
     setPersons(data)
