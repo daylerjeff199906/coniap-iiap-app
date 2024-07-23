@@ -106,6 +106,9 @@ export const FrmLogin = () => {
                 type="email"
                 placeholder="correo@correo.com"
                 radius="sm"
+                classNames={{
+                  label: 'text-white',
+                }}
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.email !== undefined}
@@ -124,6 +127,9 @@ export const FrmLogin = () => {
                 labelPlacement="outside"
                 placeholder="* * * * * * * *"
                 radius="sm"
+                classNames={{
+                  label: 'text-white',
+                }}
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.password !== undefined}
@@ -141,13 +147,12 @@ export const FrmLogin = () => {
             type="submit"
             isDisabled={loading}
             isLoading={loading}
-            size="lg"
           >
             Iniciar sesión
           </Button>
           <Link
             href="/auth/forgot-password"
-            className="text-center text-xs text-primary-500 hover:underline"
+            className="text-center text-xs text-primary-400 hover:underline"
           >
             ¿Olvidaste tu contraseña?
           </Link>
@@ -162,7 +167,7 @@ export const FrmLogin = () => {
         <Button
           radius="sm"
           fullWidth
-          className="flex items-center justify-center space-x-2"
+          className="flex items-center justify-center space-x-2 text-white"
           variant="light"
           onPress={handleGoogle}
           startContent={
@@ -177,7 +182,7 @@ export const FrmLogin = () => {
         </Button>
         <Link
           href="/"
-          className="text-center text-xs text-gray-500 hover:underline"
+          className="text-center text-xs text-gray-400 hover:underline"
         >
           Volver al inicio
         </Link>
