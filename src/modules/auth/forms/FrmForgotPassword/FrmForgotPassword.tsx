@@ -75,8 +75,8 @@ export const FrmForgotPassword = () => {
                 }}
                 value={value}
                 onValueChange={onChange}
-                required
-                // isInvalid={methods.formState.errors.email !== undefined}
+                // required
+                isInvalid={methods.formState.errors.email !== undefined}
                 // errorMessage={methods.formState.errors.email?.message}
               />
             )}
