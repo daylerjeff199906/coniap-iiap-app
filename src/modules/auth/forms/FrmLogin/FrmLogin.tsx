@@ -23,6 +23,7 @@ export const FrmLogin = () => {
   const [loading, setLoading] = useState(false)
   const { setUserData } = useAuthContext()
   const methods = useForm<ILogin>()
+  const { errors } = methods.formState
   const router = useRouter()
 
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
@@ -82,12 +83,23 @@ export const FrmLogin = () => {
     setLoading(false)
   }
 
+  let message = ''
+
+  if (errors.email && errors.password) {
+    message = 'Email y contraseña son requeridos'
+  } else if (errors.email) {
+    message = errors.email.message as string
+  } else if (errors.password) {
+    message = errors.password.message as string
+  }
+
   return (
     <main className="flex flex-col gap-3">
       <form
         className="w-full flex flex-col gap-6"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
+        {message && <AlertComponent message={message} />}
         <section className="flex flex-col gap-5">
           <Controller
             control={methods.control}
@@ -113,7 +125,7 @@ export const FrmLogin = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.email !== undefined}
-                errorMessage={methods.formState.errors.email?.message}
+                // errorMessage={methods.formState.errors.email?.message}
               />
             )}
           />
@@ -135,7 +147,7 @@ export const FrmLogin = () => {
                 value={value}
                 onValueChange={onChange}
                 isInvalid={methods.formState.errors.password !== undefined}
-                errorMessage={methods.formState.errors.password?.message}
+                // errorMessage={methods.formState.errors.password?.message}
               />
             )}
           />
@@ -194,5 +206,13 @@ export const FrmLogin = () => {
 
       <LoadingPages isOpen={loading} />
     </main>
+  )
+}
+
+const AlertComponent = ({ message }: { message: string }) => {
+  return (
+    <section className="flex items-center gap-3  p-3 rounded-md border border-danger-500 bg-danger-500/20">
+      <p className="text-xs ">{message}</p>
+    </section>
   )
 }
