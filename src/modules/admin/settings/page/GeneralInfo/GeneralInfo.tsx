@@ -1,5 +1,5 @@
 import { IGeneralData } from '@/types'
-import { FrmInfoGeneral } from '../../components'
+import { FrmComiteEditor, FrmInfoGeneral } from '../../components'
 
 interface IProps {
   data?: IGeneralData
@@ -28,7 +28,12 @@ export const GeneralInfo = (props: IProps) => {
             Información sobre el comité organizador del evento.
           </p>
         </div>
-        <div></div>
+        <div>
+          <FrmComiteEditor
+            typeComite="c_organizador"
+            list={data?.c_organizador}
+          />
+        </div>
       </section>
       <section className="section-admin grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <div>

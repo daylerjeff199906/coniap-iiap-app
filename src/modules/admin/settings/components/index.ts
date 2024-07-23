@@ -1,3 +1,4 @@
 import { FrmInfoGeneral } from './FrmInfoGeneralEditor/FrmInfoGeneral'
+import { FrmComiteEditor } from './FrmComiteEditor/FrmComiteEditor'
 
-export { FrmInfoGeneral }
+export { FrmInfoGeneral, FrmComiteEditor }
