@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { FiltersSection, TypesSearch } from './sections'
@@ -12,6 +12,7 @@ import { TableGeneral } from '@/components'
 import { usePersons } from '@/hooks/admin'
 
 export const ListParticipants = () => {
+  const limit = 30
   const { getParams, updateFilter } = useFilterFromUrl()
   const { getPersons, loading, persons } = usePersons()
   const pathname = usePathname()
@@ -52,17 +53,21 @@ export const ListParticipants = () => {
       ? 'FALSE'
       : ''
   const typeSearch = getParams('qtype', 'name')
+  const page = getParams('page', '1')
 
   useEffect(() => {
-    getPersons(query, type, isNot, statusValue, typeSearch)
-  }, [query, type, isNot, statusValue])
+    getPersons(query, type, isNot, statusValue, typeSearch, true, {
+      page: Number(page),
+      limit: limit,
+    })
+  }, [query, type, isNot, statusValue, page])
 
   const handleQuery = (value: string) => updateFilter('query', value)
 
   const listPerson =
     (persons &&
-      persons.length > 0 &&
-      persons?.map((speaker) => ({
+      persons.data.length > 0 &&
+      persons?.data.map((speaker) => ({
         key: String(speaker?.id),
         id: speaker?.id,
         date: convertDate(speaker?.created_at),
@@ -77,7 +82,7 @@ export const ListParticipants = () => {
       }))) ||
     []
 
-  const dataExcel = persons && persons.length > 0 ? persons : []
+  const dataExcel = persons && persons.data.length > 0 ? persons.data : []
 
   //To type search
   const handleTypeSearch = (val: Selection) => {
@@ -87,6 +92,10 @@ export const ListParticipants = () => {
     } else {
       updateFilter('qtype', value)
     }
+  }
+
+  const handlePageChange = (page: number) => {
+    updateFilter('page', String(page))
   }
 
   return (
@@ -115,6 +124,9 @@ export const ListParticipants = () => {
               onSelectionChange={handleTypeSearch}
             />
           }
+          count={persons?.count}
+          page={Number(page)}
+          onPageChange={handlePageChange}
         />
       </Suspense>
     </>

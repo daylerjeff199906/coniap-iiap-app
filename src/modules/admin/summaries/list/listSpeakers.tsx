@@ -47,12 +47,15 @@ export const ListSpeakers = (props: IProps) => {
   }
 
   const rows: IRows[] =
-    persons !== null
-      ? persons?.map((person) => {
+    persons !== null && persons.data.length > 0
+      ? persons?.data.map((person) => {
           return {
             key: String(person?.id),
             name: person?.name + ' ' + person?.surName,
-            typePerson: person?.typePerson,
+            typePerson:
+              person?.typePerson === 'speaker'
+                ? 'Ponente'
+                : 'Ponente magistral',
             estado: person?.isActived ? 'Activo' : 'Inactivo',
           }
         })
