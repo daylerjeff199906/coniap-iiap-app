@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DetailsSpeaker } from '@/components'
+import { DetailsSpeaker } from '@/modules/user'
 import { fetchPersonById } from '@/api'
 import { IPerson } from '@/types'
 interface IProps {

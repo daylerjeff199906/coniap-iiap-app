@@ -1,4 +1,4 @@
-'use client '
+'use client'
 import { ContactData, PersonData } from './sections'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { IPerson, IUserCreated } from '@/types'
