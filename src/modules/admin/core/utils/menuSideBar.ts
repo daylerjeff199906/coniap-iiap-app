@@ -103,17 +103,17 @@ export const menuSideBar: IMenuSideBar[] = [
         moreItems: [],
       },
       {
-        id: 'config',
+        id: 'settings',
         icon: 'settings',
-        title: 'Configuración',
-        href: '/admin/configurations',
+        title: 'Ajustes',
+        href: '/admin/settings',
         moreItems: [],
       },
     ],
   },
   {
     id: '5',
-    section: 'Configuración',
+    section: 'Cuentas y Usuarios',
     items: [
       {
         id: 'users',
