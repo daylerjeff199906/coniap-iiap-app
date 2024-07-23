@@ -28,7 +28,7 @@ export default function Page() {
             duration: 3000,
           }}
         />
-        <section className="flex flex-col section-page justify-center items-center gap-6 h-full bg-white rounded-lg border container w-full max-w-3xl">
+        <section className="flex flex-col section-page justify-center items-center gap-6 h-full bg-white rounded-lg border container w-full max-w-3xl px-2 sm:px-6 lg:px-8">
           <div className="w-full">
             <h1 className="text-3xl sm:text-4xl font-bold text-center">
               🎉 Muchas gracias por inscribirte en el congreso 🎊
