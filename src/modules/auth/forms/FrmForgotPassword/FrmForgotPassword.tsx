@@ -25,7 +25,17 @@ export const FrmForgotPassword = () => {
     const res = await sendResetPasswordEmail(data.email)
 
     if (res === 'Email sent') {
-      toast.success('Email enviado')
+      toast.success(
+        <div className="flex flex-col gap-1">
+          <h3 className="text-sm">
+            Se ha enviado un correo a <strong>{data.email}</strong> con un
+            enlace para restablecer tu contraseña
+          </h3>
+          <p className="text-xs">
+            Cambia tu contraseña y vuelve a iniciar sesión con tu nueva
+          </p>
+        </div>
+      )
       router.push('/login')
     } else {
       toast.error('Error al enviar el correo')
