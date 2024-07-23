@@ -31,6 +31,7 @@ export const ModalAction = ({
       onClose={() => {
         setOpen(false)
       }}
+      radius="sm"
     >
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>

@@ -1,5 +1,5 @@
+import { GeneralInfo } from '@/modules/admin'
+
 export default function page() {
-  return (
-    <div>page</div>
-  )
+  return <GeneralInfo />
 }
