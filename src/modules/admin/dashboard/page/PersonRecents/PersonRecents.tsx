@@ -52,7 +52,7 @@ export const PersonRecents = (props: IProps) => {
           : item.typePerson === 'speaker_mg'
           ? 'Ponente Magistral'
           : 'Asistente',
-      isActived: item.isActived ? 'Activo' : 'Inactivo',
+      isActived: item.isActived,
     }
   })
   return (
