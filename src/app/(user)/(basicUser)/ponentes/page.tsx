@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { IPerson } from '@/types'
-import { ListMastersSpeakers } from '@/modules/user'
+import { ListMastersSpeakers, ListSpeakers } from '@/modules/user'
 
 export default async function Page() {
   const supabase = createClient()
@@ -21,6 +21,10 @@ export default async function Page() {
     (speaker) => speaker.typePerson === 'speaker_mg'
   ) as IPerson[]
 
+  const speakersList = speakersData.filter(
+    (speaker) => speaker.typePerson === 'speaker'
+  ) as IPerson[]
+
   return (
     <>
       <main className="container section-page flex flex-col gap-6">
@@ -33,6 +37,15 @@ export default async function Page() {
         <section className="">
           <ListMastersSpeakers speakers={magisterSpeakers} />
         </section>
+        {speakersList.length > 0 && (
+          <>
+            <header className="flex flex-col gap-3">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl">Ponentes</h1>
+              <hr />
+            </header>
+            <ListSpeakers speakers={speakersList} />
+          </>
+        )}
       </main>
     </>
   )
