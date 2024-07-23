@@ -40,7 +40,7 @@ export const CardSpeaker = (props: IProps) => {
           src={speaker?.image !== '' ? speaker?.image : urlImgeDefault}
           alt="image"
           radius="lg"
-          className="h-64 w-full object-cover"
+          className="h-48 sm:h-64 w-full object-cover"
           removeWrapper
           isBlurred
         />
@@ -59,7 +59,7 @@ export const CardSpeaker = (props: IProps) => {
                 />
               </div>
               <div>
-                <p className="text-tiny sm:text-sm ">
+                <p className="text-tiny sm:text-sm line-clamp-2">
                   {speaker.institution}
                 </p>
               </div>

@@ -50,7 +50,7 @@ export const DetailsSpeaker = (props: IProps) => {
           </section>
           <Avatar
             src={speaker?.image || img_default}
-            className="w-40 h-40"
+            className="w-40 h-40 min-w-[160px] min-h-[160px] rounded-full"
           />
         </section>
         <Divider className="w-full" />
