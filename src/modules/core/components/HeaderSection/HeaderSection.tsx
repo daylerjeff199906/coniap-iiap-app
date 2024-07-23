@@ -1,6 +1,5 @@
 'use client'
 import { Button } from '@nextui-org/button'
-import { Divider } from '@nextui-org/react'
 import { IconPlus } from '@tabler/icons-react'
 import Link from 'next/link'
 
@@ -45,7 +44,6 @@ export const HeaderSection = (props: IProps) => {
             )}
           </div>
         </header>
-        <Divider aria-label="divider" />
       </section>
     </>
   )

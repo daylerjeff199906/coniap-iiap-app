@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback } from 'react'
+import { IconDatabaseOff } from '@tabler/icons-react'
 
 import {
   Table,
@@ -10,17 +11,17 @@ import {
   TableCell,
   getKeyValue,
   Button,
-  Switch,
   Input,
   Dropdown,
   DropdownTrigger,
   DropdownItem,
   DropdownMenu,
   Chip,
+  Pagination,
 } from '@nextui-org/react'
+import Link from 'next/link'
 import { IColumns, IRows, IActions } from '@/types'
 import { IconSearch, IconDots } from '@tabler/icons-react'
-import Link from 'next/link'
 import { LoadingPages } from '../..'
 import { usePathname } from 'next/navigation'
 
@@ -47,7 +48,14 @@ interface IProps {
   //For the search input
   onSearch?: (value: string) => void
   searchValue?: string
+  disableInputSearch?: boolean
   headerChildren?: React.ReactNode
+  endInputSection?: React.ReactNode
+  //For the pagination
+  onPageChange?: (page: number) => void
+  page?: number
+  count?: number
+  disablePagination?: boolean
 }
 
 export const TableGeneral = (props: IProps) => {
@@ -60,6 +68,12 @@ export const TableGeneral = (props: IProps) => {
     searchValue,
     actionsList,
     headerChildren,
+    endInputSection,
+    disableInputSearch,
+    onPageChange,
+    page,
+    count,
+    disablePagination,
   } = props
 
   const pathname = usePathname()
@@ -133,18 +147,25 @@ export const TableGeneral = (props: IProps) => {
   }
 
   return (
-    <main className="flex flex-col gap-3">
+    <main className="flex flex-col gap-3 section-admin">
       <section className="flex gap-2 items-start">
         <div className="flex gap-2 w-full max-w-[300px]">
-          <Input
-            aria-label="Buscar"
-            variant="bordered"
-            placeholder="Type to search..."
-            radius="sm"
-            value={searchValue}
-            onValueChange={(value) => onSearch && onSearch(value)}
-            startContent={<IconSearch size={16} />}
-          />
+          {!disableInputSearch && (
+            <Input
+              aria-label="Buscar"
+              variant="bordered"
+              placeholder="Buscar ..."
+              radius="sm"
+              value={searchValue}
+              onValueChange={(value) => onSearch && onSearch(value)}
+              startContent={
+                <div>
+                  <IconSearch size={16} />
+                </div>
+              }
+              endContent={endInputSection}
+            />
+          )}
         </div>
         {headerChildren}
       </section>
@@ -153,10 +174,29 @@ export const TableGeneral = (props: IProps) => {
         aria-labelledby="TableGeneral"
         removeWrapper
         isHeaderSticky
+        className=" rounded-xl"
         classNames={{
-          th: ['font-semibold', 'bg-white', 'text-gray-800', 'border-b'],
           base: 'max-h-[calc(100vh-20rem)] overflow-y-auto bg-white',
-          td: ['text-xs', 'font-medium'],
+          th: [
+            'bg-white',
+            'text-default-500',
+            'font-bold',
+            'rounded-none',
+            'shadow-none',
+          ],
+          table: ['border-divider', 'bg-white'],
+          td: [
+            'text-xs',
+            'font-medium',
+            'group-data-[first=true]:first:before:rounded-none',
+            'group-data-[first=true]:last:before:rounded-none',
+            // middle
+            'group-data-[middle=true]:before:rounded-none',
+            // last
+            'group-data-[last=true]:first:before:rounded-none',
+            'group-data-[last=true]:last:before:rounded-none',
+            'rounded-lg',
+          ],
         }}
         selectionMode={selectionMode}
         onRowAction={onRowAction}
@@ -173,9 +213,21 @@ export const TableGeneral = (props: IProps) => {
           )}
         </TableHeader>
         <TableBody
-          emptyContent={'No users found'}
+          emptyContent={
+            <main>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <IconDatabaseOff
+                  size={40}
+                  className="text-gray-400"
+                />
+                <p className="text-sm font-medium text-gray-600">
+                  No se encontraron resultados
+                </p>
+              </div>
+            </main>
+          }
           items={rows}
-          isLoading={true}
+          isLoading={props.loading}
         >
           {(item) => (
             <TableRow key={item?.key}>
@@ -188,6 +240,32 @@ export const TableGeneral = (props: IProps) => {
           )}
         </TableBody>
       </Table>
+      <footer className="flex gap-3 items-center">
+        {!disablePagination && (
+          <div className="flex justify-end gap-2">
+            {count && (
+              <Pagination
+                total={Math.ceil(count / 29)}
+                initialPage={page}
+                onChange={onPageChange}
+                showControls
+                size="sm"
+                variant="bordered"
+                color="default"
+                classNames={{
+                  item: 'text-xs w-8 h-8 radius-sm',
+                  cursor: 'text-xs',
+                }}
+              />
+            )}
+          </div>
+        )}
+        <div>
+          <p className="text-xs text-gray-500 text-center">
+            Total de registros: {rows.length} {count && `de ${count}`}
+          </p>
+        </div>
+      </footer>
       <LoadingPages isOpen={props.loading ?? false} />
     </main>
   )

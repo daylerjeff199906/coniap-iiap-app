@@ -7,7 +7,7 @@ import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import { IEvent, IEventRes, IRes } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -19,9 +19,7 @@ export function useEvents() {
     const res: IRes = (await createEvent(data)) as IRes
 
     if (res.message) {
-      toast.error('Error al crear el programa', {
-        description: res.message,
-      })
+      toast.error(`Error al crear el evento: ${res.message}`)
     } else {
       toast.success('Evento creado con exito')
     }
@@ -51,9 +49,7 @@ export function useEvents() {
     setLoading(true)
     const res: IRes = (await updateEvent(id, data)) as IRes
     if (res.message) {
-      toast.error('Error al actualizar el evento', {
-        description: res.message,
-      })
+      toast.error(`Error al actualizar el evento: ${res.message}`)
     } else {
       toast.success('Evento actualizado con exito')
     }

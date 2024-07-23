@@ -79,6 +79,7 @@ export const ListSponsors = () => {
         columns={columns}
         rows={rows}
         actionsList={listActions}
+        selectionMode="single"
       />
     </>
   )

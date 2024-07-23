@@ -9,6 +9,8 @@ export async function createPerson(props: IPerson) {
     .from('persons')
     .insert([props])
     .select('*')
+    .single()
+
   if (error) {
     return error
   } else {
@@ -38,7 +40,6 @@ export async function fetchPerson(query: string) {
   const { data, error } = await supabase
     .from('persons')
     .select('*')
-    .order('name', { ascending: true })
     .ilike('name', `%${query}%`)
     .single()
 
@@ -53,16 +54,26 @@ export async function fetchPersons(
   query: string,
   typePerson: string,
   isNot?: string,
-  status?: string
+  status?: string,
+  column?: string,
+  isPagination?: boolean,
+  params?: { page: number; limit: number }
 ) {
   const supabase = createClient()
 
   // Comenzamos construyendo la consulta básica
   let queryBuilder = supabase
     .from('persons')
-    .select('*')
-    .order('name', { ascending: true })
-    .ilike('surName', `%${query}%`)
+    .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+
+  if (column === 'name') {
+    queryBuilder = queryBuilder.ilike('name', `%${query}%`)
+  } else if (column === 'surname') {
+    queryBuilder = queryBuilder.ilike('surName', `%${query}%`)
+  } else if (column === 'email') {
+    queryBuilder = queryBuilder.ilike('email', `%${query}% `)
+  }
 
   // Agregamos la condición solo si typePerson no está vacío
   if (typePerson) {
@@ -78,13 +89,20 @@ export async function fetchPersons(
     queryBuilder = queryBuilder.eq('isActived', status)
   }
 
+  if (isPagination && params) {
+    queryBuilder = queryBuilder.range(
+      (params.page - 1) * params.limit,
+      params.page * params.limit - 1
+    )
+  }
+
   // Ejecutamos la consulta
-  const { data, error } = await queryBuilder
+  const { data, error, count } = await queryBuilder
 
   if (error) {
     return error
   } else {
-    return data
+    return { data, count }
   }
 }
 

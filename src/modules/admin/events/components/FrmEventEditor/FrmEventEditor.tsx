@@ -93,34 +93,39 @@ export const FrmEventEditor = (props: IProps) => {
   return (
     <>
       <FormProvider {...methods}>
-        <form
-          className="space-y-3 max-w-3xl"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <h1 className="text-2xl font-bold">Agregar Evento</h1>
-          <div className="grid grid-cols-1 gap-5">
-            <ProgramSection />
-            <SummarySection />
-            <InfoRoom />
-          </div>
-          <MoreDescription />
-          <div className="flex items-center gap-4 justify-end">
-            <Button
-              color="primary"
-              type="submit"
-              isLoading={loading}
-              isDisabled={loading}
-            >
-              Agregar evento
-            </Button>
-            <Button
-              as={Link}
-              href="/admin/eventos"
-            >
-              Cancelar
-            </Button>
-          </div>
-        </form>
+        <main className="flex">
+          <form
+            className="flex flex-col gap-3 max-w-3xl w-full relative h-screen overflow-y-auto max-h-[calc(100vh-6rem)]"
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <h1 className="text-2xl font-bold">Agregar Evento</h1>
+            <div className="grid grid-cols-1 gap-5">
+              <ProgramSection />
+              <SummarySection />
+              <InfoRoom />
+            </div>
+            <MoreDescription />
+            <footer className="flex items-center gap-2 justify-end sticky bottom-0 bg-white p-4 border-t border-gray-100">
+              <Button
+                color="primary"
+                type="submit"
+                isLoading={loading}
+                isDisabled={loading}
+                radius="sm"
+                className="button-dark"
+              >
+                Agregar evento
+              </Button>
+              <Button
+                as={Link}
+                href="/admin/eventos"
+                radius="sm"
+              >
+                Cancelar
+              </Button>
+            </footer>
+          </form>
+        </main>
       </FormProvider>
       <ModalAction
         isOpen={isOpen}

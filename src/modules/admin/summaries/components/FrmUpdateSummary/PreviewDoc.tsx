@@ -9,10 +9,6 @@ export const PreviewDoc = () => {
 
   const isString = typeof file === 'string'
 
-  console.log('value', value)
-  console.log('isString', isString)
-  console.log('file', file)
-
   const src = isString ? value : file ? URL.createObjectURL(file) : ''
 
   return (

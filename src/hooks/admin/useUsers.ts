@@ -1,48 +1,43 @@
 'use client'
 import { useState } from 'react'
-import { db } from '@/firebase/firebase'
-import { collection, getDocs, DocumentData } from 'firebase/firestore'
+import { fetchUsers, fetchUserByEmail } from '@/api'
 import { IUser } from '@/types'
 
-const convertDataToUser = (data: DocumentData[]): IUser[] => {
-  return data?.map((user) => {
-    const { email, photo, role, userName } = user
-    const id = user?.id
-    return {
-      id: id,
-      email,
-      photo,
-      userName,
-      role,
-      person: user?.person,
-    }
-  })
+interface IFilter {
+  column?: 'userName' | 'email'
+  query?: string
 }
 
 export function useUsers() {
   const [loading, setLoading] = useState<boolean>(false)
   const [users, setUsers] = useState<IUser[] | null>(null)
+  const [user, setUser] = useState<IUser | null>(null)
 
-  const getListUsers = async () => {
+  const getListUsers = async (props: IFilter) => {
+    const { query, column } = props
     setLoading(true)
-    try {
-      const usersCollection = collection(db, 'users')
-      const usersSnapshot = await getDocs(usersCollection)
+    const users = await fetchUsers({
+      column,
+      query,
+    })
 
-      const usersList: DocumentData[] = []
+    if (users) {
+      setUsers(users)
+    } else {
+      setUsers(null)
+    }
 
-      usersSnapshot.forEach((doc) => {
-        usersList.push(doc.data())
-      })
+    setLoading(false)
+  }
 
-      const users = usersSnapshot?.docs?.map((doc) => ({
-        id: doc.id.toString(),
-        ...doc.data(),
-      }))
+  const getUserByEmail = async (email: string) => {
+    setLoading(true)
+    const user = await fetchUserByEmail(email)
 
-      setUsers(convertDataToUser(users))
-    } catch (error) {
-      console.error(error)
+    if (user) {
+      setUser(user)
+    } else {
+      setUser(null)
     }
 
     setLoading(false)
@@ -51,6 +46,8 @@ export function useUsers() {
   return {
     loading,
     users,
+    user,
+    getUserByEmail,
     getListUsers,
   }
 }

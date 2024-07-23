@@ -55,6 +55,20 @@ import {
 
 import { fetchSalas } from './fetchSalas'
 import { fetchTotalPersons } from './fetchDashboard'
+import {
+  fetchUserByEmail,
+  createUser,
+  updateUser,
+  deleteUser,
+  fetchUsers,
+  fetchUserById,
+} from './fetchUser'
+
+import {
+  fetchInformation,
+  fetchInformationById,
+  updateRowInformation,
+} from './fetchInformation'
 
 export {
   //Events crud
@@ -106,4 +120,15 @@ export {
   fetchSalas,
   //Dashboard
   fetchTotalPersons,
+  //User
+  fetchUserByEmail,
+  createUser,
+  updateUser,
+  deleteUser,
+  fetchUsers,
+  fetchUserById,
+  //
+  fetchInformation,
+  fetchInformationById,
+  updateRowInformation,
 }

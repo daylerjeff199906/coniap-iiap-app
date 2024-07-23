@@ -1,18 +1,16 @@
 'use client'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-} from 'firebase/firestore'
-import { IPerson, IUser } from '@/types'
+import { IPerson, IUser, IUserCreated } from '@/types'
 import { IError } from './types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
-import { fetchPersonByEmail } from '@/api'
+import {
+  fetchUserByEmail,
+  createUser,
+  updateUser,
+  fetchPersonByEmail,
+} from '@/api'
 import { getErrors } from './getErrors'
 
 export const SignInWithGoogle = async (): Promise<IUser | null> => {
@@ -21,38 +19,66 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
   try {
     const result = await signInWithPopup(auth, provider)
     const user = result.user
-
-    const firestore = getFirestore()
-    const usersRef = collection(firestore, 'users')
-    const q = query(usersRef, where('email', '==', user.email))
-    const querySnapshot = await getDocs(q)
-
-    //Se busca si existe la persona en la tabla person
-    const person: IPerson = (await fetchPersonByEmail(
-      user.email as string
-    )) as IPerson
-
-    let userData: IUser | null = null
-    if (querySnapshot.empty) {
-      userData = {
-        id: person.id as string,
-        userName: person.name || '',
-        email: user.email || '',
-        photo: person.image || '',
-        role: null,
-        person: person,
-      }
+    if (!user) {
+      toast.error('Error al iniciar sesión')
+      return null
     } else {
-      userData = {
-        id: querySnapshot.docs[0].id,
-        userName: user.displayName || '',
-        email: user.email || '',
-        photo: user.photoURL || '',
-        role: querySnapshot.docs[0].data().role || '',
-        person: person,
+      // Check if user exists in the database
+      const userApi: IUser | null = (await fetchUserByEmail(
+        user.email as string
+      )) as IUser | null
+
+      const personApi = (await fetchPersonByEmail(
+        user.email as string
+      )) as IPerson | null
+
+      if (userApi === null) {
+        const userData: IUserCreated = {
+          email: user.email as string,
+          photo: user.photoURL as string,
+          userName: user.displayName as string,
+          role: personApi?.id
+            ? personApi?.typePerson !== 'participant'
+              ? ['speaker']
+              : null
+            : null,
+          person: personApi?.id ? Number(personApi?.id) : null,
+        }
+
+        const newUser = await createUser(userData as IUserCreated)
+
+        if (!newUser) {
+          toast.error('Error al crear el usuario')
+          return null
+        }
+
+        const userApi: IUser | null = (await fetchUserByEmail(
+          user.email as string
+        )) as IUser | null
+
+        return userApi
+      } else {
+        if (userApi?.person === null && personApi?.id) {
+          const userApiUpdated = await updateUser({
+            email: user.email as string,
+            photo: user.photoURL as string,
+            userName: user.displayName as string,
+            role: personApi.typePerson !== 'participant' ? ['speaker'] : null,
+            emailVerified: user.emailVerified,
+            person: personApi.id ? Number(personApi.id) : null,
+          })
+
+          if (!userApiUpdated) {
+            toast.error('Error al actualizar el usuario')
+            return null
+          }
+
+          return userApiUpdated
+        } else {
+          return userApi
+        }
       }
     }
-    return userData
   } catch (error) {
     const err = error as unknown as IError
     toast.error(getErrors(err))

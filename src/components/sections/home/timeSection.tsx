@@ -5,8 +5,6 @@ import Vector from '@/assets/svg/patron_vectores.svg'
 import Image from 'next/image'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import dataInfo from '@/utils/json/infoConiap.json'
-import { lotScrollDown } from '@/assets'
-import Lottie from 'lottie-react'
 
 const dateStart = new Date(
   dataInfo.data.dates['date-conference'].start
@@ -53,7 +51,7 @@ export const TimeSection = () => {
 
   const days = Math.floor(
     timeRemaining !== null ? timeRemaining / (1000 * 60 * 60 * 24) : 0
-  ) 
+  )
   const hours = Math.floor(
     (timeRemaining !== null ? timeRemaining % (1000 * 60 * 60 * 24) : 0) /
       (1000 * 60 * 60)
@@ -100,15 +98,6 @@ export const TimeSection = () => {
         {!isCurrent && !isFuture && (
           <h2 className="text-white">Próximamente</h2>
         )}
-        <section>
-          <Lottie
-            aria-label="scroll-down"
-            animationData={lotScrollDown}
-            loop
-            autoplay
-            style={{ width: 60, height: 60 }}
-          />
-        </section>
       </div>
       <Image
         className="w-full object-cover h-full object-center absolute -z-10 top-0 left-0 right-0 rounded-xl"

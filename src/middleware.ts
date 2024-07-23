@@ -4,15 +4,8 @@ import { IUser } from './types'
 
 const routePermissions: Record<string, string[]> = {
   '/admin': ['admin', 'editor'],
-  '/dashboard': ['speaker', 'speaker_mg'],
+  '/dashboard': ['speaker'],
 }
-
-// const roleRedirects: Record<string, string> = {
-//   admin: '/admin',
-//   editor: '/admin',
-//   speaker: '/dashboard',
-//   speaker_mg: '/dashboard',
-// }
 
 export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get('user')?.value
@@ -22,25 +15,21 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = currentUser !== undefined
   const { pathname } = request.nextUrl
 
-  //   if (pathname === '/login' && isAuthenticated) {
-  //     const userRole = user?.role || user?.person?.typePerson
-  //     const redirectPath = roleRedirects[userRole as string]
-  //     if (redirectPath) {
-  //       return NextResponse.redirect(new URL(redirectPath, request.url))
-  //     }
-  //   }
-
   if (!isAuthenticated) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
   for (const route in routePermissions) {
     if (pathname.startsWith(route)) {
-      if (
-        !routePermissions[route].includes(
-          (user.role as string) || (user?.person?.typePerson as string)
-        )
-      ) {
+      // if (!routePermissions[route].includes(user.role)) {
+      //   return NextResponse.redirect(new URL('/unauthorized', request.url))
+      // }
+      const userHasPermission = user?.role?.some((userRole) =>
+        routePermissions[route].includes(userRole)
+      )
+
+      // Redirigir a /unauthorized si el usuario no tiene el rol necesario
+      if (!userHasPermission) {
         return NextResponse.redirect(new URL('/unauthorized', request.url))
       }
     }

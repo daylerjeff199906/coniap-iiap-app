@@ -8,6 +8,8 @@ import Link from 'next/link'
 import { formatConferenceDate } from '@/utils/functions'
 import infoData from '@/utils/json/infoConiap.json'
 import { TimeSection } from './timeSection'
+import { lotScrollDown } from '@/assets'
+import Lottie from 'lottie-react'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -48,7 +50,7 @@ export const BannerHome = () => {
     >
       <div className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-4">
         <motion.div
-          className="w-full lg:max-w-2xl space-y-8"
+          className="w-full lg:max-w-2xl space-y-4"
           initial={{
             opacity: 0,
             x: -100,
@@ -71,18 +73,17 @@ export const BannerHome = () => {
           </h1>
           <div className="flex items-center gap-2">
             <IconCalendarEvent
-              size={56}
+              size={48}
               stroke={1}
               color="#fff"
             />
-            <h3 className="text-white sm:text-lg max-w-48">{conferenceDate}</h3>
+            <h3 className="text-white text-md max-w-48">{conferenceDate}</h3>
           </div>
           <div className="w-full flex items-center gap-3">
             <Button
               className="animate-appearance-in text-white bg-green-700"
               variant="solid"
               radius="full"
-              size="lg"
               as={Link}
               href="/agenda"
             >
@@ -91,7 +92,6 @@ export const BannerHome = () => {
             <Button
               variant="flat"
               radius="full"
-              size="lg"
               className="bg-white text-black animate-appearance-in"
               as={Link}
               href="/inscripciones"
@@ -149,6 +149,15 @@ export const BannerHome = () => {
         </motion.div>
         <section className="absolute right-0 left-0 bottom-0 flex flex-col items-center ">
           <TimeSection />
+        </section>
+        <section className="absolute left-0 lg:left-auto right-0 z-30 bottom-24 sm:bottom-32 lg:bottom-0 lg:p-6 flex flex-col items-center">
+          <Lottie
+            aria-label="scroll-down"
+            animationData={lotScrollDown}
+            loop
+            autoplay
+            className="w-10 h-10 sm:w-12 sm:h-12"
+          />
         </section>
       </div>
       <video

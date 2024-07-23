@@ -1,18 +1,11 @@
 'use client'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-} from 'firebase/firestore'
-import { fetchPersonByEmail } from '@/api'
+
+import { fetchUserByEmail, fetchPersonByEmail, createUser } from '@/api'
 import { IError } from './types'
 
-import { IPerson, IUser } from '@/types'
-// import { createCookie, createLocalStorage } from '@/lib'
-import { toast } from 'sonner'
+import { IUser, IPerson } from '@/types'
+import { toast } from 'react-toastify'
 import { getErrors } from './getErrors'
 
 interface ILogin {
@@ -24,7 +17,6 @@ export const signInWithCredentials = async (
   props: ILogin
 ): Promise<IUser | null> => {
   const auth = getAuth()
-  const firestore = getFirestore()
   const { email, password } = props
 
   try {
@@ -34,39 +26,43 @@ export const signInWithCredentials = async (
       password
     )
     if (userCredential.user.emailVerified) {
-      //Busco en la tabla users si existe el usuario
-      const usersRef = collection(firestore, 'users')
-      const q = query(usersRef, where('email', '==', userCredential.user.email))
-      const querySnapshot = await getDocs(q)
-
       //Se busca si existe la persona en la tabla person
-      const person: IPerson = (await fetchPersonByEmail(
+      const user: IUser | null = (await fetchUserByEmail(
         userCredential.user.email as string
-      )) as IPerson
+      )) as IUser | null
 
-      let userData: IUser | null = null
-      if (querySnapshot.empty) {
-        userData = {
-          id: person.id as string,
-          userName: person.name || '',
-          email: userCredential.user.email || '',
-          photo: person.image || '',
-          role: null,
-          person: person,
+      const person: IPerson | null = (await fetchPersonByEmail(
+        userCredential.user.email as string
+      )) as IPerson | null
+
+      if (person !== null && user === null) {
+        const newUser = {
+          userName: person.name,
+          email: userCredential.user.email as string,
+          photo: '',
+          role: person.typePerson !== 'participant' ? ['speaker'] : null,
+          person: Number(person?.id),
+          emailVerified: userCredential.user.emailVerified,
+        }
+
+        const newUserRes = await createUser(newUser)
+        if (newUserRes && person) {
+          return {
+            ...newUser,
+            person: person,
+          }
+        } else {
+          return null
+        }
+      } else if (user !== null) {
+        return {
+          ...user,
+          person,
         }
       } else {
-        userData = {
-          id: querySnapshot.docs[0].id,
-          userName: userCredential.user.displayName || '',
-          email: userCredential.user.email || '',
-          photo: userCredential.user.photoURL || '',
-          role: querySnapshot.docs[0].data().role || '',
-          person: person,
-        }
+        return null
       }
-      return userData
     } else {
-      console.log(userCredential.user.emailVerified)
       toast.error('Revise su correo electrónico para verificar su cuenta', {
         position: 'top-right',
       })

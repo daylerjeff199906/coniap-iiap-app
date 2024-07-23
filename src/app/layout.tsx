@@ -8,9 +8,19 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'CONIAP | Congreso Internacional de la Amazonía Peruana',
-  icons: 'coniap.ico',
+  icons: 'favicon.ico',
   description:
-    'III Congreso Internacional de la Amazonía Peruana realizado por el Instituto de Investigaciones de la Amazonía Peruana',
+    'III Congreso Internacional sobre Amazonía Peruana realizado por el Instituto de Investigaciones de la Amazonía Peruana',
+  openGraph: {
+    images: [
+      {
+        url: 'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/logos%2Fmeta-coniap.webp?alt=media&token=1f0e7ef1-3ab3-479a-8e0e-dad09842e857',
+        width: 430,
+        height: 430,
+        alt: 'CONIAP | Congreso Internacional sobre Amazonía Peruana',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({

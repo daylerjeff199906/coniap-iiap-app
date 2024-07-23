@@ -4,13 +4,12 @@ import {
   createPerson,
   fetchPersonById,
   updatePerson,
-  fetchPerson,
   fetchPersonsInEvent,
   fetchPersonsNotInEvent,
   fetchPersons,
 } from '@/api'
 import { IPerson, IRes } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 const message =
   'duplicate key value violates unique constraint "persons_email_key"'
@@ -18,7 +17,10 @@ const message =
 export function usePersons() {
   const [loading, setLoading] = useState<boolean>(false)
   const [person, setPerson] = useState<IPerson | null>(null)
-  const [persons, setPersons] = useState<IPerson[] | null>(null)
+  const [persons, setPersons] = useState<{
+    data: IPerson[]
+    count: number
+  } | null>(null)
   const [personInEvent, setPersonInEvent] = useState<IPerson[] | null>(null)
   const [asisstants, setAssistants] = useState<IPerson[] | null>(null)
 
@@ -27,17 +29,15 @@ export function usePersons() {
     const res = await createPerson(data)
       .then((res) => res)
       .catch((err) => err)
-    if (res[0]) {
+    if (res) {
       toast.success('Persona creada correctamente')
       setLoading(false)
-      return res[0]
+      return res
     } else {
       if (res.message === message) {
         toast.error('El correo ya esta registrado')
       } else {
-        toast.error('Error al crear persona', {
-          description: res.message,
-        })
+        toast.error(`Error al crear persona: ${res.message}`)
       }
       setLoading(false)
       return null
@@ -58,7 +58,7 @@ export function usePersons() {
     const res: IRes = (await updatePerson(id, data)) as IRes
 
     if (res.message) {
-      toast.error('Error al actualizar persona', { description: res.message })
+      toast.error(`Error al actualizar persona: ${res.message}`)
       setLoading(false)
       return res
     } else {
@@ -70,11 +70,23 @@ export function usePersons() {
 
   const getPersons = async (
     query: string,
-    typePerson: string,
-    isNot?: string
+    typePerson = '',
+    isNot?: string,
+    status?: string,
+    column?: string,
+    isPagination?: boolean,
+    params?: { page: number; limit: number }
   ) => {
     setLoading(true)
-    const data = await fetchPersons(query, '', isNot)
+    const data = await fetchPersons(
+      query,
+      typePerson,
+      isNot,
+      status,
+      column,
+      isPagination,
+      params
+    )
       .then((res) => res)
       .catch((err) => err)
     setPersons(data)

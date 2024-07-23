@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { fetchSalas } from '@/api'
 import { ISala } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 const message =
   'duplicate key value violates unique constraint "persons_email_key"'

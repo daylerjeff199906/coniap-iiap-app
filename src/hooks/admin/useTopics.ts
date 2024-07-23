@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { fetchTopics, fetchTopic, createTopic, updateTopic } from '@/api'
 import { ITopic } from '@/types'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 
 export function useTopics() {
   const [loading, setLoading] = useState<boolean>(false)
