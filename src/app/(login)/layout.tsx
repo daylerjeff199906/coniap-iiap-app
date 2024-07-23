@@ -12,8 +12,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Image
           src={'/bg-login.webp'}
           alt="Logo de CONIAP"
-          width={2000}
-          height={2000}
+          width={1800}
+          height={1800}
           className="absolute top-0 left-0 w-full h-full"
         />
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40" />

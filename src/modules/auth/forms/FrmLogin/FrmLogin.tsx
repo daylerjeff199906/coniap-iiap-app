@@ -106,6 +106,7 @@ export const FrmLogin = () => {
                 type="email"
                 placeholder="correo@correo.com"
                 radius="sm"
+                color="primary"
                 classNames={{
                   label: 'text-white',
                 }}
@@ -127,6 +128,7 @@ export const FrmLogin = () => {
                 labelPlacement="outside"
                 placeholder="* * * * * * * *"
                 radius="sm"
+                color="primary"
                 classNames={{
                   label: 'text-white',
                 }}
