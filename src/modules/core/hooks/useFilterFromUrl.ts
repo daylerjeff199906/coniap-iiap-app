@@ -16,7 +16,11 @@ export const useFilterFromUrl = () => {
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams)
       if (name === 'page') {
-        params.set(name, value)
+        if (value === '1') {
+          params.delete(name)
+        } else {
+          params.set(name, value)
+        }
       } else {
         params.delete('page')
         if (value === '') {

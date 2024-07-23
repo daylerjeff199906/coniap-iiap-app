@@ -93,7 +93,7 @@ export async function fetchPersons(
   if (isPagination && params) {
     queryBuilder = queryBuilder.range(
       (params.page - 1) * params.limit,
-      params.page * params.limit
+      params.page * params.limit - 1
     )
   }
 

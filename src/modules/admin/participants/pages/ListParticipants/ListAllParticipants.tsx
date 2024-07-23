@@ -12,8 +12,7 @@ import { TableGeneral } from '@/components'
 import { usePersons } from '@/hooks/admin'
 
 export const ListParticipants = () => {
-  const [page, setPage] = useState<number>(1)
-  const limit = 29
+  const limit = 30
   const { getParams, updateFilter } = useFilterFromUrl()
   const { getPersons, loading, persons } = usePersons()
   const pathname = usePathname()
@@ -54,10 +53,11 @@ export const ListParticipants = () => {
       ? 'FALSE'
       : ''
   const typeSearch = getParams('qtype', 'name')
+  const page = getParams('page', '1')
 
   useEffect(() => {
     getPersons(query, type, isNot, statusValue, typeSearch, true, {
-      page: page,
+      page: Number(page),
       limit: limit,
     })
   }, [query, type, isNot, statusValue, page])
@@ -94,6 +94,10 @@ export const ListParticipants = () => {
     }
   }
 
+  const handlePageChange = (page: number) => {
+    updateFilter('page', String(page))
+  }
+
   return (
     <>
       <HeaderSection
@@ -120,9 +124,9 @@ export const ListParticipants = () => {
               onSelectionChange={handleTypeSearch}
             />
           }
-          count={persons?.count && Math.ceil(persons.count / 29)}
-          page={page}
-          onPageChange={setPage}
+          count={persons?.count}
+          page={Number(page)}
+          onPageChange={handlePageChange}
         />
       </Suspense>
     </>

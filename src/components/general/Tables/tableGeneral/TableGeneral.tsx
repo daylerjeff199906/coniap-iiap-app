@@ -245,20 +245,24 @@ export const TableGeneral = (props: IProps) => {
           <div className="flex justify-end gap-2">
             {count && (
               <Pagination
-                total={count}
+                total={Math.ceil(count / 29)}
                 initialPage={page}
                 onChange={onPageChange}
                 showControls
                 size="sm"
                 variant="bordered"
                 color="default"
+                classNames={{
+                  item: 'text-xs w-8 h-8 radius-sm',
+                  cursor: 'text-xs',
+                }}
               />
             )}
           </div>
         )}
         <div>
           <p className="text-xs text-gray-500 text-center">
-            Total de registros: {rows.length}
+            Total de registros: {rows.length} {count && `de ${count}`}
           </p>
         </div>
       </footer>
