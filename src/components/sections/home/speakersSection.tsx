@@ -35,7 +35,9 @@ export const SpeakersSection = (props: IProps) => {
             >
               <div className="flex items-center gap-3 pb-3">
                 <div className="dot-custom" />
-                <p className="text-xs font-semibold uppercase">#Ponentes - 2024</p>
+                <p className="text-xs font-semibold uppercase">
+                  #Ponentes - 2024
+                </p>
               </div>
               <div className="w-full max-w-xl">
                 <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
@@ -57,7 +59,7 @@ export const SpeakersSection = (props: IProps) => {
             </motion.header>
 
             {speakersActive && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
                 {speakersActive.slice(0, 8).map((speaker, index) => (
                   <motion.div
                     key={speaker.id}
