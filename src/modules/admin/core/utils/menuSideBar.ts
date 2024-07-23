@@ -36,6 +36,11 @@ export const menuSideBar: IMenuSideBar[] = [
             href: '/admin/eventos',
           },
           {
+            id: 'rooms',
+            title: 'Salas virtuales',
+            href: '/admin/eventos/salas',
+          },
+          {
             id: 'calendar',
             title: 'Calendario',
             href: '/admin/eventos/calendario',
@@ -95,6 +100,13 @@ export const menuSideBar: IMenuSideBar[] = [
         icon: 'categories',
         title: 'Temáticas',
         href: '/admin/tematicas',
+        moreItems: [],
+      },
+      {
+        id: 'config',
+        icon: 'settings',
+        title: 'Configuración',
+        href: '/admin/configurations',
         moreItems: [],
       },
     ],

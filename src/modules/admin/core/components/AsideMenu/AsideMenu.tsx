@@ -14,6 +14,7 @@ import {
   IconCards,
   IconTextGrammar,
   IconCategory2,
+  IconSettings,
 } from '@tabler/icons-react'
 
 interface IProps {
@@ -29,6 +30,7 @@ const icons = {
   sponsors: <IconFlag3 size={18} />,
   categories: <IconCategory2 size={18} />,
   usersConfig: <IconUserCog size={18} />,
+  settings: <IconSettings size={18} />,
 }
 
 function getIcon(icon: string) {
