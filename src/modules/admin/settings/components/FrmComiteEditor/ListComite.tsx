@@ -49,7 +49,7 @@ export const ListComimte = () => {
 
   return (
     <section className="w-full">
-      <div className="w-full flex flex-col gap-2">
+      <div className="w-full flex flex-col gap-2 ">
         <section className="flex gap-1">
           <Input
             radius="sm"
@@ -74,7 +74,7 @@ export const ListComimte = () => {
             Agregar
           </Button>
         </section>
-        <div className="mt-1">
+        <div className="mt-1 h-full max-h-72 overflow-y-auto">
           <Controller
             control={control}
             name="list"
@@ -83,7 +83,7 @@ export const ListComimte = () => {
                 {fields.map((field, index) => (
                   <div
                     key={field.id}
-                    className="flex items-center mb-2 gap-1 p-2 hover:bg-gray-100 rounded-md"
+                    className="flex items-center  gap-1 px-2 py-1 hover:bg-gray-100 rounded-md"
                     draggable
                     onDragStart={() => handleDragStart(index)}
                     onDragEnter={() => handleDragEnter(index)}
