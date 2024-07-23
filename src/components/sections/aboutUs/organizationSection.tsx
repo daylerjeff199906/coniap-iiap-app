@@ -46,30 +46,45 @@ export const OrganizationSection = (props: IProps) => {
               className="w-full max-w-lg"
             />
           </header>
-          <section className="sm:p-4 lg:p-6 grid grid-cols-1 sm:grid-cols-3">
-            <div>
+          <section className="sm:p-4 lg:p-6 grid grid-cols-1 sm:grid-cols-4">
+            <div className="col-span-1">
               <h3 className="text-lg font-semibold pb-3">Comité Organizador</h3>
               <ul className="list-disc list-inside">
                 {comiteOrganizador?.map((person) => (
-                  <li key={person.order}>{person.name}</li>
+                  <li
+                    key={person.order}
+                    className="text-sm"
+                  >
+                    {person.name}
+                  </li>
                 ))}
               </ul>
             </div>
-            <div>
+            <div className="col-span-1 sm:col-span-2">
               <h3 className="text-lg font-semibold pb-3">Comité Científico</h3>
-              <ul className="list-disc list-inside">
+              <ul className="list-disc list-inside columns-1 sm:columns-2">
                 {comiteCientifico?.map((person) => (
-                  <li key={person.order}>{person.name}</li>
+                  <li
+                    key={person.order}
+                    className="text-sm"
+                  >
+                    {person.name}
+                  </li>
                 ))}
               </ul>
             </div>
-            <div>
+            <div className="col-span-1">
               <h3 className="text-lg font-semibold pb-3">
                 Comité de Informática
               </h3>
               <ul className="list-disc list-inside">
                 {comiteInformatica?.map((person) => (
-                  <li key={person.order}>{person.name}</li>
+                  <li
+                    key={person.order}
+                    className="text-sm"
+                  >
+                    {person.name}
+                  </li>
                 ))}
               </ul>
             </div>
