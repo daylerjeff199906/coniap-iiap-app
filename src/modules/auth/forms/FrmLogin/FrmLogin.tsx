@@ -158,7 +158,7 @@ export const FrmLogin = () => {
         <p>o</p>
         <hr className="w-full" />
       </section>
-      <section className="">
+      <section className="flex flex-col gap-4">
         <Button
           radius="sm"
           fullWidth
@@ -175,6 +175,12 @@ export const FrmLogin = () => {
         >
           Sign in with Google
         </Button>
+        <Link
+          href="/"
+          className="text-center text-xs text-gray-500 hover:underline"
+        >
+          Volver al inicio
+        </Link>
       </section>
 
       <LoadingPages isOpen={loading} />
