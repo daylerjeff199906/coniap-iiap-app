@@ -7,7 +7,6 @@ import { signInWithCredentials, SignInWithGoogle } from '@/auth'
 import { LoadingPages } from '@/components'
 import { useAuthContext } from '@/provider'
 import { toast } from 'react-toastify'
-import Google from './GoogleIcon'
 import Link from 'next/link'
 
 function encryptString(value: string) {
@@ -19,7 +18,7 @@ interface ILogin {
   password: string
 }
 
-export const FrmLogin = () => {
+export const FrmForgotPassword = () => {
   const [loading, setLoading] = useState(false)
   const { setUserData } = useAuthContext()
   const methods = useForm<ILogin>()
@@ -117,81 +116,19 @@ export const FrmLogin = () => {
               />
             )}
           />
-          <Controller
-            control={methods.control}
-            name="password"
-            rules={{ required: 'Password is required' }}
-            render={({ field: { value, onChange } }) => (
-              <Input
-                type="password"
-                label="Contraseña"
-                labelPlacement="outside"
-                placeholder="* * * * * * * *"
-                radius="sm"
-                color="primary"
-                classNames={{
-                  label: 'text-white',
-                }}
-                value={value}
-                onValueChange={onChange}
-                isInvalid={methods.formState.errors.password !== undefined}
-                errorMessage={methods.formState.errors.password?.message}
-              />
-            )}
-          />
         </section>
-        <div className="flex flex-col gap-3">
-          <Button
-            variant="solid"
-            color="primary"
-            fullWidth
-            radius="sm"
-            type="submit"
-            isDisabled={loading}
-            isLoading={loading}
-          >
-            Iniciar sesión
-          </Button>
-          <Link
-            href="/forgot-password"
-            className="text-center text-xs text-primary-300 hover:underline"
-          >
-            ¿Olvidaste tu contraseña?
-          </Link>
-        </div>
       </form>
       <section className="flex items-center gap-3">
         <hr className="w-full" />
-        <p>o</p>
-        <hr className="w-full" />
       </section>
-      <section className="flex flex-col gap-4">
-        <Button
-          radius="sm"
-          fullWidth
-          className="flex items-center justify-center space-x-2 text-white"
-          variant="light"
-          onPress={handleGoogle}
-          isLoading={loading}
-          isDisabled={loading}
-          startContent={
-            <Google
-              width="20"
-              height="20"
-              fill="currentColor"
-            />
-          }
-        >
-          Sign in with Google
-        </Button>
+      <section className="flex flex-col">
         <Link
-          href="/"
-          className="text-center text-xs text-gray-400 hover:underline"
+          href="/login"
+          className="text-sm text-gray-200 hover:text-white hover:underline text-center"
         >
-          Volver al inicio
+          Volver al inicio de sesión
         </Link>
       </section>
-
       <LoadingPages isOpen={loading} />
     </main>
   )

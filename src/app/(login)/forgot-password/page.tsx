@@ -1,6 +1,6 @@
 'use client'
-// import { FrmLogin } from '@/modules/auth'
+import { FrmForgotPassword } from '@/modules/auth'
 
 export default function Page() {
-//   return <FrmLogin />
+  return <FrmForgotPassword />
 }
