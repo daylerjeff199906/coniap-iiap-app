@@ -40,7 +40,6 @@ export async function fetchPerson(query: string) {
   const { data, error } = await supabase
     .from('persons')
     .select('*')
-    .order('name', { ascending: true })
     .ilike('name', `%${query}%`)
     .single()
 

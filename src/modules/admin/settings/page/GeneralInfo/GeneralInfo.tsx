@@ -1,6 +1,12 @@
+import { IGeneralData } from '@/types'
 import { FrmInfoGeneral } from '../../components'
 
-export const GeneralInfo = () => {
+interface IProps {
+  data?: IGeneralData
+}
+
+export const GeneralInfo = (props: IProps) => {
+  const { data } = props
   return (
     <div className="flex flex-col gap-3">
       <section className="section-admin grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
@@ -12,7 +18,7 @@ export const GeneralInfo = () => {
           </p>
         </div>
         <div className="col-span-1 sm:col-span-2">
-          <FrmInfoGeneral />
+          <FrmInfoGeneral description={data?.description} />
         </div>
       </section>
       <section className="section-admin grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">

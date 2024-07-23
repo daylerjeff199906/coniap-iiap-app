@@ -8,12 +8,9 @@ import {
   SubmitHandler,
   Controller,
 } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-
-import { useEvents } from '@/hooks/admin'
-import { LoadingPages, ModalAction } from '@/components'
-import Link from 'next/link'
+import { ModalAction } from '@/components'
 import { IGeneralData } from '@/types'
+import { updateRowInformation } from '@/api'
 
 //For the text field
 const ReactQuill = dynamic(() => import('react-quill'), {
@@ -25,7 +22,7 @@ const ReactQuill = dynamic(() => import('react-quill'), {
   ),
 })
 import 'react-quill/dist/quill.snow.css'
-import { IEvent } from '@/types'
+import { toast } from 'react-toastify'
 
 interface IProps {
   description?: string
@@ -34,10 +31,15 @@ interface IProps {
 export const FrmInfoGeneral = (props: IProps) => {
   const { description } = props
   const [isOpen, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const router = useRouter()
+  const methods = useForm<IGeneralData>({
+    defaultValues: {
+      description,
+    },
+  })
 
-  const methods = useForm<IGeneralData>({})
+  const isDirty = methods.formState.isDirty
 
   const onSubmit = () => {
     setOpen(true)
@@ -45,7 +47,19 @@ export const FrmInfoGeneral = (props: IProps) => {
 
   const handleFormSubmit: SubmitHandler<IGeneralData> = async (
     data: IGeneralData
-  ) => {}
+  ) => {
+    setOpen(false)
+    setLoading(true)
+
+    const res = await updateRowInformation('1', 'description', data.description)
+
+    if (res) {
+      toast.success('Cambios guardados correctamente')
+    } else {
+      toast.error('Error al guardar los cambios')
+    }
+    setLoading(false)
+  }
 
   return (
     <>
@@ -70,17 +84,18 @@ export const FrmInfoGeneral = (props: IProps) => {
               <Button
                 radius="sm"
                 size="sm"
+                onPress={() => methods.reset({ description })}
               >
                 Cancelar
               </Button>
               <Button
                 color="primary"
                 type="submit"
-                // isLoading={loading}
-                // isDisabled={loading}
+                isDisabled={isDirty ? false : true || loading}
                 radius="sm"
                 size="sm"
                 className="button-dark"
+                isLoading={loading}
               >
                 Guardar
               </Button>
@@ -95,7 +110,6 @@ export const FrmInfoGeneral = (props: IProps) => {
         message="¿Estás seguro de guardar los cambios?"
         onPress={methods.handleSubmit(handleFormSubmit)}
       />
-      {/* <LoadingPages isOpen={loading} /> */}
     </>
   )
 }

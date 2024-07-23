@@ -64,6 +64,12 @@ import {
   fetchUserById,
 } from './fetchUser'
 
+import {
+  fetchInformation,
+  fetchInformationById,
+  updateRowInformation,
+} from './fetchInformation'
+
 export {
   //Events crud
   fetchEvents,
@@ -121,4 +127,8 @@ export {
   deleteUser,
   fetchUsers,
   fetchUserById,
+  //
+  fetchInformation,
+  fetchInformationById,
+  updateRowInformation,
 }
