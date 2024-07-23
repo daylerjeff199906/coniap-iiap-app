@@ -154,7 +154,7 @@ export const FrmLogin = () => {
           </Button>
           <Link
             href="/auth/forgot-password"
-            className="text-center text-xs text-primary-400 hover:underline"
+            className="text-center text-xs text-primary-300 hover:underline"
           >
             ¿Olvidaste tu contraseña?
           </Link>
