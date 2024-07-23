@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
 import { InfoData, UserData } from './sections'
 
+// import
+
 interface IProps {
   data: IPerson
   summaries?: ISummary[] | null

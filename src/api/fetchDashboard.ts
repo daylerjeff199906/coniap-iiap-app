@@ -44,3 +44,55 @@ export async function fetchTotalPersons(query: IQuery) {
     return data
   }
 }
+
+type PersonStats = {
+  total: number
+  actived: number
+  inactived: number
+}
+
+type PersonStatsResult = {
+  [key: string]: PersonStats
+}
+
+export async function fetchPersonStats(): Promise<PersonStatsResult> {
+  const supabase = createClient()
+
+  const types = ['speaker', 'speaker_mg', 'participant']
+
+  // Crear un objeto para almacenar los resultados
+  let result: PersonStatsResult = {}
+
+  // Iterar sobre cada tipo de persona
+  for (const type of types) {
+    // Realizar la consulta para obtener los datos
+    const { data, error } = await supabase
+      .from('persons')
+      .select('id, typePerson, isActived') // Asume que tienes los campos 'type' e 'is_active'
+      .eq('typePerson', type)
+
+    if (error) {
+      console.error(`Error fetching ${type}:`, error)
+      result[type] = {
+        total: 0,
+        actived: 0,
+        inactived: 0,
+      }
+      continue
+    }
+
+    // Contar los totales y los estados
+    const total = data.length
+    const actived = data.filter((person) => person.isActived).length
+    const inactived = total - actived
+
+    // Almacenar los resultados en el objeto
+    result[type] = {
+      total,
+      actived,
+      inactived,
+    }
+  }
+
+  return result
+}
