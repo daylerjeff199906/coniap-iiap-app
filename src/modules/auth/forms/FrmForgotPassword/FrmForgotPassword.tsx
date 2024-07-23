@@ -7,7 +7,6 @@ import { sendResetPasswordEmail } from '@/auth'
 import { LoadingPages } from '@/components'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
-import { error } from 'console'
 
 interface IForgotPassword {
   email: string
