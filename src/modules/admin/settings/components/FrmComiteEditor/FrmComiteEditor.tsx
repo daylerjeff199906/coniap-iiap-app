@@ -62,6 +62,7 @@ export const FrmComiteEditor = (props: IProps) => {
               <Button
                 radius="sm"
                 size="sm"
+                onPress={() => methods.reset()}
               >
                 Cancelar
               </Button>
