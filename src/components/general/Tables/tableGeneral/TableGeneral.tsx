@@ -149,8 +149,8 @@ export const TableGeneral = (props: IProps) => {
   return (
     <main className="flex flex-col gap-3 section-admin">
       <section className="flex gap-2 items-start">
-        <div className="flex gap-2 w-full max-w-[300px]">
-          {!disableInputSearch && (
+        {!disableInputSearch && (
+          <div className="flex gap-2 w-full max-w-[300px]">
             <Input
               aria-label="Buscar"
               variant="bordered"
@@ -165,8 +165,8 @@ export const TableGeneral = (props: IProps) => {
               }
               endContent={endInputSection}
             />
-          )}
-        </div>
+          </div>
+        )}
         {headerChildren}
       </section>
       <Table
