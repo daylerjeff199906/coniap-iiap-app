@@ -19,7 +19,7 @@ export const CardList = (props: IProps) => {
     <>
       <ScrollShadow
         orientation="horizontal"
-        className="max-w-3xl w-full"
+        className="max-w-3xl lg:max-w-full w-full"
       >
         <section className="flex gap-2 w-full">
           {Object.keys(data).map((key) => (
