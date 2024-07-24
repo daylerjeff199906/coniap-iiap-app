@@ -46,7 +46,7 @@ export default async function Page() {
   }
 
   return (
-    <main className="flex flex-col gap-3 lg:flex-row lg:gap-3">
+    <main className="flex flex-col gap-3 sm:flex-row lg:gap-3">
       <article className="flex flex-col gap-3 w-full sm:max-w-[calc(100%-320px)] lg:max-w-[calc(100%-420px)]">
         <CardList data={data} />
         <PersonRecents data={personList} />
