@@ -1,10 +1,4 @@
 import { IMenuSideBar, IMenuItem } from './IMenuSideBar'
-import { IGeneralData, IPersonComite, IFormatSummary } from './IGeneralData'
+import { IGeneralData, IPersonComite } from './IGeneralData'
 
-export type {
-  IMenuSideBar,
-  IMenuItem,
-  IGeneralData,
-  IPersonComite,
-  IFormatSummary,
-}
+export type { IMenuSideBar, IMenuItem, IGeneralData, IPersonComite }
