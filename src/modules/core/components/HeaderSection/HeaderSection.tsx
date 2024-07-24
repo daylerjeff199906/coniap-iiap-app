@@ -17,12 +17,12 @@ export const HeaderSection = (props: IProps) => {
   return (
     <>
       <section className="flex flex-col gap-3">
-        <header className="flex items-center justify-between">
+        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             <h1 className="text-xl font-bold">{title}</h1>
             <p className="text-sm text-gray-500">{subtitle}</p>
           </div>
-          <div className="flex gap-2 justify-end">
+          <div className="flex gap-2 sm:justify-end">
             {rigthContent}
             {isButtonVisible && (
               <Button
