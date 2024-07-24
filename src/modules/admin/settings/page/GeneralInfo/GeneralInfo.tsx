@@ -1,5 +1,6 @@
 import { IGeneralData } from '@/types'
-import { FrmComiteEditor, FrmInfoGeneral } from '../../components'
+import { FrmInfoGeneral } from '../../components'
+import Link from 'next/link'
 
 interface IProps {
   data?: IGeneralData
@@ -21,49 +22,21 @@ export const GeneralInfo = (props: IProps) => {
           <FrmInfoGeneral description={data?.description} />
         </div>
       </section>
-      <section className="section-admin grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+      <section className="section-admin grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <div className="col-span-1 ">
-          <h1 className="font-bold text-sm">Comité organizador</h1>
+          <h1 className="font-bold text-sm">Formato de presentación</h1>
           <p className="text-xs text-gray-500">
-            Información sobre el comité organizador del evento.
+            Formato de resumen para los participantes del evento.
           </p>
+          <Link
+            href="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/files%2Fformato_resumen_III-CONIAP-2024.docx?alt=media&token=9c893f8a-74c4-4564-a126-28f81965ccac"
+            download={true}
+            className="text-xs text-blue-500 hover:underline"
+          >
+            Descargar formato
+          </Link>
         </div>
-        <div className="col-span-1 sm:col-span-2">
-          <FrmComiteEditor
-            typeComite="c_organizador"
-            list={data?.c_organizador}
-          />
-        </div>
-      </section>
-      <section className="section-admin grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-        <div className="col-span-1 ">
-          <h1 className="font-bold text-sm">Comité científico</h1>
-          <p className="text-xs text-gray-500">
-            Información sobre el comité científico del evento.
-          </p>
-        </div>
-        <div className="col-span-1 sm:col-span-2">
-          <FrmComiteEditor
-            typeComite="c_cientifico"
-            list={data?.c_cientifico}
-          />
-        </div>
-      </section>
-      <section className="section-admin grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-        <div className="col-span-1 ">
-          <h1 className="font-bold text-sm">
-            Comité de informática y difusión
-          </h1>
-          <p className="text-xs text-gray-500">
-            Información sobre el comité de informática y difusión del evento.
-          </p>
-        </div>
-        <div className="col-span-1 sm:col-span-2">
-          <FrmComiteEditor
-            typeComite="c_informatica"
-            list={data?.c_informatica}
-          />
-        </div>
+        <div className="col-span-1 sm:col-span-2"></div>
       </section>
       <section className="section-admin grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <div className="col-span-1 ">
