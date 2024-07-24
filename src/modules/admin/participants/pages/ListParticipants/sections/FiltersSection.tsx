@@ -51,7 +51,7 @@ export const FiltersSection = () => {
   return (
     <>
       {!isAsistentes && (
-        <div className="flex gap-2 w-full max-w-[280px]">
+        <div className="flex flex-col lg:flex-row gap-2 w-full sm:max-w-[280px]">
           <Select
             aria-label="Tipo de persona"
             aria-labelledby="Tipo de persona"
@@ -76,7 +76,7 @@ export const FiltersSection = () => {
           </Select>
         </div>
       )}
-      <div className="flex gap-2 w-full max-w-[210px]">
+      <div className="flex gap-2 w-full sm:max-w-[210px]">
         <Select
           aria-label="Estado"
           aria-labelledby="Estado"
