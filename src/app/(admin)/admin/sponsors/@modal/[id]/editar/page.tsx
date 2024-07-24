@@ -14,7 +14,7 @@ export default async function Page(props: IProps) {
   if (!res) {
     return (
       <div>
-        <p className="font-semibold">Error al cargar la temática</p>
+        <p className="font-semibold">Error al cargar la información</p>
       </div>
     )
   }

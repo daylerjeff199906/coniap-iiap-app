@@ -26,7 +26,7 @@ export default async function Page(props: IProps) {
       <ModalRender
         header={
           <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold">Estado de colaborrador</h2>
+            <h2 className="text-lg font-semibold">Estado de coorganizador</h2>
           </div>
         }
         size="lg"
