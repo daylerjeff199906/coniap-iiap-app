@@ -5,11 +5,11 @@ export default function SponsorPage() {
   return (
     <main className="flex flex-col gap-4">
       <HeaderSection
-        title="Colaboradores"
-        subtitle="Gestiona los colaboradores parte de la organización."
+        title="Coorganizadores"
+        subtitle="Gestiona los coorganizadores que participarán en el evento"
         isButtonVisible
         href="/admin/sponsors/nuevo"
-        labelButton="Añadir colaborador"
+        labelButton="Añadir coorganizador"
       />
       <ListSponsors />
     </main>

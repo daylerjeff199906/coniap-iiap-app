@@ -46,7 +46,7 @@ export function useFiles() {
       setLoading(false)
       return url
     } catch (e) {
-      console.error('Error uploading image: ', e)
+      console.error('Error uploading archivo: ', e)
       setLoading(false)
       return ''
     }
@@ -58,10 +58,10 @@ export function useFiles() {
       const storageRef = ref(storage, `${url}`)
       await deleteObject(storageRef)
       setLoading(false)
-      toast.success('Imagen eliminada correctamente')
+      toast.success('Archivo eliminado correctamente')
       return true
     } catch (e) {
-      console.error('Error deleting image: ', e)
+      console.error('Error deleting archivo: ', e)
       setLoading(false)
       return false
     }

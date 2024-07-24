@@ -3,6 +3,7 @@ export interface IGeneralData {
   c_organizador: IPersonComite[]
   c_cientifico: IPersonComite[]
   c_informatica: IPersonComite[]
+  format_summary: string
 }
 
 export interface IPersonComite {

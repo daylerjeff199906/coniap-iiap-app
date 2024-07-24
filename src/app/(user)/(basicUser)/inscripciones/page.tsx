@@ -1,11 +1,25 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { Button, Image } from '@nextui-org/react'
 import img_logo from '@/assets/svg/ISOTIPO - CONIAP.svg'
 import { imgSpeakerInscription } from '@/assets'
 import Link from 'next/link'
 import { FrmInscriptions } from '@/modules/user'
 
+import { fetchInformationById } from '@/api'
+import { IGeneralData } from '@/types'
+
 export default function Page() {
+  const [infoData, setInfoData] = useState<IGeneralData | null>(null)
+
+  const fetchInfo = async () => {
+    const res = await fetchInformationById(1)
+    if (res) setInfoData(res)
+  }
+  useEffect(() => {
+    fetchInfo()
+  }, [])
+
   return (
     <>
       <main className="w-full">
@@ -61,13 +75,13 @@ export default function Page() {
         </section>
         <article className="bg-gray-100">
           <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-            <div className="lg:col-span-3 flex flex-col gap-3">
+            <div className="lg:col-span-3 flex flex-col gap-4">
               <div className=" col-span-2 flex flex-col gap-3">
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl">
                   PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
                 </h1>
               </div>
-              <div>
+              <div className="flex items-center gap-3">
                 <Button
                   size="lg"
                   radius="full"
@@ -76,6 +90,16 @@ export default function Page() {
                   color="danger"
                 >
                   Enviar resúmen
+                </Button>
+                <Button
+                  size="lg"
+                  radius="full"
+                  variant="light"
+                  download={true}
+                  as={Link}
+                  href={infoData?.format_summary || ''}
+                >
+                  Descargar formato
                 </Button>
               </div>
             </div>
