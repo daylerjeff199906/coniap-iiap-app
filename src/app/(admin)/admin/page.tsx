@@ -47,11 +47,11 @@ export default async function Page() {
 
   return (
     <main className="flex flex-col gap-3 lg:flex-row lg:gap-3">
-      <article className="flex flex-col gap-3 w-full max-w-[calc(100%-320px)] lg:max-w-[calc(100%-420px)]">
+      <article className="flex flex-col gap-3 w-full sm:max-w-[calc(100%-320px)] lg:max-w-[calc(100%-420px)]">
         <CardList data={data} />
         <PersonRecents data={personList} />
       </article>
-      <aside className="flex flex-col gap-3 w-80 max-w-80 lg:w-[420px] lg:max-w-[420px]">
+      <aside className="flex flex-col gap-3 w-80 max-w-80 sm:w-[320px] sm:max-w-[320px] lg:w-[420px] lg:max-w-[420px]">
         <PanelUser />
         <UserRecents data={userList} />
       </aside>
