@@ -70,6 +70,11 @@ export const FrmSponsorEditor = (props: IProps) => {
     router.push('/admin/sponsors')
   }
 
+  const title = defaultData?.id ? 'Editar coorganizador' : 'Nuevo coorganizador'
+  const subtitle = defaultData?.id
+    ? 'Edita los datos del coorganizador'
+    : 'Añade un nuevo coorganizador'
+
   return (
     <>
       <Modal
@@ -81,14 +86,8 @@ export const FrmSponsorEditor = (props: IProps) => {
           <ModalHeader>
             <main className="w-full">
               <HeaderSection
-                title={
-                  defaultData?.id ? 'Editar colaborador' : 'Nuevo colaborador'
-                }
-                subtitle={
-                  defaultData?.id
-                    ? 'Edita los datos del colaborador'
-                    : 'Añade un nuevo colaborador'
-                }
+                title={title}
+                subtitle={subtitle}
               />
             </main>
           </ModalHeader>
@@ -101,11 +100,11 @@ export const FrmSponsorEditor = (props: IProps) => {
                   rules={{ required: 'Este campo es requerido' }}
                   render={({ field: { onChange, value } }) => (
                     <Input
-                      aria-label="Nombre del colaborador"
+                      aria-label="Nombre del coorganizador"
                       label="Nombre"
                       labelPlacement="outside"
                       radius="sm"
-                      placeholder="Escribe el nombre del colaborador"
+                      placeholder="Escribe el nombre del coorganizador"
                       value={value}
                       onValueChange={onChange}
                       isInvalid={methods.formState.errors.name !== undefined}
