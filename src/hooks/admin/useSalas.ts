@@ -1,11 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { fetchSalas } from '@/api'
+import { fetchSalas, createSala, updateSala } from '@/api'
 import { ISala } from '@/types'
-import { toast } from 'react-toastify'
-
-const message =
-  'duplicate key value violates unique constraint "persons_email_key"'
 
 export function useSalas() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -20,9 +16,32 @@ export function useSalas() {
     setLoading(false)
   }
 
+  const createRoom = async (data: ISala): Promise<ISala | Error> => {
+    setLoading(true)
+    const newData = await createSala(data)
+      .then((res) => res)
+      .catch((err) => err)
+    setLoading(false)
+    return newData
+  }
+
+  const updateRoom = async (
+    id: string,
+    data: ISala
+  ): Promise<ISala | Error> => {
+    setLoading(true)
+    const newData = await updateSala(id, data)
+      .then((res) => res)
+      .catch((err) => err)
+    setLoading(false)
+    return newData
+  }
+
   return {
     loading,
     listRooms,
     getRooms,
+    createRoom,
+    updateRoom,
   }
 }
