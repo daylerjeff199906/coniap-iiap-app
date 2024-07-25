@@ -1,3 +1,4 @@
 import { ListEventsSection } from './listEventsSection'
+import { ListRooms } from './ListRooms'
 
-export { ListEventsSection }
+export { ListEventsSection, ListRooms }

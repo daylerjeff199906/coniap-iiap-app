@@ -14,6 +14,13 @@ import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
 
 export default async function Page() {
   const supabase = createClient()
+
+  const { data: GeneralInfo } = await supabase
+    .from('information')
+    .select('*')
+    .eq('id', 1)
+    .single()
+
   const { data: topics } = await supabase
     .from('topics')
     .select()
@@ -71,7 +78,7 @@ export default async function Page() {
 
   return (
     <main className="h-ful">
-      <BannerHome />
+      <BannerHome data={GeneralInfo} />
       <AboutUsSection />
       <SpeakersSection persons={dataPersons} />
       <TopicsSection topics={dataTopics} />
