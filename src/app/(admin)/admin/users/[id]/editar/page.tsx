@@ -18,7 +18,7 @@ export default async function Page(props: IProps) {
   if (user) {
     return (
       <main className="w-full flex flex-col gap-2 items-center">
-        <section className="w-full max-w-2xl rounded-lg border p-4">
+        <section className="w-full max-w-2xl section-admin">
           <FrmUserEditor user={user} />
         </section>
       </main>
