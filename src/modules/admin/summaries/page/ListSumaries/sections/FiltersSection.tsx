@@ -71,7 +71,9 @@ export const FiltersSection = () => {
       : []
 
   const allTopics =
-    topicsOptions.length > 0 ? [...optionsTopics, ...topicsOptions] : []
+    topicsOptions.length > 0
+      ? [...optionsTopics, ...topicsOptions]
+      : [...optionsTopics]
 
   return (
     <>
@@ -149,6 +151,7 @@ export const FiltersSection = () => {
           classNames={{
             listbox: 'text-xs',
           }}
+          items={allTopics}
         >
           {allTopics?.map((topic, i) => (
             <SelectItem
