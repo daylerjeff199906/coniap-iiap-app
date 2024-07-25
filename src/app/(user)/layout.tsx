@@ -7,9 +7,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <NavBar />
-      <main className="relative">
+      <main className="lg:relative">
         <main>{children}</main>
-        <article className="fixed z-50 bottom-0 right-0 h-full ">
+        <article className="hidden lg:fixed z-50 bottom-0 right-0 h-full ">
           <section className="flex flex-col gap-2 items-center justify-center relative h-full">
             <Image
               src="/logo_coniap.gif"
