@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Zoom",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png"
+  },
+  {
+    "id": 2,
+    "name": "YouTube",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/YouTube_icon_%282013-2017%29.png/800px-YouTube_icon_%282013-2017%29.png"
+  },
+  {
+    "id": 3,
+    "name": "Facebook",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/800px-Facebook_f_logo_%282019%29.svg.png"
+  },
+  {
+    "id": 4,
+    "name": "Instagram",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png"
+  },
+  {
+    "id": 5,
+    "name": "Twitter",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg"
+  },
+  {
+    "id": 6,
+    "name": "LinkedIn",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
+  },
+  {
+    "id": 7,
+    "name": "WhatsApp",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+  },
+  {
+    "id": 8,
+    "name": "TikTok",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg"
+  }
+]
