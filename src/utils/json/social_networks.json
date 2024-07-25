@@ -2,12 +2,12 @@
   {
     "id": 1,
     "name": "Zoom",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Zoom_Communications_Logo.svg/1200px-Zoom_Communications_Logo.svg.png"
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuB79MjNSFlE0-cyrc_pjYnXv7PcnM4EGXSw&s"
   },
   {
     "id": 2,
     "name": "YouTube",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/YouTube_icon_%282013-2017%29.png/800px-YouTube_icon_%282013-2017%29.png"
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRSibuzODLb5lETQ6fI9ebq-FQjWwL-7cBWQ&s"
   },
   {
     "id": 3,
@@ -22,7 +22,7 @@
   {
     "id": 5,
     "name": "Twitter",
-    "logo": "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg"
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVXp4jttQFB4CuLb_CRz4ZLBcw2gqcS5FmXg&s"
   },
   {
     "id": 6,
@@ -37,6 +37,6 @@
   {
     "id": 8,
     "name": "TikTok",
-    "logo": "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg"
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrZd7mszoX8inKkbUKb6ffie8YF2-c00RL7w&s"
   }
 ]

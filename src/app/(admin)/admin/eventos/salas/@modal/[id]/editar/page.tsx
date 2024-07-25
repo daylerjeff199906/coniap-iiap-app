@@ -1,6 +1,6 @@
-import { fetchTopic } from '@/api'
-import { FrmManageTopic } from '@/modules/admin'
-import { ITopic } from '@/types'
+import { fetchSalaById } from '@/api'
+import { FrmRoomEditor } from '@/modules/admin'
+import { ISala, ITopic } from '@/types'
 interface IProps {
   params: {
     id: string
@@ -10,20 +10,20 @@ interface IProps {
 export default async function Page(props: IProps) {
   const { id } = props.params
 
-  const res = await fetchTopic(Number(id))
+  const res = await fetchSalaById(id)
   if (!res) {
     return (
       <div>
-        <p className="font-semibold">Error al cargar la temática</p>
+        <p className="font-semibold">Error al cargar la sala</p>
       </div>
     )
   }
 
-  const dataTopic: ITopic = res
+  const data: ISala = res
 
   return (
     <>
-      <FrmManageTopic dataDefault={dataTopic} />
+      <FrmRoomEditor dataDefault={data} />
     </>
   )
 }

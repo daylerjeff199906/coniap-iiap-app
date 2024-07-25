@@ -15,6 +15,7 @@ import { useSalas } from '@/hooks/admin'
 import { useRouter } from 'next/navigation'
 import { HeaderSection } from '@/modules/core'
 import { InfoData, PlatformData } from './sections'
+import { toast } from 'react-toastify'
 
 interface IProps {
   dataDefault?: ISala
@@ -32,8 +33,25 @@ export const FrmRoomEditor = (props: IProps) => {
   })
 
   const onSubmit: SubmitHandler<ISala> = async (data: ISala) => {
-    if (dataDefault?.id) {
+    const res = dataDefault?.id
+      ? await updateRoom(dataDefault.id, data)
+      : await createRoom(data)
+
+    if (res instanceof Error) {
+      toast.error(
+        <CustomToast
+          title="Error"
+          description={res.message}
+        />
+      )
     } else {
+      toast.success(
+        <CustomToast
+          title="Éxito"
+          description={`Sala  ${dataDefault?.id ? 'actualizada' : 'creada'}`}
+        />
+      )
+      router.push('/admin/eventos/salas')
     }
   }
 
@@ -76,15 +94,36 @@ export const FrmRoomEditor = (props: IProps) => {
                   type="submit"
                   isDisabled={loading}
                   isLoading={loading}
+                  radius="sm"
                 >
                   {dataDefault?.id ? 'Actualizar' : 'Guardar'}
                 </Button>
-                <Button onPress={handleExit}>Cancelar</Button>
+                <Button
+                  onPress={handleExit}
+                  radius="sm"
+                >
+                  Cancelar
+                </Button>
               </footer>
             </form>
           </FormProvider>
         </ModalBody>
       </ModalContent>
     </Modal>
+  )
+}
+
+interface IPropsToast {
+  title: string
+  description: string
+}
+
+const CustomToast = (props: IPropsToast) => {
+  const { title, description } = props
+  return (
+    <div className="flex flex-col">
+      <h2 className="text-sm">{title}</h2>
+      <p className="text-tiny text-gray-200">{description}</p>
+    </div>
   )
 }
