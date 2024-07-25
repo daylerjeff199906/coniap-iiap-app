@@ -59,7 +59,7 @@ export const FrmProgramEditor = (props: IProps) => {
   const title = program?.id ? 'Editar Programa' : 'Crear Programa'
 
   return (
-    <main className="flex flex-col gap-5 w-full max-w-5xl border p-4">
+    <main className="flex flex-col gap-5 w-full max-w-4xl section-admin">
       <HeaderSection
         title={title}
         subtitle="Un programa hace referencia a un conjunto de eventos que se realizan en una fecha determinada."
@@ -70,18 +70,20 @@ export const FrmProgramEditor = (props: IProps) => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <InfoGeneral />
-          <div className="flex items-center gap-4 justify-end">
+          <div className="flex items-center gap-3 justify-end">
             <Button
               color="primary"
               type="submit"
               isLoading={loading}
               isDisabled={loading}
+              radius="sm"
             >
               Guardar
             </Button>
             <Button
               as={Link}
               href="/admin/programas"
+              radius="sm"
             >
               Cancelar
             </Button>

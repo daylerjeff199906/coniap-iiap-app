@@ -77,6 +77,11 @@ export const FrmUpdateSummary = (props: IProps) => {
   return (
     <>
       <FormProvider {...methods}>
+        <div className="pb-2">
+          <h1 className="text-lg sm:text-2xl font-bold">
+            {summary?.id ? 'Actualizar resumen' : 'Nuevo resumen'}
+          </h1>
+        </div>
         <main className="flex flex-col sm:flex-row gap-2 f-full">
           <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-11rem)] overflow-y-auto bg-white flex flex-col gap-3 p-2 lg:p-4 border rounded-md">
             <section className="flex justify-start">
@@ -94,7 +99,7 @@ export const FrmUpdateSummary = (props: IProps) => {
               >
                 Regresar
               </Button>
-            </section>  
+            </section>
             <form
               onSubmit={methods.handleSubmit(handleFormSubmit)}
               className="flex flex-col gap-3"

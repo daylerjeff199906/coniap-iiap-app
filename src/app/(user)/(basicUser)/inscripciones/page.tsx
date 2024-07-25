@@ -109,6 +109,7 @@ export default function Page() {
                 alt="speaker"
                 removeWrapper
                 className="max-h-80 lg:max-h-[480px]"
+                loading="lazy"
               />
             </div>
           </section>

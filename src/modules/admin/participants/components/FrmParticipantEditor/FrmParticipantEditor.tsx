@@ -83,7 +83,7 @@ export const FrmParticipantEditor = (props: IProps) => {
     <>
       <FormProvider {...methods}>
         <form
-          className="space-y-4 max-w-3xl border border-gray-200 p-4 rounded-lg w-full"
+          className="space-y-4 max-w-3xl w-full section-admin"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <HeaderSection

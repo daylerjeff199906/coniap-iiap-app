@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Button, Image } from '@nextui-org/react'
+import { Button, Chip, Image } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
 
 import { motion } from 'framer-motion'
@@ -10,6 +10,7 @@ import infoData from '@/utils/json/infoConiap.json'
 import { TimeSection } from './timeSection'
 import { lotScrollDown } from '@/assets'
 import Lottie from 'lottie-react'
+import { IGeneralData } from '@/types'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -31,16 +32,39 @@ const item = {
   },
 }
 
-export const BannerHome = () => {
+interface IProps {
+  data: IGeneralData | null
+}
+
+export const BannerHome = (props: IProps) => {
+  const { data } = props
   const [videoLoaded, setVideoLoaded] = useState(false)
 
   const handleVideoLoaded = () => {
     setVideoLoaded(true)
   }
 
+  //Inicio de conferencia
   const conferenceDate = formatConferenceDate(
     infoData.data.dates['date-conference']
   )
+
+  //Fecha límite de envío de resúmen
+  const summary = infoData.data.dates['summary']
+
+  //Fecha actual
+  const dateNow = new Date()
+
+  //aún hay tiempo de inscribirse antes de que empiece la conferencia
+  const isBeforeConference =
+    dateNow < new Date(infoData.data.dates['date-conference'].start)
+
+  // aùn hay tiempo de enviar resúmenes
+  const isBeforeSummary = dateNow < new Date(summary.end)
+
+  //Ya comenzó la conferencia
+  const isAfterConference =
+    dateNow > new Date(infoData.data.dates['date-conference'].end)
 
   return (
     <section
@@ -66,6 +90,14 @@ export const BannerHome = () => {
             },
           }}
         >
+          <Chip
+            radius="sm"
+            variant="solid"
+            color="warning"
+            className="animate-appearance-in text-white"
+          >
+            Modalidad virtual
+          </Chip>
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
@@ -80,24 +112,40 @@ export const BannerHome = () => {
             <h3 className="text-white text-md max-w-48">{conferenceDate}</h3>
           </div>
           <div className="w-full flex items-center gap-3">
-            <Button
-              className="animate-appearance-in text-white bg-green-700"
-              variant="solid"
-              radius="full"
-              as={Link}
-              href="/agenda"
-            >
-              Ver agenda
-            </Button>
-            <Button
-              variant="flat"
-              radius="full"
-              className="bg-white text-black animate-appearance-in"
-              as={Link}
-              href="/inscripciones"
-            >
-              Inscríbete
-            </Button>
+            {isAfterConference && (
+              <Button
+                className="animate-appearance-in text-white bg-green-700"
+                variant="solid"
+                radius="full"
+                as={Link}
+                href="/agenda"
+              >
+                Ver agenda
+              </Button>
+            )}
+            {isBeforeConference && (
+              <Button
+                className="animate-appearance-in text-white bg-green-700"
+                variant="solid"
+                radius="full"
+                as={Link}
+                href="/inscripciones"
+              >
+                Participar
+              </Button>
+            )}
+            {isBeforeSummary && (
+              <Button
+                variant="flat"
+                radius="full"
+                className="bg-white text-black animate-appearance-in"
+                as={Link}
+                href={data ? data.format_summary : ''}
+                download={data ? 'formato-resumen.pdf' : ''}
+              >
+                Descargar formato
+              </Button>
+            )}
           </div>
         </motion.div>
         <motion.div
