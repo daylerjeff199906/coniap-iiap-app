@@ -5,6 +5,7 @@ import Link from 'next/link'
 import infoData from '@/utils/json/infoConiap.json'
 import { useAuthContext } from '@/provider'
 import { IconAlertTriangleFilled } from '@tabler/icons-react'
+import { AlertCustom } from '@/modules/core'
 
 export default function Page() {
   const { user } = useAuthContext()
@@ -39,6 +40,7 @@ export default function Page() {
                 color="danger"
                 variant="solid"
                 size="sm"
+                radius="sm"
               >
                 Completar datos
               </Button>
@@ -64,26 +66,21 @@ export default function Page() {
                   href="/dashboard/files/new"
                   color="primary"
                   variant="solid"
-                  radius="full"
+                  radius="sm"
                 >
                   Enviar resumen
                 </Button>
               </div>
             )}
           </section>
-          <section
-            className={`p-4 border rounded-lg ${
-              isBefore
-                ? 'border-warning-500 bg-warning-100 text-warning-700'
-                : 'bg-danger-100 border-danger-500 text-danger-700'
+          <AlertCustom
+            showIcon
+            title="Atención, fecha límite"
+            type={isBefore ? 'warning' : 'error'}
+            message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
+              isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'
             }`}
-          >
-            <p className="text-sm ">
-              <strong>Nota:</strong> La fecha límite para enviar resúmenes es{' '}
-              {dateFormatted}.{' '}
-              {isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'}
-            </p>
-          </section>
+          />
           <section>
             <Link
               href={urlFormat}
