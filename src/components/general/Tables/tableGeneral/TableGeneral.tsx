@@ -262,11 +262,11 @@ export const TableGeneral = (props: IProps) => {
         )}
         <div>
           <p className="text-xs text-gray-500 text-center">
-            Total de registros: {rows.length} {count && `de ${count}`}
+            Total de registros: {rows?.length} {count && `de ${count}`}
           </p>
         </div>
       </footer>
-      <LoadingPages isOpen={props.loading ?? false} />
+      <LoadingPages isOpen={props?.loading ?? false} />
     </main>
   )
 }

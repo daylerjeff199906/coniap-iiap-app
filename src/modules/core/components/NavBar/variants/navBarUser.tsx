@@ -136,7 +136,7 @@ export const NavBarUser = () => {
                     size="sm"
                     className="text-white "
                   >
-                    Ya tengo cuenta
+                    Iniciar sesión
                   </Button>
                   <Button
                     as={Link}
@@ -145,7 +145,7 @@ export const NavBarUser = () => {
                     size="sm"
                     className="bg-transparent hover:bg-[#002D61] text-white hover:text-white border-white border"
                   >
-                    ¡Inscríbete ya!
+                    ¡Participa ya!
                   </Button>
                 </section>
               )}
@@ -225,7 +225,7 @@ export const NavBarUser = () => {
                     size="sm"
                     className="text-white "
                   >
-                    Ya tengo cuenta
+                    Iniciar sesión
                   </Button>
                   <Button
                     as={Link}
@@ -235,7 +235,7 @@ export const NavBarUser = () => {
                     radius="full"
                     size="sm"
                   >
-                    ¡Inscríbete ya!
+                    ¡Participa ya!
                   </Button>
                 </section>
               )}

@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react'
 import { Button, Image } from '@nextui-org/react'
 import img_logo from '@/assets/svg/ISOTIPO - CONIAP.svg'
 import { imgSpeakerInscription } from '@/assets'
-import Link from 'next/link'
 import { FrmInscriptions } from '@/modules/user'
-
 import { fetchInformationById } from '@/api'
 import { IGeneralData } from '@/types'
+import Link from 'next/link'
 
 export default function Page() {
   const [infoData, setInfoData] = useState<IGeneralData | null>(null)
@@ -24,7 +23,7 @@ export default function Page() {
     <>
       <main className="w-full">
         <section className="container section py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-          <div className=" col-span-2 flex flex-col gap-2">
+          <div className="col-span-2 flex flex-col gap-2">
             <h1 className="text-2xl sm:text-3xl lg:text-5xl">
               PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
             </h1>
@@ -33,7 +32,7 @@ export default function Page() {
                 <b>Ten en cuenta </b> lo siguiente para participar en el
                 congreso:
               </p>
-              <ul className="text-sm list-disc flex flex-col gap-2">
+              <ul className="text-sm list-disc flex flex-col gap-2 px-3">
                 <li>
                   Si deseas participar como asistente, registra tus datos
                   personales en el formulario de inscripción y <b>¡Listo!</b>

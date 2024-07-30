@@ -1,5 +1,5 @@
 'use client'
-import { HeaderSection } from '@/modules/core'
+import { AlertCustom, HeaderSection } from '@/modules/core'
 import {
   Button,
   Modal,
@@ -125,21 +125,16 @@ export const FrmUploadFile = (props: IProps) => {
                 className="w-full flex flex-col gap-3"
                 onSubmit={methods.handleSubmit(handleFormSubmit)}
               >
-                <section
-                  className={`p-4 border rounded-lg ${
+                <AlertCustom
+                  type={isBefore ? 'warning' : 'error'}
+                  showIcon
+                  title="Atención"
+                  message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
                     isBefore
-                      ? 'border-warning-500 bg-warning-100 text-warning-700'
-                      : 'bg-danger-100 border-danger-500 text-danger-700'
+                      ? '¡Aún puedes enviar tu resumen!'
+                      : 'La fecha límite ha pasado, no puedes enviar tu resumen.'
                   }`}
-                >
-                  <p className="text-sm ">
-                    <strong>Nota:</strong> La fecha límite para enviar resúmenes
-                    es {dateFormatted}.{' '}
-                    {isBefore
-                      ? '¡Aún tienes tiempo!'
-                      : '¡Ya pasó la fecha límite!'}
-                  </p>
-                </section>
+                />
                 <TopicSection />
                 <InfoSection />
                 <AuthorsSection />

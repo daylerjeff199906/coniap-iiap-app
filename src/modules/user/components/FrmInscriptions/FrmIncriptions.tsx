@@ -1,7 +1,7 @@
 'use client'
+import { useState } from 'react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { Button } from '@nextui-org/react'
-import { useState } from 'react'
 import { ModalAction } from '@/components'
 import { IInscription, IPerson } from '@/types'
 import { usePersons } from '@/hooks/admin'
@@ -18,6 +18,7 @@ import {
 import { registerAndSendEmailVerification } from '@/auth'
 
 import infoData from '@/utils/json/infoConiap.json'
+import { AlertCustom } from '@/modules/core'
 
 function parseDate(date: string) {
   return new Date(date).toLocaleDateString('es-PE', {
@@ -131,18 +132,14 @@ export const FrmInscriptions = () => {
 
   return (
     <article className="w-full flex flex-col gap-5">
-      <section
-        className={`p-4 border rounded-lg font-medium flex flex-col gap-2 sm:mx-4 ${
-          isBefore
-            ? 'border-warning-500 bg-warning-100 text-warning-700'
-            : 'bg-danger-100 border-danger-500 text-danger-700'
-        }`}
-      >
-        <p className="text-sm ">
-          <strong>Nota:</strong> La fecha límite para inscripciones como
-          participante es {dateFormatted}.{' '}
-          {isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'}
-        </p>
+      <section className="lg:px-4">
+        <AlertCustom
+          type={isBefore ? 'warning' : 'error'}
+          title="Nota: Fecha límite"
+          message={`La fecha límite para inscripciones como participante es ${dateFormatted}. ${
+            isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'
+          }`}
+        />
       </section>
       {isBefore && (
         <FormProvider {...methods}>
@@ -155,20 +152,16 @@ export const FrmInscriptions = () => {
             <CountryData />
             <ContactData />
             {isBeforeSpeaker && isSpeaker && (
-              <section
-                className={`p-4 border rounded-lg font-medium flex flex-col gap-2 col-span-2 ${
-                  isBefore
-                    ? 'border-warning-500 bg-warning-100 text-warning-700'
-                    : 'bg-danger-100 border-danger-500 text-danger-700'
-                }`}
-              >
-                <p className="text-sm ">
-                  <strong>Nota:</strong> La fecha límite para enviar propuestas
-                  como ponente es {dateFormattedSpeaker}.{' '}
-                  {isBeforeSpeaker
-                    ? '¡Aún tienes tiempo!'
-                    : '¡Ya pasó la fecha límite!'}
-                </p>
+              <section className="col-span-2">
+                <AlertCustom
+                  type={isBeforeSpeaker ? 'warning' : 'error'}
+                  title="Nota: Fecha límite"
+                  message={`La fecha límite para enviar propuestas como ponente es ${dateFormattedSpeaker}. ${
+                    isBeforeSpeaker
+                      ? '¡Aún tienes tiempo!'
+                      : '¡Ya pasó la fecha límite!'
+                  }`}
+                />
               </section>
             )}
             {isBeforeSpeaker && <RoleData />}

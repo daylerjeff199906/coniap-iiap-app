@@ -55,9 +55,9 @@ export const AsideMenu = (props: IProps) => {
           />
         </div>
       </header>
-      <div className="w-full p-2">
+      <div className="w-full">
         <div className="flex flex-col flex-1 min-h-0 pt-0 dark:bg-gray-800">
-          <div className="py-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-200 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800">
+          <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-200 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800 h-full overflow-y-auto max-h-[calc(100vh-4rem)]">
             {menuAside?.map((item) => (
               <div key={item.id}>
                 <h3 className="px-4 text-xs text-stone-300 capitalize dark:text-gray-400">
