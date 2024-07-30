@@ -131,7 +131,7 @@ export const BannerHome = (props: IProps) => {
                 as={Link}
                 href="/inscripciones"
               >
-                Participar
+                Inscríbete
               </Button>
             )}
             {isBeforeSummary && (
