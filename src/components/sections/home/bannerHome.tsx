@@ -140,10 +140,9 @@ export const BannerHome = (props: IProps) => {
                 radius="full"
                 className="bg-white text-black animate-appearance-in"
                 as={Link}
-                href={data ? data.format_summary : ''}
-                download={data ? 'formato-resumen.pdf' : ''}
+                href="/login"
               >
-                Descargar formato
+                Enviar resumen
               </Button>
             )}
           </div>

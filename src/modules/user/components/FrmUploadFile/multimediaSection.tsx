@@ -33,7 +33,11 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
               allowMultiple={false}
               disabled={loading}
               instantUpload={false}
-              acceptedFileTypes={['application/pdf', 'application/msword']}
+              acceptedFileTypes={[
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+              ]}
               required={id ? false : true}
               server={{
                 process: (

@@ -9,7 +9,7 @@ export default function Loading() {
             width={420}
             height={420}
             alt="Loading"
-            unoptimized={false}
+            unoptimized={true}
           />
         </section>
       </main>
