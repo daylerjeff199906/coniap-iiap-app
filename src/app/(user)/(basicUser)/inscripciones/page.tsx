@@ -6,7 +6,9 @@ import { imgSpeakerInscription } from '@/assets'
 import { FrmInscriptions } from '@/modules/user'
 import { fetchInformationById } from '@/api'
 import { IGeneralData } from '@/types'
+import { stepsInscription } from '@/utils/data'
 import Link from 'next/link'
+import { IconPlayerPlayFilled } from '@tabler/icons-react'
 
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
@@ -24,58 +26,11 @@ export default function Page() {
 
   const driverObj = driver({
     showProgress: true,
-    steps: [
-      {
-        element: '#form-inscriptions',
-        popover: {
-          title: 'Formulario de Inscripción',
-          description:
-            'Este es el formulario de inscripción, aquí podrás registrarte como asistente o como ponente.',
-          side: 'left',
-          align: 'start',
-        },
-      },
-      {
-        element: '#personal-data',
-        popover: {
-          title: 'Registra tus datos',
-          description:
-            'Completa tus datos personales para poder participar en el congreso.',
-          side: 'bottom',
-          align: 'start',
-        },
-      },
-      {
-        element: '#role-data',
-        popover: {
-          title: 'Participa como Ponente',
-          description:
-            'Si deseas participar como ponente, selecciona la opción y crea una contraseña. De lo contrario no selecciones la opción.',
-          side: 'bottom',
-          align: 'start',
-        },
-      },
-      // {
-      //   element: '#password-data',
-      //   popover: {
-      //     title: 'Crea una contraseña',
-      //     description:
-      //       'Crea una contraseña para poder acceder a tu perfil de ponente. Luego confirma tu contraseña.',
-      //     side: 'left',
-      //     align: 'start',
-      //   },
-      // },
-      {
-        element: '#btn-submit-inscription',
-        popover: {
-          title: 'Enviar Inscripción',
-          description:
-            'Una vez completado el formulario, presiona el botón para enviar tu inscripción y confirma',
-          side: 'top',
-          align: 'start',
-        },
-      },
-    ],
+    steps: stepsInscription,
+    popoverClass: 'driver-popover',
+    nextBtnText: 'Siguiente',
+    prevBtnText: 'Anterior',
+    doneBtnText: 'Finalizar',
   })
 
   function activeDriver() {
@@ -121,9 +76,20 @@ export default function Page() {
                     Inicia sesión {` `}
                   </Link>
                   y envía tu propuesta.
-                  <button onClick={activeDriver}>Ver demo</button>
                 </li>
               </ul>
+              <div>
+                <Button
+                  radius="full"
+                  color="warning"
+                  className="font-medium px-6"
+                  startContent={<IconPlayerPlayFilled size={20} />}
+                  variant="bordered"
+                  onPress={activeDriver}
+                >
+                  Ver demo
+                </Button>
+              </div>
             </section>
             <Image
               src={img_logo.src}
@@ -151,6 +117,7 @@ export default function Page() {
                   as={Link}
                   href="/login"
                   color="danger"
+                  id="login-link"
                 >
                   Enviar resúmen
                 </Button>
@@ -161,6 +128,7 @@ export default function Page() {
                   download={true}
                   as={Link}
                   href={infoData?.format_summary || ''}
+                  id="download-format"
                 >
                   Descargar formato
                 </Button>
