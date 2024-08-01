@@ -131,7 +131,10 @@ export const FrmInscriptions = () => {
   const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
 
   return (
-    <article className="w-full flex flex-col gap-5">
+    <article
+      id="form-inscriptions"
+      className="w-full flex flex-col gap-5"
+    >
       <section className="lg:px-4">
         <AlertCustom
           type={isBefore ? 'warning' : 'error'}
@@ -144,15 +147,20 @@ export const FrmInscriptions = () => {
       {isBefore && (
         <FormProvider {...methods}>
           <form
-            className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4 sm:px-6"
+            className="w-full flex flex-col gap-6 sm:px-6"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <InfoData />
-            <JobData />
-            <CountryData />
-            <ContactData />
+            <section
+              className="w-full sm:grid flex flex-col sm:grid-cols-2 gap-4"
+              id="personal-data"
+            >
+              <InfoData />
+              <JobData />
+              <CountryData />
+              <ContactData />
+            </section>
             {isBeforeSpeaker && isSpeaker && (
-              <section className="col-span-2">
+              <section className="">
                 <AlertCustom
                   type={isBeforeSpeaker ? 'warning' : 'error'}
                   title="Nota: Fecha límite"
@@ -165,8 +173,9 @@ export const FrmInscriptions = () => {
               </section>
             )}
             {isBeforeSpeaker && <RoleData />}
-            <div className="col-span-2">
+            <div className="w-full">
               <Button
+                id="btn-submit-inscription"
                 radius="full"
                 color="primary"
                 type="submit"

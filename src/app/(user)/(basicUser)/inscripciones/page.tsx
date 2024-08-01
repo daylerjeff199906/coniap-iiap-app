@@ -8,6 +8,9 @@ import { fetchInformationById } from '@/api'
 import { IGeneralData } from '@/types'
 import Link from 'next/link'
 
+import { driver } from 'driver.js'
+import 'driver.js/dist/driver.css'
+
 export default function Page() {
   const [infoData, setInfoData] = useState<IGeneralData | null>(null)
 
@@ -18,6 +21,66 @@ export default function Page() {
   useEffect(() => {
     fetchInfo()
   }, [])
+
+  const driverObj = driver({
+    showProgress: true,
+    steps: [
+      {
+        element: '#form-inscriptions',
+        popover: {
+          title: 'Formulario de Inscripción',
+          description:
+            'Este es el formulario de inscripción, aquí podrás registrarte como asistente o como ponente.',
+          side: 'left',
+          align: 'start',
+        },
+      },
+      {
+        element: '#personal-data',
+        popover: {
+          title: 'Registra tus datos',
+          description:
+            'Completa tus datos personales para poder participar en el congreso.',
+          side: 'bottom',
+          align: 'start',
+        },
+      },
+      {
+        element: '#role-data',
+        popover: {
+          title: 'Participa como Ponente',
+          description:
+            'Si deseas participar como ponente, selecciona la opción y crea una contraseña. De lo contrario no selecciones la opción.',
+          side: 'bottom',
+          align: 'start',
+        },
+      },
+      // {
+      //   element: '#password-data',
+      //   popover: {
+      //     title: 'Crea una contraseña',
+      //     description:
+      //       'Crea una contraseña para poder acceder a tu perfil de ponente. Luego confirma tu contraseña.',
+      //     side: 'left',
+      //     align: 'start',
+      //   },
+      // },
+      {
+        element: '#btn-submit-inscription',
+        popover: {
+          title: 'Enviar Inscripción',
+          description:
+            'Una vez completado el formulario, presiona el botón para enviar tu inscripción y confirma',
+          side: 'top',
+          align: 'start',
+        },
+      },
+    ],
+  })
+
+  function activeDriver() {
+    driverObj.drive()
+  }
 
   return (
     <>
@@ -58,6 +121,7 @@ export default function Page() {
                     Inicia sesión {` `}
                   </Link>
                   y envía tu propuesta.
+                  <button onClick={activeDriver}>Ver demo</button>
                 </li>
               </ul>
             </section>

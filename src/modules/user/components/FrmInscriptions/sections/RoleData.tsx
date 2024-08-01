@@ -18,7 +18,10 @@ export const RoleData = () => {
 
   return (
     <>
-      <section className="col-span-1 sm:col-span-2 flex flex-col gap-2">
+      <section
+        className="col-span-1 sm:col-span-2 flex flex-col gap-2"
+        id="role-data"
+      >
         <div>
           <h3 className="text-sm">
             Si deseas participar como ponente y presentar tu trabajo de
@@ -53,7 +56,9 @@ export const RoleData = () => {
         </div>
       </section>
       {methods?.watch('typePerson') === 'speaker' && (
-        <section className="pt-2 col-span-1 sm:col-span-2 flex flex-col gap-2">
+        <section className="pt-2 col-span-1 sm:col-span-2 flex flex-col gap-2"
+        id='password-data'
+        >
           <Controller
             control={methods.control}
             name="password"
