@@ -6,7 +6,12 @@ import { imgSpeakerInscription } from '@/assets'
 import { FrmInscriptions } from '@/modules/user'
 import { fetchInformationById } from '@/api'
 import { IGeneralData } from '@/types'
+import { stepsInscription } from '@/utils/data'
 import Link from 'next/link'
+import { IconPlayerPlayFilled } from '@tabler/icons-react'
+
+import { driver } from 'driver.js'
+import 'driver.js/dist/driver.css'
 
 export default function Page() {
   const [infoData, setInfoData] = useState<IGeneralData | null>(null)
@@ -18,6 +23,19 @@ export default function Page() {
   useEffect(() => {
     fetchInfo()
   }, [])
+
+  const driverObj = driver({
+    showProgress: true,
+    steps: stepsInscription,
+    popoverClass: 'driver-popover',
+    nextBtnText: 'Siguiente',
+    prevBtnText: 'Anterior',
+    doneBtnText: 'Finalizar',
+  })
+
+  function activeDriver() {
+    driverObj.drive()
+  }
 
   return (
     <>
@@ -60,6 +78,18 @@ export default function Page() {
                   y envía tu propuesta.
                 </li>
               </ul>
+              <div>
+                <Button
+                  radius="full"
+                  color="warning"
+                  className="font-medium px-6"
+                  startContent={<IconPlayerPlayFilled size={20} />}
+                  variant="bordered"
+                  onPress={activeDriver}
+                >
+                  Ver demo
+                </Button>
+              </div>
             </section>
             <Image
               src={img_logo.src}
@@ -87,6 +117,7 @@ export default function Page() {
                   as={Link}
                   href="/login"
                   color="danger"
+                  id="login-link"
                 >
                   Enviar resúmen
                 </Button>
@@ -97,6 +128,7 @@ export default function Page() {
                   download={true}
                   as={Link}
                   href={infoData?.format_summary || ''}
+                  id="download-format"
                 >
                   Descargar formato
                 </Button>
