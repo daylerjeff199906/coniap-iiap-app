@@ -26,11 +26,6 @@ const columns: IColumns[] = [
     label: 'Type',
     align: 'start',
   },
-  {
-    key: 'isActived',
-    label: 'Status',
-    align: 'start',
-  },
 ]
 
 interface IProps {
@@ -52,7 +47,6 @@ export const PersonRecents = (props: IProps) => {
           : item.typePerson === 'speaker_mg'
           ? 'Ponente Magistral'
           : 'Asistente',
-      isActived: item.isActived,
     }
   })
   return (
