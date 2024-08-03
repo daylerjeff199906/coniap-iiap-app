@@ -47,6 +47,7 @@ export async function fetchSummaries(
     .from('summaries')
     .select('*,person:person_id(*), topic:topic_id(*)')
     .ilike('title', `%${query}%`)
+    .order('created_at', { ascending: false })
 
   if (filters?.isApproved) {
     request = request.eq('isApproved', filters.isApproved)

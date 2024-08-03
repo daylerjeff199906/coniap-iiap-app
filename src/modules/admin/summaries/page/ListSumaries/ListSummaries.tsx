@@ -7,8 +7,14 @@ import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
 import { Chip, Spinner } from '@nextui-org/react'
 import { FiltersSection } from './sections'
+import { convertDate } from '@/utils/functions'
 
 const columns: Array<IColumns> = [
+  {
+    key: 'created_at',
+    label: 'Fecha de creación',
+    align: 'start',
+  },
   {
     key: 'id',
     label: 'ID',
@@ -29,11 +35,7 @@ const columns: Array<IColumns> = [
     label: 'Persona',
     align: 'start',
   },
-  {
-    key: 'created_at',
-    label: 'Fecha de creación',
-    align: 'start',
-  },
+
   {
     key: 'st_review',
     label: 'Estado de revisión',
@@ -88,7 +90,7 @@ export const ListSummaries = () => {
             key: String(summary.id),
             id: summary.id,
             title: summary.title,
-            created_at: summary.created_at,
+            created_at: convertDate(summary.created_at),
             person: summary.person?.name + ' ' + summary.person?.surName,
             topic: summary.topic?.name || 'No tiene temática asignada',
             st_review: RenderColumnAproved(summary.isApproved),
