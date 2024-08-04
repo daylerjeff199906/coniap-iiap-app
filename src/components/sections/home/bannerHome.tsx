@@ -12,6 +12,9 @@ import { TimeSection } from './timeSection'
 import { lotScrollDown } from '@/assets'
 import Lottie from 'lottie-react'
 import { IGeneralData } from '@/types'
+import { IconDeviceLaptop } from '@tabler/icons-react'
+import { IconMicroscope } from '@tabler/icons-react'
+import { IconUsers } from '@tabler/icons-react'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -33,12 +36,7 @@ const item = {
   },
 }
 
-interface IProps {
-  data: IGeneralData | null
-}
-
-export const BannerHome = (props: IProps) => {
-  const { data } = props
+export const BannerHome = () => {
   const [videoLoaded, setVideoLoaded] = useState(false)
 
   const handleVideoLoaded = () => {
@@ -49,6 +47,9 @@ export const BannerHome = (props: IProps) => {
   const conferenceDate = formatConferenceDate(
     infoData.data.dates['date-conference']
   )
+
+  //Modalidad
+  const modality = infoData.data.modalidad.toLowerCase()
 
   //Fecha límite de envío de resúmen
   const summary = infoData.data.dates['summary']
@@ -112,12 +113,40 @@ export const BannerHome = (props: IProps) => {
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
           </h1>
           <div className="flex items-center gap-2">
-            <IconCalendarEvent
-              size={48}
+            <IconDeviceLaptop
+              size={24}
               stroke={1}
               color="#fff"
             />
-            <h3 className="text-white text-md max-w-48">{conferenceDate}</h3>
+            <h3 className="text-white text-md">Modalidad {modality}</h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <IconCalendarEvent
+              size={24}
+              stroke={1}
+              color="#fff"
+            />
+            <h3 className="text-white text-md">{conferenceDate}</h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <IconMicroscope
+              size={24}
+              stroke={1}
+              color="#fff"
+            />
+            <h3 className="text-white text-md">
+              Inscripciones como ponente {summary.end}
+            </h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <IconUsers
+              size={24}
+              stroke={1}
+              color="#fff"
+            />
+            <h3 className="text-white text-md">
+              Inscripciones como ponente {summary.end}
+            </h3>
           </div>
           <div className="w-full flex items-center gap-3">
             {isAfterConference && (
