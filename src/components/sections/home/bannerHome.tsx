@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
-import { Button, Chip, Image } from '@nextui-org/react'
+import { Button, Image as ImageUi } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
+import Image from 'next/image'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -10,7 +11,11 @@ import infoData from '@/utils/json/infoConiap.json'
 import { TimeSection } from './timeSection'
 import { lotScrollDown } from '@/assets'
 import Lottie from 'lottie-react'
-import { IGeneralData } from '@/types'
+import {
+  IconDeviceLaptop,
+  IconMicroscope,
+  IconUsers,
+} from '@tabler/icons-react'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -32,12 +37,34 @@ const item = {
   },
 }
 
-interface IProps {
-  data: IGeneralData | null
+interface InfoItemProps {
+  Icon: React.ElementType
+  text: string
 }
 
-export const BannerHome = (props: IProps) => {
-  const { data } = props
+const InfoItem: React.FC<InfoItemProps> = ({ Icon, text }) => (
+  <div className="flex items-center gap-2">
+    <Icon
+      size={24}
+      stroke={1}
+      color="#fff"
+    />
+    <h3 className="text-white text-md">{text}</h3>
+  </div>
+)
+
+function convertDate(date: string) {
+  return new Date(date)
+}
+
+function scrollToElement(id: string) {
+  const element = document.getElementById(id)
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+export const BannerHome = () => {
   const [videoLoaded, setVideoLoaded] = useState(false)
 
   const handleVideoLoaded = () => {
@@ -48,6 +75,9 @@ export const BannerHome = (props: IProps) => {
   const conferenceDate = formatConferenceDate(
     infoData.data.dates['date-conference']
   )
+
+  //Modalidad
+  const modality = infoData.data.modalidad
 
   //Fecha límite de envío de resúmen
   const summary = infoData.data.dates['summary']
@@ -69,12 +99,11 @@ export const BannerHome = (props: IProps) => {
   return (
     <section
       id="banner-home"
-      // className="h-screen flex items-center relative bg-gradient-to-r from-black/90 to-transparent w-full"
-      className="h-screen flex items-center relative bg-black/60 w-full"
+      className="h-screen flex items-start sm:pt-4 lg:pt-8 relative bg-black/60 w-full max-h-[calc(100vh-6rem)]"
     >
-      <div className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-4">
+      <div className="container grid grid-cols-1 lg:grid-cols-2 items-start gap-4">
         <motion.div
-          className="w-full lg:max-w-2xl space-y-4"
+          className="w-full lg:max-w-2xl space-y-6"
           initial={{
             opacity: 0,
             x: -100,
@@ -90,27 +119,48 @@ export const BannerHome = (props: IProps) => {
             },
           }}
         >
-          <Chip
-            radius="sm"
-            variant="solid"
-            color="warning"
-            className="animate-appearance-in text-white"
-          >
-            Modalidad virtual
-          </Chip>
+          <div className="flex gap-2 items-center">
+            <Image
+              src="/logo_coniap.webp"
+              alt="Logo CONIAP"
+              width={180}
+              height={190}
+            />
+            <div className="flex items-center gap-2 border-l ml-2 pl-4">
+              <IconDeviceLaptop
+                size={50}
+                stroke={1}
+                color="#fff"
+              />
+              <div>
+                <h3 className="text-white max-w-8 text-tiny">Modalidad</h3>
+                <h3 className="text-white font-medium text-base">{modality}</h3>
+              </div>
+            </div>
+          </div>
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
-            (CONIAP)
           </h1>
-          <div className="flex items-center gap-2">
-            <IconCalendarEvent
-              size={48}
-              stroke={1}
-              color="#fff"
+
+          <section className="flex flex-col gap-2">
+            <InfoItem
+              Icon={IconCalendarEvent}
+              text={conferenceDate}
             />
-            <h3 className="text-white text-md max-w-48">{conferenceDate}</h3>
-          </div>
+            <InfoItem
+              Icon={IconUsers}
+              text={`Inscríbete hasta el ${convertDate(
+                infoData.data.dates['date-conference'].start
+              ).toLocaleDateString()}`}
+            />
+            <InfoItem
+              Icon={IconMicroscope}
+              text={`Inscripciones como ponente ${convertDate(
+                summary.end
+              ).toLocaleDateString()}`}
+            />
+          </section>
           <div className="w-full flex items-center gap-3">
             {isAfterConference && (
               <Button
@@ -158,7 +208,7 @@ export const BannerHome = (props: IProps) => {
               className=""
               variants={item}
             >
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
                 alt="Banner Home"
                 className="w-52 h-56 object-cover "
@@ -167,7 +217,7 @@ export const BannerHome = (props: IProps) => {
               />
             </motion.div>
             <motion.div variants={item}>
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede"
                 alt="Tejido-iiap"
                 radius="sm"
@@ -177,7 +227,7 @@ export const BannerHome = (props: IProps) => {
           </div>
           <div className="space-y-3 pt-8">
             <motion.div variants={item}>
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
                 alt="expoIIAP"
                 radius="sm"
@@ -185,7 +235,7 @@ export const BannerHome = (props: IProps) => {
               />
             </motion.div>
             <motion.div variants={item}>
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2"
                 alt="Banner Home"
                 radius="sm"
@@ -204,6 +254,7 @@ export const BannerHome = (props: IProps) => {
             loop
             autoplay
             className="w-10 h-10 sm:w-12 sm:h-12"
+            onClick={() => scrollToElement('about-us')}
           />
         </section>
       </div>

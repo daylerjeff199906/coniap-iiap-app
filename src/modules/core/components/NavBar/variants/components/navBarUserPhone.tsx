@@ -15,7 +15,7 @@ export const NavBarUserPhone = () => {
   return (
     <>
       <Button
-        className="fixed right-4 z-50 text-white"
+        className="sticky top-4 right-4 z-50 text-white"
         onPress={() => setIsActived(!isActived)}
         isIconOnly
         radius="lg"
