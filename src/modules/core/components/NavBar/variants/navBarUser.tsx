@@ -15,6 +15,7 @@ import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
 import { ProfilePopover } from '@/modules/core'
+import { HeaderNav } from './components/HeaderNav'
 
 export const NavBarUser = () => {
   const { user, logout, loading } = useAuthContext()
@@ -27,7 +28,7 @@ export const NavBarUser = () => {
   const backgroundColor = useTransform(
     scrollY,
     [0, 20], // Rango de entrada: de 0 a 20 píxeles
-    ['rgba(0,0,0,0)', 'rgba(0,45,97,1)'] // Rango de salida: de transparente a azul con opacidad
+    ['rgba(0,0,0,0.6)', 'rgba(0,45,97,1)'] // Rango de salida: de transparente a azul con opacidad
   )
 
   const handleLogout = () => {
@@ -36,9 +37,10 @@ export const NavBarUser = () => {
 
   return (
     <>
+      <HeaderNav />
       {/* NavBar Phone */}
       <motion.nav
-        className="lg:hidden fixed top-0 right-0 left-0 z-50 flex justify-between items-center p-4"
+        className="lg:hidden sticky top-0 right-0 left-0 z-50 flex justify-between items-center p-4"
         style={{ backgroundColor }} // Aplicar color de fondo dinámico
         initial={{ backgroundColor: 'rgba(0,0,0,0)' }} // Color de fondo inicial transparente
         transition={{ duration: 1 }}
@@ -68,15 +70,14 @@ export const NavBarUser = () => {
       </motion.nav>
       {/* NavBar Desktop Transparent */}
       <motion.nav
-        className="hidden lg:block fixed top-0 right-0 left-0 z-50"
+        className="hidden lg:block sticky top-0 right-0 left-0 z-50"
         style={{ y: navbarYEmpty }}
       >
         <Navbar
           maxWidth="full"
           classNames={{
-            base: 'bg-transparent text-white py-3',
+            base: 'bg-black/60 text-white py-3',
           }}
-          className="bg-transparent"
           height={72}
           isBlurred={false}
         >

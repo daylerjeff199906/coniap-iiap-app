@@ -57,6 +57,13 @@ function convertDate(date: string) {
   return new Date(date)
 }
 
+function scrollToElement(id: string) {
+  const element = document.getElementById(id)
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
 export const BannerHome = () => {
   const [videoLoaded, setVideoLoaded] = useState(false)
 
@@ -92,9 +99,9 @@ export const BannerHome = () => {
   return (
     <section
       id="banner-home"
-      className="h-screen flex items-center relative bg-black/60 w-full"
+      className="h-screen flex items-start sm:pt-4 lg:pt-8 relative bg-black/60 w-full max-h-[calc(100vh-6rem)]"
     >
-      <div className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-4">
+      <div className="container grid grid-cols-1 lg:grid-cols-2 items-start gap-4">
         <motion.div
           className="w-full lg:max-w-2xl space-y-6"
           initial={{
@@ -247,6 +254,7 @@ export const BannerHome = () => {
             loop
             autoplay
             className="w-10 h-10 sm:w-12 sm:h-12"
+            onClick={() => scrollToElement('about-us')}
           />
         </section>
       </div>

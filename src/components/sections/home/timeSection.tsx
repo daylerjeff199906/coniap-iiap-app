@@ -121,7 +121,7 @@ const TimeDisplay = ({ label, value }: { label: string; value: number }) => {
 
   return (
     <div className="w-full text-center">
-      <motion.h1 className="text-2xl lg:text-5xl font-bold">
+      <motion.h1 className="text-4xl lg:text-5xl font-bold">
         {rounded}
       </motion.h1>
       <p className="text-white font-medium text-tiny lg:text-base">{label}</p>
