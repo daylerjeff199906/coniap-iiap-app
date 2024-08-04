@@ -99,12 +99,12 @@ export const BannerHome = (props: IProps) => {
           >
             Modalidad virtual
           </Chip> */}
-          <div>
+          <div className="flex gap-2 items-center">
             <Image
-              src="/logo_coniap.gif"
+              src="/logo_coniap.webp"
               alt="Logo CONIAP"
-              width={100}
-              height={100}
+              width={180}
+              height={190}
             />
           </div>
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
