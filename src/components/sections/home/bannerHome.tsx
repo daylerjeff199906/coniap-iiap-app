@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
-import { Button, Chip, Image } from '@nextui-org/react'
+import { Button, Chip, Image as ImageUi } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
+import Image from 'next/image'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -90,14 +91,22 @@ export const BannerHome = (props: IProps) => {
             },
           }}
         >
-          <Chip
+          {/* <Chip
             radius="sm"
             variant="solid"
             color="warning"
             className="animate-appearance-in text-white"
           >
             Modalidad virtual
-          </Chip>
+          </Chip> */}
+          <div>
+            <Image
+              src="/logo_coniap.gif"
+              alt="Logo CONIAP"
+              width={100}
+              height={100}
+            />
+          </div>
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
@@ -158,7 +167,7 @@ export const BannerHome = (props: IProps) => {
               className=""
               variants={item}
             >
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
                 alt="Banner Home"
                 className="w-52 h-56 object-cover "
@@ -167,7 +176,7 @@ export const BannerHome = (props: IProps) => {
               />
             </motion.div>
             <motion.div variants={item}>
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede"
                 alt="Tejido-iiap"
                 radius="sm"
@@ -177,7 +186,7 @@ export const BannerHome = (props: IProps) => {
           </div>
           <div className="space-y-3 pt-8">
             <motion.div variants={item}>
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
                 alt="expoIIAP"
                 radius="sm"
@@ -185,7 +194,7 @@ export const BannerHome = (props: IProps) => {
               />
             </motion.div>
             <motion.div variants={item}>
-              <Image
+              <ImageUi
                 src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2"
                 alt="Banner Home"
                 radius="sm"
