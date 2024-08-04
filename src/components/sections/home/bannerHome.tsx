@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Button, Chip, Image as ImageUi } from '@nextui-org/react'
+import { Button, Image as ImageUi } from '@nextui-org/react'
 import { IconCalendarEvent } from '@tabler/icons-react'
 import Image from 'next/image'
 
@@ -11,10 +11,11 @@ import infoData from '@/utils/json/infoConiap.json'
 import { TimeSection } from './timeSection'
 import { lotScrollDown } from '@/assets'
 import Lottie from 'lottie-react'
-import { IGeneralData } from '@/types'
-import { IconDeviceLaptop } from '@tabler/icons-react'
-import { IconMicroscope } from '@tabler/icons-react'
-import { IconUsers } from '@tabler/icons-react'
+import {
+  IconDeviceLaptop,
+  IconMicroscope,
+  IconUsers,
+} from '@tabler/icons-react'
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -36,6 +37,26 @@ const item = {
   },
 }
 
+interface InfoItemProps {
+  Icon: React.ElementType
+  text: string
+}
+
+const InfoItem: React.FC<InfoItemProps> = ({ Icon, text }) => (
+  <div className="flex items-center gap-2">
+    <Icon
+      size={24}
+      stroke={1}
+      color="#fff"
+    />
+    <h3 className="text-white text-md">{text}</h3>
+  </div>
+)
+
+function convertDate(date: string) {
+  return new Date(date)
+}
+
 export const BannerHome = () => {
   const [videoLoaded, setVideoLoaded] = useState(false)
 
@@ -49,7 +70,7 @@ export const BannerHome = () => {
   )
 
   //Modalidad
-  const modality = infoData.data.modalidad.toLowerCase()
+  const modality = infoData.data.modalidad
 
   //Fecha límite de envío de resúmen
   const summary = infoData.data.dates['summary']
@@ -71,12 +92,11 @@ export const BannerHome = () => {
   return (
     <section
       id="banner-home"
-      // className="h-screen flex items-center relative bg-gradient-to-r from-black/90 to-transparent w-full"
       className="h-screen flex items-center relative bg-black/60 w-full"
     >
       <div className="container grid grid-cols-1 lg:grid-cols-2 items-center gap-4">
         <motion.div
-          className="w-full lg:max-w-2xl space-y-4"
+          className="w-full lg:max-w-2xl space-y-6"
           initial={{
             opacity: 0,
             x: -100,
@@ -92,14 +112,6 @@ export const BannerHome = () => {
             },
           }}
         >
-          {/* <Chip
-            radius="sm"
-            variant="solid"
-            color="warning"
-            className="animate-appearance-in text-white"
-          >
-            Modalidad virtual
-          </Chip> */}
           <div className="flex gap-2 items-center">
             <Image
               src="/logo_coniap.webp"
@@ -107,47 +119,41 @@ export const BannerHome = () => {
               width={180}
               height={190}
             />
+            <div className="flex items-center gap-2 border-l ml-2 pl-4">
+              <IconDeviceLaptop
+                size={50}
+                stroke={1}
+                color="#fff"
+              />
+              <div>
+                <h3 className="text-white max-w-8 text-tiny">Modalidad</h3>
+                <h3 className="text-white font-medium text-base">{modality}</h3>
+              </div>
+            </div>
           </div>
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
           </h1>
-          <div className="flex items-center gap-2">
-            <IconDeviceLaptop
-              size={24}
-              stroke={1}
-              color="#fff"
+
+          <section className="flex flex-col gap-2">
+            <InfoItem
+              Icon={IconCalendarEvent}
+              text={conferenceDate}
             />
-            <h3 className="text-white text-md">Modalidad {modality}</h3>
-          </div>
-          <div className="flex items-center gap-2">
-            <IconCalendarEvent
-              size={24}
-              stroke={1}
-              color="#fff"
+            <InfoItem
+              Icon={IconUsers}
+              text={`Inscríbete hasta el ${convertDate(
+                infoData.data.dates['date-conference'].start
+              ).toLocaleDateString()}`}
             />
-            <h3 className="text-white text-md">{conferenceDate}</h3>
-          </div>
-          <div className="flex items-center gap-2">
-            <IconMicroscope
-              size={24}
-              stroke={1}
-              color="#fff"
+            <InfoItem
+              Icon={IconMicroscope}
+              text={`Inscripciones como ponente ${convertDate(
+                summary.end
+              ).toLocaleDateString()}`}
             />
-            <h3 className="text-white text-md">
-              Inscripciones como ponente {summary.end}
-            </h3>
-          </div>
-          <div className="flex items-center gap-2">
-            <IconUsers
-              size={24}
-              stroke={1}
-              color="#fff"
-            />
-            <h3 className="text-white text-md">
-              Inscripciones como ponente {summary.end}
-            </h3>
-          </div>
+          </section>
           <div className="w-full flex items-center gap-3">
             {isAfterConference && (
               <Button
