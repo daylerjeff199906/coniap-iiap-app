@@ -110,7 +110,6 @@ export const BannerHome = (props: IProps) => {
           <h1 className="text-[2.3rem] lg:text-[2.8rem]  animate-appearance-in leading-tight text-white">
             Bienvenidos al III Congreso Internacional sobre{' '}
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
-            (CONIAP)
           </h1>
           <div className="flex items-center gap-2">
             <IconCalendarEvent
