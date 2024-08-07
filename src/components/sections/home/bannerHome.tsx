@@ -99,7 +99,7 @@ export const BannerHome = () => {
   return (
     <section
       id="banner-home"
-      className="h-screen flex items-start sm:pt-4 lg:pt-8 relative bg-black/60 w-full max-h-[calc(100vh-6rem)]"
+      className="h-screen flex items-center relative bg-black/60 w-full "
     >
       <div className="container grid grid-cols-1 lg:grid-cols-2 items-start gap-4">
         <motion.div
@@ -156,7 +156,7 @@ export const BannerHome = () => {
             />
             <InfoItem
               Icon={IconMicroscope}
-              text={`Inscripciones como ponente ${convertDate(
+              text={`Enviar resumen hasta el ${convertDate(
                 summary.end
               ).toLocaleDateString()}`}
             />
