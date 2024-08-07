@@ -15,6 +15,7 @@ import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
 import { ProfilePopover } from '@/modules/core'
+import { HeaderNav } from './components/HeaderNav'
 
 export const NavBarUser = () => {
   const { user, logout, loading } = useAuthContext()
@@ -36,6 +37,7 @@ export const NavBarUser = () => {
 
   return (
     <>
+      {/* <HeaderNav /> */}
       {/* NavBar Phone */}
       <motion.nav
         className="lg:hidden fixed top-0 right-0 left-0 z-50 flex justify-between items-center p-4"
@@ -76,7 +78,6 @@ export const NavBarUser = () => {
           classNames={{
             base: 'bg-transparent text-white py-3',
           }}
-          className="bg-transparent"
           height={72}
           isBlurred={false}
         >
