@@ -7,8 +7,9 @@ import {
   fetchPersonsInEvent,
   fetchPersonsNotInEvent,
   fetchPersons,
+  fetchPersonsFilter,
 } from '@/api'
-import { IPerson, IRes } from '@/types'
+import { IPerson, IRes, IPersonFilter } from '@/types'
 import { toast } from 'react-toastify'
 
 const message =
@@ -111,6 +112,15 @@ export function usePersons() {
     setLoading(false)
   }
 
+  const getPersonsFilter = async (filter: IPersonFilter) => {
+    setLoading(true)
+    const data = await fetchPersonsFilter(filter)
+      .then((res) => res)
+      .catch((err) => err)
+    setPersons(data)
+    setLoading(false)
+  }
+
   return {
     loading,
     addPerson,
@@ -123,5 +133,6 @@ export function usePersons() {
     getListPersonsInEvent,
     asisstants,
     getAssistants,
+    getPersonsFilter,
   }
 }

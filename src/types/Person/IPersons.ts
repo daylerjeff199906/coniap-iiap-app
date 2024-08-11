@@ -14,3 +14,12 @@ export interface IPerson {
   created_at: string
   typePerson: 'speaker' | 'speaker_mg' | 'participant'
 }
+
+export interface IPersonFilter {
+  query?: string
+  typePerson?: string
+  isNot?: string
+  status?: string
+  // isPagination: boolean
+  // params: { page: number; limit: number }
+}

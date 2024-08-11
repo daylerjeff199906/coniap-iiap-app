@@ -1,6 +1,7 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Select, SelectItem, Selection } from '@nextui-org/react'
+import { Button, Select, SelectItem, Selection } from '@nextui-org/react'
+import { IconFilter } from '@tabler/icons-react'
 
 const personsType = [
   { value: 'all', label: 'Todos' },
@@ -15,8 +16,13 @@ const activeStatus = [
   { value: 'inactive', label: 'Inactivo' },
 ]
 
-export const FiltersSection = () => {
+interface IProps {
+  onChageFilter: () => void
+}
+
+export const FiltersSection = (props: IProps) => {
   const { getParams, updateFilter } = useFilterFromUrl()
+  const { onChageFilter } = props
 
   const selectedTypePerson = getParams('typePerson', 'all')
   const selectedStatus = getParams('status', 'all')
@@ -73,7 +79,6 @@ export const FiltersSection = () => {
           selectedKeys={[selectedStatus]}
           onSelectionChange={(value) => handleStatus(value)}
           disallowEmptySelection
-          // label="Estado"
           description="Estado de la persona"
         >
           {activeStatus.map((status, i) => (
@@ -88,6 +93,14 @@ export const FiltersSection = () => {
           ))}
         </Select>
       </div>
+      <Button
+        radius="sm"
+        className="button-dark"
+        startContent={<IconFilter size={20} />}
+        onPress={onChageFilter}
+      >
+        Filtrar
+      </Button>
     </>
   )
 }
