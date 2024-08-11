@@ -6,7 +6,7 @@ import { AlertCustom } from '@/modules/core'
 
 const steps = [
   {
-    title: 'Verifica tu correo',
+    title: 'Verifica tu correo (Si te inscribiste como ponente)',
     content:
       'Si aún no verificas tu correo, revisa tu bandeja de entrada. Si ingresaste con cuenta de Google, no es necesario verificar tu correo.',
     link: null,
@@ -71,10 +71,10 @@ export default function Page() {
               title="Si te inscribiste como asistente, y luego deseas enviar un resumen contactanos al correo"
               message={
                 <Link
-                  href="mailto:ggagliardi@iiap.gob.pe"
+                  href="mailto:sec.tec.coniap@iiap.gob.pe"
                   className="text-primary hover:underline"
                 >
-                  ggagliardi@iiap.gob.pe
+                  sec.tec.coniap@iiap.gob.pe
                 </Link>
               }
             />
