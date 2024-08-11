@@ -134,5 +134,6 @@ export function usePersons() {
     asisstants,
     getAssistants,
     getPersonsFilter,
+    setPersons,
   }
 }

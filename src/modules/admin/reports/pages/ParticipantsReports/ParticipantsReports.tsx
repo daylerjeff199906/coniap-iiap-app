@@ -8,23 +8,30 @@ import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { usePersons } from '@/hooks/admin'
 import { convertDate } from '@/utils/functions'
 import { useFilterFromUrl } from '@/modules/core'
+import { useRouter } from 'next/navigation'
 
 export const ParticipantsReports = () => {
-  const { getPersonsFilter, persons, loading } = usePersons()
+  const { getPersonsFilter, persons, loading, setPersons } = usePersons()
   const { getParams } = useFilterFromUrl()
+  const router = useRouter()
 
   const typePerson = getParams('typePerson', '')
-  const status = getParams('status', '')
-
+  const statusPerson = getParams('status', '')
+  const status =
+    statusPerson === 'active'
+      ? 'TRUE'
+      : statusPerson === 'inactive'
+      ? 'FALSE'
+      : ''
   const listPerson =
     (persons &&
-      persons.data.length > 0 &&
+      persons?.data?.length > 0 &&
       persons?.data.map((speaker) => ({
         key: String(speaker?.id),
         id: speaker?.id,
         date: convertDate(speaker?.created_at),
-        name: speaker?.name,
-        surname: speaker?.surName,
+        name: speaker?.name.toUpperCase(),
+        surname: speaker?.surName.toUpperCase(),
         email: speaker?.email,
         phone: speaker?.phone || 'No registrado',
         institution: speaker?.institution,
@@ -34,10 +41,18 @@ export const ParticipantsReports = () => {
       }))) ||
     []
 
-  const dataExcel = persons && persons.data.length > 0 ? persons.data : []
+  const dataExcel = persons && persons?.data?.length > 0 ? persons?.data : []
 
   const handleGetPersons = () => {
     getPersonsFilter({ typePerson, status })
+  }
+
+  const handleClearFilter = () => {
+    router.push('/admin/reportes')
+    setPersons({
+      count: 0,
+      data: [],
+    })
   }
 
   return (
@@ -50,12 +65,18 @@ export const ParticipantsReports = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <TableGeneral
           columns={columns}
-          disableInputSearch
           rows={listPerson}
           selectionMode="single"
-          headerChildren={<FiltersSection onChageFilter={handleGetPersons} />}
+          headerChildren={
+            <FiltersSection
+              onChageFilter={handleGetPersons}
+              onClearFilter={handleClearFilter}
+            />
+          }
           count={persons?.count}
           loading={loading}
+          disableInputSearch
+          disablePagination
         />
       </Suspense>
     </main>

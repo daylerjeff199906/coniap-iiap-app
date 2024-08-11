@@ -18,11 +18,12 @@ const activeStatus = [
 
 interface IProps {
   onChageFilter: () => void
+  onClearFilter: () => void
 }
 
 export const FiltersSection = (props: IProps) => {
   const { getParams, updateFilter } = useFilterFromUrl()
-  const { onChageFilter } = props
+  const { onChageFilter, onClearFilter } = props
 
   const selectedTypePerson = getParams('typePerson', 'all')
   const selectedStatus = getParams('status', 'all')
@@ -101,6 +102,15 @@ export const FiltersSection = (props: IProps) => {
       >
         Filtrar
       </Button>
+      {selectedTypePerson !== 'all' || selectedStatus !== 'all' ? (
+        <Button
+          radius="sm"
+          onPress={onClearFilter}
+          color="warning"
+        >
+          Limpiar
+        </Button>
+      ) : null}
     </>
   )
 }
