@@ -1,6 +1,5 @@
 import { ISponsor } from './ISponsors'
 import { IProgram } from './IProgram'
-import { IMenuAside } from './IMenuAside'
 import { IColumns } from './table/IColumns'
 import { ITopic } from './ITopics'
 import { IGeneralInfo } from './IGeneralInfo'
@@ -13,7 +12,6 @@ import { IActions } from './table/IActions'
 export type {
   ISponsor,
   IProgram,
-  IMenuAside,
   IColumns,
   ITopic,
   IGeneralInfo,

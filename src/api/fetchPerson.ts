@@ -1,6 +1,6 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { IPerson } from '@/types'
+import { IPerson, IPersonFilter } from '@/types'
 
 export async function createPerson(props: IPerson) {
   const supabase = createClient()
@@ -183,5 +183,39 @@ export async function fetchPersonByEmail(email: string) {
     return null
   } else {
     return data
+  }
+}
+
+export async function fetchPersonsFilter(filters: IPersonFilter) {
+  const { query, typePerson, isNot, status } = filters
+  const supabase = createClient()
+
+  let queryBuilder = supabase
+    .from('persons')
+    .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+
+  if (query) {
+    queryBuilder = queryBuilder.ilike('name', `%${query}%`)
+  }
+
+  if (typePerson) {
+    queryBuilder = queryBuilder.eq('typePerson', typePerson)
+  }
+
+  if (isNot) {
+    queryBuilder = queryBuilder.not('typePerson', 'eq', isNot)
+  }
+
+  if (status) {
+    queryBuilder = queryBuilder.eq('isActived', status)
+  }
+
+  const { data, error, count } = await queryBuilder
+
+  if (error) {
+    return error
+  } else {
+    return { data, count }
   }
 }
