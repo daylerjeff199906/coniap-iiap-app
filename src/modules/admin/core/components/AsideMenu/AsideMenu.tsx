@@ -2,7 +2,7 @@
 import { usePathname } from 'next/navigation'
 import { Button, Accordion, AccordionItem, Image } from '@nextui-org/react'
 import logo from '@/assets/images/logo-admin.webp'
-import { IMenuItem, IMenuSideBar } from '@/types'
+import { IMenuSideBar } from '@/types'
 import Link from 'next/link'
 
 import {
@@ -15,6 +15,7 @@ import {
   IconTextGrammar,
   IconCategory2,
   IconSettings,
+  IconFileSpreadsheet,
 } from '@tabler/icons-react'
 
 interface IProps {
@@ -31,6 +32,7 @@ const icons = {
   categories: <IconCategory2 size={18} />,
   usersConfig: <IconUserCog size={18} />,
   settings: <IconSettings size={18} />,
+  excel: <IconFileSpreadsheet size={18} />,
 }
 
 function getIcon(icon: string) {

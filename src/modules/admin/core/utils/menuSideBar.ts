@@ -103,6 +103,23 @@ export const menuSideBar: IMenuSideBar[] = [
         moreItems: [],
       },
       {
+        id: 'Reportes',
+        icon: 'excel',
+        title: 'Reportes',
+        moreItems: [
+          {
+            id: 'participants-report',
+            title: 'Participantes',
+            href: '/admin/reportes',
+          },
+          // {
+          //   id: 'events-report',
+          //   title: 'Eventos',
+          //   href: '/admin/reportes/eventos',
+          // },
+        ],
+      },
+      {
         id: 'settings',
         icon: 'settings',
         title: 'Ajustes',
