@@ -1,7 +1,6 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
 import { Select, SelectItem, Selection } from '@nextui-org/react'
-import { usePathname } from 'next/navigation'
 
 const personsType = [
   { value: 'all', label: 'Todos' },
@@ -18,10 +17,6 @@ const activeStatus = [
 
 export const FiltersSection = () => {
   const { getParams, updateFilter } = useFilterFromUrl()
-  const pathname = usePathname()
-
-  const isPonentes = pathname.includes('ponentes')
-  const isAsistentes = pathname.includes('asistentes')
 
   const selectedTypePerson = getParams('typePerson', 'all')
   const selectedStatus = getParams('status', 'all')
@@ -43,39 +38,32 @@ export const FiltersSection = () => {
       updateFilter('status', value)
     }
   }
-  const labelPersonType = isPonentes ? 'Tipo de ponente' : 'Tipo de persona'
-  const optionsFiltered = isPonentes
-    ? personsType.filter((type) => type.value !== 'participant')
-    : personsType
 
   return (
     <>
-      {!isAsistentes && (
-        <div className="flex flex-col lg:flex-row gap-2 w-full sm:max-w-[280px]">
-          <Select
-            aria-label="Tipo de persona"
-            aria-labelledby="Tipo de persona"
-            radius="sm"
-            variant="bordered"
-            selectedKeys={[selectedTypePerson]}
-            onSelectionChange={(value) => handleTypePerson(value)}
-            disallowEmptySelection
-            // label={labelPersonType}
-            description={labelPersonType}
-          >
-            {optionsFiltered.map((type, i) => (
-              <SelectItem
-                aria-label={`Tipo de persona ${type.label}`}
-                aria-labelledby={`Tipo de persona ${type.label}`}
-                key={type.value}
-                value={type.value}
-              >
-                {type.label}
-              </SelectItem>
-            ))}
-          </Select>
-        </div>
-      )}
+      <div className="flex gap-2 w-full sm:max-w-[210px]">
+        <Select
+          aria-label="Tipo de persona"
+          aria-labelledby="Tipo de persona"
+          radius="sm"
+          variant="bordered"
+          selectedKeys={[selectedTypePerson]}
+          onSelectionChange={(value) => handleTypePerson(value)}
+          disallowEmptySelection
+          description="Tipo de persona"
+        >
+          {personsType.map((type, i) => (
+            <SelectItem
+              aria-label={`Tipo de persona ${type.label}`}
+              aria-labelledby={`Tipo de persona ${type.label}`}
+              key={type.value}
+              value={type.value}
+            >
+              {type.label}
+            </SelectItem>
+          ))}
+        </Select>
+      </div>
       <div className="flex gap-2 w-full sm:max-w-[210px]">
         <Select
           aria-label="Estado"
