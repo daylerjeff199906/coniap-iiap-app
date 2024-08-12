@@ -24,7 +24,7 @@ export const SponsorSection = (props: IProps) => {
   return (
     <>
       <section className="bg-white section-home">
-        <div className="container space-y-6 flex flex-col sm:flex-row gap-3">
+        <div className="container space-y-6 flex flex-col gap-3">
           <motion.header
             initial={{ opacity: 0 }}
             viewport={{ once: false }}
@@ -64,7 +64,7 @@ export const SponsorSection = (props: IProps) => {
             className="w-full"
           >
             {sponsors && (
-              <>
+              <div className="">
                 <Swiper
                   slidesPerView={1}
                   spaceBetween={10}
@@ -86,24 +86,38 @@ export const SponsorSection = (props: IProps) => {
                     },
                   }}
                   modules={[Pagination]}
-                  className="mySwiper"
+                  className="mySwiper items-center flex"
                 >
                   {sponsors?.map((sponsor) => (
                     <SwiperSlide
                       key={sponsor.id}
-                      className="flex justify-center items-center w-full h-full"
+                      className="flex flex-col justify-center items-center"
                     >
                       <Image
                         src={sponsor.image}
                         alt={sponsor.name}
                         removeWrapper
-                        className="w-full h-full"
+                        className="h-full w-full sm:w-auto sm:h-56"
                       />
                     </SwiperSlide>
                   ))}
                 </Swiper>
-              </>
+              </div>
             )}
+            {/* {sponsors && (
+              <div className="hidden sm:grid grid-cols-3 gap-3 w-full">
+                {sponsors?.map((sponsor) => (
+                  <div key={sponsor.id}>
+                    <Image
+                      src={sponsor.image}
+                      alt={sponsor.name}
+                      removeWrapper
+                      className="w-full  object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )} */}
           </motion.div>
         </div>
       </section>
