@@ -66,7 +66,6 @@ export const SponsorSection = (props: IProps) => {
             {sponsors && (
               <div className="">
                 <Swiper
-                  slidesPerView={1}
                   spaceBetween={10}
                   pagination={{
                     clickable: true,
@@ -82,42 +81,29 @@ export const SponsorSection = (props: IProps) => {
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 50,
                     },
                   }}
                   modules={[Pagination]}
-                  className="mySwiper items-center flex"
+                  className="items-center flex justify-center w-full"
                 >
                   {sponsors?.map((sponsor) => (
                     <SwiperSlide
                       key={sponsor.id}
-                      className="flex flex-col justify-center items-center"
+                      className="w-auto"
                     >
-                      <Image
-                        src={sponsor.image}
-                        alt={sponsor.name}
-                        removeWrapper
-                        className="h-full w-full sm:w-auto sm:h-56"
-                      />
+                      <div className="w-full flex flex-col gap-1 justify-center items-center">
+                        <Image
+                          src={sponsor.image}
+                          alt={sponsor.name}
+                          removeWrapper
+                          className="h-full w-full sm:w-auto sm:h-32"
+                        />
+                      </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
               </div>
             )}
-            {/* {sponsors && (
-              <div className="hidden sm:grid grid-cols-3 gap-3 w-full">
-                {sponsors?.map((sponsor) => (
-                  <div key={sponsor.id}>
-                    <Image
-                      src={sponsor.image}
-                      alt={sponsor.name}
-                      removeWrapper
-                      className="w-full  object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )} */}
           </motion.div>
         </div>
       </section>
