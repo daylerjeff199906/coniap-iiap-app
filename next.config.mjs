@@ -10,6 +10,7 @@ const nextConfig = {
       process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     VITE_FIREBASE_APP_ID: process.env.VITE_FIREBASE_APP_ID,
     VITE_FIREBASE_MEASUREMENT_ID: process.env.VITE_FIREBASE_MEASUREMENT_ID,
+    BREVO_API_KEY: process.env.BREVO_API_KEY,
   },
 }
 
