@@ -13,3 +13,5 @@ export {
   deleteLocalStorage,
   getLocalStorage,
 }
+
+export * from './brevo'
