@@ -18,6 +18,7 @@ import {
 import { createPerson, updateUser, fetchUserByEmail } from '@/api'
 
 import infoData from '@/utils/json/infoConiap.json'
+import { addContactToList } from '@/lib'
 
 function parseDate(date: string) {
   return new Date(date).toLocaleDateString('es-PE', {
@@ -90,6 +91,16 @@ export const FrmInscriptionSteps = (props: IProps) => {
             role: null,
           })
         }
+
+        await addContactToList(
+          {
+            email: resData.email as string,
+            name: resData.name as string,
+            surname: resData.surName as string,
+          },
+          7
+        )
+
         toast.success('Inscripción realizada correctamente')
         router.push('/inscripciones/info')
       }
@@ -107,6 +118,14 @@ export const FrmInscriptionSteps = (props: IProps) => {
             role: ['speaker'],
           })
         }
+        await addContactToList(
+          {
+            email: resData.email as string,
+            name: resData.name as string,
+            surname: resData.surName as string,
+          },
+          3
+        )
         toast.success('Inscripción realizada correctamente')
         router.push('/inscripciones/success')
       }

@@ -13,27 +13,6 @@ export default function Page() {
             </h1>
           </div>
           <NextSteps />
-
-          {/* <section>
-            <div className="flex items-start gap-3 p-4 rounded-md bg-primary-50 dark:bg-primary-500 text-primary-700 dark:text-primary-100 text-sm border-l-8 border-primary-500">
-              <div>
-                <IconInfoCircle size={24} />
-              </div>
-              <div>
-                <p>
-                  Si te inscribiste como asistente, y luego deseas enviar un
-                  resumen contactanos al correo{' '}
-                  <a
-                    href="mailto:ggagliardi@iiap.gob.pe"
-                    className="text-primary hover:underline"
-                  >
-                    ggagliardi@iiap.gob.pe
-                  </a>{' '}
-                  para habilitar tu cuenta.
-                </p>
-              </div>
-            </div>
-          </section> */}
           <section>
             <Link
               href="/"
