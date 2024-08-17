@@ -12,7 +12,7 @@ export const InfoDataSummary = () => {
   const personas: IPerson = watch('person') as IPerson
   const tematica: ITopic = watch('topic') as ITopic
   const authors: string[] = watch('authors') as string[]
-  const status = watch('isActived')
+  // const status = watch('isActived')
   const statusApproved = watch('isApproved')
   const isExternal = watch('isExternal')
 

@@ -11,6 +11,7 @@ import {
 } from '@/api'
 import { IPerson, IRes, IPersonFilter } from '@/types'
 import { toast } from 'react-toastify'
+import { addContactToList } from '@/lib'
 
 const message =
   'duplicate key value violates unique constraint "persons_email_key"'
@@ -31,6 +32,26 @@ export function usePersons() {
       .then((res) => res)
       .catch((err) => err)
     if (res) {
+      if (data.typePerson !== 'participant') {
+        addContactToList(
+          {
+            email: data.email,
+            name: data.name,
+            surname: data.surName,
+          },
+          3
+        )
+      } else {
+        addContactToList(
+          {
+            email: data.email,
+            name: data.name,
+            surname: data.surName,
+          },
+          7
+        )
+      }
+
       toast.success('Persona creada correctamente')
       setLoading(false)
       return res
