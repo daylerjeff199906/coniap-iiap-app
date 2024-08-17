@@ -20,6 +20,11 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
           Sube un archivo en formato PDF o Word para adjuntar al resumen. Máximo
           2 hojas.
         </p>
+        <p className="text-xs font-bold">
+          Te sugerimos que el nombre del archivo sea el mismo que el título del
+          resumen y que lleve tu primer apellido y tu nombre (Ejemplo: Título
+          del resumen_Apellido_Nombre.pdf).
+        </p>
       </div>
       <div>
         <Controller
