@@ -11,9 +11,5 @@ export default async function Page(params: IProps) {
   const { id } = params.params
   const data: ISummary = (await fetchSummaryById(id)) as ISummary
 
-  return (
-    <>
-      <FrmDetailSummary summary={data} />
-    </>
-  )
+  return <FrmDetailSummary summary={data} />
 }

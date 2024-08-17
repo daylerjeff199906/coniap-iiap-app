@@ -1,4 +1,5 @@
 import { cleanUrl } from './previewDoc'
 import { getFileType } from './previewDoc'
+import { cleanFilePath } from './cleanFilePath'
 
-export { cleanUrl, getFileType }
+export { cleanUrl, getFileType, cleanFilePath }
