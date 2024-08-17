@@ -104,21 +104,22 @@ export const FrmInscriptions = () => {
         image: '',
       }
 
-      console.log('newData', newData)
-      await addContactToList(
-        {
-          email: newData.email,
-          name: newData.name,
-          surname: newData.surName,
-        },
-        7
-      )
-      // const res: IPerson = await addPerson(newData)
-      // if (res !== null) {
-      //   resetForm()
-      //   toast.success(`Datos registrados con éxito. ¡Gracias por inscribirte!`)
-      //   router.push('/inscripciones/success')
-      // }
+      const res: IPerson = await addPerson(newData)
+      if (res !== null) {
+        await addContactToList(
+          {
+            email: newData.email,
+            name: newData.name,
+            surname: newData.surName,
+          },
+          7
+        )
+        resetForm()
+        toast.success(
+          `Datos registrados con éxito. ¡Gracias por inscribirte!,En breve te enviaremos un correo de confirmación a ${newData.email}`
+        )
+        router.push('/inscripciones/success')
+      }
     }
     setLoading(false)
   }
