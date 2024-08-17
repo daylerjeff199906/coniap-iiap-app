@@ -36,9 +36,10 @@ export const FrmUpdateSummary = (props: IProps) => {
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, ...rest } = data
     let newData: ISummary
+    const fileIsArray = Array.isArray(file)
 
     if (summary?.id) {
-      if (file?.length > 0) {
+      if (file?.length > 0 && fileIsArray) {
         const fileUp = file as unknown as File[]
 
         if (summary?.file) {

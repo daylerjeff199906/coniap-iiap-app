@@ -115,7 +115,7 @@ export const FrmUploadFile = (props: IProps) => {
             <main className="w-full">
               <HeaderSection
                 title="Subir archivo"
-                subtitle="Sube er arcchivo de tu resúmen"
+                subtitle="Sube el archivo de tu resúmen"
               />
             </main>
           </ModalHeader>
