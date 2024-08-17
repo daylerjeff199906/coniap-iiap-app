@@ -27,7 +27,7 @@ export const addContactToList = async (props: IContact, listId: number) => {
       updateEnabled: true, // Si true, actualizará el contacto si ya existe
     }
 
-    const res = await apiContact.createContact(contact)
+    await apiContact.createContact(contact)
   } catch (error: any) {
     if (error.body && error.body.code === 'duplicate_parameter') {
       console.log('Contact already exists:', props.email)

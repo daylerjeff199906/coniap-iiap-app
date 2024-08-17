@@ -35,7 +35,11 @@ const columns: Array<IColumns> = [
     label: 'Persona',
     align: 'start',
   },
-
+  {
+    key: 'summary',
+    label: 'Adj. resumen',
+    align: 'start',
+  },
   {
     key: 'st_review',
     label: 'Estado de revisión',
@@ -53,10 +57,10 @@ const columns: Array<IColumns> = [
   },
 ]
 
-const actionsList = [
-  { label: 'Ver', href: '' },
-  { label: 'Editar', href: 'edit/' },
-]
+// const actionsList = [
+//   { label: 'Ver', href: '' },
+//   { label: 'Editar', href: 'edit/' },
+// ]
 
 export const ListSummaries = () => {
   const { getSummaries, summaries, loading } = useSummaries()
@@ -93,6 +97,7 @@ export const ListSummaries = () => {
             created_at: convertDate(summary.created_at),
             person: summary.person?.name + ' ' + summary.person?.surName,
             topic: summary.topic?.name || 'No tiene temática asignada',
+            summary: summary.file ? 'Sí' : 'No',
             st_review: RenderColumnAproved(summary.isApproved),
             status: summary.isActived,
             actions: 'actions',
