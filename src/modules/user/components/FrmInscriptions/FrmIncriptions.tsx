@@ -19,6 +19,7 @@ import { registerAndSendEmailVerification } from '@/auth'
 
 import infoData from '@/utils/json/infoConiap.json'
 import { AlertCustom } from '@/modules/core'
+import { addContactToList } from '@/lib'
 
 function parseDate(date: string) {
   return new Date(date).toLocaleDateString('es-PE', {
@@ -88,6 +89,14 @@ export const FrmInscriptions = () => {
         }
         const res: IPerson = await addPerson(newData)
         if (res !== null) {
+          await addContactToList(
+            {
+              email: newData.email,
+              name: newData.name,
+              surname: newData.surName,
+            },
+            3
+          )
           resetForm()
           toast.success(
             `Datos registrados con éxito, se ha enviado un correo de verificación a ${resData.email}`
@@ -102,10 +111,21 @@ export const FrmInscriptions = () => {
         isActived: false,
         image: '',
       }
+
       const res: IPerson = await addPerson(newData)
       if (res !== null) {
+        await addContactToList(
+          {
+            email: newData.email,
+            name: newData.name,
+            surname: newData.surName,
+          },
+          7
+        )
         resetForm()
-        toast.success(`Datos registrados con éxito. ¡Gracias por inscribirte!`)
+        toast.success(
+          `Datos registrados con éxito. ¡Gracias por inscribirte!,En breve te enviaremos un correo de confirmación a ${newData.email}`
+        )
         router.push('/inscripciones/success')
       }
     }
