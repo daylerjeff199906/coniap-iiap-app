@@ -18,14 +18,7 @@ export const PreviewDoc = () => {
       {value && (
         <section className="flex items-center gap-4 justify-between px-4 py-2 bg-white border-l-8 border-primary-500 rounded-sm">
           <div>
-            <h3 className="text-xs font-medium">
-              ARCHIVO:
-              {value && (
-                <span className="text-sm font-semibold text-gray-800">
-                  {' '} {cleanFilePath(value)}
-                </span>
-              )}
-            </h3>
+            <h3 className="text-xs font-medium">ARCHIVO ADJUNTO</h3>
             <p className="text-tiny text-gray-500">
               Si el archivo no se visualiza correctamente, descárgalo y ábrelo
             </p>
