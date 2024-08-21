@@ -81,12 +81,13 @@ export const UserData = (props: IProps) => {
         toast.success(
           <main className="flex flex-col gap-1">
             <h1 className="font-bold tex-sm">Usuario creado correctamente</h1>
-            <p className="tex-xs text-gray-500">
+            <p className="tex-xs text-gray-100">
               Se ha creado un usuario. Notifique al usuario que revise su correo
-              para activar la cuenta. Su nombre de usuario es su correo, y tiene
-              una contraseña predeterminada.
+              para activar la cuenta. El usuario es su correo, y tiene una
+              contraseña predeterminada.
             </p>
-          </main>
+          </main>,
+          { autoClose: 8000 }
         )
       }
     }
