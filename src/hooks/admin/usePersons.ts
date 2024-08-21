@@ -9,6 +9,7 @@ import {
   fetchPersons,
   fetchPersonsFilter,
   updateFieldUser,
+  fetchUserByEmail,
 } from '@/api'
 import { IPerson, IRes, IPersonFilter } from '@/types'
 import { toast } from 'react-toastify'
@@ -87,15 +88,30 @@ export function usePersons() {
     } else {
       toast.success('Persona actualizada correctamente')
 
-      if (data.typePerson !== 'participant' && data?.typePerson === 'speaker') {
-        updateFieldUser(id, 'role', ['speaker'])
-      } else if (
-        data.typePerson !== 'participant' &&
-        data?.typePerson === 'speaker_mg'
-      ) {
-        updateFieldUser(id, 'role', ['speaker_mg'])
-      } else if (data.typePerson === 'participant') {
-        updateFieldUser(id, 'role', [])
+      const userRes = await fetchUserByEmail(data.email)
+
+      if (userRes?.id) {
+        const rolesNow = userRes?.role
+
+        if (
+          data.typePerson !== 'participant' &&
+          data?.typePerson === 'speaker'
+        ) {
+          if (!rolesNow?.includes('speaker')) {
+            rolesNow?.push('speaker')
+            updateFieldUser(userRes?.id, 'role', rolesNow)
+          }
+        } else if (
+          data.typePerson !== 'participant' &&
+          data?.typePerson === 'speaker_mg'
+        ) {
+          if (!rolesNow?.includes('speaker_mg')) {
+            rolesNow?.push('speaker_mg')
+            updateFieldUser(userRes?.id, 'role', rolesNow)
+          }
+        } else if (data.typePerson === 'participant') {
+          updateFieldUser(userRes?.id, 'role', [])
+        }
       }
 
       setLoading(false)
