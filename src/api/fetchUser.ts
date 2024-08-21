@@ -69,6 +69,23 @@ export async function deleteUser(id: string): Promise<boolean> {
   return true
 }
 
+export async function updateFieldUser(
+  id: string,
+  field: string,
+  value: any
+): Promise<boolean> {
+  const client = createClient()
+  const { error } = await client
+    .from('users')
+    .update({ [field]: value })
+    .eq('id', id)
+
+  if (error) {
+    return false
+  }
+  return true
+}
+
 interface IFilter {
   query?: string
   column?: 'userName' | 'email'

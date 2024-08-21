@@ -8,6 +8,7 @@ import {
   fetchPersonsNotInEvent,
   fetchPersons,
   fetchPersonsFilter,
+  updateFieldUser,
 } from '@/api'
 import { IPerson, IRes, IPersonFilter } from '@/types'
 import { toast } from 'react-toastify'
@@ -85,6 +86,18 @@ export function usePersons() {
       return res
     } else {
       toast.success('Persona actualizada correctamente')
+
+      if (data.typePerson !== 'participant' && data?.typePerson === 'speaker') {
+        updateFieldUser(id, 'role', ['speaker'])
+      } else if (
+        data.typePerson !== 'participant' &&
+        data?.typePerson === 'speaker_mg'
+      ) {
+        updateFieldUser(id, 'role', ['speaker_mg'])
+      } else if (data.typePerson === 'participant') {
+        updateFieldUser(id, 'role', [])
+      }
+
       setLoading(false)
       return res
     }
