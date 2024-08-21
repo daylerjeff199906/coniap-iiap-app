@@ -93,31 +93,25 @@ export function usePersons() {
       const userRes = await fetchUserByEmail(data.email)
 
       if (userRes?.id) {
-        const rolesNow = userRes?.role
+        const rolesNow = userRes.role || []
 
-        if (
-          data.typePerson !== 'participant' &&
-          data?.typePerson === 'speaker'
-        ) {
-          if (!rolesNow?.includes('speaker')) {
-            rolesNow?.push('speaker')
-            await updateFieldUser(userRes?.id, 'role', rolesNow)
-          }
-        } else if (
-          data.typePerson !== 'participant' &&
-          data?.typePerson === 'speaker_mg'
-        ) {
-          if (!rolesNow?.includes('speaker_mg')) {
-            rolesNow?.push('speaker_mg')
-            await updateFieldUser(userRes?.id, 'role', rolesNow)
-          }
-        } else if (data.typePerson === 'participant') {
-          await updateFieldUser(userRes?.id, 'role', [])
-        }
-      } else {
         if (data.typePerson !== 'participant') {
-          toast.error('La persona no tiene usuario, le recomendamos crear uno')
+          const roleToAdd =
+            data.typePerson === 'speaker'
+              ? 'speaker'
+              : data.typePerson === 'speaker_mg'
+              ? 'speaker_mg'
+              : null
+
+          if (roleToAdd && !rolesNow.includes(roleToAdd)) {
+            rolesNow.push(roleToAdd)
+            await updateFieldUser(userRes.id, 'role', rolesNow)
+          }
+        } else {
+          await updateFieldUser(userRes.id, 'role', [])
         }
+      } else if (data.typePerson !== 'participant') {
+        toast.error('La persona no tiene usuario, le recomendamos crear uno')
       }
 
       setLoading(false)
