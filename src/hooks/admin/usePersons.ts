@@ -86,7 +86,9 @@ export function usePersons() {
       setLoading(false)
       return res
     } else {
-      toast.success('Persona actualizada correctamente')
+      toast.success('Persona actualizada correctamente', {
+        autoClose: false,
+      })
 
       const userRes = await fetchUserByEmail(data.email)
 
@@ -99,7 +101,7 @@ export function usePersons() {
         ) {
           if (!rolesNow?.includes('speaker')) {
             rolesNow?.push('speaker')
-            updateFieldUser(userRes?.id, 'role', rolesNow)
+            await updateFieldUser(userRes?.id, 'role', rolesNow)
           }
         } else if (
           data.typePerson !== 'participant' &&
@@ -107,10 +109,14 @@ export function usePersons() {
         ) {
           if (!rolesNow?.includes('speaker_mg')) {
             rolesNow?.push('speaker_mg')
-            updateFieldUser(userRes?.id, 'role', rolesNow)
+            await updateFieldUser(userRes?.id, 'role', rolesNow)
           }
         } else if (data.typePerson === 'participant') {
-          updateFieldUser(userRes?.id, 'role', [])
+          await updateFieldUser(userRes?.id, 'role', [])
+        }
+      } else {
+        if (data.typePerson !== 'participant') {
+          toast.error('La persona no tiene usuario, le recomendamos crear uno')
         }
       }
 
