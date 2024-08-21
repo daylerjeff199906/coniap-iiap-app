@@ -35,8 +35,8 @@ export const FrmLogin = () => {
     if (res) {
       await setUserData(res)
       if (res.role) {
-        toast.success('Bienvenido ' + res?.userName)
         if (res.role.length > 0) {
+          toast.success('Bienvenido ' + res?.userName)
           if (res.role.includes('admin')) {
             router.push('/admin')
           } else if (res.role.includes('superadmin')) {

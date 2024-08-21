@@ -44,7 +44,10 @@ export const DetailsParticipant = (props: IProps) => {
         data={data}
         summaries={summaries}
       />
-      <UserData user={user} />
+      <UserData
+        user={user}
+        person={data}
+      />
     </main>
   )
 }
