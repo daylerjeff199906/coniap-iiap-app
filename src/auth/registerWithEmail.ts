@@ -20,6 +20,7 @@ export async function registerAndSendEmailVerification(props: ICrendentials) {
     await sendEmailVerification(userCredential.user)
 
     // Devolver el usuario creado
+    console.log('userCredential', userCredential)
     return userCredential.user
   } catch (error) {
     const err = error as unknown as IError

@@ -30,6 +30,8 @@ export const FrmLogin = () => {
     setLoading(true)
     const res = await signInWithCredentials(data)
 
+    console.log('res', res)
+
     if (res) {
       toast.success('Bienvenido ' + res?.userName)
       await setUserData(res)

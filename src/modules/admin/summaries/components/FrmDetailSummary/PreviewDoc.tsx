@@ -5,7 +5,6 @@ import { getFileType } from '../../functions'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import { IconDownload } from '@tabler/icons-react'
-import { cleanFilePath } from '../../functions'
 
 export const PreviewDoc = () => {
   const { watch } = useFormContext<ISummary>()
