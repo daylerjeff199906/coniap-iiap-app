@@ -88,16 +88,15 @@ export const FrmInscriptions = () => {
           image: '',
         }
         const res: IPerson | null = await addPerson(newData)
-        console.log('res', res)
         if (res !== null) {
-          // await addContactToList(
-          //   {
-          //     email: newData.email,
-          //     name: newData.name,
-          //     surname: newData.surName,
-          //   },
-          //   3
-          // )
+          await addContactToList(
+            {
+              email: newData.email,
+              name: newData.name,
+              surname: newData.surName,
+            },
+            3
+          )
           resetForm()
           toast.success(
             `Datos registrados con éxito, se ha enviado un correo de verificación a ${resData.email}`

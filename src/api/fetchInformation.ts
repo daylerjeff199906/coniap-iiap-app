@@ -47,8 +47,6 @@ export async function updateRowInformation(
     .select()
     .single()
 
-  console.log(data)
-
   if (error) {
     return error
   } else {

@@ -55,7 +55,6 @@ export async function createProgram(props: IProgram) {
   if (error) {
     return error
   } else {
-    console.log('data', data)
     return data
   }
 }

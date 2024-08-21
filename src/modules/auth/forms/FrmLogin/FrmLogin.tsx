@@ -30,8 +30,6 @@ export const FrmLogin = () => {
     setLoading(true)
     const res = await signInWithCredentials(data)
 
-    console.log('res', res)
-
     if (res) {
       await setUserData(res)
       if (res.role) {
