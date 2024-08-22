@@ -128,3 +128,23 @@ export async function fetchSummaryById(id: string) {
     return data
   }
 }
+
+export async function fetchPersonsIsNotSummaryFile() {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('summaries(file)')
+    .neq('typePerson', 'participant')
+    .is('summaries.file', null) // Para agregar el chequeo de NULL correctamente
+    // .or('summaries.file.is.null, summaries.file.eq.""')
+
+  console.log(data)
+  console.log(error)
+
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}

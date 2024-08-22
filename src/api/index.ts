@@ -52,6 +52,7 @@ import {
   fetchSummaryStatus,
   fetchSummaryById,
   fetchSummaryByIdPerson,
+  fetchPersonsIsNotSummaryFile,
 } from './fetchSummaries'
 
 import { fetchSalas, createSala, fetchSalaById, updateSala } from './fetchSalas'
@@ -120,6 +121,7 @@ export {
   fetchSummaryStatus,
   fetchSummaryById,
   fetchSummaryByIdPerson,
+  fetchPersonsIsNotSummaryFile,
   //Salas
   fetchSalas,
   createSala,
