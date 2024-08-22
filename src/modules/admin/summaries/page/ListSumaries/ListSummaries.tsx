@@ -57,11 +57,6 @@ const columns: Array<IColumns> = [
   },
 ]
 
-// const actionsList = [
-//   { label: 'Ver', href: '' },
-//   { label: 'Editar', href: 'edit/' },
-// ]
-
 export const ListSummaries = () => {
   const { getSummaries, summaries, loading } = useSummaries()
   const [query, setQuery] = useState<string>('')
