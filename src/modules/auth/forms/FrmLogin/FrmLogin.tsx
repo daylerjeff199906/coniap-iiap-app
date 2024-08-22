@@ -31,17 +31,21 @@ export const FrmLogin = () => {
     const res = await signInWithCredentials(data)
 
     if (res) {
-      toast.success('Bienvenido ' + res?.userName)
       await setUserData(res)
       if (res.role) {
-        if (res.role.includes('admin')) {
-          router.push('/admin')
-        } else if (res.role.includes('superadmin')) {
-          router.push('/admin')
-        } else if (res.role.includes('editor')) {
-          router.push('/admin')
-        } else if (res.role.includes('speaker')) {
-          router.push('/dashboard')
+        if (res.role.length > 0) {
+          toast.success('Bienvenido ' + res?.userName)
+          if (res.role.includes('admin')) {
+            router.push('/admin')
+          } else if (res.role.includes('superadmin')) {
+            router.push('/admin')
+          } else if (res.role.includes('editor')) {
+            router.push('/admin')
+          } else if (res.role.includes('speaker')) {
+            router.push('/dashboard')
+          }
+        } else {
+          toast.info('No tienes permisos para acceder')
         }
       } else {
         router.push('/')

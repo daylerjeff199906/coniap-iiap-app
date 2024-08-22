@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import { IUser } from '@/types'
+import { IPerson, IUser } from '@/types'
 import { Button, Checkbox, CheckboxGroup, Divider } from '@nextui-org/react'
 import { createUser, updateUser } from '@/api'
 import { registerAndSendEmailVerification } from '@/auth'
@@ -17,6 +17,7 @@ import { toast } from 'react-toastify'
 
 interface IProps {
   user?: IUser | null
+  person: IPerson
 }
 
 const password_default = process.env.PASSWORD
@@ -30,7 +31,7 @@ const roles = [
 export const UserData = (props: IProps) => {
   const [isOpen, setOpen] = useState(false)
   const [loadSave, setLoadSave] = useState(false)
-  const { user } = props
+  const { user, person } = props
 
   const methods = useForm<IUser>({
     defaultValues: {
@@ -48,7 +49,7 @@ export const UserData = (props: IProps) => {
   const handleeSubmit: SubmitHandler<IUser> = async (data: IUser) => {
     setOpen(false)
     setLoadSave(true)
-    if (user) {
+    if (user?.email) {
       await updateUser({
         id: user.id,
         email: data.email,
@@ -62,22 +63,35 @@ export const UserData = (props: IProps) => {
       toast.success('Usuario actualizado correctamente')
     } else {
       const userCreated = await registerAndSendEmailVerification({
-        email: data.email,
+        email: person ? person.email : data.email,
         password: password_default ? password_default : 'coniap@2024_',
       })
-      if (userCreated) {
+
+      if (typeof userCreated === 'string') {
+        toast.error(userCreated)
+      } else {
         await createUser({
-          email: data.email,
+          email: person?.email,
           role: data?.role && data.role.length > 0 ? data.role : null,
-          userName: data.email.split('@')[0],
-          photo: '',
-          person: data?.id ? Number(data.id) : null,
+          userName: person?.email,
+          photo: person?.image,
+          person: person?.id ? Number(person.id) : null,
         })
-        setOpen(false)
-        toast.success('Usuario creado correctamente')
+
+        toast.success(
+          <main className="flex flex-col gap-1">
+            <h1 className="font-bold tex-sm">Usuario creado correctamente</h1>
+            <p className="tex-xs text-gray-100">
+              Se ha creado un usuario. Notifique al usuario que revise su correo
+              para activar la cuenta. El usuario es su correo, y tiene una
+              contraseña predeterminada.
+            </p>
+          </main>,
+          { autoClose: 8000 }
+        )
       }
-      // getUserByEmail(data.email)
     }
+    setOpen(false)
     setLoadSave(false)
   }
 

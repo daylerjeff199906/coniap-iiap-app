@@ -57,7 +57,6 @@ export const Calendary = (props: IProps) => {
           views={['day', 'agenda', 'month', 'week']}
         //   defaultDate={date}
           onView={(view) => setView(view)}
-        //   onSelectEvent={(event) => console.log('event', event)}
           onNavigate={(date) => setDate(date)}
           //   defaultDate={new Date()}
           //   min={new Date(2021, 0, 0, 8, 0, 0)}

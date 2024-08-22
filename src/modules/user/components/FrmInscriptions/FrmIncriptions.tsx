@@ -87,7 +87,7 @@ export const FrmInscriptions = () => {
           isActived: false,
           image: '',
         }
-        const res: IPerson = await addPerson(newData)
+        const res: IPerson | null = await addPerson(newData)
         if (res !== null) {
           await addContactToList(
             {
