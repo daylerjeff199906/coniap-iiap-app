@@ -4,7 +4,12 @@ import { NextSteps } from './NextSteps/NextSteps'
 import { ListSpeakers } from './ListSpeakers/ListSpeakers'
 import { ListMastersSpeakers } from './ListSpeakers/ListMastersSpeakers'
 import { DetailsSpeaker } from './ListSpeakers/DetailsSpeaker'
-import { AlbumSection, InfoAboutUs, OrganizationSection } from './AboutUs'
+import {
+  AlbumSection,
+  InfoAboutUs,
+  OrganizationSection,
+  TopicsSection,
+} from './AboutUs'
 
 export {
   ListShedule,
@@ -16,4 +21,5 @@ export {
   AlbumSection,
   InfoAboutUs,
   OrganizationSection,
+  TopicsSection,
 }
