@@ -29,6 +29,12 @@ export async function registerAndSendEmailVerification(props: ICrendentials) {
       return 'El correo no es válido'
     } else if (err.code === 'auth/weak-password') {
       return 'La contraseña es débil'
+    } else if (err.code === 'auth/too-many-requests') {
+      return 'Demasiadas solicitudes, intente más tarde'
+    } else if (err.code === 'auth/operation-not-allowed') {
+      return 'Operación no permitida'
+    } else if (err.code === 'auth/missing-email') {
+      return 'Falta el correo'
     } else {
       return err.message
     }

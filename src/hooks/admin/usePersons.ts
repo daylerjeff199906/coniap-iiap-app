@@ -8,6 +8,8 @@ import {
   fetchPersonsNotInEvent,
   fetchPersons,
   fetchPersonsFilter,
+  updateFieldUser,
+  fetchUserByEmail,
 } from '@/api'
 import { IPerson, IRes, IPersonFilter } from '@/types'
 import { toast } from 'react-toastify'
@@ -84,7 +86,34 @@ export function usePersons() {
       setLoading(false)
       return res
     } else {
-      toast.success('Persona actualizada correctamente')
+      toast.success('Persona actualizada correctamente', {
+        autoClose: false,
+      })
+
+      const userRes = await fetchUserByEmail(data.email)
+
+      if (userRes?.id) {
+        const rolesNow = userRes.role || []
+
+        if (data.typePerson !== 'participant') {
+          const roleToAdd =
+            data.typePerson === 'speaker'
+              ? 'speaker'
+              : data.typePerson === 'speaker_mg'
+              ? 'speaker_mg'
+              : null
+
+          if (roleToAdd && !rolesNow.includes(roleToAdd)) {
+            rolesNow.push(roleToAdd)
+            await updateFieldUser(userRes.id, 'role', rolesNow)
+          }
+        } else {
+          await updateFieldUser(userRes.id, 'role', [])
+        }
+      } else if (data.typePerson !== 'participant') {
+        toast.error('La persona no tiene usuario, le recomendamos crear uno')
+      }
+
       setLoading(false)
       return res
     }

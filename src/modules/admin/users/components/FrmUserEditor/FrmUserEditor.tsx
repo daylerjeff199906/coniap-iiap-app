@@ -32,7 +32,6 @@ export const FrmUserEditor = (props: IProps) => {
       person_detail: user?.person || null,
     },
   })
-  // console.log('user', user)
 
   const onSubmit = () => {
     setIsModalOpen(true)

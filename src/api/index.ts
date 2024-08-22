@@ -64,6 +64,7 @@ import {
   deleteUser,
   fetchUsers,
   fetchUserById,
+  updateFieldUser,
 } from './fetchUser'
 
 import {
@@ -134,6 +135,7 @@ export {
   deleteUser,
   fetchUsers,
   fetchUserById,
+  updateFieldUser,
   //
   fetchInformation,
   fetchInformationById,
