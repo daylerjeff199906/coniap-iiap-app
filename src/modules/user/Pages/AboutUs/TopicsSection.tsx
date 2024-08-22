@@ -18,7 +18,7 @@ export const TopicsSection = async () => {
   }
 
   return (
-    <main className="flex flex-col gap-5">
+    <main className="flex flex-col gap-5 py-6 sm:py-8 lg:py-16">
       <header>
         <div className="flex items-center gap-3 pb-3">
           <div className="dot-custom" />

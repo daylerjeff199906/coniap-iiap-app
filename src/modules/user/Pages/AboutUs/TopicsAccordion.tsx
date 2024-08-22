@@ -12,7 +12,7 @@ export const TopicsAccordion = (props: IProps) => {
       <Accordion
         itemClasses={{
           content: 'p-6',
-          title: 'text-white',
+          title: 'font-bold',
         }}
       >
         {data.map((topic) => (
@@ -20,21 +20,25 @@ export const TopicsAccordion = (props: IProps) => {
             key={topic.id}
             title={topic.name}
             startContent={
-              <Image
-                src={topic.image}
-                alt={topic.name}
-                width={50}
-                height={50}
-              />
+              <section
+                style={{
+                  backgroundColor: `${topic.color || '#0E793C'}`,
+                  borderRadius: '50%',
+                }}
+              >
+                <Image
+                  src={topic.image}
+                  alt={topic.name}
+                  width={50}
+                  height={50}
+                />
+              </section>
             }
             classNames={{
               trigger: `px-6`,
             }}
-            style={{
-              backgroundColor: `${topic.color || '#0E793C'}`,
-            }}
           >
-            {topic.description}
+            <main className="">{topic.description}</main>
           </AccordionItem>
         ))}
       </Accordion>
