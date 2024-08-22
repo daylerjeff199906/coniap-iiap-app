@@ -20,7 +20,6 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
     const result = await signInWithPopup(auth, provider)
     const user = result.user
     if (!user) {
-      toast.error('Error al iniciar sesión')
       return null
     } else {
       // Check if user exists in the database
@@ -60,11 +59,13 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
       } else {
         if (userApi?.person === null && personApi?.id) {
           const userApiUpdated = await updateUser({
+            id: userApi.id,
             email: user.email as string,
             photo: user.photoURL as string,
             userName: user.displayName as string,
             role: personApi.typePerson !== 'participant' ? ['speaker'] : null,
             emailVerified: user.emailVerified,
+            topics: userApi.topics,
             person: personApi.id ? Number(personApi.id) : null,
           })
 
@@ -72,7 +73,6 @@ export const SignInWithGoogle = async (): Promise<IUser | null> => {
             toast.error('Error al actualizar el usuario')
             return null
           }
-
           return userApiUpdated
         } else {
           return userApi
