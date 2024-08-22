@@ -1,4 +1,4 @@
-import { AlbumSection, InfoAboutUs, OrganizationSection } from '@/components'
+import { AlbumSection, InfoAboutUs, OrganizationSection } from '@/modules/user'
 import { fetchInformationById } from '@/api'
 import { IGeneralData } from '@/types'
 
