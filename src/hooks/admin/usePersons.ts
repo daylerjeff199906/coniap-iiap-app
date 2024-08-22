@@ -108,7 +108,7 @@ export function usePersons() {
             await updateFieldUser(userRes.id, 'role', rolesNow)
           }
         } else {
-          await updateFieldUser(userRes.id, 'role', [])
+          await updateFieldUser(userRes.id, 'role', ['user'])
         }
       } else if (data.typePerson !== 'participant') {
         toast.error('La persona no tiene usuario, le recomendamos crear uno')

@@ -9,6 +9,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 // import required modules
 import { Pagination } from 'swiper/modules'
+import Image from 'next/image'
 interface IProps {
   events: IEvent[] | undefined
 }
@@ -43,50 +44,70 @@ export const EventsSection = (props: IProps) => {
             </div>
           </motion.header>
           <div>
-            <Swiper
-              slidesPerView={1}
-              spaceBetween={8}
-              pagination={{
-                clickable: true,
-              }}
-              breakpoints={{
-                640: {
-                  slidesPerView: 1,
-                  spaceBetween: 4,
-                },
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 18,
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 24,
-                },
-              }}
-              modules={[Pagination]}
-              className="mySwiper"
-            >
-              {events &&
-                events.map((event, i) => (
-                  <SwiperSlide
-                    key={i}
-                    className="w-full"
-                  >
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      viewport={{ once: false }}
-                      whileInView={{
-                        opacity: 1,
-                        transition: {
-                          duration: 1,
-                        },
-                      }}
+            {events && events.length > 0 ? (
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={8}
+                pagination={{
+                  clickable: true,
+                }}
+                breakpoints={{
+                  640: {
+                    slidesPerView: 1,
+                    spaceBetween: 4,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 18,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 24,
+                  },
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+              >
+                {events &&
+                  events.map((event, i) => (
+                    <SwiperSlide
+                      key={i}
+                      className="w-full"
                     >
-                      <CardEvent event={event} />
-                    </motion.div>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        viewport={{ once: false }}
+                        whileInView={{
+                          opacity: 1,
+                          transition: {
+                            duration: 1,
+                          },
+                        }}
+                      >
+                        <CardEvent event={event} />
+                      </motion.div>
+                    </SwiperSlide>
+                  ))}
+              </Swiper>
+            ) : (
+              <div className="flex justify-center items-center gap-6">
+                <Image
+                  src="/svg/not-courses.svg"
+                  alt="No hay cursos disponibles"
+                  width={320}
+                  height={320}
+                />
+
+                <div className="flex flex-col items-start">
+                  <h3 className="text-sm text-center font-bold lg:text-base">
+                    No hay cursos disponibles
+                  </h3>
+                  <p className="text-xs lg:text-sm">
+                    Aún no se han programado cursos post congreso
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

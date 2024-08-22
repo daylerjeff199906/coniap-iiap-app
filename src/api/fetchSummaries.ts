@@ -39,6 +39,7 @@ export async function fetchSummaries(
     person_id?: string
     topic_id?: string
     created_at?: string
+    isFile?: boolean
   }
 ) {
   const supabase = createClient()
@@ -63,6 +64,13 @@ export async function fetchSummaries(
   }
   if (filters?.created_at) {
     request = request.ilike('created_at', `${filters.created_at}%`)
+  }
+  if (filters?.isFile !== undefined) {
+    if (filters.isFile) {
+      request = request.not('file', 'eq', '')
+    } else {
+      request = request.eq('file', '')
+    }
   }
 
   const { data, error } = await request
@@ -113,6 +121,26 @@ export async function fetchSummaryById(id: string) {
     .select('*,person:person_id(*), topic:topic_id(*)')
     .eq('id', id)
     .single()
+
+  if (error) {
+    return error
+  } else {
+    return data
+  }
+}
+
+export async function fetchPersonsIsNotSummaryFile() {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('persons')
+    .select('summaries(file)')
+    .neq('typePerson', 'participant')
+    .is('summaries.file', null) // Para agregar el chequeo de NULL correctamente
+    // .or('summaries.file.is.null, summaries.file.eq.""')
+
+  console.log(data)
+  console.log(error)
 
   if (error) {
     return error

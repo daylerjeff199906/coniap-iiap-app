@@ -17,6 +17,12 @@ const aprovedStatus = [
   { value: 'pending', label: 'Pendiente' },
 ]
 
+const optionsFiles = [
+  { value: 'all', label: 'Todos' },
+  { value: 'true', label: 'Sí' },
+  { value: 'false', label: 'No' },
+]
+
 const optionsTopics = [{ value: 'all', label: 'Todos' }]
 
 export const FiltersSection = () => {
@@ -26,6 +32,7 @@ export const FiltersSection = () => {
   const selectedStatus = getParams('status', 'all')
   const selectedAproved = getParams('aproved', 'all')
   const selectedTopic = getParams('topic', 'all')
+  const selectedFile = getParams('file', 'all')
 
   useEffect(() => {
     getTopics('', { isActived: 'TRUE' })
@@ -59,6 +66,15 @@ export const FiltersSection = () => {
       updateFilter('topic', '')
     } else {
       updateFilter('topic', value)
+    }
+  }
+
+  const handleFile = (val: Selection) => {
+    const value = Object.values(val)[0]
+    if (value === 'all') {
+      updateFilter('file', '')
+    } else {
+      updateFilter('file', value)
     }
   }
 
@@ -102,7 +118,7 @@ export const FiltersSection = () => {
         </Select>
       </div>
       {/* opciones de estado del resumen */}
-      <div className="flex gap-2 w-full max-w-[210px]">
+      <div className="flex gap-2 w-full max-w-[180px]">
         <Select
           aria-label="Estado"
           aria-labelledby="Estado"
@@ -121,6 +137,30 @@ export const FiltersSection = () => {
               value={status.value}
             >
               {status.label}
+            </SelectItem>
+          ))}
+        </Select>
+      </div>
+      {/* opciones de archivo */}
+      <div className="flex gap-2 w-full max-w-[120px]">
+        <Select
+          aria-label="Archivo"
+          aria-labelledby="Archivo"
+          radius="sm"
+          variant="bordered"
+          selectedKeys={[selectedFile]}
+          onSelectionChange={(value) => handleFile(value)}
+          disallowEmptySelection
+          description="Con archivo"
+        >
+          {optionsFiles.map((file, i) => (
+            <SelectItem
+              aria-label={`Archivo ${file.label}`}
+              aria-labelledby={`Archivo ${file.label}`}
+              key={file.value}
+              value={file.value}
+            >
+              {file.label}
             </SelectItem>
           ))}
         </Select>

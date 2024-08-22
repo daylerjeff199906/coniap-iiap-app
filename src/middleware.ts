@@ -4,7 +4,7 @@ import { IUser } from './types'
 
 const routePermissions: Record<string, string[]> = {
   '/admin': ['admin', 'editor'],
-  '/dashboard': ['speaker'],
+  '/dashboard': ['speaker', 'user'],
 }
 
 export function middleware(request: NextRequest) {
