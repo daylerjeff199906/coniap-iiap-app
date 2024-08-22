@@ -5,9 +5,10 @@ import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
-import { Chip, Spinner } from '@nextui-org/react'
+import { Button, Chip, Spinner } from '@nextui-org/react'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
+import { IconSpeakerphone } from '@tabler/icons-react'
 
 const columns: Array<IColumns> = [
   {
@@ -110,6 +111,18 @@ export const ListSummaries = () => {
         </div>
       }
     >
+      <section>
+        <Button
+          radius="sm"
+          variant="solid"
+          color="warning"
+          isDisabled={!isFile || (isFile === 'true' && summaries?.length === 0)}
+          startContent={<IconSpeakerphone />}
+          className='font-bold'
+        >
+          Recordar subir resúmenes
+        </Button>
+      </section>
       <TableGeneral
         columns={columns}
         loading={loading}
