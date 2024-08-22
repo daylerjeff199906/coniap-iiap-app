@@ -51,6 +51,7 @@ export function useSummaries() {
       person_id?: string
       topic_id?: string
       created_at?: string
+      isFile?: boolean
     }
   ) => {
     setLoading(true)

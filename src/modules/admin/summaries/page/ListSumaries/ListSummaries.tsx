@@ -66,6 +66,7 @@ export const ListSummaries = () => {
   const aproved = searchParams.get('aproved')
   const date = searchParams.get('date')
   const topic = searchParams.get('topic')
+  const isFile = searchParams.get('file')
 
   useEffect(() => {
     getSummaries(query, {
@@ -79,8 +80,9 @@ export const ListSummaries = () => {
           : undefined,
       created_at: date || undefined,
       topic_id: topic || undefined,
+      isFile: isFile === 'true' ? true : isFile === 'false' ? false : undefined,
     })
-  }, [query, status, aproved, date, topic])
+  }, [query, status, aproved, date, topic, isFile])
 
   const rows: IRows[] =
     summaries !== null && summaries?.length > 0

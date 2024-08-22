@@ -39,6 +39,7 @@ export async function fetchSummaries(
     person_id?: string
     topic_id?: string
     created_at?: string
+    isFile?: boolean
   }
 ) {
   const supabase = createClient()
@@ -63,6 +64,13 @@ export async function fetchSummaries(
   }
   if (filters?.created_at) {
     request = request.ilike('created_at', `${filters.created_at}%`)
+  }
+  if (filters?.isFile !== undefined) {
+    if (filters.isFile) {
+      request = request.not('file', 'eq', '')
+    } else {
+      request = request.eq('file', '')
+    }
   }
 
   const { data, error } = await request
