@@ -10,6 +10,8 @@ import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
 import { IconSpeakerphone } from '@tabler/icons-react'
 
+import { fetchPersonsIsNotSummaryFile } from '@/api'
+
 const columns: Array<IColumns> = [
   {
     key: 'created_at',
@@ -103,6 +105,11 @@ export const ListSummaries = () => {
         })
       : []
 
+  const handleGetPersonsIsNotSummaryFile = async () => {
+    const persons = await fetchPersonsIsNotSummaryFile()
+    console.log(persons)
+  }
+
   return (
     <Suspense
       fallback={
@@ -116,9 +123,10 @@ export const ListSummaries = () => {
           radius="sm"
           variant="solid"
           color="warning"
-          isDisabled={!isFile || (isFile === 'true' && summaries?.length === 0)}
+          isDisabled={!isFile || isFile !== 'true' || summaries?.length === 0}
           startContent={<IconSpeakerphone />}
-          className='font-bold'
+          className="font-bold"
+          // onPress={handleGetPersonsIsNotSummaryFile}
         >
           Recordar subir resúmenes
         </Button>

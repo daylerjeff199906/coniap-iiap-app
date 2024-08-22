@@ -5,6 +5,7 @@ import { Button, Tab, Tabs } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 import { formatDateToDDMMM } from '@/utils/functions'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface IProps {
   programs: IProgram[] | undefined
@@ -56,37 +57,52 @@ export const AgendaSection = (props: IProps) => {
             </Button>
           </motion.div>
           <div className="w-ful col-span-1 sm:col-span-2">
-            <Tabs
-              aria-label="Options"
-              variant="underlined"
-              classNames={{
-                panel: 'border-1',
-                tabContent: 'group-data-[selected=true]:font-bold text-xl',
-                tab: 'mb-2',
-              }}
-              size="lg"
-            >
-              {programs?.map((program, programIndex) => (
-                <Tab
-                  key={programIndex}
-                  title={formatDateToDDMMM(program.date as string)}
-                >
-                  <div className="sm:p-4 lg:p-6">
-                    {events
-                      ?.filter((event) => event.program?.id === program.id) // Filtrar eventos por program_id
-                      .slice(0, 7)
-                      .map((filteredEvent, eventIndex) => (
-                        <CardEvent
-                          key={eventIndex}
-                          event={filteredEvent}
-                          variant="list"
-                          showImage={false}
-                        />
-                      ))}
-                  </div>
-                </Tab>
-              ))}
-            </Tabs>
+            {programs && programs?.length > 0 && (
+              <Tabs
+                aria-label="Options"
+                variant="underlined"
+                classNames={{
+                  panel: 'border-1',
+                  tabContent: 'group-data-[selected=true]:font-bold text-xl',
+                  tab: 'mb-2',
+                }}
+                size="lg"
+              >
+                {programs?.map((program, programIndex) => (
+                  <Tab
+                    key={programIndex}
+                    title={formatDateToDDMMM(program.date as string)}
+                  >
+                    <div className="sm:p-4 lg:p-6">
+                      {events
+                        ?.filter((event) => event.program?.id === program.id) // Filtrar eventos por program_id
+                        .slice(0, 7)
+                        .map((filteredEvent, eventIndex) => (
+                          <CardEvent
+                            key={eventIndex}
+                            event={filteredEvent}
+                            variant="list"
+                            showImage={false}
+                          />
+                        ))}
+                    </div>
+                  </Tab>
+                ))}
+              </Tabs>
+            )}
+            {programs && programs?.length === 0 && (
+              <main className="w-full flex flex-col items-center justify-center">
+                <Image
+                  src="/svg/not-agenda.svg"
+                  alt="No hay eventos programados"
+                  width={280}
+                  height={280}
+                />
+                <h3 className="text-sm text-center font-bold">
+                  No hay eventos programados
+                </h3>
+              </main>
+            )}
           </div>
         </div>
       </section>

@@ -1,4 +1,9 @@
-import { AlbumSection, InfoAboutUs, OrganizationSection } from '@/components'
+import {
+  AlbumSection,
+  InfoAboutUs,
+  OrganizationSection,
+  TopicsSection,
+} from '@/modules/user'
 import { fetchInformationById } from '@/api'
 import { IGeneralData } from '@/types'
 
@@ -21,6 +26,7 @@ export default async function Page() {
     <>
       <article className="container py-6">
         <InfoAboutUs description={data.description} />
+        <TopicsSection />
         <AlbumSection />
         <OrganizationSection
           comiteCientifico={data.c_cientifico}

@@ -6,13 +6,14 @@ import { motion } from 'framer-motion'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination, Autoplay } from 'swiper/modules'
 
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/autoplay'
 
 // import required modules
-import { Pagination } from 'swiper/modules'
 import { ISponsor } from '@/types'
 
 interface IProps {
@@ -83,7 +84,8 @@ export const SponsorSection = (props: IProps) => {
                       slidesPerView: 3,
                     },
                   }}
-                  modules={[Pagination]}
+                  autoplay={true}
+                  modules={[Pagination, Autoplay]}
                   className="items-center flex justify-center w-full"
                 >
                   {sponsors?.map((sponsor) => (

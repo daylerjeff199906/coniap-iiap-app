@@ -2,7 +2,6 @@ import { ISponsor } from './ISponsors'
 import { IProgram } from './IProgram'
 import { IColumns } from './table/IColumns'
 import { ITopic } from './ITopics'
-import { IGeneralInfo } from './IGeneralInfo'
 import { IRows } from './table/IRows'
 import { IRes } from './responses/IResponse'
 import { ICountry } from './ICountry'
@@ -14,7 +13,6 @@ export type {
   IProgram,
   IColumns,
   ITopic,
-  IGeneralInfo,
   IRows,
   IRes,
   ICountry,

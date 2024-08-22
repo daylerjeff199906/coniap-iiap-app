@@ -7,6 +7,7 @@ const roles = [
   { value: 'admin', label: 'Administrador' },
   { value: 'revisor', label: 'Revisor' },
   { value: 'speaker', label: 'Ponente' },
+  { value: 'user', label: 'Usuario' },
 ]
 
 export const UserRoles = () => {
