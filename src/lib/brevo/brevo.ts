@@ -3,9 +3,15 @@ import * as Brevo from '@getbrevo/brevo'
 
 // const apiInstance = new brevo.TransactionalEmailsApi()
 const apiContact = new Brevo.ContactsApi()
+const apiCampaign = new Brevo.EmailCampaignsApi()
 
 apiContact.setApiKey(
   Brevo.ContactsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY as string
+)
+
+apiCampaign.setApiKey(
+  Brevo.EmailCampaignsApiApiKeys.apiKey,
   process.env.BREVO_API_KEY as string
 )
 
@@ -34,5 +40,50 @@ export const addContactToList = async (props: IContact, listId: number) => {
     } else {
       console.error('Error adding contact:', error)
     }
+  }
+}
+
+export const updateCampaignContacts = async (
+  campaignId: number,
+  listId: number,
+  contacts: IContact[]
+) => {
+  try {
+    // // 1. Eliminar todos los contactos existentes de la lista
+    // const listContacts = await apiContact.getContactsFromList(listId)
+    // const existingContacts = listContacts.contacts.map((contact) => contact.id)
+    // if (existingContacts.length > 0) {
+    //   await apiContact.deleteContactFromList(listId, {
+    //     contactIds: existingContacts,
+    //   })
+    // }
+
+    // 2. Añadir los nuevos contactos a la lista
+    for (const contact of contacts) {
+      const newContact = {
+        email: contact.email,
+        attributes: {
+          NOMBRE: contact.name,
+          APELLIDOS: contact.surname,
+        },
+        listIds: [listId],
+        updateEnabled: true,
+      }
+
+      await apiContact.createContact(newContact)
+    }
+
+    // 3. Actualizar la campaña con la nueva lista de contactos
+    const updateCampaign = {
+      recipients: {
+        listIds: [listId],
+      },
+    }
+
+    await apiCampaign.updateEmailCampaign(campaignId, updateCampaign)
+
+    console.log('Campaign updated successfully!')
+  } catch (error: any) {
+    console.error('Error updating campaign:', error)
   }
 }

@@ -5,9 +5,10 @@ import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
-import { Chip, Spinner } from '@nextui-org/react'
+import { Button, Chip, Spinner } from '@nextui-org/react'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
+import { IconSpeakerphone } from '@tabler/icons-react'
 
 const columns: Array<IColumns> = [
   {
@@ -57,11 +58,6 @@ const columns: Array<IColumns> = [
   },
 ]
 
-// const actionsList = [
-//   { label: 'Ver', href: '' },
-//   { label: 'Editar', href: 'edit/' },
-// ]
-
 export const ListSummaries = () => {
   const { getSummaries, summaries, loading } = useSummaries()
   const [query, setQuery] = useState<string>('')
@@ -71,6 +67,7 @@ export const ListSummaries = () => {
   const aproved = searchParams.get('aproved')
   const date = searchParams.get('date')
   const topic = searchParams.get('topic')
+  const isFile = searchParams.get('file')
 
   useEffect(() => {
     getSummaries(query, {
@@ -84,8 +81,9 @@ export const ListSummaries = () => {
           : undefined,
       created_at: date || undefined,
       topic_id: topic || undefined,
+      isFile: isFile === 'true' ? true : isFile === 'false' ? false : undefined,
     })
-  }, [query, status, aproved, date, topic])
+  }, [query, status, aproved, date, topic, isFile])
 
   const rows: IRows[] =
     summaries !== null && summaries?.length > 0
@@ -113,6 +111,18 @@ export const ListSummaries = () => {
         </div>
       }
     >
+      <section>
+        <Button
+          radius="sm"
+          variant="solid"
+          color="warning"
+          isDisabled={!isFile || (isFile === 'true' && summaries?.length === 0)}
+          startContent={<IconSpeakerphone />}
+          className='font-bold'
+        >
+          Recordar subir resúmenes
+        </Button>
+      </section>
       <TableGeneral
         columns={columns}
         loading={loading}
