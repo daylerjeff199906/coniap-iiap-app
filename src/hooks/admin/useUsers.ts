@@ -6,20 +6,21 @@ import { IUser } from '@/types'
 interface IFilter {
   column?: 'userName' | 'email'
   query?: string
+  page?: number
+  limit?: number
 }
 
 export function useUsers() {
   const [loading, setLoading] = useState<boolean>(false)
-  const [users, setUsers] = useState<IUser[] | null>(null)
+  const [users, setUsers] = useState<{
+    data: IUser[] | null
+    count: number | null
+  } | null>(null)
   const [user, setUser] = useState<IUser | null>(null)
 
   const getListUsers = async (props: IFilter) => {
-    const { query, column } = props
     setLoading(true)
-    const users = await fetchUsers({
-      column,
-      query,
-    })
+    const users = await fetchUsers(props)
 
     if (users) {
       setUsers(users)

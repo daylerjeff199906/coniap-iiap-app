@@ -10,6 +10,7 @@ import {
   OrganizationSection,
   TopicsSection,
 } from './AboutUs'
+import { AvisoSection } from './Home/AvisoSection'
 
 export {
   ListShedule,
@@ -22,4 +23,5 @@ export {
   InfoAboutUs,
   OrganizationSection,
   TopicsSection,
+  AvisoSection,
 }

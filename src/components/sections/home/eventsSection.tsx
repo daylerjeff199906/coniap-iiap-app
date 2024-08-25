@@ -90,7 +90,7 @@ export const EventsSection = (props: IProps) => {
                   ))}
               </Swiper>
             ) : (
-              <div className="flex justify-center items-center gap-6">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
                 <Image
                   src="/svg/not-courses.svg"
                   alt="No hay cursos disponibles"
@@ -98,7 +98,7 @@ export const EventsSection = (props: IProps) => {
                   height={320}
                 />
 
-                <div className="flex flex-col items-start">
+                <div className="flex flex-col items-start justify-center sm:justify-start sm:items-center">
                   <h3 className="text-sm text-center font-bold lg:text-base">
                     No hay cursos disponibles
                   </h3>
