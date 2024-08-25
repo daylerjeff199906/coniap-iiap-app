@@ -10,8 +10,18 @@ import { stepsInscription } from '@/utils/data'
 import Link from 'next/link'
 import { IconPlayerPlayFilled } from '@tabler/icons-react'
 
+import infoDataCongress from '@/utils/json/infoConiap.json'
+
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
+
+function parseDate(date: string) {
+  return new Date(date).toLocaleDateString('es-PE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 export default function Page() {
   const [infoData, setInfoData] = useState<IGeneralData | null>(null)
@@ -37,71 +47,114 @@ export default function Page() {
     driverObj.drive()
   }
 
+  const dateSpeaker = infoDataCongress.data.dates.summary.end
+  const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
+
   return (
-    <>
-      <main className="w-full">
-        <section className="container section py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-          <div className="col-span-2 flex flex-col gap-2">
-            <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-              PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
-            </h1>
-            <section className="flex flex-col gap-3">
-              <p className="sm:text-lg">
-                <b>Ten en cuenta </b> lo siguiente para participar en el
-                congreso:
-              </p>
-              <ul className="text-sm list-disc flex flex-col gap-2 px-3">
-                <li>
-                  Si deseas participar como asistente, registra tus datos
-                  personales en el formulario de inscripción y <b>¡Listo!</b>
-                </li>
-                <li>
-                  Si deseas participar como ponente, completa tus datos,
-                  selecciona participar como ponente y crea una contraseña, al
-                  finalizar{' '}
-                  <Link
-                    href="/login"
-                    className="text-primary hover:underline"
-                  >
-                    Inicia sesión {` `}
-                  </Link>{' '}
-                  y envía tu propuesta.
-                </li>
-                <li>
-                  Si ya estás registrado,{' '}
-                  <Link
-                    href="/login"
-                    className="text-primary hover:underline"
-                  >
-                    Inicia sesión {` `}
-                  </Link>
-                  y envía tu propuesta.
-                </li>
-              </ul>
-              <div>
-                <Button
-                  radius="full"
-                  color="warning"
-                  className="font-medium px-6"
-                  startContent={<IconPlayerPlayFilled size={20} />}
-                  variant="bordered"
-                  onPress={activeDriver}
+    <main className="w-full">
+      <section className="container section  py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
+        <div className="col-span-2 flex flex-col gap-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl">
+            PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
+          </h1>
+          <section className="flex flex-col gap-3">
+            <p className="sm:text-lg">
+              <b>Ten en cuenta </b> lo siguiente para participar en el congreso:
+            </p>
+            <ul className="text-sm list-disc flex flex-col gap-2 px-3">
+              <li>
+                Si deseas participar como asistente, registra tus datos
+                personales en el formulario de inscripción y <b>¡Listo!</b>
+              </li>
+              <li>
+                Si deseas participar como ponente, completa tus datos,
+                selecciona participar como ponente y crea una contraseña, al
+                finalizar{' '}
+                <Link
+                  href="/login"
+                  className="text-primary hover:underline"
                 >
-                  Ver demo
-                </Button>
-              </div>
-            </section>
+                  Inicia sesión {` `}
+                </Link>{' '}
+                y envía tu propuesta.
+              </li>
+              <li>
+                Si ya estás registrado,{' '}
+                <Link
+                  href="/login"
+                  className="text-primary hover:underline"
+                >
+                  Inicia sesión {` `}
+                </Link>
+                y envía tu propuesta.
+              </li>
+            </ul>
+            <div>
+              <Button
+                radius="full"
+                color="warning"
+                className="font-medium px-6"
+                startContent={<IconPlayerPlayFilled size={20} />}
+                variant="bordered"
+                onPress={activeDriver}
+              >
+                Ver demo
+              </Button>
+            </div>
+          </section>
+          <Image
+            src={img_logo.src}
+            alt="logo"
+            removeWrapper
+            className="w-1/3 lg:w-10/12"
+          />
+        </div>
+        <div className="lg:col-span-3">
+          <FrmInscriptions />
+        </div>
+      </section>
+      <section className="bg-gradient-to-r from-primary-900/90 to-primary-600/90  relative">
+        <div className="container sm:flex sm:items-center sm:gap-6 text-white py-6 sm:py-10 lg:py-14">
+          <div className="w.full h-full sm:min-w-[300px] lg:min-w-[420px]">
             <Image
-              src={img_logo.src}
+              src="/logo_coniap.webp"
               alt="logo"
-              removeWrapper
-              className="w-1/3 lg:w-10/12"
+              width={400}
+              height={200}
             />
           </div>
-          <div className="lg:col-span-3">
-            <FrmInscriptions />
+          <div className="space-y-4 sm:space-y-6 lg:space-y-8 sm:m-4 lg:m-6">
+            <div className="space-y-2">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+                Descarga el formato de resumen
+              </h1>
+              <h3 className="text-tiny sm:text-sm lg:text-base">
+                Si participas o deseas participar como ponente, ten en cuenta
+                que debes enviar tu resumen en el formato establecido.
+                !Descárgalo aquí!
+              </h3>
+            </div>
+            <Button
+              radius="full"
+              size="lg"
+              as={Link}
+              href={infoData?.format_summary || ''}
+              variant="bordered"
+              className="text-white"
+            >
+              Descargar formato
+            </Button>
           </div>
-        </section>
+        </div>
+        <Image
+          src="https://siepsi.com.co/wp-content/uploads/2021/11/ponencia.jpeg"
+          alt="inscriptions"
+          removeWrapper
+          radius="none"
+          className="absolute top-0 left-0 w-full h-full object-cover object-center -z-10"
+        />
+      </section>
+      {isBeforeSpeaker && (
         <article className="bg-gray-100">
           <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
             <div className="lg:col-span-3 flex flex-col gap-4">
@@ -121,17 +174,6 @@ export default function Page() {
                 >
                   Enviar resúmen
                 </Button>
-                <Button
-                  size="lg"
-                  radius="full"
-                  variant="light"
-                  download={true}
-                  as={Link}
-                  href={infoData?.format_summary || ''}
-                  id="download-format"
-                >
-                  Descargar formato
-                </Button>
               </div>
             </div>
             <div className=" col-span-2">
@@ -145,7 +187,7 @@ export default function Page() {
             </div>
           </section>
         </article>
-      </main>
-    </>
+      )}
+    </main>
   )
 }

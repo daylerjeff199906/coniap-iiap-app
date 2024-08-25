@@ -12,16 +12,19 @@ export const ListUsers = () => {
   const { getListUsers, loading, users } = useUsers()
   const [query, setQuery] = useState<string>('')
   const [qtype, setQtype] = useState<string>('userName')
+  const [page, setPage] = useState<number>(1)
 
   useEffect(() => {
     getListUsers({
       column: qtype as 'userName' | 'email',
       query,
+      page,
+      limit: 15,
     })
-  }, [query])
+  }, [query, page])
 
   const rows =
-    users?.map((user) => {
+    users?.data?.map((user) => {
       return {
         key: String(user.id),
         num: user.id,
@@ -47,6 +50,11 @@ export const ListUsers = () => {
       setQtype(value)
     }
   }
+  console.log(page)
+  const handleSearch = (val: string) => {
+    setPage(1)
+    setQuery(val)
+  }
 
   return (
     <>
@@ -54,7 +62,7 @@ export const ListUsers = () => {
         columns={columns}
         rows={rows}
         loading={loading}
-        onSearch={setQuery}
+        onSearch={handleSearch}
         searchValue={query}
         selectionMode="single"
         endInputSection={
@@ -63,6 +71,9 @@ export const ListUsers = () => {
             onSelectionChange={handleTypeSearch}
           />
         }
+        count={users?.count || 0}
+        page={page}
+        onPageChange={setPage}
       />
     </>
   )

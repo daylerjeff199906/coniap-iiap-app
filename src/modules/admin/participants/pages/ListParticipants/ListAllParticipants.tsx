@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect } from 'react'
 import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { FiltersSection, TypesSearch } from './sections'
 import { convertDate } from '@/utils/functions'
 import { Selection } from '@nextui-org/react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { columns, actions } from './columns'
 import { TableGeneral } from '@/components'
 import { usePersons } from '@/hooks/admin'
@@ -16,6 +16,7 @@ export const ListParticipants = () => {
   const { getParams, updateFilter } = useFilterFromUrl()
   const { getPersons, loading, persons } = usePersons()
   const pathname = usePathname()
+  const router = useRouter()
 
   const routes = {
     '/admin/participantes': {
@@ -98,6 +99,10 @@ export const ListParticipants = () => {
     updateFilter('page', String(page))
   }
 
+  const handleChangeSelect = (value: string) => {
+    router.push(`${pathname}/${value}`)
+  }
+
   return (
     <>
       <HeaderSection
@@ -127,6 +132,7 @@ export const ListParticipants = () => {
           count={persons?.count}
           page={Number(page)}
           onPageChange={handlePageChange}
+          onSelectionChange={(row) => handleChangeSelect(row.key.toString())}
         />
       </Suspense>
     </>

@@ -5,7 +5,6 @@ import { Button } from '@nextui-org/react'
 import { ModalAction } from '@/components'
 import { IPerson, IUser } from '@/types'
 import { toast } from 'react-toastify'
-import { IconAlertTriangleFilled } from '@tabler/icons-react'
 import { useRouter } from 'next/navigation'
 
 import {
@@ -19,6 +18,7 @@ import { createPerson, updateUser, fetchUserByEmail } from '@/api'
 
 import infoData from '@/utils/json/infoConiap.json'
 import { addContactToList } from '@/lib'
+import { AlertCustom } from '@/modules/core'
 
 function parseDate(date: string) {
   return new Date(date).toLocaleDateString('es-PE', {
@@ -49,7 +49,6 @@ export const FrmInscriptionSteps = (props: IProps) => {
   })
 
   const typePerson = methods.watch('typePerson')
-  // const email = methods.watch('email')
 
   const isSpeaker = typePerson === 'speaker'
 
@@ -88,7 +87,7 @@ export const FrmInscriptionSteps = (props: IProps) => {
           await updateUser({
             ...userApi,
             person: res?.id ? Number(res?.id) : null,
-            role: null,
+            role: ['user'],
           })
         }
 
@@ -145,22 +144,18 @@ export const FrmInscriptionSteps = (props: IProps) => {
 
   return (
     <article className="w-full flex flex-col gap-5">
-      <section
-        className={`p-4 rounded-sm font-medium flex gap-2 sm:mx-4 ${
-          isBefore
-            ? 'border-warning-500 bg-warning-50 text-warning-700 border-l-8'
-            : 'bg-danger-50 border-danger-500 text-danger-700 border-l-8'
-        }`}
-      >
-        <div>
-          <IconAlertTriangleFilled size={24} />
-        </div>
-        <p className="text-sm ">
-          <strong>Nota:</strong> La fecha límite para inscripciones como
-          participante es {dateFormatted}.{' '}
-          {isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'}
-        </p>
-      </section>
+      <AlertCustom
+        title={isBefore ? 'Nota: Fecha límite' : '¡Ya pasó la fecha límite!'}
+        type={isBefore ? 'warning' : 'error'}
+        showIcon
+        message={
+          <p className="text-sm ">
+            <strong>Nota:</strong> La fecha límite para inscripciones como
+            participante es {dateFormatted}.{' '}
+            {isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'}
+          </p>
+        }
+      />
       {isBefore && (
         <FormProvider {...methods}>
           <form
@@ -174,24 +169,24 @@ export const FrmInscriptionSteps = (props: IProps) => {
               <ContactData />
             </div>
             {isBeforeSpeaker && isSpeaker && (
-              <section
-                className={`p-4 rounded-sm font-medium flex col-span-2 gap-2 ${
-                  isBefore
-                    ? 'border-warning-500 bg-warning-50 text-warning-700 border-l-8'
-                    : 'bg-danger-50 border-danger-500 text-danger-700 border-l-8'
-                }`}
-              >
-                <div>
-                  <IconAlertTriangleFilled size={24} />
-                </div>
-                <p className="text-sm ">
-                  <strong>Nota:</strong> La fecha límite para enviar propuestas
-                  como ponente es {dateFormattedSpeaker}.{' '}
-                  {isBeforeSpeaker
-                    ? '¡Aún tienes tiempo!'
-                    : '¡Ya pasó la fecha límite!'}
-                </p>
-              </section>
+              <AlertCustom
+                title={
+                  isBeforeSpeaker
+                    ? 'Nota: Fecha límite'
+                    : '¡Ya pasó la fecha límite!'
+                }
+                type={isBeforeSpeaker ? 'warning' : 'error'}
+                message={
+                  <p className="text-sm ">
+                    <strong>Nota:</strong> La fecha límite para enviar
+                    propuestas como ponente es {dateFormattedSpeaker}.{' '}
+                    {isBeforeSpeaker
+                      ? '¡Aún tienes tiempo!'
+                      : '¡Ya pasó la fecha límite!'}
+                  </p>
+                }
+                showIcon
+              />
             )}
             {isBeforeSpeaker && <RoleData />}
             <div className="col-span-2 pt-3">

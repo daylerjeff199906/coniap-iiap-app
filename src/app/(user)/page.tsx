@@ -11,6 +11,7 @@ import {
 } from '@/components'
 
 import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
+import { AvisoSection } from '@/modules/user'
 
 export default async function Page() {
   const supabase = createClient()
@@ -89,6 +90,7 @@ export default async function Page() {
       <InscriptionsSection />
       <EventsSection events={dataEvents} />
       <SponsorSection sponsors={dataSponsors} />
+      <AvisoSection />
     </main>
   )
 }

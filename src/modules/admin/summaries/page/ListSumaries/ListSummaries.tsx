@@ -9,6 +9,7 @@ import { Button, Chip, Spinner } from '@nextui-org/react'
 import { FiltersSection } from './sections'
 import { convertDate } from '@/utils/functions'
 import { IconSpeakerphone } from '@tabler/icons-react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { fetchPersonsIsNotSummaryFile } from '@/api'
 
@@ -62,6 +63,8 @@ const columns: Array<IColumns> = [
 
 export const ListSummaries = () => {
   const { getSummaries, summaries, loading } = useSummaries()
+  const pathname = usePathname()
+  const router = useRouter()
   const [query, setQuery] = useState<string>('')
 
   const searchParams = useSearchParams()
@@ -110,6 +113,10 @@ export const ListSummaries = () => {
     console.log(persons)
   }
 
+  const handleSelectedChange = (value: string) => {
+    router.push(`${pathname}/${value}`)
+  }
+
   return (
     <Suspense
       fallback={
@@ -138,6 +145,8 @@ export const ListSummaries = () => {
         searchValue={query}
         rows={rows}
         headerChildren={<FiltersSection />}
+        selectionMode="single"
+        onSelectionChange={(row) => handleSelectedChange(row.key.toString())}
       />
     </Suspense>
   )

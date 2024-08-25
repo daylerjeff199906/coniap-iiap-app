@@ -159,6 +159,7 @@ export const FrmInscriptions = () => {
         <AlertCustom
           type={isBefore ? 'warning' : 'error'}
           title="Nota: Fecha límite"
+          showIcon
           message={`La fecha límite para inscripciones como participante es ${dateFormatted}. ${
             isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'
           }`}
@@ -189,6 +190,7 @@ export const FrmInscriptions = () => {
                       ? '¡Aún tienes tiempo!'
                       : '¡Ya pasó la fecha límite!'
                   }`}
+                  showIcon
                 />
               </section>
             )}
