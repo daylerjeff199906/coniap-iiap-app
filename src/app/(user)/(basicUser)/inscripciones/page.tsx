@@ -10,8 +10,18 @@ import { stepsInscription } from '@/utils/data'
 import Link from 'next/link'
 import { IconPlayerPlayFilled } from '@tabler/icons-react'
 
+import infoDataCongress from '@/utils/json/infoConiap.json'
+
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
+
+function parseDate(date: string) {
+  return new Date(date).toLocaleDateString('es-PE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 export default function Page() {
   const [infoData, setInfoData] = useState<IGeneralData | null>(null)
@@ -36,6 +46,9 @@ export default function Page() {
   function activeDriver() {
     driverObj.drive()
   }
+
+  const dateSpeaker = infoDataCongress.data.dates.summary.end
+  const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
 
   return (
     <main className="w-full">
@@ -116,8 +129,9 @@ export default function Page() {
                 Descarga el formato de resumen
               </h1>
               <h3 className="text-tiny sm:text-sm lg:text-base">
-                Para participar como ponente en el congreso, descarga el formato
-                de resumen para este congreso.
+                Si participas o deseas participar como ponente, ten en cuenta
+                que debes enviar tu resumen en el formato establecido.
+                !Descárgalo aquí!
               </h3>
             </div>
             <Button
@@ -132,46 +146,48 @@ export default function Page() {
             </Button>
           </div>
         </div>
-        {/* <UiImage
-          src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fauditorio.webp?alt=media&token=2cd62ce6-816a-4af4-974d-e0962d449911"
+        <Image
+          src="https://siepsi.com.co/wp-content/uploads/2021/11/ponencia.jpeg"
           alt="inscriptions"
           removeWrapper
           radius="none"
           className="absolute top-0 left-0 w-full h-full object-cover object-center -z-10"
-        /> */}
+        />
       </section>
-      <article className="bg-gray-100">
-        <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-          <div className="lg:col-span-3 flex flex-col gap-4">
-            <div className=" col-span-2 flex flex-col gap-3">
-              <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-                PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
-              </h1>
+      {isBeforeSpeaker && (
+        <article className="bg-gray-100">
+          <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
+            <div className="lg:col-span-3 flex flex-col gap-4">
+              <div className=" col-span-2 flex flex-col gap-3">
+                <h1 className="text-2xl sm:text-3xl lg:text-5xl">
+                  PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
+                </h1>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button
+                  size="lg"
+                  radius="full"
+                  as={Link}
+                  href="/login"
+                  color="danger"
+                  id="login-link"
+                >
+                  Enviar resúmen
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Button
-                size="lg"
-                radius="full"
-                as={Link}
-                href="/login"
-                color="danger"
-                id="login-link"
-              >
-                Enviar resúmen
-              </Button>
+            <div className=" col-span-2">
+              <Image
+                src={imgSpeakerInscription.src}
+                alt="speaker"
+                removeWrapper
+                className="max-h-80 lg:max-h-[480px]"
+                loading="lazy"
+              />
             </div>
-          </div>
-          <div className=" col-span-2">
-            <Image
-              src={imgSpeakerInscription.src}
-              alt="speaker"
-              removeWrapper
-              className="max-h-80 lg:max-h-[480px]"
-              loading="lazy"
-            />
-          </div>
-        </section>
-      </article>
+          </section>
+        </article>
+      )}
     </main>
   )
 }

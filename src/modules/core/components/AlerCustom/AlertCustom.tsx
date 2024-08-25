@@ -32,10 +32,16 @@ export const AlertCustom = (props: IProps) => {
 
   return (
     <div
-      className={`p-4 border-l-8 rounded-md font-medium flex flex-row items-start gap-2 ${types[type]}`}
+      className={`p-4 sm:p-6 border-l-8 rounded-md font-medium flex flex-row items-start gap-4 lg:gap-8 ${types[type]}`}
     >
       {showIcon && (
-        <div className="flex items-center justify-center">{icons[type]}</div>
+        <section>
+          <div className={`p-2 rounded-md shadow-lg`}>
+            <div className="flex items-center justify-center">
+              {icons[type]}
+            </div>
+          </div>
+        </section>
       )}
       <div className="flex flex-col gap-1">
         <div className="text-sm font-semibold">{title}</div>
