@@ -52,7 +52,7 @@ export default function Page() {
 
   return (
     <main className="w-full">
-      <section className="container section sm:pb-0 p-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
+      <section className="container section  py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
         <div className="col-span-2 flex flex-col gap-2">
           <h1 className="text-2xl sm:text-3xl lg:text-5xl">
             PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
