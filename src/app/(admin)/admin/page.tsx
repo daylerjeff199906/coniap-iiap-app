@@ -21,7 +21,10 @@ export default async function Page() {
     limit: 10,
   })) as IData | null
 
-  const users = await fetchUsers({})
+  const users = await fetchUsers({
+    page: 1,
+    limit: 10,
+  })
 
   const data = {
     ponentes: personStats['speaker'],
@@ -42,7 +45,7 @@ export default async function Page() {
   if (!users) {
     userList = [] as unknown as IUser[]
   } else {
-    userList = users.slice(0, 10) as unknown as IUser[]
+    userList = users?.data?.slice(0, 10) as unknown as IUser[]
   }
 
   return (
@@ -51,7 +54,7 @@ export default async function Page() {
         <CardList data={data} />
         <PersonRecents data={personList} />
       </article>
-      <aside className="flex flex-col gap-3 w-80 max-w-80 sm:w-[320px] sm:max-w-[320px] lg:w-[420px] lg:max-w-[420px]">
+      <aside className="flex flex-col gap-3  sm:w-[320px] sm:max-w-[320px] lg:w-[420px] lg:max-w-[420px]">
         <PanelUser />
         <UserRecents data={userList} />
       </aside>

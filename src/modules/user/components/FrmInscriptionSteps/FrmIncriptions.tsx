@@ -88,7 +88,7 @@ export const FrmInscriptionSteps = (props: IProps) => {
           await updateUser({
             ...userApi,
             person: res?.id ? Number(res?.id) : null,
-            role: null,
+            role: ['user'],
           })
         }
 

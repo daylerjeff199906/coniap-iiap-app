@@ -89,15 +89,19 @@ export async function updateFieldUser(
 interface IFilter {
   query?: string
   column?: 'userName' | 'email'
+  page?: number
+  limit?: number
 }
 
-export async function fetchUsers(props: IFilter): Promise<IUser[] | null> {
-  const { query, column } = props
+export async function fetchUsers(
+  props: IFilter
+): Promise<{ data: IUser[] | null; count: number | null } | null> {
+  const { query, column, page, limit } = props
   const client = createClient()
 
   let users = client
     .from('users')
-    .select('*, person(*)')
+    .select('*, person(*)', { count: 'exact' })
     .order('created_at', { ascending: false })
 
   if (column === 'userName') {
@@ -106,10 +110,14 @@ export async function fetchUsers(props: IFilter): Promise<IUser[] | null> {
     users = users.ilike('email', `%${query}%`)
   }
 
-  const { data, error } = await users
+  if (page && limit) {
+    users = users.range((page - 1) * limit, page * limit - 1)
+  }
+
+  const { data, error, count } = await users
 
   if (error) {
     return null
   }
-  return data
+  return { data, count }
 }
