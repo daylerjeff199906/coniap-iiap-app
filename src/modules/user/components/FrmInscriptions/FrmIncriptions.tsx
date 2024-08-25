@@ -190,6 +190,7 @@ export const FrmInscriptions = () => {
                       ? '¡Aún tienes tiempo!'
                       : '¡Ya pasó la fecha límite!'
                   }`}
+                  showIcon
                 />
               </section>
             )}
