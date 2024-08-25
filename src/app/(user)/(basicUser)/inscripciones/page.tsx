@@ -38,114 +38,140 @@ export default function Page() {
   }
 
   return (
-    <>
-      <main className="w-full">
-        <section className="container section py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-          <div className="col-span-2 flex flex-col gap-2">
-            <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-              PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
-            </h1>
-            <section className="flex flex-col gap-3">
-              <p className="sm:text-lg">
-                <b>Ten en cuenta </b> lo siguiente para participar en el
-                congreso:
-              </p>
-              <ul className="text-sm list-disc flex flex-col gap-2 px-3">
-                <li>
-                  Si deseas participar como asistente, registra tus datos
-                  personales en el formulario de inscripción y <b>¡Listo!</b>
-                </li>
-                <li>
-                  Si deseas participar como ponente, completa tus datos,
-                  selecciona participar como ponente y crea una contraseña, al
-                  finalizar{' '}
-                  <Link
-                    href="/login"
-                    className="text-primary hover:underline"
-                  >
-                    Inicia sesión {` `}
-                  </Link>{' '}
-                  y envía tu propuesta.
-                </li>
-                <li>
-                  Si ya estás registrado,{' '}
-                  <Link
-                    href="/login"
-                    className="text-primary hover:underline"
-                  >
-                    Inicia sesión {` `}
-                  </Link>
-                  y envía tu propuesta.
-                </li>
-              </ul>
-              <div>
-                <Button
-                  radius="full"
-                  color="warning"
-                  className="font-medium px-6"
-                  startContent={<IconPlayerPlayFilled size={20} />}
-                  variant="bordered"
-                  onPress={activeDriver}
-                >
-                  Ver demo
-                </Button>
-              </div>
-            </section>
-            <Image
-              src={img_logo.src}
-              alt="logo"
-              removeWrapper
-              className="w-1/3 lg:w-10/12"
-            />
-          </div>
-          <div className="lg:col-span-3">
-            <FrmInscriptions />
-          </div>
-        </section>
-        <article className="bg-gray-100">
-          <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-            <div className="lg:col-span-3 flex flex-col gap-4">
-              <div className=" col-span-2 flex flex-col gap-3">
-                <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-                  PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
-                </h1>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button
-                  size="lg"
-                  radius="full"
-                  as={Link}
+    <main className="w-full">
+      <section className="container section sm:pb-0 p-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
+        <div className="col-span-2 flex flex-col gap-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl">
+            PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
+          </h1>
+          <section className="flex flex-col gap-3">
+            <p className="sm:text-lg">
+              <b>Ten en cuenta </b> lo siguiente para participar en el congreso:
+            </p>
+            <ul className="text-sm list-disc flex flex-col gap-2 px-3">
+              <li>
+                Si deseas participar como asistente, registra tus datos
+                personales en el formulario de inscripción y <b>¡Listo!</b>
+              </li>
+              <li>
+                Si deseas participar como ponente, completa tus datos,
+                selecciona participar como ponente y crea una contraseña, al
+                finalizar{' '}
+                <Link
                   href="/login"
-                  color="danger"
-                  id="login-link"
+                  className="text-primary hover:underline"
                 >
-                  Enviar resúmen
-                </Button>
-                <Button
-                  size="lg"
-                  radius="full"
-                  variant="light"
-                  download={true}
-                  as={Link}
-                  href={infoData?.format_summary || ''}
-                  id="download-format"
+                  Inicia sesión {` `}
+                </Link>{' '}
+                y envía tu propuesta.
+              </li>
+              <li>
+                Si ya estás registrado,{' '}
+                <Link
+                  href="/login"
+                  className="text-primary hover:underline"
                 >
-                  Descargar formato
-                </Button>
-              </div>
-            </div>
-            <div className=" col-span-2">
-              <Image
-                src={imgSpeakerInscription.src}
-                alt="speaker"
-                removeWrapper
-                className="max-h-80 lg:max-h-[480px]"
-                loading="lazy"
-              />
+                  Inicia sesión {` `}
+                </Link>
+                y envía tu propuesta.
+              </li>
+            </ul>
+            <div>
+              <Button
+                radius="full"
+                color="warning"
+                className="font-medium px-6"
+                startContent={<IconPlayerPlayFilled size={20} />}
+                variant="bordered"
+                onPress={activeDriver}
+              >
+                Ver demo
+              </Button>
             </div>
           </section>
-        </article>
-      </main>
-    </>
+          <Image
+            src={img_logo.src}
+            alt="logo"
+            removeWrapper
+            className="w-1/3 lg:w-10/12"
+          />
+        </div>
+        <div className="lg:col-span-3">
+          <FrmInscriptions />
+        </div>
+      </section>
+      <section className="bg-gradient-to-r from-primary-900/90 to-primary-600/90  relative">
+        <div className="container sm:flex sm:items-center sm:gap-6 text-white py-6 sm:py-10 lg:py-14">
+          <div className="w.full h-full sm:min-w-[300px] lg:min-w-[420px]">
+            <Image
+              src="/logo_coniap.webp"
+              alt="logo"
+              width={400}
+              height={200}
+            />
+          </div>
+          <div className="space-y-4 sm:space-y-6 lg:space-y-8 sm:m-4 lg:m-6">
+            <div className="space-y-2">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+                Descarga el formato de resumen
+              </h1>
+              <h3 className="text-tiny sm:text-sm lg:text-base">
+                Para participar como ponente en el congreso, descarga el formato
+                de resumen para este congreso.
+              </h3>
+            </div>
+            <Button
+              radius="full"
+              size="lg"
+              as={Link}
+              href={infoData?.format_summary || ''}
+              variant="bordered"
+              className="text-white"
+            >
+              Descargar formato
+            </Button>
+          </div>
+        </div>
+        {/* <UiImage
+          src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fauditorio.webp?alt=media&token=2cd62ce6-816a-4af4-974d-e0962d449911"
+          alt="inscriptions"
+          removeWrapper
+          radius="none"
+          className="absolute top-0 left-0 w-full h-full object-cover object-center -z-10"
+        /> */}
+      </section>
+      <article className="bg-gray-100">
+        <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
+          <div className="lg:col-span-3 flex flex-col gap-4">
+            <div className=" col-span-2 flex flex-col gap-3">
+              <h1 className="text-2xl sm:text-3xl lg:text-5xl">
+                PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
+              </h1>
+            </div>
+            <div className="flex items-center gap-3">
+              <Button
+                size="lg"
+                radius="full"
+                as={Link}
+                href="/login"
+                color="danger"
+                id="login-link"
+              >
+                Enviar resúmen
+              </Button>
+            </div>
+          </div>
+          <div className=" col-span-2">
+            <Image
+              src={imgSpeakerInscription.src}
+              alt="speaker"
+              removeWrapper
+              className="max-h-80 lg:max-h-[480px]"
+              loading="lazy"
+            />
+          </div>
+        </section>
+      </article>
+    </main>
   )
 }
