@@ -113,6 +113,14 @@ export const FrmSponsorEditor = (props: IProps) => {
                   )}
                 />
                 <p className="mt-4 mb-2 text-sm">Imagen</p>
+                <style
+                  jsx
+                  global
+                >{`
+                  .filepond--action-process-item {
+                    display: none !important;
+                  }
+                `}</style>
                 <FilePond
                   allowMultiple={false}
                   acceptedFileTypes={['image/*']}

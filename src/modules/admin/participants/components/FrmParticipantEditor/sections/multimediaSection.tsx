@@ -25,6 +25,14 @@ export const MultimediaSection = (props: IProps) => {
         Imagen de perfil
       </h3>
       <div className="w-44 h-44">
+        <style
+          jsx
+          global
+        >{`
+          .filepond--action-process-item {
+            display: none !important;
+          }
+        `}</style>
         <FilePond
           allowMultiple={false}
           acceptedFileTypes={['image/*']}

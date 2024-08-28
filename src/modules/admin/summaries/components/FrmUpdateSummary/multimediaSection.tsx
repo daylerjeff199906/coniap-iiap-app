@@ -20,6 +20,14 @@ export const MultimediaSection = ({ loading }: { loading?: boolean }) => {
         </p>
       </div>
       <div>
+        <style
+          jsx
+          global
+        >{`
+          .filepond--action-process-item {
+            display: none !important;
+          }
+        `}</style>
         <Controller
           name="file"
           control={control}

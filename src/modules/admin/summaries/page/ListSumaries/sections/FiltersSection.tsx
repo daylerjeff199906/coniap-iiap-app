@@ -94,7 +94,7 @@ export const FiltersSection = () => {
   return (
     <>
       {/* opciones de estado de revisión  */}
-      <div className="flex gap-2 w-full max-w-[210px]">
+      <div className="flex gap-2 w-full sm:max-w-[210px]">
         <Select
           aria-label="Estado"
           aria-labelledby="Estado"
@@ -118,7 +118,7 @@ export const FiltersSection = () => {
         </Select>
       </div>
       {/* opciones de estado del resumen */}
-      <div className="flex gap-2 w-full max-w-[180px]">
+      <div className="flex gap-2 w-full sm:max-w-[180px]">
         <Select
           aria-label="Estado"
           aria-labelledby="Estado"
@@ -142,7 +142,7 @@ export const FiltersSection = () => {
         </Select>
       </div>
       {/* opciones de archivo */}
-      <div className="flex gap-2 w-full max-w-[120px]">
+      <div className="flex gap-2 w-full sm:max-w-[120px]">
         <Select
           aria-label="Archivo"
           aria-labelledby="Archivo"
@@ -177,7 +177,7 @@ export const FiltersSection = () => {
         />
       </div>
       {/* opciones de temas */}
-      <div className="flex gap-2 w-full max-w-[210px]">
+      <div className="flex gap-2 w-full sm:max-w-[210px]">
         <Select
           aria-label="Tema"
           aria-labelledby="Tema"
