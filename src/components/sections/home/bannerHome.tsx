@@ -10,6 +10,8 @@ import { formatConferenceDate } from '@/utils/functions'
 import infoData from '@/utils/json/infoConiap.json'
 import { TimeSection } from './timeSection'
 import { lotScrollDown } from '@/assets'
+import { formatDate } from '@/utils/functions'
+
 import Lottie from 'lottie-react'
 import {
   IconDeviceLaptop,
@@ -53,10 +55,6 @@ const InfoItem: React.FC<InfoItemProps> = ({ Icon, text }) => (
   </div>
 )
 
-function convertDate(date: string) {
-  return new Date(date)
-}
-
 function scrollToElement(id: string) {
   const element = document.getElementById(id)
   if (element) {
@@ -95,6 +93,15 @@ export const BannerHome = () => {
   //Ya comenzó la conferencia
   const isAfterConference =
     dateNow > new Date(infoData.data.dates['date-conference'].end)
+
+  // Fecha de inscripción hasta
+  const dateInscriptionTo = formatDate(
+    infoData.data.dates['date-conference'].start,
+    'DD/MM/YYYY'
+  )
+
+  //Fecha resumen hasta
+  const dateSummaryTo = formatDate(summary.end, 'DD/MM/YYYY')
 
   return (
     <section
@@ -150,15 +157,11 @@ export const BannerHome = () => {
             />
             <InfoItem
               Icon={IconUsers}
-              text={`Inscríbete hasta el ${convertDate(
-                infoData.data.dates['date-conference'].start
-              ).toLocaleDateString()}`}
+              text={`Inscríbete hasta el ${dateInscriptionTo}`}
             />
             <InfoItem
               Icon={IconMicroscope}
-              text={`Enviar resumen hasta el ${convertDate(
-                summary.end
-              ).toLocaleDateString()}`}
+              text={`Enviar resumen hasta el ${dateSummaryTo}`}
             />
           </section>
           <div className="w-full flex items-center gap-3">
