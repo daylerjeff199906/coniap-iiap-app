@@ -5,22 +5,19 @@ import {
   Accordion,
   AccordionItem,
   Button,
-  Input,
   Popover,
   PopoverContent,
   PopoverTrigger,
-  Radio,
-  RadioGroup,
 } from '@nextui-org/react'
-import { useTopics } from '@/hooks/admin'
 import { IconFilter } from '@tabler/icons-react'
 
 import { AprovedFiltered } from './AprovedFiltered'
 import { StatusFilter } from './StatusFilter'
 import { FileFiltered } from './FileFiltered'
+import { TopicsFiltered } from './TopicsFiltered'
 
 export const FiltersSection = () => {
-  const { getParams, updateFilters, filteredParams } = useFilterFromUrl()
+  const { updateFilters, filteredParams } = useFilterFromUrl()
 
   const filteredList = [
     {
@@ -41,7 +38,7 @@ export const FiltersSection = () => {
     {
       key: 'topic',
       name: 'Tema',
-      items: <AprovedFiltered />,
+      items: <TopicsFiltered />,
     },
   ]
 
