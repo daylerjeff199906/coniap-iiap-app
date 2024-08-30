@@ -12,9 +12,6 @@ import {
   PopoverTrigger,
   Radio,
   RadioGroup,
-  Select,
-  SelectItem,
-  Selection,
 } from '@nextui-org/react'
 import { useTopics } from '@/hooks/admin'
 import { IconFilter } from '@tabler/icons-react'
@@ -73,8 +70,7 @@ export const FiltersSection = () => {
     updateFilter('date', val)
   }
 
-  const handleTopic = (val: Selection) => {
-    const value = Object.values(val)[0]
+  const handleTopic = (value: string) => {
     if (value === 'all') {
       updateFilter('topic', '')
     } else {
@@ -106,21 +102,26 @@ export const FiltersSection = () => {
   return (
     <>
       <Popover
-        placement="bottom"
+        placement="right-start"
         size="sm"
         radius="sm"
       >
         <PopoverTrigger>
           <Button
             radius="sm"
-            startContent={<IconFilter />}
-            className="font-bold"
+            startContent={
+              <IconFilter
+                size={18}
+                stroke={1.5}
+              />
+            }
+            className="font-semibold"
           >
             Filtros
           </Button>
         </PopoverTrigger>
         <PopoverContent>
-          <main className=" w-60">
+          <main className=" w-64">
             <Accordion isCompact>
               <AccordionItem
                 key="1"
@@ -181,6 +182,31 @@ export const FiltersSection = () => {
                       value={status.value}
                     >
                       {status.label}
+                    </Radio>
+                  ))}
+                </RadioGroup>
+              </AccordionItem>
+              <AccordionItem
+                key="4"
+                aria-label="Filter by topic"
+                title="Tema"
+              >
+                <RadioGroup
+                  aria-label="Filter by topic"
+                  onValueChange={handleTopic}
+                  value={selectedTopic}
+                  size="sm"
+                >
+                  {allTopics.map((topic) => (
+                    <Radio
+                      key={topic.value}
+                      value={topic.value.toString()}
+                      classNames={{
+                        label: 'text-xs',
+                        base: 'w-full max-w-[200px]',
+                      }}
+                    >
+                      {topic.label}
                     </Radio>
                   ))}
                 </RadioGroup>
