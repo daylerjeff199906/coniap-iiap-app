@@ -5,7 +5,7 @@ import Link from 'next/link'
 import infoData from '@/utils/json/infoConiap.json'
 import { useAuthContext } from '@/provider'
 import { IconAlertTriangleFilled } from '@tabler/icons-react'
-import { AlertCustom } from '@/modules/core'
+import { AlertCustom, HeaderSection } from '@/modules/core'
 
 export default function Page() {
   const { user } = useAuthContext()
@@ -50,29 +50,13 @@ export default function Page() {
       )}
       {user?.person !== null && (
         <main className="flex flex-col gap-4">
-          <section className="flex flex-col sm:flex-row gap-6 sm:justify-between">
-            <div>
-              <h1 className="sm:text-xl font-semibold">
-                Historial de resúmenes
-              </h1>
-              <p className="text-sm text-gray-500">
-                Aquí podrás ver los resúmenes que has enviado
-              </p>
-            </div>
-            {isBefore && (
-              <div>
-                <Button
-                  as={Link}
-                  href="/dashboard/files/new"
-                  color="primary"
-                  variant="solid"
-                  radius="sm"
-                >
-                  Enviar resumen
-                </Button>
-              </div>
-            )}
-          </section>
+          <HeaderSection
+            title="Historial de resúmenes"
+            subtitle="Aquí podrás ver los resúmenes que has enviado"
+            isButtonVisible={isBefore}
+            labelButton="Enviar resumen"
+            href="/dashboard/files/new"
+          />
           <AlertCustom
             showIcon
             title="Atención, fecha límite"
