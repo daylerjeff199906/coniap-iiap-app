@@ -87,7 +87,9 @@ export const FiltersSection = () => {
           <main className=" w-64">
             <Accordion
               isCompact
-              defaultExpandedKeys={filteredList?.map((filter) => filter.key)}
+              defaultExpandedKeys={selectedFilter?.map(
+                (filter) => filter.value
+              )}
             >
               {filteredList.map((filter) => (
                 <AccordionItem
