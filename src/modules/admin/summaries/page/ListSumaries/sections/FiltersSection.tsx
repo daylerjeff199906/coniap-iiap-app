@@ -4,6 +4,7 @@ import { useFilterFromUrl } from '@/modules/core'
 import {
   Accordion,
   AccordionItem,
+  Badge,
   Button,
   Popover,
   PopoverContent,
@@ -46,6 +47,16 @@ export const FiltersSection = () => {
     updateFilters({ date: val })
   }
 
+  const filtersLabel = [
+    { value: 'topics', name: 'Tema' },
+    { value: 'aproved', name: 'Aprobado' },
+    { value: 'status', name: 'Estado' },
+    { value: 'file', name: 'Tiene archivo' },
+  ]
+
+  const selectedFilter = filteredParams(filtersLabel)
+  console.log(selectedFilter)
+
   return (
     <>
       <Popover
@@ -57,10 +68,16 @@ export const FiltersSection = () => {
           <Button
             radius="sm"
             startContent={
-              <IconFilter
-                size={18}
-                stroke={1.5}
-              />
+              <Badge
+                content={selectedFilter?.length}
+                isInvisible={selectedFilter?.length === 0}
+                color="danger"
+              >
+                <IconFilter
+                  size={18}
+                  stroke={1.5}
+                />
+              </Badge>
             }
             className="font-semibold"
           >
