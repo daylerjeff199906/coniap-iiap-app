@@ -15,14 +15,6 @@ import infoDataCongress from '@/utils/json/infoConiap.json'
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
 
-function parseDate(date: string) {
-  return new Date(date).toLocaleDateString('es-PE', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
-
 export default function Page() {
   const [infoData, setInfoData] = useState<IGeneralData | null>(null)
 
