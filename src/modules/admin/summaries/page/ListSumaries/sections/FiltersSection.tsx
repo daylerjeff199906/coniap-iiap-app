@@ -16,6 +16,8 @@ import {
 import { useTopics } from '@/hooks/admin'
 import { IconFilter } from '@tabler/icons-react'
 
+import { AprovedFiltered } from './AprovedFiltered'
+
 const activeStatus = [
   { value: 'all', label: 'Todos' },
   { value: 'active', label: 'Activo' },
@@ -44,6 +46,29 @@ export const FiltersSection = () => {
   const selectedAproved = getParams('aproved', 'all')
   const selectedTopic = getParams('topic', 'all')
   const selectedFile = getParams('file', 'all')
+
+  const filteredList = [
+    {
+      key: 'status',
+      name: 'Estado',
+      items: <AprovedFiltered />,
+    },
+    {
+      key: 'aproved',
+      name: 'Aprobado',
+      items: <AprovedFiltered />,
+    },
+    {
+      key: 'file',
+      name: 'Tiene archivo',
+      items: <AprovedFiltered />,
+    },
+    {
+      key: 'topic',
+      name: 'Tema',
+      items: <AprovedFiltered />,
+    },
+  ]
 
   useEffect(() => {
     getTopics('', { isActived: 'TRUE' })
@@ -123,7 +148,7 @@ export const FiltersSection = () => {
         <PopoverContent>
           <main className=" w-64">
             <Accordion isCompact>
-              <AccordionItem
+              {/* <AccordionItem
                 key="1"
                 aria-label="Filter by status"
                 title="Estado"
@@ -210,7 +235,16 @@ export const FiltersSection = () => {
                     </Radio>
                   ))}
                 </RadioGroup>
-              </AccordionItem>
+              </AccordionItem> */}
+              {filteredList.map((filter) => (
+                <AccordionItem
+                  key={filter.key}
+                  aria-label={`Filter by ${filter.key}`}
+                  title={filter.name}
+                >
+                  {filter.items}
+                </AccordionItem>
+              ))}
             </Accordion>
           </main>
         </PopoverContent>
