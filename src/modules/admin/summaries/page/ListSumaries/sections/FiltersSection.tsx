@@ -37,8 +37,8 @@ const optionsFiles = [
 const optionsTopics = [{ value: 'all', label: 'Todos' }]
 
 export const FiltersSection = () => {
-  const { getParams, updateFilter } = useFilterFromUrl()
-  const { getTopics, topics, loading } = useTopics()
+  const { getParams, updateFilters } = useFilterFromUrl()
+  const { getTopics, topics } = useTopics()
 
   const selectedStatus = getParams('status', 'all')
   const selectedAproved = getParams('aproved', 'all')
@@ -52,37 +52,37 @@ export const FiltersSection = () => {
   const handleStatus = (val: string) => {
     // const value = Object.values(val)[0]
     if (val === 'all') {
-      updateFilter('status', '')
+      updateFilters({ status: '' })
     } else {
-      updateFilter('status', val)
+      updateFilters({ status: val })
     }
   }
 
   const handleAproved = (value: string) => {
     if (value === 'all') {
-      updateFilter('aproved', '')
+      updateFilters({ aproved: '' })
     } else {
-      updateFilter('aproved', value)
+      updateFilters({ aproved: value })
     }
   }
 
   const handleDate = (val: string) => {
-    updateFilter('date', val)
+    updateFilters({ date: val })
   }
 
   const handleTopic = (value: string) => {
     if (value === 'all') {
-      updateFilter('topic', '')
+      updateFilters({ topic: '' })
     } else {
-      updateFilter('topic', value)
+      updateFilters({ topic: value })
     }
   }
 
   const handleFile = (value: string) => {
     if (value === 'all') {
-      updateFilter('file', '')
+      updateFilters({ file: '' })
     } else {
-      updateFilter('file', value)
+      updateFilters({ file: value })
     }
   }
 

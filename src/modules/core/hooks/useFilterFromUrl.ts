@@ -89,5 +89,7 @@ export const useFilterFromUrl = () => {
   return {
     getParams,
     updateFilter,
+    updateFilters,
+    filteredParams,
   }
 }
