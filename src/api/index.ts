@@ -16,7 +16,6 @@ import {
   fetchPersonsNotInEvent,
   fetchPersonByEmail,
   fetchPersons,
-  fetchPersonsFilter,
 } from './fetchPerson'
 
 import { updateField, addFileToBucket } from './fetchFields'
@@ -90,7 +89,6 @@ export {
   fetchPersonsInEvent,
   fetchPersonsNotInEvent,
   fetchPersonByEmail,
-  fetchPersonsFilter,
   //Programs crud
   fetchProgram,
   fetchPrograms,

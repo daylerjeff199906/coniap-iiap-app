@@ -4,10 +4,7 @@ import {
   createPerson,
   fetchPersonById,
   updatePerson,
-  fetchPersonsInEvent,
-  fetchPersonsNotInEvent,
   fetchPersons,
-  fetchPersonsFilter,
   updateFieldUser,
   fetchUserByEmail,
 } from '@/api'
@@ -25,8 +22,6 @@ export function usePersons() {
     data: IPerson[]
     count: number
   } | null>(null)
-  const [personInEvent, setPersonInEvent] = useState<IPerson[] | null>(null)
-  const [asisstants, setAssistants] = useState<IPerson[] | null>(null)
 
   const addPerson = async (data: IPerson) => {
     setLoading(true)
@@ -129,33 +124,6 @@ export function usePersons() {
     setLoading(false)
   }
 
-  // const getListPersonsInEvent = async () => {
-  //   setLoading(true)
-  //   const data = await fetchPersonsInEvent()
-  //     .then((res) => res)
-  //     .catch((err) => err)
-  //   setPersonInEvent(data)
-  //   setLoading(false)
-  // }
-
-  // const getAssistants = async (query: string) => {
-  //   setLoading(true)
-  //   const data = await fetchPersonsNotInEvent(query)
-  //     .then((res) => res)
-  //     .catch((err) => err)
-  //   setAssistants(data)
-  //   setLoading(false)
-  // }
-
-  // const getPersonsFilter = async (filter: IPersonFilter) => {
-  //   setLoading(true)
-  //   const data = await fetchPersonsFilter(filter)
-  //     .then((res) => res)
-  //     .catch((err) => err)
-  //   setPersons(data)
-  //   setLoading(false)
-  // }
-
   return {
     loading,
     addPerson,
@@ -164,11 +132,6 @@ export function usePersons() {
     updatePersonData,
     getPersons,
     persons,
-    personInEvent,
-    // getListPersonsInEvent,
-    asisstants,
-    // getAssistants,
-    // getPersonsFilter,
     setPersons,
   }
 }
