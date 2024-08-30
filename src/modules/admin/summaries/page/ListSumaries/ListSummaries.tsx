@@ -76,7 +76,8 @@ export const ListSummaries = () => {
 
   useEffect(() => {
     getSummaries({
-      query,
+      // query,
+      person_name: query,
       isActived:
         status === 'active' ? true : status === 'inactived' ? false : undefined,
       isApproved:

@@ -25,4 +25,8 @@ export interface ISummaryFilter {
   topic_id?: string
   created_at?: string
   isFile?: boolean
+  //test for the search
+  person_name?: string
+  person_surName?: string
+  peson_id?: string
 }

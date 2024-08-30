@@ -14,6 +14,12 @@ export default async function Page() {
     infoData.data.dates.summary.end,
     'DD/MM/YYYY'
   )
+
+  const datestartConference = formatDate(
+    infoData.data.dates['date-conference'].start,
+    'DD/MM/YYYY'
+  )
+
   const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   return (
@@ -34,7 +40,7 @@ export default async function Page() {
         </p>
       </section>
       <section className="flex flex-col gap-4">
-        <main>
+        <main className="grid grid-cols-1 gap-4">
           <AlertCustom
             showIcon
             title="Atención, fecha límite"
@@ -44,6 +50,13 @@ export default async function Page() {
                 ? '¡No te quedes sin participar!'
                 : '¡Fecha límite vencida!'
             }`}
+          />
+
+          <AlertCustom
+            showIcon
+            title="Atención, fecha de conferencia"
+            type="info"
+            message={`La fecha de la conferencia es el ${datestartConference}`}
           />
         </main>
       </section>
