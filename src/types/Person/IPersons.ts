@@ -1,18 +1,18 @@
 export interface IPerson {
-  id?: string
+  id: string
   name: string
   surName: string
   phone?: string
   job: string
   imageFile?: File
   image: string
-  email: string
+  email: string // Un email único
   location?: string
   presentation?: string
   institution?: string
-  isActived?: boolean
+  isActived: boolean
   created_at: string
-  typePerson: 'speaker' | 'speaker_mg' | 'participant'
+  // typePerson: 'speaker' | 'speaker_mg' | 'participant'
 }
 
 export interface IPersonFilter {
