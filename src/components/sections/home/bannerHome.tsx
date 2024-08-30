@@ -10,7 +10,7 @@ import { formatConferenceDate } from '@/utils/functions'
 import infoData from '@/utils/json/infoConiap.json'
 import { TimeSection } from './timeSection'
 import { lotScrollDown } from '@/assets'
-import { formatDate } from '@/utils/functions'
+import { formatDate, getConferenceStatus } from '@/utils/functions'
 
 import Lottie from 'lottie-react'
 import {
@@ -74,25 +74,15 @@ export const BannerHome = () => {
     infoData.data.dates['date-conference']
   )
 
+  //Estados de fechas
+  const { isBeforeConference, isBeforeSummary, isAfterConference } =
+    getConferenceStatus(infoData.data.dates)
+
   //Modalidad
   const modality = infoData.data.modalidad
 
   //Fecha límite de envío de resúmen
   const summary = infoData.data.dates['summary']
-
-  //Fecha actual
-  const dateNow = new Date()
-
-  //aún hay tiempo de inscribirse antes de que empiece la conferencia
-  const isBeforeConference =
-    dateNow < new Date(infoData.data.dates['date-conference'].start)
-
-  // aùn hay tiempo de enviar resúmenes
-  const isBeforeSummary = dateNow < new Date(summary.end)
-
-  //Ya comenzó la conferencia
-  const isAfterConference =
-    dateNow > new Date(infoData.data.dates['date-conference'].end)
 
   // Fecha de inscripción hasta
   const dateInscriptionTo = formatDate(

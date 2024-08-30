@@ -15,6 +15,8 @@ import infoDataCongress from '@/utils/json/infoConiap.json'
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
 
+import { getConferenceStatus } from '@/utils/functions'
+
 export default function Page() {
   const [infoData, setInfoData] = useState<IGeneralData | null>(null)
 
@@ -39,8 +41,7 @@ export default function Page() {
     driverObj.drive()
   }
 
-  const dateSpeaker = infoDataCongress.data.dates.summary.end
-  const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
+  const { isBeforeSummary } = getConferenceStatus(infoDataCongress.data.dates)
 
   return (
     <main className="w-full">
@@ -146,7 +147,7 @@ export default function Page() {
           className="absolute top-0 left-0 w-full h-full object-cover object-center -z-10"
         />
       </section>
-      {isBeforeSpeaker && (
+      {isBeforeSummary && (
         <article className="bg-gray-100">
           <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
             <div className="lg:col-span-3 flex flex-col gap-4">
