@@ -57,9 +57,16 @@ export const ListParticipants = () => {
   const page = getParams('page', '1')
 
   useEffect(() => {
-    getPersons(query, type, isNot, statusValue, typeSearch, true, {
-      page: Number(page),
-      limit: limit,
+    getPersons({
+      column: typeSearch,
+      isPagination: true,
+      query,
+      isNot,
+      status: statusValue,
+      params: {
+        limit,
+        page: Number(page),
+      },
     })
   }, [query, type, isNot, statusValue, page])
 

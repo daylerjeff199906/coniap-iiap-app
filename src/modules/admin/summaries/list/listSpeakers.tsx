@@ -40,6 +40,8 @@ export const ListSpeakers = (props: IProps) => {
 
   useEffect(() => {
     getPersons({
+      column: 'name',
+      isPagination: true,
       query,
       isNot: 'participant',
       params: {
