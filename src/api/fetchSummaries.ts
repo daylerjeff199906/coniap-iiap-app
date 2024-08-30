@@ -54,8 +54,26 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
   if (filters?.topic_id) {
     request = request.eq('topic_id', filters.topic_id)
   }
-  if (filters?.created_at) {
-    request = request.ilike('created_at', `${filters.created_at}%`)
+  if (
+    filters?.created_at &&
+    !filters?.created_at_start &&
+    !filters?.created_at_end
+  ) {
+    const startOfDay = new Date(filters.created_at)
+    const endOfDay = new Date(startOfDay)
+    endOfDay.setDate(startOfDay.getDate() + 1)
+
+    request = request
+      .gte('created_at', startOfDay.toISOString())
+      .lt('created_at', endOfDay.toISOString())
+  }
+  if (filters?.created_at_start && filters?.created_at_end) {
+    const startOfDay = new Date(filters.created_at_start)
+    const endOfDay = new Date(filters.created_at_end)
+
+    request = request
+      .gte('created_at', startOfDay.toISOString())
+      .lt('created_at', endOfDay.toISOString())
   }
   if (filters?.isFile !== undefined) {
     if (filters.isFile) {
@@ -72,9 +90,6 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
   // }
 
   const { data, error } = await request
-
-  // console.log(data)
-  // console.log(error)
 
   if (error) {
     return error

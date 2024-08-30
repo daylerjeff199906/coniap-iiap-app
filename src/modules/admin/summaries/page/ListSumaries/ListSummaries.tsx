@@ -15,15 +15,16 @@ import { fetchPersonsIsNotSummaryFile } from '@/api'
 
 const columns: Array<IColumns> = [
   {
-    key: 'created_at',
-    label: 'Fecha de creación',
-    align: 'start',
-  },
-  {
     key: 'id',
     label: 'ID',
     align: 'center',
   },
+  {
+    key: 'created_at',
+    label: 'Fecha de creación',
+    align: 'start',
+  },
+
   {
     key: 'title',
     label: 'Título',
@@ -76,7 +77,6 @@ export const ListSummaries = () => {
 
   useEffect(() => {
     getSummaries({
-      // query,
       person_name: query,
       isActived:
         status === 'active' ? true : status === 'inactived' ? false : undefined,

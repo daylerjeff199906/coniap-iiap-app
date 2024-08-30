@@ -23,8 +23,10 @@ export interface ISummaryFilter {
   isMagistral?: boolean
   person_id?: string
   topic_id?: string
-  created_at?: string
   isFile?: boolean
+  created_at?: string
+  created_at_start?: string
+  created_at_end?: string
   //test for the search
   person_name?: string
   person_surName?: string

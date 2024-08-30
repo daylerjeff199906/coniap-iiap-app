@@ -7,6 +7,7 @@ import { IError } from './types'
 import { IUser, IPerson } from '@/types'
 import { toast } from 'react-toastify'
 import { getErrors } from './getErrors'
+import { addContactToList } from '@/lib'
 
 interface ILogin {
   email: string
@@ -47,6 +48,16 @@ export const signInWithCredentials = async (
 
         const newUserRes = await createUser(newUser)
         if (newUserRes && person) {
+          const typePerson = person?.typePerson === 'participant' ? 7 : 3
+
+          await addContactToList(
+            {
+              email: userCredential.user.email as string,
+              name: person?.name as string,
+              surname: person?.surName as string,
+            },
+            typePerson
+          )
           return {
             ...newUser,
             person: person,
