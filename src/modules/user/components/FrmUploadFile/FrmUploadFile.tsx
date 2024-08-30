@@ -105,6 +105,7 @@ export const FrmUploadFile = (props: IProps) => {
             ? 'Edita la información de tu resumen y envía el archivo de tu resumen'
             : 'Crea tu tema y envía el archivo de tu resumen de tu tema'
         }
+        hrefBack="/dashboard/files"
       />
       <FormProvider {...methods}>
         <form

@@ -11,6 +11,7 @@ interface IProps {
   href?: string
   rigthContent?: React.ReactNode
   showBackButton?: boolean
+  hrefBack?: string
 }
 
 export const HeaderSection = (props: IProps) => {
@@ -21,6 +22,7 @@ export const HeaderSection = (props: IProps) => {
     href,
     rigthContent,
     showBackButton,
+    hrefBack,
   } = props
   return (
     <>
@@ -28,15 +30,18 @@ export const HeaderSection = (props: IProps) => {
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="flex gap-2">
             {showBackButton && (
-              <div>
+              <div className="pt-2">
                 <Button
                   size="sm"
                   radius="sm"
                   isIconOnly
+                  variant="bordered"
+                  {...(hrefBack && { as: Link, href: hrefBack })}
                 >
                   <IconArrowNarrowLeft
                     size={20}
-                    className="text-white"
+                    stroke={1.5}
+                    className="text-gray-500"
                   />
                 </Button>
               </div>
