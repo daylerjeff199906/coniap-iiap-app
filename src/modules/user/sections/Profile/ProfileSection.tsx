@@ -8,9 +8,5 @@ interface IProps {
 
 export const ProfileSection = (props: IProps) => {
   const { person } = props
-  return (
-    <>
-      <FrmProfile person={person} />
-    </>
-  )
+  return <FrmProfile person={person} />
 }

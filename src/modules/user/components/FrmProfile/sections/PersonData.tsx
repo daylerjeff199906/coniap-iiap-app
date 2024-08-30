@@ -10,14 +10,6 @@ export const PersonData = () => {
   } = useFormContext<IPerson>()
   return (
     <>
-      <div>
-        <h2 className="text-sm font-semibold text-gray-500">
-          Datos personales
-        </h2>
-        <p className="text-xs text-gray-400">
-          Completa tus datos personales para que otros usuarios puedan conocerte
-        </p>
-      </div>
       <Controller
         control={control}
         name="name"
@@ -64,7 +56,7 @@ export const PersonData = () => {
             description="Ejemplo: Desarrollador de software"
             value={value}
             onValueChange={onChange}
-            radius='sm'
+            radius="sm"
           />
         )}
       />
@@ -78,7 +70,7 @@ export const PersonData = () => {
             labelPlacement="outside"
             value={value}
             onValueChange={onChange}
-            radius='sm'
+            radius="sm"
           />
         )}
       />
@@ -92,7 +84,7 @@ export const PersonData = () => {
             labelPlacement="outside"
             value={value}
             onValueChange={onChange}
-            radius='sm'
+            radius="sm"
           />
         )}
       />

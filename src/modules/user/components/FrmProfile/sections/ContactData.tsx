@@ -12,15 +12,6 @@ export const ContactData = () => {
 
   return (
     <>
-      <div>
-        <h2 className="text-sm font-semibold text-gray-500">
-          Datos de contacto
-        </h2>
-        <p className="text-xs text-gray-400">
-          Completa tus datos de contacto para que otros usuarios puedan
-          comunicarse contigo
-        </p>
-      </div>
       <Controller
         control={control}
         name="email"
