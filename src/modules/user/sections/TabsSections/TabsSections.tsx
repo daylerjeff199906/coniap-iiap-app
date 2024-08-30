@@ -9,57 +9,42 @@ const dataTabs = [
   {
     title: 'Inicio',
     href: '/dashboard',
-    icon: <IconHome size={28} />,
+    icon: (
+      <IconHome
+        size={28}
+        stroke={1.5}
+      />
+    ),
   },
   {
     title: 'Mis resumenes',
     href: '/dashboard/files',
-    icon: <IconFile size={28} />,
+    icon: (
+      <IconFile
+        size={28}
+        stroke={1.5}
+      />
+    ),
   },
   {
     title: 'Perfil',
     href: '/dashboard/profile',
-    icon: <IconUser size={28} />,
+    icon: (
+      <IconUser
+        size={28}
+        stroke={1.5}
+      />
+    ),
   },
 ]
 
 export const TabsSections = () => {
   const pathname = usePathname()
   return (
-    <>
-      <aside className="hidden sm:block">
-        <header className="py-2">
-          <main className="">
-            <Tabs
-              size="lg"
-              radius="sm"
-              variant="solid"
-              selectedKey={pathname}
-              classNames={{
-                tab: 'gap-4 py-12 px-4 sm:px-6 text-sm',
-              }}
-              isVertical={true}
-            >
-              {dataTabs.map((tab) => (
-                <Tab
-                  key={tab.href}
-                  title={
-                    <div className="flex flex-col items-center gap-2">
-                      {tab.icon}
-                      <span>{tab.title}</span>
-                    </div>
-                  }
-                  as={Link}
-                  href={tab.href}
-                />
-              ))}
-            </Tabs>
-          </main>
-        </header>
-      </aside>
-      <section className="block sm:hidden">
+    <main className="border-b">
+      <section className="h-16 bg-primary-800"></section>
+      <section className="container py-2">
         <Tabs
-          size="sm"
           radius="sm"
           variant="underlined"
           selectedKey={pathname}
@@ -69,6 +54,7 @@ export const TabsSections = () => {
               key={tab.href}
               title={
                 <div className="flex items-center gap-2">
+                  <div>{tab.icon}</div>
                   <span>{tab.title}</span>
                 </div>
               }
@@ -78,6 +64,6 @@ export const TabsSections = () => {
           ))}
         </Tabs>
       </section>
-    </>
+    </main>
   )
 }

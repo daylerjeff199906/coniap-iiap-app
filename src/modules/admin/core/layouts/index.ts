@@ -1,3 +1,3 @@
 import { PanelLayout } from './PanelLayout'
-
-export { PanelLayout }
+import { LayoutFrmHorizontal } from './LayoutFrmHorizontal'
+export { PanelLayout, LayoutFrmHorizontal }

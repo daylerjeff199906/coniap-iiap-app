@@ -1,12 +1,6 @@
 'use client'
 import { AlertCustom, HeaderSection } from '@/modules/core'
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-} from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 
@@ -19,6 +13,7 @@ import { useFiles, useSummaries } from '@/hooks/admin'
 import infoData from '@/utils/json/infoConiap.json'
 import { AuthorsSection } from './AuthorsSection'
 import { ActionsSummary } from './ActionsSummary'
+import { LayoutFrmHorizontal } from '@/modules/admin'
 
 interface IProps {
   summary?: ISummary
@@ -101,66 +96,71 @@ export const FrmUploadFile = (props: IProps) => {
   }
 
   return (
-    <>
-      <Modal
-        isOpen
-        onClose={handleExit}
-        size="2xl"
-        radius="sm"
-        scrollBehavior="inside"
-      >
-        <ModalContent>
-          <ModalHeader>
-            <main className="w-full">
-              <HeaderSection
-                title="Subir archivo"
-                subtitle="Sube el archivo de tu resúmen"
-              />
-            </main>
-          </ModalHeader>
-          <ModalBody>
-            <FormProvider {...methods}>
-              <form
-                className="w-full flex flex-col gap-3"
-                onSubmit={methods.handleSubmit(handleFormSubmit)}
-              >
-                <AlertCustom
-                  type={isBefore ? 'warning' : 'error'}
-                  showIcon
-                  title="Atención"
-                  message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
-                    isBefore
-                      ? '¡Aún puedes enviar tu resumen!'
-                      : 'La fecha límite ha pasado, no puedes enviar tu resumen.'
-                  }`}
-                />
-                <TopicSection />
-                <InfoSection />
-                <AuthorsSection />
-                <ActionsSummary />
-                <MultimediaSection />
-                <footer className="flex gap-3 items-center justify-end">
-                  <Button
-                    radius="sm"
-                    type="submit"
-                    isLoading={loading || loadingFile}
-                    isDisabled={loading || loadingFile || !isBefore}
-                    className="button-dark"
-                  >
-                    Guardar
-                  </Button>
-                  <Button
-                    radius="sm"
-                    onPress={handleExit}
-                  >
-                    Cancelar
-                  </Button>
-                </footer>
-              </form>
-            </FormProvider>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+    <main className="w-full flex flex-col gap-5">
+      <HeaderSection
+        showBackButton
+        title={summary?.id ? 'Editar resumen' : 'Nuevo resumen'}
+        subtitle={
+          summary?.id
+            ? 'Edita la información de tu resumen y envía el archivo de tu resumen'
+            : 'Crea tu tema y envía el archivo de tu resumen de tu tema'
+        }
+        hrefBack="/dashboard/files"
+      />
+      <FormProvider {...methods}>
+        <form
+          className="w-full flex flex-col gap-6"
+          onSubmit={methods.handleSubmit(handleFormSubmit)}
+        >
+          <AlertCustom
+            type={isBefore ? 'warning' : 'error'}
+            showIcon
+            title="Atención"
+            message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
+              isBefore
+                ? '¡Aún puedes enviar tu resumen!'
+                : 'La fecha límite ha pasado, no puedes enviar tu resumen.'
+            }`}
+          />
+          <LayoutFrmHorizontal
+            title="Información del resumen"
+            subtitle="Selecciona la temática e ingresa el título de tu resumen"
+          >
+            <TopicSection />
+            <InfoSection />
+          </LayoutFrmHorizontal>
+          <LayoutFrmHorizontal
+            title="Autores"
+            subtitle="Ingresa los datos de los autores del resumen"
+          >
+            <AuthorsSection />
+            <ActionsSummary />
+          </LayoutFrmHorizontal>
+          <LayoutFrmHorizontal
+            title="Multimedia"
+            subtitle="Sube el archivo de tu resumen"
+          >
+            <MultimediaSection />
+          </LayoutFrmHorizontal>
+          <footer className="flex gap-3 items-center justify-end">
+            <Button
+              radius="sm"
+              type="submit"
+              isLoading={loading || loadingFile}
+              isDisabled={loading || loadingFile || !isBefore}
+              className="button-dark"
+            >
+              Guardar
+            </Button>
+            <Button
+              radius="sm"
+              onPress={handleExit}
+            >
+              Cancelar
+            </Button>
+          </footer>
+        </form>
+      </FormProvider>
+    </main>
   )
 }

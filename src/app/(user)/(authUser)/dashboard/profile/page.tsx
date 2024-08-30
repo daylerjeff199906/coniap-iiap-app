@@ -2,6 +2,7 @@ import { ProfileSection } from '@/modules/user'
 import { fetchPersonByEmail } from '@/api'
 import { getCookie } from '@/lib'
 import { IUser, IResCookie, IPerson } from '@/types'
+import { HeaderSection } from '@/modules/core'
 
 export default async function Page() {
   const user: IResCookie = (await getCookie('user')) as unknown as IResCookie
@@ -19,12 +20,10 @@ export default async function Page() {
   return (
     <>
       <main className="flex flex-col gap-4">
-        <section>
-          <h1 className="sm:text-xl font-semibold">Configurar perfil</h1>
-          <p className="text-gray-500">
-            Mantén actualizada tu información personal
-          </p>
-        </section>
+        <HeaderSection
+          title="Configurar perfil"
+          subtitle="Mantén actualizada tu información personal"
+        />
         <section>
           <ProfileSection person={person} />
         </section>
