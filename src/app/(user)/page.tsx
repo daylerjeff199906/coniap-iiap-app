@@ -16,12 +16,6 @@ import { AvisoSection } from '@/modules/user'
 export default async function Page() {
   const supabase = createClient()
 
-  // const { data: GeneralInfo } = await supabase
-  //   .from('information')
-  //   .select('*')
-  //   .eq('id', 1)
-  //   .single()
-
   const { data: topics } = await supabase
     .from('topics')
     .select()

@@ -20,6 +20,7 @@ export interface IPersonFilter {
   typePerson?: string
   isNot?: string
   status?: string
-  // isPagination: boolean
-  // params: { page: number; limit: number }
+  column: string
+  isPagination?: boolean
+  params?: { page: number; limit: number }
 }

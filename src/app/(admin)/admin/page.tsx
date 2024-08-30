@@ -16,9 +16,12 @@ interface IData {
 export default async function Page() {
   const personStats = await fetchPersonStats()
 
-  const persons: IData | null = (await fetchPersons('', '', '', '', '', true, {
-    page: 1,
-    limit: 10,
+  const persons: IData | null = (await fetchPersons({
+    column: 'name',
+    params: {
+      limit: 10,
+      page: 1,
+    },
   })) as IData | null
 
   const users = await fetchUsers({

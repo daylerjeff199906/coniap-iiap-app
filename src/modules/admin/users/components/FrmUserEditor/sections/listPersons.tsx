@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components/general'
 import { IColumns, IRows } from '@/types'
 
-import { usePersons, usePrograms } from '@/hooks/admin'
+import { usePersons } from '@/hooks/admin'
 import { useFormContext } from 'react-hook-form'
 
 const columns: IColumns[] = [
@@ -37,10 +37,19 @@ export const ListPersons = (props: IProps) => {
   const { onSelectedSpeaker } = props
 
   const [query, setQuery] = useState('')
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    getPersons(query, '', '')
-  }, [query])
+    getPersons({
+      column: 'name',
+      isPagination: true,
+      query,
+      params: {
+        limit: 20,
+        page: page,
+      },
+    })
+  }, [query, page])
 
   const onSelectionChange = (row: IRows) => {
     setValue('person_id', row.key)
@@ -65,6 +74,11 @@ export const ListPersons = (props: IProps) => {
         })
       : []
 
+  const handleSearch = (value: string) => {
+    setQuery(value)
+    setPage(1)
+  }
+
   return (
     <>
       <section className="">
@@ -75,9 +89,13 @@ export const ListPersons = (props: IProps) => {
             onSelectionChange(row)
           }}
           loading={loading}
-          onSearch={(value) => setQuery(value)}
+          onSearch={handleSearch}
           searchValue={query}
           rows={rows}
+          disableWrapper
+          count={persons?.count || 0}
+          page={page}
+          onPageChange={(page) => setPage(page)}
         />
       </section>
     </>

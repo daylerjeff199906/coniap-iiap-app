@@ -16,7 +16,6 @@ import {
   fetchPersonsNotInEvent,
   fetchPersonByEmail,
   fetchPersons,
-  fetchPersonsFilter,
 } from './fetchPerson'
 
 import { updateField, addFileToBucket } from './fetchFields'
@@ -49,7 +48,6 @@ import {
   createSummary,
   updateSummary,
   fetchSummaries,
-  fetchSummaryStatus,
   fetchSummaryById,
   fetchSummaryByIdPerson,
   fetchPersonsIsNotSummaryFile,
@@ -91,7 +89,6 @@ export {
   fetchPersonsInEvent,
   fetchPersonsNotInEvent,
   fetchPersonByEmail,
-  fetchPersonsFilter,
   //Programs crud
   fetchProgram,
   fetchPrograms,
@@ -118,7 +115,6 @@ export {
   createSummary,
   updateSummary,
   fetchSummaries,
-  fetchSummaryStatus,
   fetchSummaryById,
   fetchSummaryByIdPerson,
   fetchPersonsIsNotSummaryFile,

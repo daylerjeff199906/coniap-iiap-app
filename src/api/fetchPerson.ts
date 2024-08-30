@@ -50,15 +50,9 @@ export async function fetchPerson(query: string) {
   }
 }
 
-export async function fetchPersons(
-  query: string,
-  typePerson: string,
-  isNot?: string,
-  status?: string,
-  column?: string,
-  isPagination?: boolean,
-  params?: { page: number; limit: number }
-) {
+export async function fetchPersons(filters: IPersonFilter) {
+  const { query, typePerson, isNot, status, column, isPagination, params } =
+    filters
   const supabase = createClient()
 
   // Comenzamos construyendo la consulta básica
@@ -183,39 +177,5 @@ export async function fetchPersonByEmail(email: string) {
     return null
   } else {
     return data
-  }
-}
-
-export async function fetchPersonsFilter(filters: IPersonFilter) {
-  const { query, typePerson, isNot, status } = filters
-  const supabase = createClient()
-
-  let queryBuilder = supabase
-    .from('persons')
-    .select('*', { count: 'exact' })
-    .order('created_at', { ascending: false })
-
-  if (query) {
-    queryBuilder = queryBuilder.ilike('name', `%${query}%`)
-  }
-
-  if (typePerson) {
-    queryBuilder = queryBuilder.eq('typePerson', typePerson)
-  }
-
-  if (isNot) {
-    queryBuilder = queryBuilder.not('typePerson', 'eq', isNot)
-  }
-
-  if (status) {
-    queryBuilder = queryBuilder.eq('isActived', status)
-  }
-
-  const { data, error, count } = await queryBuilder
-
-  if (error) {
-    return error
-  } else {
-    return { data, count }
   }
 }

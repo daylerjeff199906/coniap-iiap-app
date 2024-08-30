@@ -75,7 +75,8 @@ export const ListSummaries = () => {
   const isFile = searchParams.get('file')
 
   useEffect(() => {
-    getSummaries(query, {
+    getSummaries({
+      query,
       isActived:
         status === 'active' ? true : status === 'inactived' ? false : undefined,
       isApproved:

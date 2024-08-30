@@ -5,7 +5,6 @@ import { ITopic } from './ITopics'
 import { IRows } from './table/IRows'
 import { IRes } from './responses/IResponse'
 import { ICountry } from './ICountry'
-import { ISummary } from './ISummary'
 import { IActions } from './table/IActions'
 
 export type {
@@ -16,7 +15,6 @@ export type {
   IRows,
   IRes,
   ICountry,
-  ISummary,
   IActions,
 }
 
