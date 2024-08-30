@@ -30,12 +30,12 @@ export const FrmEventEditor = (props: IProps) => {
   const methods = useForm<IEvent>({
     defaultValues: {
       ...dataDefault,
-      program_name:
-        dataDefault?.program?.title + ' - ' + dataDefault?.date || '',
-      summary_name:
-        dataDefault?.summary?.person?.name +
-        ' - ' +
-        dataDefault?.summary?.person?.surName,
+      program_name: dataDefault?.program?.id
+        ? `${dataDefault?.program?.id} - ${dataDefault?.program?.title} - ${dataDefault?.program?.date}`
+        : '',
+      summary_name: dataDefault?.summary?.id
+        ? `${dataDefault?.summary?.id} - ${dataDefault?.summary?.title}`
+        : '',
       sala_name: dataDefault?.sala?.name || '',
     },
   })
