@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components'
 import { useUsers } from '@/hooks/admin'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 import { TypesSearch } from './TypesSearch'
 import { Selection } from '@nextui-org/react'
 import { columns } from './columns'
@@ -29,7 +29,7 @@ export const ListUsers = () => {
         key: String(user.id),
         num: user.id,
         created_at: user?.created_at
-          ? convertDate(user.created_at)
+          ? formatDate(user.created_at, 'DD/MM/YYYY Hora: HH:mm')
           : 'No asignado',
         userName: user.userName,
         email: user.email,

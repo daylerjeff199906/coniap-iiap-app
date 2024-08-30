@@ -1,6 +1,6 @@
 'use client'
 import { IPerson, ISummary, ITopic } from '@/types'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 import { Avatar, Chip } from '@nextui-org/react'
 import { useFormContext } from 'react-hook-form'
 
@@ -27,7 +27,7 @@ export const InfoDataSummary = () => {
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-gray-500">
-              Creación: {convertDate(date_created)}
+              Creación: {formatDate(date_created, 'DD/MM/YYYY Hora: HH:mm')}
             </p>
             <Chip
               color={statusApproved ? 'success' : 'warning'}

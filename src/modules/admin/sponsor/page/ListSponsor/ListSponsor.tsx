@@ -7,7 +7,7 @@ import { TableGeneral } from '@/components'
 import { IActions, IColumns } from '@/types'
 
 import { useSponsors, useFiles } from '@/hooks/admin'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 
 const columns: Array<IColumns> = [
   {
@@ -65,7 +65,7 @@ export const ListSponsors = () => {
       return {
         key: sponsor.id,
         image: RenderImage(sponsor.image),
-        createdAt: convertDate(sponsor?.created_at),
+        createdAt: formatDate(sponsor?.created_at, 'DD/MM/YYYY Hora: HH:mm'),
         name: sponsor.name,
         status: sponsor.isActived,
         actions: 'actions',

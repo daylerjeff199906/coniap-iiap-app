@@ -4,7 +4,7 @@ import { Suspense, useEffect } from 'react'
 import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { FiltersSection, TypesSearch } from './sections'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 import { Selection } from '@nextui-org/react'
 import { usePathname, useRouter } from 'next/navigation'
 import { columns, actions } from './columns'
@@ -79,7 +79,7 @@ export const ListParticipants = () => {
       persons?.data.map((speaker) => ({
         key: String(speaker?.id),
         id: speaker?.id,
-        date: convertDate(speaker?.created_at),
+        date: formatDate(speaker?.created_at, 'DD/MM/YYYY Hora: HH:mm'),
         name: speaker?.name,
         surname: speaker?.surName,
         email: speaker?.email,

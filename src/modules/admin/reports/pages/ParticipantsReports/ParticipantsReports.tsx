@@ -6,7 +6,7 @@ import { FiltersSection } from './FilterSection'
 import { HeaderSection } from '@/modules/core'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { usePersons } from '@/hooks/admin'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 import { useFilterFromUrl } from '@/modules/core'
 import { useRouter } from 'next/navigation'
 
@@ -29,7 +29,7 @@ export const ParticipantsReports = () => {
       persons?.data.map((speaker) => ({
         key: String(speaker?.id),
         id: speaker?.id,
-        date: convertDate(speaker?.created_at),
+        date: formatDate(speaker?.created_at, 'DD/MM/YYYY Hora: HH:mm'),
         name: speaker?.name.toUpperCase(),
         surname: speaker?.surName.toUpperCase(),
         email: speaker?.email,

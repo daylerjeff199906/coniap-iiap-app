@@ -7,6 +7,7 @@ import { IInscription, IPerson } from '@/types'
 import { usePersons } from '@/hooks/admin'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
+import { getConferenceStatus, formatDate } from '@/utils/functions'
 
 import {
   ContactData,
@@ -20,14 +21,6 @@ import { registerAndSendEmailVerification } from '@/auth'
 import infoData from '@/utils/json/infoConiap.json'
 import { AlertCustom } from '@/modules/core'
 import { addContactToList } from '@/lib'
-
-function parseDate(date: string) {
-  return new Date(date).toLocaleDateString('es-PE', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
 
 export const FrmInscriptions = () => {
   const [isOpenAction, setIsOpenAction] = useState<boolean>(false)
@@ -141,14 +134,19 @@ export const FrmInscriptions = () => {
     methods.setValue('email', '')
   }
 
-  const date = infoData.data.dates['date-conference'].start
-  const dateSpeaker = infoData.data.dates.summary.end
+  const { isBeforeConference, isBeforeSummary } = getConferenceStatus(
+    infoData.data.dates
+  )
 
-  const dateFormatted = parseDate(date)
-  const dateFormattedSpeaker = parseDate(dateSpeaker)
+  const dateFormatted = formatDate(
+    infoData.data.dates['date-conference'].start,
+    'DD/MM/YYYY'
+  )
 
-  const isBefore = new Date(date) > new Date()
-  const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
+  const dateFormattedSpeaker = formatDate(
+    infoData.data.dates.summary.end,
+    'DD/MM/YYYY'
+  )
 
   return (
     <article
@@ -157,15 +155,17 @@ export const FrmInscriptions = () => {
     >
       <section className="lg:px-4">
         <AlertCustom
-          type={isBefore ? 'warning' : 'error'}
+          type={isBeforeConference ? 'warning' : 'error'}
           title="Nota: Fecha límite"
           showIcon
           message={`La fecha límite para inscripciones como participante es ${dateFormatted}. ${
-            isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'
+            isBeforeConference
+              ? '¡Aún tienes tiempo!'
+              : '¡Ya pasó la fecha límite!'
           }`}
         />
       </section>
-      {isBefore && (
+      {isBeforeConference && (
         <FormProvider {...methods}>
           <form
             className="w-full flex flex-col gap-6 sm:px-6"
@@ -180,13 +180,13 @@ export const FrmInscriptions = () => {
               <CountryData />
               <ContactData />
             </section>
-            {isBeforeSpeaker && isSpeaker && (
+            {isBeforeSummary && isSpeaker && (
               <section className="">
                 <AlertCustom
-                  type={isBeforeSpeaker ? 'warning' : 'error'}
+                  type={isBeforeSummary ? 'warning' : 'error'}
                   title="Nota: Fecha límite"
                   message={`La fecha límite para enviar propuestas como ponente es ${dateFormattedSpeaker}. ${
-                    isBeforeSpeaker
+                    isBeforeSummary
                       ? '¡Aún tienes tiempo!'
                       : '¡Ya pasó la fecha límite!'
                   }`}
@@ -194,7 +194,7 @@ export const FrmInscriptions = () => {
                 />
               </section>
             )}
-            {isBeforeSpeaker && <RoleData />}
+            {isBeforeSummary && <RoleData />}
             <div className="w-full">
               <Button
                 id="btn-submit-inscription"

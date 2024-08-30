@@ -18,3 +18,42 @@ export function formatConferenceDate(dateConference: IProps): string {
   // Formatear y devolver la cadena
   return `Del ${startDay} al ${endDay} de ${month} ${year}`
 }
+
+interface ConferenceDates {
+  summary: {
+    start: string
+    end: string
+  }
+  'date-conference': {
+    start: string
+    end: string
+  }
+}
+
+interface ConferenceStatus {
+  isBeforeConference: boolean
+  isBeforeSummary: boolean
+  isAfterConference: boolean
+}
+
+export function getConferenceStatus(dates: ConferenceDates): ConferenceStatus {
+  // Fecha actual
+  const dateNow = new Date()
+
+  // Fechas relevantes
+  const conferenceStart = new Date(dates['date-conference'].start)
+  const conferenceEnd = new Date(dates['date-conference'].end)
+  const summaryEnd = new Date(dates.summary.end)
+
+  // Evaluaciones
+  const isBeforeConference = dateNow < conferenceStart
+  const isBeforeSummary = dateNow < summaryEnd
+  const isAfterConference = dateNow > conferenceEnd
+
+  // Devolvemos el estado
+  return {
+    isBeforeConference,
+    isBeforeSummary,
+    isAfterConference,
+  }
+}

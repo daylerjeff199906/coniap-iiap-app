@@ -36,14 +36,11 @@ export function useFiles() {
     return response
   }
 
-  const uploadImage = async (
-    namePath: string,
-    file: File,
-    nameFile?: string
-  ): Promise<string> => {
+  const uploadImage = async (namePath: string, file: File): Promise<string> => {
     setLoading(true)
     try {
-      const nameFileInitial = nameFile || file.name
+      const dateNow = new Date()
+      const nameFileInitial = `${dateNow.getTime()}_${file.name}`
       const storageRef = ref(storage, `${namePath}/${nameFileInitial}`)
       await uploadBytes(storageRef, file)
 

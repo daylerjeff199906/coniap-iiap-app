@@ -1,6 +1,14 @@
 import { formatDateToDDMMM } from './formatDateToDDMMM'
-import { formatConferenceDate } from './formatConferenceDate'
-import { convertDate } from './converDate'
+import {
+  formatConferenceDate,
+  getConferenceStatus,
+} from './formatConferenceDate'
 import { getUser } from './getUser'
-
-export { formatDateToDDMMM, formatConferenceDate, convertDate, getUser }
+import { formatDate } from './formatDate'
+export {
+  formatDateToDDMMM,
+  formatConferenceDate,
+  getUser,
+  formatDate,
+  getConferenceStatus,
+}

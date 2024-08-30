@@ -1,6 +1,6 @@
 import { IPerson, IPersonExcel } from '@/types'
 import { getTypePerson } from '../../core'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 
 export function convertListPersonToExcel(dataList: IPerson[]) {
   return dataList?.map((person) => {
@@ -14,7 +14,10 @@ export function convertListPersonToExcel(dataList: IPerson[]) {
       pais: String(person.location) || 'No especificado',
       institution: person.institution || 'No especificado',
       estado: person.isActived ? 'Activo' : 'Inactivo',
-      'fecha de creacion': convertDate(person.created_at),
+      'fecha de creacion': formatDate(
+        person.created_at,
+        'DD/MM/YYYY Hora: HH:mm'
+      ),
       rol: getTypePerson(person.typePerson),
     }
   })
