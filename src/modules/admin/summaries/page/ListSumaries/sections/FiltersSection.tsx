@@ -2,8 +2,22 @@
 'use client'
 import { useEffect } from 'react'
 import { useFilterFromUrl } from '@/modules/core'
-import { Input, Select, SelectItem, Selection } from '@nextui-org/react'
+import {
+  Accordion,
+  AccordionItem,
+  Button,
+  Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Radio,
+  RadioGroup,
+  Select,
+  SelectItem,
+  Selection,
+} from '@nextui-org/react'
 import { useTopics } from '@/hooks/admin'
+import { IconFilter } from '@tabler/icons-react'
 
 const activeStatus = [
   { value: 'all', label: 'Todos' },
@@ -38,17 +52,16 @@ export const FiltersSection = () => {
     getTopics('', { isActived: 'TRUE' })
   }, [])
 
-  const handleStatus = (val: Selection) => {
-    const value = Object.values(val)[0]
-    if (value === 'all') {
+  const handleStatus = (val: string) => {
+    // const value = Object.values(val)[0]
+    if (val === 'all') {
       updateFilter('status', '')
     } else {
-      updateFilter('status', value)
+      updateFilter('status', val)
     }
   }
 
-  const handleAproved = (val: Selection) => {
-    const value = Object.values(val)[0]
+  const handleAproved = (value: string) => {
     if (value === 'all') {
       updateFilter('aproved', '')
     } else {
@@ -69,8 +82,7 @@ export const FiltersSection = () => {
     }
   }
 
-  const handleFile = (val: Selection) => {
-    const value = Object.values(val)[0]
+  const handleFile = (value: string) => {
     if (value === 'all') {
       updateFilter('file', '')
     } else {
@@ -93,118 +105,90 @@ export const FiltersSection = () => {
 
   return (
     <>
-      {/* opciones de estado de revisión  */}
-      <div className="flex gap-2 w-full sm:max-w-[210px]">
-        <Select
-          aria-label="Estado"
-          aria-labelledby="Estado"
-          radius="sm"
-          variant="bordered"
-          selectedKeys={[selectedAproved]}
-          onSelectionChange={(value) => handleAproved(value)}
-          disallowEmptySelection
-          description="Estado de revisión"
-        >
-          {aprovedStatus.map((status, i) => (
-            <SelectItem
-              aria-label={`Estado ${status.label} -${i}`}
-              aria-labelledby={`Estado ${status.label}`}
-              key={status.value}
-              value={status.value}
-            >
-              {status.label}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
-      {/* opciones de estado del resumen */}
-      <div className="flex gap-2 w-full sm:max-w-[180px]">
-        <Select
-          aria-label="Estado"
-          aria-labelledby="Estado"
-          radius="sm"
-          variant="bordered"
-          selectedKeys={[selectedStatus]}
-          onSelectionChange={(value) => handleStatus(value)}
-          disallowEmptySelection
-          description="Estado del resumen"
-        >
-          {activeStatus.map((status, i) => (
-            <SelectItem
-              aria-label={`Estado ${status.label}`}
-              aria-labelledby={`Estado ${status.label}`}
-              key={status.value}
-              value={status.value}
-            >
-              {status.label}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
-      {/* opciones de archivo */}
-      <div className="flex gap-2 w-full sm:max-w-[120px]">
-        <Select
-          aria-label="Archivo"
-          aria-labelledby="Archivo"
-          radius="sm"
-          variant="bordered"
-          selectedKeys={[selectedFile]}
-          onSelectionChange={(value) => handleFile(value)}
-          disallowEmptySelection
-          description="Con archivo"
-        >
-          {optionsFiles.map((file, i) => (
-            <SelectItem
-              aria-label={`Archivo ${file.label}`}
-              aria-labelledby={`Archivo ${file.label}`}
-              key={file.value}
-              value={file.value}
-            >
-              {file.label}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
-      {/* fecha de creación */}
-      <div>
-        <Input
-          type="date"
-          variant="bordered"
-          radius="sm"
-          description="Fecha de creación"
-          value={getParams('date', '')}
-          onValueChange={(val) => handleDate(val)}
-        />
-      </div>
-      {/* opciones de temas */}
-      <div className="flex gap-2 w-full sm:max-w-[210px]">
-        <Select
-          aria-label="Tema"
-          aria-labelledby="Tema"
-          radius="sm"
-          variant="bordered"
-          selectedKeys={[selectedTopic]}
-          onSelectionChange={(value) => handleTopic(value)}
-          disallowEmptySelection
-          description="Líneas temáticas"
-          isLoading={loading}
-          classNames={{
-            listbox: 'text-xs',
-          }}
-          items={allTopics}
-        >
-          {allTopics?.map((topic, i) => (
-            <SelectItem
-              aria-label={`Tema ${topic.label} - ${i}	`}
-              aria-labelledby={`Tema ${topic.label}`}
-              key={topic.value}
-              value={topic.value}
-            >
-              {topic.label}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
+      <Popover
+        placement="bottom"
+        size="sm"
+        radius="sm"
+      >
+        <PopoverTrigger>
+          <Button
+            radius="sm"
+            startContent={<IconFilter />}
+            className="font-bold"
+          >
+            Filtros
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <main className=" w-60">
+            <Accordion isCompact>
+              <AccordionItem
+                key="1"
+                aria-label="Filter by status"
+                title="Estado"
+              >
+                <RadioGroup
+                  aria-label="Filter by status"
+                  onValueChange={handleStatus}
+                  value={selectedStatus}
+                  size="sm"
+                >
+                  {activeStatus.map((status) => (
+                    <Radio
+                      key={status.value}
+                      value={status.value}
+                    >
+                      {status.label}
+                    </Radio>
+                  ))}
+                </RadioGroup>
+              </AccordionItem>
+              <AccordionItem
+                key="2"
+                aria-label="Filter by aproved"
+                title="Aprobado"
+              >
+                <RadioGroup
+                  aria-label="Filter by aproved"
+                  onValueChange={handleAproved}
+                  value={selectedAproved}
+                  size="sm"
+                >
+                  {aprovedStatus.map((status) => (
+                    <Radio
+                      key={status.value}
+                      value={status.value}
+                    >
+                      {status.label}
+                    </Radio>
+                  ))}
+                </RadioGroup>
+              </AccordionItem>
+              <AccordionItem
+                key="3"
+                aria-label="Filter by isFile"
+                title="Tiene archivo"
+              >
+                <RadioGroup
+                  aria-label="Filter by isFile"
+                  onValueChange={handleFile}
+                  value={selectedFile}
+                  size="sm"
+                >
+                  {optionsFiles.map((status) => (
+                    <Radio
+                      key={status.value}
+                      value={status.value}
+                    >
+                      {status.label}
+                    </Radio>
+                  ))}
+                </RadioGroup>
+              </AccordionItem>
+            </Accordion>
+          </main>
+        </PopoverContent>
+      </Popover>
     </>
   )
 }
