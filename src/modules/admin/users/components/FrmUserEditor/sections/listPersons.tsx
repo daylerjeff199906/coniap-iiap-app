@@ -46,10 +46,10 @@ export const ListPersons = (props: IProps) => {
       query,
       params: {
         limit: 20,
-        page: 1,
+        page: page,
       },
     })
-  }, [query])
+  }, [query, page])
 
   const onSelectionChange = (row: IRows) => {
     setValue('person_id', row.key)
