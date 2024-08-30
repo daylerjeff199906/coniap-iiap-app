@@ -14,8 +14,9 @@ function parseDate(date: string) {
 export const AvisoSection = () => {
   const [isOpen, setIsOpen] = useState(true)
 
-  const dateSpeaker = infoData.data.dates.summary.end
-  const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
+  // const dateSpeaker = infoData.data.dates.summary.end
+  // const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
+  const isBeforeSpeaker = true
 
   return (
     <>
