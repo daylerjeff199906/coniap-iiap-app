@@ -54,9 +54,9 @@ export default async function Page() {
 
           <AlertCustom
             showIcon
-            title="Atención, fecha de conferencia"
+            title="Fecha de inicio de CONIAP 2024"
             type="info"
-            message={`La fecha de la conferencia es el ${datestartConference}`}
+            message={`La fecha de inicion del congreso es el ${datestartConference}`}
           />
         </main>
       </section>

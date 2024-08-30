@@ -2,24 +2,15 @@
 import { ModalAviso } from '@/modules/core'
 import { useState } from 'react'
 import infoData from '@/utils/json/infoConiap.json'
-
-function parseDate(date: string) {
-  return new Date(date).toLocaleDateString('es-PE', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
-
+import { getConferenceStatus } from '@/utils/functions'
 export const AvisoSection = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(infoData.data.showAviso)
 
-  const dateSpeaker = infoData.data.dates.summary.end
-  const isBeforeSpeaker = new Date(dateSpeaker) > new Date()
+  const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   return (
     <>
-      {isBeforeSpeaker && (
+      {isBeforeSummary && (
         <ModalAviso
           isOpen={isOpen}
           setIsOpen={setIsOpen}
