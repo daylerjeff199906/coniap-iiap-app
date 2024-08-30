@@ -166,24 +166,26 @@ export const FrmInscriptionSteps = (props: IProps) => {
               <ContactData />
             </div>
             {isBeforeSummary && isSpeaker && (
-              <AlertCustom
-                title={
-                  isBeforeSummary
-                    ? 'Nota: Fecha límite'
-                    : '¡Ya pasó la fecha límite!'
-                }
-                type={isBeforeSummary ? 'warning' : 'error'}
-                message={
-                  <p className="text-sm ">
-                    <strong>Nota:</strong> La fecha límite para enviar
-                    propuestas como ponente es {dateFormattedSpeaker}.{' '}
-                    {isBeforeSummary
-                      ? '¡Aún tienes tiempo!'
-                      : '¡Ya pasó la fecha límite!'}
-                  </p>
-                }
-                showIcon
-              />
+              <section className="col-span-1 sm:col-span-2">
+                <AlertCustom
+                  title={
+                    isBeforeSummary
+                      ? 'Nota: Fecha límite'
+                      : '¡Ya pasó la fecha límite!'
+                  }
+                  type={isBeforeSummary ? 'warning' : 'error'}
+                  message={
+                    <p className="text-sm ">
+                      La fecha límite para enviar propuestas como ponente es{' '}
+                      {dateFormattedSpeaker}.{' '}
+                      {isBeforeSummary
+                        ? '¡Aún tienes tiempo!'
+                        : '¡Ya pasó la fecha límite!'}
+                    </p>
+                  }
+                  showIcon
+                />
+              </section>
             )}
             {isBeforeSummary && <RoleData />}
             <div className="col-span-2 pt-3">

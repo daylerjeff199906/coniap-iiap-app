@@ -37,9 +37,11 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
   let request = supabase
     .from('summaries')
     .select('*,person:person_id(*), topic:topic_id(*)')
-    .ilike('title', `%${filters?.query}%`)
     .order('created_at', { ascending: false })
 
+  if (filters?.query) {
+    request = request.eq('title', `%${filters.query}%`)
+  }
   if (filters?.isApproved) {
     request = request.eq('isApproved', filters.isApproved)
   }
@@ -65,8 +67,14 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
   if (filters?.isMagistral) {
     request = request.eq('isMagistral', filters.isMagistral)
   }
+  // if (filters?.person_name) {
+  //   request = request.or(`person.name.ilike.%${filters?.person_name}%`)
+  // }
 
   const { data, error } = await request
+
+  // console.log(data)
+  // console.log(error)
 
   if (error) {
     return error

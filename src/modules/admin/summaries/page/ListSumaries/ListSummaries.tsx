@@ -76,7 +76,8 @@ export const ListSummaries = () => {
 
   useEffect(() => {
     getSummaries({
-      query,
+      // query,
+      person_name: query,
       isActived:
         status === 'active' ? true : status === 'inactived' ? false : undefined,
       isApproved:
@@ -143,6 +144,7 @@ export const ListSummaries = () => {
         </Button>
       </section>
       <TableGeneral
+        placeholderSearch="Buscar por título de resumen"
         columns={columns}
         loading={loading}
         onSearch={(value) => setQuery(value)}

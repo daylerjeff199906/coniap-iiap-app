@@ -46,6 +46,7 @@ interface IProps {
   selectionMode?: 'single' | 'multiple' | 'none'
   onSelectionChange?: (row: IRows) => void
   //For the search input
+  placeholderSearch?: string
   onSearch?: (value: string) => void
   searchValue?: string
   disableInputSearch?: boolean
@@ -77,6 +78,7 @@ export const TableGeneral = (props: IProps) => {
     disablePagination,
     disableWrapper,
     loading,
+    placeholderSearch,
   } = props
 
   const pathname = usePathname()
@@ -159,7 +161,7 @@ export const TableGeneral = (props: IProps) => {
             <Input
               aria-label="Buscar"
               variant="bordered"
-              placeholder="Buscar ..."
+              placeholder={placeholderSearch || 'Buscar...'}
               radius="sm"
               value={searchValue}
               onValueChange={(value) => onSearch && onSearch(value)}
@@ -233,7 +235,7 @@ export const TableGeneral = (props: IProps) => {
             </main>
           }
           items={rows}
-          isLoading={props.loading}
+          isLoading={loading}
         >
           {(item) => (
             <TableRow key={item?.key}>
