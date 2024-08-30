@@ -13,6 +13,7 @@ import { useFiles, useSummaries } from '@/hooks/admin'
 import infoData from '@/utils/json/infoConiap.json'
 import { AuthorsSection } from './AuthorsSection'
 import { ActionsSummary } from './ActionsSummary'
+import { LayoutFrmHorizontal } from '@/modules/admin'
 
 interface IProps {
   summary?: ISummary
@@ -95,16 +96,14 @@ export const FrmUploadFile = (props: IProps) => {
   }
 
   return (
-    <>
-      <main className="w-full">
-        <HeaderSection
-          title="Subir archivo"
-          subtitle="Sube el archivo de tu resúmen"
-        />
-      </main>
+    <main className="w-full flex flex-col gap-5">
+      <HeaderSection
+        title="Subir archivo"
+        subtitle="Sube el archivo de tu resúmen"
+      />
       <FormProvider {...methods}>
         <form
-          className="w-full flex flex-col gap-3"
+          className="w-full flex flex-col gap-6"
           onSubmit={methods.handleSubmit(handleFormSubmit)}
         >
           <AlertCustom
@@ -117,11 +116,26 @@ export const FrmUploadFile = (props: IProps) => {
                 : 'La fecha límite ha pasado, no puedes enviar tu resumen.'
             }`}
           />
-          <TopicSection />
-          <InfoSection />
-          <AuthorsSection />
-          <ActionsSummary />
-          <MultimediaSection />
+          <LayoutFrmHorizontal
+            title="Información del resumen"
+            subtitle="Selecciona la temática e ingresa el título de tu resumen"
+          >
+            <TopicSection />
+            <InfoSection />
+          </LayoutFrmHorizontal>
+          <LayoutFrmHorizontal
+            title="Autores"
+            subtitle="Ingresa los datos de los autores del resumen"
+          >
+            <AuthorsSection />
+            <ActionsSummary />
+          </LayoutFrmHorizontal>
+          <LayoutFrmHorizontal
+            title="Multimedia"
+            subtitle="Sube el archivo de tu resumen"
+          >
+            <MultimediaSection />
+          </LayoutFrmHorizontal>
           <footer className="flex gap-3 items-center justify-end">
             <Button
               radius="sm"
@@ -141,6 +155,6 @@ export const FrmUploadFile = (props: IProps) => {
           </footer>
         </form>
       </FormProvider>
-    </>
+    </main>
   )
 }
