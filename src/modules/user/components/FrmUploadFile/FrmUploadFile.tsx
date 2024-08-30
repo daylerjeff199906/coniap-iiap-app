@@ -1,12 +1,6 @@
 'use client'
 import { AlertCustom, HeaderSection } from '@/modules/core'
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-} from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 
@@ -102,65 +96,51 @@ export const FrmUploadFile = (props: IProps) => {
 
   return (
     <>
-      <Modal
-        isOpen
-        onClose={handleExit}
-        size="2xl"
-        radius="sm"
-        scrollBehavior="inside"
-      >
-        <ModalContent>
-          <ModalHeader>
-            <main className="w-full">
-              <HeaderSection
-                title="Subir archivo"
-                subtitle="Sube el archivo de tu resúmen"
-              />
-            </main>
-          </ModalHeader>
-          <ModalBody>
-            <FormProvider {...methods}>
-              <form
-                className="w-full flex flex-col gap-3"
-                onSubmit={methods.handleSubmit(handleFormSubmit)}
-              >
-                <AlertCustom
-                  type={isBefore ? 'warning' : 'error'}
-                  showIcon
-                  title="Atención"
-                  message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
-                    isBefore
-                      ? '¡Aún puedes enviar tu resumen!'
-                      : 'La fecha límite ha pasado, no puedes enviar tu resumen.'
-                  }`}
-                />
-                <TopicSection />
-                <InfoSection />
-                <AuthorsSection />
-                <ActionsSummary />
-                <MultimediaSection />
-                <footer className="flex gap-3 items-center justify-end">
-                  <Button
-                    radius="sm"
-                    type="submit"
-                    isLoading={loading || loadingFile}
-                    isDisabled={loading || loadingFile || !isBefore}
-                    className="button-dark"
-                  >
-                    Guardar
-                  </Button>
-                  <Button
-                    radius="sm"
-                    onPress={handleExit}
-                  >
-                    Cancelar
-                  </Button>
-                </footer>
-              </form>
-            </FormProvider>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <main className="w-full">
+        <HeaderSection
+          title="Subir archivo"
+          subtitle="Sube el archivo de tu resúmen"
+        />
+      </main>
+      <FormProvider {...methods}>
+        <form
+          className="w-full flex flex-col gap-3"
+          onSubmit={methods.handleSubmit(handleFormSubmit)}
+        >
+          <AlertCustom
+            type={isBefore ? 'warning' : 'error'}
+            showIcon
+            title="Atención"
+            message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
+              isBefore
+                ? '¡Aún puedes enviar tu resumen!'
+                : 'La fecha límite ha pasado, no puedes enviar tu resumen.'
+            }`}
+          />
+          <TopicSection />
+          <InfoSection />
+          <AuthorsSection />
+          <ActionsSummary />
+          <MultimediaSection />
+          <footer className="flex gap-3 items-center justify-end">
+            <Button
+              radius="sm"
+              type="submit"
+              isLoading={loading || loadingFile}
+              isDisabled={loading || loadingFile || !isBefore}
+              className="button-dark"
+            >
+              Guardar
+            </Button>
+            <Button
+              radius="sm"
+              onPress={handleExit}
+            >
+              Cancelar
+            </Button>
+          </footer>
+        </form>
+      </FormProvider>
     </>
   )
 }

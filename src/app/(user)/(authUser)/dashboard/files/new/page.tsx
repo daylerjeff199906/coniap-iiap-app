@@ -14,16 +14,14 @@ export default async function Page() {
   const summary = {} as ISummary
 
   return (
-    <>
-      <FrmUploadFile
-        summary={{
-          ...summary,
-          person: {
-            ...person,
-            id: person.id,
-          },
-        }}
-      />
-    </>
+    <FrmUploadFile
+      summary={{
+        ...summary,
+        person: {
+          ...person,
+          id: person.id,
+        },
+      }}
+    />
   )
 }

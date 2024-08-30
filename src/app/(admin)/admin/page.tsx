@@ -18,6 +18,8 @@ export default async function Page() {
 
   const persons: IData | null = (await fetchPersons({
     column: 'name',
+    query: '',
+    isPagination: true,
     params: {
       limit: 10,
       page: 1,
