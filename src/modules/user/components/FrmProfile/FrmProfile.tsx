@@ -10,6 +10,7 @@ import { updateUser } from '@/api'
 import { useAuth } from '../..'
 import { useAuthContext } from '@/provider'
 import { toast } from 'react-toastify'
+import { LayoutFrmHorizontal } from '@/modules/admin'
 
 interface IFrmProfileProps {
   person: IPerson
@@ -81,30 +82,44 @@ export const FrmProfile = (props: IFrmProfileProps) => {
   }
 
   return (
-    <>
-      <FormProvider {...methods}>
-        <form
-          className="flex flex-col gap-6 max-w-2xl"
-          onSubmit={methods.handleSubmit(onSubmit)}
+    <FormProvider {...methods}>
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
+        <LayoutFrmHorizontal
+          title="Datos personales"
+          subtitle="Actualiza tu información personal"
         >
           <PersonData />
+        </LayoutFrmHorizontal>
+        <LayoutFrmHorizontal
+          title="Datos de contacto"
+          subtitle="Mantén actualizada tu información de contacto"
+        >
           <ContactData />
+        </LayoutFrmHorizontal>
 
-          <footer className="pt-4">
-            <div className="flex items-center gap-3 justify-end">
-              <Button
-                color="primary"
-                isDisabled={loading}
-                isLoading={loading}
-                type="submit"
-              >
-                Guardar cambios
-              </Button>
-              <Button onPress={handleCancel}>Cancelar</Button>
-            </div>
-          </footer>
-        </form>
-      </FormProvider>
-    </>
+        <footer className="pt-4">
+          <div className="flex items-center gap-3 justify-end">
+            <Button
+              color="primary"
+              isDisabled={loading}
+              isLoading={loading}
+              type="submit"
+              radius="sm"
+            >
+              Guardar cambios
+            </Button>
+            <Button
+              onPress={handleCancel}
+              radius="sm"
+            >
+              Cancelar
+            </Button>
+          </div>
+        </footer>
+      </form>
+    </FormProvider>
   )
 }

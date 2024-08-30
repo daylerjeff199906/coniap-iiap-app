@@ -34,6 +34,14 @@
   @apply border border-gray-200 p-4 rounded-md bg-white;
 }
 
+.title-form {
+  @apply text-sm font-bold;
+}
+
+.description-form {
+  @apply text-xs text-gray-500;
+}
+
 /* styles/globals.css */
 .custom-quill {
   h1 {

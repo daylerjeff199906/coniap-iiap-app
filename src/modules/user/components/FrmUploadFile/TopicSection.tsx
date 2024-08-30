@@ -34,7 +34,6 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
             label="Línea de investigación"
             labelPlacement="outside"
             placeholder={placeholder}
-            description="Seleccione una línea temática para su archivo"
             selectedKeys={value ? [value] : []}
             onChange={(value) => {
               onChange(value)
