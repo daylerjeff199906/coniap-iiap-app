@@ -22,22 +22,20 @@ export const AprovedFiltered = () => {
   }
 
   return (
-    <>
-      <RadioGroup
-        aria-label="Filter by aproved"
-        onValueChange={handleAproved}
-        value={selectedAproved}
-        size="sm"
-      >
-        {aprovedStatus.map((status) => (
-          <Radio
-            key={status.value}
-            value={status.value}
-          >
-            {status.label}
-          </Radio>
-        ))}
-      </RadioGroup>
-    </>
+    <RadioGroup
+      aria-label="Filter by aproved"
+      onValueChange={handleAproved}
+      value={selectedAproved}
+      size="sm"
+    >
+      {aprovedStatus.map((status) => (
+        <Radio
+          key={status.value}
+          value={status.value}
+        >
+          {status.label}
+        </Radio>
+      ))}
+    </RadioGroup>
   )
 }

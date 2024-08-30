@@ -21,22 +21,20 @@ export const FileFiltered = () => {
   }
 
   return (
-    <>
-      <RadioGroup
-        aria-label="Filter by isFile"
-        onValueChange={handleFile}
-        value={selectedFile}
-        size="sm"
-      >
-        {optionsFiles.map((status) => (
-          <Radio
-            key={status.value}
-            value={status.value}
-          >
-            {status.label}
-          </Radio>
-        ))}
-      </RadioGroup>
-    </>
+    <RadioGroup
+      aria-label="Filter by isFile"
+      onValueChange={handleFile}
+      value={selectedFile}
+      size="sm"
+    >
+      {optionsFiles.map((status) => (
+        <Radio
+          key={status.value}
+          value={status.value}
+        >
+          {status.label}
+        </Radio>
+      ))}
+    </RadioGroup>
   )
 }
