@@ -37,6 +37,9 @@ export const FrmUpdateSummary = (props: IProps) => {
     const { file, person, topic, ...rest } = data
     let newData: ISummary
     const fileIsArray = Array.isArray(file)
+    const nameFile = `${person?.surName}-${person?.name}-${
+      summary?.title || 'RESUMEN CONIAP 2024'
+    }-${new Date().getTime()}`
 
     if (summary?.id) {
       if (file?.length > 0 && fileIsArray) {
@@ -45,7 +48,7 @@ export const FrmUpdateSummary = (props: IProps) => {
         if (summary?.file) {
           await deleteImage(summary?.file)
         }
-        const url = await uploadImage('files', fileUp[0])
+        const url = await uploadImage('files', fileUp[0], nameFile)
         newData = { ...rest, file: url }
       } else {
         newData = { ...rest, file: summary?.file }
@@ -56,7 +59,7 @@ export const FrmUpdateSummary = (props: IProps) => {
     } else {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]
-        const url = await uploadImage('files', fileUp[0])
+        const url = await uploadImage('files', fileUp[0], nameFile)
 
         newData = { ...rest, file: url, isActived: false, isApproved: false }
       } else {
