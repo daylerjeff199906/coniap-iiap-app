@@ -31,7 +31,7 @@ export const FrmUploadFile = (props: IProps) => {
   const router = useRouter()
 
   const dateFormatted = formatDate(
-    infoData.data.dates['date-conference'].end,
+    infoData.data.dates.summary.end,
     'DD/MM/YYYY'
   )
   const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
@@ -39,9 +39,6 @@ export const FrmUploadFile = (props: IProps) => {
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, ...rest } = data
     const fileIsArray = Array.isArray(file)
-    const nameFile = `${person?.surName}-${person?.name}-${
-      summary?.title || 'RESUMEN CONIAP 2024'
-    }-${new Date().getTime()}`
 
     let newData: ISummary
     if (summary?.id) {
@@ -51,7 +48,7 @@ export const FrmUploadFile = (props: IProps) => {
         if (summary.file) {
           await deleteImage(summary.file)
         }
-        const url = await uploadImage('files', fileUp[0], nameFile)
+        const url = await uploadImage('files', fileUp[0])
         newData = { ...rest, person_id: person?.id || '', file: url }
       } else {
         newData = { ...rest, person_id: person?.id || '', file: summary.file }
@@ -64,7 +61,7 @@ export const FrmUploadFile = (props: IProps) => {
     } else {
       if (file?.length > 0) {
         const fileUp = file as unknown as File[]
-        const url = await uploadImage('files', fileUp[0], nameFile)
+        const url = await uploadImage('files', fileUp[0])
         newData = {
           ...rest,
           person_id: person?.id || '',
