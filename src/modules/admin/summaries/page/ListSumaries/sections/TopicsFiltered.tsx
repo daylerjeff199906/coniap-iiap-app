@@ -2,14 +2,14 @@
 'use client'
 import { useEffect } from 'react'
 import { useFilterFromUrl } from '@/modules/core'
-import { Radio, RadioGroup } from '@nextui-org/react'
+import { Radio, RadioGroup, Skeleton } from '@nextui-org/react'
 import { useTopics } from '@/hooks/admin'
 
 const optionsTopics = [{ value: 'all', label: 'Todos' }]
 
 export const TopicsFiltered = () => {
-  const { getParams, updateFilters, filteredParams } = useFilterFromUrl()
-  const { getTopics, topics } = useTopics()
+  const { getParams, updateFilters } = useFilterFromUrl()
+  const { getTopics, topics, loading } = useTopics()
 
   const selectedTopic = getParams('topic', 'all')
 
@@ -39,24 +39,38 @@ export const TopicsFiltered = () => {
       : [...optionsTopics]
 
   return (
-    <RadioGroup
-      aria-label="Filter by topic"
-      onValueChange={handleTopic}
-      value={selectedTopic}
-      size="sm"
-    >
-      {allTopics.map((topic) => (
-        <Radio
-          key={topic.value}
-          value={topic.value.toString()}
-          classNames={{
-            label: 'text-xs',
-            base: 'w-full max-w-[200px]',
-          }}
+    <>
+      {loading && (
+        <section className="flex flex-col gap-1">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              className="w-full rounded-md h-6"
+            />
+          ))}
+        </section>
+      )}
+      {!loading && (
+        <RadioGroup
+          aria-label="Filter by topic"
+          onValueChange={handleTopic}
+          value={selectedTopic}
+          size="sm"
         >
-          {topic.label}
-        </Radio>
-      ))}
-    </RadioGroup>
+          {allTopics.map((topic) => (
+            <Radio
+              key={topic.value}
+              value={topic.value.toString()}
+              classNames={{
+                label: 'text-xs',
+                base: 'w-full max-w-[200px]',
+              }}
+            >
+              {topic.label}
+            </Radio>
+          ))}
+        </RadioGroup>
+      )}
+    </>
   )
 }

@@ -16,9 +16,10 @@ import { AprovedFiltered } from './AprovedFiltered'
 import { StatusFilter } from './StatusFilter'
 import { FileFiltered } from './FileFiltered'
 import { TopicsFiltered } from './TopicsFiltered'
+import { DateFiltered } from './DateFiltered'
 
 export const FiltersSection = () => {
-  const { updateFilters, filteredParams } = useFilterFromUrl()
+  const { filteredParams } = useFilterFromUrl()
 
   const filteredList = [
     {
@@ -43,15 +44,12 @@ export const FiltersSection = () => {
     },
   ]
 
-  const handleDate = (val: string) => {
-    updateFilters({ date: val })
-  }
-
   const filtersLabel = [
-    { value: 'topics', name: 'Tema' },
+    { value: 'topic', name: 'Tema' },
     { value: 'aproved', name: 'Aprobado' },
     { value: 'status', name: 'Estado' },
     { value: 'file', name: 'Tiene archivo' },
+    { value: 'date', name: 'Fecha' },
   ]
 
   const selectedFilter = filteredParams(filtersLabel)
@@ -104,6 +102,7 @@ export const FiltersSection = () => {
           </main>
         </PopoverContent>
       </Popover>
+      <DateFiltered />
     </>
   )
 }
