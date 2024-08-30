@@ -143,6 +143,7 @@ export const ListSummaries = () => {
         </Button>
       </section>
       <TableGeneral
+        placeholderSearch="Buscar por título de resumen"
         columns={columns}
         loading={loading}
         onSearch={(value) => setQuery(value)}

@@ -14,7 +14,7 @@ export default function Page() {
     'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/files%2Fformato_resumen_III-CONIAP-2024.docx?alt=media&token=46b37311-27d7-4460-9387-c07118b41422'
 
   const dateFormatted = formatDate(
-    infoData.data.dates['date-conference'].end,
+    infoData.data.dates.summary.end,
     'DD/MM/YYYY'
   )
   const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)

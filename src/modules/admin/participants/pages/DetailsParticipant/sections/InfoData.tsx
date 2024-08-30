@@ -19,7 +19,7 @@ export const InfoData = (props: IProps) => {
             alt={data?.name}
             removeWrapper
             width={72}
-            className="h-40 w-44 object-cover rounded-full"
+            className="h-40 w-44 object-cover rounded-full min-w-40"
           />
         </div>
         <div className="w-full">
@@ -55,11 +55,11 @@ export const InfoData = (props: IProps) => {
       {summaries && summaries?.length > 0 && (
         <section className="flex flex-col gap-2">
           <h4 className="font-bold mt-4 text-gray-500">Resúmenes adjuntos</h4>
-          <div>
+          <div className="flex flex-col gap-4">
             {props.summaries?.map((summary) => (
               <div
                 key={summary.id}
-                className="flex flex-col gap-2 border rounded-lg p-4 bg-gray-100"
+                className="flex flex-col gap-2 border rounded-lg p-4 bg-gray-100 w-full"
               >
                 <Chip
                   size="sm"
