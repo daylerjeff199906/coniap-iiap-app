@@ -20,15 +20,3 @@ export function formatDate(dateString: string, format: DateFormats): string {
     .replace('HH', hours)
     .replace('mm', minutes)
 }
-
-export function convertToDateWithTime(dateString: string): string {
-  return formatDate(dateString, 'DD/MM/YYYY Hora: HH:mm')
-}
-
-export function convertToISODate(dateString: string): string {
-  return formatDate(dateString, 'YYYY-MM-DD')
-}
-
-export function convertToMonthYear(dateString: string): string {
-  return formatDate(dateString, 'MM/YYYY')
-}
