@@ -11,6 +11,7 @@ export interface ISummary {
   isActived: boolean
   isApproved: boolean
   isExternal: boolean
+  isMagistral: boolean
   file: string
   title: string
   authors: string[] | null
