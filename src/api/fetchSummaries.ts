@@ -1,6 +1,6 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { ISummary } from '@/types'
+import { ISummary, ISummaryFilter } from '@/types'
 
 export async function createSummary(props: ISummary) {
   const supabase = createClient()
@@ -31,16 +31,7 @@ export async function updateSummary(id: string, props: ISummary) {
   }
 }
 
-export async function fetchSummaries(filters?: {
-  query?: string
-  isApproved?: boolean
-  isActived?: boolean
-  isMagistral?: boolean
-  person_id?: string
-  topic_id?: string
-  created_at?: string
-  isFile?: boolean
-}) {
+export async function fetchSummaries(filters?: ISummaryFilter) {
   const supabase = createClient()
 
   let request = supabase
@@ -77,22 +68,6 @@ export async function fetchSummaries(filters?: {
 
   const { data, error } = await request
 
-  if (error) {
-    return error
-  } else {
-    return data
-  }
-}
-
-export async function fetchSummaryStatus(query: string, isApproved: boolean) {
-  const supabase = createClient()
-
-  const { data, error } = await supabase
-    .from('summaries')
-    .select('*,person:person_id(*), topic:topic_id(*)')
-    .order('title', { ascending: true })
-    .eq('isApproved', isApproved)
-    .ilike('title', `%${query}%`)
   if (error) {
     return error
   } else {

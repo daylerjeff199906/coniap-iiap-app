@@ -3,7 +3,6 @@ import { useState } from 'react'
 
 import {
   fetchSummaries,
-  // fetchSummaryStatus,
   createSummary,
   updateSummary,
   fetchSummaryByIdPerson,
@@ -52,15 +51,6 @@ export function useSummaries() {
     setLoading(false)
   }
 
-  // const getSummariesStatus = async (query: string, isApproved: boolean) => {
-  //   setLoading(true)
-  //   const data = await fetchSummaryStatus(query, isApproved)
-  //     .then((res) => res)
-  //     .catch((err) => err)
-  //   setSummaries(data)
-  //   setLoading(false)
-  // }
-
   const getSummaryByIdPerson = async (idPerson: string) => {
     setLoading(true)
     const data = await fetchSummaryByIdPerson(idPerson)
@@ -81,7 +71,6 @@ export function useSummaries() {
     loading,
     summaries,
     getSummaries,
-    // getSummariesStatus,
     createDataSummary,
     updateDataSummary,
     approveSummary,

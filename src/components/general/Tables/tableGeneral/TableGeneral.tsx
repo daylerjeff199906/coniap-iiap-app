@@ -56,6 +56,7 @@ interface IProps {
   page?: number
   count?: number
   disablePagination?: boolean
+  disableWrapper?: boolean
 }
 
 export const TableGeneral = (props: IProps) => {
@@ -74,6 +75,8 @@ export const TableGeneral = (props: IProps) => {
     page,
     count,
     disablePagination,
+    disableWrapper,
+    loading,
   } = props
 
   const pathname = usePathname()
@@ -147,7 +150,9 @@ export const TableGeneral = (props: IProps) => {
   }
 
   return (
-    <main className="flex flex-col gap-3 section-admin">
+    <main
+      className={`flex flex-col gap-3 ${!disableWrapper && 'section-admin'}`}
+    >
       <header className="flex flex-col sm:flex-row gap-2 items-start">
         {!disableInputSearch && (
           <div className="flex gap-2 w-full sm:max-w-[300px]">

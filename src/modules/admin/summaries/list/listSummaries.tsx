@@ -41,14 +41,17 @@ interface IProps {
 }
 
 export const ListSummaries = (props: IProps) => {
-  const { getSummariesStatus, summaries, loading } = useSummaries()
+  const { getSummaries, summaries, loading } = useSummaries()
   const { setValue } = useFormContext()
   const { onSetOpen } = props
 
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    getSummariesStatus(query, true)
+    getSummaries({
+      query,
+      isApproved: true,
+    })
   }, [query])
 
   const onSelectionChange = (row: IRows) => {
@@ -58,36 +61,32 @@ export const ListSummaries = (props: IProps) => {
   }
 
   return (
-    <>
-      <section className="">
-        <TableGeneral
-          loading={loading}
-          columns={columns}
-          onSearch={(value) => setQuery(value)}
-          onSelectionChange={onSelectionChange}
-          searchValue={query}
-          selectionMode="single"
-          rows={
-            summaries !== null
-              ? summaries?.map((summary) => {
-                  return {
-                    key: String(summary.id),
-                    title: summary.title,
-                    created_at: summary.created_at,
-                    person:
-                      summary?.person !== null && summary?.person !== undefined
-                        ? summary.person.name + summary.person.surName
-                        : '',
-                    st_review: RenderColumnAproved(summary.isApproved),
-                    status: summary.isActived,
-                    actions: 'actions',
-                  }
-                })
-              : []
-          }
-        />
-      </section>
-    </>
+    <TableGeneral
+      loading={loading}
+      columns={columns}
+      onSearch={(value) => setQuery(value)}
+      onSelectionChange={onSelectionChange}
+      searchValue={query}
+      selectionMode="single"
+      rows={
+        summaries !== null
+          ? summaries?.map((summary) => {
+              return {
+                key: String(summary.id),
+                title: summary.title,
+                created_at: summary.created_at,
+                person:
+                  summary?.person !== null && summary?.person !== undefined
+                    ? summary.person.name + summary.person.surName
+                    : '',
+                st_review: RenderColumnAproved(summary.isApproved),
+                status: summary.isActived,
+                actions: 'actions',
+              }
+            })
+          : []
+      }
+    />
   )
 }
 
