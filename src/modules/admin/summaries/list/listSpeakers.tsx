@@ -46,7 +46,6 @@ export const ListSpeakers = (props: IProps) => {
         limit: 20,
         page,
       },
-      status: 'true',
     })
   }, [query, page])
 
