@@ -61,7 +61,7 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
       <DrawerSelect
         isOpen={isOpen}
         setOpen={setIsOpen}
-        title="Seleccionar programa"
+        title="Seleccionar un ponente"
         content={<ListSpeakers onSelectedSpeaker={onSelectedSpeaker} />}
       />
     </>
