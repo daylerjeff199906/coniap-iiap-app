@@ -63,6 +63,7 @@ export const ListParticipants = () => {
       query,
       isNot,
       status: statusValue,
+      typePerson: type,
       params: {
         limit,
         page: Number(page),
