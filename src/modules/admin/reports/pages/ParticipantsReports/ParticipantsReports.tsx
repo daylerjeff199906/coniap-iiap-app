@@ -11,7 +11,7 @@ import { useFilterFromUrl } from '@/modules/core'
 import { useRouter } from 'next/navigation'
 
 export const ParticipantsReports = () => {
-  const { getPersonsFilter, persons, loading, setPersons } = usePersons()
+  const { getPersons, persons, loading, setPersons } = usePersons()
   const { getParams } = useFilterFromUrl()
   const router = useRouter()
 
@@ -44,7 +44,12 @@ export const ParticipantsReports = () => {
   const dataExcel = persons && persons?.data?.length > 0 ? persons?.data : []
 
   const handleGetPersons = () => {
-    getPersonsFilter({ typePerson, status })
+    getPersons({
+      column: 'name',
+      query: '',
+      typePerson,
+      status,
+    })
   }
 
   const handleClearFilter = () => {

@@ -1,5 +1,4 @@
-import { IProgram } from '..'
-import { ISummary } from '../ISummary'
+import { ISummary } from '@/types'
 
 export interface IEventRes {
   id: string

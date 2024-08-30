@@ -102,7 +102,7 @@ export const FrmParticipantEditor = (props: IProps) => {
               render={({ field: { onChange, value } }) => (
                 <Select
                   aria-label="select"
-                  label="Tipo de participante"
+                  label="Tipo de participante (ACTUAL)"
                   labelPlacement="outside"
                   placeholder="Selecciona un tipo de participante"
                   defaultSelectedKeys={['participant']}

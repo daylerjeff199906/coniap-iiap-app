@@ -20,6 +20,7 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
   const onSelectedSpeaker = (row: any) => {
     setValue('person', row)
     setValue('person_id', row.key)
+    setValue('isMagistral', row.typePerson === 'speaker' ? false : true)
     setIsOpen(false)
   }
 
@@ -60,7 +61,7 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
       <DrawerSelect
         isOpen={isOpen}
         setOpen={setIsOpen}
-        title="Seleccionar programa"
+        title="Seleccionar un ponente"
         content={<ListSpeakers onSelectedSpeaker={onSelectedSpeaker} />}
       />
     </>

@@ -2,9 +2,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { TableGeneral } from '@/components/general'
-import { IColumns, IEvent, IRows } from '@/types'
+import { IColumns, IEvent } from '@/types'
 
-import { usePersons, usePrograms, useSummaries } from '@/hooks/admin'
+import { useSummaries } from '@/hooks/admin'
 import { useFormContext } from 'react-hook-form'
 
 const columns: IColumns[] = [
@@ -38,13 +38,15 @@ export const ListSummaries = (props: IProps) => {
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    getSummaries(query)
+    getSummaries({
+      query,
+    })
   }, [query])
 
   const onSelectionChange = (row: any) => {
-    setValue('summary.id', row.key)
-    setValue('summary_name', row.fullname)
-    setValue('name', row.summary)
+    setValue('summary.id', row?.key)
+    setValue('summary_name', row?.fullname)
+    setValue('name', row?.summary)
     onSetOpen(false)
   }
 
@@ -59,20 +61,16 @@ export const ListSummaries = (props: IProps) => {
     }) || []
 
   return (
-    <>
-      <section className="">
-        <TableGeneral
-          columns={columns}
-          selectionMode="single"
-          onSelectionChange={(row) => {
-            onSelectionChange(row)
-          }}
-          loading={loading}
-          onSearch={(value) => setQuery(value)}
-          searchValue={query}
-          rows={rows}
-        />
-      </section>
-    </>
+    <TableGeneral
+      columns={columns}
+      selectionMode="single"
+      onSelectionChange={(row) => {
+        onSelectionChange(row)
+      }}
+      loading={loading}
+      onSearch={(value) => setQuery(value)}
+      searchValue={query}
+      rows={rows}
+    />
   )
 }
