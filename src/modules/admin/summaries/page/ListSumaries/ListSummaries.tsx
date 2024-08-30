@@ -7,7 +7,7 @@ import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
 import { Button, Chip, Spinner } from '@nextui-org/react'
 import { FiltersSection } from './sections'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 import { IconSpeakerphone } from '@tabler/icons-react'
 import { usePathname, useRouter } from 'next/navigation'
 
@@ -98,7 +98,10 @@ export const ListSummaries = () => {
             key: String(summary.id),
             id: summary.id,
             title: summary.title,
-            created_at: convertDate(summary.created_at),
+            created_at: formatDate(
+              summary.created_at,
+              'DD/MM/YYYY Hora: HH:mm'
+            ),
             person: summary.person?.name + ' ' + summary.person?.surName,
             topic: summary.topic?.name || 'No tiene temática asignada',
             summary: summary.file ? 'Sí' : 'No',

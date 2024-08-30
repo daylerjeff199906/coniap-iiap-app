@@ -8,7 +8,7 @@ import { IActions, IColumns } from '@/types'
 
 import { useTopics } from '@/hooks/admin'
 import { useFiles } from '@/hooks/admin'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 
 const columns: Array<IColumns> = [
   {
@@ -66,7 +66,7 @@ export const ListTopics = () => {
     ? topics?.map((topic) => {
         return {
           key: topic?.id,
-          createdAt: convertDate(topic?.created_at),
+          createdAt: formatDate(topic?.created_at, 'DD/MM/YYYY Hora: HH:mm'),
           image: RenderImage(topic?.image),
           name: topic?.name,
           description: topic?.description,

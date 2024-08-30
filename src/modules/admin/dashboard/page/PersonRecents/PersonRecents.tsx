@@ -1,7 +1,7 @@
 'use client'
 import { TableGeneral } from '@/components'
 import { IColumns, IPerson, IRows } from '@/types'
-import { convertDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 
@@ -38,7 +38,7 @@ export const PersonRecents = (props: IProps) => {
   const dataList: IRows[] = data?.map((item) => {
     return {
       key: Number(item.id),
-      created_at: convertDate(item.created_at),
+      created_at: formatDate(item.created_at, 'DD/MM/YYYY Hora: HH:mm'),
       name: item.name + ' ' + item.surName,
       email: item.email,
       typePerson:
