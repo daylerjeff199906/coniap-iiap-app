@@ -31,23 +31,22 @@ export async function updateSummary(id: string, props: ISummary) {
   }
 }
 
-export async function fetchSummaries(
-  query: string,
-  filters?: {
-    isApproved?: boolean
-    isActived?: boolean
-    person_id?: string
-    topic_id?: string
-    created_at?: string
-    isFile?: boolean
-  }
-) {
+export async function fetchSummaries(filters?: {
+  query?: string
+  isApproved?: boolean
+  isActived?: boolean
+  isMagistral?: boolean
+  person_id?: string
+  topic_id?: string
+  created_at?: string
+  isFile?: boolean
+}) {
   const supabase = createClient()
 
   let request = supabase
     .from('summaries')
     .select('*,person:person_id(*), topic:topic_id(*)')
-    .ilike('title', `%${query}%`)
+    .ilike('title', `%${filters?.query}%`)
     .order('created_at', { ascending: false })
 
   if (filters?.isApproved) {
@@ -71,6 +70,9 @@ export async function fetchSummaries(
     } else {
       request = request.eq('file', '')
     }
+  }
+  if (filters?.isMagistral) {
+    request = request.eq('isMagistral', filters.isMagistral)
   }
 
   const { data, error } = await request
@@ -137,7 +139,7 @@ export async function fetchPersonsIsNotSummaryFile() {
     .select('summaries(file)')
     .neq('typePerson', 'participant')
     .is('summaries.file', null) // Para agregar el chequeo de NULL correctamente
-    // .or('summaries.file.is.null, summaries.file.eq.""')
+  // .or('summaries.file.is.null, summaries.file.eq.""')
 
   console.log(data)
   console.log(error)

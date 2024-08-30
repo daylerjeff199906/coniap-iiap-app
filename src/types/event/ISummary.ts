@@ -1,5 +1,4 @@
-import { ITopic } from '.'
-import { IPerson } from '@/types'
+import { IPerson, ITopic } from '@/types'
 
 export interface ISummary {
   id: string
@@ -15,4 +14,15 @@ export interface ISummary {
   file: string
   title: string
   authors: string[] | null
+}
+
+export interface ISummaryFilter {
+  query?: string
+  isApproved?: boolean
+  isActived?: boolean
+  isMagistral?: boolean
+  person_id?: string
+  topic_id?: string
+  created_at?: string
+  isFile?: boolean
 }

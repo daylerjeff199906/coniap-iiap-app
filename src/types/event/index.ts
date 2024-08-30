@@ -1,5 +1,5 @@
 import { IEvent } from './IEvent'
 import { IEventRes } from './IEventRes'
-import { ISummary } from './ISummary'
+import { ISummary, ISummaryFilter } from './ISummary'
 
-export type { IEvent, IEventRes, ISummary }
+export type { IEvent, IEventRes, ISummary, ISummaryFilter }

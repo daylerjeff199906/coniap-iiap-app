@@ -3,14 +3,14 @@ import { useState } from 'react'
 
 import {
   fetchSummaries,
-  fetchSummaryStatus,
+  // fetchSummaryStatus,
   createSummary,
   updateSummary,
   fetchSummaryByIdPerson,
 } from '@/api'
 import { useFiles } from './useFiles'
 
-import { IRes, ISummary } from '@/types'
+import { IRes, ISummary, ISummaryFilter } from '@/types'
 import { toast } from 'react-toastify'
 
 export function useSummaries() {
@@ -43,33 +43,23 @@ export function useSummaries() {
     return res
   }
 
-  const getSummaries = async (
-    query: string,
-    filters?: {
-      isApproved?: boolean
-      isActived?: boolean
-      person_id?: string
-      topic_id?: string
-      created_at?: string
-      isFile?: boolean
-    }
-  ) => {
+  const getSummaries = async (filters?: ISummaryFilter) => {
     setLoading(true)
-    const data = await fetchSummaries(query, filters)
+    const data = await fetchSummaries(filters)
       .then((res) => res)
       .catch((err) => err)
     setSummaries(data)
     setLoading(false)
   }
 
-  const getSummariesStatus = async (query: string, isApproved: boolean) => {
-    setLoading(true)
-    const data = await fetchSummaryStatus(query, isApproved)
-      .then((res) => res)
-      .catch((err) => err)
-    setSummaries(data)
-    setLoading(false)
-  }
+  // const getSummariesStatus = async (query: string, isApproved: boolean) => {
+  //   setLoading(true)
+  //   const data = await fetchSummaryStatus(query, isApproved)
+  //     .then((res) => res)
+  //     .catch((err) => err)
+  //   setSummaries(data)
+  //   setLoading(false)
+  // }
 
   const getSummaryByIdPerson = async (idPerson: string) => {
     setLoading(true)
@@ -91,7 +81,7 @@ export function useSummaries() {
     loading,
     summaries,
     getSummaries,
-    getSummariesStatus,
+    // getSummariesStatus,
     createDataSummary,
     updateDataSummary,
     approveSummary,
