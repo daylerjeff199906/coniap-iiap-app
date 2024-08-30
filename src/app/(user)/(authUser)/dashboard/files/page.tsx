@@ -6,20 +6,18 @@ import infoData from '@/utils/json/infoConiap.json'
 import { useAuthContext } from '@/provider'
 import { IconAlertTriangleFilled } from '@tabler/icons-react'
 import { AlertCustom, HeaderSection } from '@/modules/core'
+import { getConferenceStatus, formatDate } from '@/utils/functions'
 
 export default function Page() {
   const { user } = useAuthContext()
   const urlFormat =
     'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/files%2Fformato_resumen_III-CONIAP-2024.docx?alt=media&token=46b37311-27d7-4460-9387-c07118b41422'
 
-  const date = infoData.data.dates.summary.end
-  const dateFormatted = new Date(date).toLocaleDateString('es-PE', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-
-  const isBefore = new Date(date) > new Date()
+  const dateFormatted = formatDate(
+    infoData.data.dates['date-conference'].end,
+    'DD/MM/YYYY'
+  )
+  const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   return (
     <>
@@ -53,16 +51,18 @@ export default function Page() {
           <HeaderSection
             title="Historial de resúmenes"
             subtitle="Aquí podrás ver los resúmenes que has enviado"
-            isButtonVisible={isBefore}
+            isButtonVisible={isBeforeSummary}
             labelButton="Enviar resumen"
             href="/dashboard/files/new"
           />
           <AlertCustom
             showIcon
             title="Atención, fecha límite"
-            type={isBefore ? 'warning' : 'error'}
+            type={isBeforeSummary ? 'warning' : 'error'}
             message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
-              isBefore ? '¡Aún tienes tiempo!' : '¡Ya pasó la fecha límite!'
+              isBeforeSummary
+                ? '¡Aún tienes tiempo!'
+                : '¡Ya pasó la fecha límite!'
             }`}
           />
           <section>

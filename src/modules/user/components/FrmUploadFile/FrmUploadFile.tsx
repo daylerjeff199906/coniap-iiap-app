@@ -14,6 +14,7 @@ import infoData from '@/utils/json/infoConiap.json'
 import { AuthorsSection } from './AuthorsSection'
 import { ActionsSummary } from './ActionsSummary'
 import { LayoutFrmHorizontal } from '@/modules/admin'
+import { getConferenceStatus, formatDate } from '@/utils/functions'
 
 interface IProps {
   summary?: ISummary
@@ -29,14 +30,11 @@ export const FrmUploadFile = (props: IProps) => {
   const { uploadImage, loading: loadingFile, deleteImage } = useFiles()
   const router = useRouter()
 
-  const date = infoData.data.dates.summary.end
-  const dateFormatted = new Date(date).toLocaleDateString('es-PE', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-
-  const isBefore = new Date(date) > new Date()
+  const dateFormatted = formatDate(
+    infoData.data.dates['date-conference'].end,
+    'DD/MM/YYYY'
+  )
+  const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, ...rest } = data
@@ -116,11 +114,11 @@ export const FrmUploadFile = (props: IProps) => {
           onSubmit={methods.handleSubmit(handleFormSubmit)}
         >
           <AlertCustom
-            type={isBefore ? 'warning' : 'error'}
+            type={isBeforeSummary ? 'warning' : 'error'}
             showIcon
             title="Atención"
             message={`La fecha límite para enviar resúmenes es ${dateFormatted}. ${
-              isBefore
+              isBeforeSummary
                 ? '¡Aún puedes enviar tu resumen!'
                 : 'La fecha límite ha pasado, no puedes enviar tu resumen.'
             }`}
@@ -150,7 +148,7 @@ export const FrmUploadFile = (props: IProps) => {
               radius="sm"
               type="submit"
               isLoading={loading || loadingFile}
-              isDisabled={loading || loadingFile || !isBefore}
+              isDisabled={loading || loadingFile || !isBeforeSummary}
               className="button-dark"
             >
               Guardar
