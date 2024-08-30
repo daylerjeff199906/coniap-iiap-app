@@ -19,12 +19,6 @@ import { IconFilter } from '@tabler/icons-react'
 import { AprovedFiltered } from './AprovedFiltered'
 import { StatusFilter } from './StatusFilter'
 
-const optionsFiles = [
-  { value: 'all', label: 'Todos' },
-  { value: 'true', label: 'Sí' },
-  { value: 'false', label: 'No' },
-]
-
 const optionsTopics = [{ value: 'all', label: 'Todos' }]
 
 export const FiltersSection = () => {
@@ -70,14 +64,6 @@ export const FiltersSection = () => {
       updateFilters({ topic: '' })
     } else {
       updateFilters({ topic: value })
-    }
-  }
-
-  const handleFile = (value: string) => {
-    if (value === 'all') {
-      updateFilters({ file: '' })
-    } else {
-      updateFilters({ file: value })
     }
   }
 
@@ -131,21 +117,7 @@ export const FiltersSection = () => {
                 aria-label="Filter by isFile"
                 title="Tiene archivo"
               >
-                <RadioGroup
-                  aria-label="Filter by isFile"
-                  onValueChange={handleFile}
-                  value={selectedFile}
-                  size="sm"
-                >
-                  {optionsFiles.map((status) => (
-                    <Radio
-                      key={status.value}
-                      value={status.value}
-                    >
-                      {status.label}
-                    </Radio>
-                  ))}
-                </RadioGroup>
+              
               </AccordionItem>
               <AccordionItem
                 key="4"
