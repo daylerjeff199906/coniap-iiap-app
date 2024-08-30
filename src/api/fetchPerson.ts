@@ -50,15 +50,9 @@ export async function fetchPerson(query: string) {
   }
 }
 
-export async function fetchPersons(
-  query: string,
-  typePerson: string,
-  isNot?: string,
-  status?: string,
-  column?: string,
-  isPagination?: boolean,
-  params?: { page: number; limit: number }
-) {
+export async function fetchPersons(filters: IPersonFilter) {
+  const { query, typePerson, isNot, status, column, isPagination, params } =
+    filters
   const supabase = createClient()
 
   // Comenzamos construyendo la consulta básica

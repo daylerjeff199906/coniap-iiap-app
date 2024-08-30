@@ -74,6 +74,7 @@ export const ListSpeakers = (props: IProps) => {
           onSearch={(value) => setQuery(value)}
           searchValue={query}
           rows={rows}
+          disableWrapper
         />
       </section>
     </>
