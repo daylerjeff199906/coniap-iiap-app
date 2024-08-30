@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
 import { Radio, RadioGroup } from '@nextui-org/react'

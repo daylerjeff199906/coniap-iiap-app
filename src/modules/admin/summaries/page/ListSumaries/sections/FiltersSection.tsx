@@ -17,18 +17,7 @@ import { useTopics } from '@/hooks/admin'
 import { IconFilter } from '@tabler/icons-react'
 
 import { AprovedFiltered } from './AprovedFiltered'
-
-const activeStatus = [
-  { value: 'all', label: 'Todos' },
-  { value: 'active', label: 'Activo' },
-  { value: 'inactive', label: 'Inactivo' },
-]
-
-const aprovedStatus = [
-  { value: 'all', label: 'Todos' },
-  { value: 'approved', label: 'Aprobado' },
-  { value: 'pending', label: 'Pendiente' },
-]
+import { StatusFilter } from './StatusFilter'
 
 const optionsFiles = [
   { value: 'all', label: 'Todos' },
@@ -42,8 +31,6 @@ export const FiltersSection = () => {
   const { getParams, updateFilters, filteredParams } = useFilterFromUrl()
   const { getTopics, topics } = useTopics()
 
-  const selectedStatus = getParams('status', 'all')
-  const selectedAproved = getParams('aproved', 'all')
   const selectedTopic = getParams('topic', 'all')
   const selectedFile = getParams('file', 'all')
 
@@ -51,7 +38,7 @@ export const FiltersSection = () => {
     {
       key: 'status',
       name: 'Estado',
-      items: <AprovedFiltered />,
+      items: <StatusFilter />,
     },
     {
       key: 'aproved',
@@ -73,23 +60,6 @@ export const FiltersSection = () => {
   useEffect(() => {
     getTopics('', { isActived: 'TRUE' })
   }, [])
-
-  const handleStatus = (val: string) => {
-    // const value = Object.values(val)[0]
-    if (val === 'all') {
-      updateFilters({ status: '' })
-    } else {
-      updateFilters({ status: val })
-    }
-  }
-
-  const handleAproved = (value: string) => {
-    if (value === 'all') {
-      updateFilters({ aproved: '' })
-    } else {
-      updateFilters({ aproved: value })
-    }
-  }
 
   const handleDate = (val: string) => {
     updateFilters({ date: val })
@@ -153,43 +123,9 @@ export const FiltersSection = () => {
                 aria-label="Filter by status"
                 title="Estado"
               >
-                <RadioGroup
-                  aria-label="Filter by status"
-                  onValueChange={handleStatus}
-                  value={selectedStatus}
-                  size="sm"
-                >
-                  {activeStatus.map((status) => (
-                    <Radio
-                      key={status.value}
-                      value={status.value}
-                    >
-                      {status.label}
-                    </Radio>
-                  ))}
-                </RadioGroup>
+               
               </AccordionItem>
-              <AccordionItem
-                key="2"
-                aria-label="Filter by aproved"
-                title="Aprobado"
-              >
-                <RadioGroup
-                  aria-label="Filter by aproved"
-                  onValueChange={handleAproved}
-                  value={selectedAproved}
-                  size="sm"
-                >
-                  {aprovedStatus.map((status) => (
-                    <Radio
-                      key={status.value}
-                      value={status.value}
-                    >
-                      {status.label}
-                    </Radio>
-                  ))}
-                </RadioGroup>
-              </AccordionItem>
+       
               <AccordionItem
                 key="3"
                 aria-label="Filter by isFile"
