@@ -37,7 +37,7 @@ const optionsFiles = [
 const optionsTopics = [{ value: 'all', label: 'Todos' }]
 
 export const FiltersSection = () => {
-  const { getParams, updateFilters } = useFilterFromUrl()
+  const { getParams, updateFilters, filteredParams } = useFilterFromUrl()
   const { getTopics, topics } = useTopics()
 
   const selectedStatus = getParams('status', 'all')
