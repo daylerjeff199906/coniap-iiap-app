@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@nextui-org/button'
-import { IconPlus } from '@tabler/icons-react'
+import { IconPlus, IconArrowNarrowLeft } from '@tabler/icons-react'
 import Link from 'next/link'
 
 interface IProps {
@@ -10,17 +10,41 @@ interface IProps {
   isButtonVisible?: boolean
   href?: string
   rigthContent?: React.ReactNode
+  showBackButton?: boolean
 }
 
 export const HeaderSection = (props: IProps) => {
-  const { title, subtitle, isButtonVisible, href, rigthContent } = props
+  const {
+    title,
+    subtitle,
+    isButtonVisible,
+    href,
+    rigthContent,
+    showBackButton,
+  } = props
   return (
     <>
       <section className="flex flex-col gap-3">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div>
-            <h1 className="text-xl font-bold">{title}</h1>
-            <p className="text-sm text-gray-500">{subtitle}</p>
+          <div className="flex gap-2">
+            {showBackButton && (
+              <div>
+                <Button
+                  size="sm"
+                  radius="sm"
+                  isIconOnly
+                >
+                  <IconArrowNarrowLeft
+                    size={20}
+                    className="text-white"
+                  />
+                </Button>
+              </div>
+            )}
+            <div>
+              <h1 className="text-xl font-bold">{title}</h1>
+              <p className="text-sm text-gray-500">{subtitle}</p>
+            </div>
           </div>
           <div className="flex gap-2 sm:justify-end">
             {rigthContent}

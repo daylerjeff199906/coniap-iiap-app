@@ -98,8 +98,13 @@ export const FrmUploadFile = (props: IProps) => {
   return (
     <main className="w-full flex flex-col gap-5">
       <HeaderSection
-        title="Subir archivo"
-        subtitle="Sube el archivo de tu resúmen"
+        showBackButton
+        title={summary?.id ? 'Editar resumen' : 'Nuevo resumen'}
+        subtitle={
+          summary?.id
+            ? 'Edita la información de tu resumen y envía el archivo de tu resumen'
+            : 'Crea tu tema y envía el archivo de tu resumen de tu tema'
+        }
       />
       <FormProvider {...methods}>
         <form

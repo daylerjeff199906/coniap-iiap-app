@@ -17,7 +17,7 @@ export const ActionsSummary = () => {
               <Switch
                 classNames={{
                   base: cn(
-                    'flex-row-reverse w-full max-w-2xl bg-content1 hover:bg-content2 items-center',
+                    'flex-row-reverse w-full max-w-4xl bg-content1 hover:bg-content2 items-center',
                     'justify-between cursor-pointer rounded-lg gap-2 p-4 border-2',
                     'data-[selected=true]:border-primary'
                   ),
