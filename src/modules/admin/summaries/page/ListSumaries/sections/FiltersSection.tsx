@@ -55,7 +55,6 @@ export const FiltersSection = () => {
   ]
 
   const selectedFilter = filteredParams(filtersLabel)
-  console.log(selectedFilter)
 
   return (
     <>
@@ -86,7 +85,10 @@ export const FiltersSection = () => {
         </PopoverTrigger>
         <PopoverContent>
           <main className=" w-64">
-            <Accordion isCompact>
+            <Accordion
+              isCompact
+              defaultExpandedKeys={filteredList?.map((filter) => filter.key)}
+            >
               {filteredList.map((filter) => (
                 <AccordionItem
                   key={filter.key}
