@@ -85,11 +85,16 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
   if (filters?.isMagistral) {
     request = request.eq('isMagistral', filters.isMagistral)
   }
-  // if (filters?.person_name) {
-  //   request = request.or(`person.name.ilike.%${filters?.person_name}%`)
-  // }
+  if (filters?.params) {
+    request = request.range(
+      (filters.params.page - 1) * filters.params.limit,
+      filters.params.page * filters.params.limit - 1
+    )
+  }
 
   const { data, error } = await request
+
+  console.log(data, error)
 
   if (error) {
     return error

@@ -17,6 +17,7 @@ import { StatusFilter } from './StatusFilter'
 import { FileFiltered } from './FileFiltered'
 import { TopicsFiltered } from './TopicsFiltered'
 import { DateFiltered } from './DateFiltered'
+import { PersonFiltered } from './PersonFiltered'
 
 export const FiltersSection = () => {
   const { filteredParams } = useFilterFromUrl()
@@ -102,7 +103,8 @@ export const FiltersSection = () => {
           </main>
         </PopoverContent>
       </Popover>
-      <DateFiltered />
+      {/* <DateFiltered /> */}
+      {/* <PersonFiltered /> */}
     </>
   )
 }

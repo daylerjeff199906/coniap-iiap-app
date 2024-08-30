@@ -66,6 +66,8 @@ export const ListSummaries = () => {
   const { getSummaries, summaries, loading } = useSummaries()
   const pathname = usePathname()
   const router = useRouter()
+  const [page, setPage] = useState<number>(1)
+
   const [query, setQuery] = useState<string>('')
 
   const searchParams = useSearchParams()
@@ -77,7 +79,7 @@ export const ListSummaries = () => {
 
   useEffect(() => {
     getSummaries({
-      person_name: query,
+      query,
       isActived:
         status === 'active' ? true : status === 'inactived' ? false : undefined,
       isApproved:
@@ -89,6 +91,7 @@ export const ListSummaries = () => {
       created_at: date || undefined,
       topic_id: topic || undefined,
       isFile: isFile === 'true' ? true : isFile === 'false' ? false : undefined,
+      params: { page: page, limit: 15 },
     })
   }, [query, status, aproved, date, topic, isFile])
 
@@ -153,6 +156,9 @@ export const ListSummaries = () => {
         headerChildren={<FiltersSection />}
         selectionMode="single"
         onSelectionChange={(row) => handleSelectedChange(row.key.toString())}
+        count={summaries?.length}
+        page={page}
+        onPageChange={(page) => setPage(page)}
       />
     </Suspense>
   )

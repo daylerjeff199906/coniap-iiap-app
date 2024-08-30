@@ -31,4 +31,8 @@ export interface ISummaryFilter {
   person_name?: string
   person_surName?: string
   peson_id?: string
+  params?: {
+    page: number
+    limit: number
+  }
 }
