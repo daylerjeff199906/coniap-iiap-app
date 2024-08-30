@@ -19,7 +19,7 @@ export const PersonData = () => {
             label="Nombres"
             placeholder="Escribe tus nombres"
             labelPlacement="outside"
-            value={value}
+            value={value || ''}
             onValueChange={onChange}
             isInvalid={errors.name !== undefined}
             errorMessage={errors.name?.message}
@@ -36,7 +36,7 @@ export const PersonData = () => {
             label="Apellidos"
             placeholder="Escribe tus apellidos"
             labelPlacement="outside"
-            value={value}
+            value={value || ''}
             onValueChange={onChange}
             isInvalid={errors.surName !== undefined}
             errorMessage={errors.surName?.message}
@@ -54,7 +54,7 @@ export const PersonData = () => {
             placeholder="Escribe tu puesto de trabajo, ocupación o profesión"
             labelPlacement="outside"
             description="Ejemplo: Desarrollador de software"
-            value={value}
+            value={value || ''}
             onValueChange={onChange}
             radius="sm"
           />
@@ -68,7 +68,7 @@ export const PersonData = () => {
             label="Institucion | Empresa"
             placeholder="Escribe el nombre de la institución donde te desempeñas"
             labelPlacement="outside"
-            value={value}
+            value={value || ''}
             onValueChange={onChange}
             radius="sm"
           />
@@ -82,7 +82,7 @@ export const PersonData = () => {
             label="Presentación"
             placeholder="Escribe una presentación corta sobre ti"
             labelPlacement="outside"
-            value={value}
+            value={value || ''}
             onValueChange={onChange}
             radius="sm"
           />
