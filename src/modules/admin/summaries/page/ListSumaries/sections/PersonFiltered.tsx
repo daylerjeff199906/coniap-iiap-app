@@ -27,6 +27,7 @@ export const PersonFiltered = (props: IFilter) => {
   useEffect(() => {
     getPersons({
       column: 'surname',
+      isNot: 'participant',
       query: query,
       isPagination: true,
       params: {

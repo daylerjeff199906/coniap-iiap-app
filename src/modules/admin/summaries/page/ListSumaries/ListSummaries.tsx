@@ -67,7 +67,7 @@ export const ListSummaries = () => {
   const router = useRouter()
 
   const [query, setQuery] = useState<string>('')
-  const [idPerson, setIdPerson] = useState<string | undefined>(undefined)
+  const [idPerson, setIdPerson] = useState<string>('')
 
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
@@ -92,7 +92,7 @@ export const ListSummaries = () => {
       created_at: date || undefined,
       topic_id: topic || undefined,
       isFile: isFile === 'true' ? true : isFile === 'false' ? false : undefined,
-      person_id: idPerson,
+      person_id: idPerson || undefined,
       params: { page: Number(page) || 1, limit: 30 },
     })
   }, [query, status, aproved, date, topic, isFile, page, idPerson])
@@ -138,13 +138,7 @@ export const ListSummaries = () => {
         onSearch={(value) => setQuery(value)}
         searchValue={query}
         rows={rows}
-        headerChildren={
-          <FiltersSection
-            onValueChange={(value) =>
-              setIdPerson(value === '' ? undefined : value)
-            }
-          />
-        }
+        headerChildren={<FiltersSection onValueChange={setIdPerson} />}
         selectionMode="single"
         onSelectionChange={(row) => handleSelectedChange(row.key.toString())}
         count={summaries?.count}
