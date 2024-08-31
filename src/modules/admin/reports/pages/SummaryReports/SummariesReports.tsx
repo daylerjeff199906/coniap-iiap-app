@@ -11,7 +11,7 @@ import { useSummaries } from '@/hooks/admin'
 import { ExportSummariesExcel } from './ExportSummariesExcel'
 
 export const SummariesReports = () => {
-  const { getSummaries, summaries, loading } = useSummaries()
+  const { getSummaries, summaries, loading, setSummaries } = useSummaries()
   const { getParams } = useFilterFromUrl()
   const router = useRouter()
 
@@ -60,7 +60,8 @@ export const SummariesReports = () => {
   }
 
   const handleClearFilter = () => {
-    router.push('/admin/reportes')
+    router.push('/admin/reportes/summaries')
+    setSummaries(null)
   }
 
   return (

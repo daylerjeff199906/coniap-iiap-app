@@ -19,6 +19,7 @@ export const ExportSummariesExcel = (props: IProps) => {
       <ExportExcelButton
         dataList={listExcel}
         fileName={`${tittle} - ${dateNow.toLocaleDateString()}.xlsx`}
+        linkColumnKey="link"
       />
     </>
   )

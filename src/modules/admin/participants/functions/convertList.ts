@@ -27,21 +27,24 @@ export function convertListSummaryToExcel(dataList: ISummary[]) {
   return dataList?.map((summary) => {
     return {
       id: String(summary.id),
-      titulo: String(summary.title),
-      'linea-tematica':
-        String(summary.topic?.name) || 'No tiene temática asignada',
-      nombre: String(summary.person?.name),
-      apellidos: String(summary.person?.surName),
-      email: String(summary.person?.email),
-      telefono: String(summary.person?.phone) || 'No registrado',
-      institucion: summary.person?.institution || 'No especificado',
-      coautores: summary.authors,
-      estado: summary.isApproved ? 'Activo' : 'Inactivo',
-      aprobado: summary.isApproved ? 'Sí' : 'No',
       'fecha de creacion': formatDate(
         summary.created_at,
         'DD/MM/YYYY Hora: HH:mm'
       ),
+      titulo: String(summary.title),
+      'linea-tematica':
+        String(summary.topic?.name.toUpperCase()) ||
+        'No tiene temática asignada',
+      nombre: String(summary.person?.name.toUpperCase()),
+      apellidos: String(summary.person?.surName.toUpperCase()),
+      email: String(summary.person?.email),
+      telefono: String(summary.person?.phone) || 'No registrado',
+      institucion:
+        summary.person?.institution?.toUpperCase() || 'No especificado',
+      coautores: summary.authors,
+      estado: summary.isApproved ? 'Activo' : 'Inactivo',
+      aprobado: summary.isApproved ? 'Sí' : 'No',
+      link: summary.file || 'No tiene archivo',
     }
   })
 }

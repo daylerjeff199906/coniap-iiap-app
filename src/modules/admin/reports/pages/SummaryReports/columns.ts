@@ -17,7 +17,7 @@ export const columns: Array<IColumns> = [
     align: 'start',
   },
   {
-    key: 'category',
+    key: 'topic',
     label: 'Línea de investigación',
     align: 'start',
   },

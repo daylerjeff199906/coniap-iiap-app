@@ -78,5 +78,6 @@ export function useSummaries() {
     updateDataSummary,
     approveSummary,
     getSummaryByIdPerson,
+    setSummaries,
   }
 }
