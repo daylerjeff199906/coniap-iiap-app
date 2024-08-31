@@ -1,5 +1,4 @@
-import { ParticipantsReports } from '@/modules/admin/reports'
-import { HeaderSection } from '@/modules/core'
+import { ParticipantsReports } from '@/modules/admin'
 
 export default function Page() {
   return (
