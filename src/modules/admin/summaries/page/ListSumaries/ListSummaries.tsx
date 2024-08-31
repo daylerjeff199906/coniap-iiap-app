@@ -93,7 +93,7 @@ export const ListSummaries = () => {
       topic_id: topic || undefined,
       isFile: isFile === 'true' ? true : isFile === 'false' ? false : undefined,
       person_id: idPerson !== '' ? idPerson : undefined,
-      params: { page: Number(page) || 1, limit: 30 },
+      params: { page: Number(page) || 1, limit: 29 },
     })
   }, [query, status, aproved, date, topic, isFile, page, idPerson])
 

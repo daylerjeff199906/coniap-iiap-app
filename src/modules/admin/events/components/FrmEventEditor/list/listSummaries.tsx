@@ -41,9 +41,10 @@ export const ListSummaries = (props: IProps) => {
   useEffect(() => {
     getSummaries({
       query,
+      isPagination: true,
       params: {
         page,
-        limit: 30,
+        limit: 29,
       },
     })
   }, [query, page])
