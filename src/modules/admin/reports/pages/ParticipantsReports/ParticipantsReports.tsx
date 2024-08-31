@@ -37,7 +37,6 @@ export const ParticipantsReports = () => {
         institution: speaker?.institution,
         level: getTypePerson(speaker?.typePerson),
         status: speaker?.isActived,
-        actions: 'actions',
       }))) ||
     []
 

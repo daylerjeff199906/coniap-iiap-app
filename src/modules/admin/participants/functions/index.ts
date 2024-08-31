@@ -1,3 +1,6 @@
-import { convertListPersonToExcel } from './convertList'
+import {
+  convertListPersonToExcel,
+  convertListSummaryToExcel,
+} from './convertList'
 
-export { convertListPersonToExcel }
+export { convertListPersonToExcel, convertListSummaryToExcel }

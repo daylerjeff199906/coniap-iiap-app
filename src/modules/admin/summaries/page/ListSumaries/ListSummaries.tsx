@@ -6,10 +6,10 @@ import { IColumns, IRows } from '@/types'
 import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
 import { Chip, Spinner } from '@nextui-org/react'
-import { FiltersSection } from './sections'
 import { formatDate } from '@/utils/functions'
 import { usePathname, useRouter } from 'next/navigation'
 import { useFilterFromUrl } from '@/modules/core'
+import { FiltersSection } from './FiltersSection'
 
 const columns: Array<IColumns> = [
   {

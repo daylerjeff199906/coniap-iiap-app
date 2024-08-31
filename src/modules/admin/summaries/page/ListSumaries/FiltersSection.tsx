@@ -12,12 +12,13 @@ import {
 } from '@nextui-org/react'
 import { IconFilter } from '@tabler/icons-react'
 
-import { AprovedFiltered } from './AprovedFiltered'
-import { StatusFilter } from './StatusFilter'
-import { FileFiltered } from './FileFiltered'
-import { TopicsFiltered } from './TopicsFiltered'
-import { DateFiltered } from './DateFiltered'
-import { PersonFiltered } from './PersonFiltered'
+import {
+  AprovedFiltered,
+  StatusFilter,
+  FileFiltered,
+  TopicsFiltered,
+  PersonFiltered,
+} from '@/modules/admin/summaries/components'
 
 interface IFilter {
   onValueChange: (value: string) => void
@@ -111,7 +112,6 @@ export const FiltersSection = (props: IFilter) => {
       <div>
         <PersonFiltered onValueChange={onValueChange} />
       </div>
-      {/* <DateFiltered /> */}
     </>
   )
 }
