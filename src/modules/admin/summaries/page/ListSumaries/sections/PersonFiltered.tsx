@@ -81,6 +81,7 @@ export const PersonFiltered = (props: IFilter) => {
             <Listbox
               selectionMode="single"
               onSelectionChange={handlePerson}
+              disallowEmptySelection
               topContent={
                 <Input
                   startContent={<IconSearch stroke={1.5} />}
