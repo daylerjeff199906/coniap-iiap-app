@@ -1,4 +1,5 @@
+import { SummariesReports } from '@/modules/admin'
 
 export default function Page() {
-  return <div>page</div>
+  return <SummariesReports />
 }
