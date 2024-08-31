@@ -36,7 +36,7 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
 
   let request = supabase
     .from('summaries')
-    .select('*,person:person_id(*), topic:topic_id(*)')
+    .select('*,person:person_id(*), topic:topic_id(*)', { count: 'exact' })
     .order('created_at', { ascending: false })
 
   if (filters?.query) {
@@ -85,21 +85,19 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
   if (filters?.isMagistral) {
     request = request.eq('isMagistral', filters.isMagistral)
   }
-  if (filters?.params) {
+  if (filters?.isPagination && filters?.params) {
     request = request.range(
       (filters.params.page - 1) * filters.params.limit,
       filters.params.page * filters.params.limit - 1
     )
   }
 
-  const { data, error } = await request
-
-  console.log(data, error)
+  const { data, error, count } = await request
 
   if (error) {
     return error
   } else {
-    return data
+    return { data, count }
   }
 }
 
@@ -144,8 +142,8 @@ export async function fetchPersonsIsNotSummaryFile() {
     .is('summaries.file', null) // Para agregar el chequeo de NULL correctamente
   // .or('summaries.file.is.null, summaries.file.eq.""')
 
-  console.log(data)
-  console.log(error)
+  // console.log(data)
+  // console.log(error)
 
   if (error) {
     return error

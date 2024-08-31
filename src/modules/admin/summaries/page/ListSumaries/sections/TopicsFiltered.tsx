@@ -19,9 +19,9 @@ export const TopicsFiltered = () => {
 
   const handleTopic = (value: string) => {
     if (value === 'all') {
-      updateFilters({ topic: '' })
+      updateFilters({ topic: '', page: '' })
     } else {
-      updateFilters({ topic: value })
+      updateFilters({ topic: value, page: '' })
     }
   }
 

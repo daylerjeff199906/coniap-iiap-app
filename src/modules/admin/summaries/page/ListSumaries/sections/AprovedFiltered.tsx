@@ -15,9 +15,9 @@ export const AprovedFiltered = () => {
 
   const handleAproved = (value: string) => {
     if (value === 'all') {
-      updateFilters({ aproved: '' })
+      updateFilters({ aproved: '', page: '' })
     } else {
-      updateFilters({ aproved: value })
+      updateFilters({ aproved: value, page: '' })
     }
   }
 

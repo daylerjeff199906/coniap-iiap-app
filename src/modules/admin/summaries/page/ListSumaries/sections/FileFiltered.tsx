@@ -14,9 +14,9 @@ export const FileFiltered = () => {
   const selectedFile = getParams('file', 'all')
   const handleFile = (value: string) => {
     if (value === 'all') {
-      updateFilters({ file: '' })
+      updateFilters({ file: '', page: '' })
     } else {
-      updateFilters({ file: value })
+      updateFilters({ file: value, page: '' })
     }
   }
 

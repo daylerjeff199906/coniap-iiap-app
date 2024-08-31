@@ -14,11 +14,10 @@ export const StatusFilter = () => {
   const selectedStatus = getParams('status', 'all')
 
   const handleStatus = (val: string) => {
-    // const value = Object.values(val)[0]
     if (val === 'all') {
-      updateFilters({ status: '' })
+      updateFilters({ status: '', page: '' })
     } else {
-      updateFilters({ status: val })
+      updateFilters({ status: val, page: '' })
     }
   }
 

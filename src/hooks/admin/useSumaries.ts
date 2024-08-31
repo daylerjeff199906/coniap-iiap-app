@@ -14,7 +14,10 @@ import { toast } from 'react-toastify'
 
 export function useSummaries() {
   const [loading, setLoading] = useState<boolean>(false)
-  const [summaries, setSummaries] = useState<ISummary[] | null>(null)
+  const [summaries, setSummaries] = useState<{
+    data: ISummary[]
+    count: number
+  } | null>(null)
   const { editField } = useFiles()
 
   const createDataSummary = async (data: ISummary) => {
