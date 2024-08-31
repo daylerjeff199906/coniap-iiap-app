@@ -19,7 +19,10 @@ export default async function Page(props: IProps) {
     .then((res) => res)
     .catch((err) => err)
 
-  const summaries: ISummary[] | null = await fetchSummaryByIdPerson(id)
+  const summaries: {
+    data: ISummary[]
+    count: number
+  } | null = await fetchSummaryByIdPerson(id)
     .then((res) => res)
     .catch((err) => err)
 
@@ -36,7 +39,7 @@ export default async function Page(props: IProps) {
         <section className="flex flex-col w-full justify-center items-center max-w-5xl">
           <DetailsParticipant
             data={person}
-            summaries={summaries}
+            summaries={summaries?.data}
             user={user}
           />
         </section>

@@ -5,13 +5,11 @@ import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
-import { Button, Chip, Spinner } from '@nextui-org/react'
-import { FiltersSection } from './sections'
+import { Chip, Spinner } from '@nextui-org/react'
 import { formatDate } from '@/utils/functions'
-import { IconSpeakerphone } from '@tabler/icons-react'
 import { usePathname, useRouter } from 'next/navigation'
-
-import { fetchPersonsIsNotSummaryFile } from '@/api'
+import { useFilterFromUrl } from '@/modules/core'
+import { FiltersSection } from './FiltersSection'
 
 const columns: Array<IColumns> = [
   {
@@ -64,9 +62,12 @@ const columns: Array<IColumns> = [
 
 export const ListSummaries = () => {
   const { getSummaries, summaries, loading } = useSummaries()
+  const { updateFilters } = useFilterFromUrl()
   const pathname = usePathname()
   const router = useRouter()
+
   const [query, setQuery] = useState<string>('')
+  const [idPerson, setIdPerson] = useState<string>('')
 
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
@@ -74,10 +75,12 @@ export const ListSummaries = () => {
   const date = searchParams.get('date')
   const topic = searchParams.get('topic')
   const isFile = searchParams.get('file')
+  const page = searchParams.get('page')
 
   useEffect(() => {
     getSummaries({
-      person_name: query,
+      query,
+      isPagination: true,
       isActived:
         status === 'active' ? true : status === 'inactived' ? false : undefined,
       isApproved:
@@ -89,12 +92,14 @@ export const ListSummaries = () => {
       created_at: date || undefined,
       topic_id: topic || undefined,
       isFile: isFile === 'true' ? true : isFile === 'false' ? false : undefined,
+      person_id: idPerson !== '' ? idPerson : undefined,
+      params: { page: Number(page) || 1, limit: 29 },
     })
-  }, [query, status, aproved, date, topic, isFile])
+  }, [query, status, aproved, date, topic, isFile, page, idPerson])
 
   const rows: IRows[] =
-    summaries !== null && summaries?.length > 0
-      ? summaries?.map((summary) => {
+    summaries !== null && summaries?.data?.length > 0
+      ? summaries?.data?.map((summary) => {
           return {
             key: String(summary.id),
             id: summary.id,
@@ -113,11 +118,6 @@ export const ListSummaries = () => {
         })
       : []
 
-  const handleGetPersonsIsNotSummaryFile = async () => {
-    const persons = await fetchPersonsIsNotSummaryFile()
-    console.log(persons)
-  }
-
   const handleSelectedChange = (value: string) => {
     router.push(`${pathname}/${value}`)
   }
@@ -130,19 +130,7 @@ export const ListSummaries = () => {
         </div>
       }
     >
-      <section>
-        <Button
-          radius="sm"
-          variant="solid"
-          color="warning"
-          isDisabled={!isFile || isFile !== 'true' || summaries?.length === 0}
-          startContent={<IconSpeakerphone />}
-          className="font-bold"
-          // onPress={handleGetPersonsIsNotSummaryFile}
-        >
-          Recordar subir resúmenes
-        </Button>
-      </section>
+      <section></section>
       <TableGeneral
         placeholderSearch="Buscar por título de resumen"
         columns={columns}
@@ -150,9 +138,12 @@ export const ListSummaries = () => {
         onSearch={(value) => setQuery(value)}
         searchValue={query}
         rows={rows}
-        headerChildren={<FiltersSection />}
+        headerChildren={<FiltersSection onValueChange={setIdPerson} />}
         selectionMode="single"
         onSelectionChange={(row) => handleSelectedChange(row.key.toString())}
+        count={summaries?.count}
+        page={page ? Number(page) : 1}
+        onPageChange={(page) => updateFilters({ page: page.toString() })}
       />
     </Suspense>
   )

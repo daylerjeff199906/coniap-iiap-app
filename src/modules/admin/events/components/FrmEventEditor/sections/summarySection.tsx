@@ -93,7 +93,7 @@ export const SummarySection = () => {
             <DrawerSelect
               isOpen={isOpen}
               setOpen={setIsOpen}
-              title="Seleccionar programa"
+              title="Seleccionar resumen"
               content={<ListSummaries onSetOpen={setIsOpen} />}
             />
           </div>

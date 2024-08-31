@@ -75,7 +75,7 @@ export const ListParticipants = () => {
 
   const listPerson =
     (persons &&
-      persons.data.length > 0 &&
+      persons?.data?.length > 0 &&
       persons?.data.map((speaker) => ({
         key: String(speaker?.id),
         id: speaker?.id,
@@ -91,7 +91,7 @@ export const ListParticipants = () => {
       }))) ||
     []
 
-  const dataExcel = persons && persons.data.length > 0 ? persons.data : []
+  const dataExcel = persons && persons?.data?.length > 0 ? persons?.data : []
 
   //To type search
   const handleTypeSearch = (val: Selection) => {

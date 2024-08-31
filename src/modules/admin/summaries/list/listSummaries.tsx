@@ -68,9 +68,10 @@ export const ListSummaries = (props: IProps) => {
       onSelectionChange={onSelectionChange}
       searchValue={query}
       selectionMode="single"
+      disableWrapper
       rows={
         summaries !== null
-          ? summaries?.map((summary) => {
+          ? summaries?.data?.map((summary) => {
               return {
                 key: String(summary.id),
                 title: summary.title,

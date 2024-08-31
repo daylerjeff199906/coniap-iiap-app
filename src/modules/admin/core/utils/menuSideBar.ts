@@ -54,6 +54,13 @@ export const menuSideBar: IMenuSideBar[] = [
     section: 'Participantes',
     items: [
       {
+        id: 'summary',
+        icon: 'text',
+        title: 'Resúmenes',
+        href: '/admin/participantes/resumenes',
+        moreItems: [],
+      },
+      {
         id: 'participants',
         icon: 'users',
         title: 'Participantes',
@@ -74,13 +81,6 @@ export const menuSideBar: IMenuSideBar[] = [
             href: '/admin/participantes/asistentes',
           },
         ],
-      },
-      {
-        id: 'summary',
-        icon: 'text',
-        title: 'Resúmenes',
-        href: '/admin/participantes/resumenes',
-        moreItems: [],
       },
     ],
   },
@@ -112,11 +112,11 @@ export const menuSideBar: IMenuSideBar[] = [
             title: 'Participantes',
             href: '/admin/reportes',
           },
-          // {
-          //   id: 'events-report',
-          //   title: 'Eventos',
-          //   href: '/admin/reportes/eventos',
-          // },
+          {
+            id: 'summary-report',
+            title: 'Resúmenes',
+            href: '/admin/reportes/summaries',
+          },
         ],
       },
       {

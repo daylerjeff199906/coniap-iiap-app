@@ -48,7 +48,7 @@ export const ListSummaries = () => {
   return (
     <>
       {loading ? (
-        <div className='flex flex-col gap-3'>
+        <div className="flex flex-col gap-3">
           {[1, 2, 3].map((item) => (
             <Skeleton
               key={item}
@@ -58,7 +58,7 @@ export const ListSummaries = () => {
         </div>
       ) : (
         <>
-          {summaries?.length === 0 && (
+          {summaries?.data?.length === 0 && (
             <section className="flex flex-col items-center w-full justify-center">
               <Image
                 src="/svg/not-summary.svg"
@@ -72,7 +72,7 @@ export const ListSummaries = () => {
             </section>
           )}
           <section className="flex flex-col gap-4">
-            {summaries?.map((summary) => (
+            {summaries?.data?.map((summary) => (
               <div
                 key={summary.id}
                 className="p-6 bg-gray-100 rounded-lg flex flex-col gap-4"
@@ -97,7 +97,7 @@ export const ListSummaries = () => {
                   <p className="text-xs ">
                     Línea temática: {summary.topic?.name}
                   </p>
-                  {summary?.authors && summaries?.length > 0 && (
+                  {summary?.authors && summaries?.data?.length > 0 && (
                     <p className="text-xs">
                       Co-autores:{' '}
                       {summary.authors.map((author) => author).join(', ')}
