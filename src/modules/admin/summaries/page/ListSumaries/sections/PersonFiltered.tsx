@@ -114,7 +114,10 @@ export const PersonFiltered = (props: IFilter) => {
           isIconOnly
           radius="sm"
           variant="bordered"
-          onPress={() => setPersonSelected(null)}
+          onPress={() => {
+            setPersonSelected(null)
+            onValueChange('')
+          }}
         >
           <IconTrash size={20} />
         </Button>
