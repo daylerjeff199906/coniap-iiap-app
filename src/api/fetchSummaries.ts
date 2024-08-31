@@ -104,15 +104,16 @@ export async function fetchSummaries(filters?: ISummaryFilter) {
 export async function fetchSummaryByIdPerson(idPerson: string) {
   const supabase = createClient()
 
-  const { data, error } = await supabase
+  const { data, error, count } = await supabase
     .from('summaries')
-    .select('*,person:person_id(*), topic:topic_id(*)')
+    .select('*,person:person_id(*), topic:topic_id(*)', { count: 'exact' })
     .eq('person_id', idPerson)
     .order('title', { ascending: true })
+
   if (error) {
     return error
   } else {
-    return data
+    return { data, count }
   }
 }
 
