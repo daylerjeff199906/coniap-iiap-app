@@ -10,24 +10,27 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Skeleton,
 } from '@nextui-org/react'
+import { IPerson } from '@/types'
+import { IconSearch } from '@tabler/icons-react'
 
 export const PersonFiltered = () => {
   const { getPersons, persons, loading } = usePersons()
-  const [page, setPage] = useState(1)
-  const limit = 10
+  const [query, setQuery] = useState('')
+  const [personSelected, setPersonSelected] = useState<IPerson | null>(null)
 
   useEffect(() => {
     getPersons({
-      column: 'name',
-      query: '',
+      column: 'surName',
+      query: query,
       isPagination: true,
       params: {
-        page,
-        limit,
+        page: 1,
+        limit: 10,
       },
     })
-  }, [])
+  }, [query])
 
   const dataPersons = persons?.data || []
 
@@ -35,22 +38,20 @@ export const PersonFiltered = () => {
     <section>
       <Popover>
         <PopoverTrigger>
-          <Button
-            isLoading={loading}
-            radius="sm"
-          >
-            Filtrar por persona
-          </Button>
+          <Button radius="sm">Filtrar por persona</Button>
         </PopoverTrigger>
         <PopoverContent>
           <div>
-            {dataPersons && dataPersons.length > 0 && (
+            {!loading && dataPersons && dataPersons.length > 0 && (
               <Listbox
                 topContent={
                   <Input
+                    startContent={<IconSearch stroke={1.5} />}
                     aria-label="Search person"
-                    placeholder="Buscar persona"
+                    placeholder="Buscar por apellido..."
                     radius="sm"
+                    value={query}
+                    onValueChange={(value) => setQuery(value)}
                   />
                 }
               >
@@ -69,12 +70,23 @@ export const PersonFiltered = () => {
                 ))}
               </Listbox>
             )}
-            {!dataPersons ||
+            {(!loading && !dataPersons) ||
               (dataPersons.length === 0 && (
                 <section className="h-10 flex flex-col gap-1 justify-center items-center">
                   <p className="text-gray-500">No hay personas registradas</p>
                 </section>
               ))}
+
+            {loading && (
+              <section className="w-full flex flex-col gap-1">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    className="w-full rounded-md h-6 min-w-[200px]"
+                  />
+                ))}
+              </section>
+            )}
           </div>
         </PopoverContent>
       </Popover>
