@@ -10,7 +10,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-  Skeleton,
+  Selection,
 } from '@nextui-org/react'
 import { IPerson } from '@/types'
 import { IconSearch } from '@tabler/icons-react'
@@ -22,7 +22,7 @@ export const PersonFiltered = () => {
 
   useEffect(() => {
     getPersons({
-      column: 'surName',
+      column: 'surname',
       query: query,
       isPagination: true,
       params: {
@@ -34,59 +34,55 @@ export const PersonFiltered = () => {
 
   const dataPersons = persons?.data || []
 
+  const handlePerson = (value: Selection) => {
+    const val = Object.values(value)[0]
+    const person = dataPersons.find((person) => person.id === val)
+  }
+
   return (
     <section>
-      <Popover>
+      <Popover
+        radius="sm"
+        placement="right-start"
+      >
         <PopoverTrigger>
-          <Button radius="sm">Filtrar por persona</Button>
+          <Button
+            isLoading={loading}
+            radius="sm"
+          >
+            Filtrar por persona
+          </Button>
         </PopoverTrigger>
         <PopoverContent>
-          <div>
-            {!loading && dataPersons && dataPersons.length > 0 && (
-              <Listbox
-                topContent={
-                  <Input
-                    startContent={<IconSearch stroke={1.5} />}
-                    aria-label="Search person"
-                    placeholder="Buscar por apellido..."
-                    radius="sm"
-                    value={query}
-                    onValueChange={(value) => setQuery(value)}
-                  />
-                }
-              >
-                {dataPersons?.map((person) => (
-                  <ListboxItem
-                    key={String(person?.id)}
-                    value={person.id}
-                  >
-                    <div className="flex flex-col gap-1">
-                      <h3 className="text-sm">
-                        {person.name} {person.surName}
-                      </h3>
-                      <p className="text-xs text-gray-500">{person.email}</p>
-                    </div>
-                  </ListboxItem>
-                ))}
-              </Listbox>
-            )}
-            {(!loading && !dataPersons) ||
-              (dataPersons.length === 0 && (
-                <section className="h-10 flex flex-col gap-1 justify-center items-center">
-                  <p className="text-gray-500">No hay personas registradas</p>
-                </section>
+          <div className="min-w-[200px]">
+            <Listbox
+              selectionMode="single"
+              onSelectionChange={handlePerson}
+              topContent={
+                <Input
+                  startContent={<IconSearch stroke={1.5} />}
+                  aria-label="Search person"
+                  placeholder="Buscar por apellido..."
+                  radius="sm"
+                  value={query}
+                  onValueChange={(value) => setQuery(value)}
+                />
+              }
+            >
+              {dataPersons?.map((person) => (
+                <ListboxItem
+                  key={String(person?.id)}
+                  value={person.id}
+                >
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-sm">
+                      {person.name} {person.surName}
+                    </h3>
+                    <p className="text-xs text-gray-500">{person.email}</p>
+                  </div>
+                </ListboxItem>
               ))}
-
-            {loading && (
-              <section className="w-full flex flex-col gap-1">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Skeleton
-                    key={index}
-                    className="w-full rounded-md h-6 min-w-[200px]"
-                  />
-                ))}
-              </section>
-            )}
+            </Listbox>
           </div>
         </PopoverContent>
       </Popover>
