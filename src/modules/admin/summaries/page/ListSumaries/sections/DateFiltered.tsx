@@ -8,7 +8,7 @@ export const DateFiltered = () => {
   const selectedFile = getParams('date', 'all')
 
   const handleFile = (value: string) => {
-    updateFilters({ date: value, page: '' })
+    updateFilters({ date: value, page: '1' })
   }
 
   return (

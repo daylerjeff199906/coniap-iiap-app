@@ -15,9 +15,9 @@ export const StatusFilter = () => {
 
   const handleStatus = (val: string) => {
     if (val === 'all') {
-      updateFilters({ status: '', page: '' })
+      updateFilters({ status: '', page: '1' })
     } else {
-      updateFilters({ status: val, page: '' })
+      updateFilters({ status: val, page: '1' })
     }
   }
 
