@@ -103,8 +103,8 @@ export const FiltersSection = () => {
           </main>
         </PopoverContent>
       </Popover>
-      {/* <DateFiltered /> */}
-      {/* <PersonFiltered /> */}
+      <DateFiltered />
+      <PersonFiltered />
     </>
   )
 }
