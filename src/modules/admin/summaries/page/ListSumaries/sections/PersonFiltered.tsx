@@ -13,10 +13,14 @@ import {
   Selection,
 } from '@nextui-org/react'
 import { IPerson } from '@/types'
-import { IconSearch } from '@tabler/icons-react'
+import { IconSearch, IconTrash } from '@tabler/icons-react'
+interface IFilter {
+  onValueChange: (value: string) => void
+}
 
-export const PersonFiltered = () => {
+export const PersonFiltered = (props: IFilter) => {
   const { getPersons, persons, loading } = usePersons()
+  const { onValueChange } = props
   const [query, setQuery] = useState('')
   const [personSelected, setPersonSelected] = useState<IPerson | null>(null)
 
@@ -36,11 +40,18 @@ export const PersonFiltered = () => {
 
   const handlePerson = (value: Selection) => {
     const val = Object.values(value)[0]
-    const person = dataPersons.find((person) => person.id === val)
+    const person = dataPersons.find((person) => person.id?.toString() === val)
+    if (person?.id) {
+      setPersonSelected(person)
+      onValueChange(person.id)
+    } else {
+      setPersonSelected(null)
+      onValueChange('')
+    }
   }
 
   return (
-    <section>
+    <section className="flex gap-2">
       <Popover
         radius="sm"
         placement="right-start"
@@ -50,7 +61,18 @@ export const PersonFiltered = () => {
             isLoading={loading}
             radius="sm"
           >
-            Filtrar por persona
+            {personSelected ? (
+              <div className="flex flex-col justify-start items-start">
+                <h3 className="text-xs">
+                  {personSelected.name} {personSelected.surName}
+                </h3>
+                <p className="text-tiny text-gray-500">
+                  {personSelected.email}
+                </p>
+              </div>
+            ) : (
+              <p>Filtrar por persona</p>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent>
@@ -86,6 +108,16 @@ export const PersonFiltered = () => {
           </div>
         </PopoverContent>
       </Popover>
+      {personSelected && (
+        <Button
+          isIconOnly
+          radius="sm"
+          variant="bordered"
+          onPress={() => setPersonSelected(null)}
+        >
+          <IconTrash size={20} />
+        </Button>
+      )}
     </section>
   )
 }

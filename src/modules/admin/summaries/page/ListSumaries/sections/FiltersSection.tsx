@@ -19,8 +19,13 @@ import { TopicsFiltered } from './TopicsFiltered'
 import { DateFiltered } from './DateFiltered'
 import { PersonFiltered } from './PersonFiltered'
 
-export const FiltersSection = () => {
+interface IFilter {
+  onValueChange: (value: string) => void
+}
+
+export const FiltersSection = (props: IFilter) => {
   const { filteredParams } = useFilterFromUrl()
+  const { onValueChange } = props
 
   const filteredList = [
     {
@@ -104,7 +109,7 @@ export const FiltersSection = () => {
         </PopoverContent>
       </Popover>
       <div>
-        <PersonFiltered />
+        <PersonFiltered onValueChange={onValueChange} />
       </div>
       {/* <DateFiltered /> */}
     </>
