@@ -36,12 +36,17 @@ export const ListSummaries = (props: IProps) => {
   const { onSetOpen } = props
 
   const [query, setQuery] = useState('')
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     getSummaries({
       query,
+      params: {
+        page,
+        limit: 30,
+      },
     })
-  }, [query])
+  }, [query, page])
 
   const onSelectionChange = (row: any) => {
     setValue('summary.id', row?.key)
@@ -51,7 +56,7 @@ export const ListSummaries = (props: IProps) => {
   }
 
   const rows =
-    summaries?.map((summary) => {
+    summaries?.data?.map((summary) => {
       return {
         key: String(summary.id),
         fullname: summary?.person?.name + ' ' + summary?.person?.surName,
@@ -68,9 +73,16 @@ export const ListSummaries = (props: IProps) => {
         onSelectionChange(row)
       }}
       loading={loading}
-      onSearch={(value) => setQuery(value)}
+      onSearch={(value) => {
+        setQuery(value)
+        setPage(1)
+      }}
       searchValue={query}
       rows={rows}
+      count={summaries?.count || 0}
+      page={page}
+      onPageChange={(page) => setPage(page)}
+      disableWrapper
     />
   )
 }
