@@ -54,14 +54,12 @@ export const FrmUploadFile = (props: IProps) => {
           ...rest,
           person_id: person?.id || '',
           file: url,
-          topic_id: topic?.id || '',
         }
       } else {
         newData = {
           ...rest,
           person_id: person?.id || '',
           file: summary.file,
-          topic_id: topic?.id || '',
         }
       }
 
@@ -76,7 +74,6 @@ export const FrmUploadFile = (props: IProps) => {
         newData = {
           ...rest,
           person_id: person?.id || '',
-          topic_id: topic?.id || '',
           file: url,
           isActived: false,
           isApproved: false,
@@ -86,7 +83,6 @@ export const FrmUploadFile = (props: IProps) => {
         newData = {
           ...rest,
           person_id: person?.id || '',
-          topic_id: topic?.id || '',
           file: '',
           isActived: false,
           isApproved: false,
