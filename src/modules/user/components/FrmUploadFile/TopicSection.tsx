@@ -34,7 +34,7 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
             label="Línea de investigación"
             labelPlacement="outside"
             placeholder={placeholder}
-            selectedKeys={value ? [value] : []}
+            selectedKeys={value ? [value.toString()] : []}
             onChange={(value) => {
               onChange(value)
             }}
@@ -45,7 +45,7 @@ export const TopicSection = ({ loading }: { loading?: boolean }) => {
             isDisabled={loadingList || loading}
           >
             {datalist.map((item) => (
-              <SelectItem key={item.id}>{item.name}</SelectItem>
+              <SelectItem key={item.id.toString()}>{item.name}</SelectItem>
             ))}
           </Select>
         )}
