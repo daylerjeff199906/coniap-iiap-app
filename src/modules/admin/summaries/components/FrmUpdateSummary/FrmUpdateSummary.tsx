@@ -34,7 +34,7 @@ export const FrmUpdateSummary = (props: IProps) => {
   })
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    const { file, person, ...rest } = data
+    const { file, person, topic, ...rest } = data
     let newData: ISummary
     const fileIsArray = Array.isArray(file)
 

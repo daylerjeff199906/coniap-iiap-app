@@ -38,7 +38,7 @@ export const FrmUploadFile = (props: IProps) => {
   const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    const { file, person, ...rest } = data
+    const { file, person, topic, ...rest } = data
     const fileIsArray = Array.isArray(file)
 
     let newData: ISummary
@@ -50,9 +50,19 @@ export const FrmUploadFile = (props: IProps) => {
           await deleteImage(summary.file)
         }
         const url = await uploadImage('files', fileUp[0])
-        newData = { ...rest, person_id: person?.id || '', file: url }
+        newData = {
+          ...rest,
+          person_id: person?.id || '',
+          file: url,
+          topic_id: topic?.id || '',
+        }
       } else {
-        newData = { ...rest, person_id: person?.id || '', file: summary.file }
+        newData = {
+          ...rest,
+          person_id: person?.id || '',
+          file: summary.file,
+          topic_id: topic?.id || '',
+        }
       }
 
       const resData = await updateDataSummary(summary.id, newData)
@@ -66,6 +76,7 @@ export const FrmUploadFile = (props: IProps) => {
         newData = {
           ...rest,
           person_id: person?.id || '',
+          topic_id: topic?.id || '',
           file: url,
           isActived: false,
           isApproved: false,
@@ -75,6 +86,7 @@ export const FrmUploadFile = (props: IProps) => {
         newData = {
           ...rest,
           person_id: person?.id || '',
+          topic_id: topic?.id || '',
           file: '',
           isActived: false,
           isApproved: false,
