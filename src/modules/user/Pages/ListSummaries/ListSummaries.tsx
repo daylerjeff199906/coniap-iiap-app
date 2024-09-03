@@ -77,14 +77,27 @@ export const ListSummaries = () => {
                 key={summary.id}
                 className="p-6 bg-gray-100 rounded-lg flex flex-col gap-4"
               >
-                <Chip
-                  radius="sm"
-                  size="sm"
-                  color={summary.isApproved ? 'success' : 'default'}
-                  variant="flat"
-                >
-                  {summary.isApproved ? 'Aprobado' : 'Pendiente de aprobación'}
-                </Chip>
+                <section className="flex gap-4">
+                  <Chip
+                    radius="sm"
+                    color={summary.isApproved ? 'success' : 'default'}
+                    variant="flat"
+                  >
+                    {summary.isApproved
+                      ? 'Aprobado'
+                      : 'Pendiente de aprobación'}
+                  </Chip>
+
+                  <Chip
+                    radius="sm"
+                    color={summary.file ? 'success' : 'danger'}
+                    variant="flat"
+                  >
+                    {summary?.file
+                      ? 'Resumen subido'
+                      : 'Archivo de resumen no subido'}
+                  </Chip>
+                </section>
                 <section className="flex flex-col gap-1">
                   <p className="text-tiny text-gray-500">
                     subido el{' '}

@@ -26,6 +26,7 @@ export const FrmUploadFile = (props: IProps) => {
   const methods = useForm<ISummary>({
     defaultValues: summary,
   })
+
   const { updateDataSummary, createDataSummary, loading } = useSummaries()
   const { uploadImage, loading: loadingFile, deleteImage } = useFiles()
   const router = useRouter()
@@ -37,7 +38,7 @@ export const FrmUploadFile = (props: IProps) => {
   const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    const { file, person, topic, ...rest } = data
+    const { file, person, ...rest } = data
     const fileIsArray = Array.isArray(file)
 
     let newData: ISummary

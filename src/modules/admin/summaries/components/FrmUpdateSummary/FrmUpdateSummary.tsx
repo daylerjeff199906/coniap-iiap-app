@@ -34,12 +34,9 @@ export const FrmUpdateSummary = (props: IProps) => {
   })
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    const { file, person, topic, ...rest } = data
+    const { file, person, ...rest } = data
     let newData: ISummary
     const fileIsArray = Array.isArray(file)
-    const nameFile = `${person?.surName}-${person?.name}-${
-      summary?.title || 'RESUMEN CONIAP 2024'
-    }-${new Date().getTime()}`
 
     if (summary?.id) {
       if (file?.length > 0 && fileIsArray) {
