@@ -4,8 +4,11 @@ import {
   getConferenceStatus,
 } from './formatConferenceDate'
 import { getUser } from './getUser'
-import { formatDate } from './formatDate'
+
+import { formatDate, formatDateLarge } from './formatDate'
+
 export {
+  formatDateLarge,
   formatDateToDDMMM,
   formatConferenceDate,
   getUser,
