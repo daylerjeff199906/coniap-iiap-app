@@ -5,14 +5,16 @@ import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
 import {
+  FileSection,
   InfoRoom,
   MoreDescription,
   ProgramSection,
+  StatusSection,
   SummarySection,
 } from './sections'
 import { IEvent, IEventRes } from '@/types'
 
-import { useEvents } from '@/hooks/admin'
+import { useEvents, useFiles } from '@/hooks/admin'
 import { LoadingPages, ModalAction } from '@/components'
 import Link from 'next/link'
 
@@ -23,9 +25,11 @@ interface IProps {
 export const FrmEventEditor = (props: IProps) => {
   const { dataDefault } = props
   const [isOpen, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
-  const { createDataEvent, updateDataEvent, loading } = useEvents()
+  const { createDataEvent, updateDataEvent } = useEvents()
+  const { uploadImage, deleteImage } = useFiles()
 
   const methods = useForm<IEvent>({
     defaultValues: {
@@ -40,13 +44,17 @@ export const FrmEventEditor = (props: IProps) => {
     },
   })
 
+  const isDirty = methods.formState.isDirty
+
   const onSubmit = () => {
     setOpen(true)
   }
 
   const handleFormSubmit: SubmitHandler<IEvent> = async (data: IEvent) => {
     setOpen(false)
+    setLoading(true)
     const {
+      file,
       program,
       summary,
       program_name,
@@ -54,31 +62,56 @@ export const FrmEventEditor = (props: IProps) => {
       sala_name,
       ...resData
     } = data
-    const newData: IEventRes = {
+    const fileIsArray = Array.isArray(file)
+    let newData: IEventRes = {
       ...resData,
-      banner: '',
       program_id: data.program?.id || null,
       summary_id: data.summary?.id || null,
       date: data.date || null,
       sala: data?.sala?.id || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
-      isActived: false,
+      isActived: data.isActived || false,
     }
 
-    let res: any
-    if (dataDefault) {
-      res = await updateDataEvent(dataDefault.id, newData)
+    if (dataDefault?.id) {
+      if (file && file?.length > 0 && fileIsArray) {
+        const fileUp = file as unknown as File[]
+
+        if (dataDefault?.banner) {
+          await deleteImage(dataDefault?.banner)
+        }
+        const url = await uploadImage('banners', fileUp[0])
+        newData = { ...newData, banner: url }
+      } else {
+        newData = { ...newData, banner: data?.banner }
+      }
     } else {
-      res = await createDataEvent(newData)
+      if (file && file?.length > 0) {
+        const fileUp = file as unknown as File[]
+        const url = await uploadImage('banners', fileUp[0])
+        newData = { ...newData, banner: url }
+      } else {
+        newData = { ...newData, banner: '' }
+      }
     }
 
-    if (res.message) {
-      return null
-    } else {
-      resetForm()
-      router.push('/admin/eventos')
+    try {
+      const resData = dataDefault?.id
+        ? await updateDataEvent(dataDefault?.id, newData)
+        : await createDataEvent(newData)
+
+      if (resData.message) {
+        return null
+      } else {
+        resetForm()
+        router.push('/admin/eventos')
+      }
+    } catch (error) {
+      console.log(error)
     }
+
+    setLoading(false)
   }
 
   const resetForm = () => {
@@ -98,23 +131,27 @@ export const FrmEventEditor = (props: IProps) => {
             className="flex flex-col gap-3 max-w-3xl w-full relative h-screen overflow-y-auto max-h-[calc(100vh-6rem)]"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <h1 className="text-2xl font-bold">Agregar Evento</h1>
+            <h1 className="text-2xl font-bold">
+              {dataDefault?.id ? 'Editar evento' : 'Agregar evento'}
+            </h1>
             <div className="grid grid-cols-1 gap-5">
               <ProgramSection />
               <SummarySection />
               <InfoRoom />
             </div>
+            {dataDefault?.id && <FileSection />}
             <MoreDescription />
+            <StatusSection />
             <footer className="flex items-center gap-2 justify-end sticky bottom-0 bg-white p-4 border-t border-gray-100">
               <Button
                 color="primary"
                 type="submit"
                 isLoading={loading}
-                isDisabled={loading}
+                isDisabled={loading || !isDirty}
                 radius="sm"
                 className="button-dark"
               >
-                Agregar evento
+                {dataDefault?.id ? 'Editar' : 'Agregar'}
               </Button>
               <Button
                 as={Link}
