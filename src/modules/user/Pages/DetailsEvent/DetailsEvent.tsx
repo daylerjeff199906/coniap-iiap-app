@@ -17,7 +17,7 @@ export const DetailsEvent = (props: IProps) => {
   const { event } = props
 
   const cleanContent =
-    event?.customContent && event.customContent.replace(/&#xA;/g, '\n')
+    event?.customContent && event.customContent.replace(/<[^>]*>?/gm, '')
 
   return (
     <main className="container section grid grid-cols-1 py-12 gap-6">
@@ -46,8 +46,6 @@ export const DetailsEvent = (props: IProps) => {
             width={800}
             height={600}
             removeWrapper
-            isLoading
-            isBlurred
             className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
           />
           <IconsShared />
