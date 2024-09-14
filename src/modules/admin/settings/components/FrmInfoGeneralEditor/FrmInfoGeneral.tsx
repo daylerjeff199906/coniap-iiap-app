@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
-import dynamic from 'next/dynamic'
-import { Button, Skeleton } from '@nextui-org/react'
+import '@mdxeditor/editor/style.css'
+import { useState, useRef } from 'react'
+import { Button } from '@nextui-org/react'
 import {
   useForm,
   FormProvider,
@@ -11,17 +11,25 @@ import {
 import { ModalAction } from '@/components'
 import { IGeneralData } from '@/types'
 import { updateRowInformation } from '@/api'
+import {
+  BoldItalicUnderlineToggles,
+  headingsPlugin,
+  InsertTable,
+  MDXEditor,
+  MDXEditorMethods,
+  quotePlugin,
+  thematicBreakPlugin,
+  toolbarPlugin,
+  UndoRedo,
+  tablePlugin,
+  BlockTypeSelect,
+  linkDialogPlugin,
+  linkPlugin,
+  CreateLink,
+  ListsToggle,
+  listsPlugin,
+} from '@mdxeditor/editor'
 
-//For the text field
-const ReactQuill = dynamic(() => import('react-quill'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-ful">
-      <Skeleton className="max-h-52 w-full h-52 rounded-md" />
-    </div>
-  ),
-})
-import 'react-quill/dist/quill.snow.css'
 import { toast } from 'react-toastify'
 
 interface IProps {
@@ -32,6 +40,8 @@ export const FrmInfoGeneral = (props: IProps) => {
   const { description } = props
   const [isOpen, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const ref = useRef<MDXEditorMethods>(null)
 
   const methods = useForm<IGeneralData>({
     defaultValues: {
@@ -71,11 +81,34 @@ export const FrmInfoGeneral = (props: IProps) => {
                 control={methods.control}
                 name="description"
                 render={({ field: { value, onChange } }) => (
-                  <ReactQuill
-                    value={value}
-                    onChange={onChange}
-                    theme="snow"
-                    className="max-h-52 w-full h-52"
+                  <MDXEditor
+                    className="custom-quill"
+                    ref={ref}
+                    plugins={[
+                      toolbarPlugin({
+                        toolbarContents: () => (
+                          <>
+                            <UndoRedo />
+                            <BoldItalicUnderlineToggles />
+                            <InsertTable /> {/* Plugin para insertar tablas */}
+                            <BlockTypeSelect />
+                            <CreateLink />
+                            <ListsToggle /> {/* Plugin para listas */}
+                            {/* Plugin para cambiar tamaño de fuente */}
+                          </>
+                        ),
+                      }),
+                      headingsPlugin({ allowedHeadingLevels: [1, 2, 3] }),
+                      headingsPlugin(), // Plugin para manejar encabezados
+                      thematicBreakPlugin(), // Línea horizontal
+                      quotePlugin(), // Citas
+                      tablePlugin(),
+                      linkPlugin(),
+                      linkDialogPlugin(),
+                      listsPlugin(),
+                    ]}
+                    markdown={value || ''}
+                    onChange={(value) => onChange(value)}
                   />
                 )}
               />

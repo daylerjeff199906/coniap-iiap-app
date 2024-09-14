@@ -13,10 +13,6 @@ interface IProps {
   event: IEvent
 }
 
-interface ISection {
-  htmlContent: string
-}
-
 export const DetailsEvent = (props: IProps) => {
   const { event } = props
 
@@ -34,16 +30,6 @@ export const DetailsEvent = (props: IProps) => {
             <IconArrowNarrowLeft size={20} />
             Lista de eventos
           </Link>
-          {/* <Divider
-            orientation="vertical"
-            className="bg-primary-500 h-6 w-[1px]"
-          />
-          <Link
-            href="/agenda"
-            className="text-primary-500  hover:text-primary-600"
-          >
-            Ir a Agenda
-          </Link> */}
         </div>
       </section>
       <header className="flex flex-col gap-1">
@@ -148,14 +134,5 @@ export const DetailsEvent = (props: IProps) => {
         </article>
       </section>
     </main>
-  )
-}
-
-function DisplayHTMLContent({ htmlContent }: ISection) {
-  return (
-    <div
-      className=".custom-quill"
-      dangerouslySetInnerHTML={{ __html: htmlContent }}
-    />
   )
 }
