@@ -62,6 +62,8 @@ export const FrmEventEditor = (props: IProps) => {
       sala_name,
       ...resData
     } = data
+    console.log('data', data)
+
     const fileIsArray = Array.isArray(file)
     let newData: IEventRes = {
       ...resData,
