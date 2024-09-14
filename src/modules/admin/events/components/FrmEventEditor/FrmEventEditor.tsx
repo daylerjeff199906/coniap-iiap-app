@@ -5,6 +5,7 @@ import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
 import {
+  FileSection,
   InfoRoom,
   MoreDescription,
   ProgramSection,
@@ -39,6 +40,8 @@ export const FrmEventEditor = (props: IProps) => {
       sala_name: dataDefault?.sala?.name || '',
     },
   })
+
+  const isDirty = methods.formState.isDirty
 
   const onSubmit = () => {
     setOpen(true)
@@ -98,23 +101,26 @@ export const FrmEventEditor = (props: IProps) => {
             className="flex flex-col gap-3 max-w-3xl w-full relative h-screen overflow-y-auto max-h-[calc(100vh-6rem)]"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <h1 className="text-2xl font-bold">Agregar Evento</h1>
+            <h1 className="text-2xl font-bold">
+              {dataDefault?.id ? 'Editar evento' : 'Agregar evento'}
+            </h1>
             <div className="grid grid-cols-1 gap-5">
               <ProgramSection />
               <SummarySection />
               <InfoRoom />
             </div>
+            {dataDefault?.id && <FileSection />}
             <MoreDescription />
             <footer className="flex items-center gap-2 justify-end sticky bottom-0 bg-white p-4 border-t border-gray-100">
               <Button
                 color="primary"
                 type="submit"
                 isLoading={loading}
-                isDisabled={loading}
+                isDisabled={loading || !isDirty}
                 radius="sm"
                 className="button-dark"
               >
-                Agregar evento
+                {dataDefault?.id ? 'Editar' : 'Agregar'}
               </Button>
               <Button
                 as={Link}

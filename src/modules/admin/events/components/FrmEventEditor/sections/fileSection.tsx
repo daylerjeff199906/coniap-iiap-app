@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Button, Checkbox, Input, cn } from '@nextui-org/react'
+import { Button, Checkbox, cn } from '@nextui-org/react'
 import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
 import { DrawerSelect } from '@/components'
@@ -10,6 +10,19 @@ export const FileSection = () => {
   const { control, watch, setValue } = useFormContext<IEvent>()
 
   return (
-    <section className="flex flex-col gap-3 w-full section-admin"></section>
+    <section className="flex flex-col gap-3 w-full section-admin">
+      <Controller
+        name="banner"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <input
+            aria-label="Archivo"
+            type="file"
+            value={value}
+            onChange={onChange}
+          />
+        )}
+      />
+    </section>
   )
 }
