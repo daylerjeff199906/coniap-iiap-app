@@ -39,7 +39,7 @@ export const EventsSection = (props: IProps) => {
             </div>
             <div className="w-full max-w-4xl">
               <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
-                Cursos <b>post</b> congreso
+                Próximos <b>eventos</b> para tí
               </h2>
             </div>
           </motion.header>
