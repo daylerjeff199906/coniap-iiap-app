@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { DetailsEvent } from '@/components'
 import { fetchEventById } from '@/api'
 import { IEvent } from '@/types'
+import { DetailsEvent } from '@/modules/user'
 interface IProps {
   params: {
     id: string
