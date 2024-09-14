@@ -3,6 +3,8 @@ import { Avatar, Button, Divider, Image } from '@nextui-org/react'
 import { IconCalendarClock, IconArrowNarrowLeft } from '@tabler/icons-react'
 import Link from 'next/link'
 import logo_iiap from '@/assets/images/logo_coniap_simple.webp'
+import { UtilsActions } from './UtilsActions'
+
 interface IProps {
   event: IEvent
 }
@@ -53,6 +55,28 @@ export const DetailsEvent = (props: IProps) => {
             removeWrapper
             className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
           />
+          <article className="w-full h-fit max-w-sm min-w-sm sm:hidden flex flex-col gap-4 sm:sticky sm:top-16 bg-gray-100 rounded-md p-4">
+            <div className="space-y-2 w-full">
+              <div className="flex items-center gap-3">
+                <div className="dot-custom" />
+                <h1 className="text-2xl font-bold">Fecha y hora</h1>
+              </div>
+              <div className="flex gap-2 items-center">
+                <IconCalendarClock size={28} />
+                <p className="font-semibold">
+                  {event?.date} - {event?.timeStart} - {event?.timeEnd}
+                </p>
+              </div>
+            </div>
+            <div className="space-y-2 w-full">
+              <div className="flex items-center gap-3">
+                <div className="dot-custom" />
+                <h1 className="text-2xl font-bold">Acerca de este evento</h1>
+              </div>
+              <p className="text-gray-500">{event?.shortDescription}</p>
+            </div>
+            <UtilsActions event={event} />
+          </article>
           {event && event?.summary && event?.summary?.person && (
             <section className="space-y-6 w-full col-span-1 sm:col-span-8">
               <h1 className="text-2xl font-bold">Ponente</h1>
@@ -85,7 +109,7 @@ export const DetailsEvent = (props: IProps) => {
             </main>
           )}
         </main>
-        <article className="w-full h-fit max-w-sm min-w-sm flex flex-col gap-6 sm:sticky sm:top-16 bg-gray-100 rounded-md p-4">
+        <article className="w-full h-fit max-w-sm min-w-sm hidden sm:flex flex-col gap-4 sm:sticky sm:top-16 bg-gray-100 rounded-md p-4 ">
           <div className="space-y-2 w-full">
             <div className="flex items-center gap-3">
               <div className="dot-custom" />
@@ -105,6 +129,7 @@ export const DetailsEvent = (props: IProps) => {
             </div>
             <p className="text-gray-500">{event?.shortDescription}</p>
           </div>
+          <UtilsActions event={event} />
         </article>
       </section>
     </main>
