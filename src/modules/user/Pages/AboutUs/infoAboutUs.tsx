@@ -68,7 +68,6 @@ export const InfoAboutUs = (props: IProps) => {
                 duration: 1,
               }}
             >
-              {/* {RenderHtml(description || '')} */}
               <ReactMarkdown
                 className="prose custom-quill"
                 remarkPlugins={[remarkGfm]}
@@ -79,17 +78,6 @@ export const InfoAboutUs = (props: IProps) => {
           </section>
         </main>
       </section>
-    </>
-  )
-}
-
-const RenderHtml = (html: string) => {
-  return (
-    <>
-      <div
-        className="custom-quill"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
     </>
   )
 }
