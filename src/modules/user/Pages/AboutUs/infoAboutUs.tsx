@@ -2,6 +2,8 @@
 import { motion } from 'framer-motion'
 import { imgImagoTipoConiap } from '@/assets'
 import Image from 'next/image'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface IProps {
   description: string
@@ -66,7 +68,13 @@ export const InfoAboutUs = (props: IProps) => {
                 duration: 1,
               }}
             >
-              {RenderHtml(description || '')}
+              {/* {RenderHtml(description || '')} */}
+              <ReactMarkdown
+                className="prose custom-quill"
+                remarkPlugins={[remarkGfm]}
+              >
+                {description}
+              </ReactMarkdown>
             </motion.div>
           </section>
         </main>
