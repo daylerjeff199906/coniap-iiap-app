@@ -15,6 +15,7 @@ export interface IEvent {
   date: string | null
   shortDescription: string
   banner: string
+  file?: File[]
   customContent: string
   //delete
   created_at: Date
