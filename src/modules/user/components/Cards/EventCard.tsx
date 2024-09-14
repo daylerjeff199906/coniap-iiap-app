@@ -44,8 +44,8 @@ export const EventCard = (props: EventCardProps) => {
               </p>
             </section>
             <Divider />
-            <footer className="flex justify-between items-center">
-              <div className="text-xs font-bold flex gap-3">
+            <footer className="flex flex-col sm:flex-row gap-3 justify-between items-center">
+              <div className="text-xs font-bold flex gap-3 w-full justify-between sm:justify-start">
                 <div className="flex gap-2 items-center">
                   <IconCalendarEvent size={28} />
                   <h2>{data.date}</h2>
@@ -57,17 +57,19 @@ export const EventCard = (props: EventCardProps) => {
                   </h3>
                 </div>
               </div>
-              <Link
-                href={`/eventos/${data.id}`}
-                className="text-sm flex gap-2"
-              >
-                Ver más
-                <IconArrowNarrowRight
-                  size={24}
-                  stroke={1.5}
-                  className="text-gray-500"
-                />
-              </Link>
+              <div className="flex justify-end w-full">
+                <Link
+                  href={`/eventos/${data.id}`}
+                  className="text-sm flex gap-2"
+                >
+                  Ver más
+                  <IconArrowNarrowRight
+                    size={24}
+                    stroke={1.5}
+                    className="text-gray-500"
+                  />
+                </Link>
+              </div>
             </footer>
           </section>
         </main>

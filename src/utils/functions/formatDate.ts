@@ -20,3 +20,16 @@ export function formatDate(dateString: string, format: DateFormats): string {
     .replace('HH', hours)
     .replace('mm', minutes)
 }
+
+export function formatDateLarge(dateString: string): string {
+  const date = new Date(dateString)
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }
+  return date
+    .toLocaleDateString('es-ES', options)
+    .toUpperCase()
+    .replace('.', '')
+}
