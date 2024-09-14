@@ -9,6 +9,7 @@ import {
   InfoRoom,
   MoreDescription,
   ProgramSection,
+  StatusSection,
   SummarySection,
 } from './sections'
 import { IEvent, IEventRes } from '@/types'
@@ -70,7 +71,7 @@ export const FrmEventEditor = (props: IProps) => {
       sala: data?.sala?.id || null,
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
-      isActived: false,
+      isActived: data.isActived || false,
     }
 
     if (dataDefault?.id) {
@@ -83,7 +84,7 @@ export const FrmEventEditor = (props: IProps) => {
         const url = await uploadImage('banners', fileUp[0])
         newData = { ...newData, banner: url }
       } else {
-        newData = { ...newData, banner: '' }
+        newData = { ...newData, banner: data?.banner }
       }
     } else {
       if (file && file?.length > 0) {
@@ -140,6 +141,7 @@ export const FrmEventEditor = (props: IProps) => {
             </div>
             {dataDefault?.id && <FileSection />}
             <MoreDescription />
+            <StatusSection />
             <footer className="flex items-center gap-2 justify-end sticky bottom-0 bg-white p-4 border-t border-gray-100">
               <Button
                 color="primary"

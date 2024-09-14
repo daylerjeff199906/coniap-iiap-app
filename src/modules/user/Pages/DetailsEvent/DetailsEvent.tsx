@@ -4,6 +4,7 @@ import { IconCalendarClock, IconArrowNarrowLeft } from '@tabler/icons-react'
 import Link from 'next/link'
 import logo_iiap from '@/assets/images/logo_coniap_simple.webp'
 import { UtilsActions } from './UtilsActions'
+import { IconsShared } from './IconsShared'
 
 interface IProps {
   event: IEvent
@@ -27,7 +28,7 @@ export const DetailsEvent = (props: IProps) => {
             <IconArrowNarrowLeft size={20} />
             Lista de eventos
           </Link>
-          <Divider
+          {/* <Divider
             orientation="vertical"
             className="bg-primary-500 h-6 w-[1px]"
           />
@@ -36,7 +37,7 @@ export const DetailsEvent = (props: IProps) => {
             className="text-primary-500  hover:text-primary-600"
           >
             Ir a Agenda
-          </Link>
+          </Link> */}
         </div>
       </section>
       <header className="flex flex-col gap-1">
@@ -77,6 +78,7 @@ export const DetailsEvent = (props: IProps) => {
             </div>
             <UtilsActions event={event} />
           </article>
+          <IconsShared />
           {event && event?.summary && event?.summary?.person && (
             <section className="space-y-6 w-full col-span-1 sm:col-span-8">
               <h1 className="text-2xl font-bold">Ponente</h1>
