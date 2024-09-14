@@ -33,6 +33,7 @@ export const UtilsActions = (props: IProps) => {
         fullWidth
         color="primary"
         startContent={<IconCalendarMonth />}
+        onPress={handleAddToCalendar}
       >
         Agregar a mi agenda
       </Button>

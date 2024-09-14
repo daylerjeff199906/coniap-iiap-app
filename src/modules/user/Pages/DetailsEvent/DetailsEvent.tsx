@@ -113,7 +113,7 @@ export const DetailsEvent = (props: IProps) => {
           <div className="space-y-2 w-full">
             <div className="flex items-center gap-3">
               <div className="dot-custom" />
-              <h1 className="text-2xl font-bold">Fecha y hora</h1>
+              <h1 className="text-xl font-bold">Fecha y hora</h1>
             </div>
             <div className="flex gap-2 items-center">
               <IconCalendarClock size={28} />
@@ -125,9 +125,9 @@ export const DetailsEvent = (props: IProps) => {
           <div className="space-y-2 w-full">
             <div className="flex items-center gap-3">
               <div className="dot-custom" />
-              <h1 className="text-2xl font-bold">Acerca de este evento</h1>
+              <h1 className="text-xl font-bold">Acerca de este evento</h1>
             </div>
-            <p className="text-gray-500">{event?.shortDescription}</p>
+            <p className="text-gray-500 text-sm">{event?.shortDescription}</p>
           </div>
           <UtilsActions event={event} />
         </article>
