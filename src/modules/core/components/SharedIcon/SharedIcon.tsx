@@ -53,7 +53,7 @@ export const ShareIcons = (props: IProps) => {
   return (
     <div id="share-media">
       <Link
-        href={`${socialSelected.url}http://coniap.iiap.gob.pe${pathname}`}
+        href={`${socialSelected.url}https://coniap.iiap.gob.pe${pathname}`}
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-2 hover:opacity-80"

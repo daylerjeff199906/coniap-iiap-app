@@ -1,21 +1,23 @@
+'use client'
+import ReactMarkdown from 'react-markdown'
 import { IEvent } from '@/types'
-import { Avatar, Button, Divider, Image } from '@nextui-org/react'
+import { Avatar, Image } from '@nextui-org/react'
 import { IconCalendarClock, IconArrowNarrowLeft } from '@tabler/icons-react'
 import Link from 'next/link'
 import logo_iiap from '@/assets/images/logo_coniap_simple.webp'
 import { UtilsActions } from './UtilsActions'
 import { IconsShared } from './IconsShared'
+import remarkGfm from 'remark-gfm'
 
 interface IProps {
   event: IEvent
 }
 
-interface ISection {
-  htmlContent: string
-}
-
 export const DetailsEvent = (props: IProps) => {
   const { event } = props
+
+  const cleanContent =
+    event?.customContent && event.customContent.replace(/&#xA;/g, '\n')
 
   return (
     <main className="container section grid grid-cols-1 py-12 gap-6">
@@ -28,16 +30,6 @@ export const DetailsEvent = (props: IProps) => {
             <IconArrowNarrowLeft size={20} />
             Lista de eventos
           </Link>
-          {/* <Divider
-            orientation="vertical"
-            className="bg-primary-500 h-6 w-[1px]"
-          />
-          <Link
-            href="/agenda"
-            className="text-primary-500  hover:text-primary-600"
-          >
-            Ir a Agenda
-          </Link> */}
         </div>
       </section>
       <header className="flex flex-col gap-1">
@@ -54,8 +46,11 @@ export const DetailsEvent = (props: IProps) => {
             width={800}
             height={600}
             removeWrapper
+            isLoading
+            isBlurred
             className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
           />
+          <IconsShared />
           <article className="w-full h-fit max-w-sm min-w-sm sm:hidden flex flex-col gap-4 sm:sticky sm:top-16 bg-gray-100 rounded-md p-4">
             <div className="space-y-2 w-full">
               <div className="flex items-center gap-3">
@@ -78,7 +73,6 @@ export const DetailsEvent = (props: IProps) => {
             </div>
             <UtilsActions event={event} />
           </article>
-          <IconsShared />
           {event && event?.summary && event?.summary?.person && (
             <section className="space-y-6 w-full col-span-1 sm:col-span-8">
               <h1 className="text-2xl font-bold">Ponente</h1>
@@ -107,7 +101,12 @@ export const DetailsEvent = (props: IProps) => {
                 <div className="dot-custom" />
                 <h1 className="text-2xl font-bold">Sobre el evento</h1>
               </div>
-              <DisplayHTMLContent htmlContent={event?.customContent} />
+              <ReactMarkdown
+                className="prose custom-quill"
+                remarkPlugins={[remarkGfm]}
+              >
+                {cleanContent}
+              </ReactMarkdown>
             </main>
           )}
         </main>
@@ -135,14 +134,5 @@ export const DetailsEvent = (props: IProps) => {
         </article>
       </section>
     </main>
-  )
-}
-
-function DisplayHTMLContent({ htmlContent }: ISection) {
-  return (
-    <div
-      className=".custom-quill"
-      dangerouslySetInnerHTML={{ __html: htmlContent }}
-    />
   )
 }

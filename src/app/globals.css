@@ -45,26 +45,99 @@
 /* styles/globals.css */
 .custom-quill {
   h1 {
-    @apply text-4xl font-bold;
+    @apply text-4xl font-bold; /* Tamaño y peso de fuente para h1 */
   }
 
   h2 {
-    @apply text-3xl font-semibold;
+    @apply text-3xl font-semibold; /* Tamaño y peso de fuente para h2 */
   }
 
   h3 {
-    @apply text-2xl font-medium;
+    @apply text-2xl font-medium; /* Tamaño y peso de fuente para h3 */
   }
 
   h4 {
-    @apply text-xl font-medium;
+    @apply text-xl font-medium; /* Tamaño y peso de fuente para h4 */
   }
 
+  h5 {
+    @apply text-lg font-medium; /* Tamaño y peso de fuente para h5 */
+  }
+
+  h6 {
+    @apply text-base font-medium; /* Tamaño y peso de fuente para h6 */
+  }
+
+  /* Párrafos */
   p {
-    @apply text-base;
+    @apply text-base; /* Tamaño de fuente para párrafos */
   }
 
+  /* Texto fuerte */
   strong {
-    @apply font-bold;
+    @apply font-bold; /* Estilo de fuente fuerte */
+  }
+
+  /* Citas */
+  blockquote {
+    @apply border-l-4 pl-4 text-gray-700 italic; /* Estilo para citas */
+  }
+
+  /* Listas */
+  ul,
+  ol {
+    @apply list-inside; /* Estilo de listas */
+  }
+
+  ul {
+    @apply list-disc; /* Tipo de lista para ul */
+  }
+
+  ol {
+    @apply list-decimal; /* Tipo de lista para ol */
+  }
+
+  li {
+    @apply mb-2; /* Espacio entre los elementos de la lista */
+  }
+
+  /* Código */
+  code {
+    @apply bg-gray-200 p-1 rounded; /* Estilo para código en línea */
+  }
+
+  pre {
+    @apply bg-gray-800 text-gray-100 p-4 rounded; /* Estilo para bloques de código */
+  }
+
+  pre code {
+    @apply text-sm; /* Tamaño de fuente para bloques de código */
+  }
+
+  table {
+    @apply table-auto w-full border-collapse border border-gray-300; /* Tabla con ancho completo y bordes */
+  }
+
+  th {
+    @apply bg-gray-100 border border-gray-300 p-2 text-left font-semibold; /* Cabeceras de la tabla */
+  }
+
+  td {
+    @apply border border-gray-300 p-2; /* Celdas de la tabla */
+  }
+
+  tr:nth-child(even) {
+    @apply bg-gray-50; /* Fondo alterno para filas pares */
+  }
+
+  /* Añadir un estilo para hover en filas */
+  tr:hover {
+    @apply bg-gray-200; /* Cambiar el fondo cuando se pasa el ratón por encima */
+  }
+
+  /* Alineación del contenido */
+  td,
+  th {
+    @apply align-middle; /* Alinear verticalmente al centro */
   }
 }

@@ -62,6 +62,7 @@ export const FrmEventEditor = (props: IProps) => {
       sala_name,
       ...resData
     } = data
+
     const fileIsArray = Array.isArray(file)
     let newData: IEventRes = {
       ...resData,
@@ -72,6 +73,7 @@ export const FrmEventEditor = (props: IProps) => {
       shortDescription: data.shortDescription || '',
       customContent: data.customContent || '',
       isActived: data.isActived || false,
+      banner: data.banner || '',
     }
 
     if (dataDefault?.id) {
@@ -84,7 +86,7 @@ export const FrmEventEditor = (props: IProps) => {
         const url = await uploadImage('banners', fileUp[0])
         newData = { ...newData, banner: url }
       } else {
-        newData = { ...newData, banner: data?.banner }
+        newData = { ...newData }
       }
     } else {
       if (file && file?.length > 0) {
@@ -92,7 +94,7 @@ export const FrmEventEditor = (props: IProps) => {
         const url = await uploadImage('banners', fileUp[0])
         newData = { ...newData, banner: url }
       } else {
-        newData = { ...newData, banner: '' }
+        newData = { ...newData }
       }
     }
 
