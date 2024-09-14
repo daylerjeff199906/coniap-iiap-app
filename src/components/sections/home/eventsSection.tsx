@@ -10,6 +10,7 @@ import 'swiper/css/pagination'
 // import required modules
 import { Pagination } from 'swiper/modules'
 import Image from 'next/image'
+import { EventCard } from '@/modules/user'
 interface IProps {
   events: IEvent[] | undefined
 }
@@ -57,11 +58,11 @@ export const EventsSection = (props: IProps) => {
                     spaceBetween: 4,
                   },
                   768: {
-                    slidesPerView: 3,
+                    slidesPerView: 1,
                     spaceBetween: 18,
                   },
                   1024: {
-                    slidesPerView: 4,
+                    slidesPerView: 1,
                     spaceBetween: 24,
                   },
                 }}
@@ -84,7 +85,7 @@ export const EventsSection = (props: IProps) => {
                           },
                         }}
                       >
-                        <CardEvent event={event} />
+                        <EventCard data={event} />
                       </motion.div>
                     </SwiperSlide>
                   ))}
@@ -100,10 +101,10 @@ export const EventsSection = (props: IProps) => {
 
                 <div className="flex flex-col items-start justify-center sm:justify-start sm:items-center">
                   <h3 className="text-sm text-center font-bold lg:text-base">
-                    No hay cursos disponibles
+                    ¡Pronto más eventos para ti!
                   </h3>
                   <p className="text-xs lg:text-sm">
-                    Aún no se han programado cursos post congreso
+                    Aún no se han programado eventos disponibles
                   </p>
                 </div>
               </div>
