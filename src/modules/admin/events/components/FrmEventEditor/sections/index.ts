@@ -4,6 +4,7 @@ import { SectionSpeaker } from './sectionSpeaker'
 import { ProgramSection } from './programSection'
 import { SummarySection } from './summarySection'
 import { DateEvent } from './DateEvent'
+import { FileSection } from './fileSection'
 
 export {
   InfoRoom,
@@ -12,4 +13,5 @@ export {
   ProgramSection,
   SummarySection,
   DateEvent,
+  FileSection,
 }
