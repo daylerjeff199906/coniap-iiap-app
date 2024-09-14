@@ -1,5 +1,7 @@
+'use client'
+import ReactMarkdown from 'react-markdown'
 import { IEvent } from '@/types'
-import { Avatar, Button, Divider, Image } from '@nextui-org/react'
+import { Avatar, Image } from '@nextui-org/react'
 import { IconCalendarClock, IconArrowNarrowLeft } from '@tabler/icons-react'
 import Link from 'next/link'
 import logo_iiap from '@/assets/images/logo_coniap_simple.webp'
@@ -109,7 +111,10 @@ export const DetailsEvent = (props: IProps) => {
                 <div className="dot-custom" />
                 <h1 className="text-2xl font-bold">Sobre el evento</h1>
               </div>
-              <DisplayHTMLContent htmlContent={event?.customContent} />
+              {/* <DisplayHTMLContent htmlContent={event?.customContent} /> */}
+              <div className="custom-quill">
+                <ReactMarkdown>{event.customContent}</ReactMarkdown>
+              </div>
             </main>
           )}
         </main>
