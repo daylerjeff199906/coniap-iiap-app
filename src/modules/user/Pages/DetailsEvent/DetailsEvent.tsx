@@ -2,12 +2,19 @@
 import ReactMarkdown from 'react-markdown'
 import { IEvent } from '@/types'
 import { Avatar, Image } from '@nextui-org/react'
-import { IconCalendarClock, IconArrowNarrowLeft } from '@tabler/icons-react'
+import {
+  IconCalendarClock,
+  IconArrowNarrowLeft,
+  IconClockHour12,
+} from '@tabler/icons-react'
 import Link from 'next/link'
 import logo_iiap from '@/assets/images/logo_coniap_simple.webp'
 import { UtilsActions } from './UtilsActions'
 import { IconsShared } from './IconsShared'
 import remarkGfm from 'remark-gfm'
+import { formatDateLarge } from '@/utils/functions'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 interface IProps {
   event: IEvent
@@ -40,14 +47,16 @@ export const DetailsEvent = (props: IProps) => {
       </header>
       <section className="flex flex-col sm:flex-row gap-6">
         <main className="w-full flex flex-col gap-6">
-          <Image
-            src={event?.banner || '/banner_coniap_simple.webp'}
-            alt={event?.name}
-            width={800}
-            height={600}
-            removeWrapper
-            className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
-          />
+          <Zoom>
+            <Image
+              src={event?.banner || '/banner_coniap_simple.webp'}
+              alt={event?.name}
+              width={800}
+              height={600}
+              removeWrapper
+              className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
+            />
+          </Zoom>
           <IconsShared />
           <article className="w-full h-fit max-w-sm min-w-sm sm:hidden flex flex-col gap-4 sm:sticky sm:top-16 bg-gray-100 rounded-md p-4">
             <div className="space-y-2 w-full">
@@ -55,12 +64,22 @@ export const DetailsEvent = (props: IProps) => {
                 <div className="dot-custom" />
                 <h1 className="text-2xl font-bold">Fecha y hora</h1>
               </div>
-              <div className="flex gap-2 items-center">
-                <IconCalendarClock size={28} />
-                <p className="font-semibold">
-                  {event?.date} - {event?.timeStart} - {event?.timeEnd}
-                </p>
-              </div>
+              <section className="flex flex-col gap-3">
+                <div className="flex gap-2 items-center">
+                  <IconCalendarClock size={28} />
+                  {event?.date && (
+                    <p className="font-semibold">
+                      {formatDateLarge(event?.date)}
+                    </p>
+                  )}
+                </div>
+                <div className="flex gap-2 items-center">
+                  <IconClockHour12 size={28} />
+                  <p className="font-semibold">
+                    {event?.timeStart} - {event?.timeEnd}
+                  </p>
+                </div>
+              </section>
             </div>
             <div className="space-y-2 w-full">
               <div className="flex items-center gap-3">
@@ -114,12 +133,22 @@ export const DetailsEvent = (props: IProps) => {
               <div className="dot-custom" />
               <h1 className="text-xl font-bold">Fecha y hora</h1>
             </div>
-            <div className="flex gap-2 items-center">
-              <IconCalendarClock size={28} />
-              <p className="font-semibold">
-                {event?.date} - {event?.timeStart} - {event?.timeEnd}
-              </p>
-            </div>
+            <section className="flex flex-col gap-3">
+              {event?.date && (
+                <div className="flex gap-2 items-center">
+                  <IconCalendarClock size={28} />
+                  <p className="font-semibold">
+                    {formatDateLarge(event?.date)}
+                  </p>
+                </div>
+              )}
+              <div className="flex gap-2 items-center">
+                <IconClockHour12 size={28} />
+                <p className="font-semibold">
+                  {event?.timeStart} - {event?.timeEnd}
+                </p>
+              </div>
+            </section>
           </div>
           <div className="space-y-2 w-full">
             <div className="flex items-center gap-3">

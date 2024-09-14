@@ -72,10 +72,10 @@ export const ListEventsSection = () => {
     fetchData()
   }, [event, isEdit])
 
-  const handleStatusChange = async (key: string, value: boolean) => {
-    await editField(key, 'events', 'isActived', value)
-    getEvents('')
-  }
+  // const handleStatusChange = async (key: string, value: boolean) => {
+  //   await editField(key, 'events', 'isActived', value)
+  //   getEvents('')
+  // }
 
   return (
     <>
@@ -99,7 +99,7 @@ export const ListEventsSection = () => {
                       ? event?.summary?.person?.name +
                         ' ' +
                         event?.summary?.person?.surName
-                      : '',
+                      : 'No tiene expositor',
                   actions: 'actions',
                 }
               })
