@@ -7,6 +7,7 @@ import Link from 'next/link'
 import logo_iiap from '@/assets/images/logo_coniap_simple.webp'
 import { UtilsActions } from './UtilsActions'
 import { IconsShared } from './IconsShared'
+import remarkGfm from 'remark-gfm'
 
 interface IProps {
   event: IEvent
@@ -18,6 +19,9 @@ interface ISection {
 
 export const DetailsEvent = (props: IProps) => {
   const { event } = props
+
+  const cleanContent =
+    event?.customContent && event.customContent.replace(/&#xA;/g, '\n')
 
   return (
     <main className="container section grid grid-cols-1 py-12 gap-6">
@@ -111,10 +115,12 @@ export const DetailsEvent = (props: IProps) => {
                 <div className="dot-custom" />
                 <h1 className="text-2xl font-bold">Sobre el evento</h1>
               </div>
-              {/* <DisplayHTMLContent htmlContent={event?.customContent} /> */}
-              <div className="custom-quill">
-                <ReactMarkdown>{event.customContent}</ReactMarkdown>
-              </div>
+              <ReactMarkdown
+                className="prose custom-quill"
+                remarkPlugins={[remarkGfm]}
+              >
+                {cleanContent}
+              </ReactMarkdown>
             </main>
           )}
         </main>

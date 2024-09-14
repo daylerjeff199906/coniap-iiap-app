@@ -113,4 +113,31 @@
   pre code {
     @apply text-sm; /* Tamaño de fuente para bloques de código */
   }
+
+  table {
+    @apply table-auto w-full border-collapse border border-gray-300; /* Tabla con ancho completo y bordes */
+  }
+
+  th {
+    @apply bg-gray-100 border border-gray-300 p-2 text-left font-semibold; /* Cabeceras de la tabla */
+  }
+
+  td {
+    @apply border border-gray-300 p-2; /* Celdas de la tabla */
+  }
+
+  tr:nth-child(even) {
+    @apply bg-gray-50; /* Fondo alterno para filas pares */
+  }
+
+  /* Añadir un estilo para hover en filas */
+  tr:hover {
+    @apply bg-gray-200; /* Cambiar el fondo cuando se pasa el ratón por encima */
+  }
+
+  /* Alineación del contenido */
+  td,
+  th {
+    @apply align-middle; /* Alinear verticalmente al centro */
+  }
 }
