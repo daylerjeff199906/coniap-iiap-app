@@ -57,16 +57,16 @@ export const EventCard = (props: EventCardProps) => {
                   </h3>
                 </div>
               </div>
-              <div className="flex justify-end w-full">
+              <div className="flex justify-center sm:justify-end w-full bg-primary-700 sm:bg-transparent text-white rounded-md sm:text-gray-500 p-2 sm:p-0">
                 <Link
                   href={`/eventos/${data.id}`}
-                  className="text-sm flex gap-2"
+                  className="text-sm flex gap-2 "
                 >
                   Ver más
                   <IconArrowNarrowRight
                     size={24}
                     stroke={1.5}
-                    className="text-gray-500"
+                    className="sm:text-gray-500"
                   />
                 </Link>
               </div>
