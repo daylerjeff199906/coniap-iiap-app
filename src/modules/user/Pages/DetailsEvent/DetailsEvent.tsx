@@ -8,6 +8,7 @@ import logo_iiap from '@/assets/images/logo_coniap_simple.webp'
 import { UtilsActions } from './UtilsActions'
 import { IconsShared } from './IconsShared'
 import remarkGfm from 'remark-gfm'
+import { formatDateLarge } from '@/utils/functions'
 
 interface IProps {
   event: IEvent
@@ -55,12 +56,22 @@ export const DetailsEvent = (props: IProps) => {
                 <div className="dot-custom" />
                 <h1 className="text-2xl font-bold">Fecha y hora</h1>
               </div>
-              <div className="flex gap-2 items-center">
-                <IconCalendarClock size={28} />
-                <p className="font-semibold">
-                  {event?.date} - {event?.timeStart} - {event?.timeEnd}
-                </p>
-              </div>
+              <section className="flex flex-col gap-3">
+                <div className="flex gap-2 items-center">
+                  <IconCalendarClock size={28} />
+                  {event?.date && (
+                    <p className="font-semibold">
+                      {formatDateLarge(event?.date)}
+                    </p>
+                  )}
+                </div>
+                <div className="flex gap-2 items-center">
+                  <IconCalendarClock size={28} />
+                  <p className="font-semibold">
+                    {event?.timeStart} - {event?.timeEnd}
+                  </p>
+                </div>
+              </section>
             </div>
             <div className="space-y-2 w-full">
               <div className="flex items-center gap-3">
