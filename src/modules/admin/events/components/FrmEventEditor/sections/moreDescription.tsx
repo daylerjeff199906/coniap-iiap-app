@@ -20,6 +20,7 @@ import {
   CreateLink,
   ListsToggle,
   listsPlugin,
+  InsertThematicBreak,
 } from '@mdxeditor/editor'
 
 export const MoreDescription = () => {
@@ -48,6 +49,7 @@ export const MoreDescription = () => {
                       <BlockTypeSelect />
                       <CreateLink />
                       <ListsToggle /> {/* Plugin para listas */}
+                      <InsertThematicBreak />{' '}
                       {/* Plugin para cambiar tamaño de fuente */}
                     </>
                   ),
@@ -60,6 +62,7 @@ export const MoreDescription = () => {
                 linkPlugin(),
                 linkDialogPlugin(),
                 listsPlugin(),
+                thematicBreakPlugin(),
               ]}
               markdown={value || ''}
               onChange={(value) => onChange(value)}

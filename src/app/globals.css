@@ -70,7 +70,7 @@
 
   /* Párrafos */
   p {
-    @apply text-base; /* Tamaño de fuente para párrafos */
+    @apply text-base whitespace-pre-wrap mb-4 sm:mb-6; /* Tamaño de fuente para párrafos */
   }
 
   /* Texto fuerte */
