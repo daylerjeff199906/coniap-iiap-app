@@ -70,7 +70,10 @@ export const DetailsEvent = (props: IProps) => {
           </div>
         </div>
         <div className="space-y-2">
-          <h1 className="text-2xl font-bold">Acerca de este evento</h1>
+          <div className="flex items-center gap-3">
+            <div className="dot-custom" />
+            <h1 className="text-2xl font-bold">Acerca de este evento</h1>
+          </div>
           <p>{event?.shortDescription}</p>
         </div>
         {event && event?.summary && event?.summary?.person && (
@@ -98,7 +101,10 @@ export const DetailsEvent = (props: IProps) => {
         <article>
           {event && event.customContent && (
             <>
-              <h1 className="text-2xl font-bold">Sobre la conferencia</h1>
+              <div className="flex items-center gap-3">
+                <div className="dot-custom" />
+                <h1 className="text-2xl font-bold">Sobre el evento</h1>
+              </div>
               <DisplayHTMLContent htmlContent={event?.customContent} />
             </>
           )}
