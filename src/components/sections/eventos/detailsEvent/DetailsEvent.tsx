@@ -23,12 +23,12 @@ export const DetailsEvent = (props: IProps) => {
   const subtitle = `Hora: ${event?.timeStart} - ${event?.timeEnd}`
   return (
     <>
-      <BannerStatic
+      {/* <BannerStatic
         title={event?.name}
         subtitle={subtitle}
         description={event?.date || ''}
         urlImage={event?.banner || ''}
-      />
+      /> */}
       <main className="container section grid grid-cols-1 sm:flex max-w-7xl py-12 gap-6">
         <section className="space-y-7 sm:space-y-8 lg:space-y-12 w-full">
           <section>
