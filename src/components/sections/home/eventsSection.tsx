@@ -1,5 +1,4 @@
 'use client'
-import { CardEvent } from '@/components'
 import { IEvent } from '@/types'
 import { motion } from 'framer-motion'
 
