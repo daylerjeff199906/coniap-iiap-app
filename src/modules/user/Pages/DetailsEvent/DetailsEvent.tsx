@@ -54,8 +54,11 @@ export const DetailsEvent = (props: IProps) => {
             width={800}
             height={600}
             removeWrapper
+            isLoading
+            isBlurred
             className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
           />
+          <IconsShared />
           <article className="w-full h-fit max-w-sm min-w-sm sm:hidden flex flex-col gap-4 sm:sticky sm:top-16 bg-gray-100 rounded-md p-4">
             <div className="space-y-2 w-full">
               <div className="flex items-center gap-3">
@@ -78,7 +81,6 @@ export const DetailsEvent = (props: IProps) => {
             </div>
             <UtilsActions event={event} />
           </article>
-          <IconsShared />
           {event && event?.summary && event?.summary?.person && (
             <section className="space-y-6 w-full col-span-1 sm:col-span-8">
               <h1 className="text-2xl font-bold">Ponente</h1>

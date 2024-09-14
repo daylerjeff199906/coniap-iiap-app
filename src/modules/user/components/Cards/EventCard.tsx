@@ -26,6 +26,8 @@ export const EventCard = (props: EventCardProps) => {
               width={260}
               height={260}
               removeWrapper
+              isLoading
+              isBlurred
               className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28"
             />
           </section>
