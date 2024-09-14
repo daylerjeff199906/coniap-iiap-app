@@ -16,7 +16,8 @@ export const FileSection = () => {
       <div>
         <h3 className="text-sm">Subir banner</h3>
         <p className="text-gray-500 text-xs">
-          Sube una imagen para el banner, que no sea mayora a 4 MB
+          Sube una imagen para el banner, que no sea mayora a 4 MB. De
+          preferencia de dimensiones 720x720.
         </p>
       </div>
       <div>
@@ -34,9 +35,8 @@ export const FileSection = () => {
           render={({ field: { onChange } }) => (
             <FilePond
               allowMultiple={false}
-              //   disabled={loading}
               instantUpload={false}
-              acceptedFileTypes={['webp', 'svg', 'png', 'jpg', 'jpeg']}
+              acceptedFileTypes={['image/*']}
               server={{
                 process: (
                   fieldName: any,
@@ -58,7 +58,7 @@ export const FileSection = () => {
             />
           )}
         />
-        {watch('file') && (
+        {watch('banner') && (
           <p className="text-sm font-medium">
             Si sube un resumen reemplazará el actual.
           </p>

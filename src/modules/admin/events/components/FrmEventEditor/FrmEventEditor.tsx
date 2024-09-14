@@ -80,7 +80,7 @@ export const FrmEventEditor = (props: IProps) => {
         if (dataDefault?.banner) {
           await deleteImage(dataDefault?.banner)
         }
-        const url = await uploadImage('files', fileUp[0])
+        const url = await uploadImage('banners', fileUp[0])
         newData = { ...newData, banner: url }
       } else {
         newData = { ...newData, banner: '' }
@@ -88,7 +88,7 @@ export const FrmEventEditor = (props: IProps) => {
     } else {
       if (file && file?.length > 0) {
         const fileUp = file as unknown as File[]
-        const url = await uploadImage('files', fileUp[0])
+        const url = await uploadImage('banners', fileUp[0])
         newData = { ...newData, banner: url }
       } else {
         newData = { ...newData, banner: '' }
