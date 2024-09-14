@@ -11,6 +11,7 @@ import {
   TopicsSection,
 } from './AboutUs'
 import { AvisoSection } from './Home/AvisoSection'
+import { DetailsEvent } from './DetailsEvent/DetailsEvent'
 
 export {
   ListShedule,
@@ -24,4 +25,5 @@ export {
   OrganizationSection,
   TopicsSection,
   AvisoSection,
+  DetailsEvent,
 }
