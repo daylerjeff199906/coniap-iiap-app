@@ -15,7 +15,7 @@ import { usePathname } from 'next/navigation'
 import { menuItems } from './components/linkData'
 import { NavBarUserPhone } from './components/navBarUserPhone'
 import { ProfilePopover } from '@/modules/core'
-import { HeaderNav } from './components/HeaderNav'
+// import { HeaderNav } from './components/HeaderNav'
 
 export const NavBarUser = () => {
   const { user, logout, loading } = useAuthContext()

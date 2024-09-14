@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { Input } from '@nextui-org/react'
+import { Image, Input } from '@nextui-org/react'
 import { IconSearch } from '@tabler/icons-react'
 
 import { useEvents } from '@/hooks/client'
-import { CardEvent, DataNotFound, LoadingPages } from '@/components'
+import { CardEvent, LoadingPages } from '@/components'
+import { EventCard } from '@/modules/user'
 
 export const ListEventsPage = () => {
   const [query, setQuery] = useState<string>('')
@@ -48,17 +49,32 @@ export const ListEventsPage = () => {
             <>
               <div className="w-ful grid grid-cols-1 gap-8 lg:p-6">
                 {events.map((filteredEvent, eventIndex) => (
-                  <CardEvent
+                  <EventCard
                     key={eventIndex}
-                    event={filteredEvent}
-                    variant="agenda"
+                    data={filteredEvent}
                   />
                 ))}
               </div>
             </>
           ) : (
             <>
-              <DataNotFound />
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <Image
+                  src="/svg/not-courses.svg"
+                  alt="No hay cursos disponibles"
+                  width={320}
+                  height={320}
+                />
+
+                <div className="flex flex-col items-start justify-center sm:justify-start sm:items-center">
+                  <h3 className="text-sm text-center font-bold lg:text-base">
+                    ¡Pronto más eventos para ti!
+                  </h3>
+                  <p className="text-xs lg:text-sm">
+                    Aún no se han programado eventos disponibles
+                  </p>
+                </div>
+              </div>
             </>
           )}
         </section>
