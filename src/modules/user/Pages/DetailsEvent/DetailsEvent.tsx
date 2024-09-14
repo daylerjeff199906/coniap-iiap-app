@@ -13,6 +13,8 @@ import { UtilsActions } from './UtilsActions'
 import { IconsShared } from './IconsShared'
 import remarkGfm from 'remark-gfm'
 import { formatDateLarge } from '@/utils/functions'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 interface IProps {
   event: IEvent
@@ -45,14 +47,16 @@ export const DetailsEvent = (props: IProps) => {
       </header>
       <section className="flex flex-col sm:flex-row gap-6">
         <main className="w-full flex flex-col gap-6">
-          <Image
-            src={event?.banner || '/banner_coniap_simple.webp'}
-            alt={event?.name}
-            width={800}
-            height={600}
-            removeWrapper
-            className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
-          />
+          <Zoom>
+            <Image
+              src={event?.banner || '/banner_coniap_simple.webp'}
+              alt={event?.name}
+              width={800}
+              height={600}
+              removeWrapper
+              className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
+            />
+          </Zoom>
           <IconsShared />
           <article className="w-full h-fit max-w-sm min-w-sm sm:hidden flex flex-col gap-4 sm:sticky sm:top-16 bg-gray-100 rounded-md p-4">
             <div className="space-y-2 w-full">
