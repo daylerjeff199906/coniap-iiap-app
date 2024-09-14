@@ -29,5 +29,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page(props: IProps) {
   const { id } = props.params
   const event = await fetchEventById(id)
-  return <>{event && <DetailsEvent event={event} />}</>
+  return (
+    <>
+      {event && (
+        <main>
+          <div className="bg-primary-800 h-16"></div>
+          <DetailsEvent event={event} />
+        </main>
+      )}
+    </>
+  )
 }
