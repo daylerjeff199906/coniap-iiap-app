@@ -1,4 +1,5 @@
 import { IEvent } from '@/types'
+import { formatDateLarge } from '@/utils/functions'
 import { Divider, Image } from '@nextui-org/react'
 import {
   IconCalendarEvent,
@@ -48,7 +49,7 @@ export const EventCard = (props: EventCardProps) => {
               <div className="text-xs font-bold flex gap-3 w-full justify-between sm:justify-start">
                 <div className="flex gap-2 items-center">
                   <IconCalendarEvent size={28} />
-                  <h2>{data.date}</h2>
+                  {data.date && <h2>{formatDateLarge(data?.date)}</h2>}
                 </div>
                 <div className="flex gap-2 items-center">
                   <IconClockHour12 size={28} />
