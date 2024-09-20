@@ -5,7 +5,13 @@ type DateFormats =
   | 'DD/MM/YYYY Hora: HH:mm'
 
 export function formatDate(dateString: string, format: DateFormats): string {
-  const date = new Date(dateString)
+  // Crear la fecha en UTC y ajustar a la zona horaria local
+  const dateParts = dateString.split('-')
+  const date = new Date(
+    parseInt(dateParts[0], 10), // Año
+    parseInt(dateParts[1], 10) - 1, // Mes (restar 1 ya que los meses en JS son 0-based)
+    parseInt(dateParts[2], 10) // Día
+  )
 
   const day = String(date.getDate()).padStart(2, '0')
   const month = String(date.getMonth() + 1).padStart(2, '0')
