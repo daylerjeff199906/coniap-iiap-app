@@ -1,5 +1,4 @@
 'use client'
-import { BannerStatic } from '@/components'
 import { TabsSections, AuthProvider } from '@/modules/user'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
