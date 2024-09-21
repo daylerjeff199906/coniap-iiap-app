@@ -4,28 +4,37 @@ type DateFormats =
   | 'MM/YYYY'
   | 'DD/MM/YYYY Hora: HH:mm'
 
-export function formatDate(dateString: string, format: DateFormats): string {
-  // Crear la fecha en UTC y ajustar a la zona horaria local
-  const dateParts = dateString.split('-')
-  const date = new Date(
-    parseInt(dateParts[0], 10), // Año
-    parseInt(dateParts[1], 10) - 1, // Mes (restar 1 ya que los meses en JS son 0-based)
-    parseInt(dateParts[2], 10) // Día
-  )
-
-  const day = String(date.getDate()).padStart(2, '0')
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const year = date.getFullYear()
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-
-  return format
-    .replace('DD', day)
-    .replace('MM', month)
-    .replace('YYYY', String(year))
-    .replace('HH', hours)
-    .replace('mm', minutes)
-}
+  export function formatDate(dateString: string, format: DateFormats): string {
+    // Dividir el dateString en partes
+    const [datePart, timePart] = dateString.split('T');
+    const dateParts = datePart.split('-');
+    
+    // Crear la fecha basada en el datePart
+    const year = parseInt(dateParts[0], 10);
+    const month = dateParts[1] ? parseInt(dateParts[1], 10) - 1 : 0; // Mes (restar 1 ya que los meses en JS son 0-based)
+    const day = dateParts[2] ? parseInt(dateParts[2], 10) : 1; // Si no hay día, asumir 1
+    const date = new Date(year, month, day);
+  
+    // Si el formato incluye horas, extraerlas o asignar valores predeterminados
+    let hours = '00', minutes = '00';
+    if (timePart) {
+      const [h, m] = timePart.split(':');
+      hours = h.padStart(2, '0');
+      minutes = m.padStart(2, '0');
+    }
+  
+    const dayString = String(date.getDate()).padStart(2, '0');
+    const monthString = String(date.getMonth() + 1).padStart(2, '0');
+    const yearString = String(date.getFullYear());
+  
+    // Devolver el formato solicitado
+    return format
+      .replace('DD', dayString)
+      .replace('MM', monthString)
+      .replace('YYYY', yearString)
+      .replace('HH', hours)
+      .replace('mm', minutes);
+  }
 
 export function formatDateLarge(dateString: string): string {
   const [year, month, day] = dateString.split('-').map(Number)

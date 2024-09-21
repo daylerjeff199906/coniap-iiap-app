@@ -45,6 +45,9 @@ export function getConferenceStatus(dates: ConferenceDates): ConferenceStatus {
   const conferenceEnd = new Date(dates['date-conference'].end)
   const summaryEnd = new Date(dates.summary.end)
 
+  // Agregar 1 día a summaryEnd
+  summaryEnd.setDate(summaryEnd.getDate() + 1)
+
   // Evaluaciones
   const isBeforeConference = dateNow < conferenceStart
   const isBeforeSummary = dateNow < summaryEnd
