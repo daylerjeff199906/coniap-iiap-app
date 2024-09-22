@@ -5,24 +5,33 @@ type DateFormats =
   | 'DD/MM/YYYY Hora: HH:mm'
 
 export function formatDate(dateString: string, format: DateFormats): string {
-  // Crear la fecha en UTC y ajustar a la zona horaria local
-  const dateParts = dateString.split('-')
-  const date = new Date(
-    parseInt(dateParts[0], 10), // Año
-    parseInt(dateParts[1], 10) - 1, // Mes (restar 1 ya que los meses en JS son 0-based)
-    parseInt(dateParts[2], 10) // Día
-  )
+  // Crear la fecha a partir del dateString
+  const date = new Date(dateString)
 
-  const day = String(date.getDate()).padStart(2, '0')
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const year = date.getFullYear()
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
+  // Asegurarse de convertir la fecha a la zona horaria de Lima, Perú
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: 'America/Lima',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false, // Para formato de 24 horas
+  }
 
+  // Obtener la fecha y hora formateadas en la zona horaria de Perú
+  const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(date)
+
+  // Separar la parte de la fecha y la hora
+  const [datePart, timePart] = formattedDate.split(', ')
+  const [day, month, year] = datePart.split('/')
+  const [hours, minutes] = timePart.split(':')
+
+  // Reemplazar los valores en el formato solicitado
   return format
     .replace('DD', day)
     .replace('MM', month)
-    .replace('YYYY', String(year))
+    .replace('YYYY', year)
     .replace('HH', hours)
     .replace('mm', minutes)
 }
