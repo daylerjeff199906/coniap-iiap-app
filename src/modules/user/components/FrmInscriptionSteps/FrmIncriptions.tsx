@@ -127,9 +127,11 @@ export const FrmInscriptionSteps = (props: IProps) => {
     setLoading(false)
   }
 
-  const { isBeforeConference, isBeforeSummary } = getConferenceStatus(
+  const { isBeforeConference } = getConferenceStatus(
     infoData.data.dates
   )
+
+  const isBeforeSummary = true
 
   const dateFormatted = formatDate(
     infoData.data.dates['date-conference'].start,
