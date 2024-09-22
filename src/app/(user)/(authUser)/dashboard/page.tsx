@@ -20,8 +20,7 @@ export default async function Page() {
     'DD/MM/YYYY'
   )
 
-  // const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
-   const isBeforeSummary = true
+  const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   return (
     <div className="flex flex-col gap-6">

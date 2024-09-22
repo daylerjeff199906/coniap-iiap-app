@@ -4,37 +4,37 @@ type DateFormats =
   | 'MM/YYYY'
   | 'DD/MM/YYYY Hora: HH:mm'
 
-  export function formatDate(dateString: string, format: DateFormats): string {
-    // Dividir el dateString en partes
-    const [datePart, timePart] = dateString.split('T');
-    const dateParts = datePart.split('-');
-    
-    // Crear la fecha basada en el datePart
-    const year = parseInt(dateParts[0], 10);
-    const month = dateParts[1] ? parseInt(dateParts[1], 10) - 1 : 0; // Mes (restar 1 ya que los meses en JS son 0-based)
-    const day = dateParts[2] ? parseInt(dateParts[2], 10) : 1; // Si no hay día, asumir 1
-    const date = new Date(year, month, day);
-  
-    // Si el formato incluye horas, extraerlas o asignar valores predeterminados
-    let hours = '00', minutes = '00';
-    if (timePart) {
-      const [h, m] = timePart.split(':');
-      hours = h.padStart(2, '0');
-      minutes = m.padStart(2, '0');
-    }
-  
-    const dayString = String(date.getDate()).padStart(2, '0');
-    const monthString = String(date.getMonth() + 1).padStart(2, '0');
-    const yearString = String(date.getFullYear());
-  
-    // Devolver el formato solicitado
-    return format
-      .replace('DD', dayString)
-      .replace('MM', monthString)
-      .replace('YYYY', yearString)
-      .replace('HH', hours)
-      .replace('mm', minutes);
+export function formatDate(dateString: string, format: DateFormats): string {
+  // Crear la fecha a partir del dateString
+  const date = new Date(dateString)
+
+  // Asegurarse de convertir la fecha a la zona horaria de Lima, Perú
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: 'America/Lima',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false, // Para formato de 24 horas
   }
+
+  // Obtener la fecha y hora formateadas en la zona horaria de Perú
+  const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(date)
+
+  // Separar la parte de la fecha y la hora
+  const [datePart, timePart] = formattedDate.split(', ')
+  const [day, month, year] = datePart.split('/')
+  const [hours, minutes] = timePart.split(':')
+
+  // Reemplazar los valores en el formato solicitado
+  return format
+    .replace('DD', day)
+    .replace('MM', month)
+    .replace('YYYY', year)
+    .replace('HH', hours)
+    .replace('mm', minutes)
+}
 
 export function formatDateLarge(dateString: string): string {
   const [year, month, day] = dateString.split('-').map(Number)

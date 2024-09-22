@@ -134,11 +134,9 @@ export const FrmInscriptions = () => {
     methods.setValue('email', '')
   }
 
-  const { isBeforeConference } = getConferenceStatus(
+  const { isBeforeConference, isBeforeSummary } = getConferenceStatus(
     infoData.data.dates
   )
-
-  const isBeforeSummary = true
 
   const dateFormatted = formatDate(
     infoData.data.dates['date-conference'].start,
