@@ -35,7 +35,8 @@ export const FrmUploadFile = (props: IProps) => {
     infoData.data.dates.summary.end,
     'DD/MM/YYYY'
   )
-  const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
+  // const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
+   const isBeforeSummary = true
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, ...rest } = data
