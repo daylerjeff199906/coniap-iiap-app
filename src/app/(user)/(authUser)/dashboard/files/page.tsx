@@ -17,7 +17,8 @@ export default function Page() {
     infoData.data.dates.summary.end,
     'DD/MM/YYYY'
   )
-  const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
+  // const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
+  const isBeforeSummary = true
 
   return (
     <>
