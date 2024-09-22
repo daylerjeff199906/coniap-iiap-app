@@ -41,7 +41,8 @@ export default function Page() {
     driverObj.drive()
   }
 
-  const { isBeforeSummary } = getConferenceStatus(infoDataCongress.data.dates)
+  // const { isBeforeSummary } = getConferenceStatus(infoDataCongress.data.dates)
+  const  isBeforeSummary  = true
 
   return (
     <main className="w-full">
