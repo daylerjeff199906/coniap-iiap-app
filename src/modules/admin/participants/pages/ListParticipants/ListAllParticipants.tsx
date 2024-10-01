@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { FiltersSection, TypesSearch } from './sections'
@@ -15,6 +15,7 @@ export const ListParticipants = () => {
   const limit = 30
   const { getParams, updateFilter } = useFilterFromUrl()
   const { getPersons, loading, persons } = usePersons()
+  const [query, setQuery] = useState<string>('')
   const pathname = usePathname()
   const router = useRouter()
 
@@ -45,7 +46,6 @@ export const ListParticipants = () => {
 
   const { type, isNot, subtitle, title } =
     routes[pathname as keyof typeof routes] || {}
-  const query = getParams('query', '')
   const statusPerson = getParams('status', '')
   const statusValue =
     statusPerson === 'active'
@@ -69,9 +69,11 @@ export const ListParticipants = () => {
         page: Number(page),
       },
     })
-  }, [query, type, isNot, statusValue, page])
+  }, [query, type, isNot, statusValue, page, typeSearch])
 
-  const handleQuery = (value: string) => updateFilter('query', value)
+  const handleQuery = (value: string) => {
+    setQuery(value)
+  }
 
   const listPerson =
     (persons &&
