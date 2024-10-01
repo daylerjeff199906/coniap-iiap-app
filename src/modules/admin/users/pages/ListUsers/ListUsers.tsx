@@ -21,7 +21,7 @@ export const ListUsers = () => {
       page,
       limit: 15,
     })
-  }, [query, page])
+  }, [query, page, qtype])
 
   const rows =
     users?.data?.map((user) => {
