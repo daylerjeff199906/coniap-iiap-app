@@ -28,10 +28,10 @@ export const ListEventsPage = () => {
 
   return (
     <>
-      <article className="section-home">
-        <section className="flex justify-between">
-          <div></div>
-          <div>
+      <article className="section-home grid grid-cols-1 gap-4">
+        <section className="flex sm:justify-between">
+          <div className='w-full hidden sm:flex'></div>
+          <div className="w-full sm:max-w-xl sm:min-w-80">
             <Input
               aria-label="Buscar eventos"
               placeholder="Buscar eventos ..."

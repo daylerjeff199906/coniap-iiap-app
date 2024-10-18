@@ -1,6 +1,11 @@
 import { AlertCustom } from '@/modules/core'
 import { IUser } from '@/types'
-import { formatDate, getConferenceStatus, getUser } from '@/utils/functions'
+import {
+  formatConferenceDate,
+  formatDate,
+  getConferenceStatus,
+  getUser,
+} from '@/utils/functions'
 import infoData from '@/utils/json/infoConiap.json'
 
 export default async function Page() {
@@ -15,9 +20,9 @@ export default async function Page() {
     'DD/MM/YYYY'
   )
 
-  const datestartConference = formatDate(
-    infoData.data.dates['date-conference'].start,
-    'DD/MM/YYYY'
+  //Inicio de conferencia
+  const conferenceDate = formatConferenceDate(
+    infoData.data.dates['date-conference']
   )
 
   const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
@@ -56,7 +61,7 @@ export default async function Page() {
             showIcon
             title="Fecha de inicio de CONIAP 2024"
             type="info"
-            message={`La fecha de inicion del congreso es el ${datestartConference}`}
+            message={`La fecha de inicion del congreso es el ${conferenceDate}`}
           />
         </main>
       </section>
