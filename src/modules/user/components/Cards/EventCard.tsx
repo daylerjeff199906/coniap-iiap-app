@@ -19,7 +19,7 @@ export const EventCard = (props: EventCardProps) => {
   return (
     <>
       {variant === 'list' && (
-        <main className="grid grid-cols-1 sm:grid-cols-6 p-4 lg:p-6 bg-white hover:cursor-pointer rounded-md gap-4 sm:gap-6 items-center">
+        <main className="grid grid-cols-1 sm:grid-cols-6  bg-transparent hover:cursor-pointer rounded-md gap-4 sm:gap-6 items-center ">
           <section className="col-span-1 sm:col-span-2">
             <Image
               src={data.banner || '/banner_coniap_simple.webp'}
@@ -58,7 +58,7 @@ export const EventCard = (props: EventCardProps) => {
                   </h3>
                 </div>
               </div>
-              <div className="flex justify-center sm:justify-end w-full bg-primary-700 sm:bg-transparent text-white rounded-md sm:text-gray-500 p-2 sm:p-0">
+              <div className="flex justify-center sm:justify-end w-full bg-primary-700 sm:bg-transparent text-white rounded-md sm:text-gray-500 p-2 sm:px-4">
                 <Link
                   href={`/eventos/${data.id}`}
                   className="text-sm flex gap-2 "

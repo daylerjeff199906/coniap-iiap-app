@@ -76,7 +76,7 @@ export const Banner = () => {
 
   return (
     <>
-      <section className="w-full h-80 lg:h-[26rem] bg-black/60 relative">
+      <section className="w-full h-96 sm:h-80 lg:h-[26rem] bg-black/60 relative">
         <div className="container text-white flex items-center gap-2 lg:gap-4 h-full">
           <div className="flex items-center gap-1 sm:gap-2 pb-36 sm:pb-28">
             <div className="w-3 sm:w-10 lg:w-16 border border-white" />
