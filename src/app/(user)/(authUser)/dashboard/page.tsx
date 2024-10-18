@@ -24,6 +24,7 @@ export default async function Page() {
   const conferenceDate = formatConferenceDate(
     infoData.data.dates['date-conference']
   )
+
   const { isBeforeSummary } = getConferenceStatus(infoData.data.dates)
 
   return (
