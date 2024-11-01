@@ -110,15 +110,17 @@ export const sendTemplateMessage = async (
       to: [{ email: message.email }],
       templateId: templateId,
       params: {
-        NAME: message.name,
-        SURNAME: message.surname,
+        NOMBRE: message.name,
+        APELLIDOS: message.surname,
         SUBJECT: message.subject,
       },
     }
 
     const response = await apiTransactional.sendTransacEmail(sendSmtpEmail)
     console.log('Email sent successfully:', response)
+    return true
   } catch (error: any) {
     console.error('Error sending email:', error)
+    return false
   }
 }

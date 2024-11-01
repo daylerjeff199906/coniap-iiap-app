@@ -11,6 +11,7 @@ import { useFiles } from './useFiles'
 
 import { IRes, ISummary, ISummaryFilter } from '@/types'
 import { toast } from 'react-toastify'
+import { sendTemplateMessage } from '@/lib'
 
 export function useSummaries() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -33,13 +34,34 @@ export function useSummaries() {
     return res
   }
 
-  const updateDataSummary = async (id: string, data: ISummary) => {
+  const updateDataSummary = async (
+    id: string,
+    data: ISummary,
+    message?: {
+      email: string
+      name: string
+      surname: string
+      subject: string
+    }
+  ) => {
     setLoading(true)
+    const { person } = data
     const res: IRes = (await updateSummary(id, data)) as IRes
     if (res.message) {
       toast.error(`Error al actualizar el resumen ${res.message}`)
     } else {
       toast.success('Tema de resumen actualizado con éxito')
+      const resMsg = await sendTemplateMessage(16, {
+        email: String(message?.email),
+        name: String(person?.name),
+        surname: String(person?.surName),
+        subject: String(data?.title),
+      })
+      if (resMsg) {
+        toast.success(
+          'Se enviará un mensaje al correo del ponente, con los detalles de la revisión'
+        )
+      }
     }
     setLoading(false)
     return res
