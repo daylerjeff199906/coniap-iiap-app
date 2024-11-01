@@ -88,7 +88,7 @@ export default async function Page(props: Props) {
   return (
     <>
       <main className="w-full bg-gray-50">
-        <section className="container ">
+        <section className="container py-12">
           {programs?.programs && programs?.programs?.length > 0 ? (
             <ListShedule
               programs={programs.programs}

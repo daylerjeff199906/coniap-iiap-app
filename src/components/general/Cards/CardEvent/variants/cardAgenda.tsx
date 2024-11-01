@@ -28,14 +28,14 @@ export const CardAgendaEvent = (props: IProps) => {
   const { event, showImage } = props
   const [isHover, setIsHover] = useState(false)
   return (
-    <main
-      className={`border w-full bg-white rounded-md transition-shadow duration-300 ease-in-out ${
+    <Card
+      className={`border w-full bg-white transition-shadow duration-300 ease-in-out ${
         isHover ? 'shadow-sm' : 'shadow-none'
       }`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <section className={`flex flex-row gap-4 items-center p-5 lg:m-6`}>
+      <CardBody className={`flex flex-row gap-4 items-center p-5 lg:m-6`}>
         {showImage && (
           <div className="hidden sm:block w-32 h-32">
             <Image
@@ -93,18 +93,17 @@ export const CardAgendaEvent = (props: IProps) => {
               description={event?.summary?.person?.institution}
             />
           </div>
-          {/* <Divider /> */}
         </div>
-      </section>
+      </CardBody>
       <Divider className="sm:hidden" />
-      <footer className="bg-gray-200 justify-between p-4">
-        <div className="flex items-center gap-6">
+      <CardFooter className="bg-gray-200 justify-between p-4">
+        <div className="flex items-center gap-6 text-sm sm:text-base">
           <div className="flex items-center gap-3">
-            <IconCalendarEvent size={20} />
+            <IconCalendarEvent className="w-4 h-4" />
             <span>{event?.date}</span>
           </div>
           <div className="flex items-center gap-3">
-            <IconClockFilled size={20} />
+            <IconClockFilled className="w-4 h-4" />
             <span>
               {formatTime(event?.timeStart)} - {formatTime(event?.timeEnd)}
             </span>
@@ -112,11 +111,11 @@ export const CardAgendaEvent = (props: IProps) => {
         </div>
         <Link
           href={`/agenda/${event?.id}`}
-          className="flex items-center gap-2 px-4"
+          className="flex items-center gap-2 px-4 text-xs sm:text-sm"
         >
           <p className="font-medium text-base">Leer más</p>
         </Link>
-      </footer>
-    </main>
+      </CardFooter>
+    </Card>
   )
 }
