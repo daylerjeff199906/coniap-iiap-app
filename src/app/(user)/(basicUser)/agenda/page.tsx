@@ -6,7 +6,7 @@ import { fetchEvents, fetchProgramsFilter } from '@/api'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Agenda',
+  title: 'Agenda | CONIAP',
   description:
     'Descubre la agenda del III Congreso Internacional sobre Amazonía Peruana 2024',
 }
