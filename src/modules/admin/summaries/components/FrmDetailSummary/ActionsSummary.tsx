@@ -9,7 +9,7 @@ interface IProps {
 
 export const ActionsSummary = (props: IProps) => {
   const { defaultValues } = props
-  const { control } = useFormContext<ISummary>()
+  const { control, watch } = useFormContext<ISummary>()
 
   return (
     <>
@@ -101,6 +101,7 @@ export const ActionsSummary = (props: IProps) => {
                 <Checkbox
                   aria-label="Notificar al autor"
                   name="isNotification"
+                  isDisabled={!watch('isApproved')}
                   checked={value}
                   onChange={onChange}
                   className="w-full"
