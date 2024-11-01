@@ -29,8 +29,9 @@ export const CardAgendaEvent = (props: IProps) => {
   const [isHover, setIsHover] = useState(false)
   return (
     <main
-      shadow={isHover ? 'sm' : 'none'}
-      className="border w-full bg-white rounded-md"
+      className={`border w-full bg-white rounded-md transition-shadow duration-300 ease-in-out ${
+        isHover ? 'shadow-sm' : 'shadow-none'
+      }`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
