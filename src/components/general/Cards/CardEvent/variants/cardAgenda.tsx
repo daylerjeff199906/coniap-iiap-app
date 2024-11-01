@@ -29,12 +29,13 @@ export const CardAgendaEvent = (props: IProps) => {
   const [isHover, setIsHover] = useState(false)
   return (
     <Card
-      shadow={isHover ? 'sm' : 'none'}
-      className="border w-full bg-white"
+      className={`border w-full bg-white transition-shadow duration-300 ease-in-out ${
+        isHover ? 'shadow-sm' : 'shadow-none'
+      }`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <CardBody className={`flex flex-row gap-4 items-center p-5 lg:p-6`}>
+      <CardBody className={`flex flex-row gap-4 items-center p-5 lg:m-6`}>
         {showImage && (
           <div className="hidden sm:block w-32 h-32">
             <Image
@@ -48,14 +49,9 @@ export const CardAgendaEvent = (props: IProps) => {
         )}
         <div className="w-full flex flex-col gap-4">
           <div>
-            <Chip
-              radius="full"
-              color="primary"
-              variant="flat"
-              size="sm"
-            >
+            <span className="text-sm text-primary-500 bg-primary-50 rounded-full px-4 py-1">
               {event?.summary?.topic?.name}
-            </Chip>
+            </span>
             <div>
               {event?.sala && (
                 <Chip
@@ -97,26 +93,26 @@ export const CardAgendaEvent = (props: IProps) => {
               description={event?.summary?.person?.institution}
             />
           </div>
-          {/* <Divider /> */}
         </div>
       </CardBody>
       <Divider className="sm:hidden" />
-      <CardFooter className="bg-gray-200 justify-between">
-        <div className="flex items-center gap-6">
+      <CardFooter className="bg-gray-200 justify-between p-4">
+        <div className="flex items-center gap-6 text-sm sm:text-base">
           <div className="flex items-center gap-3">
-            <IconCalendarEvent size={20} />
+            <IconCalendarEvent className="w-4 h-4" />
             <span>{event?.date}</span>
           </div>
           <div className="flex items-center gap-3">
-            <IconClockFilled size={20} />
+            <IconClockFilled className="w-4 h-4" />
             <span>
               {formatTime(event?.timeStart)} - {formatTime(event?.timeEnd)}
             </span>
           </div>
         </div>
         <Link
-          href={`/agenda/${event?.id}`}
-          className="flex items-center gap-2 px-4"
+          href={`/eventos/${event?.id}`}
+          target='_blank'
+          className="flex items-center gap-2 px-4 text-xs sm:text-sm"
         >
           <p className="font-medium text-base">Leer más</p>
         </Link>

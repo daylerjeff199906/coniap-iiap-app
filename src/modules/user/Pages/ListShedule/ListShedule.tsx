@@ -54,7 +54,7 @@ export const ListShedule = (props: IProps) => {
   }
 
   return (
-    <section className="py-12 flex flex-col items-center w-full">
+    <>
       <section className="w-full">
         <header
           id="section-tabs"
@@ -105,7 +105,7 @@ export const ListShedule = (props: IProps) => {
           </footer>
         )}
       </section>
-      <main className="flex flex-col gap-4 md:gap-6">
+      <main className="flex flex-col gap-4 md:gap-6 relative">
         {events?.map((event, index) => (
           <CardEvent
             key={index}
@@ -116,6 +116,6 @@ export const ListShedule = (props: IProps) => {
         ))}
         {events?.length === 0 && <DataNotFound />}
       </main>
-    </section>
+    </>
   )
 }

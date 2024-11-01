@@ -6,7 +6,7 @@ import { fetchEvents, fetchProgramsFilter } from '@/api'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Agenda',
+  title: 'Agenda | CONIAP',
   description:
     'Descubre la agenda del III Congreso Internacional sobre Amazonía Peruana 2024',
 }
@@ -88,7 +88,7 @@ export default async function Page(props: Props) {
   return (
     <>
       <main className="w-full bg-gray-50">
-        <section className="container ">
+        <section className="container py-12">
           {programs?.programs && programs?.programs?.length > 0 ? (
             <ListShedule
               programs={programs.programs}

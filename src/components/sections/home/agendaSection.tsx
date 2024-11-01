@@ -8,12 +8,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 interface IProps {
-  programs: IProgram[] | undefined
-  events: IEvent[] | undefined
+  programs: IProgram[]
+  events: IEvent[]
 }
 
 export const AgendaSection = (props: IProps) => {
   const { programs, events } = props
+
   return (
     <>
       <section className=" bg-white">
@@ -62,7 +63,7 @@ export const AgendaSection = (props: IProps) => {
                 aria-label="Options"
                 variant="underlined"
                 classNames={{
-                  panel: 'border-1',
+                  panel: 'border-1 border-gray-200 rounded-md p-4',
                   tabContent: 'group-data-[selected=true]:font-bold text-xl',
                   tab: 'mb-2',
                 }}
@@ -73,9 +74,13 @@ export const AgendaSection = (props: IProps) => {
                     key={programIndex}
                     title={formatDateToDDMMM(program.date as string)}
                   >
-                    <div className="sm:p-4 lg:p-6">
+                    <div className="sm:p-4 lg:p-6 rounded-md">
                       {events
-                        ?.filter((event) => event.program?.id === program.id) // Filtrar eventos por program_id
+                        ?.filter(
+                          (event) =>
+                            event.program?.id.toString() ===
+                            program.id.toString()
+                        ) // Filtrar eventos por program_id
                         .slice(0, 7)
                         .map((filteredEvent, eventIndex) => (
                           <CardEvent

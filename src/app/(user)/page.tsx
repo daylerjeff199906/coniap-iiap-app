@@ -9,7 +9,7 @@ import {
   InscriptionsSection,
   AgendaSection,
 } from '@/components'
-import { fetchEvents } from '@/api'
+import { fetchEvents, fetchProgramsFilter } from '@/api'
 
 import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
 import { AvisoSection } from '@/modules/user'
@@ -19,7 +19,28 @@ export default async function Page() {
 
   let dataEvents: IEvent[] = []
   let eventSpeakers: IEvent[] = []
+  let programs: IProgram[] = []
 
+  // Fetch data programs from API
+  try {
+    const data = await fetchProgramsFilter({
+      query: '',
+      page: 1,
+      limit: 10,
+      orderBy: {
+        column: 'date',
+        ascending: true,
+      },
+    })
+
+    if (data) {
+      programs = data.programs as unknown as IProgram[]
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error)
+  }
+
+  //  Fetch data events from API
   try {
     const data = await fetchEvents({
       page: 1,
@@ -34,6 +55,7 @@ export default async function Page() {
     console.error('Error fetching events:', error)
   }
 
+  //  Fetch data events other from API
   try {
     const data = await fetchEvents({
       page: 1,
@@ -63,11 +85,6 @@ export default async function Page() {
     .from('sponsors')
     .select()
     .eq('isActived', true)
-
-  const { data: programs } = (await supabase
-    .from('programs')
-    .select()
-    .eq('isActived', true)) as { data: IProgram[] }
 
   const dataTopics: ITopic[] | undefined = topics?.map((topic: ITopic) => ({
     ...topic,
