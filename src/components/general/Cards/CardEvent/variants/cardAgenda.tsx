@@ -1,7 +1,6 @@
 'use client'
 import { IEvent } from '@/types'
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -14,9 +13,11 @@ import Link from 'next/link'
 import { IconCalendarEvent, IconClockFilled } from '@tabler/icons-react'
 
 import logo from '@/assets/images/logo_coniap_simple.webp'
+import { useState } from 'react'
 
 interface IProps {
   event: IEvent
+  showImage?: boolean
 }
 
 function formatTime(time: string) {
@@ -24,82 +25,102 @@ function formatTime(time: string) {
 }
 
 export const CardAgendaEvent = (props: IProps) => {
-  const { event } = props
+  const { event, showImage } = props
+  const [isHover, setIsHover] = useState(false)
   return (
-    <>
-      <Card
-        shadow="none"
-        className="lg:border"
-      >
-        <CardBody className="px-0 sm:p-6 lg:p-8  grid grid-cols-1 sm:grid-cols-12 gap-6">
-          <div className="hidden sm:block sm:col-span-3">
+    <Card
+      shadow={isHover ? 'sm' : 'none'}
+      className="border w-full bg-white"
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      <CardBody className={`flex flex-row gap-4 items-center p-5 lg:p-6`}>
+        {showImage && (
+          <div className="hidden sm:block w-32 h-32">
             <Image
               src={event?.banner || logo.src}
               alt={event?.name}
               removeWrapper
               radius="none"
-              className="w-full h-full object-cover bg-gray-300"
+              className="w-full h-full object-cover bg-gray-300 rounded-md"
             />
           </div>
-          <div className="sm:col-span-9 grid grid-cols-1 gap-4">
+        )}
+        <div className="w-full flex flex-col gap-4">
+          <div>
+            <Chip
+              radius="full"
+              color="primary"
+              variant="flat"
+              size="sm"
+            >
+              {event?.summary?.topic?.name}
+            </Chip>
             <div>
-              <h2 className="text-lg pb-1">{formatTime(event?.timeStart)}</h2>
-              <div>
-                {event?.sala && (
-                  <Chip
-                    className="bg-black text-white"
-                    size="sm"
-                  >
-                    {`Sala ${event?.sala}`}
-                  </Chip>
-                )}
-              </div>
-            </div>
-            <div>
-              <h1 className="text-2xl lg:text-3xl font-bold">{event?.name}</h1>
-              <p className="hidden">{event?.shortDescription}</p>
-            </div>
-            <div>
-              <User
-                name={
-                  event?.summary?.person?.name +
-                  ' ' +
-                  event?.summary?.person?.surName
-                }
-                description={event?.summary?.person?.institution}
-              />
-            </div>
-            <Divider />
-            <div className="sm:flex justify-between gap-4">
-              <div className="sm:flex items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <IconCalendarEvent size={20} />
-                  <span>{event?.date}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <IconClockFilled size={20} />
-                  <span>
-                    {formatTime(event?.timeStart)} -{' '}
-                    {formatTime(event?.timeEnd)}
-                  </span>
-                </div>
-              </div>
-              <Link
-                href={`/eventos/${event?.id}`}
-                className="hidden sm:block"
-              >
-                <p className="font-medium text-base">Leer más</p>
-              </Link>
+              {event?.sala && (
+                <Chip
+                  className="bg-black text-white"
+                  size="sm"
+                >
+                  {`Sala ${event?.sala}`}
+                </Chip>
+              )}
             </div>
           </div>
-        </CardBody>
-        <Divider className="sm:hidden" />
-        <CardFooter className="px-0 sm:hidden">
-          <Link href={`/agenda/${event?.id}`}>
-            <p className="font-medium text-base">Leer más</p>
-          </Link>
-        </CardFooter>
-      </Card>
-    </>
+          <div className="flex flex-col gap-2 sm:gap-3">
+            <Link
+              href={`/eventos/${event?.id}`}
+              target="_blank"
+              className={`text-2xl lg:text-3xl font-medium ${
+                isHover
+                  ? 'text-primary-500 underline cursor-pointer'
+                  : 'text-gray-700'
+              }`}
+            >
+              {event?.name}
+            </Link>
+            <p className="line-clamp-2 text-sm text-gray-500">
+              {event?.shortDescription}
+            </p>
+          </div>
+          <div>
+            <User
+              avatarProps={{
+                src: event?.summary?.person?.image || logo.src,
+                alt: event?.summary?.person?.name,
+              }}
+              name={
+                event?.summary?.person?.name +
+                ' ' +
+                event?.summary?.person?.surName
+              }
+              description={event?.summary?.person?.institution}
+            />
+          </div>
+          {/* <Divider /> */}
+        </div>
+      </CardBody>
+      <Divider className="sm:hidden" />
+      <CardFooter className="bg-gray-200 justify-between">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <IconCalendarEvent size={20} />
+            <span>{event?.date}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <IconClockFilled size={20} />
+            <span>
+              {formatTime(event?.timeStart)} - {formatTime(event?.timeEnd)}
+            </span>
+          </div>
+        </div>
+        <Link
+          href={`/agenda/${event?.id}`}
+          className="flex items-center gap-2 px-4"
+        >
+          <p className="font-medium text-base">Leer más</p>
+        </Link>
+      </CardFooter>
+    </Card>
   )
 }

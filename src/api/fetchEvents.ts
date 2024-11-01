@@ -3,14 +3,33 @@ import { IEventFilter, IEventRes } from '@/types'
 import { createClient } from '@/utils/supabase/server'
 
 export async function fetchEvents(props: IEventFilter) {
-  const { query, date, isSumary, topic, isPagination, limit, page, programId } =
-    props
+  const {
+    query,
+    date,
+    isSumary,
+    topic,
+    isPagination,
+    limit,
+    page,
+    programId,
+    orderBy,
+  } = props
   const supabase = createClient()
 
   let queryBuilder = supabase
     .from('events')
-    .select('*,summary:summary_id(*, person:person_id(*))', { count: 'exact' })
+    .select('*,summary:summary_id(*, topic:topic_id(*), person:person_id(*))', {
+      count: 'exact',
+    })
     .eq('isActived', true)
+
+  if (orderBy) {
+    queryBuilder = queryBuilder.order(orderBy.column, {
+      ascending: orderBy.ascending,
+    })
+  } else {
+    queryBuilder = queryBuilder.order('created_at', { ascending: false })
+  }
 
   if (query) {
     queryBuilder = queryBuilder.ilike('name', `%${query}%`)

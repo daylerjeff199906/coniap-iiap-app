@@ -12,8 +12,8 @@ const config: Config = {
   theme: {
     container: {
       screens: {
-        sm: '100%',
-        md: '100%',
+        // sm: '100%',
+        // md: '100%',
         xl: '1280px',
       },
       center: true,

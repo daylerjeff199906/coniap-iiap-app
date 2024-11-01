@@ -21,7 +21,10 @@ export const CardEvent = (props: IProps) => {
         </>
       ) : variant === 'agenda' ? (
         <>
-          <CardAgendaEvent event={event} />
+          <CardAgendaEvent
+            event={event}
+            showImage={showImage}
+          />
         </>
       ) : (
         <>

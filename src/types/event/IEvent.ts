@@ -34,4 +34,8 @@ export interface IEventFilter {
   page?: number
   limit?: number
   isPagination?: boolean
+  orderBy?: {
+    column: 'created_at' | 'date' | 'timeStart' | 'timeEnd'
+    ascending: boolean
+  }
 }
