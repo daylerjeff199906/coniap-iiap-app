@@ -28,13 +28,13 @@ export const CardAgendaEvent = (props: IProps) => {
   const { event, showImage } = props
   const [isHover, setIsHover] = useState(false)
   return (
-    <Card
+    <main
       shadow={isHover ? 'sm' : 'none'}
-      className="border w-full bg-white"
+      className="border w-full bg-white rounded-md"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <CardBody className={`flex flex-row gap-4 items-center p-5 lg:p-6`}>
+      <section className={`flex flex-row gap-4 items-center p-5 lg:p-6`}>
         {showImage && (
           <div className="hidden sm:block w-32 h-32">
             <Image
@@ -99,9 +99,9 @@ export const CardAgendaEvent = (props: IProps) => {
           </div>
           {/* <Divider /> */}
         </div>
-      </CardBody>
+      </section>
       <Divider className="sm:hidden" />
-      <CardFooter className="bg-gray-200 justify-between">
+      <footer className="bg-gray-200 justify-between p-4">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
             <IconCalendarEvent size={20} />
@@ -120,7 +120,7 @@ export const CardAgendaEvent = (props: IProps) => {
         >
           <p className="font-medium text-base">Leer más</p>
         </Link>
-      </CardFooter>
-    </Card>
+      </footer>
+    </main>
   )
 }
