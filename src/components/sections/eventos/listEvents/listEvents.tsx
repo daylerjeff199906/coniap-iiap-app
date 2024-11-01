@@ -52,15 +52,15 @@ export const ListEventsPage = (props: IEventsPage) => {
   return (
     <>
       <article className="section-home grid grid-cols-1 gap-4">
-        <section className="flex sm:justify-between">
-          <div className="w-full hidden sm:flex">
+        <section className="flex flex-col gap-3 sm:flex-row sm:justify-between">
+          <div className="w-full sm:flex">
             <Select
               aria-label="Filtrar por tipo de evento"
               selectedKeys={[searchType]}
               onSelectionChange={handleSelectType}
               variant="bordered"
               radius="sm"
-              className="w-full max-w-xs"
+              className="w-full sm:max-w-xs"
             >
               {optionsTypesEvents.map((option) => (
                 <SelectItem key={option.value}>{option.label}</SelectItem>
