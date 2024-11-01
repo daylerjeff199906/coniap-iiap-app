@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-'use client '
+'use client'
 import { Avatar } from '@nextui-org/react'
-import { useSearchParams } from 'next/navigation'
 import { FrmInscriptionSteps } from '@/modules/user'
+import { useFilterFromUrl } from '@/modules/core'
 
 function desencryptString(value: string) {
   if (typeof window !== 'undefined') {
@@ -11,15 +10,15 @@ function desencryptString(value: string) {
 }
 
 export const NextSteps = () => {
-  const searchParams = useSearchParams()
+  const { getParams } = useFilterFromUrl()
 
-  const emailEncrypt = searchParams.get('email')
+  const emailEncrypt = getParams('email', '')
   const email = desencryptString(emailEncrypt || '')
 
-  const nameEncrypt = searchParams.get('name')
+  const nameEncrypt = getParams('name', '')
   const name = desencryptString(nameEncrypt || '')
 
-  const photoEncrypt = searchParams.get('photo')
+  const photoEncrypt = getParams('photo', '')
   const photo = desencryptString(photoEncrypt || '')
 
   return (
