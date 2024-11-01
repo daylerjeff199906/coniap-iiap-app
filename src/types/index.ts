@@ -1,5 +1,5 @@
 import { ISponsor } from './ISponsors'
-import { IProgram } from './IProgram'
+import { IProgram, IProgramsFilter } from './IProgram'
 import { IColumns } from './table/IColumns'
 import { ITopic } from './ITopics'
 import { IRows } from './table/IRows'
@@ -16,6 +16,7 @@ export type {
   IRes,
   ICountry,
   IActions,
+  IProgramsFilter,
 }
 
 export * from './event'

@@ -8,3 +8,16 @@ export interface IProgram {
   isActived?: boolean
   events: IEvent[]
 }
+
+export interface IProgramsFilter {
+  query?: string
+  column?: string
+  date?: string
+  page?: number
+  limit?: number
+  isPagination?: boolean
+  orderBy?: {
+    column: 'created_at' | 'date'
+    ascending: boolean
+  }
+}

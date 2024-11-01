@@ -1,6 +1,6 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
-import { IProgram } from '@/types'
+import { IProgram, IProgramsFilter } from '@/types'
 
 export async function fetchPrograms(
   query: string,
@@ -26,6 +26,40 @@ export async function fetchPrograms(
     return error
   } else {
     return data
+  }
+}
+
+//program by filter
+export async function fetchProgramsFilter(filter: IProgramsFilter) {
+  const { query, column, date, isPagination, limit, orderBy, page } = filter
+  const supabase = createClient()
+  const allSelect = column ? column : '*'
+
+  let request = supabase
+    .from('programs')
+    .select(allSelect, { count: 'exact' })
+    .ilike('title', `%${query}%`)
+
+  if (orderBy) {
+    request = request.order(orderBy.column, { ascending: orderBy.ascending })
+  } else {
+    request = request.order('created_at', { ascending: false })
+  }
+
+  if (date) {
+    request = request.eq('date', date)
+  }
+
+  if (isPagination && limit && page) {
+    request = request.range((page - 1) * limit, page * limit - 1)
+  }
+
+  const { data: programs, error, count } = await request
+
+  if (error) {
+    return null
+  } else {
+    return { programs, count }
   }
 }
 

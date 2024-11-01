@@ -1,19 +1,58 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createClient } from '@/utils/supabase/server'
-import { OtherEventsSection } from '@/components'
-import { DataNotFound } from '@/components'
+import { OtherEventsSection, DataNotFound } from '@/components'
 import { IEvent, IProgram } from '@/types'
 import { ListShedule } from '@/modules/user'
-import { fetchEvents } from '@/api'
+import { fetchEvents, fetchProgramsFilter } from '@/api'
+import { Metadata } from 'next'
 
-export default async function Page() {
-  const supabase = createClient()
+export const metadata: Metadata = {
+  title: 'Agenda',
+  description:
+    'Descubre la agenda del III Congreso Internacional sobre Amazonía Peruana 2024',
+}
+interface Props {
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default async function Page(props: Props) {
+  const { searchParams } = props
+  const { program } = searchParams as {
+    program: string
+  }
+
   let otherEvents: IEvent[] = []
   let eventSpeakers: { event: IEvent[]; count: number } = {
     event: [],
     count: 0,
   }
+  let programs: { programs: IProgram[]; count: number } = {
+    programs: [],
+    count: 0,
+  }
 
+  // Get programs list
+  try {
+    const data = await fetchProgramsFilter({
+      query: '',
+      orderBy: {
+        column: 'date',
+        ascending: true,
+      },
+    })
+
+    if (data) {
+      programs = {
+        programs: data.programs as unknown as IProgram[],
+        count: Number(data.count),
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error)
+  }
+
+  // Get other events
   try {
     const data = await fetchEvents({
       page: 1,
@@ -28,11 +67,15 @@ export default async function Page() {
     console.error('Error fetching events:', error)
   }
 
+  // Get event speakers
   try {
     const data = await fetchEvents({
-      page: 1,
-      limit: 10,
       isSumary: 'true',
+      programId: Number(program) || Number(programs.programs[0]?.id),
+      orderBy: {
+        column: 'timeStart',
+        ascending: true,
+      },
     })
 
     if (data) {
@@ -42,25 +85,20 @@ export default async function Page() {
     console.error('Error fetching events:', error)
   }
 
-  const { data: programs } = (await supabase
-    .from('programs')
-    .select()
-    .eq('isActived', true)) as { data: IProgram[] }
-
   return (
     <>
-      <section className="container">
-        {programs !== undefined && programs?.length > 0 ? (
-          <>
+      <main className="w-full bg-gray-50">
+        <section className="container ">
+          {programs?.programs && programs?.programs?.length > 0 ? (
             <ListShedule
-              programs={programs}
+              programs={programs.programs}
               events={eventSpeakers.event}
             />
-          </>
-        ) : (
-          <DataNotFound />
-        )}
-      </section>
+          ) : (
+            <DataNotFound />
+          )}
+        </section>
+      </main>
       <OtherEventsSection events={otherEvents} />
     </>
   )

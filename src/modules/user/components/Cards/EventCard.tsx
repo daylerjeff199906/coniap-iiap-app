@@ -1,3 +1,4 @@
+'use client'
 import { IEvent } from '@/types'
 import { formatDateLarge } from '@/utils/functions'
 import { Divider, Image } from '@nextui-org/react'
@@ -7,6 +8,7 @@ import {
   IconArrowNarrowRight,
 } from '@tabler/icons-react'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface EventCardProps {
   variant?: 'gallery' | 'list' | 'agenda'
@@ -14,12 +16,17 @@ interface EventCardProps {
 }
 
 export const EventCard = (props: EventCardProps) => {
+  const [isHover, setIsHover] = useState(false)
   const { variant = 'list', data } = props
 
   return (
     <>
       {variant === 'list' && (
-        <main className="grid grid-cols-1 sm:grid-cols-6  bg-transparent hover:cursor-pointer rounded-md gap-4 sm:gap-6 items-center ">
+        <main
+          className="grid grid-cols-1 sm:grid-cols-6  bg-transparent hover:cursor-pointer rounded-md gap-4 sm:gap-6 items-center "
+          onMouseEnter={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+        >
           <section className="col-span-1 sm:col-span-2">
             <Image
               src={data.banner || '/banner_coniap_simple.webp'}
@@ -34,7 +41,9 @@ export const EventCard = (props: EventCardProps) => {
             <header>
               <Link
                 href={`/eventos/${data.id}`}
-                className="font-bold text-2xl uppercase hover:underline"
+                className={`text-lg sm:text-2xl uppercase font-bold  ${
+                  isHover ? 'text-primary-700 underline' : 'text-black'
+                }`}
               >
                 {data.name}
               </Link>
@@ -61,13 +70,14 @@ export const EventCard = (props: EventCardProps) => {
               <div className="flex justify-center sm:justify-end w-full bg-primary-700 sm:bg-transparent text-white rounded-md sm:text-gray-500 p-2 sm:px-4">
                 <Link
                   href={`/eventos/${data.id}`}
-                  className="text-sm flex gap-2 "
+                  className={`flex gap-2 items-center ${
+                    isHover ? 'text-primary-700' : 'sm:text-gray-500'
+                  }`}
                 >
                   Ver más
                   <IconArrowNarrowRight
                     size={24}
                     stroke={1.5}
-                    className="sm:text-gray-500"
                   />
                 </Link>
               </div>

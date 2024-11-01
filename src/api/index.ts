@@ -26,6 +26,7 @@ import {
   updateProgram,
   updateFieldProgram,
   fetchProgram,
+  fetchProgramsFilter,
 } from './fetchPrograms'
 
 import {
@@ -91,6 +92,7 @@ export {
   fetchPersonByEmail,
   //Programs crud
   fetchProgram,
+  fetchProgramsFilter,
   fetchPrograms,
   createProgram,
   updateProgram,
