@@ -1,7 +1,7 @@
 'use client'
 import ReactMarkdown from 'react-markdown'
 import { IEvent } from '@/types'
-import { Avatar, Image } from '@nextui-org/react'
+import { Avatar, Image, User } from '@nextui-org/react'
 import {
   IconCalendarClock,
   IconArrowNarrowLeft,
@@ -41,20 +41,30 @@ export const DetailsEvent = (props: IProps) => {
       </section>
       <header className="flex flex-col gap-1">
         <h4 className="text-sm text-gray-500">Detalles del evento</h4>
-        <h1 className="text-2xl font-bold sm:text-4xl lg:text-[40px]">
-          {event?.name}
-        </h1>
+        <section className="flex flex-col gap-3 w-full">
+          <h1 className="text-2xl font-bold sm:text-4xl lg:text-[40px]">
+            {event?.name}
+          </h1>
+          {event?.summary && (
+            <p className="text-gray-500">
+              Línea temática:{' '}
+              <span className="font-semibold text-gray-800">
+                {event?.summary?.topic?.name}
+              </span>
+            </p>
+          )}
+        </section>
       </header>
       <section className="flex flex-col sm:flex-row gap-6">
         <main className="w-full flex flex-col gap-6">
-          <Zoom>
+          <Zoom canSwipeToUnzoom>
             <Image
               src={event?.banner || '/banner_coniap_simple.webp'}
               alt={event?.name}
               width={800}
               height={600}
               removeWrapper
-              className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28 min-w-full"
+              className="rounded-md w-full h-72 max-h-72  sm:h-full sm:max-h-full object-cover bg-gray-300 sm:min-h-28 min-w-full"
             />
           </Zoom>
           <IconsShared />
@@ -93,22 +103,27 @@ export const DetailsEvent = (props: IProps) => {
           {event && event?.summary && event?.summary?.person && (
             <section className="space-y-6 w-full col-span-1 sm:col-span-8">
               <h1 className="text-2xl font-bold">Ponente</h1>
-              <div className="flex items-center gap-4">
-                <Avatar
-                  src={event?.summary?.person?.image || logo_iiap.src}
-                  className="w-24 h-24"
+              <div className="flex items-center gap-4 max-w-xl">
+                <User
+                  name={`${event?.summary?.person?.name} ${event?.summary?.person?.surName}`}
+                  description={event?.summary?.person?.institution}
+                  avatarProps={{
+                    src: event?.summary?.person?.image,
+                    color: 'secondary',
+                    className: 'w-24 h-24 min-w-24 min-h-24',
+                  }}
+                  classNames={{
+                    name: 'text-xl sm:text-2xl font-bold',
+                  }}
                 />
-                <div>
-                  <div>
-                    <h4 className="text-gray-400 text-sm">
-                      {event?.summary?.person?.institution}
-                    </h4>
-                  </div>
-                  <h2 className="text-lg font-semibold">
-                    {event?.summary?.person?.name}
-                  </h2>
-                  <h3 className="">{event?.summary?.person?.surName}</h3>
-                </div>
+              </div>
+            </section>
+          )}
+          {event && event?.summary && event?.summary?.person && (
+            <section className="space-y-2 w-full col-span-1 sm:col-span-8">
+              <h1 className="text-lg font-bold">Acerca de mí</h1>
+              <div className="flex items-center gap-4">
+                <p>{event?.summary?.person?.presentation}</p>
               </div>
             </section>
           )}
