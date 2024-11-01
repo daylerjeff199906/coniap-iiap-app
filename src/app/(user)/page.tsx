@@ -22,7 +22,6 @@ export default async function Page() {
 
   try {
     const data = await fetchEvents({
-      query: '',
       page: 1,
       limit: 10,
       isSumary: 'false',
@@ -37,7 +36,6 @@ export default async function Page() {
 
   try {
     const data = await fetchEvents({
-      query: '',
       page: 1,
       limit: 10,
       isSumary: 'true',

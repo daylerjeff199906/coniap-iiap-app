@@ -4,26 +4,48 @@ import { OtherEventsSection } from '@/components'
 import { DataNotFound } from '@/components'
 import { IEvent, IProgram } from '@/types'
 import { ListShedule } from '@/modules/user'
+import { fetchEvents } from '@/api'
 
 export default async function Page() {
   const supabase = createClient()
+  let otherEvents: IEvent[] = []
+  let eventSpeakers: { event: IEvent[]; count: number } = {
+    event: [],
+    count: 0,
+  }
+
+  try {
+    const data = await fetchEvents({
+      page: 1,
+      limit: 10,
+      isSumary: 'false',
+    })
+
+    if (data) {
+      otherEvents = data.event
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error)
+  }
+
+  try {
+    const data = await fetchEvents({
+      page: 1,
+      limit: 10,
+      isSumary: 'true',
+    })
+
+    if (data) {
+      eventSpeakers = { event: data.event, count: Number(data.count) }
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error)
+  }
 
   const { data: programs } = (await supabase
     .from('programs')
     .select()
     .eq('isActived', true)) as { data: IProgram[] }
-
-  const { data: eventSpeakers } = (await supabase
-    .from('events')
-    .select('*, persons(*)')
-    .eq('isActived', true)
-    .not('program_id', 'is', null)) as { data: IEvent[] }
-
-  const { data: otherEvents } = (await supabase
-    .from('events')
-    .select()
-    .eq('isActived', true)
-    .is('sala', null)) as { data: IEvent[] }
 
   return (
     <>
@@ -32,7 +54,7 @@ export default async function Page() {
           <>
             <ListShedule
               programs={programs}
-              events={eventSpeakers}
+              events={eventSpeakers.event}
             />
           </>
         ) : (
