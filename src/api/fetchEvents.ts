@@ -1,24 +1,55 @@
 'use server'
-import { IEvent, IEventRes } from '@/types'
+import { IEventFilter, IEventRes } from '@/types'
 import { createClient } from '@/utils/supabase/server'
 
-interface IProps {
-  query?: string
-  date?: string
-}
-
-export async function fetchEvents(props: IProps) {
-  const { query, date } = props
+export async function fetchEvents(props: IEventFilter) {
+  const { query, date, isSumary, topic, isPagination, limit, page, programId } =
+    props
   const supabase = createClient()
 
-  const { data: event } = await supabase
+  let queryBuilder = supabase
     .from('events')
-    .select('*,summary:summary_id(*, person:person_id(*))')
+    .select('*,summary:summary_id(*, person:person_id(*))', { count: 'exact' })
     .eq('isActived', true)
-    .ilike('name', `%${query}%`)
-    .order('created_at', { ascending: false })
 
-  return event
+  if (query) {
+    queryBuilder = queryBuilder.ilike('name', `%${query}%`)
+  }
+
+  if (date) {
+    queryBuilder = queryBuilder.eq('date', date)
+  }
+
+  if (topic) {
+    queryBuilder = queryBuilder.eq('topic', topic)
+  }
+
+  if (programId) {
+    queryBuilder = queryBuilder.eq('program_id', programId)
+  }
+
+  if (isSumary) {
+    if (isSumary === 'true') {
+      queryBuilder = queryBuilder.not('summary_id', 'is', null)
+    } else if (isSumary === 'false') {
+      queryBuilder = queryBuilder.is('summary_id', null)
+    }
+  }
+
+  queryBuilder = queryBuilder.order('created_at', { ascending: false })
+
+  if (isPagination && limit && page) {
+    queryBuilder = queryBuilder.range((page - 1) * limit, page * limit - 1)
+  }
+
+  const { data: event, error, count } = await queryBuilder
+
+  if (error) {
+    console.error('error', error)
+    return null
+  } else {
+    return { event, count }
+  }
 }
 
 export async function fetchAllEvents(query: string, column?: string) {
@@ -32,7 +63,6 @@ export async function fetchAllEvents(query: string, column?: string) {
 
   return event
 }
-// export async function fetchEventsByProgram(query: string, programsId: string) {}
 
 export async function fetchEventById(id: string) {
   const supabase = createClient()
