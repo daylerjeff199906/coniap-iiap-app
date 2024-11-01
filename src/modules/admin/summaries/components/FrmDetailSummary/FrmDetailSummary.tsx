@@ -24,11 +24,10 @@ export const FrmDetailSummary = (props: IProps) => {
     defaultValues: summary,
   })
 
-  console.log('summary', summary)
+  const isDirty = methods.formState.isDirty
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, isNotification, ...rest } = data
-    console.log('data', data,'person', person)
 
     const newData: ISummary = { ...rest } as ISummary
 
@@ -81,6 +80,8 @@ export const FrmDetailSummary = (props: IProps) => {
                   radius="sm"
                   type="submit"
                   className="button-dark"
+                  disabled={!isDirty || loading}
+                  isLoading={loading}
                 >
                   Guardar cambios
                 </Button>

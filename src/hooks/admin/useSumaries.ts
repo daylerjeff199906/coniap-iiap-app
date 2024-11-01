@@ -50,16 +50,18 @@ export function useSummaries() {
       toast.error(`Error al actualizar el resumen ${res.message}`)
     } else {
       toast.success('Tema de resumen actualizado con éxito')
-      const resMsg = await sendTemplateMessage(16, {
-        email: String(message?.email),
-        name: String(message?.name),
-        surname: String(message?.surname),
-        subject: String(data?.title),
-      })
-      if (resMsg) {
-        toast.success(
-          'Se enviará un mensaje al correo del ponente, con los detalles de la revisión'
-        )
+      if (data.isNotification) {
+        const resMsg = await sendTemplateMessage(16, {
+          email: String(message?.email),
+          name: String(message?.name),
+          surname: String(message?.surname),
+          subject: String(data?.title),
+        })
+        if (resMsg) {
+          toast.success(
+            'Se enviará un mensaje al correo del ponente, con los detalles de la revisión'
+          )
+        }
       }
     }
     setLoading(false)
