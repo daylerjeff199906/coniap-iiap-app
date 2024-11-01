@@ -45,7 +45,7 @@ const columns: Array<IColumns> = [
 ]
 export const ListEventsSection = () => {
   const { getEvents, events, getEventById, event, loading } = useEvents()
-  const { editField } = useFiles()
+  // const { editField } = useFiles()
   const [query, setQuery] = useState('')
 
   const searchParams = useSearchParams()

@@ -14,6 +14,7 @@ export interface ISummary {
   file: string
   title: string
   authors: string[] | null
+  isNotification?: boolean
 }
 
 export interface ISummaryFilter {
