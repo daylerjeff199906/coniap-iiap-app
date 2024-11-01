@@ -106,6 +106,22 @@ export const sendTemplateMessage = async (
   message: IMessage
 ) => {
   try {
+    const { email, name, surname, subject } = message
+
+    // Actualiza los atributos del contacto con los datos proporcionados
+    const updateContact = {
+      email: email,
+      attributes: {
+        NOMBRE: name, // Utiliza el nombre proporcionado
+        APELLIDOS: surname, // Utiliza el apellido proporcionado
+        SUBJECT: subject, // Utiliza el asunto proporcionado
+      },
+    }
+
+    // Actualiza el contacto en Brevo
+    await apiContact.updateContact(email, updateContact)
+
+    // Envía el mensaje
     const sendSmtpEmail = {
       to: [{ email: message.email }],
       templateId: templateId,
@@ -121,6 +137,5 @@ export const sendTemplateMessage = async (
     return true
   } catch (error: any) {
     console.error('Error sending email:', error)
-    return false
   }
 }

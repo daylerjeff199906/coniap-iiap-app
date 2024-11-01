@@ -24,17 +24,20 @@ export const FrmDetailSummary = (props: IProps) => {
     defaultValues: summary,
   })
 
+  console.log('summary', summary)
+
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
     const { file, person, topic, isNotification, ...rest } = data
+    console.log('data', data,'person', person)
 
     const newData: ISummary = { ...rest } as ISummary
 
     if (summary.id) {
       const resApi = await updateDataSummary(summary.id, newData, {
-        email: person.email,
-        name: person.name,
-        surname: person.surName,
-        subject: newData.title,
+        email: String(summary.person?.email),
+        name: String(summary.person?.name),
+        surname: String(summary.person?.surName),
+        subject: newData?.title,
       })
       if (!resApi.message) {
         handleCancel()

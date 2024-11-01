@@ -45,7 +45,6 @@ export function useSummaries() {
     }
   ) => {
     setLoading(true)
-    const { person } = data
     const res: IRes = (await updateSummary(id, data)) as IRes
     if (res.message) {
       toast.error(`Error al actualizar el resumen ${res.message}`)
@@ -53,8 +52,8 @@ export function useSummaries() {
       toast.success('Tema de resumen actualizado con éxito')
       const resMsg = await sendTemplateMessage(16, {
         email: String(message?.email),
-        name: String(person?.name),
-        surname: String(person?.surName),
+        name: String(message?.name),
+        surname: String(message?.surname),
         subject: String(data?.title),
       })
       if (resMsg) {
