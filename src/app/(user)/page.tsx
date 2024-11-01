@@ -29,7 +29,7 @@ export default async function Page() {
       limit: 10,
       orderBy: {
         column: 'date',
-        ascending: false,
+        ascending: true,
       },
     })
 

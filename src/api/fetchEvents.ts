@@ -18,9 +18,12 @@ export async function fetchEvents(props: IEventFilter) {
 
   let queryBuilder = supabase
     .from('events')
-    .select('*,summary:summary_id(*, topic:topic_id(*), person:person_id(*))', {
-      count: 'exact',
-    })
+    .select(
+      '*,summary:summary_id(*, topic:topic_id(*), person:person_id(*)), program:program_id(*)',
+      {
+        count: 'exact',
+      }
+    )
     .eq('isActived', true)
 
   if (orderBy) {

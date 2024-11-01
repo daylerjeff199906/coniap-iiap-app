@@ -63,7 +63,7 @@ export const AgendaSection = (props: IProps) => {
                 aria-label="Options"
                 variant="underlined"
                 classNames={{
-                  panel: 'border-1',
+                  panel: 'border-1 border-gray-200 rounded-md p-4',
                   tabContent: 'group-data-[selected=true]:font-bold text-xl',
                   tab: 'mb-2',
                 }}
@@ -74,7 +74,7 @@ export const AgendaSection = (props: IProps) => {
                     key={programIndex}
                     title={formatDateToDDMMM(program.date as string)}
                   >
-                    <div className="sm:p-4 lg:p-6">
+                    <div className="sm:p-4 lg:p-6 rounded-md">
                       {events
                         ?.filter(
                           (event) =>
