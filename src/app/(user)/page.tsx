@@ -24,8 +24,13 @@ export default async function Page() {
   // Fetch data programs from API
   try {
     const data = await fetchProgramsFilter({
+      query: '',
       page: 1,
       limit: 10,
+      orderBy: {
+        column: 'date',
+        ascending: false,
+      },
     })
 
     if (data) {

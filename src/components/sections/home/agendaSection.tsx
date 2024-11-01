@@ -8,15 +8,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 interface IProps {
-  programs: IProgram[] | undefined
-  events: IEvent[] | undefined
+  programs: IProgram[]
+  events: IEvent[]
 }
 
 export const AgendaSection = (props: IProps) => {
   const { programs, events } = props
-  console.log('programs:', programs)
-  console.log('events:', events)
-  
+  console.log('programs', programs)
+
   return (
     <>
       <section className=" bg-white">
