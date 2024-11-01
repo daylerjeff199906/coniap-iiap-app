@@ -4,6 +4,7 @@ import * as Brevo from '@getbrevo/brevo'
 // const apiInstance = new brevo.TransactionalEmailsApi()
 const apiContact = new Brevo.ContactsApi()
 const apiCampaign = new Brevo.EmailCampaignsApi()
+const apiTransactional = new Brevo.TransactionalEmailsApi()
 
 apiContact.setApiKey(
   Brevo.ContactsApiApiKeys.apiKey,
@@ -15,10 +16,22 @@ apiCampaign.setApiKey(
   process.env.BREVO_API_KEY as string
 )
 
+apiTransactional.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY as string
+)
+
 interface IContact {
   email: string
   name: string
   surname: string
+}
+
+interface IMessage {
+  email: string
+  name: string
+  surname: string
+  subject: string
 }
 
 export const addContactToList = async (props: IContact, listId: number) => {
@@ -85,5 +98,27 @@ export const updateCampaignContacts = async (
     console.log('Campaign updated successfully!')
   } catch (error: any) {
     console.error('Error updating campaign:', error)
+  }
+}
+
+export const sendTemplateMessage = async (
+  templateId: number,
+  message: IMessage
+) => {
+  try {
+    const sendSmtpEmail = {
+      to: [{ email: message.email }],
+      templateId: templateId,
+      params: {
+        NAME: message.name,
+        SURNAME: message.surname,
+        SUBJECT: message.subject,
+      },
+    }
+
+    const response = await apiTransactional.sendTransacEmail(sendSmtpEmail)
+    console.log('Email sent successfully:', response)
+  } catch (error: any) {
+    console.error('Error sending email:', error)
   }
 }

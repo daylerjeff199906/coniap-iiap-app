@@ -17,7 +17,7 @@ export const InfoDataSummary = (props: IProps) => {
   const personas: IPerson = watch('person') as IPerson
   const tematica: ITopic = watch('topic') as ITopic
   const authors: string[] = watch('authors') as string[]
-  const statusApproved = defaultValues?.isExternal
+  const statusApproved = defaultValues?.isApproved
   const isExternal = watch('isExternal')
 
   return (

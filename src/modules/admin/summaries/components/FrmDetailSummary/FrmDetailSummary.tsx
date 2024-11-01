@@ -62,7 +62,7 @@ export const FrmDetailSummary = (props: IProps) => {
                   Regresar
                 </Button>
               </section>
-              <InfoDataSummary />
+              <InfoDataSummary defaultValues={summary} />
               <ActionsSummary />
               <footer className="flex gap-2 justify-start">
                 <Button

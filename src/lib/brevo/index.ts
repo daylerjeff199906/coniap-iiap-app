@@ -1,3 +1,7 @@
-import { addContactToList } from './brevo'
+import {
+  addContactToList,
+  sendTemplateMessage,
+  updateCampaignContacts,
+} from './brevo'
 
-export { addContactToList }
+export { addContactToList, sendTemplateMessage, updateCampaignContacts }
