@@ -9,6 +9,7 @@ import { PreviewDoc } from './PreviewDoc'
 import { ActionsSummary } from './ActionsSummary'
 import { Button } from '@nextui-org/react'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
+import { sendTemplateMessage } from '@/lib'
 
 interface IProps {
   summary: ISummary
@@ -28,7 +29,15 @@ export const FrmDetailSummary = (props: IProps) => {
     const newData: ISummary = { ...rest } as ISummary
 
     if (summary.id) {
-      await updateDataSummary(summary.id, newData)
+      const resApi = await updateDataSummary(summary.id, newData)
+      if (!resApi.message && isNotification && !data.isApproved) {
+        await sendTemplateMessage(1, {
+          email: String(person?.email),
+          name: String(person?.name),
+          surname: String(person?.surName),
+          subject: String(data?.title),
+        })
+      }
       handleCancel()
     }
   }
