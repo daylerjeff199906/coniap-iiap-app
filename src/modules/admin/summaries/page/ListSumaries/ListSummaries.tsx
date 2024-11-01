@@ -10,6 +10,7 @@ import { formatDate } from '@/utils/functions'
 import { usePathname, useRouter } from 'next/navigation'
 import { useFilterFromUrl } from '@/modules/core'
 import { FiltersSection } from './FiltersSection'
+import { useDebounce } from '@/hooks/core'
 
 const columns: Array<IColumns> = [
   {
@@ -69,6 +70,8 @@ export const ListSummaries = () => {
   const [query, setQuery] = useState<string>('')
   const [idPerson, setIdPerson] = useState<string>('')
 
+  const debounceSearchTerm = useDebounce(query, 200)
+
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
   const aproved = searchParams.get('aproved')
@@ -95,7 +98,7 @@ export const ListSummaries = () => {
       person_id: idPerson !== '' ? idPerson : undefined,
       params: { page: Number(page) || 1, limit: 29 },
     })
-  }, [query, status, aproved, date, topic, isFile, page, idPerson])
+  }, [debounceSearchTerm, status, aproved, date, topic, isFile, page, idPerson])
 
   const rows: IRows[] =
     summaries !== null && summaries?.data?.length > 0

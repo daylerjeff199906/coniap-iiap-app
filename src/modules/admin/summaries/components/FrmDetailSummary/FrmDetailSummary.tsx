@@ -9,6 +9,8 @@ import { PreviewDoc } from './PreviewDoc'
 import { ActionsSummary } from './ActionsSummary'
 import { Button } from '@nextui-org/react'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
+import { sendTemplateMessage } from '@/lib'
+import { toast } from 'react-toastify'
 
 interface IProps {
   summary: ISummary
@@ -22,14 +24,28 @@ export const FrmDetailSummary = (props: IProps) => {
     defaultValues: summary,
   })
 
+  const isDirty = methods.formState.isDirty
+
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    const { file, person, topic, ...rest } = data
+    const { file, person, topic, isNotification, ...rest } = data
 
     const newData: ISummary = { ...rest } as ISummary
 
     if (summary.id) {
-      await updateDataSummary(summary.id, newData)
-      handleCancel()
+      const resApi = await updateDataSummary(
+        summary.id,
+        newData,
+        {
+          email: String(summary.person?.email),
+          name: String(summary.person?.name),
+          surname: String(summary.person?.surName),
+          subject: newData?.title,
+        },
+        isNotification
+      )
+      if (!resApi.message) {
+        handleCancel()
+      }
     }
   }
 
@@ -62,13 +78,15 @@ export const FrmDetailSummary = (props: IProps) => {
                   Regresar
                 </Button>
               </section>
-              <InfoDataSummary />
-              <ActionsSummary />
+              <InfoDataSummary defaultValues={summary} />
+              <ActionsSummary defaultValues={summary} />
               <footer className="flex gap-2 justify-start">
                 <Button
                   radius="sm"
                   type="submit"
                   className="button-dark"
+                  disabled={!isDirty || loading}
+                  isLoading={loading}
                 >
                   Guardar cambios
                 </Button>

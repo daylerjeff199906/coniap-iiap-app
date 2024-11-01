@@ -4,7 +4,12 @@ import { formatDate } from '@/utils/functions'
 import { Avatar, Chip } from '@nextui-org/react'
 import { useFormContext } from 'react-hook-form'
 
-export const InfoDataSummary = () => {
+interface IProps {
+  defaultValues?: ISummary
+}
+
+export const InfoDataSummary = (props: IProps) => {
+  const { defaultValues } = props
   const { watch } = useFormContext<ISummary>()
 
   const title = watch('title')
@@ -12,8 +17,7 @@ export const InfoDataSummary = () => {
   const personas: IPerson = watch('person') as IPerson
   const tematica: ITopic = watch('topic') as ITopic
   const authors: string[] = watch('authors') as string[]
-  // const status = watch('isActived')
-  const statusApproved = watch('isApproved')
+  const statusApproved = defaultValues?.isApproved
   const isExternal = watch('isExternal')
 
   return (
@@ -35,7 +39,7 @@ export const InfoDataSummary = () => {
               radius="sm"
               variant="flat"
             >
-              {statusApproved ? 'Aprobado' : 'Pendiente de aprobación'}
+              {statusApproved ? 'Resumen Aprobado' : 'Pendiente de aprobación'}
             </Chip>
           </div>
         </div>

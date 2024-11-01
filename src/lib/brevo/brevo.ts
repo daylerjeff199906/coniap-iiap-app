@@ -4,6 +4,7 @@ import * as Brevo from '@getbrevo/brevo'
 // const apiInstance = new brevo.TransactionalEmailsApi()
 const apiContact = new Brevo.ContactsApi()
 const apiCampaign = new Brevo.EmailCampaignsApi()
+const apiTransactional = new Brevo.TransactionalEmailsApi()
 
 apiContact.setApiKey(
   Brevo.ContactsApiApiKeys.apiKey,
@@ -15,10 +16,22 @@ apiCampaign.setApiKey(
   process.env.BREVO_API_KEY as string
 )
 
+apiTransactional.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY as string
+)
+
 interface IContact {
   email: string
   name: string
   surname: string
+}
+
+interface IMessage {
+  email: string
+  name: string
+  surname: string
+  subject: string
 }
 
 export const addContactToList = async (props: IContact, listId: number) => {
@@ -85,5 +98,44 @@ export const updateCampaignContacts = async (
     console.log('Campaign updated successfully!')
   } catch (error: any) {
     console.error('Error updating campaign:', error)
+  }
+}
+
+export const sendTemplateMessage = async (
+  templateId: number,
+  message: IMessage
+) => {
+  try {
+    const { email, name, surname, subject } = message
+
+    // Actualiza los atributos del contacto con los datos proporcionados
+    const updateContact = {
+      email: email,
+      attributes: {
+        NOMBRE: name, // Utiliza el nombre proporcionado
+        APELLIDOS: surname, // Utiliza el apellido proporcionado
+        SUBJECT: subject, // Utiliza el asunto proporcionado
+      },
+    }
+
+    // Actualiza el contacto en Brevo
+    await apiContact.updateContact(email, updateContact)
+
+    // Envía el mensaje
+    const sendSmtpEmail = {
+      to: [{ email: message.email }],
+      templateId: templateId,
+      params: {
+        NOMBRE: message.name,
+        APELLIDOS: message.surname,
+        SUBJECT: message.subject,
+      },
+    }
+
+    const response = await apiTransactional.sendTransacEmail(sendSmtpEmail)
+    console.log('Email sent successfully:', response)
+    return true
+  } catch (error: any) {
+    console.error('Error sending email:', error)
   }
 }
