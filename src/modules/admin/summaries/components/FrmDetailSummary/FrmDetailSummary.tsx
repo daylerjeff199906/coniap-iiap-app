@@ -32,12 +32,17 @@ export const FrmDetailSummary = (props: IProps) => {
     const newData: ISummary = { ...rest } as ISummary
 
     if (summary.id) {
-      const resApi = await updateDataSummary(summary.id, newData, {
-        email: String(summary.person?.email),
-        name: String(summary.person?.name),
-        surname: String(summary.person?.surName),
-        subject: newData?.title,
-      })
+      const resApi = await updateDataSummary(
+        summary.id,
+        newData,
+        {
+          email: String(summary.person?.email),
+          name: String(summary.person?.name),
+          surname: String(summary.person?.surName),
+          subject: newData?.title,
+        },
+        isNotification
+      )
       if (!resApi.message) {
         handleCancel()
       }
