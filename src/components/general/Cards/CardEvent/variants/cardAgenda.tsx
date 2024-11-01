@@ -110,7 +110,8 @@ export const CardAgendaEvent = (props: IProps) => {
           </div>
         </div>
         <Link
-          href={`/agenda/${event?.id}`}
+          href={`/eventos/${event?.id}`}
+          target='_blank'
           className="flex items-center gap-2 px-4 text-xs sm:text-sm"
         >
           <p className="font-medium text-base">Leer más</p>
