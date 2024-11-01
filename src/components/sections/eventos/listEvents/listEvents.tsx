@@ -1,38 +1,75 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { Image, Input } from '@nextui-org/react'
+import {
+  Image,
+  Input,
+  Pagination,
+  Select,
+  SelectItem,
+  Selection,
+} from '@nextui-org/react'
 import { IconSearch } from '@tabler/icons-react'
 
-import { useEvents } from '@/hooks/client'
-import { CardEvent, LoadingPages } from '@/components'
 import { EventCard } from '@/modules/user'
+import { IEvent } from '@/types'
+import { useFilterFromUrl } from '@/modules/core'
+import { useDebounce } from '@/hooks/core'
 
-export const ListEventsPage = () => {
+interface IEventsPage {
+  events: { event: IEvent[]; count: number }
+}
+
+const optionsTypesEvents = [
+  { value: 'all', label: 'Todos los eventos' },
+  { value: 'true', label: 'Ponencias' },
+  { value: 'false', label: 'Foros y otros' },
+]
+
+export const ListEventsPage = (props: IEventsPage) => {
+  const { events } = props
   const [query, setQuery] = useState<string>('')
-  const { getEventsActive, events, loading } = useEvents()
-  let typingTimer: ReturnType<typeof setTimeout>
+  const { updateFilters, getParams } = useFilterFromUrl()
+
+  const searchDefault = getParams('search', '')
+  const searchType = getParams('type', 'all')
+  const currentPage = getParams('page', '1')
+  const debouncedQuery = useDebounce(query, 500)
 
   useEffect(() => {
-    // Esta función se ejecutará cuando el usuario deje de escribir durante 300ms
-    const search = () => {
-      getEventsActive(query, '')
+    updateFilters({ search: debouncedQuery })
+  }, [debouncedQuery])
+
+  const handleSelectType = (key: Selection) => {
+    const value = Object.values(key)[0]
+    if (value === 'all') {
+      updateFilters({ type: '' })
+    } else {
+      updateFilters({ type: value })
     }
-
-    clearTimeout(typingTimer)
-    typingTimer = setTimeout(search, 300)
-
-    // Limpia el temporizador en cada cambio de query
-    return () => clearTimeout(typingTimer)
-  }, [query])
+  }
 
   return (
     <>
       <article className="section-home grid grid-cols-1 gap-4">
         <section className="flex sm:justify-between">
-          <div className='w-full hidden sm:flex'></div>
+          <div className="w-full hidden sm:flex">
+            <Select
+              aria-label="Filtrar por tipo de evento"
+              selectedKeys={[searchType]}
+              onSelectionChange={handleSelectType}
+              variant="bordered"
+              radius="sm"
+              className="w-full max-w-xs"
+            >
+              {optionsTypesEvents.map((option) => (
+                <SelectItem key={option.value}>{option.label}</SelectItem>
+              ))}
+            </Select>
+          </div>
           <div className="w-full sm:max-w-xl sm:min-w-80">
             <Input
+              defaultValue={searchDefault}
               aria-label="Buscar eventos"
               placeholder="Buscar eventos ..."
               variant="bordered"
@@ -45,10 +82,10 @@ export const ListEventsPage = () => {
           </div>
         </section>
         <section>
-          {events && events.length > 0 ? (
+          {events && events.event.length > 0 ? (
             <>
               <div className="w-ful grid grid-cols-1 gap-8 lg:p-6">
-                {events.map((filteredEvent, eventIndex) => (
+                {events.event.map((filteredEvent, eventIndex) => (
                   <EventCard
                     key={eventIndex}
                     data={filteredEvent}
@@ -78,8 +115,17 @@ export const ListEventsPage = () => {
             </>
           )}
         </section>
+        {Math.ceil(events.count / 10) > 1 && (
+          <footer>
+            <Pagination
+              page={parseInt(currentPage)}
+              onChange={(page) => updateFilters({ page: page.toString() })}
+              showControls
+              total={Math.ceil(events.count / 10)}
+            />
+          </footer>
+        )}
       </article>
-      <LoadingPages isOpen={loading} />
     </>
   )
 }

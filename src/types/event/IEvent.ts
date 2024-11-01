@@ -24,3 +24,14 @@ export interface IEvent {
   summary_name: string
   sala_name: string
 }
+
+export interface IEventFilter {
+  query?: string
+  date?: string
+  isSumary?: string
+  programId?: number
+  topic?: number
+  page?: number
+  limit?: number
+  isPagination?: boolean
+}

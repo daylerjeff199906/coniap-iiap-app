@@ -9,12 +9,44 @@ import {
   InscriptionsSection,
   AgendaSection,
 } from '@/components'
+import { fetchEvents } from '@/api'
 
 import { ITopic, IPerson, ISponsor, IEvent, IProgram } from '@/types'
 import { AvisoSection } from '@/modules/user'
 
 export default async function Page() {
   const supabase = createClient()
+
+  let dataEvents: IEvent[] = []
+  let eventSpeakers: IEvent[] = []
+
+  try {
+    const data = await fetchEvents({
+      page: 1,
+      limit: 10,
+      isSumary: 'false',
+    })
+
+    if (data) {
+      dataEvents = data.event
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error)
+  }
+
+  try {
+    const data = await fetchEvents({
+      page: 1,
+      limit: 10,
+      isSumary: 'true',
+    })
+
+    if (data) {
+      eventSpeakers = data.event
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error)
+  }
 
   const { data: topics } = await supabase
     .from('topics')
@@ -32,22 +64,10 @@ export default async function Page() {
     .select()
     .eq('isActived', true)
 
-  const { data: event } = await supabase
-    .from('events')
-    .select()
-    .eq('isActived', true)
-    .is('sala', null)
-
   const { data: programs } = (await supabase
     .from('programs')
     .select()
     .eq('isActived', true)) as { data: IProgram[] }
-
-  const { data: eventSpeakers } = (await supabase
-    .from('events')
-    .select('*,summary:summary_id(*, person:person_id(*))')
-    .eq('isActived', true)
-    .not('program_id', 'is', null)) as { data: IEvent[] }
 
   const dataTopics: ITopic[] | undefined = topics?.map((topic: ITopic) => ({
     ...topic,
@@ -65,11 +85,6 @@ export default async function Page() {
       created_at: sponsor?.created_at,
     })
   )
-
-  const dataEvents: IEvent[] | undefined = event?.map((event: IEvent) => ({
-    ...event,
-    date: event?.date,
-  }))
 
   return (
     <main className="h-ful">

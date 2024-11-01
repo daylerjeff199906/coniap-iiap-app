@@ -14,7 +14,7 @@ export const CardGalleryEvent = (props: IProps) => {
   const dateFormatted = formatDateToDDMMM(event.date as string)
   return (
     <Card
-      className="bg-white max-w-sm"
+      className="bg-transparent border-0"
       radius="sm"
       shadow="none"
     >
@@ -27,11 +27,16 @@ export const CardGalleryEvent = (props: IProps) => {
           radius="lg"
         />
       )}
-      <CardBody className="px-0">
-        <h3 className="text-sm sm:text-lg xl:text-xl font-bold">
+      <CardBody className="px-0 flex flex-col gap-2">
+        <Link
+          className="text-sm sm:text-lg xl:text-xl font-bold line-clamp-2 hover:underline hover:cursor-pointer"
+          href={`/eventos/${event.id}`}
+        >
           {event.name}
-        </h3>
-        <p className="text-sm line-clamp-3">Descripción del evento</p>
+        </Link>
+        <p className="text-xs sm:text-sm text-gray-600 line-clamp-3">
+          {event.shortDescription || ''}
+        </p>
       </CardBody>
       <CardFooter className="flex justify-end px-0">
         {/* <Button
