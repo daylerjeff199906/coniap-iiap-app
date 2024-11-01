@@ -35,7 +35,7 @@ export const CardAgendaEvent = (props: IProps) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <section className={`flex flex-row gap-4 items-center p-5 lg:p-6`}>
+      <section className={`flex flex-row gap-4 items-center p-5 lg:m-6`}>
         {showImage && (
           <div className="hidden sm:block w-32 h-32">
             <Image
@@ -49,14 +49,9 @@ export const CardAgendaEvent = (props: IProps) => {
         )}
         <div className="w-full flex flex-col gap-4">
           <div>
-            <Chip
-              radius="full"
-              color="primary"
-              variant="flat"
-              size="sm"
-            >
+            <span className="text-sm text-primary-500 bg-primary-50 rounded-full px-4 py-1">
               {event?.summary?.topic?.name}
-            </Chip>
+            </span>
             <div>
               {event?.sala && (
                 <Chip
