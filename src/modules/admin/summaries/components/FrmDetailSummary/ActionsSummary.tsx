@@ -1,6 +1,6 @@
 'use client'
 import { ISummary } from '@/types'
-import { Switch, cn } from '@nextui-org/react'
+import { Checkbox, Switch, cn } from '@nextui-org/react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 export const ActionsSummary = () => {
@@ -87,6 +87,28 @@ export const ActionsSummary = () => {
             )}
           />
         </section>
+        <div className="w-full border p-4 rounded-lg">
+          <Controller
+            control={control}
+            name="isNotification"
+            render={({ field: { value, onChange } }) => (
+              <Checkbox
+                aria-label="Notificar al autor"
+                name="isNotification"
+                checked={value}
+                onChange={onChange}
+                className="w-full"
+              >
+                <section>
+                  <p className="text-medium">Notificar al autor</p>
+                  <p className="text-tiny text-default-400">
+                    Enviar un correo al autor del resumen
+                  </p>
+                </section>
+              </Checkbox>
+            )}
+          />
+        </div>
       </main>
     </>
   )

@@ -23,7 +23,7 @@ export const FrmDetailSummary = (props: IProps) => {
   })
 
   const handleFormSubmit: SubmitHandler<ISummary> = async (data: ISummary) => {
-    const { file, person, topic, ...rest } = data
+    const { file, person, topic, isNotification, ...rest } = data
 
     const newData: ISummary = { ...rest } as ISummary
 
