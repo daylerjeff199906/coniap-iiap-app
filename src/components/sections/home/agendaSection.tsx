@@ -14,7 +14,6 @@ interface IProps {
 
 export const AgendaSection = (props: IProps) => {
   const { programs, events } = props
-  console.log('events', events)
 
   return (
     <>
