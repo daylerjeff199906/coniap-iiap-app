@@ -24,6 +24,11 @@ const columns: Array<IColumns> = [
     align: 'start',
   },
   {
+    key: 'speaker-type',
+    label: 'T. Persona',
+    align: 'start',
+  },
+  {
     key: 'date',
     label: 'Fecha',
     align: 'start',
@@ -93,7 +98,6 @@ export const ListEventsSection = () => {
         searchValue={query}
         onPageChange={(page) => setPage(page)}
         page={page}
-        count={events?.count || 0}
         rows={
           events?.event
             ? events.event.map((event) => {
@@ -111,6 +115,9 @@ export const ListEventsSection = () => {
                         ' ' +
                         event?.summary?.person?.surName
                       : 'No tiene expositor',
+                  'speaker-type': event?.summary?.person
+                    ? event?.summary?.person?.typePerson
+                    : 'N/A',
                   actions: 'actions',
                 }
               })
