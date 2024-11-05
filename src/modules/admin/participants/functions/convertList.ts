@@ -1,4 +1,4 @@
-import { IPerson, ISummary } from '@/types'
+import { IEvent, IPerson, ISummary } from '@/types'
 import { getTypePerson } from '../../core'
 import { formatDate } from '@/utils/functions'
 
@@ -45,6 +45,31 @@ export function convertListSummaryToExcel(dataList: ISummary[]) {
       estado: summary.isApproved ? 'Activo' : 'Inactivo',
       aprobado: summary.isApproved ? 'Sí' : 'No',
       link: summary.file || 'No tiene archivo',
+    }
+  })
+}
+
+export function convertListEventsToExcel(dataList: IEvent[]) {
+  return dataList?.map((event) => {
+    return {
+      id: String(event.id),
+      'fecha de creacion': formatDate(
+        event.created_at.toString(),
+        'DD/MM/YYYY Hora: HH:mm'
+      ),
+      nombre: String(event.name.toUpperCase()),
+      'linea-tematica':
+        String(event.summary?.topic?.name.toUpperCase()) ||
+        'No tiene temática asignada',
+      fecha: event.date,
+      hora_inicio: event.timeStart,
+      hora_fin: event.timeEnd,
+      persona_nombre: event.summary?.person?.name.toUpperCase(),
+      persona_apellidos: event.summary?.person?.surName.toUpperCase(),
+      sala: event.sala?.name.toUpperCase(),
+      email: event.summary?.person?.email,
+      institucion: event.summary?.person?.institution,
+      estado: event.isActived ? 'Activo' : 'Inactivo',
     }
   })
 }

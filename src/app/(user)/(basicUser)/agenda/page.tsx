@@ -58,6 +58,7 @@ export default async function Page(props: Props) {
       page: 1,
       limit: 10,
       isSumary: 'false',
+      isActived: true,
     })
 
     if (data) {
@@ -71,6 +72,7 @@ export default async function Page(props: Props) {
   try {
     const data = await fetchEvents({
       isSumary: 'true',
+      isActived: true,
       programId: Number(program) || Number(programs.programs[0]?.id),
       orderBy: {
         column: 'timeStart',

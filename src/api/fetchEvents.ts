@@ -13,19 +13,22 @@ export async function fetchEvents(props: IEventFilter) {
     page,
     programId,
     orderBy,
+    isActived,
   } = props
   const supabase = createClient()
 
   let queryBuilder = supabase
     .from('events')
     .select(
-      '*,summary:summary_id(*, topic:topic_id(*), person:person_id(*)), program:program_id(*)',
+      '*,summary:summary_id(*, topic:topic_id(*), person:person_id(*)), program:program_id(*), sala:sala(*)',
       {
         count: 'exact',
       }
     )
-    .eq('isActived', true)
 
+  if (isActived !== undefined) {
+    queryBuilder = queryBuilder.eq('isActived', isActived)
+  }
   if (orderBy) {
     queryBuilder = queryBuilder.order(orderBy.column, {
       ascending: orderBy.ascending,

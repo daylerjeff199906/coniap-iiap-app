@@ -117,6 +117,11 @@ export const menuSideBar: IMenuSideBar[] = [
             title: 'Resúmenes',
             href: '/admin/reportes/summaries',
           },
+          {
+            id: 'events-report',
+            title: 'Eventos',
+            href: '/admin/reportes/events',
+          },
         ],
       },
       {

@@ -46,6 +46,7 @@ export default async function Page() {
       page: 1,
       limit: 10,
       isSumary: 'false',
+      isActived: true,
     })
 
     if (data) {
@@ -61,6 +62,7 @@ export default async function Page() {
       page: 1,
       limit: 10,
       isSumary: 'true',
+      isActived: true,
     })
 
     if (data) {
