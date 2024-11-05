@@ -13,6 +13,7 @@ export async function fetchEvents(props: IEventFilter) {
     page,
     programId,
     orderBy,
+    isActived,
   } = props
   const supabase = createClient()
 
@@ -24,8 +25,10 @@ export async function fetchEvents(props: IEventFilter) {
         count: 'exact',
       }
     )
-    .eq('isActived', true)
 
+  if (isActived !== undefined) {
+    queryBuilder = queryBuilder.eq('isActived', isActived)
+  }
   if (orderBy) {
     queryBuilder = queryBuilder.order(orderBy.column, {
       ascending: orderBy.ascending,

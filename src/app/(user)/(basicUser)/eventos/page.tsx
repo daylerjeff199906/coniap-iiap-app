@@ -28,6 +28,7 @@ export default async function Page(props: Props) {
       isSumary:
         type === 'true' ? 'true' : type === 'false' ? 'false' : undefined,
       date,
+      isActived: true,
       limit: 10,
     })
 

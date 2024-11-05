@@ -86,6 +86,7 @@ export function useEvents() {
     loading,
     createDataEvent,
     getEvents,
+    setEvents,
     events,
     getEventById,
     event,
