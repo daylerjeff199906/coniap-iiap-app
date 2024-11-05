@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from '@/utils/supabase/server'
+import { count } from 'console'
 
 // export async function createTopic(props: ITopic) {
 //   const supabase = createClient()
@@ -66,9 +67,13 @@ export async function fetchPersonStats(): Promise<PersonStatsResult> {
   // Iterar sobre cada tipo de persona
   for (const type of types) {
     // Realizar la consulta para obtener los datos
-    const { data, error } = await supabase
+    const {
+      data,
+      error,
+      count: total_count,
+    } = await supabase
       .from('persons')
-      .select('id, typePerson, isActived') // Asume que tienes los campos 'type' e 'is_active'
+      .select('id, typePerson, isActived', { count: 'exact' }) // Asume que tienes los campos 'type' e 'is_active'
       .eq('typePerson', type)
 
     if (error) {
@@ -80,11 +85,10 @@ export async function fetchPersonStats(): Promise<PersonStatsResult> {
       }
       continue
     }
-
     // Contar los totales y los estados
-    const total = data.length
+    const total = Number(total_count)
     const actived = data.filter((person) => person.isActived).length
-    const inactived = total - actived
+    const inactived = Number(total_count) - actived
 
     // Almacenar los resultados en el objeto
     result[type] = {
