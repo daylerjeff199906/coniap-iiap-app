@@ -2,13 +2,13 @@
 import { Suspense } from 'react'
 import { TableGeneral } from '@/components'
 import { columns } from './columns'
-import { FiltersSection } from './FilterSection'
+import { FiltersSection } from './FiltersSection'
 import { HeaderSection } from '@/modules/core'
 import { formatDate } from '@/utils/functions'
 import { useFilterFromUrl } from '@/modules/core'
 import { useRouter } from 'next/navigation'
 import { useEvents } from '@/hooks/admin'
-import { ExportSummariesExcel } from './ExportSummariesExcel'
+import { ExportEventsExcel } from './ExportEventsExcel'
 
 export const EventsReports = () => {
   const { getEvents, events, loading, setEvents } = useEvents()
@@ -65,7 +65,7 @@ export const EventsReports = () => {
       <HeaderSection
         title="Reportes de resumen"
         subtitle="Realiza un seguimiento de los resumenes subidos en el congreso hasta la fecha"
-        rigthContent={<ExportSummariesExcel dataList={dataExcel} />}
+        rigthContent={<ExportEventsExcel dataList={dataExcel} />}
       />
       <Suspense fallback={<div>Loading...</div>}>
         <TableGeneral
