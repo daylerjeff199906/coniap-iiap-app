@@ -2,16 +2,25 @@
 import { useState } from 'react'
 import { storage } from '@/firebase/firebase'
 
-import { fetchAllEvents, createEvent, fetchEventById, updateEvent } from '@/api'
+import {
+  fetchAllEvents,
+  createEvent,
+  fetchEventById,
+  updateEvent,
+  fetchEvents,
+} from '@/api'
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-import { IEvent, IEventRes, IRes } from '@/types'
+import { IEvent, IEventFilter, IEventRes, IRes } from '@/types'
 import { toast } from 'react-toastify'
 
 export function useEvents() {
   const [loading, setLoading] = useState<boolean>(false)
-  const [events, setEvents] = useState<IEvent[] | null>(null)
+  const [events, setEvents] = useState<{
+    event: IEvent[]
+    count: number
+  } | null>(null)
   const [event, setEvent] = useState<IEvent | null>(null)
 
   const createDataEvent = async (data: IEventRes) => {
@@ -27,9 +36,9 @@ export function useEvents() {
     return res
   }
 
-  const getEvents = async (query: string, column?: string) => {
+  const getEvents = async (query: IEventFilter) => {
     setLoading(true)
-    const data = await fetchAllEvents(query, column)
+    const data = await fetchEvents(query)
       .then((res) => res)
       .catch((err) => err)
     setEvents(data)

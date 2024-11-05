@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
 import { useEvents } from '@/hooks/admin'
+import { useFilterFromUrl } from '@/modules/core'
+import { useDebounce } from '@/hooks/core'
 
 const columns: Array<IColumns> = [
   {
@@ -50,27 +51,33 @@ const columns: Array<IColumns> = [
 ]
 export const ListEventsSection = () => {
   const { getEvents, events, getEventById, event, loading } = useEvents()
-  // const { editField } = useFiles()
+  const { getParams } = useFilterFromUrl()
   const [query, setQuery] = useState('')
+  const [page, setPage] = useState(1)
 
-  const searchParams = useSearchParams()
+  const debouncedQuery = useDebounce(query, 500)
 
-  const isEdit = searchParams.get('edit') !== null
+  const isEdit = getParams('edit', '')
 
   useEffect(() => {
-    getEvents(query)
-  }, [query])
+    getEvents({
+      query: debouncedQuery,
+      isPagination: true,
+      limit: 10,
+      page: page,
+    })
+  }, [debouncedQuery, page])
 
   useEffect(() => {
     const fetchData = async () => {
       if (isEdit) {
         // Agregar verificación para event !== null
-        const id = await searchParams.get('edit')
+        const id = await getParams('id', '')
         if (id) {
           await getEventById(id)
         }
       } else {
-        getEvents('')
+        getEvents({})
       }
     }
 
@@ -84,11 +91,15 @@ export const ListEventsSection = () => {
         columns={columns}
         onSearch={(value) => setQuery(value)}
         searchValue={query}
+        onPageChange={(page) => setPage(page)}
+        page={page}
+        count={events?.count || 0}
         rows={
-          events
-            ? events.map((event) => {
+          events?.event
+            ? events.event.map((event) => {
                 return {
                   key: event.id,
+                  id: event.id,
                   name: event.name,
                   date: event.date,
                   timeStart: event.timeStart,

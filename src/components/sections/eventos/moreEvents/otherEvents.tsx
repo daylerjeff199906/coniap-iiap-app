@@ -23,7 +23,7 @@ export const OtherEventsSection = (props: IProps) => {
               </h2>
             </div>
           </header>
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {events &&
               events.map((event, i) => (
                 <CardEvent
