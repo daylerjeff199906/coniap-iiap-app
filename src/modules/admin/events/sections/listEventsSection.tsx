@@ -68,7 +68,7 @@ export const ListEventsSection = () => {
     getEvents({
       query: debouncedQuery,
       isPagination: true,
-      limit: 10,
+      limit: 30,
       page: page,
     })
   }, [debouncedQuery, page])
@@ -98,6 +98,7 @@ export const ListEventsSection = () => {
         searchValue={query}
         onPageChange={(page) => setPage(page)}
         page={page}
+        count={events?.count}
         rows={
           events?.event
             ? events.event.map((event) => {
