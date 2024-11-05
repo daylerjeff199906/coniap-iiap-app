@@ -20,7 +20,7 @@ export async function fetchEvents(props: IEventFilter) {
   let queryBuilder = supabase
     .from('events')
     .select(
-      '*,summary:summary_id(*, topic:topic_id(*), person:person_id(*)), program:program_id(*)',
+      '*,summary:summary_id(*, topic:topic_id(*), person:person_id(*)), program:program_id(*), sala:sala(*)',
       {
         count: 'exact',
       }
