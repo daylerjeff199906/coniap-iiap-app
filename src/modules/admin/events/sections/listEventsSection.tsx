@@ -4,9 +4,14 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { TableGeneral } from '@/components'
 import { IColumns } from '@/types'
-import { useEvents, useFiles } from '@/hooks/admin'
+import { useEvents } from '@/hooks/admin'
 
 const columns: Array<IColumns> = [
+  {
+    key: 'id',
+    label: 'ID',
+    align: 'start',
+  },
   {
     key: 'name',
     label: 'Nombre',
@@ -71,11 +76,6 @@ export const ListEventsSection = () => {
 
     fetchData()
   }, [event, isEdit])
-
-  // const handleStatusChange = async (key: string, value: boolean) => {
-  //   await editField(key, 'events', 'isActived', value)
-  //   getEvents('')
-  // }
 
   return (
     <>
