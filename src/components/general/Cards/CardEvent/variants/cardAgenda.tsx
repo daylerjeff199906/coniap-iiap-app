@@ -107,6 +107,7 @@ export const CardAgendaEvent = (props: IProps) => {
                 target="_blank"
                 size="sm"
                 showAnchorIcon
+                isDisabled
               >
                 Ir a {event?.sala?.name}
               </NextLink>
