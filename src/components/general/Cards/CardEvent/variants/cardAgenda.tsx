@@ -4,15 +4,12 @@ import { IEvent } from '@/types'
 import {
   Card,
   CardBody,
-  CardFooter,
   Chip,
-  Divider,
   Image,
   User,
   Link as NextLink,
 } from '@nextui-org/react'
 import Link from 'next/link'
-import { IconCalendarEvent, IconClockFilled } from '@tabler/icons-react'
 import { formatDate } from '@/utils/functions'
 
 import logo from '@/assets/images/logo_coniap_simple.webp'
@@ -21,19 +18,6 @@ interface IProps {
   event: IEvent
   showImage?: boolean
 }
-
-// function formatTime
-
-// function parseDateLarge(date: string) {
-//   const dateObj = new Date(date)
-//   const options: Intl.DateTimeFormatOptions = {
-//     weekday: 'long',
-//     year: 'numeric',
-//     month: 'long',
-//     day: 'numeric',
-//   }
-//   return new Intl.DateTimeFormat('es-ES', options).format(dateObj)
-// }
 
 export const CardAgendaEvent = (props: IProps) => {
   const { event, showImage } = props
@@ -45,13 +29,13 @@ export const CardAgendaEvent = (props: IProps) => {
 
   return (
     <Card
-      className={`w-full bg-white transition-shadow duration-300 ease-in-out ${
-        isHover ? 'shadow-sm' : 'shadow-none'
+      className={`w-full bg-transparent transition-shadow duration-300 border-none ease-in-out ${
+        isHover ? 'bg-gray-50 shadow-none' : 'shadow-none'
       }`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <CardBody className={`flex flex-row gap-4 items-center p-4`}>
+      <CardBody className={`flex flex-row gap-4 items-center px-4`}>
         {showImage && (
           <div className="hidden sm:block w-32 h-32">
             <Image
@@ -118,6 +102,7 @@ export const CardAgendaEvent = (props: IProps) => {
               avatarProps={{
                 src: event?.summary?.person?.image || logo.src,
                 alt: event?.summary?.person?.name,
+                className: 'w-10 h-10 min-w-10 min-h-10',
               }}
               name={
                 event?.summary?.person?.name +
@@ -129,28 +114,6 @@ export const CardAgendaEvent = (props: IProps) => {
           </div>
         </div>
       </CardBody>
-      {/* <Divider className="sm:hidden" />
-      <CardFooter className="bg-gray-200 justify-between p-4">
-        <div className="flex items-center gap-6 text-sm sm:text-base">
-          <div className="flex items-center gap-3">
-            <IconCalendarEvent className="w-4 h-4" />
-            <span>{event?.date}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <IconClockFilled className="w-4 h-4" />
-            <span>
-              {formatTime(event?.timeStart)} - {formatTime(event?.timeEnd)}
-            </span>
-          </div>
-        </div>
-        <Link
-          href={`/eventos/${event?.id}`}
-          target="_blank"
-          className="flex items-center gap-2 px-4 text-xs sm:text-sm"
-        >
-          <p className="font-medium text-base">Leer más</p>
-        </Link>
-      </CardFooter> */}
     </Card>
   )
 }
