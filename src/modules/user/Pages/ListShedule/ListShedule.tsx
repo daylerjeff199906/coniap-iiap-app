@@ -105,14 +105,22 @@ export const ListShedule = (props: IProps) => {
           </footer>
         )}
       </section>
-      <main className="flex flex-col gap-4 md:gap-6 relative">
+      <main className="relative border-s border-gray-200 dark:border-gray-700">
         {events?.map((event, index) => (
-          <CardEvent
+          <div
             key={index}
-            event={event}
-            variant="agenda"
-            showImage={false}
-          />
+            className="relative mb-10 ms-0"
+          >
+            {/* Punto de la línea de tiempo */}
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-4 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+
+            {/* Tu componente CardEvent con el contenido de cada evento */}
+            <CardEvent
+              event={event}
+              variant="agenda"
+              showImage={false}
+            />
+          </div>
         ))}
         {events?.length === 0 && <DataNotFound />}
       </main>

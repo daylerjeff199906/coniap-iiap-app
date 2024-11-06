@@ -81,7 +81,7 @@ export const AgendaSection = (props: IProps) => {
                             event.program?.id.toString() ===
                             program.id.toString()
                         ) // Filtrar eventos por program_id
-                        .slice(0, 7)
+                        .slice(0, 4)
                         .map((filteredEvent, eventIndex) => (
                           <CardEvent
                             key={eventIndex}
