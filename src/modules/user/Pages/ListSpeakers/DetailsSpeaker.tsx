@@ -12,6 +12,7 @@ const img_default =
 
 export const DetailsSpeaker = (props: IProps) => {
   const { speaker } = props
+
   return (
     <>
       <main className="container section-home space-y-6">

@@ -26,6 +26,10 @@ export const DetailsEvent = (props: IProps) => {
   const cleanContent =
     event?.customContent && event.customContent.replace(/<[^>]*>?/gm, '')
 
+  const isMagistral =
+    event?.summary?.person &&
+    event?.summary?.person?.typePerson === 'speaker_mg'
+
   return (
     <main className="container section grid grid-cols-1 py-12 gap-6">
       <section>
@@ -102,7 +106,9 @@ export const DetailsEvent = (props: IProps) => {
           </article>
           {event && event?.summary && event?.summary?.person && (
             <section className="space-y-6 w-full col-span-1 sm:col-span-8">
-              <h1 className="text-2xl font-bold">Ponente</h1>
+              <h1 className="text-2xl font-bold">
+                {isMagistral ? 'Ponente magistral' : 'Ponente'}
+              </h1>
               <div className="flex items-center gap-4 max-w-xl">
                 <User
                   name={`${event?.summary?.person?.name} ${event?.summary?.person?.surName}`}
