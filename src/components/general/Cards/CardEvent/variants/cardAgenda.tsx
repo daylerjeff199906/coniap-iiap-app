@@ -10,9 +10,15 @@ import {
   Link as NextLink,
 } from '@nextui-org/react'
 import Link from 'next/link'
-import { formatDate } from '@/utils/functions'
 
 import logo from '@/assets/images/logo_coniap_simple.webp'
+
+function formatDate(date: string, format: string) {
+  return format
+    .replace(/YYYY/g, date.slice(0, 4))
+    .replace(/MM/g, date.slice(5, 7))
+    .replace(/DD/g, date.slice(8, 10))
+}
 
 interface IProps {
   event: IEvent
@@ -30,7 +36,7 @@ export const CardAgendaEvent = (props: IProps) => {
   return (
     <Card
       className={`w-full bg-transparent transition-shadow duration-300 border-none ease-in-out ${
-        isHover ? 'bg-gray-50 shadow-none' : 'shadow-none'
+        isHover ? 'shadow-none' : 'shadow-none'
       }`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
@@ -59,7 +65,9 @@ export const CardAgendaEvent = (props: IProps) => {
                   P. Magistral
                 </Chip>
               )}
-              
+              <span>
+                {event?.date && formatDate(event?.date, 'DD/MM/YYYY')}
+              </span>
               <span>
                 {event?.timeStart} - {event?.timeEnd}
               </span>
@@ -89,7 +97,6 @@ export const CardAgendaEvent = (props: IProps) => {
                 target="_blank"
                 size="sm"
                 showAnchorIcon
-                isDisabled
               >
                 Ir a {event?.sala?.name}
               </NextLink>
@@ -100,7 +107,9 @@ export const CardAgendaEvent = (props: IProps) => {
               avatarProps={{
                 src: event?.summary?.person?.image || logo.src,
                 alt: event?.summary?.person?.name,
-                className: 'w-10 h-10 min-w-10 min-h-10',
+                className: `w-10 h-10 min-w-10 min-h-10 ${
+                  !isMagistral && 'hidden'
+                }`,
               }}
               name={
                 event?.summary?.person?.name +
