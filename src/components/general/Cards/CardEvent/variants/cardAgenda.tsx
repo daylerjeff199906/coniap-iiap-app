@@ -59,9 +59,7 @@ export const CardAgendaEvent = (props: IProps) => {
                   P. Magistral
                 </Chip>
               )}
-              <span>
-                {event?.date && formatDate(event?.date, 'DD/MM/YYYY')}
-              </span>
+              
               <span>
                 {event?.timeStart} - {event?.timeEnd}
               </span>
