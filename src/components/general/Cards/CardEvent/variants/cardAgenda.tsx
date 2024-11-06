@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { IEvent } from '@/types'
 import {
   Card,
@@ -11,31 +12,45 @@ import {
 } from '@nextui-org/react'
 import Link from 'next/link'
 import { IconCalendarEvent, IconClockFilled } from '@tabler/icons-react'
+import { formatDate } from '@/utils/functions'
 
 import logo from '@/assets/images/logo_coniap_simple.webp'
-import { useState } from 'react'
 
 interface IProps {
   event: IEvent
   showImage?: boolean
 }
 
-function formatTime(time: string) {
-  return time.split(':').slice(0, 2).join(':')
-}
+// function formatTime
+
+// function parseDateLarge(date: string) {
+//   const dateObj = new Date(date)
+//   const options: Intl.DateTimeFormatOptions = {
+//     weekday: 'long',
+//     year: 'numeric',
+//     month: 'long',
+//     day: 'numeric',
+//   }
+//   return new Intl.DateTimeFormat('es-ES', options).format(dateObj)
+// }
 
 export const CardAgendaEvent = (props: IProps) => {
   const { event, showImage } = props
   const [isHover, setIsHover] = useState(false)
+
+  const isMagistral =
+    event?.summary?.person &&
+    event?.summary?.person?.typePerson === 'speaker_mg'
+
   return (
     <Card
-      className={`border w-full bg-white transition-shadow duration-300 ease-in-out ${
+      className={`w-full bg-white transition-shadow duration-300 ease-in-out ${
         isHover ? 'shadow-sm' : 'shadow-none'
       }`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <CardBody className={`flex flex-row gap-4 items-center p-5 lg:m-6`}>
+      <CardBody className={`flex flex-row gap-4 items-center p-4`}>
         {showImage && (
           <div className="hidden sm:block w-32 h-32">
             <Image
@@ -48,36 +63,43 @@ export const CardAgendaEvent = (props: IProps) => {
           </div>
         )}
         <div className="w-full flex flex-col gap-4">
-          <div>
-            <span className="text-sm text-primary-500 bg-primary-50 rounded-full px-4 py-1">
-              {event?.summary?.topic?.name}
-            </span>
-            <div>
-              {event?.sala && (
+          <section>
+            <div className="flex flex-row gap-2 text-sm text-gray-400 items-center">
+              {isMagistral && (
                 <Chip
-                  className="bg-black text-white"
+                  color="success"
+                  variant="flat"
                   size="sm"
                 >
-                  {`Sala ${event?.sala}`}
+                  P. Magistral
                 </Chip>
               )}
+              <span>
+                {event?.date && formatDate(event?.date, 'DD/MM/YYYY')}
+              </span>
+              <span>
+                {event?.timeStart} - {event?.timeEnd}
+              </span>
             </div>
-          </div>
-          <div className="flex flex-col gap-2 sm:gap-3">
+          </section>
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-gray-600 font-medium">
+              {event?.summary?.topic?.name}
+            </p>
             <Link
               href={`/eventos/${event?.id}`}
               target="_blank"
-              className={`text-2xl lg:text-3xl font-medium ${
+              className={`text-base lg:text-lg font-bold uppercase ${
                 isHover
-                  ? 'text-primary-500 underline cursor-pointer'
-                  : 'text-gray-700'
+                  ? 'text-primary-800 underline cursor-pointer'
+                  : 'text-gray-900'
               }`}
             >
               {event?.name}
             </Link>
-            <p className="line-clamp-2 text-sm text-gray-500">
+            <h2 className="line-clamp-2 text-sm sm:text-base text-gray-600 dark:text-gray-500">
               {event?.shortDescription}
-            </p>
+            </h2>
           </div>
           <div>
             <User
@@ -95,7 +117,7 @@ export const CardAgendaEvent = (props: IProps) => {
           </div>
         </div>
       </CardBody>
-      <Divider className="sm:hidden" />
+      {/* <Divider className="sm:hidden" />
       <CardFooter className="bg-gray-200 justify-between p-4">
         <div className="flex items-center gap-6 text-sm sm:text-base">
           <div className="flex items-center gap-3">
@@ -111,12 +133,12 @@ export const CardAgendaEvent = (props: IProps) => {
         </div>
         <Link
           href={`/eventos/${event?.id}`}
-          target='_blank'
+          target="_blank"
           className="flex items-center gap-2 px-4 text-xs sm:text-sm"
         >
           <p className="font-medium text-base">Leer más</p>
         </Link>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }
