@@ -9,6 +9,7 @@ import {
   Divider,
   Image,
   User,
+  Link as NextLink,
 } from '@nextui-org/react'
 import Link from 'next/link'
 import { IconCalendarEvent, IconClockFilled } from '@tabler/icons-react'
@@ -100,6 +101,16 @@ export const CardAgendaEvent = (props: IProps) => {
             <h2 className="line-clamp-2 text-sm sm:text-base text-gray-600 dark:text-gray-500">
               {event?.shortDescription}
             </h2>
+            {event?.sala && (
+              <NextLink
+                href={event?.sala?.url || '#'}
+                target="_blank"
+                size="sm"
+                showAnchorIcon
+              >
+                Ir a {event?.sala?.name}
+              </NextLink>
+            )}
           </div>
           <div>
             <User
