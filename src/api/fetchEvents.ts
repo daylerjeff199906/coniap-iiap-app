@@ -14,13 +14,16 @@ export async function fetchEvents(props: IEventFilter) {
     programId,
     orderBy,
     isActived,
+    isMagistral,
   } = props
   const supabase = createClient()
+
+  const allSelect = '*'
 
   let queryBuilder = supabase
     .from('events')
     .select(
-      '*,summary:summary_id(*, topic:topic_id(*), person:person_id(*)), program:program_id(*), sala:sala(*)',
+      `${allSelect}, summary:summary_id(*, person:person_id(*), topic:topic_id(*)), program:program_id(*), sala:sala(*)	`,
       {
         count: 'exact',
       }
@@ -45,10 +48,6 @@ export async function fetchEvents(props: IEventFilter) {
     queryBuilder = queryBuilder.eq('date', date)
   }
 
-  if (topic) {
-    queryBuilder = queryBuilder.eq('topic', topic)
-  }
-
   if (programId) {
     queryBuilder = queryBuilder.eq('program_id', programId)
   }
@@ -68,6 +67,10 @@ export async function fetchEvents(props: IEventFilter) {
   }
 
   const { data: event, error, count } = await queryBuilder
+
+  console.log('event', event)
+  console.log('count', count)
+  console.log('error', error)
 
   if (error) {
     console.error('error', error)

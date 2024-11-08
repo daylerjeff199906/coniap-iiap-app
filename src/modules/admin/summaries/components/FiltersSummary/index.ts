@@ -5,6 +5,7 @@ import { StatusFilter } from './StatusFilter'
 import { TopicsFiltered } from './TopicsFiltered'
 import { PersonFiltered } from './PersonFiltered'
 import { RangeDateFiltered } from './RangeDateFiltered'
+import { PersonMagistral } from './PersonMagistral'
 
 export {
   AprovedFiltered,
@@ -14,4 +15,5 @@ export {
   TopicsFiltered,
   PersonFiltered,
   RangeDateFiltered,
+  PersonMagistral,
 }

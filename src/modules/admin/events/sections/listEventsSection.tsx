@@ -6,6 +6,7 @@ import { IColumns } from '@/types'
 import { useEvents } from '@/hooks/admin'
 import { useFilterFromUrl } from '@/modules/core'
 import { useDebounce } from '@/hooks/core'
+import { FiltersSection } from '../../reports/pages/EventsReports/FiltersSection'
 
 const columns: Array<IColumns> = [
   {
@@ -55,39 +56,35 @@ const columns: Array<IColumns> = [
   },
 ]
 export const ListEventsSection = () => {
-  const { getEvents, events, getEventById, event, loading } = useEvents()
+  const { getEvents, events, loading } = useEvents()
   const { getParams } = useFilterFromUrl()
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
 
   const debouncedQuery = useDebounce(query, 500)
 
-  const isEdit = getParams('edit', '')
+  //filters from url
+  const status = getParams('status', 'all')
+  const file = getParams('file', 'all')
+  const topic = getParams('topic', 'all')
+  const isMagistral = getParams('magistral', 'all')
 
-  useEffect(() => {
+  function refreshData() {
     getEvents({
       query: debouncedQuery,
+      isActived: status === 'all' ? undefined : status === 'true',
+      isSumary: file === 'all' ? undefined : file === 'true' ? 'true' : 'false',
+      topic: topic === 'all' ? undefined : Number(topic),
+      isMagistral: isMagistral === 'all' ? undefined : isMagistral === 'true',
       isPagination: true,
       limit: 30,
       page: page,
     })
-  }, [debouncedQuery, page])
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (isEdit) {
-        // Agregar verificación para event !== null
-        const id = await getParams('id', '')
-        if (id) {
-          await getEventById(id)
-        }
-      } else {
-        getEvents({})
-      }
-    }
-
-    fetchData()
-  }, [event, isEdit])
+    refreshData()
+  }, [debouncedQuery, page])
 
   return (
     <>
@@ -99,6 +96,12 @@ export const ListEventsSection = () => {
         onPageChange={(page) => setPage(page)}
         page={page}
         count={events?.count}
+        headerChildren={
+          <FiltersSection
+            onChageFilter={refreshData}
+            onClearFilter={() => {}}
+          />
+        }
         rows={
           events?.event
             ? events.event.map((event) => {

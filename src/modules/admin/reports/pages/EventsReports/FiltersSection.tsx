@@ -13,10 +13,10 @@ import {
 import { IconFilter } from '@tabler/icons-react'
 
 import {
-  AprovedFiltered,
   StatusFilter,
   FileFiltered,
   TopicsFiltered,
+  PersonMagistral,
 } from '@/modules/admin/summaries/components'
 
 interface IProps {
@@ -39,11 +39,16 @@ export const FiltersSection = (props: IProps) => {
       name: 'Tiene archivo',
       items: <FileFiltered />,
     },
-    {
-      key: 'topic',
-      name: 'Tema',
-      items: <TopicsFiltered />,
-    },
+    // {
+    //   key: 'magistral',
+    //   name: 'Ponencia magistral',
+    //   items: <PersonMagistral />,
+    // },
+    // {
+    //   key: 'topic',
+    //   name: 'Tema',
+    //   items: <TopicsFiltered />,
+    // },
   ]
 
   const filtersLabel = [
@@ -52,6 +57,7 @@ export const FiltersSection = (props: IProps) => {
     { value: 'status', name: 'Estado' },
     { value: 'file', name: 'Tiene archivo' },
     { value: 'date', name: 'Fecha' },
+    { value: 'is_magistral', name: 'Magistral' },
   ]
 
   const selectedFilter = filteredParams(filtersLabel)
