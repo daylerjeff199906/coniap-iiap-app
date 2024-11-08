@@ -62,14 +62,14 @@ export async function fetchEvents(props: IEventFilter) {
     }
   }
 
-  // Filtro por `isMagistral` dentro de `summary`
-  if (isMagistral !== undefined) {
-    queryBuilder = queryBuilder.eq('summary.isMagistral', isMagistral)
-  }
-
   // Filtro por `topic` dentro de `summary`
   if (topic) {
-    queryBuilder = queryBuilder.contains('summary.topic_id', { id: topic })
+    queryBuilder = queryBuilder.eq('summary.topic_id', topic)
+  }
+
+  // Filtro por `isMagistral` dentro de `summary`
+  if (isMagistral !== undefined) {
+    queryBuilder = queryBuilder.eq('summary.person.typePerson', 'speaker_mg')
   }
 
   queryBuilder = queryBuilder.order('created_at', { ascending: false })
