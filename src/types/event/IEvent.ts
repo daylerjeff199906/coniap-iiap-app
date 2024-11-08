@@ -35,6 +35,7 @@ export interface IEventFilter {
   limit?: number
   isPagination?: boolean
   isActived?: boolean
+  isMagistral?: boolean
   orderBy?: {
     column: 'created_at' | 'date' | 'timeStart' | 'timeEnd'
     ascending: boolean

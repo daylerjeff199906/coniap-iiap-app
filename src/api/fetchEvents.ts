@@ -14,6 +14,7 @@ export async function fetchEvents(props: IEventFilter) {
     programId,
     orderBy,
     isActived,
+    isMagistral,
   } = props
   const supabase = createClient()
 
@@ -60,6 +61,10 @@ export async function fetchEvents(props: IEventFilter) {
       queryBuilder = queryBuilder.is('summary_id', null)
     }
   }
+
+  // if (isMagistral) {
+  //   queryBuilder = queryBuilder.eq('summary_id', isMagistral)
+  // }
 
   queryBuilder = queryBuilder.order('created_at', { ascending: false })
 
