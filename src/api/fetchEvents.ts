@@ -62,9 +62,10 @@ export async function fetchEvents(props: IEventFilter) {
     }
   }
 
-  // if (isMagistral) {
-  //   queryBuilder = queryBuilder.eq('summary_id', isMagistral)
-  // }
+  // Filtro por `isMagistral` dentro de `summary`
+  if (isMagistral !== undefined) {
+    queryBuilder = queryBuilder.eq('summary.isMagistral', isMagistral)
+  }
 
   queryBuilder = queryBuilder.order('created_at', { ascending: false })
 
