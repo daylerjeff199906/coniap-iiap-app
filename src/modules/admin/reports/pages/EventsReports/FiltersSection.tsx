@@ -39,16 +39,16 @@ export const FiltersSection = (props: IProps) => {
       name: 'Tiene archivo',
       items: <FileFiltered />,
     },
-    {
-      key: 'magistral',
-      name: 'Ponencia magistral',
-      items: <PersonMagistral />,
-    },
-    {
-      key: 'topic',
-      name: 'Tema',
-      items: <TopicsFiltered />,
-    },
+    // {
+    //   key: 'magistral',
+    //   name: 'Ponencia magistral',
+    //   items: <PersonMagistral />,
+    // },
+    // {
+    //   key: 'topic',
+    //   name: 'Tema',
+    //   items: <TopicsFiltered />,
+    // },
   ]
 
   const filtersLabel = [

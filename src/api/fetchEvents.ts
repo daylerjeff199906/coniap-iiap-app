@@ -18,10 +18,13 @@ export async function fetchEvents(props: IEventFilter) {
   } = props
   const supabase = createClient()
 
+  const allSelect = '*'
+  let summarySelect = `summary:summary_id(*, person:person_id(*), topic:topic_id(*))`
+
   let queryBuilder = supabase
     .from('events')
     .select(
-      '*,summary:summary_id(*, topic:topic_id(*), person:person_id(*)), program:program_id(*), sala:sala(*)',
+      `${allSelect}, ${summarySelect}, program:program_id(*), sala:sala(*)	`,
       {
         count: 'exact',
       }
@@ -46,10 +49,6 @@ export async function fetchEvents(props: IEventFilter) {
     queryBuilder = queryBuilder.eq('date', date)
   }
 
-  if (topic) {
-    queryBuilder = queryBuilder.eq('topic', topic)
-  }
-
   if (programId) {
     queryBuilder = queryBuilder.eq('program_id', programId)
   }
@@ -62,16 +61,6 @@ export async function fetchEvents(props: IEventFilter) {
     }
   }
 
-  // Filtro por `topic` dentro de `summary`
-  if (topic) {
-    queryBuilder = queryBuilder.eq('summary.topic_id', topic)
-  }
-
-  // Filtro por `isMagistral` dentro de `summary`
-  if (isMagistral !== undefined) {
-    queryBuilder = queryBuilder.eq('summary.person.typePerson', 'speaker_mg')
-  }
-
   queryBuilder = queryBuilder.order('created_at', { ascending: false })
 
   if (isPagination && limit && page) {
@@ -79,10 +68,6 @@ export async function fetchEvents(props: IEventFilter) {
   }
 
   const { data: event, error, count } = await queryBuilder
-
-  console.log('event', event)
-  console.log('count', count)
-  console.log('error', error)
 
   if (error) {
     console.error('error', error)
