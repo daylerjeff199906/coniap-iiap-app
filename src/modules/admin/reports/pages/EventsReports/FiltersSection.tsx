@@ -57,7 +57,7 @@ export const FiltersSection = (props: IProps) => {
     { value: 'status', name: 'Estado' },
     { value: 'file', name: 'Tiene archivo' },
     { value: 'date', name: 'Fecha' },
-    { value: 'magistral', name: 'Magistral' },
+    { value: 'is_magistral', name: 'Magistral' },
   ]
 
   const selectedFilter = filteredParams(filtersLabel)

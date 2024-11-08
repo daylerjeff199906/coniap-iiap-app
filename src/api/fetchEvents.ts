@@ -67,6 +67,11 @@ export async function fetchEvents(props: IEventFilter) {
     queryBuilder = queryBuilder.eq('summary.isMagistral', isMagistral)
   }
 
+  // Filtro por `topic` dentro de `summary`
+  if (topic) {
+    queryBuilder = queryBuilder.contains('summary.topic_id', { id: topic })
+  }
+
   queryBuilder = queryBuilder.order('created_at', { ascending: false })
 
   if (isPagination && limit && page) {
@@ -74,6 +79,10 @@ export async function fetchEvents(props: IEventFilter) {
   }
 
   const { data: event, error, count } = await queryBuilder
+
+  console.log('event', event)
+  console.log('count', count)
+  console.log('error', error)
 
   if (error) {
     console.error('error', error)

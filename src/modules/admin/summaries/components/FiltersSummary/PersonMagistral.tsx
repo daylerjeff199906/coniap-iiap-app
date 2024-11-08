@@ -14,9 +14,9 @@ export const PersonMagistral = () => {
   const selectedFile = getParams('is_magistral', 'all')
   const handleFile = (value: string) => {
     if (value === 'all') {
-      updateFilters({ file: '', page: '1' })
+      updateFilters({ is_magistral: '', page: '1' })
     } else {
-      updateFilters({ file: value, page: '1' })
+      updateFilters({ is_magistral: value, page: '1' })
     }
   }
 
