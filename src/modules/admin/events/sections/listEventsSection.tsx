@@ -6,6 +6,7 @@ import { IColumns } from '@/types'
 import { useEvents } from '@/hooks/admin'
 import { useFilterFromUrl } from '@/modules/core'
 import { useDebounce } from '@/hooks/core'
+import { FiltersSection } from '../../reports/pages/EventsReports/FiltersSection'
 
 const columns: Array<IColumns> = [
   {
@@ -99,6 +100,12 @@ export const ListEventsSection = () => {
         onPageChange={(page) => setPage(page)}
         page={page}
         count={events?.count}
+        headerChildren={
+          <FiltersSection
+            onChageFilter={() => {}}
+            onClearFilter={() => {}}
+          />
+        }
         rows={
           events?.event
             ? events.event.map((event) => {
