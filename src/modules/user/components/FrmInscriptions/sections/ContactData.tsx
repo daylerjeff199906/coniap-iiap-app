@@ -23,7 +23,7 @@ export const ContactData = () => {
             labelPlacement="outside"
             radius="sm"
             placeholder="ejemplo@hotmail.com"
-            value={value || ''}
+            value={value.trim() || ''}
             onValueChange={onChange}
             isInvalid={methods.formState.errors.email !== undefined}
             errorMessage={methods.formState.errors.email?.message as string}
