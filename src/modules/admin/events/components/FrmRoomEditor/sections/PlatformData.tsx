@@ -26,7 +26,7 @@ export const PlatformData = () => {
             radius="sm"
             defaultSelectedKeys={['1']}
             disallowEmptySelection
-            selectedKeys={[String(value)] || ['']}
+            selectedKeys={[String(value)]}
             onChange={onChange}
             isInvalid={errors.platform !== undefined}
             items={socialNetworks}
