@@ -1,11 +1,12 @@
 'use client'
 import { DataNotFound, CardEvent } from '@/components'
 import { IEvent, IProgram } from '@/types'
-import { Button, Divider } from '@nextui-org/react'
-import { IconPrinter } from '@tabler/icons-react'
-import Link from 'next/link'
+// import { Button, Divider } from '@nextui-org/react'
+// import { IconPrinter } from '@tabler/icons-react'
+// import Link from 'next/link'
 
 import { useFilterFromUrl } from '@/modules/core'
+import { ListSheduleGroup } from './list-shedule-group'
 
 interface IProps {
   programs: IProgram[]
@@ -101,29 +102,13 @@ export const ListShedule = (props: IProps) => {
             className="py-6 lg:p-8 flex flex-col items-center gap-1 sm:gap-2 w-full"
           >
             <h1 className="text-2xl sm:text-3xl font-bold">{program?.title}</h1>
-            <p className="text-gray-500 text-center">{program?.shortDescription}</p>
+            <p className="text-gray-500 text-center">
+              {program?.shortDescription}
+            </p>
           </footer>
         )}
       </section>
-      <main className="relative border-s border-gray-200 dark:border-gray-700">
-        {events?.map((event, index) => (
-          <div
-            key={index}
-            className="relative mb-10 ms-0"
-          >
-            {/* Punto de la línea de tiempo */}
-            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-4 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-
-            {/* Tu componente CardEvent con el contenido de cada evento */}
-            <CardEvent
-              event={event}
-              variant="agenda"
-              showImage={false}
-            />
-          </div>
-        ))}
-        {events?.length === 0 && <DataNotFound />}
-      </main>
+      <ListSheduleGroup data={events} />
     </>
   )
 }

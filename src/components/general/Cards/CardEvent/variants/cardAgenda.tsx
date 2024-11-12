@@ -12,6 +12,7 @@ import {
 import Link from 'next/link'
 
 import logo from '@/assets/images/logo_coniap_simple.webp'
+import socialNetworks from '@/utils/json/social_networks.json'
 
 function formatDate(date: string, format: string) {
   return format
@@ -32,6 +33,10 @@ export const CardAgendaEvent = (props: IProps) => {
   const isMagistral =
     event?.summary?.person &&
     event?.summary?.person?.typePerson === 'speaker_mg'
+
+  const socialNetworksLogo = socialNetworks.find(
+    (item) => item?.id === event?.sala?.platform || ''
+  )
 
   return (
     <Card
@@ -97,7 +102,14 @@ export const CardAgendaEvent = (props: IProps) => {
                 target="_blank"
                 size="sm"
                 showAnchorIcon
+                className="flex items-center gap-2"
               >
+                <Image
+                  src={socialNetworksLogo?.logo}
+                  alt="Sala"
+                  width={20}
+                  className="mr-2 flex-shrink-0"
+                />
                 Ir a {event?.sala?.name}
               </NextLink>
             )}
