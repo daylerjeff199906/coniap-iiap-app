@@ -147,7 +147,7 @@ export const BannerHome = () => {
             />
             <InfoItem
               Icon={IconUsers}
-              text={`Inscríbete hasta el ${dateInscriptionTo}`}
+              text={`Inscríbete hasta el 12/11/2024`}
             />
             <InfoItem
               Icon={IconMicroscope}
