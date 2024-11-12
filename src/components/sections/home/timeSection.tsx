@@ -6,9 +6,7 @@ import Image from 'next/image'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import dataInfo from '@/utils/json/infoConiap.json'
 
-const dateStart = new Date(
-  dataInfo.data.dates['date-conference'].start
-).getTime()
+const dateStart = new Date('2024-11-13T09:00:00Z').getTime()
 const dateEnd = new Date(dataInfo.data.dates['date-conference'].end).getTime()
 // sumar 2 años a dateEnd para que sea la fecha de la próxima conferencia
 function addYears(date: Date, years: number) {
