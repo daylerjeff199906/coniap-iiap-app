@@ -112,8 +112,8 @@ export default function Page() {
             <Image
               src="/logo_coniap.webp"
               alt="logo"
-              width={400}
-              height={200}
+              width={360}
+              height={180}
             />
           </div>
           <div className="space-y-4 sm:space-y-6 lg:space-y-8 sm:m-4 lg:m-6">

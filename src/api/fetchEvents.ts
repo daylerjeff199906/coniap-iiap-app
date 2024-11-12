@@ -68,10 +68,6 @@ export async function fetchEvents(props: IEventFilter) {
 
   const { data: event, error, count } = await queryBuilder
 
-  console.log('event', event)
-  console.log('count', count)
-  console.log('error', error)
-
   if (error) {
     console.error('error', error)
     return null
