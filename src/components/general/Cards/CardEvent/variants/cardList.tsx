@@ -93,25 +93,27 @@ export const CardListEvent = (props: IProps) => {
               </h1>
               <p className="text-xs">{event.shortDescription}</p>
             </main>
-            <section className="w-full pt-3">
-              <User
-                avatarProps={{
-                  src: event?.summary?.person?.image || '',
-                  alt: event?.summary?.person?.name || 'Nombre de ponente',
-                  className: `w-10 h-10 min-w-10 min-h-10 ${
-                    !isMagistral && 'hidden'
-                  }`,
-                }}
-                name={
-                  event?.summary?.person?.name +
-                    ' ' +
-                    event?.summary?.person?.surName || 'Nombre de ponente'
-                }
-                description={
-                  event?.summary?.person?.institution || 'Institucion'
-                }
-              />
-            </section>
+            {event?.summary?.person && (
+              <section className="w-full pt-3">
+                <User
+                  avatarProps={{
+                    src: event?.summary?.person?.image || '',
+                    alt: event?.summary?.person?.name || 'Nombre de ponente',
+                    className: `w-10 h-10 min-w-10 min-h-10 ${
+                      !isMagistral && 'hidden'
+                    }`,
+                  }}
+                  name={
+                    event?.summary?.person?.name +
+                      ' ' +
+                      event?.summary?.person?.surName || 'Nombre de ponente'
+                  }
+                  description={
+                    event?.summary?.person?.institution || 'Institucion'
+                  }
+                />
+              </section>
+            )}
           </section>
         </div>
       </div>

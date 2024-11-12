@@ -62,6 +62,11 @@ export default async function Page() {
       page: 1,
       limit: 10,
       isSumary: 'true',
+      isMagistral: true,
+      orderBy: {
+        column: 'date',
+        ascending: true,
+      },
       isActived: true,
     })
 

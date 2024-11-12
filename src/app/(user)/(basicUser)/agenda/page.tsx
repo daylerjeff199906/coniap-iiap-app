@@ -71,7 +71,7 @@ export default async function Page(props: Props) {
   // Get event speakers
   try {
     const data = await fetchEvents({
-      isSumary: 'true',
+      // isSumary: 'true',
       isActived: true,
       programId: Number(program) || Number(programs.programs[0]?.id),
       orderBy: {
