@@ -60,25 +60,28 @@ export const SpeakersSection = (props: IProps) => {
 
             {speakersActive && (
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
-                {speakersActive.slice(0, 8).map((speaker, index) => (
-                  <motion.div
-                    key={speaker.id}
-                    className="w-full"
-                    initial={{ opacity: 0, x: 15 }}
-                    viewport={{
-                      once: false,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      x: 0,
-                      transition: {
-                        duration: 0.1 + index / 10,
-                      },
-                    }}
-                  >
-                    <CardSpeaker speaker={speaker} />
-                  </motion.div>
-                ))}
+                {speakersActive
+                  .filter((speaker) => speaker.typePerson === 'speaker_mg')
+                  .slice(0, 8)
+                  .map((speaker, index) => (
+                    <motion.div
+                      key={speaker.id}
+                      className="w-full"
+                      initial={{ opacity: 0, x: 15 }}
+                      viewport={{
+                        once: false,
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        x: 0,
+                        transition: {
+                          duration: 0.1 + index / 10,
+                        },
+                      }}
+                    >
+                      <CardSpeaker speaker={speaker} />
+                    </motion.div>
+                  ))}
               </div>
             )}
           </div>
