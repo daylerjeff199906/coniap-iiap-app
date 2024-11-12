@@ -17,8 +17,6 @@ export const ListSheduleGroup = (props: IProps) => {
     return acc
   }, {} as Record<string, IEvent[]>)
 
-  console.log('groupedEvents', groupedEvents)
-
   return (
     <section className="w-full">
       {Object.entries(groupedEvents).map(([hour, eventsAtHour], index) => (
