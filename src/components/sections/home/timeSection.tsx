@@ -22,10 +22,6 @@ const dateNext = addYears(
 
 export const TimeSection = () => {
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null)
-  console.log('dateStart', dateStart)
-  // console.log('dateEnd', dateEnd)
-  // console.log('dateNext', dateNext)
-  console.log('timeRemaining', timeRemaining)
   const [isCurrent, setIsCurrent] = useState(false)
   const [isFuture, setIsFuture] = useState(false)
 
