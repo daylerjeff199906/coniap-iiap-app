@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react'
 import { IEvent } from '@/types'
-import { Chip, Image, User } from '@nextui-org/react'
+import { Chip, Image, User, Link as NextLink } from '@nextui-org/react'
 import { IconClockHour12 } from '@tabler/icons-react'
 import logo from '@/assets/images/logo_coniap_simple.webp'
+import socialNetworks from '@/utils/json/social_networks.json'
 import Link from 'next/link'
 
 interface IProps {
@@ -16,6 +17,9 @@ export const CardListEvent = (props: IProps) => {
   const [isHover, setIsHover] = useState(false)
 
   const isMagistral = event?.summary?.person?.typePerson === 'speaker_mg'
+  const socialNetworksLogo = socialNetworks.find(
+    (item) => item?.id === event?.sala?.platform || ''
+  )
 
   return (
     <Link
@@ -51,7 +55,7 @@ export const CardListEvent = (props: IProps) => {
               )}
               <div
                 className={`flex gap-2 items-center ${
-                  isHover ? 'text-primary-800' : 'text-gray-500'
+                  isHover ? 'text-primary-800 font-medium' : 'text-gray-500'
                 }`}
               >
                 <IconClockHour12 size={14} />
@@ -59,6 +63,23 @@ export const CardListEvent = (props: IProps) => {
                   Desde las {event.timeStart} a {event.timeEnd}
                 </h3>
               </div>
+              {event?.sala && (
+                <NextLink
+                  href={event?.sala?.url || '#'}
+                  target="_blank"
+                  size="sm"
+                  showAnchorIcon
+                  className="flex items-center gap-2"
+                >
+                  <Image
+                    src={socialNetworksLogo?.logo}
+                    alt="Sala"
+                    width={20}
+                    className="mr-2 flex-shrink-0"
+                  />
+                  Ir a {event?.sala?.name}
+                </NextLink>
+              )}
             </header>
             <main className="pb-2 w-full">
               <h1
