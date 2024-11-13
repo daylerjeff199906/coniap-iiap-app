@@ -79,7 +79,7 @@ export const CardListEvent = (props: IProps) => {
                     width={20}
                     className="mr-2 flex-shrink-0"
                   />
-                  Ir a {event?.sala?.name}
+                  <p className='hidden sm:flex'>Ir a {event?.sala?.name}</p>
                 </NextLink>
               )}
             </header>
