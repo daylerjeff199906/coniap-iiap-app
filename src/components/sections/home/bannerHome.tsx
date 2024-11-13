@@ -164,7 +164,7 @@ export const BannerHome = () => {
                     13, 14 y 15
                   </h1>
                   <span className="text-xl font-medium">
-                    de noviembre de 2024, ! te esperamos !
+                    de noviembre de 2024, ¡ te esperamos !
                   </span>
                 </div>
               ) : (
@@ -202,6 +202,7 @@ export const BannerHome = () => {
                   href={URL_PROGRAM}
                   download={true}
                   className="animate-appearance-in text-white px-6 py-2 rounded-full border"
+                  target="_blank"
                 >
                   Descargar programa
                 </Link>

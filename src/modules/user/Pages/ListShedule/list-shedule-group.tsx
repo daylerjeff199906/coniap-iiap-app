@@ -24,8 +24,8 @@ export const ListSheduleGroup = (props: IProps) => {
           key={hour}
           className="mb-6"
         >
-          <div className="flex flex-col sm:flex-row gap-3 items-start border-b">
-            <div className="text-xl font-bold pr-4 sm:pr-6 lg:pr-8 w-full sm:min-w-[160px] sm:w-[160px] sticky top-20 z-10">
+          <div className="flex flex-col sm:flex-row gap-3 items-start border-b ">
+            <div className="text-xl font-bold pr-4 sm:pr-6 lg:pr-8 w-full sm:min-w-[160px] sm:w-[160px] sticky top-20 z-10 bg-white">
               {hour}
             </div>
             <div

@@ -102,7 +102,7 @@ export const ListShedule = (props: IProps) => {
             className="py-6 lg:p-8 flex flex-col items-center gap-1 sm:gap-2 w-full"
           >
             <h1 className="text-2xl sm:text-3xl font-bold">{program?.title}</h1>
-            <p className="text-gray-500 text-center">
+            <p className="text-gray-500 text-center text-sm sm:text-base">
               {program?.shortDescription}
             </p>
           </footer>
