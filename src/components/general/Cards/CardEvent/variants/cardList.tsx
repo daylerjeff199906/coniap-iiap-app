@@ -21,6 +21,8 @@ export const CardListEvent = (props: IProps) => {
     (item) => item?.id === event?.sala?.platform || ''
   )
 
+  const isPassHour = new Date().getTime() > new Date(event.timeStart).getTime()
+
   return (
     <Link
       className="border-none w-full min-w-full"
@@ -56,7 +58,7 @@ export const CardListEvent = (props: IProps) => {
               <div
                 className={`flex gap-2 items-center ${
                   isHover ? 'text-primary-800 font-medium' : 'text-gray-500'
-                }`}
+                } ${isPassHour && 'text-gray-400 line-through'}`}
               >
                 <IconClockHour12 size={14} />
                 <h3>
