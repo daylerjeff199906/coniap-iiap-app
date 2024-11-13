@@ -66,7 +66,9 @@ export const TimeSection = () => {
     <section className="bg-success-700/70 w-full relative container rounded-t-xl ">
       <div className="py-4 sm:py-8 lg:py-5 flex items-center justify-center">
         {isCurrent && (
-          <h2 className="text-white">The event is happening now</h2>
+          <h2 className="text-white text-3xl font-semibold text-center">
+            No te pierdas las conferencias en vivo, del día de hoy
+          </h2>
         )}
         {isFuture && (
           <div className="flex flex-col gap-2 lg:max-w-2xl w-full">

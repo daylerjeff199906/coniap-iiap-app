@@ -85,13 +85,25 @@ export const BannerHome = () => {
   const summary = infoData.data.dates['summary']
 
   // Fecha de inscripción hasta
-  const dateInscriptionTo = formatDate(
-    infoData.data.dates['date-conference'].start,
-    'DD/MM/YYYY'
-  )
+  // const dateInscriptionTo = formatDate(
+  //   infoData.data.dates['date-conference'].start,
+  //   'DD/MM/YYYY'
+  // )
 
   //Fecha resumen hasta
   const dateSummaryTo = formatDate(summary.end, 'DD/MM/YYYY')
+
+  const isSpecificDate = () => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0) // Set time to midnight to avoid time zone issues
+    const specificDates = [
+      new Date('2024-11-13T00:00:00'),
+      new Date('2024-11-14T00:00:00'),
+      new Date('2024-11-15T00:00:00'),
+    ]
+
+    return specificDates.some((date) => date.getTime() === today.getTime())
+  }
 
   return (
     <section
@@ -140,20 +152,36 @@ export const BannerHome = () => {
             <span className="text-green-500 font-bold">Amazonía</span> Peruana
           </h1>
 
-          <section className="flex flex-col gap-2">
-            <InfoItem
-              Icon={IconCalendarEvent}
-              text={conferenceDate}
-            />
-            <InfoItem
-              Icon={IconUsers}
-              text={`Inscríbete hasta el 12/11/2024`}
-            />
-            <InfoItem
-              Icon={IconMicroscope}
-              text={`Enviar resumen hasta el ${dateSummaryTo}`}
-            />
-          </section>
+          {!isAfterConference && (
+            <>
+              {isSpecificDate() ? (
+                <div className="text-white flex flex-col gap-1">
+                  <p className="text-base font-medium">Desde este </p>
+                  <h1 className=" text-3xl lg:text-5xl font-bold">
+                    13, 14 y 15
+                  </h1>
+                  <span className="text-xl font-medium">
+                    de noviembre de 2024, !te esperamos!
+                  </span>
+                </div>
+              ) : (
+                <section className="flex flex-col gap-2">
+                  <InfoItem
+                    Icon={IconCalendarEvent}
+                    text={conferenceDate}
+                  />
+                  <InfoItem
+                    Icon={IconUsers}
+                    text={`Inscríbete hasta el 12/11/2024`}
+                  />
+                  <InfoItem
+                    Icon={IconMicroscope}
+                    text={`Enviar resumen hasta el ${dateSummaryTo}`}
+                  />
+                </section>
+              )}
+            </>
+          )}
           <div className="w-full flex items-center gap-3">
             {isAfterConference && (
               <Button
@@ -196,46 +224,66 @@ export const BannerHome = () => {
           animate="visible"
           className="hidden lg:flex gap-3"
         >
-          <div className="space-y-3">
-            <motion.div
-              className=""
-              variants={item}
-            >
-              <ImageUi
-                src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
+          {!isSpecificDate() ? (
+            <>
+              <div className="space-y-3">
+                <motion.div
+                  className=""
+                  variants={item}
+                >
+                  <ImageUi
+                    src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
+                    alt="Banner Home"
+                    className="w-52 h-56 object-cover "
+                    radius="sm"
+                    removeWrapper
+                  />
+                </motion.div>
+                <motion.div variants={item}>
+                  <ImageUi
+                    src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede"
+                    alt="Tejido-iiap"
+                    radius="sm"
+                    className="w-52 h-56 object-cover"
+                  />
+                </motion.div>
+              </div>
+              <div className="space-y-3 pt-8">
+                <motion.div variants={item}>
+                  <ImageUi
+                    src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
+                    alt="expoIIAP"
+                    radius="sm"
+                    className="w-48 h-52 object-cover"
+                  />
+                </motion.div>
+                <motion.div variants={item}>
+                  <ImageUi
+                    src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2"
+                    alt="Banner Home"
+                    radius="sm"
+                    className="h-48 object-cover"
+                  />
+                </motion.div>
+              </div>
+            </>
+          ) : (
+            <Link href="/agenda">
+              {/* <motion.div
+                className="flex items-center justify-center bg-white text-black w-72 h-72 rounded-xl"
+                variants={item}
+              > */}
+              <Image
+                src="/banner-speaker.webp"
                 alt="Banner Home"
-                className="w-52 h-56 object-cover "
-                radius="sm"
-                removeWrapper
+                width={600}
+                height={600}
+                className="rounded-lg"
+                loading="lazy"
               />
-            </motion.div>
-            <motion.div variants={item}>
-              <ImageUi
-                src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede"
-                alt="Tejido-iiap"
-                radius="sm"
-                className="w-52 h-56 object-cover"
-              />
-            </motion.div>
-          </div>
-          <div className="space-y-3 pt-8">
-            <motion.div variants={item}>
-              <ImageUi
-                src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
-                alt="expoIIAP"
-                radius="sm"
-                className="w-48 h-52 object-cover"
-              />
-            </motion.div>
-            <motion.div variants={item}>
-              <ImageUi
-                src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2"
-                alt="Banner Home"
-                radius="sm"
-                className="h-48 object-cover"
-              />
-            </motion.div>
-          </div>
+              {/* </motion.div> */}
+            </Link>
+          )}
         </motion.div>
         <section className="absolute right-0 left-0 bottom-0 flex flex-col items-center ">
           <TimeSection />
