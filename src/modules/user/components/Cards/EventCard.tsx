@@ -46,14 +46,14 @@ export const EventCard = (props: EventCardProps) => {
             <header>
               <Link
                 href={`/eventos/${data.id}`}
-                className={`text-lg sm:text-2xl uppercase font-bold  ${
+                className={`text-lg sm:text-2xl uppercase font-bold line-clamp-2  ${
                   isHover ? 'text-primary-700 underline' : 'text-black'
                 }`}
               >
                 {data.name}
               </Link>
             </header>
-            <section>
+            <section className="flex flex-col gap-1">
               <p className="line-clamp-2 text-sm text-gray-500">
                 {data?.shortDescription}
               </p>

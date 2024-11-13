@@ -157,15 +157,15 @@ export const DetailsEvent = (props: IProps) => {
             <section className="flex flex-col gap-3">
               {event?.date && (
                 <div className="flex gap-2 items-center">
-                  <IconCalendarClock size={28} />
-                  <p className="font-semibold">
+                  <IconCalendarClock size={24} />
+                  <p className="font-medium text-sm">
                     {formatDateLarge(event?.date)}
                   </p>
                 </div>
               )}
               <div className="flex gap-2 items-center">
-                <IconClockHour12 size={28} />
-                <p className="font-semibold">
+                <IconClockHour12 size={24} />
+                <p className="font-medium text-sm">
                   {event?.timeStart} - {event?.timeEnd}
                 </p>
               </div>
