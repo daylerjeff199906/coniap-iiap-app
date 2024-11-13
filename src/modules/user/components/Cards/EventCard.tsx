@@ -1,14 +1,15 @@
 'use client'
+import { useState } from 'react'
 import { IEvent } from '@/types'
 import { formatDateLarge } from '@/utils/functions'
-import { Divider, Image } from '@nextui-org/react'
+import { Divider, Image, Link as NextLink } from '@nextui-org/react'
 import {
   IconCalendarEvent,
   IconClockHour12,
   IconArrowNarrowRight,
 } from '@tabler/icons-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import socialNetworks from '@/utils/json/social_networks.json'
 
 interface EventCardProps {
   variant?: 'gallery' | 'list' | 'agenda'
@@ -18,6 +19,10 @@ interface EventCardProps {
 export const EventCard = (props: EventCardProps) => {
   const [isHover, setIsHover] = useState(false)
   const { variant = 'list', data } = props
+
+  const socialNetworksLogo = socialNetworks.find(
+    (item) => item?.id === data?.sala?.platform || ''
+  )
 
   return (
     <>
@@ -52,6 +57,23 @@ export const EventCard = (props: EventCardProps) => {
               <p className="line-clamp-2 text-sm text-gray-500">
                 {data?.shortDescription}
               </p>
+              {data?.sala && (
+                <NextLink
+                  href={data?.sala?.url || '#'}
+                  target="_blank"
+                  size="sm"
+                  showAnchorIcon
+                  className="flex items-center gap-2"
+                >
+                  <Image
+                    src={socialNetworksLogo?.logo}
+                    alt="Sala"
+                    width={20}
+                    className="mr-2 flex-shrink-0"
+                  />
+                  Ir a {data?.sala?.name}
+                </NextLink>
+              )}
             </section>
             <Divider />
             <footer className="flex flex-col sm:flex-row gap-3 justify-between items-center">

@@ -5,6 +5,7 @@ import Vector from '@/assets/svg/patron_vectores.svg'
 import Image from 'next/image'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import dataInfo from '@/utils/json/infoConiap.json'
+import Link from 'next/link'
 
 const dateStart = new Date('2024-11-13T09:00:00Z').getTime()
 const dateEnd = new Date(dataInfo.data.dates['date-conference'].end).getTime()
@@ -66,9 +67,11 @@ export const TimeSection = () => {
     <section className="bg-success-700/70 w-full relative container rounded-t-xl ">
       <div className="py-4 sm:py-8 lg:py-5 flex items-center justify-center">
         {isCurrent && (
-          <h2 className="text-white text-3xl font-semibold text-center">
-            No te pierdas las conferencias en vivo, del día de hoy
-          </h2>
+          <div className="flex flex-col gap-1 sm:flex-row sm:gap-3 items-center">
+            <h2 className="text-white text-xl sm:text-3xl font-medium text-center">
+              No te pierdas las conferencias en vivo
+            </h2>
+          </div>
         )}
         {isFuture && (
           <div className="flex flex-col gap-2 lg:max-w-2xl w-full">

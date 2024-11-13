@@ -41,7 +41,9 @@ export default function Page() {
     driverObj.drive()
   }
 
-  const { isBeforeSummary } = getConferenceStatus(infoDataCongress.data.dates)
+  const { isBeforeSummary, isBeforeConference } = getConferenceStatus(
+    infoDataCongress.data.dates
+  )
 
   return (
     <main className="w-full">
@@ -82,28 +84,42 @@ export default function Page() {
                 y envía tu propuesta.
               </li>
             </ul>
-            <div>
-              <Button
-                radius="full"
-                color="warning"
-                className="font-medium px-6"
-                startContent={<IconPlayerPlayFilled size={20} />}
-                variant="bordered"
-                onPress={activeDriver}
-              >
-                Ver demo
-              </Button>
-            </div>
+            {isBeforeConference && (
+              <div>
+                <Button
+                  radius="full"
+                  color="warning"
+                  className="font-medium px-6"
+                  startContent={<IconPlayerPlayFilled size={20} />}
+                  variant="bordered"
+                  onPress={activeDriver}
+                >
+                  Ver demo
+                </Button>
+              </div>
+            )}
           </section>
-          <Image
-            src={img_logo.src}
-            alt="logo"
-            removeWrapper
-            className="w-1/3 lg:w-10/12"
-          />
+          {isBeforeConference && (
+            <Image
+              src={img_logo.src}
+              alt="logo"
+              removeWrapper
+              className="w-1/3 lg:w-10/12"
+            />
+          )}
         </div>
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 flex flex-col gap-2">
           <FrmInscriptions />
+          {!isBeforeConference && (
+            <div className="flex justify-center items-center h-64 order-1 sm:order-2">
+              <Image
+                src={img_logo.src}
+                alt="logo"
+                removeWrapper
+                className="h-64"
+              />
+            </div>
+          )}
         </div>
       </section>
       <section className="bg-gradient-to-r from-primary-900/90 to-primary-600/90  relative">
