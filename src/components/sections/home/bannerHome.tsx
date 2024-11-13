@@ -164,7 +164,7 @@ export const BannerHome = () => {
                     13, 14 y 15
                   </h1>
                   <span className="text-xl font-medium">
-                    de noviembre de 2024, ! te esperamos !
+                    de noviembre de 2024, ¡ te esperamos !
                   </span>
                 </div>
               ) : (
