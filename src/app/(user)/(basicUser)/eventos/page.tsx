@@ -30,6 +30,10 @@ export default async function Page(props: Props) {
       date,
       isActived: true,
       limit: 10,
+      orderBy: {
+        column: 'date',
+        ascending: true,
+      },
     })
 
     if (data) {

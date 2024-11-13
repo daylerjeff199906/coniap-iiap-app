@@ -19,6 +19,9 @@ import {
   IconUsers,
 } from '@tabler/icons-react'
 
+const URL_PROGRAM =
+  'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/events%2FPrograma%20III%20CONIAP-2024.pdf?alt=media&token=095af6f4-db50-4196-abe6-67ab17bf7bcb'
+
 const container = {
   hidden: { opacity: 1, scale: 0 },
   visible: {
@@ -161,7 +164,7 @@ export const BannerHome = () => {
                     13, 14 y 15
                   </h1>
                   <span className="text-xl font-medium">
-                    de noviembre de 2024, !te esperamos!
+                    de noviembre de 2024, ! te esperamos !
                   </span>
                 </div>
               ) : (
@@ -183,16 +186,26 @@ export const BannerHome = () => {
             </>
           )}
           <div className="w-full flex items-center gap-3">
-            {isAfterConference && (
-              <Button
-                className="animate-appearance-in text-white bg-green-700"
-                variant="solid"
-                radius="full"
-                as={Link}
-                href="/agenda"
-              >
-                Ver agenda
-              </Button>
+            {isSpecificDate() && (
+              <div className="flex flex-row gap-1 items-center">
+                <Button
+                  className="animate-appearance-in text-white bg-green-700 px-6"
+                  variant="solid"
+                  radius="full"
+                  size="lg"
+                  as={Link}
+                  href="/agenda"
+                >
+                  Ver agenda
+                </Button>
+                <Link
+                  href={URL_PROGRAM}
+                  download={true}
+                  className="animate-appearance-in text-white px-6 py-2 rounded-full border"
+                >
+                  Descargar programa
+                </Link>
+              </div>
             )}
             {isBeforeConference && (
               <Button
