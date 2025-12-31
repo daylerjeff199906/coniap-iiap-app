@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@getbrevo/brevo": "^2.2.0",
+    "@getbrevo/brevo": "^3.0.1",
     "@mdxeditor/editor": "^3.11.3",
     "@nextui-org/react": "^2.4.6",
     "@supabase/ssr": "^0.1.0",
