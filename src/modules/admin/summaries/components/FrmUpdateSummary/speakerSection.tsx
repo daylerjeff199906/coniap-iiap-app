@@ -46,11 +46,13 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
             disabled={loading}
             endContent={
               <div>
-                <Button startContent={<IconLink size={16} />}
+                <Button />
+  <IconLink size={16
+  }
                   onClick={() => setIsOpen(true)}
                 >
                   Seleccionar
-                </Button>
+</Button>
               </div>
             }
           />

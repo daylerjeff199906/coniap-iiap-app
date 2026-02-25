@@ -39,21 +39,15 @@ export const AuthorsSection = () => {
               setAuthor(value)
             }}
           />
-          <Button
-            type="button"
-            onClick={handleAddAuthor}
-            
-            startContent={
-              <div>
+          <Button type="button" onClick={handleAddAuthor} className="text-gray-600" />
+  <div>
                 <IconPlus
-                  size={16}
-                  className="text-gray-600"
-                />
-              </div>
+                  size={16
+  </div>
             }
           >
             Agregar
-          </Button>
+</Button>
         </section>
         <div className="mt-1">
           <Controller
@@ -79,19 +73,15 @@ export const AuthorsSection = () => {
                         ])
                       }}
                     />
-                    <Button
-                      type="button"
-                      onClick={() => remove(index)}
-                      
-                      startContent={
-                        <div>
-                          <IconTrash size={16} />
-                        </div>
+                    <Button type="button" onClick={() => remove(index)} />
+  <div>
+                          <IconTrash size={16
+  </div>
                       }
                       variant="destructive"
                     >
                       Quitar
-                    </Button>
+</Button>
                   </div>
                 ))}
               </div>

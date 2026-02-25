@@ -2,7 +2,12 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
 import { Badge } from '@/components/ui/badge'
-// TODO: Check these imports: // TODO: Check these imports: // Removed NextUI import:  Accordion, AccordionItem 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { IconFilter } from '@tabler/icons-react'
@@ -20,7 +25,7 @@ interface IProps {
 }
 
 export const FiltersSection = (props: IProps) => {
-  const { filteredParams, updateFilters } = useFilterFromUrl()
+  const { filteredParams } = useFilterFromUrl()
   const { onChageFilter, onClearFilter } = props
 
   const filteredList = [
@@ -61,65 +66,56 @@ export const FiltersSection = (props: IProps) => {
   }
 
   return (
-    <>
-      <Popover
-        placement="right-start"
-        size="sm"
-        className="rounded-sm"
-      >
-        <PopoverTrigger>
-          <Button
-            className="rounded-sm"
-            startContent={
-              <Badge
-                content={selectedFilter?.length}
-                isInvisible={selectedFilter?.length === 0}
-                variant="destructive"
-              >
-                <IconFilter
-                  size={18}
-                  stroke={1.5}
-                />
-              </Badge>
-            }
-            className="font-semibold"
-          >
+    <div className="flex items-center gap-2">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="outline" className="gap-2 relative">
+            <IconFilter size={18} stroke={1.5} />
             Filtros
+            {selectedFilter?.length > 0 && (
+              <Badge variant="destructive" className="ml-1 h-5 w-5 rounded-full flex items-center justify-center p-0 text-[10px]">
+                {selectedFilter.length}
+              </Badge>
+            )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent>
-          <main className=" w-64">
-            <Accordion
-              isCompact
-              defaultExpandedKeys={selectedFilter?.map(
-                (filter) => filter.value
-              )}
-            >
-              {filteredList.map((filter) => (
-                <AccordionItem
-                  key={filter.key}
-                  aria-label={`Filter by ${filter.key}`}
-                  title={filter.name}
-                >
+        <PopoverContent className="w-72 p-0" align="start">
+          <div className="p-4 bg-muted/20 border-b">
+            <h4 className="font-bold text-sm">Filtros de resumen</h4>
+          </div>
+          <Accordion type="multiple" className="w-full">
+            {filteredList.map((filter) => (
+              <AccordionItem key={filter.key} value={filter.key} className="px-4 border-b">
+                <AccordionTrigger className="text-sm hover:no-underline py-3">
+                  {filter.name}
+                </AccordionTrigger>
+                <AccordionContent className="pb-4">
                   {filter.items}
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </main>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+          <div className="p-3 bg-muted/10 flex justify-end">
+            <Button size="sm" variant="ghost" onClick={handleDeleteFilters} className="text-xs">
+              Limpiar filtros
+            </Button>
+          </div>
         </PopoverContent>
       </Popover>
-      <Button className="button-dark" onClick={onChageFilter} >
+
+      <Button variant="default" onClick={onChageFilter} className="font-bold">
         Filtrar
       </Button>
+
       {selectedFilter?.length > 0 && (
         <Button
-          className="rounded-sm"
+          variant="ghost"
           onClick={handleDeleteFilters}
-          variant="outline"
+          className="text-muted-foreground"
         >
           Limpiar
         </Button>
       )}
-    </>
+    </div>
   )
 }

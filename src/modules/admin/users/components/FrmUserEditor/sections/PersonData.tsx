@@ -41,11 +41,13 @@ export const PersonData = () => {
             errorMessage={errors.person_detail?.message as string}
             endContent={
               <div>
-                <Button startContent={<IconLink size={16} />}
+                <Button />
+  <IconLink size={16
+  }
                   onClick={() => setIsOpen(true)}
                 >
                   Seleccionar
-                </Button>
+</Button>
               </div>
             }
           />

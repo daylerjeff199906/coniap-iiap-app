@@ -87,12 +87,14 @@ export default function Page() {
             </ul>
             {isBeforeConference && (
               <div>
-                <Button variant="outline" className="font-medium px-6" startContent={<IconPlayerPlayFilled size={20} />}
+                <Button variant="outline" className="font-medium px-6" />
+  <IconPlayerPlayFilled size={20
+  }
                   variant="outline"
                   onClick={activeDriver}
                 >
                   Ver demo
-                </Button>
+</Button>
               </div>
             )}
           </section>

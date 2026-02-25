@@ -52,33 +52,9 @@ export const PersonFiltered = (props: IFilter) => {
         placement="right-start"
       >
         <PopoverTrigger>
-          <Button
-            disabled={loading}
-            className="rounded-sm"
-          >
-            {personSelected ? (
-              <div className="flex flex-col justify-start items-start">
-                <h3 className="text-xs">
-                  {personSelected.name} {personSelected.surName}
-                </h3>
-                <p className="text-tiny text-gray-500">
-                  {personSelected.email}
-                </p>
-              </div>
-            ) : (
-              <p>Filtrar por persona</p>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <div className="min-w-[200px]">
-            <Listbox
-              selectionMode="single"
-              onSelectionChange={handlePerson}
-              disallowEmptySelection
-              topContent={
-                <Input
-                  startContent={<IconSearch stroke={1.5} />}
+          <Button disabled={loading} className="rounded-sm" > {personSelected ? ( <div className="flex flex-col justify-start items-start"> <h3 className="text-xs"> {personSelected.name} {personSelected.surName} </h3> <p className="text-tiny text-gray-500"> {personSelected.email} </p> </div> ) : ( <p>Filtrar por persona</p> )} </Button> </PopoverTrigger> <PopoverContent> <div className="min-w-[200px]"> <Listbox selectionMode="single" onSelectionChange={handlePerson} disallowEmptySelection topContent={ <Input />
+  <IconSearch stroke={1.5
+  }
                   aria-label="Search person"
                   placeholder="Buscar por apellido..."
                   className="rounded-sm"
@@ -115,7 +91,7 @@ export const PersonFiltered = (props: IFilter) => {
           }}
         >
           <IconTrash size={20} />
-        </Button>
+</Button>
       )}
     </section>
   )

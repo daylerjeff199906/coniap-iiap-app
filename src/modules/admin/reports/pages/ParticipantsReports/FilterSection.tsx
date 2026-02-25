@@ -1,8 +1,13 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-
 import { Button } from '@/components/ui/button'
-import { Select, SelectItem } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { IconFilter } from '@tabler/icons-react'
 
 const personsType = [
@@ -30,8 +35,7 @@ export const FiltersSection = (props: IProps) => {
   const selectedTypePerson = getParams('typePerson', 'all')
   const selectedStatus = getParams('status', 'all')
 
-  const handleTypePerson = (val: any) => {
-    const value = Object.values(val)[0]
+  const handleTypePerson = (value: string) => {
     if (value === 'all') {
       updateFilter('typePerson', '')
     } else {
@@ -39,8 +43,7 @@ export const FiltersSection = (props: IProps) => {
     }
   }
 
-  const handleStatus = (val: any) => {
-    const value = Object.values(val)[0]
+  const handleStatus = (value: string) => {
     if (value === 'all') {
       updateFilter('status', '')
     } else {
@@ -49,67 +52,58 @@ export const FiltersSection = (props: IProps) => {
   }
 
   return (
-    <>
-      <div className="flex gap-2 w-full sm:max-w-[210px]">
-        <Select
-          aria-label="Tipo de persona"
-          aria-labelledby="Tipo de persona"
-          className="rounded-sm"
-          variant="outline"
-          selectedKeys={[selectedTypePerson]}
-          onSelectionChange={(value) => handleTypePerson(value)}
-          disallowEmptySelection
-          description="Tipo de persona"
-        >
-          {personsType.map((type, i) => (
-            <SelectItem
-              aria-label={`Tipo de persona ${type.label}`}
-              aria-labelledby={`Tipo de persona ${type.label}`}
-              key={type.value}
-              value={type.value}
-            >
-              {type.label}
-            </SelectItem>
-          ))}
+    <div className="flex flex-wrap items-center gap-3">
+      <div className="w-full sm:w-[200px] space-y-1">
+        <label className="text-[10px] font-bold uppercase text-muted-foreground ml-1">Tipo de persona</label>
+        <Select value={selectedTypePerson} onValueChange={handleTypePerson}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Tipo de persona" />
+          </SelectTrigger>
+          <SelectContent>
+            {personsType.map((type) => (
+              <SelectItem key={type.value} value={type.value}>
+                {type.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </div>
-      <div className="flex gap-2 w-full sm:max-w-[210px]">
-        <Select
-          aria-label="Estado"
-          aria-labelledby="Estado"
-          className="rounded-sm"
-          variant="outline"
-          selectedKeys={[selectedStatus]}
-          onSelectionChange={(value) => handleStatus(value)}
-          disallowEmptySelection
-          description="Estado de la persona"
-        >
-          {activeStatus.map((status, i) => (
-            <SelectItem
-              aria-label={`Estado ${status.label}`}
-              aria-labelledby={`Estado ${status.label}`}
-              key={status.value}
-              value={status.value}
-            >
-              {status.label}
-            </SelectItem>
-          ))}
+
+      <div className="w-full sm:w-[200px] space-y-1">
+        <label className="text-[10px] font-bold uppercase text-muted-foreground ml-1">Estado</label>
+        <Select value={selectedStatus} onValueChange={handleStatus}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Estado de la persona" />
+          </SelectTrigger>
+          <SelectContent>
+            {activeStatus.map((status) => (
+              <SelectItem key={status.value} value={status.value}>
+                {status.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </div>
-      <Button className="button-dark" startContent={<IconFilter size={20} />}
-        onClick={onChageFilter}
-      >
-        Filtrar
-      </Button>
-      {selectedTypePerson !== 'all' || selectedStatus !== 'all' ? (
+
+      <div className="flex items-end h-full gap-2 pt-5">
         <Button
-          className="rounded-sm"
-          onClick={onClearFilter}
-          variant="outline"
+          variant="default"
+          onClick={onChageFilter}
+          className="font-bold gap-2"
         >
-          Limpiar
+          <IconFilter size={18} />
+          Filtrar
         </Button>
-      ) : null}
-    </>
+        {(selectedTypePerson !== 'all' || selectedStatus !== 'all') && (
+          <Button
+            onClick={onClearFilter}
+            variant="ghost"
+            className="text-muted-foreground"
+          >
+            Limpiar
+          </Button>
+        )}
+      </div>
+    </div>
   )
 }

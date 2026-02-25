@@ -2,7 +2,12 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
 import { Badge } from '@/components/ui/badge'
-// TODO: Check these imports: // TODO: Check these imports: // Removed NextUI import:  Accordion, AccordionItem 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { IconFilter } from '@tabler/icons-react'
@@ -15,11 +20,11 @@ import {
   PersonFiltered,
 } from '@/modules/admin/summaries/components'
 
-interface IFilter {
+interface IFilterProps {
   onValueChange: (value: string) => void
 }
 
-export const FiltersSection = (props: IFilter) => {
+export const FiltersSection = (props: IFilterProps) => {
   const { filteredParams } = useFilterFromUrl()
   const { onValueChange } = props
 
@@ -57,56 +62,41 @@ export const FiltersSection = (props: IFilter) => {
   const selectedFilter = filteredParams(filtersLabel)
 
   return (
-    <>
-      <Popover
-        placement="right-start"
-        size="sm"
-        className="rounded-sm"
-      >
-        <PopoverTrigger>
-          <Button
-            className="rounded-sm"
-            startContent={
-              <Badge
-                content={selectedFilter?.length}
-                isInvisible={selectedFilter?.length === 0}
-                variant="destructive"
-              >
-                <IconFilter
-                  size={18}
-                  stroke={1.5}
-                />
-              </Badge>
-            }
-            className="font-semibold"
-          >
+    <div className="flex items-center gap-3">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="outline" className="gap-2 relative">
+            <IconFilter size={18} stroke={1.5} />
             Filtros
+            {selectedFilter?.length > 0 && (
+              <Badge variant="destructive" className="ml-1 h-5 w-5 rounded-full flex items-center justify-center p-0 text-[10px]">
+                {selectedFilter.length}
+              </Badge>
+            )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent>
-          <main className=" w-64">
-            <Accordion
-              isCompact
-              defaultExpandedKeys={selectedFilter?.map(
-                (filter) => filter.value
-              )}
-            >
-              {filteredList.map((filter) => (
-                <AccordionItem
-                  key={filter.key}
-                  aria-label={`Filter by ${filter.key}`}
-                  title={filter.name}
-                >
+        <PopoverContent className="w-72 p-0" align="start">
+          <div className="p-4 bg-muted/20 border-b">
+            <h4 className="font-bold text-sm">Opciones de filtrado</h4>
+          </div>
+          <Accordion type="multiple" className="w-full">
+            {filteredList.map((filter) => (
+              <AccordionItem key={filter.key} value={filter.key} className="px-4 border-b last:border-0">
+                <AccordionTrigger className="text-sm hover:no-underline py-3">
+                  {filter.name}
+                </AccordionTrigger>
+                <AccordionContent className="pb-4">
                   {filter.items}
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </main>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </PopoverContent>
       </Popover>
-      <div>
+
+      <div className="flex-1 max-w-sm">
         <PersonFiltered onValueChange={onValueChange} />
       </div>
-    </>
+    </div>
   )
 }
