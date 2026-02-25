@@ -109,18 +109,14 @@ export const FiltersSection = (props: IProps) => {
           </main>
         </PopoverContent>
       </Popover>
-      <Button
-        className="rounded-sm"
-        className="button-dark"
-        onClick={onChageFilter}
-      >
+      <Button className="button-dark" onClick={onChageFilter} >
         Filtrar
       </Button>
       {selectedFilter?.length > 0 && (
         <Button
           className="rounded-sm"
           onClick={handleDeleteFilters}
-          color="warning"
+          variant="outline"
         >
           Limpiar
         </Button>

@@ -45,17 +45,9 @@ export const SpeakersSection = (props: IProps) => {
                   <b>Magistrales</b> que provocan el <b>cambio</b>
                 </h2>
               </div>
-              <Button
-                radius="full"
-                size="lg"
-                variant="solid"
-                variant="default"
-                className="text-white"
-                as={Link}
-                href="/ponentes"
-              >
-                Ver más
-              </Button>
+              <Button size="lg" variant="default" className="text-white" asChild>
+  <Link href="/ponentes">Ver más</Link>
+</Button>
             </motion.header>
 
             {speakersActive && (

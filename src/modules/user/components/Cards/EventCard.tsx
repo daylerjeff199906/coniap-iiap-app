@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { IEvent } from '@/types'
 import { formatDateLarge } from '@/utils/functions'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Link as NextLink } from 'next/link'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -40,7 +40,6 @@ export const EventCard = (props: EventCardProps) => {
               alt={data.name}
               width={260}
               height={260}
-              removeWrapper
               className="rounded-md w-full h-full object-cover bg-gray-300 min-h-28"
             />
           </section>

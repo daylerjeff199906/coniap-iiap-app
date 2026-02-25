@@ -24,9 +24,9 @@ export const UserData = () => {
               onValueChange={onChange}
               label="Nombre de usuario"
               placeholder="Ejemplo: johndoe"
-              radius="sm"
-              variant="bordered"
-              labelPlacement="outside"
+              
+              variant="outline"
+              
               isInvalid={errors.userName !== undefined}
               errorMessage={errors.userName?.message}
             />
@@ -49,13 +49,13 @@ export const UserData = () => {
               onValueChange={onChange}
               label="Correo electrónico"
               placeholder="Ejemplo: correo@gamil.com"
-              radius="sm"
-              variant="bordered"
-              labelPlacement="outside"
+              
+              variant="outline"
+              
               isInvalid={errors.email !== undefined}
               errorMessage={errors.email?.message}
               description="El correo electrónico debe ser válido, se enviará un mensaje para confirmar la creación de la cuenta."
-              isDisabled={watch('id') !== undefined}
+              disabled={watch('id') !== undefined}
             />
           )}
         />
@@ -78,9 +78,9 @@ export const UserData = () => {
                   onValueChange={onChange}
                   label="Password"
                   placeholder="********"
-                  radius="sm"
-                  variant="bordered"
-                  labelPlacement="outside"
+                  
+                  variant="outline"
+                  
                   isInvalid={errors.password !== undefined}
                   errorMessage={errors.password?.message}
                 />
@@ -101,9 +101,9 @@ export const UserData = () => {
                   onValueChange={onChange}
                   label="Confirmar password"
                   placeholder="********"
-                  radius="sm"
-                  variant="bordered"
-                  labelPlacement="outside"
+                  
+                  variant="outline"
+                  
                   isInvalid={errors.password_confirmation !== undefined}
                   errorMessage={errors.password_confirmation?.message}
                 />

@@ -64,7 +64,7 @@ export const FrmDetailSummary = (props: IProps) => {
             >
               <section className="flex justify-start">
                 <Button
-                  radius="sm"
+                  
                   variant="ghost"
                   onClick={handleCancel}
                   startContent={
@@ -81,13 +81,7 @@ export const FrmDetailSummary = (props: IProps) => {
               <InfoDataSummary defaultValues={summary} />
               <ActionsSummary defaultValues={summary} />
               <footer className="flex gap-2 justify-start">
-                <Button
-                  radius="sm"
-                  type="submit"
-                  className="button-dark"
-                  disabled={!isDirty || loading}
-                  isLoading={loading}
-                >
+                <Button type="submit" className="button-dark" disabled={loading} >
                   Guardar cambios
                 </Button>
               </footer>

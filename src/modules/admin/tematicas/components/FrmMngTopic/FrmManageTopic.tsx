@@ -108,8 +108,8 @@ export const FrmManageTopic = (props: IProps) => {
                         <Input
                           aria-label="Nombre del TENA"
                           label="Nombre"
-                          labelPlacement="outside"
-                          radius="sm"
+                          
+                          
                           placeholder="Escribe el nombre del tema"
                           value={value}
                           onValueChange={onChange}
@@ -128,8 +128,8 @@ export const FrmManageTopic = (props: IProps) => {
                         <Textarea
                           aria-label="Descripción del colaborador"
                           label="Descripción"
-                          labelPlacement="outside"
-                          radius="sm"
+                          
+                          
                           placeholder="Escribe la descripción del colaborador"
                           value={value}
                           onValueChange={onChange}
@@ -150,8 +150,8 @@ export const FrmManageTopic = (props: IProps) => {
                         <Input
                           aria-label="Descripción del colaborador"
                           label="Color del tema"
-                          labelPlacement="outside"
-                          radius="sm"
+                          
+                          
                           placeholder="Selecciona un color"
                           description="Selecciona un color o escribe el código hexadecimal"
                           value={value}
@@ -173,12 +173,7 @@ export const FrmManageTopic = (props: IProps) => {
                   </>
                 )}
                 <footer className="flex gap-3 justify-end pt-4 pb-4">
-                  <Button
-                    variant="default"
-                    type="submit"
-                    isDisabled={loading || fileLoading}
-                    isLoading={loading || fileLoading}
-                  >
+                  <Button variant="default" type="submit" disabled={loading || fileLoading} >
                     {dataDefault?.id ? 'Actualizar' : 'Guardar'}
                   </Button>
                   <Button onClick={handleExit}>Cancelar</Button>

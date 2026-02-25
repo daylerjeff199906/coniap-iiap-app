@@ -1,5 +1,5 @@
 'use client'
-import { Image } from 'next/image'
+import NextImage from 'next/image'
 import { IEvent } from '@/types'
 import { Button } from '@/components/ui/button'
 import { IconCalendarMonth } from '@tabler/icons-react'
@@ -36,33 +36,31 @@ export const UtilsActions = (props: IProps) => {
   return (
     <section className="w-full flex flex-col gap-3">
       <Button
-        fullWidth
         variant="default"
-        startContent={<IconCalendarMonth />}
         onClick={handleAddToCalendar}
-        className="rounded-sm"
+        className="w-full font-bold gap-2"
       >
+        <IconCalendarMonth size={20} />
         Agregar a mi agenda
       </Button>
       {event?.sala?.url && (
         <Button
-          href={event?.sala?.url || '#'}
-          target="_blank"
-          className="rounded-sm"
-          as={Link}
-          variant="bordered"
-          variant="default"
-          className="text-primary-500"
-          startContent={
-            <Image
-              src={socialNetworksLogo?.logo}
-              alt="Sala"
-              width={20}
-              className="mr-2 flex-shrink-0"
-            />
-          }
+          variant="outline"
+          asChild
+          className="w-full font-bold"
         >
-          Ir a {event?.sala?.name}
+          <Link href={event?.sala?.url || '#'} target="_blank">
+            {socialNetworksLogo?.logo && (
+              <NextImage
+                src={socialNetworksLogo?.logo}
+                alt="Platform"
+                width={20}
+                height={20}
+                className="mr-2 h-5 w-5 object-contain"
+              />
+            )}
+            Ir a {event?.sala?.name}
+          </Link>
         </Button>
       )}
     </section>

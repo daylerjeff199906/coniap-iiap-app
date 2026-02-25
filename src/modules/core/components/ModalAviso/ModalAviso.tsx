@@ -13,7 +13,7 @@ export const ModalAviso = (props: IProps) => {
     <Modal
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      radius="sm"
+      
       size="2xl"
     >
       <ModalContent>

@@ -121,13 +121,7 @@ export const DialogStatus = (props: IProps) => {
             >
               Cancelar
             </Button>
-            <Button
-              className="rounded-sm"
-              isLoading={loading}
-              isDisabled={loading}
-              className="button-dark"
-              type="submit"
-            >
+            <Button disabled={loading} className="button-dark" type="submit" >
               Guardar
             </Button>
           </footer>

@@ -16,8 +16,8 @@ export const FilterSection = () => {
       <div className="flex gap-2 w-full max-w-[180px]">
         <Input
           type="date"
-          radius="sm"
-          variant="bordered"
+          
+          variant="outline"
           value={date}
           onValueChange={handleDate}
         />

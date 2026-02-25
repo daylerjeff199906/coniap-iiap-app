@@ -45,7 +45,7 @@ export const TabsSections = () => {
       <section className="h-16 bg-primary-800"></section>
       <section className="container py-2">
         <TabsTriggers
-          radius="sm"
+          
           variant="underlined"
           selectedKey={pathname}
         >

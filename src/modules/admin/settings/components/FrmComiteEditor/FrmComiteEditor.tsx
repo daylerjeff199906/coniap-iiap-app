@@ -60,21 +60,13 @@ export const FrmComiteEditor = (props: IProps) => {
             </main>
             <footer className="flex items-center gap-2 justify-end sticky bottom-0 bg-white p-4 border-t border-gray-100">
               <Button
-                radius="sm"
+                
                 size="sm"
                 onClick={() => methods.reset()}
               >
                 Cancelar
               </Button>
-              <Button
-                variant="default"
-                type="submit"
-                isDisabled={isDirty ? false : true || loading}
-                radius="sm"
-                size="sm"
-                className="button-dark"
-                isLoading={loading}
-              >
+              <Button variant="default" type="submit" size="sm" className="button-dark" disabled={loading} >
                 Guardar
               </Button>
             </footer>

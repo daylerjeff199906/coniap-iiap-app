@@ -22,7 +22,7 @@ export const PlatformData = () => {
           <Select
             aria-label="Plataforma"
             label="Plataforma"
-            labelPlacement="outside"
+            
             placeholder="Plataforma"
             className="rounded-sm"
             defaultSelectedKeys={['1']}

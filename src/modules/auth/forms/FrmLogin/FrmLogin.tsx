@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
@@ -120,7 +120,7 @@ export const FrmLogin = () => {
             render={({ field: { value, onChange } }) => (
               <Input
                 label="Correo electrónico"
-                labelPlacement="outside"
+                
                 type="email"
                 placeholder="correo@correo.com"
                 className="rounded-sm"
@@ -143,7 +143,7 @@ export const FrmLogin = () => {
               <Input
                 type="password"
                 label="Contraseña"
-                labelPlacement="outside"
+                
                 placeholder="* * * * * * * *"
                 className="rounded-sm"
                 variant="default"
@@ -159,15 +159,7 @@ export const FrmLogin = () => {
           />
         </section>
         <div className="flex flex-col gap-3">
-          <Button
-            variant="solid"
-            variant="default"
-            fullWidth
-            className="rounded-sm"
-            type="submit"
-            isDisabled={loading}
-            isLoading={loading}
-          >
+          <Button variant="default" fullWidth className="rounded-sm" type="submit" disabled={loading} >
             Iniciar sesión
           </Button>
           <Link
@@ -184,20 +176,7 @@ export const FrmLogin = () => {
         <hr className="w-full" />
       </section>
       <section className="flex flex-col gap-4">
-        <Button
-          className="rounded-sm"
-          fullWidth
-          className="flex items-center justify-center space-x-2 text-white"
-          variant="ghost"
-          onClick={handleGoogle}
-          isLoading={loading}
-          isDisabled={loading}
-          startContent={
-            <Google
-              width="20"
-              height="20"
-              fill="currentColor"
-            />
+        <Button fullWidth className="flex items-center justify-center space-x-2 text-white" variant="ghost" onClick={handleGoogle} disabled={loading} startContent={ <Google width="20" height="20" fill="currentColor" />
           }
         >
           Sign in with Google

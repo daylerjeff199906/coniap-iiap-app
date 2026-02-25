@@ -42,9 +42,9 @@ export const DrawerSelect = (props: IProps) => {
         <footer className="flex justify-end gap-3 p-2">
           <Button
             size="sm"
-            radius="sm"
+            
             onClick={() => setOpen(false)}
-            variant="bordered"
+            variant="outline"
           >
             Cancelar
           </Button>

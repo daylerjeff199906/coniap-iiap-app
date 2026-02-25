@@ -26,8 +26,8 @@ export const InfoGeneral = () => {
               <Input
                 aria-label="Nombre del ponente"
                 label="Nombres"
-                labelPlacement="outside"
-                radius="sm"
+                
+                
                 placeholder="Nombre del ponente"
                 value={value}
                 onValueChange={onChange}
@@ -46,8 +46,8 @@ export const InfoGeneral = () => {
               <Input
                 aria-label="Apellidos del ponente"
                 label="Apellidos"
-                labelPlacement="outside"
-                radius="sm"
+                
+                
                 placeholder="Apellidos del ponente"
                 value={value}
                 onValueChange={onChange}
@@ -69,9 +69,9 @@ export const InfoGeneral = () => {
             <Input
               aria-label="Institución"
               label="Institución"
-              labelPlacement="outside"
+              
               placeholder="Institución a la que pertenece"
-              radius="sm"
+              
               value={value}
               onValueChange={onChange}
               isInvalid={errors.institution !== undefined}
@@ -85,9 +85,9 @@ export const InfoGeneral = () => {
           render={({ field: { onChange, value } }) => (
             <Input
               label="Puesto"
-              labelPlacement="outside"
+              
               placeholder="Puesto que desempeña"
-              radius="sm"
+              
               value={value}
               onValueChange={onChange}
               isInvalid={errors.job !== undefined}
@@ -110,9 +110,9 @@ export const InfoGeneral = () => {
               <Input
                 aria-label="email"
                 label="Email"
-                labelPlacement="outside"
+                
                 placeholder="ejemplo@ejemplo.com"
-                radius="sm"
+                
                 value={value}
                 onValueChange={onChange}
                 isInvalid={errors.email !== undefined}
@@ -128,8 +128,8 @@ export const InfoGeneral = () => {
             <Textarea
               aria-label="Presentación"
               label="Presentación"
-              labelPlacement="outside"
-              radius="sm"
+              
+              
               placeholder="Presentación del ponente"
               value={value}
               onValueChange={onChange}

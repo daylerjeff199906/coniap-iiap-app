@@ -19,12 +19,12 @@ export const PersonData = () => {
           <Input
             label="Nombres"
             placeholder="Escribe tus nombres"
-            labelPlacement="outside"
+            
             value={value || ''}
             onValueChange={onChange}
             isInvalid={errors.name !== undefined}
             errorMessage={errors.name?.message}
-            radius="sm"
+            
           />
         )}
       />
@@ -36,12 +36,12 @@ export const PersonData = () => {
           <Input
             label="Apellidos"
             placeholder="Escribe tus apellidos"
-            labelPlacement="outside"
+            
             value={value || ''}
             onValueChange={onChange}
             isInvalid={errors.surName !== undefined}
             errorMessage={errors.surName?.message}
-            radius="sm"
+            
           />
         )}
       />
@@ -53,11 +53,11 @@ export const PersonData = () => {
           <Input
             label="Puesto de trabajo | Ocupación | Profesión"
             placeholder="Escribe tu puesto de trabajo, ocupación o profesión"
-            labelPlacement="outside"
+            
             description="Ejemplo: Desarrollador de software"
             value={value || ''}
             onValueChange={onChange}
-            radius="sm"
+            
           />
         )}
       />
@@ -68,10 +68,10 @@ export const PersonData = () => {
           <Input
             label="Institucion | Empresa"
             placeholder="Escribe el nombre de la institución donde te desempeñas"
-            labelPlacement="outside"
+            
             value={value || ''}
             onValueChange={onChange}
-            radius="sm"
+            
           />
         )}
       />
@@ -82,10 +82,10 @@ export const PersonData = () => {
           <Textarea
             label="Presentación"
             placeholder="Escribe una presentación corta sobre ti"
-            labelPlacement="outside"
+            
             value={value || ''}
             onValueChange={onChange}
-            radius="sm"
+            
           />
         )}
       />

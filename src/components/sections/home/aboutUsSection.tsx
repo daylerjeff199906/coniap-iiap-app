@@ -81,8 +81,6 @@ export const AboutUsSection = () => {
             <ImageUI
               src={imgAboutUs.src}
               alt="CONIAP 2024"
-              radius="lg"
-              removeWrapper
               className="w-full h-full max-h-[720px] object-cover rounded-xl"
             />
           </motion.div>
@@ -156,7 +154,7 @@ export const AboutUsSection = () => {
               >
                 <Card
                   className="space-y-3 lg:p-5 rounded-xl text-center border-none"
-                  shadow="none"
+                  
                 >
                   <CardContent className="space-y-3">
                     <div className="w-full text-gray-400">{item.icon}</div>

@@ -189,13 +189,7 @@ export const FrmInscriptionSteps = (props: IProps) => {
             )}
             {isBeforeSummary && <RoleData />}
             <div className="col-span-2 pt-3">
-              <Button
-                radius="sm"
-                variant="default"
-                type="submit"
-                isLoading={loading}
-                isDisabled={loading}
-              >
+              <Button variant="default" type="submit" disabled={loading} >
                 Enviar inscripción
               </Button>
             </div>

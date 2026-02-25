@@ -17,8 +17,8 @@ export const DateEvent = () => {
           <Input
             aria-label="Fecha del evento"
             label="Fecha"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             type="date"
             value={String(value) || ''}
             onValueChange={onChange}
@@ -36,8 +36,8 @@ export const DateEvent = () => {
           <Input
             aria-label="Hora de inicio"
             label="Hora de inicio"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             type="time"
             value={value}
             onValueChange={onChange}
@@ -56,8 +56,8 @@ export const DateEvent = () => {
         render={({ field: { onChange, value } }) => (
           <Input
             label="Hora de fin"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             type="time"
             value={value}
             onValueChange={onChange}

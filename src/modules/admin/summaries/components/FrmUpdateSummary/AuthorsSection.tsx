@@ -29,8 +29,8 @@ export const AuthorsSection = () => {
         </header>
         <section className="flex gap-1">
           <Input
-            radius="sm"
-            variant="bordered"
+            
+            variant="outline"
             placeholder="Nombre del autor"
             value={author}
             onValueChange={(value) => {
@@ -40,7 +40,7 @@ export const AuthorsSection = () => {
           <Button
             type="button"
             onClick={handleAddAuthor}
-            radius="sm"
+            
             startContent={
               <div>
                 <IconPlus
@@ -66,7 +66,7 @@ export const AuthorsSection = () => {
                   >
                     <Input
                       type="text"
-                      radius="sm"
+                      
                       placeholder="Nombre del autor"
                       value={(value && value[index]) || ''}
                       onValueChange={(e) => {
@@ -80,7 +80,7 @@ export const AuthorsSection = () => {
                     <Button
                       type="button"
                       onClick={() => remove(index)}
-                      radius="sm"
+                      
                       startContent={
                         <div>
                           <IconTrash size={16} />

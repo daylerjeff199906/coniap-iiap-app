@@ -35,21 +35,18 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
           <Input
             aria-label="Speakers"
             label="Ponente"
-            radius="sm"
-            labelPlacement="outside"
+            
+            
             placeholder="Seleccionar ponente"
             value={value?.name}
             onChange={onChange}
             description="Seleccione el programa al que pertenece el evento, es opcional"
             isInvalid={errors.person_id !== undefined}
             errorMessage={errors.person_id?.message as string}
-            isDisabled={loading}
+            disabled={loading}
             endContent={
               <div>
-                <Button
-                  size="sm"
-                  radius="sm"
-                  startContent={<IconLink size={16} />}
+                <Button startContent={<IconLink size={16} />}
                   onClick={() => setIsOpen(true)}
                 >
                   Seleccionar

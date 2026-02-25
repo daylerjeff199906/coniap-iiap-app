@@ -1,5 +1,5 @@
 // TODO: Check these imports: // Removed NextUI import:  Dropdown, DropdownItem, DropdownMenu, DropdownTrigger 
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Link } from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -55,13 +55,7 @@ export const CardRoom = (props: IProps) => {
           }}
         >
           <DropdownTrigger>
-            <Button
-              isIconOnly
-              size="sm"
-              className="rounded-sm"
-              variant="ghost"
-              className="text-gray-500"
-            >
+            <Button size="sm" variant="ghost" className="text-gray-500" >
               <IconDots size={20} />
             </Button>
           </DropdownTrigger>

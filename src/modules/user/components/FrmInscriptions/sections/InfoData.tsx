@@ -15,8 +15,8 @@ export const InfoData = () => {
         render={({ field: { value, onChange } }) => (
           <Input
             label="Nombres"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             placeholder="Nombres"
             value={value || ''}
             onValueChange={onChange}
@@ -32,8 +32,8 @@ export const InfoData = () => {
         render={({ field: { value, onChange } }) => (
           <Input
             label="Apellidos"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             placeholder="Apellidos"
             value={value || ''}
             onValueChange={onChange}

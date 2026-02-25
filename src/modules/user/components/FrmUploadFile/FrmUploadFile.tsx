@@ -150,17 +150,11 @@ export const FrmUploadFile = (props: IProps) => {
             <MultimediaSection />
           </LayoutFrmHorizontal>
           <footer className="flex gap-3 items-center justify-end">
-            <Button
-              radius="sm"
-              type="submit"
-              isLoading={loading || loadingFile}
-              isDisabled={loading || loadingFile || !isBeforeSummary}
-              className="button-dark"
-            >
+            <Button type="submit" disabled={loading || loadingFile || !isBeforeSummary} className="button-dark" >
               Guardar
             </Button>
             <Button
-              radius="sm"
+              
               onClick={handleExit}
             >
               Cancelar

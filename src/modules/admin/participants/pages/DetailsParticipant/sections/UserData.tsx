@@ -165,13 +165,7 @@ export const UserData = (props: IProps) => {
               >
                 Cancelar
               </Button>
-              <Button
-                className="rounded-sm"
-                className="button-dark"
-                type="submit"
-                isLoading={loadSave}
-                isDisabled={loadSave || !isDirty}
-              >
+              <Button className="button-dark" type="submit" disabled={loadSave || !isDirty} >
                 Crear usuario
               </Button>
             </footer>

@@ -1,6 +1,6 @@
 'use client'
 import { IPerson, ISummary } from '@/types'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 
 interface IProps {
@@ -18,7 +18,6 @@ export const InfoData = (props: IProps) => {
           <Image
             src={data?.image}
             alt={data?.name}
-            removeWrapper
             width={72}
             className="h-40 w-44 object-cover rounded-full min-w-40"
           />
@@ -28,7 +27,6 @@ export const InfoData = (props: IProps) => {
             size="sm"
             className="rounded-sm"
             variant="secondary"
-            color="success"
           >
             {data?.typePerson === 'speaker'
               ? 'Ponente'

@@ -1,4 +1,4 @@
-import { Image } from 'next/image'
+import Image from 'next/image'
 
 export const AlbumSection = () => {
   return (
@@ -22,30 +22,26 @@ export const AlbumSection = () => {
             <Image
               src="https://andeangreattreks.com/wp-content/uploads/exotic-Peruvian-Amazon-1.jpg"
               alt="Peruvian Amazon"
-              removeWrapper
               className="w-full h-full"
-              radius="none"
+              
             />
             <Image
               src="https://andeangreattreks.com/wp-content/uploads/Incredible-biodiversity-of-the-Peruvian-Amazon-1.jpg"
               alt="Incredible biodiversity of the Peruvian Amazon"
-              removeWrapper
               className="w-full h-full"
-              radius="none"
+              
             />
             <Image
               src="https://andeangreattreks.com/wp-content/uploads/birdwatrching-in-peruvian-amazon-1.jpg"
               alt="Bird watching in Peruvian Amazon"
-              removeWrapper
               className="w-full h-full"
-              radius="none"
+              
             />
             <Image
               src="https://andeangreattreks.com/wp-content/uploads/why-explore-the-peruvian-amazon-1.jpg"
               alt="Bird watching in Peruvian Amazon"
-              removeWrapper
               className="w-full h-full"
-              radius="none"
+              
             />
           </div>
         </div>

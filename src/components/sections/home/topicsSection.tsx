@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Card } from '@/components/ui/card'
 
 import { motion } from 'framer-motion'
@@ -73,8 +73,8 @@ const CardTopics = ({ title, icon }: { title: string; icon: string }) => {
   return (
     <Card
       className={`bg-transparent text-white p-6 text-center flex flex-col justify-center items-center gap-2 animate-appearance-in `}
-      radius="none"
-      shadow="none"
+      
+      
     >
       <div className="flex justify-center items-center  rounded-full p-4 ">
         <Image

@@ -17,7 +17,7 @@ interface IProps {
 
 export const FrmUserEditor = (props: IProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [disabled, setIsLoading] = useState(false)
   const { user } = props
   const router = useRouter()
 
@@ -102,18 +102,12 @@ export const FrmUserEditor = (props: IProps) => {
           </main>
           <footer className="flex justify-end gap-2 mt-4">
             <Button
-              radius="sm"
+              
               onClick={() => router.push('/admin/users')}
             >
               Cancelar
             </Button>
-            <Button
-              radius="sm"
-              className="button-dark"
-              type="submit"
-              isLoading={isLoading}
-              isDisabled={isLoading}
-            >
+            <Button className="button-dark" type="submit" disabled={disabled} >
               Guardar
             </Button>
           </footer>

@@ -20,13 +20,13 @@ export const ContactData = () => {
           <Input
             label="Correo electrónico"
             placeholder="Escribe tu correo electrónico"
-            labelPlacement="outside"
+            
             value={value}
             onValueChange={onChange}
             isInvalid={errors.email !== undefined}
             errorMessage={errors.email?.message}
-            isDisabled
-            radius="sm"
+            disabled
+            
           />
         )}
       />
@@ -37,10 +37,10 @@ export const ContactData = () => {
           <Input
             label="Teléfono"
             placeholder="Escribe tu número de teléfono"
-            labelPlacement="outside"
+            
             value={value}
             onValueChange={onChange}
-            radius="sm"
+            
           />
         )}
       />

@@ -24,7 +24,7 @@ export const SectionSpeaker = () => {
           <Input
             aria-label="Speakers"
             label="Ponente"
-            labelPlacement="outside"
+            
             placeholder="Seleccionar ponente"
             value={String(value) || ''}
             onChange={onChange}
@@ -33,10 +33,7 @@ export const SectionSpeaker = () => {
             // errorMessage={errors.person_id?.message as string}
             endContent={
               <div>
-                <Button
-                  size="sm"
-                  radius="sm"
-                  startContent={<IconLink size={16} />}
+                <Button startContent={<IconLink size={16} />}
                   onClick={() => setIsOpen(true)}
                 >
                   Seleccionar

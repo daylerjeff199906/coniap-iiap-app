@@ -14,8 +14,8 @@ export const JobData = () => {
           <Input
             className="sm:col-span-2"
             label="Formación/Profesión"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             placeholder="Biólogo, Ingeniero, etc."
             value={value || ''}
             onValueChange={onChange}
@@ -32,8 +32,8 @@ export const JobData = () => {
           <Input
             className="sm:col-span-2"
             label="Institución"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             placeholder="Escriba el nombre de la institución"
             value={value || ''}
             onValueChange={onChange}

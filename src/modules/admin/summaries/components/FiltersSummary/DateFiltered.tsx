@@ -16,7 +16,7 @@ export const DateFiltered = () => {
       <Input
         aria-label="Filter by date"
         placeholder="Filter by date"
-        radius="sm"
+        
         value={selectedFile}
         onValueChange={handleFile}
         type="date"

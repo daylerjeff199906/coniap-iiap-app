@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { Pagination } from '@/components/ui/pagination'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Select, SelectItem } from '@/components/ui/select'
 import { IconSearch } from '@tabler/icons-react'
@@ -51,28 +51,14 @@ export const ListEventsPage = (props: IEventsPage) => {
       <article className="section-home grid grid-cols-1 gap-4">
         <section className="flex flex-col gap-3 sm:flex-row sm:justify-between">
           <div className="w-full sm:flex">
-            <Select
-              aria-label="Filtrar por tipo de evento"
-              selectedKeys={[searchType]}
-              onSelectionChange={handleSelectType}
-              variant="bordered"
-              className="rounded-sm"
-              className="w-full sm:max-w-xs"
-            >
+            <Select aria-label="Filtrar por tipo de evento" selectedKeys={[searchType]} onSelectionChange={handleSelectType} variant="outline" className="w-full sm:max-w-xs" >
               {optionsTypesEvents.map((option) => (
                 <SelectItem key={option.value}>{option.label}</SelectItem>
               ))}
             </Select>
           </div>
           <div className="w-full sm:max-w-xl sm:min-w-80">
-            <Input
-              defaultValue={searchDefault}
-              aria-label="Buscar eventos"
-              placeholder="Buscar eventos ..."
-              variant="bordered"
-              className="rounded-sm"
-              variant="default"
-              startContent={<IconSearch />}
+            <Input defaultValue={searchDefault} aria-label="Buscar eventos" placeholder="Buscar eventos ..." className="rounded-sm" variant="default" startContent={<IconSearch />}
               value={query}
               onValueChange={setQuery}
             />

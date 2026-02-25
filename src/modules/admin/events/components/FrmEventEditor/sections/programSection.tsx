@@ -64,17 +64,14 @@ export const ProgramSection = () => {
               <Input
                 aria-label="Programs"
                 label="Programa"
-                labelPlacement="outside"
+                
                 placeholder="Seleccionar programa"
                 value={value || ''}
                 onChange={onChange}
                 description="Seleccione el programa al que pertenece el evento, es opcional"
                 endContent={
                   <div>
-                    <Button
-                      size="sm"
-                      className="rounded-sm"
-                      startContent={<IconLink size={16} />}
+                    <Button className="rounded-sm" startContent={<IconLink size={16} />}
                       onClick={() => setIsOpen(true)}
                     >
                       Seleccionar

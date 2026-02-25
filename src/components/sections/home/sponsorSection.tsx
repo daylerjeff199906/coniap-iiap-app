@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Image } from 'next/image'
+import Image from 'next/image'
 
 import { motion } from 'framer-motion'
 
@@ -97,7 +97,6 @@ export const SponsorSection = (props: IProps) => {
                         <Image
                           src={sponsor.image}
                           alt={sponsor.name}
-                          removeWrapper
                           className="h-full w-full sm:w-auto sm:h-32"
                         />
                       </div>

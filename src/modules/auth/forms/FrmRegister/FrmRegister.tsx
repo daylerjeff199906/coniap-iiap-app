@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { svgIsotipoConiap } from '@/assets'
@@ -72,14 +72,14 @@ export const FrmRegister = () => {
                 <Input
                   aria-label="email"
                   label="Correo electrónico"
-                  labelPlacement="outside"
+                  
                   placeholder="ejemplo@ejemplo.com"
                   className="rounded-sm"
                   value={value}
                   onChange={onChange}
                   isInvalid={Boolean(methods.formState.errors.email)}
                   errorMessage={methods.formState.errors.email?.message}
-                  isDisabled={loading}
+                  disabled={loading}
                 />
               )}
             />
@@ -97,7 +97,7 @@ export const FrmRegister = () => {
                 <Input
                   aria-label="Contraseña"
                   label="Contraseña"
-                  labelPlacement="outside"
+                  
                   placeholder="* * * * * * * *"
                   type="password"
                   className="rounded-sm"
@@ -105,13 +105,13 @@ export const FrmRegister = () => {
                   onChange={onChange}
                   isInvalid={Boolean(methods.formState.errors.password)}
                   errorMessage={methods.formState.errors.password?.message}
-                  isDisabled={loading}
+                  disabled={loading}
                 />
               )}
             />
             {/* <Input
             label="Celular"
-            labelPlacement="outside"
+            
             placeholder="999 999 999"
             type="phone"
             className="rounded-sm"
@@ -119,25 +119,17 @@ export const FrmRegister = () => {
           /> */}
             {/* <Input
             label="Nombres"
-            labelPlacement="outside"
+            
             placeholder="Escribe tus nombres"
             className="rounded-sm"
           />
           <Input
             label="Apellidos"
-            labelPlacement="outside"
+            
             placeholder="Escribe tus apellidos"
             className="rounded-sm"
           /> */}
-            <Button
-              fullWidth
-              variant="solid"
-              variant="default"
-              size="lg"
-              type="submit"
-              isLoading={loading}
-              isDisabled={loading}
-            >
+            <Button fullWidth variant="default" size="lg" type="submit" disabled={loading} >
               Registrarse
             </Button>
           </form>
@@ -145,15 +137,15 @@ export const FrmRegister = () => {
         <footer className="flex gap-3 items-center">
           <Button
             fullWidth
-            variant="bordered"
-            isDisabled={loading}
+            variant="outline"
+            disabled={loading}
           >
             Iniciar con Google
           </Button>
           <Button
             fullWidth
-            variant="bordered"
-            isDisabled={loading}
+            variant="outline"
+            disabled={loading}
             onClick={signInWithGoogle}
           >
             Iniciar con Google

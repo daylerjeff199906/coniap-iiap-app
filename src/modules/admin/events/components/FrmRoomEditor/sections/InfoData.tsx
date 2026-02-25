@@ -33,7 +33,7 @@ export const InfoData = () => {
           <Input
             aria-label="Nombre de la sala"
             label="Nombre de la sala"
-            labelPlacement="outside"
+            
             className="rounded-sm"
             placeholder="Ej: Sala 1"
             value={value}
@@ -51,7 +51,7 @@ export const InfoData = () => {
           <Input
             aria-label="Url de la sala"
             label="Url de la sala"
-            labelPlacement="outside"
+            
             className="rounded-sm"
             placeholder="Ej: https://meet.google.com/abc-123"
             value={value}

@@ -20,8 +20,8 @@ export const ContactData = () => {
         render={({ field: { value, onChange } }) => (
           <Input
             label="Email"
-            labelPlacement="outside"
-            radius="sm"
+            
+            
             placeholder="ejemplo@hotmail.com"
             value={value || ''}
             onValueChange={(val) => onChange(val.trim())}

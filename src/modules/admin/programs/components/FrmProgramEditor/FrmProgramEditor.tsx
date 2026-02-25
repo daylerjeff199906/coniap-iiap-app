@@ -71,22 +71,12 @@ export const FrmProgramEditor = (props: IProps) => {
         >
           <InfoGeneral />
           <div className="flex items-center gap-3 justify-end">
-            <Button
-              variant="default"
-              type="submit"
-              isLoading={loading}
-              isDisabled={loading}
-              radius="sm"
-            >
+            <Button variant="default" type="submit" disabled={loading} >
               Guardar
             </Button>
-            <Button
-              as={Link}
-              href="/admin/programas"
-              radius="sm"
-            >
-              Cancelar
-            </Button>
+            <Button asChild>
+  <Link href="/admin/programas">Cancelar</Link>
+</Button>
           </div>
         </form>
       </FormProvider>

@@ -46,16 +46,9 @@ export const AgendaSection = (props: IProps) => {
               por realizarse
             </h3>
           </div>
-          <Button
-            radius="full"
-            size="lg"
-            variant="ghost"
-            variant="destructive"
-            as={Link}
-            href="/agenda"
-          >
-            Ver agenda
-          </Button>
+          <Button size="lg" variant="ghost" asChild>
+  <Link href="/agenda">Ver agenda</Link>
+</Button>
         </motion.div>
         <div className="w-ful col-span-1 sm:col-span-2">
           {programs && programs?.length > 0 && (

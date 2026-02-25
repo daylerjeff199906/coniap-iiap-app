@@ -23,8 +23,8 @@ export const InfoGeneral = () => {
             <Input
               aria-label="titulo del programa"
               label="Título del programa"
-              labelPlacement="outside"
-              radius="sm"
+              
+              
               placeholder="Escríbe el título del programa"
               value={value}
               onValueChange={onChange}
@@ -45,8 +45,8 @@ export const InfoGeneral = () => {
               <Input
                 aria-label="Fecha del evento"
                 label="Fecha"
-                labelPlacement="outside"
-                radius="sm"
+                
+                
                 type="date"
                 value={value}
                 onValueChange={onChange}
@@ -66,8 +66,8 @@ export const InfoGeneral = () => {
             <Textarea
               aria-label="Descripción del evento"
               label="Descripción del programa"
-              labelPlacement="outside"
-              radius="sm"
+              
+              
               placeholder="Descripción del evento"
               value={value}
               onValueChange={onChange}

@@ -72,15 +72,9 @@ export const Header = () => {
         </p>
       </div>
       <div>
-        <Button
-          size="sm"
-          variant="ghost"
-          radius="sm"
-          as={Link}
-          href="/admin/participantes"
-        >
-          Ver todos
-        </Button>
+        <Button size="sm" variant="ghost" asChild>
+  <Link href="/admin/participantes">Ver todos</Link>
+</Button>
       </div>
     </div>
   )

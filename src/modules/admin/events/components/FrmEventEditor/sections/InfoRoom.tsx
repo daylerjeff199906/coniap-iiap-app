@@ -63,17 +63,14 @@ export const InfoRoom = () => {
               <Input
                 aria-label="Sala"
                 label="Sala virtual"
-                labelPlacement="outside"
+                
                 placeholder="Seleccionar sala virtual"
                 value={value || ''}
                 onChange={onChange}
                 description="Seleccione la sala virtual en la que se llevará a cabo el evento"
                 endContent={
                   <div>
-                    <Button
-                      size="sm"
-                      className="rounded-sm"
-                      startContent={<IconLink size={16} />}
+                    <Button className="rounded-sm" startContent={<IconLink size={16} />}
                       onClick={() => setIsOpen(true)}
                     >
                       Seleccionar

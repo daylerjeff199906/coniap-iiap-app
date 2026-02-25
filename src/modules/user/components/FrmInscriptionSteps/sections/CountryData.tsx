@@ -17,7 +17,7 @@ export const CountryData = () => {
         render={({ field: { onChange, value } }) => (
           <Autocomplete
             label="País"
-            labelPlacement="outside"
+            
             placeholder="Selecciona un país"
             name="location"
             defaultItems={countriesData}

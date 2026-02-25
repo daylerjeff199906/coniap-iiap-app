@@ -35,7 +35,7 @@ export const FrmContactUs = () => {
                 aria-label="Nombre"
                 placeholder="John Doe"
                 label="Nombre"
-                radius="sm"
+                
                 size="sm"
               />
               <Input
@@ -43,13 +43,13 @@ export const FrmContactUs = () => {
                 placeholder="ejemplo@correo.com.pe"
                 label="Correo electrónico"
                 size="sm"
-                radius="sm"
+                
               />
               <Input
                 aria-label="Teléfono"
                 placeholder="987654321"
                 label="Teléfono"
-                radius="sm"
+                
                 size="sm"
               />
               <Checkbox size="sm">
@@ -59,9 +59,9 @@ export const FrmContactUs = () => {
               </Checkbox>
               <div>
                 <Button
-                  variant="solid"
+                  
                   variant="default"
-                  radius="full"
+                  
                 >
                   Enviar
                 </Button>

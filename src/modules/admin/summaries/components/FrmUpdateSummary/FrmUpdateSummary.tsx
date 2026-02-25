@@ -88,7 +88,7 @@ export const FrmUpdateSummary = (props: IProps) => {
           <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-8rem)] overflow-y-auto bg-white flex flex-col gap-3 p-2 lg:p-4 border rounded-md">
             <section className="flex justify-start">
               <Button
-                radius="sm"
+                
                 variant="ghost"
                 onClick={handleCancel}
                 startContent={
@@ -123,14 +123,14 @@ export const FrmUpdateSummary = (props: IProps) => {
                   <Input
                     aria-label="Título del resumen"
                     label="Título del tema del resumen"
-                    labelPlacement="outside"
+                    
                     placeholder="Título"
                     value={value}
                     onChange={onChange}
-                    radius="sm"
+                    
                     isInvalid={methods.formState.errors?.title !== undefined}
                     errorMessage={methods.formState.errors?.title?.message}
-                    isDisabled={loading || loadingFile}
+                    disabled={loading || loadingFile}
                   />
                 )}
               />
@@ -141,18 +141,11 @@ export const FrmUpdateSummary = (props: IProps) => {
 
               <footer className="pt-4">
                 <div className="flex items-center justify-end gap-3">
-                  <Button
-                    type="submit"
-                    radius="sm"
-                    variant="default"
-                    isLoading={loading || loadingFile}
-                    isDisabled={loading || loadingFile}
-                    className="button-dark"
-                  >
+                  <Button type="submit" variant="default" disabled={loading || loadingFile} className="button-dark" >
                     {summary?.id ? 'Actualizar' : 'Guardar'}
                   </Button>
                   <Button
-                    radius="sm"
+                    
                     type="reset"
                     onClick={handleCancel}
                   >

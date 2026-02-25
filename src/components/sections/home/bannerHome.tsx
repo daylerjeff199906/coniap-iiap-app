@@ -189,16 +189,9 @@ export const BannerHome = () => {
           <div className="w-full flex items-center gap-3">
             {isSpecificDate() && (
               <div className="flex flex-row gap-1 items-center">
-                <Button
-                  className="animate-appearance-in text-white bg-green-700 px-6"
-                  variant="solid"
-                  className="rounded-full"
-                  size="lg"
-                  as={Link}
-                  href="/agenda"
-                >
-                  Ver agenda
-                </Button>
+                <Button className="rounded-full" size="lg" asChild>
+  <Link href="/agenda">Ver agenda</Link>
+</Button>
                 <Link
                   href={URL_PROGRAM}
                   download={true}
@@ -210,26 +203,14 @@ export const BannerHome = () => {
               </div>
             )}
             {isBeforeConference && (
-              <Button
-                className="animate-appearance-in text-white bg-green-700"
-                variant="solid"
-                className="rounded-full"
-                as={Link}
-                href="/inscripciones"
-              >
-                Inscríbete
-              </Button>
+              <Button className="rounded-full" asChild>
+  <Link href="/inscripciones">Inscríbete</Link>
+</Button>
             )}
             {isBeforeSummary && (
-              <Button
-                variant="secondary"
-                className="rounded-full"
-                className="bg-white text-black animate-appearance-in"
-                as={Link}
-                href="/login"
-              >
-                Enviar resumen
-              </Button>
+              <Button variant="secondary" className="bg-white text-black animate-appearance-in" asChild>
+  <Link href="/login">Enviar resumen</Link>
+</Button>
             )}
           </div>
         </motion.div>
@@ -246,39 +227,18 @@ export const BannerHome = () => {
                   className=""
                   variants={item}
                 >
-                  <ImageUi
-                    src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
-                    alt="Banner Home"
-                    className="w-52 h-56 object-cover "
-                    className="rounded-sm"
-                    removeWrapper
-                  />
+                  <ImageUi src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe" alt="Banner Home" className="rounded-sm" />
                 </motion.div>
                 <motion.div variants={item}>
-                  <ImageUi
-                    src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede"
-                    alt="Tejido-iiap"
-                    className="rounded-sm"
-                    className="w-52 h-56 object-cover"
-                  />
+                  <ImageUi src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede" alt="Tejido-iiap" className="w-52 h-56 object-cover" />
                 </motion.div>
               </div>
               <div className="space-y-3 pt-8">
                 <motion.div variants={item}>
-                  <ImageUi
-                    src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
-                    alt="expoIIAP"
-                    className="rounded-sm"
-                    className="w-48 h-52 object-cover"
-                  />
+                  <ImageUi src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be" alt="expoIIAP" className="w-48 h-52 object-cover" />
                 </motion.div>
                 <motion.div variants={item}>
-                  <ImageUi
-                    src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2"
-                    alt="Banner Home"
-                    className="rounded-sm"
-                    className="h-48 object-cover"
-                  />
+                  <ImageUi src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2" alt="Banner Home" className="h-48 object-cover" />
                 </motion.div>
               </div>
             </>

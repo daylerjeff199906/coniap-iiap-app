@@ -196,15 +196,7 @@ export const FrmInscriptions = () => {
             )}
             {isBeforeSummary && <RoleData />}
             <div className="w-full">
-              <Button
-                id="btn-submit-inscription"
-                radius="full"
-                variant="default"
-                type="submit"
-                size="lg"
-                isLoading={loading}
-                isDisabled={loading}
-              >
+              <Button id="btn-submit-inscription" variant="default" type="submit" size="lg" disabled={loading} >
                 Enviar inscripción
               </Button>
             </div>

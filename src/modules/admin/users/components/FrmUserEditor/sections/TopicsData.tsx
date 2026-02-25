@@ -53,7 +53,7 @@ export const TopicsData = () => {
                 onChange={onChange}
                 errorMessage={errors.topics?.message}
                 isInvalid={errors.topics !== undefined}
-                isDisabled={loading}
+                disabled={loading}
               >
                 {listTopics.map((topic) => (
                   <Checkbox

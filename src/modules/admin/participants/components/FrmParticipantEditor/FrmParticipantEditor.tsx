@@ -104,7 +104,7 @@ export const FrmParticipantEditor = (props: IProps) => {
                 <Select
                   aria-label="select"
                   label="Tipo de participante (ACTUAL)"
-                  labelPlacement="outside"
+                  
                   placeholder="Selecciona un tipo de participante"
                   defaultSelectedKeys={['participant']}
                   selectedKeys={[value] || ['participant']}
@@ -113,7 +113,7 @@ export const FrmParticipantEditor = (props: IProps) => {
                     onChange(newValue)
                   }}
                   disallowEmptySelection
-                  radius="sm"
+                  
                   isInvalid={methods.formState.errors.typePerson !== undefined}
                   errorMessage={
                     methods.formState.errors.typePerson?.message as string
@@ -133,19 +133,13 @@ export const FrmParticipantEditor = (props: IProps) => {
           </div>
           <InfoGeneral />
           <footer className="flex items-center justify-end gap-3">
-            <Button
-              type="submit"
-              variant="default"
-              isDisabled={loading || loadFile}
-              isLoading={loading || loadFile}
-              radius="sm"
-            >
+            <Button type="submit" variant="default" disabled={loading || loadFile} >
               Guardar
             </Button>
             <Button
               type="reset"
               onClick={handleBack}
-              radius="sm"
+              
             >
               Cancelar
             </Button>

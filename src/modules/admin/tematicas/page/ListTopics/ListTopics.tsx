@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { Image } from 'next/image'
+import Image from 'next/image'
 
 import { TableGeneral } from '@/components'
 import { IActions, IColumns } from '@/types'
@@ -96,7 +96,7 @@ const RenderImage = (image: string) => {
         alt="sponsor"
         width={50}
         height={50}
-        radius="none"
+        
       />
     </div>
   )

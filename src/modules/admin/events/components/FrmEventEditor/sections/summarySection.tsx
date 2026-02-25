@@ -72,7 +72,7 @@ export const SummarySection = () => {
                 <Input
                   aria-label="Resumen"
                   label="Resumen"
-                  labelPlacement="outside"
+                  
                   placeholder="Seleccionar resumen"
                   value={value || ''}
                   onChange={onChange}
@@ -81,10 +81,7 @@ export const SummarySection = () => {
                   errorMessage={errors.summary?.message as string}
                   endContent={
                     <div>
-                      <Button
-                        size="sm"
-                        className="rounded-sm"
-                        startContent={<IconLink size={16} />}
+                      <Button className="rounded-sm" startContent={<IconLink size={16} />}
                         onClick={() => setIsOpen(true)}
                       >
                         Seleccionar
@@ -112,7 +109,7 @@ export const SummarySection = () => {
             <Input
               aria-label="Nombre del evento"
               label="Nombre"
-              labelPlacement="outside"
+              
               className="rounded-sm"
               placeholder="Nombre del evento"
               value={value}
@@ -132,7 +129,7 @@ export const SummarySection = () => {
             <Textarea
               aria-label="Descripción del evento"
               label="Descripción breve del evento"
-              labelPlacement="outside"
+              
               className="rounded-sm"
               placeholder="Descripción del evento"
               value={value}

@@ -75,10 +75,10 @@ export const FrmForgotPassword = () => {
             render={({ field: { value, onChange } }) => (
               <Input
                 label="Correo electrónico"
-                labelPlacement="outside"
+                
                 type="email"
                 placeholder="correo@correo.com"
-                radius="sm"
+                
                 variant="default"
                 classNames={{
                   label: 'text-white',
@@ -93,14 +93,7 @@ export const FrmForgotPassword = () => {
           />
         </section>
         <section className="flex items-center gap-3">
-          <Button
-            type="submit"
-            variant="default"
-            fullWidth
-            disabled={loading}
-            isLoading={loading}
-            radius="sm"
-          >
+          <Button type="submit" variant="default" fullWidth disabled={loading} >
             Enviar correo
           </Button>
         </section>

@@ -31,8 +31,8 @@ export const PersonData = () => {
           <Input
             aria-label="person_detail"
             label="Persona"
-            radius="sm"
-            labelPlacement="outside"
+            
+            
             placeholder="Seleccionar una persona"
             value={value ? value.name + ' ' + value.surName : ''}
             onChange={onChange}
@@ -41,10 +41,7 @@ export const PersonData = () => {
             errorMessage={errors.person_detail?.message as string}
             endContent={
               <div>
-                <Button
-                  size="sm"
-                  radius="sm"
-                  startContent={<IconLink size={16} />}
+                <Button startContent={<IconLink size={16} />}
                   onClick={() => setIsOpen(true)}
                 >
                   Seleccionar

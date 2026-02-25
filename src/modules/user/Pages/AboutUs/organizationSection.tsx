@@ -1,5 +1,5 @@
 'use client'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import svgAddorm from '@/assets/svg/patron-fino.svg'
 import { IPersonComite } from '@/types'
@@ -42,7 +42,6 @@ export const OrganizationSection = (props: IProps) => {
             <Image
               src={svgAddorm.src}
               alt="Patrón fino"
-              removeWrapper
               className="w-full max-w-lg"
             />
           </header>

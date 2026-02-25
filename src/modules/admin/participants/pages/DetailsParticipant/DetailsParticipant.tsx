@@ -24,17 +24,7 @@ export const DetailsParticipant = (props: IProps) => {
   return (
     <main className="flex flex-col gap-4 w-full p-6 border rounded-xl bg-white">
       <section>
-        <Button
-          onClick={handleExit}
-          size="sm"
-          variant="ghost"
-          radius="sm"
-          startContent={
-            <IconArrowNarrowLeft
-              size={20}
-              stroke={1.5}
-              className="text-gray-500"
-            />
+        <Button onClick={handleExit} variant="ghost" startContent={ <IconArrowNarrowLeft size={20} stroke={1.5} className="text-gray-500" />
           }
         >
           Atras

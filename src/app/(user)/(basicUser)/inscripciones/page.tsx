@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import img_logo from '@/assets/svg/ISOTIPO - CONIAP.svg'
 import { imgSpeakerInscription } from '@/assets'
@@ -87,12 +87,8 @@ export default function Page() {
             </ul>
             {isBeforeConference && (
               <div>
-                <Button
-                  className="rounded-full"
-                  color="warning"
-                  className="font-medium px-6"
-                  startContent={<IconPlayerPlayFilled size={20} />}
-                  variant="bordered"
+                <Button variant="outline" className="font-medium px-6" startContent={<IconPlayerPlayFilled size={20} />}
+                  variant="outline"
                   onClick={activeDriver}
                 >
                   Ver demo
@@ -104,7 +100,6 @@ export default function Page() {
             <Image
               src={img_logo.src}
               alt="logo"
-              removeWrapper
               className="w-1/3 lg:w-10/12"
             />
           )}
@@ -116,7 +111,6 @@ export default function Page() {
               <Image
                 src={img_logo.src}
                 alt="logo"
-                removeWrapper
                 className="h-64"
               />
             </div>
@@ -144,23 +138,15 @@ export default function Page() {
                 !Descárgalo aquí!
               </h3>
             </div>
-            <Button
-              className="rounded-full"
-              size="lg"
-              as={Link}
-              href={infoData?.format_summary || ''}
-              variant="bordered"
-              className="text-white"
-            >
-              Descargar formato
-            </Button>
+            <Button size="lg" asChild variant="outline" className="text-white">
+  <Link href={infoData?.format_summary || ''}>Descargar formato</Link>
+</Button>
           </div>
         </div>
         <Image
           src="https://siepsi.com.co/wp-content/uploads/2021/11/ponencia.jpeg"
           alt="inscriptions"
-          removeWrapper
-          radius="none"
+          
           className="absolute top-0 left-0 w-full h-full object-cover object-center -z-10"
         />
       </section>
@@ -174,23 +160,15 @@ export default function Page() {
                 </h1>
               </div>
               <div className="flex items-center gap-3">
-                <Button
-                  size="lg"
-                  className="rounded-full"
-                  as={Link}
-                  href="/login"
-                  variant="destructive"
-                  id="login-link"
-                >
-                  Enviar resúmen
-                </Button>
+                <Button size="lg" className="rounded-full" asChild variant="destructive" id="login-link">
+  <Link href="/login">Enviar resúmen</Link>
+</Button>
               </div>
             </div>
             <div className=" col-span-2">
               <Image
                 src={imgSpeakerInscription.src}
                 alt="speaker"
-                removeWrapper
                 className="max-h-80 lg:max-h-[480px]"
                 loading="lazy"
               />

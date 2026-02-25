@@ -17,8 +17,8 @@ export const NavBarUserPhone = () => {
       <Button
         className="sticky top-4 right-4 z-50 text-white"
         onClick={() => setIsActived(!isActived)}
-        isIconOnly
-        radius="lg"
+        size="icon"
+        
         variant="ghost"
       >
         {isActived ? (
@@ -109,28 +109,12 @@ const NavSection = (props: IProps) => {
           </div>
 
           <div className="pt-4 flex flex-col gap-2">
-            <Button
-              size="lg"
-              variant="ghost"
-              radius="full"
-              fullWidth
-              as={Link}
-              href="/login"
-              className="text-white"
-            >
-              Ya tengo mi cuenta
-            </Button>
-            <Button
-              size="lg"
-              variant="solid"
-              variant="destructive"
-              radius="full"
-              fullWidth
-              as={Link}
-              href="/inscripciones"
-            >
-              ¡Inscríbete ya!
-            </Button>
+            <Button size="lg" variant="ghost" fullWidth asChild className="text-white">
+  <Link href="/login">Ya tengo mi cuenta</Link>
+</Button>
+            <Button size="lg" variant="destructive" fullWidth asChild>
+  <Link href="/inscripciones">¡Inscríbete ya!</Link>
+</Button>
           </div>
 
           <div className="flex w-full justify-between text-sm pt-6">

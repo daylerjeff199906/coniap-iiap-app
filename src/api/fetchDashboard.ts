@@ -87,7 +87,7 @@ export async function fetchPersonStats(): Promise<PersonStatsResult> {
     }
     // Contar los totales y los estados
     const total = Number(total_count)
-    const actived = data.filter((person) => person.isActived).length
+    const actived = (data || []).filter((person: any) => person.isActived).length
     const inactived = Number(total_count) - actived
 
     // Almacenar los resultados en el objeto

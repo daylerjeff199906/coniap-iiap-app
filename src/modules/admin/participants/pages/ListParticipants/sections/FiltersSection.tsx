@@ -57,7 +57,7 @@ export const FiltersSection = () => {
             aria-label="Tipo de persona"
             aria-labelledby="Tipo de persona"
             className="rounded-sm"
-            variant="bordered"
+            variant="outline"
             selectedKeys={[selectedTypePerson]}
             onSelectionChange={(value) => handleTypePerson(value)}
             disallowEmptySelection
@@ -82,7 +82,7 @@ export const FiltersSection = () => {
           aria-label="Estado"
           aria-labelledby="Estado"
           className="rounded-sm"
-          variant="bordered"
+          variant="outline"
           selectedKeys={[selectedStatus]}
           onSelectionChange={(value) => handleStatus(value)}
           disallowEmptySelection

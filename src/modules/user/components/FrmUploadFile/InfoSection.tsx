@@ -15,11 +15,11 @@ export const InfoSection = () => {
           <Input
             aria-label="Título del resumen"
             label="Título del tema del resumen"
-            labelPlacement="outside"
+            
             placeholder="Título"
             value={value}
             onChange={onChange}
-            radius="sm"
+            
             isInvalid={formState.errors?.title !== undefined}
             errorMessage={formState.errors?.title?.message}
           />

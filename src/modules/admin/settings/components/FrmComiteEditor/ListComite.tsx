@@ -53,8 +53,8 @@ export const ListComimte = () => {
       <div className="w-full flex flex-col gap-2 ">
         <section className="flex gap-1">
           <Input
-            radius="sm"
-            variant="bordered"
+            
+            variant="outline"
             placeholder="Nombre del personal de comité"
             value={personal}
             onChange={(e) => setPersonal(e.target.value)}
@@ -62,7 +62,7 @@ export const ListComimte = () => {
           <Button
             type="button"
             onClick={handleAddAuthor}
-            radius="sm"
+            
             startContent={
               <div>
                 <IconPlus
@@ -91,20 +91,13 @@ export const ListComimte = () => {
                     onDragEnd={handleDragEnd}
                   >
                     <div>
-                      <Button
-                        radius="sm"
-                        size="sm"
-                        isIconOnly
-                        variant="ghost"
-                        className="cursor-move"
-                        isDisabled
-                      >
+                      <Button size="icon" variant="ghost" className="cursor-move" disabled >
                         <IconGripVertical size={16} />
                       </Button>
                     </div>
                     <Input
                       type="text"
-                      radius="sm"
+                      
                       size="sm"
                       placeholder="Nombre del personal de comité"
                       value={value?.[index]?.name || ''}
@@ -121,7 +114,7 @@ export const ListComimte = () => {
                       type="button"
                       size="sm"
                       onClick={() => remove(index)}
-                      radius="sm"
+                      
                       startContent={
                         <div>
                           <IconTrash size={16} />

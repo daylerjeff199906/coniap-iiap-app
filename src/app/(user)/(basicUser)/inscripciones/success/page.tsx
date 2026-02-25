@@ -50,15 +50,9 @@ export default function Page() {
                     {step.content}
                   </p>
                   {step.link && (
-                    <Button
-                      href={step?.link}
-                      as={Link}
-                      variant="bordered"
-                      radius="full"
-                      variant="default"
-                    >
-                      Iniciar sesión
-                    </Button>
+                    <Button asChild variant="outline">
+  <Link href={step?.link}>Iniciar sesión</Link>
+</Button>
                   )}
                 </li>
               ))}

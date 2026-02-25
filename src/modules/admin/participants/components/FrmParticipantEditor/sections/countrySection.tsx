@@ -19,7 +19,7 @@ export const CountrySection = () => {
         render={({ field: { onChange, value } }) => (
           <Autocomplete
             label="País"
-            labelPlacement="outside"
+            
             placeholder="Selecciona un país"
             name="location"
             defaultItems={countriesData}
@@ -46,7 +46,7 @@ export const CountrySection = () => {
           <Input
             aria-label="Teléfono del participante"
             label="Teléfono"
-            labelPlacement="outside"
+            
             className="rounded-sm"
             placeholder="Teléfono del participante"
             value={value}

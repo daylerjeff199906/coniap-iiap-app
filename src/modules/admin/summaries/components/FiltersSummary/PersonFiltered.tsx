@@ -53,7 +53,7 @@ export const PersonFiltered = (props: IFilter) => {
       >
         <PopoverTrigger>
           <Button
-            isLoading={loading}
+            disabled={loading}
             className="rounded-sm"
           >
             {personSelected ? (
@@ -106,9 +106,9 @@ export const PersonFiltered = (props: IFilter) => {
       </Popover>
       {personSelected && (
         <Button
-          isIconOnly
+          size="icon"
           className="rounded-sm"
-          variant="bordered"
+          variant="outline"
           onClick={() => {
             setPersonSelected(null)
             onValueChange('')

@@ -102,18 +102,12 @@ export const FrmProfile = (props: IFrmProfileProps) => {
 
         <footer className="pt-4">
           <div className="flex items-center gap-3 justify-end">
-            <Button
-              variant="default"
-              isDisabled={loading}
-              isLoading={loading}
-              type="submit"
-              radius="sm"
-            >
+            <Button variant="default" disabled={loading} type="submit" >
               Guardar cambios
             </Button>
             <Button
               onClick={handleCancel}
-              radius="sm"
+              
             >
               Cancelar
             </Button>

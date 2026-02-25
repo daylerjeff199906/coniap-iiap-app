@@ -55,7 +55,7 @@ export const FiltersSection = (props: IProps) => {
           aria-label="Tipo de persona"
           aria-labelledby="Tipo de persona"
           className="rounded-sm"
-          variant="bordered"
+          variant="outline"
           selectedKeys={[selectedTypePerson]}
           onSelectionChange={(value) => handleTypePerson(value)}
           disallowEmptySelection
@@ -78,7 +78,7 @@ export const FiltersSection = (props: IProps) => {
           aria-label="Estado"
           aria-labelledby="Estado"
           className="rounded-sm"
-          variant="bordered"
+          variant="outline"
           selectedKeys={[selectedStatus]}
           onSelectionChange={(value) => handleStatus(value)}
           disallowEmptySelection
@@ -96,10 +96,7 @@ export const FiltersSection = (props: IProps) => {
           ))}
         </Select>
       </div>
-      <Button
-        className="rounded-sm"
-        className="button-dark"
-        startContent={<IconFilter size={20} />}
+      <Button className="button-dark" startContent={<IconFilter size={20} />}
         onClick={onChageFilter}
       >
         Filtrar
@@ -108,7 +105,7 @@ export const FiltersSection = (props: IProps) => {
         <Button
           className="rounded-sm"
           onClick={onClearFilter}
-          color="warning"
+          variant="outline"
         >
           Limpiar
         </Button>

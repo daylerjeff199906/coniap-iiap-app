@@ -32,16 +32,9 @@ export default function Page() {
               para poder enviar resúmenes.
             </p>
             <div>
-              <Button
-                as={Link}
-                href="/dashboard/profile"
-                variant="destructive"
-                variant="solid"
-                size="sm"
-                radius="sm"
-              >
-                Completar datos
-              </Button>
+              <Button asChild variant="destructive" size="sm">
+  <Link href="/dashboard/profile">Completar datos</Link>
+</Button>
             </div>
           </div>
         </section>

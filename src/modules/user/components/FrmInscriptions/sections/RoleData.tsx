@@ -72,7 +72,7 @@ export const RoleData = () => {
               <Input
                 className="rounded-sm"
                 label="Contraseña"
-                labelPlacement="outside"
+                
                 placeholder="Ingrese su contraseña"
                 type="password"
                 value={value || ''}
@@ -95,7 +95,7 @@ export const RoleData = () => {
               <Input
                 className="rounded-sm"
                 label="Confirmar contraseña"
-                labelPlacement="outside"
+                
                 placeholder="Confirme su contraseña"
                 type="password"
                 value={value || ''}

@@ -1,11 +1,17 @@
 'use client'
 import { usePathname } from 'next/navigation'
-// TODO: Check these imports: // Removed NextUI import:  Accordion, AccordionItem 
-import { Image } from 'next/image'
+import NextImage from 'next/image'
 import { Button } from '@/components/ui/button'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import logo from '@/assets/images/logo-admin.webp'
 import { IMenuSideBar } from '@/types'
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
 
 import {
   IconLayoutDashboard,
@@ -47,105 +53,82 @@ export const AsideMenu = (props: IProps) => {
 
   return (
     <aside
-      className="fixed lg:sticky top-0 z-50 w-60 hidden lg:flex  max-w-60 min-w-60 flex-col flex-shrink-0 font-normal bg-white dark:bg-gray-800 h-screen border-r border-gray-200 dark:border-gray-700 transition-width duration-75"
+      className="fixed lg:sticky top-0 z-50 w-64 hidden lg:flex max-w-64 min-w-64 flex-col flex-shrink-0 bg-background h-screen border-r transition-all duration-300"
       id="aside-menu"
     >
-      <header className="w-full">
-        <div className="px-4 py-3">
-          <Image
-            src={logo.src}
-            alt="logo"
-            removeWrapper
-          />
-        </div>
+      <header className="p-6">
+        <NextImage
+          src={logo.src}
+          alt="Admin Logo"
+          width={180}
+          height={60}
+          className="object-contain"
+          priority
+        />
       </header>
-      <div className="w-full">
-        <div className="flex flex-col flex-1 min-h-0 pt-0 dark:bg-gray-800">
-          <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-200 dark:scrollbar-thumb-gray-700 dark:scrollbar-track-gray-800 h-full overflow-y-auto max-h-[calc(100vh-4rem)]">
-            {menuAside?.map((item) => (
-              <div key={item.id}>
-                <h3 className="px-4 text-xs text-stone-300 capitalize dark:text-gray-400">
-                  {item.section}
-                </h3>
-                <ul className="my-2">
-                  {item.items?.map((subItem) =>
-                    subItem?.moreItems && subItem?.moreItems.length > 0 ? (
-                      <li
-                        className="px-4"
-                        key={subItem?.id}
-                      >
-                        <Accordion
-                          variant="ghost"
-                          isCompact
-                          className="w-full min-w-full px-0"
-                          itemClasses={{
-                            base: 'text-xs w-full px-0',
-                            title: 'text-xs mx-0 font-medium px-0',
-                            content: 'w-full',
-                            trigger:
-                              'hover:bg-default-200 rounded-lg w-full px-3',
-                          }}
-                        >
-                          <AccordionItem
-                            title={subItem.title}
-                            startContent={
-                              <>{getIcon(subItem?.icon as string)}</>
-                            }
-                          >
-                            <ul>
-                              {subItem.moreItems.map((moreItem) => (
-                                <li key={moreItem.id}>
-                                  <Button
-                                    className="rounded-sm"
-                                    size="sm"
-                                    fullWidth
-                                    className="flex items-center justify-start"
-                                    startContent={
-                                      <>{getIcon(moreItem?.icon as string)}</>
-                                    }
-                                    as={Link}
-                                    href={moreItem.href ?? ''}
-                                    variant={
-                                      pathname === moreItem.href
-                                        ? 'solid'
-                                        : 'light'
-                                    }
-                                  >
-                                    {moreItem.title}
-                                  </Button>
-                                </li>
-                              ))}
-                            </ul>
-                          </AccordionItem>
-                        </Accordion>
-                      </li>
-                    ) : (
-                      <li
-                        className="px-4"
-                        key={subItem.id}
-                      >
-                        <Button
-                          className="rounded-sm"
-                          size="sm"
-                          fullWidth
-                          className="flex items-center justify-start"
-                          startContent={<>{getIcon(subItem?.icon as string)}</>}
-                          as={Link}
-                          href={subItem.href ?? ''}
-                          variant={
-                            pathname === subItem.href ? 'solid' : 'light'
-                          }
-                        >
-                          {subItem.title}
-                        </Button>
-                      </li>
-                    )
-                  )}
-                </ul>
-              </div>
-            ))}
+
+      <div className="flex-1 overflow-y-auto px-4 py-2 space-y-6">
+        {menuAside?.map((item) => (
+          <div key={item.id} className="space-y-2">
+            <h3 className="px-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              {item.section}
+            </h3>
+            <ul className="space-y-1">
+              {item.items?.map((subItem) =>
+                subItem?.moreItems && subItem?.moreItems.length > 0 ? (
+                  <li key={subItem?.id}>
+                    <Accordion type="single" collapsible className="border-none">
+                      <AccordionItem value={subItem.id} className="border-none">
+                        <AccordionTrigger className="py-2 px-3 hover:bg-accent rounded-lg hover:no-underline text-sm font-medium transition-colors">
+                          <div className="flex items-center gap-3">
+                            {getIcon(subItem?.icon as string)}
+                            <span>{subItem.title}</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-1 pb-0 pl-7 space-y-1">
+                          {subItem.moreItems.map((moreItem) => (
+                            <Button
+                              key={moreItem.id}
+                              asChild
+                              variant={pathname === moreItem.href ? 'secondary' : 'ghost'}
+                              size="sm"
+                              className={cn(
+                                "w-full justify-start font-medium gap-3",
+                                pathname === moreItem.href && "bg-secondary text-secondary-foreground"
+                              )}
+                            >
+                              <Link href={moreItem.href ?? ''}>
+                                {getIcon(moreItem?.icon as string)}
+                                {moreItem.title}
+                              </Link>
+                            </Button>
+                          ))}
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </li>
+                ) : (
+                  <li key={subItem.id}>
+                    <Button
+                      asChild
+                      variant={pathname === subItem.href ? 'secondary' : 'ghost'}
+                      size="sm"
+                      className={cn(
+                        "w-full justify-start font-medium gap-3 h-10 px-3",
+                        pathname === subItem.href && "bg-secondary text-secondary-foreground"
+                      )}
+                    >
+                      <Link href={subItem.href ?? ''}>
+                        {getIcon(subItem?.icon as string)}
+                        {subItem.title}
+                      </Link>
+                    </Button>
+                  </li>
+                )
+              )}
+            </ul>
           </div>
-        </div>
+        ))}
       </div>
     </aside>
   )

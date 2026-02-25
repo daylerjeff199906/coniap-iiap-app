@@ -145,23 +145,12 @@ export const FrmEventEditor = (props: IProps) => {
             <MoreDescription />
             <StatusSection />
             <footer className="flex items-center gap-2 justify-end sticky bottom-0 bg-white p-4 border-t border-gray-100">
-              <Button
-                variant="default"
-                type="submit"
-                isLoading={loading}
-                isDisabled={loading || !isDirty}
-                radius="sm"
-                className="button-dark"
-              >
+              <Button variant="default" type="submit" disabled={loading || !isDirty} className="button-dark" >
                 {dataDefault?.id ? 'Editar' : 'Agregar'}
               </Button>
-              <Button
-                as={Link}
-                href="/admin/eventos"
-                radius="sm"
-              >
-                Cancelar
-              </Button>
+              <Button asChild>
+  <Link href="/admin/eventos">Cancelar</Link>
+</Button>
             </footer>
           </form>
         </main>
