@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form'
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { IconTrash, IconPlus, IconGripVertical } from '@tabler/icons-react'
 import { IPersonComite } from '@/types'
 
@@ -60,7 +61,7 @@ export const ListComimte = () => {
           />
           <Button
             type="button"
-            onPress={handleAddAuthor}
+            onClick={handleAddAuthor}
             radius="sm"
             startContent={
               <div>
@@ -94,7 +95,7 @@ export const ListComimte = () => {
                         radius="sm"
                         size="sm"
                         isIconOnly
-                        variant="light"
+                        variant="ghost"
                         className="cursor-move"
                         isDisabled
                       >
@@ -119,14 +120,14 @@ export const ListComimte = () => {
                     <Button
                       type="button"
                       size="sm"
-                      onPress={() => remove(index)}
+                      onClick={() => remove(index)}
                       radius="sm"
                       startContent={
                         <div>
                           <IconTrash size={16} />
                         </div>
                       }
-                      color="danger"
+                      variant="destructive"
                     >
                       Quitar
                     </Button>

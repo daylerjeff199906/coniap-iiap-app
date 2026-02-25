@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Card, Image } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Card } from '@/components/ui/card'
 
 import { motion } from 'framer-motion'
 

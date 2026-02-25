@@ -1,12 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Button,
-} from '@nextui-org/react'
+import {  } from '@nextui-org/react'
+import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
 import { ISala } from '@/types'
@@ -90,7 +86,7 @@ export const FrmRoomEditor = (props: IProps) => {
               <InfoData />
               <footer className="flex gap-3 justify-end pt-4 pb-4">
                 <Button
-                  color="primary"
+                  variant="default"
                   type="submit"
                   isDisabled={loading}
                   isLoading={loading}
@@ -99,7 +95,7 @@ export const FrmRoomEditor = (props: IProps) => {
                   {dataDefault?.id ? 'Actualizar' : 'Guardar'}
                 </Button>
                 <Button
-                  onPress={handleExit}
+                  onClick={handleExit}
                   radius="sm"
                 >
                   Cancelar

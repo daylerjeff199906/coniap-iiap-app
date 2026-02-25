@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react'
-import { Button, Image, Input } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { svgIsotipoConiap } from '@/assets'
 import Link from 'next/link'
 import { FormProvider, Controller, useForm } from 'react-hook-form'
@@ -72,7 +74,7 @@ export const FrmRegister = () => {
                   label="Correo electrónico"
                   labelPlacement="outside"
                   placeholder="ejemplo@ejemplo.com"
-                  radius="sm"
+                  className="rounded-sm"
                   value={value}
                   onChange={onChange}
                   isInvalid={Boolean(methods.formState.errors.email)}
@@ -98,7 +100,7 @@ export const FrmRegister = () => {
                   labelPlacement="outside"
                   placeholder="* * * * * * * *"
                   type="password"
-                  radius="sm"
+                  className="rounded-sm"
                   value={value}
                   onChange={onChange}
                   isInvalid={Boolean(methods.formState.errors.password)}
@@ -112,25 +114,25 @@ export const FrmRegister = () => {
             labelPlacement="outside"
             placeholder="999 999 999"
             type="phone"
-            radius="sm"
+            className="rounded-sm"
             description="Este campo es opcional"
           /> */}
             {/* <Input
             label="Nombres"
             labelPlacement="outside"
             placeholder="Escribe tus nombres"
-            radius="sm"
+            className="rounded-sm"
           />
           <Input
             label="Apellidos"
             labelPlacement="outside"
             placeholder="Escribe tus apellidos"
-            radius="sm"
+            className="rounded-sm"
           /> */}
             <Button
               fullWidth
               variant="solid"
-              color="primary"
+              variant="default"
               size="lg"
               type="submit"
               isLoading={loading}
@@ -152,7 +154,7 @@ export const FrmRegister = () => {
             fullWidth
             variant="bordered"
             isDisabled={loading}
-            onPress={signInWithGoogle}
+            onClick={signInWithGoogle}
           >
             Iniciar con Google
           </Button>

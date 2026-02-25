@@ -2,7 +2,10 @@
 'use client'
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { Button, Chip, Skeleton, Link as UILink } from '@nextui-org/react'
+import { Link as UILink } from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '../..'
 import Link from 'next/link'
 import { useSummaries } from '@/hooks/admin'
@@ -33,9 +36,9 @@ export const ListSummaries = () => {
               <Button
                 as={Link}
                 href="/dashboard/profile"
-                color="primary"
+                variant="default"
                 variant="solid"
-                radius="sm"
+                className="rounded-sm"
               >
                 Completar datos
               </Button>
@@ -78,25 +81,25 @@ export const ListSummaries = () => {
                 className="p-6 bg-gray-100 rounded-lg flex flex-col gap-4"
               >
                 <section className="flex gap-4">
-                  <Chip
-                    radius="sm"
+                  <Badge
+                    className="rounded-sm"
                     color={summary.isApproved ? 'success' : 'default'}
-                    variant="flat"
+                    variant="secondary"
                   >
                     {summary.isApproved
                       ? 'Aprobado'
                       : 'Pendiente de aprobación'}
-                  </Chip>
+                  </Badge>
 
-                  <Chip
-                    radius="sm"
+                  <Badge
+                    className="rounded-sm"
                     color={summary.file ? 'success' : 'danger'}
-                    variant="flat"
+                    variant="secondary"
                   >
                     {summary?.file
                       ? 'Resumen subido'
                       : 'Archivo de resumen no subido'}
-                  </Chip>
+                  </Badge>
                 </section>
                 <section className="flex flex-col gap-1">
                   <p className="text-tiny text-gray-500">
@@ -122,7 +125,7 @@ export const ListSummaries = () => {
                     <Button
                       as={Link}
                       href={`/dashboard/files/${summary.id}`}
-                      radius="sm"
+                      className="rounded-sm"
                       size="sm"
                       className="button-dark"
                     >

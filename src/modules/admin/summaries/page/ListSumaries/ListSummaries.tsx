@@ -5,7 +5,8 @@ import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
-import { Chip, Spinner } from '@nextui-org/react'
+import { Spinner } from '@nextui-org/react'
+import { Badge } from '@/components/ui/badge'
 import { formatDate } from '@/utils/functions'
 import { usePathname, useRouter } from 'next/navigation'
 import { useFilterFromUrl } from '@/modules/core'
@@ -155,14 +156,14 @@ export const ListSummaries = () => {
 const RenderColumnAproved = (value: boolean) => {
   return (
     <div className="flex flex-col">
-      <Chip
+      <Badge
         color={value ? 'success' : 'warning'}
-        variant="flat"
+        variant="secondary"
         size="sm"
         radius="sm"
       >
         {value ? 'Aprobado' : 'Pendiente'}
-      </Chip>
+      </Badge>
     </div>
   )
 }

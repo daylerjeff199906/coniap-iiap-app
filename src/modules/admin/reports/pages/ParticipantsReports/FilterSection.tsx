@@ -1,6 +1,8 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Button, Select, SelectItem, Selection } from '@nextui-org/react'
+import { Selection } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Select, SelectItem } from '@/components/ui/select'
 import { IconFilter } from '@tabler/icons-react'
 
 const personsType = [
@@ -98,14 +100,14 @@ export const FiltersSection = (props: IProps) => {
         radius="sm"
         className="button-dark"
         startContent={<IconFilter size={20} />}
-        onPress={onChageFilter}
+        onClick={onChageFilter}
       >
         Filtrar
       </Button>
       {selectedTypePerson !== 'all' || selectedStatus !== 'all' ? (
         <Button
           radius="sm"
-          onPress={onClearFilter}
+          onClick={onClearFilter}
           color="warning"
         >
           Limpiar

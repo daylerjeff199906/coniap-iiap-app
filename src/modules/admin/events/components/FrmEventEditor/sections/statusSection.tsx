@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Checkbox, cn } from '@nextui-org/react'
+import { cn } from '@nextui-org/react'
+import { Checkbox } from '@/components/ui/checkbox'
 import { useFormContext, Controller } from 'react-hook-form'
 import { IEvent } from '@/types'
 

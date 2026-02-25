@@ -1,12 +1,12 @@
 'use client'
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from '@nextui-org/react'
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 
 interface IProps {
   isOpen: boolean
@@ -26,44 +26,33 @@ export const ModalAction = ({
   onPress,
 }: IProps) => {
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => {
-        setOpen(false)
-      }}
-      radius="sm"
-      size="sm"
-    >
-      <ModalContent>
-        <ModalHeader>{title}</ModalHeader>
-        <ModalBody>
+    <Dialog open={isOpen} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        <div className="py-4">
           {message ? (
-            <div>
-              <p>{message}</p>
-            </div>
+            <p className="text-sm text-muted-foreground">{message}</p>
           ) : (
             bodyMessage
           )}
-        </ModalBody>
-        <ModalFooter>
+        </div>
+        <DialogFooter className="flex gap-2 sm:justify-end">
           <Button
-            color="primary"
-            onPress={onPress}
-            radius="sm"
-          >
-            Aceptar
-          </Button>
-          <Button
-            onPress={() => {
-              setOpen(false)
-            }}
-            color="danger"
-            radius="sm"
+            variant="ghost"
+            onClick={() => setOpen(false)}
           >
             Cancelar
           </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+          <Button
+            variant="default"
+            onClick={onPress}
+          >
+            Aceptar
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }

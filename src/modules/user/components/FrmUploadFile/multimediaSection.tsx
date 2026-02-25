@@ -2,7 +2,7 @@
 import { FilePond, registerPlugin } from 'react-filepond'
 import { useFormContext, Controller } from 'react-hook-form'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-import { Link } from '@nextui-org/react'
+import { Link } from 'next/link'
 registerPlugin(FilePondPluginFileValidateType)
 
 export const MultimediaSection = ({ loading }: { loading?: boolean }) => {

@@ -1,15 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Input,
-  Button,
-  Textarea,
-} from '@nextui-org/react'
+import {  } from '@nextui-org/react'
+import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
 import {
   Controller,
   FormProvider,
@@ -178,14 +174,14 @@ export const FrmManageTopic = (props: IProps) => {
                 )}
                 <footer className="flex gap-3 justify-end pt-4 pb-4">
                   <Button
-                    color="primary"
+                    variant="default"
                     type="submit"
                     isDisabled={loading || fileLoading}
                     isLoading={loading || fileLoading}
                   >
                     {dataDefault?.id ? 'Actualizar' : 'Guardar'}
                   </Button>
-                  <Button onPress={handleExit}>Cancelar</Button>
+                  <Button onClick={handleExit}>Cancelar</Button>
                 </footer>
               </form>
             </FormProvider>

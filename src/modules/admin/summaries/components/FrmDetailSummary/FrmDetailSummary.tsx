@@ -7,7 +7,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { InfoDataSummary } from './InfoDataSummary'
 import { PreviewDoc } from './PreviewDoc'
 import { ActionsSummary } from './ActionsSummary'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
 import { sendTemplateMessage } from '@/lib'
 import { toast } from 'react-toastify'
@@ -65,8 +65,8 @@ export const FrmDetailSummary = (props: IProps) => {
               <section className="flex justify-start">
                 <Button
                   radius="sm"
-                  variant="light"
-                  onPress={handleCancel}
+                  variant="ghost"
+                  onClick={handleCancel}
                   startContent={
                     <IconArrowNarrowLeft
                       size={16}

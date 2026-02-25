@@ -1,7 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import { Button, Checkbox, Input, cn } from '@nextui-org/react'
+import { cn } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
 import { IconLink } from '@tabler/icons-react'
 import { useFormContext, Controller } from 'react-hook-form'
 import { ListPrograms } from '../list/listPrograms'
@@ -72,7 +75,7 @@ export const ProgramSection = () => {
                       size="sm"
                       radius="sm"
                       startContent={<IconLink size={16} />}
-                      onPress={() => setIsOpen(true)}
+                      onClick={() => setIsOpen(true)}
                     >
                       Seleccionar
                     </Button>

@@ -2,7 +2,10 @@
 'use client'
 import { useState } from 'react'
 import { IPerson, IUser } from '@/types'
-import { Button, Checkbox, CheckboxGroup, Divider } from '@nextui-org/react'
+import { CheckboxGroup } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Separator } from '@/components/ui/separator'
 import { createUser, updateUser } from '@/api'
 import { registerAndSendEmailVerification } from '@/auth'
 
@@ -130,7 +133,7 @@ export const UserData = (props: IProps) => {
               </header>
             </section>
           )}
-          <Divider />
+          <Separator />
           <main className="flex flex-col gap-2">
             <Controller
               control={methods.control}
@@ -158,7 +161,7 @@ export const UserData = (props: IProps) => {
             <footer className="flex items-center justify-end gap-2 w-full">
               <Button
                 radius="sm"
-                onPress={() => methods.reset()}
+                onClick={() => methods.reset()}
               >
                 Cancelar
               </Button>
@@ -180,7 +183,7 @@ export const UserData = (props: IProps) => {
         setOpen={setOpen}
         title="Guardar cambios"
         message="¿Estás seguro de guardar los cambios?"
-        onPress={() => methods.handleSubmit(handleeSubmit)()}
+        onClick={() => methods.handleSubmit(handleeSubmit)()}
       />
     </>
   )

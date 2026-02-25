@@ -1,6 +1,6 @@
 'use client'
 import { IPerson, ISummary, IUser } from '@/types'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
 import { InfoData, UserData } from './sections'
@@ -25,9 +25,9 @@ export const DetailsParticipant = (props: IProps) => {
     <main className="flex flex-col gap-4 w-full p-6 border rounded-xl bg-white">
       <section>
         <Button
-          onPress={handleExit}
+          onClick={handleExit}
           size="sm"
-          variant="light"
+          variant="ghost"
           radius="sm"
           startContent={
             <IconArrowNarrowLeft

@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { ModalAction } from '@/components'
 import { IInscription, IPerson } from '@/types'
 import { usePersons } from '@/hooks/admin'
@@ -199,7 +199,7 @@ export const FrmInscriptions = () => {
               <Button
                 id="btn-submit-inscription"
                 radius="full"
-                color="primary"
+                variant="default"
                 type="submit"
                 size="lg"
                 isLoading={loading}
@@ -216,7 +216,7 @@ export const FrmInscriptions = () => {
         setOpen={setIsOpenAction}
         title="Confirmar inscripción"
         bodyMessage={message}
-        onPress={methods.handleSubmit(handleOnSubmit)}
+        onClick={methods.handleSubmit(handleOnSubmit)}
       />
     </article>
   )

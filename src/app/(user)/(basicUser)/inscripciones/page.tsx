@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Button, Image } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Button } from '@/components/ui/button'
 import img_logo from '@/assets/svg/ISOTIPO - CONIAP.svg'
 import { imgSpeakerInscription } from '@/assets'
 import { FrmInscriptions } from '@/modules/user'
@@ -87,12 +88,12 @@ export default function Page() {
             {isBeforeConference && (
               <div>
                 <Button
-                  radius="full"
+                  className="rounded-full"
                   color="warning"
                   className="font-medium px-6"
                   startContent={<IconPlayerPlayFilled size={20} />}
                   variant="bordered"
-                  onPress={activeDriver}
+                  onClick={activeDriver}
                 >
                   Ver demo
                 </Button>
@@ -144,7 +145,7 @@ export default function Page() {
               </h3>
             </div>
             <Button
-              radius="full"
+              className="rounded-full"
               size="lg"
               as={Link}
               href={infoData?.format_summary || ''}
@@ -175,10 +176,10 @@ export default function Page() {
               <div className="flex items-center gap-3">
                 <Button
                   size="lg"
-                  radius="full"
+                  className="rounded-full"
                   as={Link}
                   href="/login"
-                  color="danger"
+                  variant="destructive"
                   id="login-link"
                 >
                   Enviar resúmen

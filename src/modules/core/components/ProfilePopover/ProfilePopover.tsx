@@ -1,15 +1,15 @@
 'use client'
 import { IUser } from '@/types'
 import {
-  Button,
-  Dropdown,
-  DropdownItem,
   DropdownMenu,
-  DropdownTrigger,
-  Skeleton,
-  User,
-} from '@nextui-org/react'
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 interface IProps {
   user: IUser | null
@@ -79,77 +79,48 @@ export const ProfilePopover = (props: IProps) => {
   const rol = user?.role
   const options = filterOptionsByRole(rol || [])
 
+  const getInitials = (name: string) => {
+    return name?.charAt(0).toUpperCase() || 'U'
+  }
+
   return (
     <>
       {loading ? (
-        <div className="max-w-[300px] w-full flex items-center gap-3">
-          <div>
-            <Skeleton
-              isLoaded
-              className="flex rounded-full w-12 h-12"
-            />
-          </div>
-          <div className="w-full flex flex-col gap-2">
-            <Skeleton
-              isLoaded
-              className="h-3 w-3/5 rounded-lg"
-            />
-            <Skeleton className="h-3 w-4/5 rounded-lg" />
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-10 w-10 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[100px]" />
+            <Skeleton className="h-3 w-[120px]" />
           </div>
         </div>
       ) : (
         <>
           {user ? (
-            <Dropdown
-              aria-label="Profile"
-              radius="sm"
-              showArrow
-              classNames={{
-                base: 'before:bg-default-200', // change arrow background
-                content: 'p-0 border-small border-divider bg-background',
-              }}
-            >
-              <DropdownTrigger>
-                <User
-                  as={Button}
-                  variant="light"
-                  name={user?.userName}
-                  description={user?.email}
-                  avatarProps={{
-                    isBordered: true,
-                    src: user?.photo,
-                    size: 'sm',
-                  }}
-                  classNames={{
-                    name: `text-xs font-medium ${!isAdmin && 'text-white'}`,
-                    description: 'text-tiny',
-                  }}
-                />
-              </DropdownTrigger>
-              <DropdownMenu
-                aria-label="Custom item styles"
-                variant="flat"
-                className="p-2"
-                itemClasses={{
-                  base: 'hover:bg-default-200 text-xs',
-                  title: 'text-xs font-medium',
-                }}
-              >
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 flex items-center gap-2 px-2 hover:bg-white/10">
+                  <Avatar className="h-8 w-8 border">
+                    <AvatarImage src={user?.photo} alt={user?.userName} />
+                    <AvatarFallback>{getInitials(user?.userName)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col items-start text-left ml-1 hidden sm:flex">
+                    <span className={`text-xs font-semibold ${!isAdmin && 'text-white'}`}>{user?.userName}</span>
+                    <span className="text-[10px] text-muted-foreground line-clamp-1">{user?.email}</span>
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
                 {options.map((option) => (
-                  <DropdownItem
-                    key={option.id}
-                    color={option.color as 'default' | 'danger'}
-                    {...(option.href && {
-                      href: option.href,
-                      as: Link,
-                    })}
-                    onClick={option.onClick ? logout : undefined}
-                  >
-                    {option.label}
-                  </DropdownItem>
+                  <DropdownMenuItem key={option.id} asChild={!!option.href} onClick={option.onClick ? logout : undefined} className={option.color === 'danger' ? 'text-destructive focus:text-destructive' : ''}>
+                    {option.href ? (
+                      <Link href={option.href}>{option.label}</Link>
+                    ) : (
+                      <span>{option.label}</span>
+                    )}
+                  </DropdownMenuItem>
                 ))}
-              </DropdownMenu>
-            </Dropdown>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : null}
         </>
       )}

@@ -1,7 +1,8 @@
 'use client'
 import { CardEvent } from '@/components'
 import { IEvent, IProgram } from '@/types'
-import { Button, Tab, Tabs } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { TabsTrigger, Tabs } from '@/components/ui/tabs'
 import { motion } from 'framer-motion'
 import { formatDateToDDMMM } from '@/utils/functions'
 import Link from 'next/link'
@@ -49,7 +50,7 @@ export const AgendaSection = (props: IProps) => {
             radius="full"
             size="lg"
             variant="ghost"
-            color="danger"
+            variant="destructive"
             as={Link}
             href="/agenda"
           >
@@ -58,7 +59,7 @@ export const AgendaSection = (props: IProps) => {
         </motion.div>
         <div className="w-ful col-span-1 sm:col-span-2">
           {programs && programs?.length > 0 && (
-            <Tabs
+            <TabsTriggers
               aria-label="Options"
               variant="underlined"
               classNames={{
@@ -69,7 +70,7 @@ export const AgendaSection = (props: IProps) => {
               size="lg"
             >
               {programs?.map((program, programIndex) => (
-                <Tab
+                <TabsTrigger
                   key={programIndex}
                   title={formatDateToDDMMM(program.date as string)}
                 >
@@ -93,9 +94,9 @@ export const AgendaSection = (props: IProps) => {
                         </div>
                       ))}
                   </div>
-                </Tab>
+                </TabsTrigger>
               ))}
-            </Tabs>
+            </TabsTriggers>
           )}
           {programs && programs?.length === 0 && (
             <main className="w-full flex flex-col items-center justify-center">

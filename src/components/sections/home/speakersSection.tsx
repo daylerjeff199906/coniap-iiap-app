@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { CardSpeaker } from '@/components'
 import Link from 'next/link'
 
@@ -49,7 +49,7 @@ export const SpeakersSection = (props: IProps) => {
                 radius="full"
                 size="lg"
                 variant="solid"
-                color="primary"
+                variant="default"
                 className="text-white"
                 as={Link}
                 href="/ponentes"

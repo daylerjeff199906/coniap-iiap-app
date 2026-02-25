@@ -2,7 +2,7 @@
 import { ISummary } from '@/types'
 import { useFormContext } from 'react-hook-form'
 import { getFileType } from '../../functions'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { IconDownload } from '@tabler/icons-react'
 
@@ -30,8 +30,8 @@ export const PreviewDoc = () => {
               isDisabled={!value}
               radius="sm"
               size="sm"
-              color="primary"
-              variant="light"
+              variant="default"
+              variant="ghost"
               endContent={
                 <IconDownload
                   stroke={1.5}

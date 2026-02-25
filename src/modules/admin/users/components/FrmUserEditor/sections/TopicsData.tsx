@@ -2,7 +2,8 @@
 'use client'
 import { IUserCreate } from '@/types'
 import { useFormContext, Controller } from 'react-hook-form'
-import { Checkbox, CheckboxGroup } from '@nextui-org/react'
+import { CheckboxGroup } from '@nextui-org/react'
+import { Checkbox } from '@/components/ui/checkbox'
 import { useTopics } from '@/hooks/admin'
 import { useEffect } from 'react'
 

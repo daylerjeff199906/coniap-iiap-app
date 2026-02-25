@@ -1,4 +1,4 @@
-import { Skeleton } from '@nextui-org/react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const Loading = () => {
   return (

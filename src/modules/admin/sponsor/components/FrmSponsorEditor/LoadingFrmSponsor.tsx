@@ -1,12 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Skeleton,
-} from '@nextui-org/react'
+import {  } from '@nextui-org/react'
+import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const LoadingFrmSponsor = () => {
   return (

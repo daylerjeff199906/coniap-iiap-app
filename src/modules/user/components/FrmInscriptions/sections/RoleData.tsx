@@ -1,6 +1,8 @@
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Checkbox, Input, cn } from '@nextui-org/react'
+import { cn } from '@nextui-org/react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
 import { IInscription } from '@/types'
 
 export const RoleData = () => {

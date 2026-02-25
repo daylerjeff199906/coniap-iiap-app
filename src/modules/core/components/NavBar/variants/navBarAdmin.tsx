@@ -1,17 +1,19 @@
 'use client'
 import {
+  Breadcrumb,
   BreadcrumbItem,
-  Breadcrumbs,
-  Button,
-  Navbar,
-  NavbarContent,
-  NavbarItem,
-} from '@nextui-org/react'
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
 
 import { useAuthContext } from '@/provider'
 import { ProfilePopover } from '@/modules/core'
 import { usePathname } from 'next/navigation'
 import { IconMenu2 } from '@tabler/icons-react'
+import React from 'react'
 
 const generateBreadcrumbItems = (pathname: string) => {
   const pathParts = pathname?.split('/').filter(Boolean)
@@ -28,15 +30,23 @@ const generateBreadcrumbItems = (pathname: string) => {
   const startIndex =
     pathParts.indexOf('admin') === -1 ? 0 : pathParts.indexOf('admin') + 1
 
-  return pathParts.slice(startIndex).map((item, index) => (
-    <BreadcrumbItem
-      href={`/${pathParts.slice(0, startIndex + index + 1).join('/')}`}
-      key={index}
-      className="capitalize"
-    >
-      {capitalizeAndReplace(item)}
-    </BreadcrumbItem>
-  ))
+  return pathParts.slice(startIndex).map((item, index, array) => {
+    const isLast = index === array.length - 1
+    const href = `/${pathParts.slice(0, startIndex + index + 1).join('/')}`
+
+    return (
+      <React.Fragment key={index}>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          {isLast ? (
+            <BreadcrumbPage>{capitalizeAndReplace(item)}</BreadcrumbPage>
+          ) : (
+            <BreadcrumbLink href={href}>{capitalizeAndReplace(item)}</BreadcrumbLink>
+          )}
+        </BreadcrumbItem>
+      </React.Fragment>
+    )
+  })
 }
 
 export const NavBarAdmin = () => {
@@ -59,58 +69,41 @@ export const NavBarAdmin = () => {
   }
 
   return (
-    <Navbar
-      maxWidth="full"
-      isBlurred
-      isBordered
-      // height={64}
-    >
-      <NavbarContent
-        justify="start"
-        className="flex lg:hidden"
-      >
-        <Button
-          isIconOnly
-          size="sm"
-          radius="sm"
-          variant="light"
-          onPress={handleOpenMenu}
-        >
-          <IconMenu2 size={24} />
-        </Button>
-      </NavbarContent>
-      <NavbarContent
-        justify="start"
-        className="hidden lg:flex"
-      >
-        <section className="py-4 sticky top-16 z-30 w-full max-w-[1920px] mx-auto px-4 sm:px-6">
-          {pathname !== null && (
-            <Breadcrumbs
-              className="text-sm"
-              color="primary"
-              size="sm"
-            >
-              <BreadcrumbItem
-                href="/admin"
-                key={'home'}
-              >
-                Inicio
-              </BreadcrumbItem>
-              {generateBreadcrumbItems(pathname)}
-            </Breadcrumbs>
-          )}
-        </section>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem>
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleOpenMenu}
+            className="lg:hidden"
+          >
+            <IconMenu2 size={24} />
+          </Button>
+
+          <div className="hidden lg:block">
+            {pathname !== null && (
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/admin">Inicio</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  {generateBreadcrumbItems(pathname)}
+                </BreadcrumbList>
+              </Breadcrumb>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
           <ProfilePopover
             user={user}
             logout={handleLogout}
             loading={loading}
             isAdmin
           />
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+        </div>
+      </div>
+    </header>
   )
 }

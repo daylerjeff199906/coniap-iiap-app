@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { Button, Select, SelectItem } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Select, SelectItem } from '@/components/ui/select'
 import {
   useForm,
   FormProvider,
@@ -134,7 +135,7 @@ export const FrmParticipantEditor = (props: IProps) => {
           <footer className="flex items-center justify-end gap-3">
             <Button
               type="submit"
-              color="primary"
+              variant="default"
               isDisabled={loading || loadFile}
               isLoading={loading || loadFile}
               radius="sm"
@@ -143,7 +144,7 @@ export const FrmParticipantEditor = (props: IProps) => {
             </Button>
             <Button
               type="reset"
-              onPress={handleBack}
+              onClick={handleBack}
               radius="sm"
             >
               Cancelar
@@ -156,7 +157,7 @@ export const FrmParticipantEditor = (props: IProps) => {
         setOpen={setOpen}
         title="Guardar cambios"
         message="¿Estás seguro de guardar los cambios?"
-        onPress={methods.handleSubmit(handleFormSubmit)}
+        onClick={methods.handleSubmit(handleFormSubmit)}
       />
       <LoadingPages isOpen={loading || loadFile} />
     </>

@@ -5,7 +5,6 @@ import { TableGeneral } from '@/components'
 import { useUsers } from '@/hooks/admin'
 import { formatDate } from '@/utils/functions'
 import { TypesSearch } from './TypesSearch'
-import { Selection } from '@nextui-org/react'
 import { columns } from './columns'
 
 export const ListUsers = () => {
@@ -40,16 +39,10 @@ export const ListUsers = () => {
     }) || []
 
   //To type search
-  const handleTypeSearch = (val: Selection) => {
-    const value = Object.values(val)[0]
-    if (value === 'userName') {
-      // updateFilter('qtype', '')
-      setQtype('')
-    } else {
-      // updateFilter('qtype', value)
-      setQtype(value)
-    }
+  const handleTypeSearch = (value: string) => {
+    setQtype(value)
   }
+
   console.log(page)
   const handleSearch = (val: string) => {
     setPage(1)
@@ -67,7 +60,7 @@ export const ListUsers = () => {
         selectionMode="single"
         endInputSection={
           <TypesSearch
-            selectedKey={qtype === 'userName' ? ['userName'] : ['email']}
+            selectedKey={qtype}
             onSelectionChange={handleTypeSearch}
           />
         }
@@ -78,3 +71,4 @@ export const ListUsers = () => {
     </>
   )
 }
+

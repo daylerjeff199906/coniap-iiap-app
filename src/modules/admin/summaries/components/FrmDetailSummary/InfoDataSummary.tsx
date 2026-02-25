@@ -1,7 +1,8 @@
 'use client'
 import { IPerson, ISummary, ITopic } from '@/types'
 import { formatDate } from '@/utils/functions'
-import { Avatar, Chip } from '@nextui-org/react'
+import { Avatar } from '@nextui-org/react'
+import { Badge } from '@/components/ui/badge'
 import { useFormContext } from 'react-hook-form'
 
 interface IProps {
@@ -33,14 +34,14 @@ export const InfoDataSummary = (props: IProps) => {
             <p className="text-gray-500">
               Creación: {formatDate(date_created, 'DD/MM/YYYY Hora: HH:mm')}
             </p>
-            <Chip
+            <Badge
               color={statusApproved ? 'success' : 'warning'}
               size="sm"
               radius="sm"
-              variant="flat"
+              variant="secondary"
             >
               {statusApproved ? 'Resumen Aprobado' : 'Pendiente de aprobación'}
-            </Chip>
+            </Badge>
           </div>
         </div>
       </header>

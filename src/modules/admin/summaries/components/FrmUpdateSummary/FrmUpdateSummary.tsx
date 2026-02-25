@@ -2,7 +2,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { ISummary } from '@/types'
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   useForm,
   FormProvider,
@@ -88,8 +89,8 @@ export const FrmUpdateSummary = (props: IProps) => {
             <section className="flex justify-start">
               <Button
                 radius="sm"
-                variant="light"
-                onPress={handleCancel}
+                variant="ghost"
+                onClick={handleCancel}
                 startContent={
                   <IconArrowNarrowLeft
                     size={16}
@@ -143,7 +144,7 @@ export const FrmUpdateSummary = (props: IProps) => {
                   <Button
                     type="submit"
                     radius="sm"
-                    color="primary"
+                    variant="default"
                     isLoading={loading || loadingFile}
                     isDisabled={loading || loadingFile}
                     className="button-dark"
@@ -153,7 +154,7 @@ export const FrmUpdateSummary = (props: IProps) => {
                   <Button
                     radius="sm"
                     type="reset"
-                    onPress={handleCancel}
+                    onClick={handleCancel}
                   >
                     Cancelar
                   </Button>

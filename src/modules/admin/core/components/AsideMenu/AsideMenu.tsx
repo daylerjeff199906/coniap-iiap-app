@@ -1,6 +1,8 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { Button, Accordion, AccordionItem, Image } from '@nextui-org/react'
+import { Accordion, AccordionItem } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Button } from '@/components/ui/button'
 import logo from '@/assets/images/logo-admin.webp'
 import { IMenuSideBar } from '@/types'
 import Link from 'next/link'
@@ -73,7 +75,7 @@ export const AsideMenu = (props: IProps) => {
                         key={subItem?.id}
                       >
                         <Accordion
-                          variant="light"
+                          variant="ghost"
                           isCompact
                           className="w-full min-w-full px-0"
                           itemClasses={{
@@ -94,7 +96,7 @@ export const AsideMenu = (props: IProps) => {
                               {subItem.moreItems.map((moreItem) => (
                                 <li key={moreItem.id}>
                                   <Button
-                                    radius="sm"
+                                    className="rounded-sm"
                                     size="sm"
                                     fullWidth
                                     className="flex items-center justify-start"
@@ -123,7 +125,7 @@ export const AsideMenu = (props: IProps) => {
                         key={subItem.id}
                       >
                         <Button
-                          radius="sm"
+                          className="rounded-sm"
                           size="sm"
                           fullWidth
                           className="flex items-center justify-start"

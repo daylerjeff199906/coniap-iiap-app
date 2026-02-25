@@ -1,5 +1,5 @@
 import { IEvent } from '@/types'
-import { Input } from '@nextui-org/react'
+import { Input } from '@/components/ui/input'
 import { useFormContext, Controller } from 'react-hook-form'
 
 export const DateEvent = () => {

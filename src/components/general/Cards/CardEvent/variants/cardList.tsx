@@ -1,7 +1,10 @@
 'use client'
 import { useState } from 'react'
 import { IEvent } from '@/types'
-import { Chip, Image, User, Link as NextLink } from '@nextui-org/react'
+import { User } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Link as NextLink } from 'next/link'
+import { Badge } from '@/components/ui/badge'
 import { IconClockHour12 } from '@tabler/icons-react'
 import logo from '@/assets/images/logo_coniap_simple.webp'
 import socialNetworks from '@/utils/json/social_networks.json'
@@ -46,14 +49,14 @@ export const CardListEvent = (props: IProps) => {
           <section className="w-full ">
             <header className="text-xs text-gray-500 flex gap-2 pb-2">
               {isMagistral && (
-                <Chip
+                <Badge
                   color="success"
                   size="sm"
-                  radius="full"
-                  variant="flat"
+                  className="rounded-full"
+                  variant="secondary"
                 >
                   Magistral
-                </Chip>
+                </Badge>
               )}
               <div
                 className={`flex gap-2 items-center ${

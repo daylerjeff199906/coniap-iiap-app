@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { ModalAction } from '@/components'
 import { IPerson, IUser } from '@/types'
 import { toast } from 'react-toastify'
@@ -191,7 +191,7 @@ export const FrmInscriptionSteps = (props: IProps) => {
             <div className="col-span-2 pt-3">
               <Button
                 radius="sm"
-                color="primary"
+                variant="default"
                 type="submit"
                 isLoading={loading}
                 isDisabled={loading}
@@ -207,7 +207,7 @@ export const FrmInscriptionSteps = (props: IProps) => {
         setOpen={setIsOpenAction}
         title="Confirmar inscripción"
         bodyMessage={message}
-        onPress={methods.handleSubmit(handleOnSubmit)}
+        onClick={methods.handleSubmit(handleOnSubmit)}
       />
     </article>
   )

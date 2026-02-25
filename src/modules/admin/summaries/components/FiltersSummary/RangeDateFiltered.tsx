@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { Button, DateRangePicker } from '@nextui-org/react'
+import { DateRangePicker } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { parseDate } from '@internationalized/date'
 import { IconTrash } from '@tabler/icons-react'
 const getInitialDates = () => {
@@ -32,7 +33,7 @@ export const RangeDateFiltered = () => {
           isIconOnly
           radius="sm"
           variant="bordered"
-          onPress={() => setValue(getInitialDates())}
+          onClick={() => setValue(getInitialDates())}
         >
           <IconTrash size={20} />
         </Button>

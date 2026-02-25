@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 // import { useEvents } from '@/hooks/admin'
 import { IconLink } from '@tabler/icons-react'
 import { Controller, useFormContext } from 'react-hook-form'
@@ -36,7 +37,7 @@ export const SectionSpeaker = () => {
                   size="sm"
                   radius="sm"
                   startContent={<IconLink size={16} />}
-                  onPress={() => setIsOpen(true)}
+                  onClick={() => setIsOpen(true)}
                 >
                   Seleccionar
                 </Button>

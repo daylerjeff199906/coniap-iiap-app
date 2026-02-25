@@ -1,5 +1,5 @@
 'use client'
-import { Input } from '@nextui-org/react'
+import { Input } from '@/components/ui/input'
 import { useFilterFromUrl } from '@/modules/core'
 
 export const FilterSection = () => {

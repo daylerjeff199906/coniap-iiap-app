@@ -1,32 +1,38 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
-import { cookies } from 'next/headers'
-
-export function createClient() {
-  const cookieStore = cookies()
-
-  return createServerClient(process.env.API_URL_PROD!, process.env.API_KEY!, {
-    cookies: {
-      get(name: string) {
-        return cookieStore.get(name)?.value
-      },
-      set(name: string, value: string, options: CookieOptions) {
-        try {
-          cookieStore.set({ name, value, ...options })
-        } catch (error) {
-          // The `set` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing
-          // user sessions.
-        }
-      },
-      remove(name: string, options: CookieOptions) {
-        try {
-          cookieStore.set({ name, value: '', ...options })
-        } catch (error) {
-          // The `delete` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing
-          // user sessions.
-        }
-      },
-    },
-  })
+// MOCK FOR SUPABASE REMOVAL
+export const createClient = () => {
+  return {
+    from: (table: string) => ({
+      select: () => ({
+        eq: () => ({
+          single: async () => ({ data: null, error: { message: 'Supabase removed' } }),
+          range: () => ({ data: [], error: null, count: 0 }),
+          order: () => ({ data: [], error: null, count: 0 }),
+        }),
+        ilike: () => ({
+          order: () => ({ data: [], error: null }),
+        }),
+        order: () => ({ data: [], error: null }),
+      }),
+      insert: () => ({
+        select: () => ({
+          single: async () => ({ data: null, error: { message: 'Supabase removed' } }),
+        }),
+      }),
+      update: () => ({
+        eq: () => ({
+          select: () => ({
+            single: async () => ({ data: null, error: { message: 'Supabase removed' } }),
+          }),
+        }),
+      }),
+      delete: () => ({
+        eq: async () => ({ error: { message: 'Supabase removed' } }),
+      }),
+    }),
+    auth: {
+      signUp: async () => ({ data: null, error: { message: 'Supabase removed' } }),
+      signInWithPassword: async () => ({ data: null, error: { message: 'Supabase removed' } }),
+      signOut: async () => ({ error: null }),
+    }
+  } as any
 }

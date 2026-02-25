@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Input,
-  Button,
-} from '@nextui-org/react'
+import {  } from '@nextui-org/react'
+import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import {
   Controller,
   FormProvider,
@@ -131,14 +127,14 @@ export const FrmSponsorEditor = (props: IProps) => {
                 />
                 <footer className="flex gap-3 justify-end pt-4 pb-4">
                   <Button
-                    color="primary"
+                    variant="default"
                     type="submit"
                     isDisabled={loading || loadFile}
                     isLoading={loading || loadFile}
                   >
                     {defaultData?.id ? 'Actualizar' : 'Guardar'}
                   </Button>
-                  <Button onPress={handleOpenChange}>Cancelar</Button>
+                  <Button onClick={handleOpenChange}>Cancelar</Button>
                 </footer>
               </form>
             </FormProvider>

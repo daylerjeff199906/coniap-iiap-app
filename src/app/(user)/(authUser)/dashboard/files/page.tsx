@@ -1,6 +1,6 @@
 'use client'
 import { ListSummaries } from '@/modules/user'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import infoData from '@/utils/json/infoConiap.json'
 import { useAuthContext } from '@/provider'
@@ -35,7 +35,7 @@ export default function Page() {
               <Button
                 as={Link}
                 href="/dashboard/profile"
-                color="danger"
+                variant="destructive"
                 variant="solid"
                 size="sm"
                 radius="sm"

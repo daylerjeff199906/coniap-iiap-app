@@ -1,50 +1,29 @@
 'use client'
-import { Select, SelectItem, Selection } from '@nextui-org/react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 interface ITypesSearch {
-  selectedKey?: string[] | undefined
-  onSelectionChange?: (value: Selection) => void
+  selectedKey?: string
+  onSelectionChange?: (value: string) => void
 }
 
 export const TypesSearch = (props: ITypesSearch) => {
   const { onSelectionChange, selectedKey } = props
 
   return (
-    <>
-      <Select
-        aria-label="Select"
-        size="sm"
-        radius="sm"
-        defaultSelectedKeys={['userName']}
-        popoverProps={{
-          radius: 'sm',
-          size: 'sm',
-        }}
-        classNames={{
-          base: 'h-8',
-          value: 'text-tiny radius-sm',
-        }}
-        disallowEmptySelection
-        selectedKeys={selectedKey}
-        onSelectionChange={onSelectionChange}
-      >
-        <SelectItem
-          key="userName"
-          classNames={{
-            title: 'text-tiny',
-          }}
-        >
-          por usuario
-        </SelectItem>
-        <SelectItem
-          key="email"
-          classNames={{
-            title: 'text-tiny',
-          }}
-        >
-          por correo
-        </SelectItem>
-      </Select>
-    </>
+    <Select value={selectedKey} onValueChange={onSelectionChange}>
+      <SelectTrigger className="w-[140px] h-9">
+        <SelectValue placeholder="Filtrar por..." />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="userName">por usuario</SelectItem>
+        <SelectItem value="email">por correo</SelectItem>
+      </SelectContent>
+    </Select>
   )
 }

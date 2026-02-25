@@ -1,5 +1,5 @@
 'use client'
-import { Image } from '@nextui-org/react'
+import { Image } from 'next/image'
 import { motion } from 'framer-motion'
 import svgAddorm from '@/assets/svg/patron-fino.svg'
 import { IPersonComite } from '@/types'

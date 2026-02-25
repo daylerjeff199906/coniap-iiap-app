@@ -1,7 +1,7 @@
 'use client'
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { IconDownload } from '@tabler/icons-react'
 
 interface IProps<T> {
@@ -79,7 +79,7 @@ export const ExportExcelButton = <T extends Record<string, any>>(
   return (
     <>
       <Button
-        onPress={handleExportToExcel}
+        onClick={handleExportToExcel}
         radius="sm"
         size="sm"
         startContent={<IconDownload size={16} />}

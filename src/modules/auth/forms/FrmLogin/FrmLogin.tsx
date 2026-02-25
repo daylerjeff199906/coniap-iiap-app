@@ -1,6 +1,8 @@
 'use client'
 import React, { useState } from 'react'
-import { Button, Input, Image } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { signInWithCredentials, SignInWithGoogle } from '@/auth'
@@ -121,8 +123,8 @@ export const FrmLogin = () => {
                 labelPlacement="outside"
                 type="email"
                 placeholder="correo@correo.com"
-                radius="sm"
-                color="primary"
+                className="rounded-sm"
+                variant="default"
                 classNames={{
                   label: 'text-white',
                 }}
@@ -143,8 +145,8 @@ export const FrmLogin = () => {
                 label="Contraseña"
                 labelPlacement="outside"
                 placeholder="* * * * * * * *"
-                radius="sm"
-                color="primary"
+                className="rounded-sm"
+                variant="default"
                 classNames={{
                   label: 'text-white',
                 }}
@@ -159,9 +161,9 @@ export const FrmLogin = () => {
         <div className="flex flex-col gap-3">
           <Button
             variant="solid"
-            color="primary"
+            variant="default"
             fullWidth
-            radius="sm"
+            className="rounded-sm"
             type="submit"
             isDisabled={loading}
             isLoading={loading}
@@ -183,11 +185,11 @@ export const FrmLogin = () => {
       </section>
       <section className="flex flex-col gap-4">
         <Button
-          radius="sm"
+          className="rounded-sm"
           fullWidth
           className="flex items-center justify-center space-x-2 text-white"
-          variant="light"
-          onPress={handleGoogle}
+          variant="ghost"
+          onClick={handleGoogle}
           isLoading={loading}
           isDisabled={loading}
           startContent={

@@ -6,7 +6,7 @@ import { IColumns, IRows } from '@/types'
 
 import { useSummaries } from '@/hooks/admin'
 import { useFormContext } from 'react-hook-form'
-import { Chip } from '@nextui-org/react'
+import { Badge } from '@/components/ui/badge'
 
 const columns: Array<IColumns> = [
   {
@@ -94,13 +94,13 @@ export const ListSummaries = (props: IProps) => {
 const RenderColumnAproved = (value: boolean) => {
   return (
     <div className="flex flex-col">
-      <Chip
+      <Badge
         color={value ? 'success' : 'warning'}
-        variant="flat"
+        variant="secondary"
         size="sm"
       >
         {value ? 'Aprobado' : 'Pendiente'}
-      </Chip>
+      </Badge>
     </div>
   )
 }

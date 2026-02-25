@@ -1,15 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import {
-  Accordion,
-  AccordionItem,
-  Badge,
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@nextui-org/react'
+import { Accordion, AccordionItem, Badge } from '@nextui-org/react'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/components/ui/button'
 import { IconFilter } from '@tabler/icons-react'
 
 import {
@@ -70,16 +64,16 @@ export const FiltersSection = (props: IProps) => {
       <Popover
         placement="right-start"
         size="sm"
-        radius="sm"
+        className="rounded-sm"
       >
         <PopoverTrigger>
           <Button
-            radius="sm"
+            className="rounded-sm"
             startContent={
               <Badge
                 content={selectedFilter?.length}
                 isInvisible={selectedFilter?.length === 0}
-                color="danger"
+                variant="destructive"
               >
                 <IconFilter
                   size={18}
@@ -114,16 +108,16 @@ export const FiltersSection = (props: IProps) => {
         </PopoverContent>
       </Popover>
       <Button
-        radius="sm"
+        className="rounded-sm"
         className="button-dark"
-        onPress={onChageFilter}
+        onClick={onChageFilter}
       >
         Filtrar
       </Button>
       {selectedFilter?.length > 0 && (
         <Button
-          radius="sm"
-          onPress={handleDeleteFilters}
+          className="rounded-sm"
+          onClick={handleDeleteFilters}
           color="warning"
         >
           Limpiar

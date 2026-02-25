@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
@@ -72,7 +72,7 @@ export const FrmProgramEditor = (props: IProps) => {
           <InfoGeneral />
           <div className="flex items-center gap-3 justify-end">
             <Button
-              color="primary"
+              variant="default"
               type="submit"
               isLoading={loading}
               isDisabled={loading}
@@ -95,7 +95,7 @@ export const FrmProgramEditor = (props: IProps) => {
         setOpen={setOpen}
         title={'Confirmación'}
         message={'¿Estás seguro de que deseas guardar los cambios?'}
-        onPress={methods.handleSubmit(handleFormSubmit)}
+        onClick={methods.handleSubmit(handleFormSubmit)}
       />
       <LoadingPages isOpen={loading} />
     </main>

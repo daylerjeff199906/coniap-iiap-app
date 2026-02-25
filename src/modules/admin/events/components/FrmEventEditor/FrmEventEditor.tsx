@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
@@ -146,7 +146,7 @@ export const FrmEventEditor = (props: IProps) => {
             <StatusSection />
             <footer className="flex items-center gap-2 justify-end sticky bottom-0 bg-white p-4 border-t border-gray-100">
               <Button
-                color="primary"
+                variant="default"
                 type="submit"
                 isLoading={loading}
                 isDisabled={loading || !isDirty}
@@ -171,7 +171,7 @@ export const FrmEventEditor = (props: IProps) => {
         setOpen={setOpen}
         title="Agregar evento"
         message="¿Estás seguro de agregar este evento?"
-        onPress={methods.handleSubmit(handleFormSubmit)}
+        onClick={methods.handleSubmit(handleFormSubmit)}
       />
       <LoadingPages isOpen={loading} />
     </>

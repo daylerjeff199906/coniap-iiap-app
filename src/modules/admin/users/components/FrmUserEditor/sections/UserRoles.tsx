@@ -1,6 +1,7 @@
 'use client'
 import { IUserCreate } from '@/types'
-import { Checkbox, CheckboxGroup } from '@nextui-org/react'
+import { CheckboxGroup } from '@nextui-org/react'
+import { Checkbox } from '@/components/ui/checkbox'
 import { useFormContext, Controller } from 'react-hook-form'
 
 const roles = [

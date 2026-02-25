@@ -1,6 +1,7 @@
 'use client'
 import { ITopic } from '@/types'
-import { Accordion, AccordionItem, Image } from '@nextui-org/react'
+import { Accordion, AccordionItem } from '@nextui-org/react'
+import { Image } from 'next/image'
 interface IProps {
   data: ITopic[]
 }

@@ -1,6 +1,7 @@
 'use client'
 import { ISala } from '@/types'
-import { Avatar, Select, SelectItem } from '@nextui-org/react'
+import { Avatar } from '@nextui-org/react'
+import { Select, SelectItem } from '@/components/ui/select'
 import { Controller, useFormContext } from 'react-hook-form'
 import socialNetworks from '@/utils/json/social_networks.json'
 

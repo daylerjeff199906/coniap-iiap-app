@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect } from 'react'
-import { Select, SelectItem } from '@nextui-org/react'
+import { Select, SelectItem } from '@/components/ui/select'
 import { Controller, useFormContext } from 'react-hook-form'
 import { ISummary } from '@/types'
 import { useTopics } from '@/hooks/admin'

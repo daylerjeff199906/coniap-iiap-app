@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { sendResetPasswordEmail } from '@/auth'
@@ -78,7 +79,7 @@ export const FrmForgotPassword = () => {
                 type="email"
                 placeholder="correo@correo.com"
                 radius="sm"
-                color="primary"
+                variant="default"
                 classNames={{
                   label: 'text-white',
                 }}
@@ -94,7 +95,7 @@ export const FrmForgotPassword = () => {
         <section className="flex items-center gap-3">
           <Button
             type="submit"
-            color="primary"
+            variant="default"
             fullWidth
             disabled={loading}
             isLoading={loading}

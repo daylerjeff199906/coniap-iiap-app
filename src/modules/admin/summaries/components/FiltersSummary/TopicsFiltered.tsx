@@ -2,7 +2,8 @@
 'use client'
 import { useEffect } from 'react'
 import { useFilterFromUrl } from '@/modules/core'
-import { Radio, RadioGroup, Skeleton } from '@nextui-org/react'
+import { Radio, RadioGroup } from '@nextui-org/react'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useTopics } from '@/hooks/admin'
 
 const optionsTopics = [{ value: 'all', label: 'Todos' }]

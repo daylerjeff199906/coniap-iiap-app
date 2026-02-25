@@ -1,6 +1,7 @@
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Autocomplete, AutocompleteItem, Input } from '@nextui-org/react'
+import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+import { Input } from '@/components/ui/input'
 import countriesData from '@/utils/json/countries.json'
 import { IPerson } from '@/types'
 

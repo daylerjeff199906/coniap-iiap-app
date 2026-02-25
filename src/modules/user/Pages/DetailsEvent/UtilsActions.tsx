@@ -1,7 +1,7 @@
 'use client'
-import { Image } from '@nextui-org/react'
+import { Image } from 'next/image'
 import { IEvent } from '@/types'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { IconCalendarMonth } from '@tabler/icons-react'
 import socialNetworks from '@/utils/json/social_networks.json'
 import Link from 'next/link'
@@ -37,10 +37,10 @@ export const UtilsActions = (props: IProps) => {
     <section className="w-full flex flex-col gap-3">
       <Button
         fullWidth
-        color="primary"
+        variant="default"
         startContent={<IconCalendarMonth />}
-        onPress={handleAddToCalendar}
-        radius="sm"
+        onClick={handleAddToCalendar}
+        className="rounded-sm"
       >
         Agregar a mi agenda
       </Button>
@@ -48,10 +48,10 @@ export const UtilsActions = (props: IProps) => {
         <Button
           href={event?.sala?.url || '#'}
           target="_blank"
-          radius="sm"
+          className="rounded-sm"
           as={Link}
           variant="bordered"
-          color="primary"
+          variant="default"
           className="text-primary-500"
           startContent={
             <Image

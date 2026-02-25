@@ -1,6 +1,7 @@
 'use client'
 import { IPerson, ISummary } from '@/types'
-import { Image, Chip } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Badge } from '@/components/ui/badge'
 
 interface IProps {
   data: IPerson
@@ -23,10 +24,10 @@ export const InfoData = (props: IProps) => {
           />
         </div>
         <div className="w-full">
-          <Chip
+          <Badge
             size="sm"
-            radius="sm"
-            variant="flat"
+            className="rounded-sm"
+            variant="secondary"
             color="success"
           >
             {data?.typePerson === 'speaker'
@@ -34,7 +35,7 @@ export const InfoData = (props: IProps) => {
               : data?.typePerson === 'speaker_mg'
               ? 'Ponente magistral'
               : 'Participante'}
-          </Chip>
+          </Badge>
           <h3 className="text-5xl font-bold">{data?.name}</h3>
           <p className="text-lg ">{data?.surName}</p>
           <p className="text-sm text-gray-500">{data?.email}</p>
@@ -61,13 +62,13 @@ export const InfoData = (props: IProps) => {
                 key={summary.id}
                 className="flex flex-col gap-2 border rounded-lg p-4 bg-gray-100 w-full"
               >
-                <Chip
+                <Badge
                   size="sm"
-                  radius="sm"
+                  className="rounded-sm"
                   variant="dot"
                 >
                   Año: {summary.created_at.split('-')[0]}
-                </Chip>
+                </Badge>
                 <h5 className="font-bold uppercase">{summary.title}</h5>
                 <p>Línea temática</p>
                 <p className="text-sm text-gray-500">{summary.topic?.name}</p>

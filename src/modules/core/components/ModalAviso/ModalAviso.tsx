@@ -1,5 +1,5 @@
 'use client'
-import { Modal, ModalBody, ModalContent } from '@nextui-org/react'
+import { Dialog, DialogBody, DialogContent } from '@/components/ui/dialog'
 
 interface IProps {
   isOpen: boolean

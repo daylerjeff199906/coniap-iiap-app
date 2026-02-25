@@ -1,6 +1,7 @@
 'use client'
 import { IPerson } from '@/types'
-import { Input, Textarea } from '@nextui-org/react'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { useFormContext, Controller } from 'react-hook-form'
 
 export const PersonData = () => {

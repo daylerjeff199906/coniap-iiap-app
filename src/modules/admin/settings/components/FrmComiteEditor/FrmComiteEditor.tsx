@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { ModalAction } from '@/components'
 import { updateRowInformation } from '@/api'
@@ -62,12 +62,12 @@ export const FrmComiteEditor = (props: IProps) => {
               <Button
                 radius="sm"
                 size="sm"
-                onPress={() => methods.reset()}
+                onClick={() => methods.reset()}
               >
                 Cancelar
               </Button>
               <Button
-                color="primary"
+                variant="default"
                 type="submit"
                 isDisabled={isDirty ? false : true || loading}
                 radius="sm"
@@ -86,7 +86,7 @@ export const FrmComiteEditor = (props: IProps) => {
         setOpen={setOpen}
         title="Guardar los cambios"
         message="¿Estás seguro de guardar los cambios?"
-        onPress={methods.handleSubmit(handleFormSubmit)}
+        onClick={methods.handleSubmit(handleFormSubmit)}
       />
     </>
   )

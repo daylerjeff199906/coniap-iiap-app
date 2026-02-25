@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import { Button, Checkbox, Input, Textarea, cn } from '@nextui-org/react'
+import { cn } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { IconLink } from '@tabler/icons-react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { DrawerSelect } from '@/components/general'
@@ -81,7 +85,7 @@ export const SummarySection = () => {
                         size="sm"
                         radius="sm"
                         startContent={<IconLink size={16} />}
-                        onPress={() => setIsOpen(true)}
+                        onClick={() => setIsOpen(true)}
                       >
                         Seleccionar
                       </Button>

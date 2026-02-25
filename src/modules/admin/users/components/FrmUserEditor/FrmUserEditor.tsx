@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { IError, IUser, IUserCreate } from '@/types'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { PersonData, TopicsData, UserData, UserRoles } from './sections'
 import { HeaderSection } from '@/modules/core'
@@ -103,7 +103,7 @@ export const FrmUserEditor = (props: IProps) => {
           <footer className="flex justify-end gap-2 mt-4">
             <Button
               radius="sm"
-              onPress={() => router.push('/admin/users')}
+              onClick={() => router.push('/admin/users')}
             >
               Cancelar
             </Button>
@@ -124,7 +124,7 @@ export const FrmUserEditor = (props: IProps) => {
         title="Usuario"
         message="¿Estás seguro de guardar los cambios?"
         setOpen={setIsModalOpen}
-        onPress={() => methods.handleSubmit(handleSubmit)()}
+        onClick={() => methods.handleSubmit(handleSubmit)()}
       />
     </>
   )

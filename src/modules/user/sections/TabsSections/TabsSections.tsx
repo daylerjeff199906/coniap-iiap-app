@@ -1,6 +1,6 @@
 'use client'
 
-import { Tab, Tabs } from '@nextui-org/react'
+import { TabsTrigger, Tabs } from '@/components/ui/tabs'
 import Link from 'next/link'
 import { IconHome, IconFile, IconUser } from '@tabler/icons-react'
 import { usePathname } from 'next/navigation'
@@ -44,13 +44,13 @@ export const TabsSections = () => {
     <main className="border-b">
       <section className="h-16 bg-primary-800"></section>
       <section className="container py-2">
-        <Tabs
+        <TabsTriggers
           radius="sm"
           variant="underlined"
           selectedKey={pathname}
         >
           {dataTabs.map((tab) => (
-            <Tab
+            <TabsTrigger
               key={tab.href}
               title={
                 <div className="flex items-center gap-2">
@@ -62,7 +62,7 @@ export const TabsSections = () => {
               href={tab.href}
             />
           ))}
-        </Tabs>
+        </TabsTriggers>
       </section>
     </main>
   )

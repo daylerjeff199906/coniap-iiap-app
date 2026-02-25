@@ -2,7 +2,7 @@
 import { TableGeneral } from '@/components'
 import { IColumns, IPerson, IRows } from '@/types'
 import { formatDate } from '@/utils/functions'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 const columns: IColumns[] = [
@@ -74,7 +74,7 @@ export const Header = () => {
       <div>
         <Button
           size="sm"
-          variant="light"
+          variant="ghost"
           radius="sm"
           as={Link}
           href="/admin/participantes"

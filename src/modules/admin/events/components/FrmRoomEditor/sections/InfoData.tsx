@@ -1,6 +1,7 @@
 'use client'
 import { ISala } from '@/types'
-import { Input, Radio, RadioGroup, cn } from '@nextui-org/react'
+import { Radio, RadioGroup, cn } from '@nextui-org/react'
+import { Input } from '@/components/ui/input'
 import { Controller, useFormContext } from 'react-hook-form'
 
 const optValues = [

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { IconX, IconMenu } from '@tabler/icons-react'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 
 import { menuItems } from './linkData'
 import { menuSlide, scale, slide } from './anim'
@@ -16,10 +16,10 @@ export const NavBarUserPhone = () => {
     <>
       <Button
         className="sticky top-4 right-4 z-50 text-white"
-        onPress={() => setIsActived(!isActived)}
+        onClick={() => setIsActived(!isActived)}
         isIconOnly
         radius="lg"
-        variant="light"
+        variant="ghost"
       >
         {isActived ? (
           <IconX
@@ -111,7 +111,7 @@ const NavSection = (props: IProps) => {
           <div className="pt-4 flex flex-col gap-2">
             <Button
               size="lg"
-              variant="light"
+              variant="ghost"
               radius="full"
               fullWidth
               as={Link}
@@ -123,7 +123,7 @@ const NavSection = (props: IProps) => {
             <Button
               size="lg"
               variant="solid"
-              color="danger"
+              variant="destructive"
               radius="full"
               fullWidth
               as={Link}

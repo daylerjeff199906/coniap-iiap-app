@@ -1,6 +1,7 @@
 'use client'
 import { ISummary } from '@/types'
-import { Checkbox, Switch, cn } from '@nextui-org/react'
+import { Switch, cn } from '@nextui-org/react'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Controller, useFormContext } from 'react-hook-form'
 
 interface IProps {

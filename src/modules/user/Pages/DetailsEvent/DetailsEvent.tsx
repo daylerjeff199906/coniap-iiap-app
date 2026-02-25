@@ -1,7 +1,8 @@
 'use client'
 import ReactMarkdown from 'react-markdown'
 import { IEvent } from '@/types'
-import { Avatar, Image, User } from '@nextui-org/react'
+import { Avatar, User } from '@nextui-org/react'
+import { Image } from 'next/image'
 import {
   IconCalendarClock,
   IconArrowNarrowLeft,

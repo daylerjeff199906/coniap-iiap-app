@@ -1,4 +1,6 @@
-import { Button, Checkbox, Input } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
 import svgLine from '@/assets/svg/patron-fino.svg'
 import Image from 'next/image'
 
@@ -58,7 +60,7 @@ export const FrmContactUs = () => {
               <div>
                 <Button
                   variant="solid"
-                  color="primary"
+                  variant="default"
                   radius="full"
                 >
                   Enviar

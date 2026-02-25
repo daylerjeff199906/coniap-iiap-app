@@ -2,7 +2,7 @@
 import { ContactData, PersonData } from './sections'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 import { IPerson, IUserCreated } from '@/types'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
 import { usePersons } from '@/hooks/admin'
@@ -103,7 +103,7 @@ export const FrmProfile = (props: IFrmProfileProps) => {
         <footer className="pt-4">
           <div className="flex items-center gap-3 justify-end">
             <Button
-              color="primary"
+              variant="default"
               isDisabled={loading}
               isLoading={loading}
               type="submit"
@@ -112,7 +112,7 @@ export const FrmProfile = (props: IFrmProfileProps) => {
               Guardar cambios
             </Button>
             <Button
-              onPress={handleCancel}
+              onClick={handleCancel}
               radius="sm"
             >
               Cancelar

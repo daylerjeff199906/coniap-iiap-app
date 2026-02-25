@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { Button, Image as ImageUi } from '@nextui-org/react'
+import { Image as ImageUi } from 'next/image'
+import { Button } from '@/components/ui/button'
 import { IconCalendarEvent } from '@tabler/icons-react'
 import Image from 'next/image'
 
@@ -191,7 +192,7 @@ export const BannerHome = () => {
                 <Button
                   className="animate-appearance-in text-white bg-green-700 px-6"
                   variant="solid"
-                  radius="full"
+                  className="rounded-full"
                   size="lg"
                   as={Link}
                   href="/agenda"
@@ -212,7 +213,7 @@ export const BannerHome = () => {
               <Button
                 className="animate-appearance-in text-white bg-green-700"
                 variant="solid"
-                radius="full"
+                className="rounded-full"
                 as={Link}
                 href="/inscripciones"
               >
@@ -221,8 +222,8 @@ export const BannerHome = () => {
             )}
             {isBeforeSummary && (
               <Button
-                variant="flat"
-                radius="full"
+                variant="secondary"
+                className="rounded-full"
                 className="bg-white text-black animate-appearance-in"
                 as={Link}
                 href="/login"
@@ -249,7 +250,7 @@ export const BannerHome = () => {
                     src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Findigena.webp?alt=media&token=082b59bc-7cad-41bf-ac9a-916f4fa116fe"
                     alt="Banner Home"
                     className="w-52 h-56 object-cover "
-                    radius="sm"
+                    className="rounded-sm"
                     removeWrapper
                   />
                 </motion.div>
@@ -257,7 +258,7 @@ export const BannerHome = () => {
                   <ImageUi
                     src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapTejido.webp?alt=media&token=6e673280-2daa-4b3f-96b7-945ab95b5ede"
                     alt="Tejido-iiap"
-                    radius="sm"
+                    className="rounded-sm"
                     className="w-52 h-56 object-cover"
                   />
                 </motion.div>
@@ -267,7 +268,7 @@ export const BannerHome = () => {
                   <ImageUi
                     src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2FRanitomeya_fantastica_Shawi_GGU_IMG_7937.webp?alt=media&token=41f56cfa-fb64-4294-9530-e4cede2038be"
                     alt="expoIIAP"
-                    radius="sm"
+                    className="rounded-sm"
                     className="w-48 h-52 object-cover"
                   />
                 </motion.div>
@@ -275,7 +276,7 @@ export const BannerHome = () => {
                   <ImageUi
                     src="https://firebasestorage.googleapis.com/v0/b/species-iiap-bb45a.appspot.com/o/coniap-iiap%2FiiapFoto.webp?alt=media&token=ebd2a474-f961-48e6-9b4d-06c530dda0c2"
                     alt="Banner Home"
-                    radius="sm"
+                    className="rounded-sm"
                     className="h-48 object-cover"
                   />
                 </motion.div>

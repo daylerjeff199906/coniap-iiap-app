@@ -1,14 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import {
-  Image,
-  Input,
-  Pagination,
-  Select,
-  SelectItem,
-  Selection,
-} from '@nextui-org/react'
+import { Selection } from '@nextui-org/react'
+import { Pagination } from '@/components/ui/pagination'
+import { Image } from 'next/image'
+import { Input } from '@/components/ui/input'
+import { Select, SelectItem } from '@/components/ui/select'
 import { IconSearch } from '@tabler/icons-react'
 
 import { EventCard } from '@/modules/user'
@@ -59,7 +56,7 @@ export const ListEventsPage = (props: IEventsPage) => {
               selectedKeys={[searchType]}
               onSelectionChange={handleSelectType}
               variant="bordered"
-              radius="sm"
+              className="rounded-sm"
               className="w-full sm:max-w-xs"
             >
               {optionsTypesEvents.map((option) => (
@@ -73,8 +70,8 @@ export const ListEventsPage = (props: IEventsPage) => {
               aria-label="Buscar eventos"
               placeholder="Buscar eventos ..."
               variant="bordered"
-              radius="sm"
-              color="primary"
+              className="rounded-sm"
+              variant="default"
               startContent={<IconSearch />}
               value={query}
               onValueChange={setQuery}

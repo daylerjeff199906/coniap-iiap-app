@@ -2,7 +2,8 @@
 import { useState } from 'react'
 import { ISummary } from '@/types'
 import { useFormContext, useFieldArray, Controller } from 'react-hook-form'
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { IconTrash, IconPlus } from '@tabler/icons-react'
 
 export const AuthorsSection = () => {
@@ -38,7 +39,7 @@ export const AuthorsSection = () => {
           />
           <Button
             type="button"
-            onPress={handleAddAuthor}
+            onClick={handleAddAuthor}
             radius="sm"
             startContent={
               <div>
@@ -78,14 +79,14 @@ export const AuthorsSection = () => {
                     />
                     <Button
                       type="button"
-                      onPress={() => remove(index)}
+                      onClick={() => remove(index)}
                       radius="sm"
                       startContent={
                         <div>
                           <IconTrash size={16} />
                         </div>
                       }
-                      color="danger"
+                      variant="destructive"
                     >
                       Quitar
                     </Button>

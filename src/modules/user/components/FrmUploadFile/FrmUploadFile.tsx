@@ -1,6 +1,6 @@
 'use client'
 import { AlertCustom, HeaderSection } from '@/modules/core'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form'
 
@@ -161,7 +161,7 @@ export const FrmUploadFile = (props: IProps) => {
             </Button>
             <Button
               radius="sm"
-              onPress={handleExit}
+              onClick={handleExit}
             >
               Cancelar
             </Button>

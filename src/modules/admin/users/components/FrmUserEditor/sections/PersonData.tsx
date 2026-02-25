@@ -2,7 +2,8 @@
 import { useState } from 'react'
 import { IUserCreate } from '@/types'
 import { useFormContext, Controller } from 'react-hook-form'
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { IconLink } from '@tabler/icons-react'
 import { DrawerSelect } from '@/components/general'
 import { ListPersons } from './listPersons'
@@ -44,7 +45,7 @@ export const PersonData = () => {
                   size="sm"
                   radius="sm"
                   startContent={<IconLink size={16} />}
-                  onPress={() => setIsOpen(true)}
+                  onClick={() => setIsOpen(true)}
                 >
                   Seleccionar
                 </Button>

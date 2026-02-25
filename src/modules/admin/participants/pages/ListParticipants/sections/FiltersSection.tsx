@@ -1,6 +1,7 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Select, SelectItem, Selection } from '@nextui-org/react'
+import { Selection } from '@nextui-org/react'
+import { Select, SelectItem } from '@/components/ui/select'
 import { usePathname } from 'next/navigation'
 
 const personsType = [

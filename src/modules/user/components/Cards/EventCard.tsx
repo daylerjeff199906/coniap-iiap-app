@@ -2,7 +2,9 @@
 import { useState } from 'react'
 import { IEvent } from '@/types'
 import { formatDateLarge } from '@/utils/functions'
-import { Divider, Image, Link as NextLink } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Link as NextLink } from 'next/link'
+import { Separator } from '@/components/ui/separator'
 import {
   IconCalendarEvent,
   IconClockHour12,
@@ -75,7 +77,7 @@ export const EventCard = (props: EventCardProps) => {
                 </NextLink>
               )}
             </section>
-            <Divider />
+            <Separator />
             <footer className="flex flex-col sm:flex-row gap-3 justify-between items-center">
               <div className="text-xs font-bold flex gap-3 w-full justify-between sm:justify-start">
                 <div className="flex gap-2 items-center">

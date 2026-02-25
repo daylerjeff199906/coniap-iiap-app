@@ -1,5 +1,6 @@
 import { IPerson } from '@/types'
-import { Avatar, Divider } from '@nextui-org/react'
+import { Avatar } from '@nextui-org/react'
+import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
 
@@ -25,7 +26,7 @@ export const DetailsSpeaker = (props: IProps) => {
               <IconArrowNarrowLeft size={20} />
               Lista de ponentes
             </Link>
-            <Divider
+            <Separator
               orientation="vertical"
               className="bg-primary-500 h-6 w-[1px]"
             />
@@ -46,7 +47,7 @@ export const DetailsSpeaker = (props: IProps) => {
               {speaker?.job} | {''}
               <span className="font-bold">{speaker?.institution}</span>
             </p>
-            <Divider className="w-full max-w-48 py-0.5" />
+            <Separator className="w-full max-w-48 py-0.5" />
             <h3 className="font-medium text-gray-400">{speaker?.location}</h3>
           </section>
           <Avatar
@@ -54,7 +55,7 @@ export const DetailsSpeaker = (props: IProps) => {
             className="w-40 h-40 min-w-[160px] min-h-[160px] rounded-full"
           />
         </section>
-        <Divider className="w-full" />
+        <Separator className="w-full" />
         <section className="space-y-4">
           <h2 className="text-xl sm:text-2xl font-bold">Presentación</h2>
           <p className="text-tiny sm:text-medium">{speaker?.presentation}</p>

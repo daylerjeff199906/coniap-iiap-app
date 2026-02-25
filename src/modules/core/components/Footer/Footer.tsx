@@ -1,4 +1,4 @@
-import { Divider } from '@nextui-org/react'
+import { Separator } from '@/components/ui/separator'
 import isoTipo from '@/assets/svg/ISOTIPO - CONIAP.svg'
 import Image from 'next/image'
 import {
@@ -118,7 +118,7 @@ export const Footer = () => {
                 </div>
               </div>
             </div>
-            <Divider />
+            <Separator />
             <div>
               {
                 <ul className="space-y-2 sm:space-y-0 sm:flex sm:gap-4 sm:items-center sm:justify-center">
@@ -138,7 +138,7 @@ export const Footer = () => {
           </div>
         </section>
         <section className="bg-slate-900 py-2 space-y-3">
-          <Divider className="bg-white" />
+          <Separator className="bg-white" />
           <p className="text-white text-tiny text-center">
             © {new Date().getFullYear()} Todos los derechos reservados |{' '}
             {dataInfo.data.title.es}

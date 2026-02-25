@@ -1,13 +1,8 @@
-import {
-  Button,
-  Chip,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Image,
-  Link,
-} from '@nextui-org/react'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Link } from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import socialNetworks from '@/utils/json/social_networks.json'
 import { ISala } from '@/types'
 import { IconDots } from '@tabler/icons-react'
@@ -40,19 +35,19 @@ export const CardRoom = (props: IProps) => {
   return (
     <div className="flex flex-col gap-3 p-4 bg-white rounded-lg shadow-lg relative hover:shadow-xl transition-all duration-300 hover:cursor-pointer">
       <section className="absolute top-2 left-2">
-        <Chip
+        <Badge
           color={room?.isActived ? 'success' : 'danger'}
           size="sm"
           variant="dot"
-          radius="sm"
+          className="rounded-sm"
         >
           {room?.isActived ? 'On' : 'Off'}
-        </Chip>
+        </Badge>
       </section>
       <section className="absolute top-2 right-2">
         <Dropdown
           aria-label="Profile"
-          radius="sm"
+          className="rounded-sm"
           showArrow
           classNames={{
             base: 'before:bg-default-200', // change arrow background
@@ -63,8 +58,8 @@ export const CardRoom = (props: IProps) => {
             <Button
               isIconOnly
               size="sm"
-              radius="sm"
-              variant="light"
+              className="rounded-sm"
+              variant="ghost"
               className="text-gray-500"
             >
               <IconDots size={20} />
@@ -72,7 +67,7 @@ export const CardRoom = (props: IProps) => {
           </DropdownTrigger>
           <DropdownMenu
             aria-label="Custom item styles"
-            variant="flat"
+            variant="secondary"
             className="p-2"
             itemClasses={{
               base: 'hover:bg-default-200 text-xs',

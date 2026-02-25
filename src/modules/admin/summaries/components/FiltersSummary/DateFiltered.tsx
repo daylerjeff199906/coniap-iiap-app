@@ -1,6 +1,6 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Input } from '@nextui-org/react'
+import { Input } from '@/components/ui/input'
 
 export const DateFiltered = () => {
   const { getParams, updateFilters } = useFilterFromUrl()

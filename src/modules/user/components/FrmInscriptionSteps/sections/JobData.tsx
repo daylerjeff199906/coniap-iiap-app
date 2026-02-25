@@ -1,5 +1,5 @@
 import { IPerson } from '@/types'
-import { Input } from '@nextui-org/react'
+import { Input } from '@/components/ui/input'
 import { Controller, useFormContext } from 'react-hook-form'
 
 export const JobData = () => {

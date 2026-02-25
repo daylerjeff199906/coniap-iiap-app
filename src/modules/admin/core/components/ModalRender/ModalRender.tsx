@@ -1,13 +1,8 @@
 'use client'
 
-import {
-  Divider,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react'
+import {  } from '@nextui-org/react'
+import { Separator } from '@/components/ui/separator'
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation'
 
 interface IProps {
@@ -33,7 +28,7 @@ export const ModalRender = (props: IProps) => {
     >
       <ModalContent>
         <ModalHeader>{header}</ModalHeader>
-        <Divider />
+        <Separator />
         <ModalBody>
           <main className="w-full p-4s">{children}</main>
         </ModalBody>

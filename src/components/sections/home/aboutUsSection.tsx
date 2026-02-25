@@ -1,5 +1,6 @@
 'use client'
-import { Card, CardBody, Image as ImageUI } from '@nextui-org/react'
+import { Image as ImageUI } from 'next/image'
+import { Card, CardContent } from '@/components/ui/card'
 import { motion } from 'framer-motion'
 
 import {
@@ -157,11 +158,11 @@ export const AboutUsSection = () => {
                   className="space-y-3 lg:p-5 rounded-xl text-center border-none"
                   shadow="none"
                 >
-                  <CardBody className="space-y-3">
+                  <CardContent className="space-y-3">
                     <div className="w-full text-gray-400">{item.icon}</div>
                     {/* <h1 className="text-xl font-bold">{item.title}</h1> */}
                     <p className="text-xs lg:text-sm">{item.description}</p>
-                  </CardBody>
+                  </CardContent>
                 </Card>
               </motion.div>
             ))}

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { Image } from '@nextui-org/react'
+import { Image } from 'next/image'
 
 import { TableGeneral } from '@/components'
 import { IActions, IColumns } from '@/types'

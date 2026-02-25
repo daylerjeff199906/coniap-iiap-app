@@ -1,7 +1,7 @@
 'use client'
 import '@mdxeditor/editor/style.css'
 import { useState, useRef } from 'react'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import {
   useForm,
   FormProvider,
@@ -117,12 +117,12 @@ export const FrmInfoGeneral = (props: IProps) => {
               <Button
                 radius="sm"
                 size="sm"
-                onPress={() => methods.reset({ description })}
+                onClick={() => methods.reset({ description })}
               >
                 Cancelar
               </Button>
               <Button
-                color="primary"
+                variant="default"
                 type="submit"
                 isDisabled={isDirty ? false : true || loading}
                 radius="sm"
@@ -141,7 +141,7 @@ export const FrmInfoGeneral = (props: IProps) => {
         setOpen={setOpen}
         title="Guardar los cambios"
         message="¿Estás seguro de guardar los cambios?"
-        onPress={methods.handleSubmit(handleFormSubmit)}
+        onClick={methods.handleSubmit(handleFormSubmit)}
       />
     </>
   )

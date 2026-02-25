@@ -1,14 +1,11 @@
 'use client'
 import { useState } from 'react'
 import { IEvent } from '@/types'
-import {
-  Card,
-  CardBody,
-  Chip,
-  Image,
-  User,
-  Link as NextLink,
-} from '@nextui-org/react'
+import { User } from '@nextui-org/react'
+import { Image } from 'next/image'
+import { Link as NextLink } from 'next/link'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 
 import logo from '@/assets/images/logo_coniap_simple.webp'
@@ -46,7 +43,7 @@ export const CardAgendaEvent = (props: IProps) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <CardBody className={`flex flex-row gap-4 items-center px-4`}>
+      <CardContent className={`flex flex-row gap-4 items-center px-4`}>
         {showImage && (
           <div className="hidden sm:block w-32 h-32">
             <Image
@@ -62,13 +59,13 @@ export const CardAgendaEvent = (props: IProps) => {
           <section>
             <div className="flex flex-row gap-2 text-sm text-gray-400 items-center">
               {isMagistral && (
-                <Chip
+                <Badge
                   color="success"
-                  variant="flat"
+                  variant="secondary"
                   size="sm"
                 >
                   P. Magistral
-                </Chip>
+                </Badge>
               )}
               <span>
                 {event?.date && formatDate(event?.date, 'DD/MM/YYYY')}
@@ -132,7 +129,7 @@ export const CardAgendaEvent = (props: IProps) => {
             />
           </div>
         </div>
-      </CardBody>
+      </CardContent>
     </Card>
   )
 }

@@ -1,7 +1,8 @@
 'use client'
 import { DataNotFound, CardEvent } from '@/components'
 import { IEvent, IProgram } from '@/types'
-// import { Button, Divider } from '@nextui-org/react'
+// import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 // import { IconPrinter } from '@tabler/icons-react'
 // import Link from 'next/link'
 

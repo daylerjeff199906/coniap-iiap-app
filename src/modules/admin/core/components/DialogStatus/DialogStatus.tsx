@@ -1,5 +1,7 @@
 'use client'
-import { Button, Divider, Radio, RadioGroup, cn } from '@nextui-org/react'
+import { Radio, RadioGroup, cn } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { useFiles } from '@/hooks/admin'
 import { useRouter } from 'next/navigation'
 import {
@@ -111,11 +113,11 @@ export const DialogStatus = (props: IProps) => {
               )}
             />
           </main>
-          <Divider />
+          <Separator />
           <footer className="flex justify-end gap-2">
             <Button
               radius="sm"
-              onPress={handleExit}
+              onClick={handleExit}
             >
               Cancelar
             </Button>

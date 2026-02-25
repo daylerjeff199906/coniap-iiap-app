@@ -1,12 +1,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import {
-  Divider,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-} from '@nextui-org/react'
+import {  } from '@nextui-org/react'
+import { Separator } from '@/components/ui/separator'
+import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { ISummary } from '@/types'
 
 interface IProps {
@@ -38,7 +34,7 @@ export const ModalSummary = (props: IProps) => {
               <h1 className="text-lg font-semibold">Detalles del resumen</h1>
             )}
           </ModalHeader>
-          <Divider />
+          <Separator />
           <ModalBody>{children}</ModalBody>
         </ModalContent>
       </Modal>

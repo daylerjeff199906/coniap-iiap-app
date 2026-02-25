@@ -2,16 +2,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { usePersons } from '@/hooks/admin'
-import {
-  Button,
-  Input,
-  Listbox,
-  ListboxItem,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Selection,
-} from '@nextui-org/react'
+import { Listbox, ListboxItem, Selection } from '@nextui-org/react'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { IPerson } from '@/types'
 import { IconSearch, IconTrash } from '@tabler/icons-react'
 interface IFilter {
@@ -54,13 +48,13 @@ export const PersonFiltered = (props: IFilter) => {
   return (
     <section className="flex gap-2">
       <Popover
-        radius="sm"
+        className="rounded-sm"
         placement="right-start"
       >
         <PopoverTrigger>
           <Button
             isLoading={loading}
-            radius="sm"
+            className="rounded-sm"
           >
             {personSelected ? (
               <div className="flex flex-col justify-start items-start">
@@ -87,7 +81,7 @@ export const PersonFiltered = (props: IFilter) => {
                   startContent={<IconSearch stroke={1.5} />}
                   aria-label="Search person"
                   placeholder="Buscar por apellido..."
-                  radius="sm"
+                  className="rounded-sm"
                   value={query}
                   onValueChange={(value) => setQuery(value)}
                 />
@@ -113,9 +107,9 @@ export const PersonFiltered = (props: IFilter) => {
       {personSelected && (
         <Button
           isIconOnly
-          radius="sm"
+          className="rounded-sm"
           variant="bordered"
-          onPress={() => {
+          onClick={() => {
             setPersonSelected(null)
             onValueChange('')
           }}

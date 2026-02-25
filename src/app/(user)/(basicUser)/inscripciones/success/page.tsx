@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Fireworks from 'react-canvas-confetti/dist/presets/fireworks'
 import { AlertCustom } from '@/modules/core'
@@ -55,7 +55,7 @@ export default function Page() {
                       as={Link}
                       variant="bordered"
                       radius="full"
-                      color="primary"
+                      variant="default"
                     >
                       Iniciar sesión
                     </Button>
