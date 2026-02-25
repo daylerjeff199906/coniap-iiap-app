@@ -3,32 +3,33 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { IconX, IconMenu } from '@tabler/icons-react'
+import { IconX, IconMenu, IconChevronRight, IconLogin } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 
 import { menuItems } from './linkData'
 import { menuSlide, scale, slide } from './anim'
+import { cn } from '@/lib/utils'
 
 export const NavBarUserPhone = () => {
   const [isActived, setIsActived] = useState(false)
 
   return (
     <>
-      <Button className="sticky top-4 right-4 z-50 text-white"
+      <Button
+        className={cn(
+          "fixed top-4 right-4 z-[60] rounded-full h-12 w-12 shadow-2xl transition-all duration-300",
+          isActived ? "bg-white text-primary hover:bg-white" : "bg-primary text-white hover:bg-primary/90"
+        )}
         onClick={() => setIsActived(!isActived)}
         size="icon"
-        
         variant="ghost"
       >
         {isActived ? (
-          <IconX
-            size={24}
-            stroke={1}>) : (
-          <IconMenu
-            size={24}
-            stroke={1}
-          />
-        )}</Button>
+          <IconX size={24} stroke={2.5} />
+        ) : (
+          <IconMenu size={24} stroke={2.5} />
+        )}
+      </Button>
       <AnimatePresence mode="wait">
         {isActived && <NavSection onValueChange={() => setIsActived(false)} />}
       </AnimatePresence>
@@ -45,90 +46,84 @@ const NavSection = (props: IProps) => {
   const pathname = usePathname()
   const [selectedIndicator, setSelectedIndicator] = useState(pathname)
 
-  const initialPath = `M100 0 L100 ${window.innerHeight} Q-100 ${
-    window.innerHeight / 2
-  } 100 0`
-
-  const targetPath = `M100 0 L100 ${window.innerHeight} Q100 ${
-    window.innerHeight / 2
-  } 100 0`
-
+  // Curva de diseño SVG
   const curve = {
     initial: {
-      d: initialPath,
+      d: `M100 0 L100 ${typeof window !== 'undefined' ? window.innerHeight : 800} Q-100 ${(typeof window !== 'undefined' ? window.innerHeight : 800) / 2
+        } 100 0`,
     },
-
     enter: {
-      d: targetPath,
-
+      d: `M100 0 L100 ${typeof window !== 'undefined' ? window.innerHeight : 800} Q100 ${(typeof window !== 'undefined' ? window.innerHeight : 800) / 2
+        } 100 0`,
       transition: { duration: 1, ease: [0.76, 0, 0.24, 1] },
     },
-
     exit: {
-      d: initialPath,
-
+      d: `M100 0 L100 ${typeof window !== 'undefined' ? window.innerHeight : 800} Q-100 ${(typeof window !== 'undefined' ? window.innerHeight : 800) / 2
+        } 100 0`,
       transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
     },
   }
 
   return (
-    <>
-      <motion.div
-        variants={menuSlide}
-        initial="initial"
-        animate="enter"
-        exit="exit"
-        className="h-screen fixed right-0 top-0 text-white bg-primary-800"
-      >
-        <div className="h-full p-20 flex flex-col justify-between">
-          <div
-            onMouseLeave={() => {
-              setSelectedIndicator(pathname)
-            }}
-            className="flex flex-col text-5xl gap-3 mt-12"
-          >
-            <div className="border-b border-gray-200 uppercase text-xs mb-10">
-              <p>Navigation</p>
-            </div>
-
-            {menuItems.map((data, index) => {
-              return (
-                <LinkUi
-                  key={index}
-                  data={{ ...data, index }}
-                  isActive={selectedIndicator == data.link}
-                  setSelectedIndicator={setSelectedIndicator}
-                  onValueChange={onValueChange}
-                />
-              )
-            })}
+    <motion.div
+      variants={menuSlide}
+      initial="initial"
+      animate="enter"
+      exit="exit"
+      className="fixed right-0 top-0 h-screen text-white bg-primary-900/95 backdrop-blur-xl z-50 w-full sm:w-[400px] shadow-[-20px_0_60px_rgba(0,0,0,0.5)]"
+    >
+      <div className="h-full flex flex-col justify-between p-10 pt-24 pb-12 overflow-y-auto">
+        <div className="space-y-12">
+          <div className="border-b border-white/10 pb-4">
+            <h3 className="text-xs font-black tracking-widest text-white/50 uppercase">Menú de Navegación</h3>
           </div>
 
-          <div className="pt-4 flex flex-col gap-2">
-            <Button size="lg" variant="ghost" fullWidth asChild className="text-white">
-  <Link href="/login">Ya tengo mi cuenta</Link>
-</Button>
-            <Button size="lg" variant="destructive" fullWidth asChild>
-  <Link href="/inscripciones">¡Inscríbete ya!</Link>
-</Button>
+          <nav className="flex flex-col gap-4">
+            {menuItems.map((data, index) => (
+              <LinkUi
+                key={index}
+                data={{ ...data, index }}
+                isActive={selectedIndicator === data.link}
+                setSelectedIndicator={setSelectedIndicator}
+                onValueChange={onValueChange}
+              />
+            ))}
+          </nav>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex flex-col gap-3">
+            <Button size="lg" variant="secondary" className="font-bold h-14 rounded-2xl w-full gap-3 shadow-xl" asChild onClick={onValueChange}>
+              <Link href="/login">
+                <IconLogin size={20} />
+                Iniciar Sesión
+              </Link>
+            </Button>
+            <Button size="lg" variant="default" className="font-bold h-14 rounded-2xl w-full gap-3 shadow-xl bg-green-600 hover:bg-green-500" asChild onClick={onValueChange}>
+              <Link href="/inscripciones">
+                ¡Participa Ahora!
+                <IconChevronRight size={20} />
+              </Link>
+            </Button>
           </div>
 
-          <div className="flex w-full justify-between text-sm pt-6">
-            <a className="text-white font-semibold">Instagram</a>
-            <a className="text-white font-semibold">Facebook</a>
-            <a className="text-white font-semibold">Tik tok</a>
+          <div className="flex justify-between items-center text-xs text-white/40 pt-8 border-t border-white/5">
+            <Link href="#" className="hover:text-white transition-colors">Instagram</Link>
+            <Link href="#" className="hover:text-white transition-colors">Facebook</Link>
+            <Link href="#" className="hover:text-white transition-colors">Twitter</Link>
           </div>
         </div>
-        <svg className="absolute top-0 -left-24 w-24 h-full stroke-none fill-primary-800">
-          <motion.path
-            variants={curve}
-            initial="initial"
-            animate="enter"
-            exit="exit"
-          ></motion.path>
-        </svg>
-      </motion.div>
-    </>
+      </div>
+
+      <svg className="absolute top-0 -left-24 w-24 h-full stroke-none fill-primary-900/95 backdrop-blur-xl pointer-events-none lg:hidden hidden sm:block">
+        <motion.path
+          variants={curve}
+          initial="initial"
+          animate="enter"
+          exit="exit"
+        />
+      </svg>
+    </motion.div>
   )
 }
 
@@ -146,13 +141,11 @@ interface ILinkProps {
 const LinkUi = (props: ILinkProps) => {
   const { data, isActive, setSelectedIndicator, onValueChange } = props
   const { name, link, index } = data
+
   return (
     <motion.div
-      className="relative flex items-center"
-      onMouseEnter={() => {
-        setSelectedIndicator(link)
-        onValueChange && onValueChange()
-      }}
+      className="relative flex items-center group px-2 py-1"
+      onMouseEnter={() => setSelectedIndicator(link)}
       custom={index}
       variants={slide}
       initial="initial"
@@ -162,10 +155,19 @@ const LinkUi = (props: ILinkProps) => {
       <motion.div
         variants={scale}
         animate={isActive ? 'open' : 'closed'}
-        className="w-[10px] h-[10px] bg-white absolute -left-6 rounded-small"
-      ></motion.div>
+        className="w-2 h-2 bg-green-400 absolute left-0 rounded-full"
+      />
 
-      <Link href={link}>{name}</Link>
+      <Link
+        href={link}
+        onClick={onValueChange}
+        className={cn(
+          "text-3xl sm:text-4xl font-black italic uppercase tracking-tighter transition-all pl-6",
+          isActive ? "text-white" : "text-white/40 hover:text-white/70"
+        )}
+      >
+        {name}
+      </Link>
     </motion.div>
   )
 }

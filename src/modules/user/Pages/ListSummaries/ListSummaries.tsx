@@ -9,6 +9,8 @@ import { useAuth } from '../..'
 import Link from 'next/link'
 import { useSummaries } from '@/hooks/admin'
 import Image from 'next/image'
+import { IconFileText, IconEdit, IconExternalLink, IconInfoCircle, IconPlus } from '@tabler/icons-react'
+import { cn } from '@/lib/utils'
 
 export const ListSummaries = () => {
   const { myPerson } = useAuth()
@@ -24,119 +26,162 @@ export const ListSummaries = () => {
 
   if (myPerson?.name === '' || myPerson?.surName === '')
     return (
-      <section>
-        <div className="p-6 bg-accent/20 rounded-xl border flex flex-col justify-center gap-6 text-center">
-          <div className="space-y-2">
-            <h1 className="font-bold text-2xl">Completa tus datos</h1>
-            <p className="text-muted-foreground">Debes completar tus datos para poder enviar un resumen</p>
+      <section className="animate-in fade-in zoom-in duration-500">
+        <div className="p-12 bg-primary/5 rounded-3xl border-2 border-dashed border-primary/20 flex flex-col items-center justify-center gap-6 text-center shadow-inner">
+          <div className="p-4 bg-primary/10 rounded-full">
+            <IconInfoCircle size={48} className="text-primary" />
           </div>
-          <div className="flex justify-center">
-            <Button asChild
-              variant="default"
-              className="px-8"
-            >
-              <Link href="/dashboard/profile">Completar datos</Link>
-            </Button>
+          <div className="space-y-2 max-w-sm">
+            <h1 className="font-black text-3xl uppercase italic tracking-tighter">Completa tus datos</h1>
+            <p className="text-muted-foreground font-medium">Debes completar tu perfil profesional para poder enviar y gestionar tus propuestas de resumen.</p>
           </div>
+          <Button asChild
+            variant="default"
+            size="lg"
+            className="px-10 rounded-2xl font-black uppercase italic shadow-lg shadow-primary/20"
+          >
+            <Link href="/dashboard/profile">Ir a mi perfil</Link>
+          </Button>
         </div>
       </section>
     )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {loading ? (
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {[1, 2, 3].map((item) => (
             <Skeleton
               key={item}
-              className="w-full h-32 rounded-xl">))}
+              className="w-full h-48 rounded-3xl"
+            />
+          ))}
         </div>
       ) : (
         <>
           {summaries?.data?.length === 0 && (
-            <section className="flex flex-col items-center w-full justify-center py-12 gap-6">
-              <Image
-                src="/svg/not-summary.svg"
-                alt="No data"
-                width={260}
-                height={260}
-                className="opacity-50"
-              />
-              <h1 className="font-bold text-xl text-muted-foreground">
-                Aún no has enviado ningún resumen
-              </h1>
+            <section className="flex flex-col items-center w-full justify-center py-20 gap-8 bg-muted/20 rounded-3xl border-2 border-dashed">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full" />
+                <Image
+                  src="/svg/not-data.svg"
+                  alt="No data"
+                  width={280}
+                  height={280}
+                  className="opacity-70 relative"
+                />
+              </div>
+              <div className="text-center space-y-2">
+                <h1 className="font-black text-2xl uppercase italic tracking-tighter text-muted-foreground">
+                  Aún no has enviado propuestas
+                </h1>
+                <p className="text-sm text-muted-foreground font-medium">Tus resúmenes enviados aparecerán listados en esta sección.</p>
+              </div>
+              <Button asChild className="rounded-2xl font-bold gap-2 shadow-lg">
+                <Link href="/dashboard/files/upload">
+                  <IconPlus size={18} stroke={3} />
+                  Enviar primer resumen
+                </Link>
+              </Button>
             </section>
           )}
-          <section className="flex flex-col gap-6">
+
+          <section className="grid grid-cols-1 gap-6">
             {summaries?.data?.map((summary) => (
               <div
                 key={summary.id}
-                className="p-6 bg-card border rounded-xl shadow-sm flex flex-col gap-6 transition-all hover:shadow-md"
+                className="group p-8 bg-card border-2 rounded-3xl shadow-sm flex flex-col gap-6 transition-all hover:shadow-2xl hover:border-primary/50 relative overflow-hidden"
               >
-                <div className="flex flex-wrap gap-2">
+                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <IconFileText size={120} stroke={1} />
+                </div>
+
+                <div className="flex flex-wrap gap-3 relative z-10">
                   <Badge
                     variant={summary.isApproved ? "default" : "secondary"}
-                    className="rounded-full px-3"
+                    className={cn(
+                      "rounded-full px-4 py-1 font-bold uppercase tracking-widest text-[10px] italic shadow-sm",
+                      summary.isApproved ? "bg-green-500 hover:bg-green-600" : "bg-primary/10 text-primary border-primary/20"
+                    )}
                   >
                     {summary.isApproved
-                      ? 'Aprobado'
-                      : 'Pendiente de aprobación'}
+                      ? 'APROBADO'
+                      : 'PENDIENTE'}
                   </Badge>
 
                   <Badge
                     variant={summary.file ? "outline" : "destructive"}
-                    className="rounded-full px-3"
+                    className="rounded-full px-4 py-1 font-bold uppercase tracking-widest text-[10px] italic shadow-sm"
                   >
                     {summary?.file
-                      ? 'Resumen subido'
-                      : 'Archivo de resumen no subido'}
+                      ? 'ARCHIVO SUBIDO'
+                      : 'ARCHIVO PENDIENTE'}
                   </Badge>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
-                    Subido el{' '}
-                    {new Date(summary?.created_at).toLocaleDateString()} a las{' '}
-                    {new Date(summary?.created_at).toLocaleTimeString()}
-                  </p>
-                  <h1 className="font-extrabold text-2xl tracking-tight uppercase">
-                    {summary.title}
-                  </h1>
-                  <p className="text-sm border-l-4 border-primary/30 pl-3 py-1 font-medium">
-                    Línea temática: {summary.topic?.name}
-                  </p>
+                <div className="space-y-4 relative z-10">
+                  <div className="space-y-1">
+                    <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">
+                      Subido el {new Date(summary?.created_at).toLocaleDateString()} a las {new Date(summary?.created_at).toLocaleTimeString()}
+                    </p>
+                    <h1 className="font-black text-3xl tracking-tighter uppercase italic leading-none group-hover:text-primary transition-colors">
+                      {summary.title}
+                    </h1>
+                  </div>
+
+                  <div className="inline-flex items-center gap-2 bg-muted/50 px-3 py-1.5 rounded-xl border">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-tight">
+                      Línea: <span className="text-foreground">{summary.topic?.name}</span>
+                    </p>
+                  </div>
+
                   {summary?.authors && summary?.authors?.length > 0 && (
                     <div className="flex flex-wrap gap-2 pt-2">
-                      <span className="text-xs font-semibold text-muted-foreground">Co-autores:</span>
                       {summary.authors.map((author, i) => (
-                        <span key={i} className="text-xs bg-muted px-2 py-1 rounded-md">{author}</span>
+                        <span key={i} className="text-[10px] font-black uppercase tracking-wider bg-primary/5 text-primary/70 px-3 py-1 rounded-lg border border-primary/10">
+                          {author}
+                        </span>
                       ))}
                     </div>
                   )}
                 </div>
 
-                <div className="flex items-center gap-4 pt-4 border-t">
-                  {!summary?.isApproved && (
-                    <Button
-                      asChild
-                      size="sm"
-                      className="font-bold shadow-sm"
-                    >
-                      <Link href={`/dashboard/files/${summary.id}`}>
-                        Editar resumen
-                      </Link></Button>
-                  )}
-                  {summary.file ? (
-                    <Link
-                      href={`${summary.file}`}
-                      download
-                      target="_blank"
-                      className="text-sm font-bold text-primary hover:underline flex items-center gap-1"
-                    >
-                      Ver resumen
-                    </Link>
-                  ) : (
-                    <span className="text-sm font-medium text-muted-foreground">Sin archivo</span>
+                <div className="flex items-center justify-between pt-6 border-t border-dashed relative z-10">
+                  <div className="flex items-center gap-4">
+                    {!summary?.isApproved && (
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="secondary"
+                        className="font-bold rounded-xl h-10 px-6 gap-2 border-2 border-transparent hover:border-primary/20"
+                      >
+                        <Link href={`/dashboard/files/${summary.id}`}>
+                          <IconEdit size={18} />
+                          Editar
+                        </Link>
+                      </Button>
+                    )}
+
+                    {summary.file && (
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="ghost"
+                        className="font-bold text-primary hover:text-primary hover:bg-primary/5 gap-2 px-6"
+                      >
+                        <Link href={`${summary.file}`} target="_blank">
+                          <IconExternalLink size={18} />
+                          Ver documento
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
+
+                  {!summary.file && (
+                    <span className="text-xs font-black uppercase tracking-widest text-destructive animate-pulse">
+                      Archivo no subido
+                    </span>
                   )}
                 </div>
               </div>

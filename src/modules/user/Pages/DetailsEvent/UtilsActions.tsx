@@ -2,7 +2,7 @@
 import NextImage from 'next/image'
 import { IEvent } from '@/types'
 import { Button } from '@/components/ui/button'
-import { IconCalendarMonth } from '@tabler/icons-react'
+import { IconCalendarMonth, IconExternalLink } from '@tabler/icons-react'
 import socialNetworks from '@/utils/json/social_networks.json'
 import Link from 'next/link'
 
@@ -34,27 +34,44 @@ export const UtilsActions = (props: IProps) => {
   )
 
   return (
-    <section className="w-full flex flex-col gap-3">
-      <Button variant="default" onClick={handleAddToCalendar} className="w-full font-bold gap-2">
-  <IconCalendarMonth size={20} />
-  Agregar a mi agenda
-</Button>
-      {event?.sala?.url && (
-        <Button variant="outline"
-          asChild
-          className="w-full font-bold"
+    <section className="w-full flex flex-col gap-4 p-6 bg-muted/30 border-2 border-dashed rounded-3xl animate-in zoom-in duration-500">
+      <div className="space-y-1">
+        <h3 className="text-xs font-black tracking-widest text-muted-foreground uppercase text-center">Acciones Rápidas</h3>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <Button
+          variant="default"
+          onClick={handleAddToCalendar}
+          className="w-full h-12 font-black uppercase italic tracking-tighter gap-3 rounded-2xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-base"
         >
-          <Link href={event?.sala?.url || '#'} target="_blank">
-            {socialNetworksLogo?.logo && (
-              <NextImage
-                src={socialNetworksLogo?.logo}
-                alt="Platform"
-                width={20}
-                height={20}
-                className="mr-2 h-5 w-5 object-contain">)}
-            Ir a {event?.sala?.name}
-          </Link></Button>
-      )}
+          <IconCalendarMonth size={22} stroke={2.5} />
+          Agendar Evento
+        </Button>
+
+        {event?.sala?.url && (
+          <Button
+            variant="outline"
+            asChild
+            className="w-full h-12 font-black uppercase italic tracking-tighter gap-3 rounded-2xl border-2 hover:bg-background shadow-md transition-all text-base"
+          >
+            <Link href={event?.sala?.url || '#'} target="_blank">
+              {socialNetworksLogo?.logo ? (
+                <NextImage
+                  src={socialNetworksLogo?.logo}
+                  alt="Platform"
+                  width={24}
+                  height={24}
+                  className="h-6 w-6 object-contain"
+                />
+              ) : (
+                <IconExternalLink size={22} stroke={2.5} />
+              )}
+              <span>Ir a {event?.sala?.name}</span>
+            </Link>
+          </Button>
+        )}
+      </div>
     </section>
   )
 }

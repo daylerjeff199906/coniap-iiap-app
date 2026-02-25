@@ -70,11 +70,9 @@ export const InfoRoom = () => {
                 description="Seleccione la sala virtual en la que se llevará a cabo el evento"
                 endContent={
                   <div>
-                    <Button className="rounded-sm" onClick={() =>
+                    <Button className="rounded-sm" onClick={() => setIsOpen(true)} className="rounded-sm gap-2">
   <IconLink size={16} />
-  setIsOpen(true)}
-                    >
-                      Seleccionar
+  Seleccionar
 </Button>
                   </div>
                 }

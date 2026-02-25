@@ -12,78 +12,77 @@ export const AuthorsSection = () => {
 
   const { fields, append, remove } = useFieldArray({
     name: 'authors',
+    control
   })
 
   const handleAddAuthor = () => {
-    append(author)
-    setAuthor('')
+    if (author.trim()) {
+      append(author.trim())
+      setAuthor('')
+    }
   }
+
   return (
-    <section className="w-full">
-      <div className="w-full flex flex-col gap-2">
-        <header className="flex justify-between items-center">
-          <div>
-            <h1 className="text-sm">Autores | Co-autores</h1>
-            <p className="text-xs">
-              Agrega los co-autores del resumen (opcional)
-            </p>
-          </div>
-        </header>
-        <section className="flex gap-1">
-          <Input
-            
-            variant="outline"
-            placeholder="Nombre del autor"
-            value={author}
-            onValueChange={(value) => {
-              setAuthor(value)
-            }}
-          />
-          <Button type="button" onClick={handleAddAuthor} className="text-gray-600"><div>
-                <IconPlus
-                  size={16
-  </div>
-            }
-          >
-            Agregar</Button>
-        </section>
-        <div className="mt-1">
-          <Controller
-            control={control}
-            name="authors"
-            render={({ field: { onChange, value } }) => (
-              <div className="space-y-2">
-                {fields.map((field, index) => (
-                  <div
-                    key={field.id}
-                    className="flex items-center mb-2 gap-1 "
+    <section className="w-full space-y-6">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Autores | Co-autores</h1>
+        <p className="text-xs text-muted-foreground">Agrega los co-autores del resumen (opcional)</p>
+      </div>
+
+      <div className="flex gap-2">
+        <Input
+          placeholder="Nombre completo del autor"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          className="flex-1"
+        />
+        <Button
+          type="button"
+          onClick={handleAddAuthor}
+          variant="secondary"
+          className="gap-2 font-bold"
+        >
+          <IconPlus size={18} />
+          Agregar
+        </Button>
+      </div>
+
+      <div className="space-y-2 mt-4">
+        <Controller
+          control={control}
+          name="authors"
+          render={({ field: { onChange, value } }) => (
+            <div className="flex flex-col gap-2">
+              {fields.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="flex items-center gap-2 p-1 bg-muted/20 border rounded-lg group"
+                >
+                  <Input
+                    type="text"
+                    placeholder="Nombre del autor"
+                    value={(value && value[index]) || ''}
+                    onChange={(e) => {
+                      const newValue = [...(value || [])];
+                      newValue[index] = e.target.value;
+                      onChange(newValue);
+                    }}
+                    className="h-8 text-sm bg-transparent border-none shadow-none focus-visible:ring-0"
+                  />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => remove(index)}
+                    className="h-8 w-8 text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <Input
-                      type="text"
-                      
-                      placeholder="Nombre del autor"
-                      value={(value && value[index]) || ''}
-                      onValueChange={(e) => {
-                        onChange([
-                          ...(value?.slice(0, index) || []),
-                          e,
-                          ...(value?.slice(index + 1) || []),
-                        ])
-                      }}
-                    />
-                    <Button type="button" onClick={() => remove(index)}><div>
-                          <IconTrash size={16
-  </div>
-                      }
-                      variant="destructive"
-                    >
-                      Quitar</Button>
-                  </div>
-                ))}
-              </div>
-            )}
-          />
-        </div>
+                    <IconTrash size={16} />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+        />
       </div>
     </section>
   )

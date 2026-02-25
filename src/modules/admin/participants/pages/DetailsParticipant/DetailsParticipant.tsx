@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
 import { InfoData, UserData } from './sections'
-
-// import
+import { HeaderSection } from '@/modules/core'
 
 interface IProps {
   data: IPerson
@@ -22,21 +21,24 @@ export const DetailsParticipant = (props: IProps) => {
   }
 
   return (
-    <main className="flex flex-col gap-4 w-full p-6 border rounded-xl bg-white">
-      <section>
-        <Button onClick={handleExit} variant="ghost" stroke={1.5} className="text-gray-500">
-  <IconArrowNarrowLeft size={20} />
-  Atras
-</Button>
-      </section>
-      <InfoData
-        data={data}
-        summaries={summaries}
+    <main className="flex flex-col gap-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <HeaderSection
+        title={`${data.name} ${data.surName}`}
+        subtitle="Detalles completos del participante y su actividad en el sistema"
+        showBackButton
+        hrefBack="#" // The handleExit logic is better handled by simply having a back button or link
       />
-      <UserData
-        user={user}
-        person={data}
-      />
+
+      <div className="grid grid-cols-1 gap-6">
+        <InfoData
+          data={data}
+          summaries={summaries}
+        />
+        <UserData
+          user={user}
+          person={data}
+        />
+      </div>
     </main>
   )
 }

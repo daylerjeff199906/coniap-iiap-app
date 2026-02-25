@@ -28,47 +28,52 @@ export const RangeDateFiltered = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <div className={cn("grid gap-2")}>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button id="date"
-              variant={"outline"}
-              className={cn(
-                "w-[260px] justify-start text-left font-normal h-9",
-                !date && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4">{date?.from ? (
-                date.to ? (
-                  <>
-                    {format(date.from, "LLL dd, y")} -{" "}
-                    {format(date.to, "LLL dd, y")}
-                  </>
-                ) : (
-                  format(date.from, "LLL dd, y")
-                )
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            id="date"
+            variant="outline"
+            className={cn(
+              "w-[280px] justify-start text-left font-normal h-10 gap-2",
+              !date && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className="h-4 w-4" />
+            {date?.from ? (
+              date.to ? (
+                <span className="truncate">
+                  {format(date.from, "LLL dd, y")} -{" "}
+                  {format(date.to, "LLL dd, y")}
+                </span>
               ) : (
-                <span>Seleccionar fechas</span>
-              )}</Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              initialFocus
-              mode="range"
-              defaultMonth={date?.from}
-              selected={date}
-              onSelect={setDate}
-              numberOfMonths={2}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <Button variant="outline"
+                format(date.from, "LLL dd, y")
+              )
+            ) : (
+              <span>Seleccionar fechas</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            initialFocus
+            mode="range"
+            defaultMonth={date?.from}
+            selected={date}
+            onSelect={setDate}
+            numberOfMonths={2}
+          />
+        </PopoverContent>
+      </Popover>
+
+      <Button
+        variant="ghost"
         size="icon"
-        className="h-9 w-9"
+        className="h-10 w-10 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
         onClick={resetDates}
+        title="Limpiar fechas"
       >
-        <Trash2 className="h-4 w-4"></Button>
+        <Trash2 className="h-4 w-4" />
+      </Button>
     </div>
   )
 }

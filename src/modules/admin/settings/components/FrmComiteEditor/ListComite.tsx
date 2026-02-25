@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { IconTrash, IconPlus, IconGripVertical } from '@tabler/icons-react'
 import { IPersonComite } from '@/types'
+import { cn } from '@/lib/utils'
 
 interface IListData {
   list: IPersonComite[]
@@ -21,8 +22,10 @@ export const ListComimte = () => {
   const [draggedItem, setDraggedItem] = useState<number | null>(null)
 
   const handleAddAuthor = () => {
-    append({ order: fields.length + 1, name: personal })
-    setPersonal('')
+    if (personal.trim()) {
+      append({ order: fields.length + 1, name: personal.trim() })
+      setPersonal('')
+    }
   }
 
   const handleDragStart = (index: number) => {
@@ -49,28 +52,82 @@ export const ListComimte = () => {
   }
 
   return (
-    <section className="w-full">
-      <div className="w-full flex flex-col gap-2 ">
-        <section className="flex gap-1">
-          <Input
-            
-            variant="outline"
-            placeholder="Nombre del personal de comité"
-            value={personal}
-            onChange={(e) => setPersonal(e.target.value)}
-          />
-          <Button type="button" onClick={handleAddAuthor} className="text-gray-600"><div> <IconPlus size={16 </div> } > Agregar</Button> </section> <div className="mt-1 h-full max-h-72 overflow-y-auto"> <Controller control={control} name="list" render={({ field: { onChange, value } }) => ( <div className="space-y-2"> {fields.map((field, index) => ( <div key={field.id} className="flex items-center gap-1 px-2 py-1 hover:bg-gray-100 rounded-md" draggable onDragStart={() => handleDragStart(index)} onDragEnter={() => handleDragEnter(index)} onDragEnd={handleDragEnd} > <div> <Button size="icon" variant="ghost" className="cursor-move" disabled>
-  <IconGripVertical size={16} />
-  
-</Button> </div> <Input type="text" size="sm" placeholder="Nombre del personal de comité" value={value?.[index]?.name || ''} onChange={(e) => { const newValue = [...(value || [])] newValue[index] = { ...newValue[index], name: e.target.value, } onChange(newValue) }} /> <Button type="button" size="sm" onClick={() => remove(index)}><div>
-                          <IconTrash size={16
-  </div>
-                      }
-                      variant="destructive"
-                    >
-                      Quitar</Button>
+    <section className="w-full space-y-6">
+      <div className="flex flex-col gap-1">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Miembros del Comité</h2>
+        <p className="text-xs text-muted-foreground">Agrega y organiza los miembros del comité (puedes arrastrar para reordenar)</p>
+      </div>
+
+      <div className="flex gap-2">
+        <Input
+          placeholder="Nombre del miembro"
+          value={personal}
+          onChange={(e) => setPersonal(e.target.value)}
+          className="flex-1"
+        />
+        <Button
+          type="button"
+          onClick={handleAddAuthor}
+          className="gap-2 font-bold px-6"
+        >
+          <IconPlus size={18} />
+          Agregar
+        </Button>
+      </div>
+
+      <div className="mt-4 border rounded-xl overflow-hidden bg-muted/10">
+        <div className="max-h-96 overflow-y-auto p-4 space-y-2">
+          <Controller
+            control={control}
+            name="list"
+            render={({ field: { onChange, value } }) => (
+              <div className="space-y-2">
+                {fields.length === 0 ? (
+                  <div className="text-center py-10 text-muted-foreground text-sm">
+                    No hay miembros agregados aún.
                   </div>
-                ))}
+                ) : (
+                  fields.map((field, index) => (
+                    <div
+                      key={field.id}
+                      className={cn(
+                        "flex items-center gap-2 p-2 bg-background border rounded-lg shadow-sm transition-all",
+                        draggedItem === index ? "opacity-50 ring-2 ring-primary" : "hover:border-primary/50"
+                      )}
+                      draggable
+                      onDragStart={() => handleDragStart(index)}
+                      onDragEnter={() => handleDragEnter(index)}
+                      onDragEnd={handleDragEnd}
+                    >
+                      <div className="cursor-grab active:cursor-grabbing p-1 text-muted-foreground hover:text-foreground transition-colors">
+                        <IconGripVertical size={20} />
+                      </div>
+
+                      <div className="flex-1">
+                        <Input
+                          type="text"
+                          className="h-9 bg-transparent border-none shadow-none focus-visible:ring-0 font-medium"
+                          value={value?.[index]?.name || ''}
+                          onChange={(e) => {
+                            const newValue = [...(value || [])]
+                            newValue[index] = { ...newValue[index], name: e.target.value }
+                            onChange(newValue)
+                          }}
+                        />
+                      </div>
+
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => remove(index)}
+                        className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <IconTrash size={16} />
+                      </Button>
+                    </div>
+                  ))
+                )}
               </div>
             )}
           />

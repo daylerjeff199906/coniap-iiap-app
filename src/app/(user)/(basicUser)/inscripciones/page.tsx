@@ -87,10 +87,14 @@ export default function Page() {
             </ul>
             {isBeforeConference && (
               <div className="pt-4">
-                <Button variant="outline" className="font-bold px-8 gap-2 rounded-full border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm" onClick={activeDriver} />
-  <IconPlayerPlayFilled size={18} />
-  Ver demo
-</Button>
+                <Button
+                  variant="outline"
+                  className="font-bold px-8 gap-2 rounded-full border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm"
+                  onClick={activeDriver}
+                >
+                  <IconPlayerPlayFilled size={18} />
+                  Ver demo
+                </Button>
               </div>
             )}
           </section>

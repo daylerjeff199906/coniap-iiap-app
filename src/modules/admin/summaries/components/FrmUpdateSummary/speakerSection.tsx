@@ -46,11 +46,9 @@ export const SpeakerSection = ({ loading }: { loading?: boolean }) => {
             disabled={loading}
             endContent={
               <div>
-                <Button onClick={() =>
+                <Button  onClick={() => setIsOpen(true)} className="rounded-sm gap-2">
   <IconLink size={16} />
-  setIsOpen(true)}
-                >
-                  Seleccionar
+  Seleccionar
 </Button>
               </div>
             }

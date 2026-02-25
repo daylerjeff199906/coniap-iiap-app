@@ -11,6 +11,7 @@ import { useAuthContext } from '@/provider'
 import { toast } from 'react-toastify'
 import Google from './GoogleIcon'
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
 
 function encryptString(value: string) {
   return btoa(value)
@@ -30,67 +31,66 @@ export const FrmLogin = () => {
 
   const onSubmit: SubmitHandler<ILogin> = async (data: ILogin) => {
     setLoading(true)
-    const res = await signInWithCredentials(data)
+    try {
+      const res = await signInWithCredentials(data)
 
-    if (res) {
-      await setUserData(res)
-      if (res.role) {
-        if (res.role.length > 0) {
-          toast.success('Bienvenido ' + res?.userName)
-          if (res.role.includes('admin')) {
-            router.push('/admin')
-          } else if (res.role.includes('superadmin')) {
-            router.push('/admin')
-          } else if (res.role.includes('editor')) {
-            router.push('/admin')
-          } else if (res.role.includes('speaker')) {
-            router.push('/dashboard')
+      if (res) {
+        await setUserData(res)
+        if (res.role) {
+          if (res.role.length > 0) {
+            toast.success('Bienvenido ' + res?.userName)
+            if (res.role.includes('admin') || res.role.includes('superadmin') || res.role.includes('editor')) {
+              router.push('/admin')
+            } else if (res.role.includes('speaker')) {
+              router.push('/dashboard')
+            }
+          } else {
+            toast.info('No tienes permisos para acceder')
           }
         } else {
-          toast.info('No tienes permisos para acceder')
+          router.push('/')
         }
-      } else {
-        router.push('/')
       }
+    } catch (error) {
+      toast.error('Error al iniciar sesión')
     }
     setLoading(false)
   }
 
   const handleGoogle = async () => {
     setLoading(true)
-    const res = await SignInWithGoogle()
-    if (res) {
-      toast.success('Bienvenido ' + res?.userName)
-      await setUserData(res)
-      if (res.role) {
-        if (res.role.includes('admin')) {
-          router.push('/admin')
-        } else if (res.role.includes('superadmin')) {
-          router.push('/admin')
-        } else if (res.role.includes('editor')) {
-          router.push('/admin')
-        } else if (res.role.includes('speaker')) {
-          router.push('/dashboard')
+    try {
+      const res = await SignInWithGoogle()
+      if (res) {
+        toast.success('Bienvenido ' + res?.userName)
+        await setUserData(res)
+        if (res.role) {
+          if (res.role.includes('admin') || res.role.includes('superadmin') || res.role.includes('editor')) {
+            router.push('/admin')
+          } else if (res.role.includes('speaker')) {
+            router.push('/dashboard')
+          }
+        } else {
+          if (res.person && res.person.typePerson === 'participant') {
+            router.push('/inscripciones/info')
+          } else {
+            router.push(
+              `/next-steps?email=${encryptString(res.email)}&name=${encryptString(
+                res.userName
+              )}&photo=${encryptString(res.photo)}`
+            )
+          }
         }
       } else {
-        if (res.person && res.person.typePerson === 'participant') {
-          router.push('/inscripciones/info')
-        } else {
-          router.push(
-            `/next-steps?email=${encryptString(res.email)}&name=${encryptString(
-              res.userName
-            )}&photo=${encryptString(res.photo)}`
-          )
-        }
+        toast.error('Error al iniciar sesión con Google')
       }
-    } else {
+    } catch (error) {
       toast.error('Error al iniciar sesión')
     }
     setLoading(false)
   }
 
   let message = ''
-
   if (errors.email && errors.password) {
     message = 'Email y contraseña son requeridos'
   } else if (errors.email) {
@@ -100,85 +100,113 @@ export const FrmLogin = () => {
   }
 
   return (
-    <main className="flex flex-col gap-3">
+    <div className="w-full space-y-8 animate-in fade-in zoom-in duration-500">
       <form
-        className="w-full flex flex-col gap-6"
+        className="space-y-6"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         {message && <AlertComponent message={message} />}
-        <section className="flex flex-col gap-5">
+
+        <div className="space-y-4">
           <Controller
             control={methods.control}
             name="email"
             rules={{
-              required: 'Email is required',
+              required: 'El correo electrónico es requerido',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: 'Invalid email address',
+                message: 'Correo electrónico inválido',
               },
             }}
-            render={({ field: { value, onChange } }) => (
-              <Input
-                label="Correo electrónico"
-                
-                type="email"
-                placeholder="correo@correo.com"
-                className="rounded-sm"
-                variant="default"
-                classNames={{
-                  label: 'text-white',
-                }}
-                value={value}
-                onValueChange={onChange}
-                isInvalid={methods.formState.errors.email !== undefined}
-                // errorMessage={methods.formState.errors.email?.message}
-              />
+            render={({ field }) => (
+              <div className="space-y-2">
+                <Input
+                  {...field}
+                  label="Correo electrónico"
+                  type="email"
+                  placeholder="name@company.com"
+                  className="rounded-xl border-white/20 bg-white/5 text-white placeholder:text-white/30"
+                />
+              </div>
             )}
           />
+
           <Controller
             control={methods.control}
             name="password"
-            rules={{ required: 'Password is required' }}
-            render={({ field: { value, onChange } }) => (
-              <Input
-                type="password"
-                label="Contraseña"
-                
-                placeholder="* * * * * * * *"
-                className="rounded-sm"
-                variant="default"
-                classNames={{
-                  label: 'text-white',
-                }}
-                value={value}
-                onValueChange={onChange}
-                isInvalid={methods.formState.errors.password !== undefined}
-                // errorMessage={methods.formState.errors.password?.message}
-              />
+            rules={{ required: 'La contraseña es requerida' }}
+            render={({ field }) => (
+              <div className="space-y-2">
+                <Input
+                  {...field}
+                  label="Contraseña"
+                  type="password"
+                  placeholder="••••••••"
+                  className="rounded-xl border-white/20 bg-white/5 text-white placeholder:text-white/30"
+                />
+              </div>
             )}
           />
-        </section>
-        <div className="flex flex-col gap-3">
-          <Button variant="default" fullWidth className="rounded-sm" type="submit" disabled={loading} > Iniciar sesión </Button> <Link href="/forgot-password" className="text-center text-xs text-primary-300 hover:underline" > ¿Olvidaste tu contraseña? </Link> </div> </form> <section className="flex items-center gap-3"> <hr className="w-full"><p>o</p> <hr className="w-full" /> </section> <section className="flex flex-col gap-4"> <Button fullWidth className="flex items-center justify-center space-x-2 text-white" variant="ghost" onClick={handleGoogle} disabled={loading}>
-  <Google width="20" height="20" fill="currentColor" />
-  Sign in with Google</Button>
-        <Link
-          href="/"
-          className="text-center text-xs text-gray-400 hover:underline"
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <Button
+            variant="default"
+            className="w-full rounded-xl h-12 text-base font-bold shadow-lg"
+            type="submit"
+            disabled={loading}
+          >
+            Iniciar sesión
+          </Button>
+
+          <Link
+            href="/forgot-password"
+            className="text-center text-sm font-medium text-primary-200 hover:text-white hover:underline transition-colors"
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </div>
+      </form>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t border-white/10" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-transparent px-2 text-white/50 font-bold">O continúa con</span>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        <Button
+          className="w-full flex items-center justify-center gap-3 text-white border-white/20 hover:bg-white/10 rounded-xl h-12 font-bold"
+          variant="outline"
+          onClick={handleGoogle}
+          disabled={loading}
         >
-          Volver al inicio
-        </Link>
-      </section>
+          <Google width="20" height="20" fill="currentColor" />
+          Google
+        </Button>
+
+        <div className="text-center">
+          <Link
+            href="/"
+            className="text-sm font-medium text-white/40 hover:text-white transition-colors"
+          >
+            Volver al inicio
+          </Link>
+        </div>
+      </div>
 
       <LoadingPages isOpen={loading} />
-    </main>
+    </div>
   )
 }
 
 const AlertComponent = ({ message }: { message: string }) => {
   return (
-    <section className="flex items-center gap-3  p-3 rounded-md border border-danger-500 bg-danger-500/20">
-      <p className="text-xs ">{message}</p>
-    </section>
+    <div className="flex items-center gap-3 p-4 rounded-xl border border-destructive/50 bg-destructive/10 text-destructive animate-in slide-in-from-top-2">
+      <p className="text-sm font-semibold">{message}</p>
+    </div>
   )
 }

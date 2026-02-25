@@ -71,11 +71,9 @@ export const ProgramSection = () => {
                 description="Seleccione el programa al que pertenece el evento, es opcional"
                 endContent={
                   <div>
-                    <Button className="rounded-sm" onClick={() =>
+                    <Button className="rounded-sm" onClick={() => setIsOpen(true)} className="rounded-sm gap-2">
   <IconLink size={16} />
-  setIsOpen(true)}
-                    >
-                      Seleccionar
+  Seleccionar
 </Button>
                   </div>
                 }

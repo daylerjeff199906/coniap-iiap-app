@@ -33,11 +33,9 @@ export const SectionSpeaker = () => {
             // errorMessage={errors.person_id?.message as string}
             endContent={
               <div>
-                <Button onClick={() =>
+                <Button  onClick={() => setIsOpen(true)} className="rounded-sm gap-2">
   <IconLink size={16} />
-  setIsOpen(true)}
-                >
-                  Seleccionar
+  Seleccionar
 </Button>
               </div>
             }
