@@ -7,7 +7,7 @@ const routePermissions: Record<string, string[]> = {
   '/dashboard': ['speaker', 'user'],
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const currentUser = request.cookies.get('user')?.value
 
   const user: IUser = currentUser ? JSON.parse(currentUser) : undefined
