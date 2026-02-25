@@ -2,7 +2,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { usePersons } from '@/hooks/admin'
-import { Listbox, ListboxItem, Selection } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Listbox, ListboxItem 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -33,7 +33,7 @@ export const PersonFiltered = (props: IFilter) => {
 
   const dataPersons = persons?.data || []
 
-  const handlePerson = (value: Selection) => {
+  const handlePerson = (value: any) => {
     const val = Object.values(value)[0]
     const person = dataPersons.find((person) => person.id?.toString() === val)
     if (person?.id) {

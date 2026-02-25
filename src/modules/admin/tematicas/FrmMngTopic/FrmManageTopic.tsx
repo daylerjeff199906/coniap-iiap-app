@@ -1,11 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import {  } from '@nextui-org/react'
-import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
 import {
   Controller,
   FormProvider,
@@ -20,6 +25,7 @@ import { useFiles } from '@/hooks/admin'
 import { Loading } from './loading'
 
 import { useRouter } from 'next/navigation'
+
 interface IProps {
   dataDefault?: ITopic
 }
@@ -81,113 +87,111 @@ export const FrmManageTopic = (props: IProps) => {
   }
 
   return (
-    <>
-      <Modal
-        isOpen
-        onOpenChange={handleExit}
-        size="3xl"
-      >
-        <ModalContent>
-          <ModalHeader>
-            {dataDefault?.id ? 'Editar Tema' : 'Agregar Tema'}
-          </ModalHeader>
-          <ModalBody>
-            <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(onSubmit)}>
-                {loading || fileLoading ? (
-                  <>
-                    <Loading />
-                  </>
-                ) : (
-                  <>
-                    <Controller
-                      control={methods.control}
-                      name="name"
-                      rules={{ required: 'Este campo es requerido' }}
-                      render={({ field: { onChange, value } }) => (
+    <Dialog open onOpenChange={handleExit}>
+      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{dataDefault?.id ? 'Editar Tema' : 'Agregar Tema'}</DialogTitle>
+        </DialogHeader>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+            {loading || fileLoading ? (
+              <Loading />
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="name">Nombre</Label>
+                  <Controller
+                    control={methods.control}
+                    name="name"
+                    rules={{ required: 'Este campo es requerido' }}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        id="name"
+                        placeholder="Escribe el nombre del tema"
+                        className={methods.formState.errors.name ? 'border-destructive' : ''}
+                      />
+                    )}
+                  />
+                  {methods.formState.errors.name && (
+                    <p className="text-xs text-destructive">{methods.formState.errors.name.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">Descripción</Label>
+                  <Controller
+                    control={methods.control}
+                    name="description"
+                    render={({ field }) => (
+                      <Textarea
+                        {...field}
+                        id="description"
+                        placeholder="Escribe la descripción"
+                        className={methods.formState.errors.description ? 'border-destructive' : ''}
+                      />
+                    )}
+                  />
+                  {methods.formState.errors.description && (
+                    <p className="text-xs text-destructive">{methods.formState.errors.description.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="color">Color del tema</Label>
+                  <Controller
+                    control={methods.control}
+                    name="color"
+                    render={({ field }) => (
+                      <div className="flex gap-2 items-center">
                         <Input
-                          aria-label="Nombre del TENA"
-                          label="Nombre"
-                          labelPlacement="outside"
-                          radius="sm"
-                          placeholder="Escribe el nombre del tema"
-                          value={value}
-                          onValueChange={onChange}
-                          isInvalid={
-                            methods.formState.errors.name !== undefined
-                          }
-                          errorMessage={methods.formState.errors.name?.message}
-                        />
-                      )}
-                    />
-                    <Controller
-                      control={methods.control}
-                      name="description"
-                      // rules={{ required: 'Este campo es requerido' }}
-                      render={({ field: { onChange, value } }) => (
-                        <Textarea
-                          aria-label="Descripción del colaborador"
-                          label="Descripción"
-                          labelPlacement="outside"
-                          radius="sm"
-                          placeholder="Escribe la descripción del colaborador"
-                          value={value}
-                          onValueChange={onChange}
-                          className="pt-4"
-                          isInvalid={
-                            methods.formState.errors.description !== undefined
-                          }
-                          errorMessage={
-                            methods.formState.errors.description?.message
-                          }
-                        />
-                      )}
-                    />
-                    <Controller
-                      control={methods.control}
-                      name="color"
-                      render={({ field: { onChange, value } }) => (
-                        <Input
-                          aria-label="Descripción del colaborador"
-                          label="Color del tema"
-                          labelPlacement="outside"
-                          radius="sm"
-                          placeholder="Selecciona un color"
-                          description="Selecciona un color o escribe el código hexadecimal"
-                          value={value}
+                          {...field}
+                          id="color"
                           type="color"
-                          onValueChange={onChange}
-                          className="pt-4"
+                          className="w-12 h-10 p-1"
                         />
-                      )}
-                    />
-                    <p className="mt-4 mb-2 text-sm">Imagen</p>
-                    <FilePond
-                      allowMultiple={false}
-                      acceptedFileTypes={['image/*']}
-                      files={files}
-                      onupdatefiles={handleUpdateFiles}
-                      labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-                      // required={id ? false : true}
-                    />
-                  </>
-                )}
-                <footer className="flex gap-3 justify-end pt-4 pb-4">
-                  <Button
-                    variant="default"
-                    type="submit"
-                    isDisabled={loading || fileLoading}
-                    isLoading={loading || fileLoading}
-                  >
-                    {dataDefault?.id ? 'Actualizar' : 'Guardar'}
-                  </Button>
-                  <Button onClick={handleExit}>Cancelar</Button>
-                </footer>
-              </form>
-            </FormProvider>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+                        <Input
+                          {...field}
+                          placeholder="#000000"
+                          className="flex-1"
+                        />
+                      </div>
+                    )}
+                  />
+                  <p className="text-xs text-muted-foreground">Selecciona un color o escribe el código hexadecimal</p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Imagen</Label>
+                  <FilePond
+                    allowMultiple={false}
+                    acceptedFileTypes={['image/*']}
+                    files={files}
+                    onupdatefiles={handleUpdateFiles}
+                    labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
+                  />
+                </div>
+              </>
+            )}
+            <footer className="flex gap-3 justify-end pt-4">
+              <Button
+                variant="ghost"
+                onClick={handleExit}
+                type="button"
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="default"
+                type="submit"
+                disabled={loading || fileLoading}
+              >
+                {loading || fileLoading ? 'Procesando...' : (dataDefault?.id ? 'Actualizar' : 'Guardar')}
+              </Button>
+            </footer>
+          </form>
+        </FormProvider>
+      </DialogContent>
+    </Dialog>
   )
 }

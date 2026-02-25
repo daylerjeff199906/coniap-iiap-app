@@ -1,4 +1,4 @@
-import { ScrollShadow } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  ScrollShadow 
 
 type PersonStats = {
   total: number

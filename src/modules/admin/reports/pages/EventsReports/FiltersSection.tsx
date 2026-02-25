@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Accordion, AccordionItem, Badge } from '@nextui-org/react'
+import { Badge } from '@/components/ui/badge'
+// TODO: Check these imports: // TODO: Check these imports: // Removed NextUI import:  Accordion, AccordionItem 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { IconFilter } from '@tabler/icons-react'

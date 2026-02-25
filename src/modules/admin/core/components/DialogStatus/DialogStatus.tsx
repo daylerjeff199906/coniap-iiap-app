@@ -1,5 +1,5 @@
 'use client'
-import { Radio, RadioGroup, cn } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Radio, RadioGroup, cn 
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { useFiles } from '@/hooks/admin'
@@ -116,13 +116,13 @@ export const DialogStatus = (props: IProps) => {
           <Separator />
           <footer className="flex justify-end gap-2">
             <Button
-              radius="sm"
+              className="rounded-sm"
               onClick={handleExit}
             >
               Cancelar
             </Button>
             <Button
-              radius="sm"
+              className="rounded-sm"
               isLoading={loading}
               isDisabled={loading}
               className="button-dark"

@@ -1,6 +1,6 @@
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Autocomplete, AutocompleteItem 
 import { Input } from '@/components/ui/input'
 import countriesData from '@/utils/json/countries.json'
 import { IPerson } from '@/types'
@@ -27,7 +27,7 @@ export const CountrySection = () => {
               onChange(value)
             }}
             selectedKey={value || ''}
-            radius="sm"
+            className="rounded-sm"
             isInvalid={errors.location !== undefined}
             errorMessage={errors.location?.message as string}
           >
@@ -47,7 +47,7 @@ export const CountrySection = () => {
             aria-label="Teléfono del participante"
             label="Teléfono"
             labelPlacement="outside"
-            radius="sm"
+            className="rounded-sm"
             placeholder="Teléfono del participante"
             value={value}
             onValueChange={onChange}

@@ -1,6 +1,6 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { Accordion, AccordionItem } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Accordion, AccordionItem 
 import { Image } from 'next/image'
 import { Button } from '@/components/ui/button'
 import logo from '@/assets/images/logo-admin.webp'

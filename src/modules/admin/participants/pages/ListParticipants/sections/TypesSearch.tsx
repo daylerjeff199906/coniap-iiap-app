@@ -1,10 +1,10 @@
 'use client'
-import { Selection } from '@nextui-org/react'
+
 import { Select, SelectItem } from '@/components/ui/select'
 
 interface ITypesSearch {
   selectedKey?: string[] | undefined
-  onSelectionChange?: (value: Selection) => void
+  onSelectionChange?: (value: any) => void
 }
 
 export const TypesSearch = (props: ITypesSearch) => {
@@ -15,7 +15,7 @@ export const TypesSearch = (props: ITypesSearch) => {
       <Select
         aria-label="Select"
         size="sm"
-        radius="sm"
+        className="rounded-sm"
         defaultSelectedKeys={['name']}
         popoverProps={{
           radius: 'sm',

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import { cn } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  cn 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -83,7 +83,7 @@ export const SummarySection = () => {
                     <div>
                       <Button
                         size="sm"
-                        radius="sm"
+                        className="rounded-sm"
                         startContent={<IconLink size={16} />}
                         onClick={() => setIsOpen(true)}
                       >
@@ -113,7 +113,7 @@ export const SummarySection = () => {
               aria-label="Nombre del evento"
               label="Nombre"
               labelPlacement="outside"
-              radius="sm"
+              className="rounded-sm"
               placeholder="Nombre del evento"
               value={value}
               onValueChange={onChange}
@@ -133,7 +133,7 @@ export const SummarySection = () => {
               aria-label="Descripción del evento"
               label="Descripción breve del evento"
               labelPlacement="outside"
-              radius="sm"
+              className="rounded-sm"
               placeholder="Descripción del evento"
               value={value}
               onValueChange={onChange}

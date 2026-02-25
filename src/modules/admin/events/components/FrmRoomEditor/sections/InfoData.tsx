@@ -1,6 +1,6 @@
 'use client'
 import { ISala } from '@/types'
-import { Radio, RadioGroup, cn } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Radio, RadioGroup, cn 
 import { Input } from '@/components/ui/input'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -34,7 +34,7 @@ export const InfoData = () => {
             aria-label="Nombre de la sala"
             label="Nombre de la sala"
             labelPlacement="outside"
-            radius="sm"
+            className="rounded-sm"
             placeholder="Ej: Sala 1"
             value={value}
             onValueChange={onChange}
@@ -52,7 +52,7 @@ export const InfoData = () => {
             aria-label="Url de la sala"
             label="Url de la sala"
             labelPlacement="outside"
-            radius="sm"
+            className="rounded-sm"
             placeholder="Ej: https://meet.google.com/abc-123"
             value={value}
             onValueChange={onChange}

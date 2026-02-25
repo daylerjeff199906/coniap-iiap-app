@@ -1,4 +1,4 @@
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Dropdown, DropdownItem, DropdownMenu, DropdownTrigger 
 import { Image } from 'next/image'
 import { Link } from 'next/link'
 import { Button } from '@/components/ui/button'

@@ -1,9 +1,14 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import {  } from '@nextui-org/react'
 import { Separator } from '@/components/ui/separator'
-import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { ISummary } from '@/types'
+import { cn } from '@/lib/utils'
 
 interface IProps {
   isEdit: boolean
@@ -15,29 +20,25 @@ export const ModalSummary = (props: IProps) => {
   const { summary, children, isEdit } = props
   const router = useRouter()
 
-  const handleClose = () => {
-    router.back()
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      router.back()
+    }
   }
 
   return (
-    <>
-      <Modal
-        isOpen
-        onClose={handleClose}
-        size={isEdit ? '3xl' : '2xl'}
-      >
-        <ModalContent>
-          <ModalHeader>
-            {isEdit ? (
-              <h1 className="text-lg font-semibold">{summary.title}</h1>
-            ) : (
-              <h1 className="text-lg font-semibold">Detalles del resumen</h1>
-            )}
-          </ModalHeader>
-          <Separator />
-          <ModalBody>{children}</ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+    <Dialog open onOpenChange={handleOpenChange}>
+      <DialogContent className={cn("p-0 overflow-hidden", isEdit ? "sm:max-w-3xl" : "sm:max-w-2xl")}>
+        <DialogHeader className="px-6 py-4">
+          <DialogTitle>
+            {isEdit ? summary.title : 'Detalles del resumen'}
+          </DialogTitle>
+        </DialogHeader>
+        <Separator />
+        <div className="px-6 py-4 max-h-[80vh] overflow-y-auto">
+          {children}
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }

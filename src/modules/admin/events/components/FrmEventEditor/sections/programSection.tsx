@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import { cn } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  cn 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -73,7 +73,7 @@ export const ProgramSection = () => {
                   <div>
                     <Button
                       size="sm"
-                      radius="sm"
+                      className="rounded-sm"
                       startContent={<IconLink size={16} />}
                       onClick={() => setIsOpen(true)}
                     >

@@ -1,6 +1,6 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Selection } from '@nextui-org/react'
+
 import { Select, SelectItem } from '@/components/ui/select'
 import { usePathname } from 'next/navigation'
 
@@ -27,7 +27,7 @@ export const FiltersSection = () => {
   const selectedTypePerson = getParams('typePerson', 'all')
   const selectedStatus = getParams('status', 'all')
 
-  const handleTypePerson = (val: Selection) => {
+  const handleTypePerson = (val: any) => {
     const value = Object.values(val)[0]
     if (value === 'all') {
       updateFilter('typePerson', '')
@@ -36,7 +36,7 @@ export const FiltersSection = () => {
     }
   }
 
-  const handleStatus = (val: Selection) => {
+  const handleStatus = (val: any) => {
     const value = Object.values(val)[0]
     if (value === 'all') {
       updateFilter('status', '')
@@ -56,7 +56,7 @@ export const FiltersSection = () => {
           <Select
             aria-label="Tipo de persona"
             aria-labelledby="Tipo de persona"
-            radius="sm"
+            className="rounded-sm"
             variant="bordered"
             selectedKeys={[selectedTypePerson]}
             onSelectionChange={(value) => handleTypePerson(value)}
@@ -81,7 +81,7 @@ export const FiltersSection = () => {
         <Select
           aria-label="Estado"
           aria-labelledby="Estado"
-          radius="sm"
+          className="rounded-sm"
           variant="bordered"
           selectedKeys={[selectedStatus]}
           onSelectionChange={(value) => handleStatus(value)}

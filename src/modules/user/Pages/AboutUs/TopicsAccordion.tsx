@@ -1,6 +1,6 @@
 'use client'
 import { ITopic } from '@/types'
-import { Accordion, AccordionItem } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Accordion, AccordionItem 
 import { Image } from 'next/image'
 interface IProps {
   data: ITopic[]

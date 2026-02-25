@@ -2,7 +2,7 @@
 'use client'
 import { IUserCreate } from '@/types'
 import { useFormContext, Controller } from 'react-hook-form'
-import { CheckboxGroup } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  CheckboxGroup 
 import { Checkbox } from '@/components/ui/checkbox'
 import { useTopics } from '@/hooks/admin'
 import { useEffect } from 'react'
@@ -44,7 +44,7 @@ export const TopicsData = () => {
               },
             }}
             render={({ field: { value, onChange } }) => (
-              <CheckboxGroup
+              <div
                 name="topics"
                 label="Líneas temáticas"
                 description="Selecciona las líneas temáticas que deseas revisar"
@@ -63,7 +63,7 @@ export const TopicsData = () => {
                     {topic.name}
                   </Checkbox>
                 ))}
-              </CheckboxGroup>
+              </div>
             )}
           />
         </section>

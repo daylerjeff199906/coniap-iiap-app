@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import {  } from '@nextui-org/react'
-import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
@@ -62,50 +66,43 @@ export const FrmRoomEditor = (props: IProps) => {
   }
 
   return (
-    <Modal
-      isOpen
-      onOpenChange={handleExit}
-      size="xl"
-    >
-      <ModalContent>
-        <ModalHeader>
+    <Dialog open onOpenChange={handleExit}>
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="sr-only">{title}</DialogTitle>
           <header className="w-full">
             <HeaderSection
               title={title}
               subtitle={description}
             />
           </header>
-        </ModalHeader>
-        <ModalBody>
-          <FormProvider {...methods}>
-            <form
-              onSubmit={methods.handleSubmit(onSubmit)}
-              className="flex flex-col gap-4"
-            >
-              <PlatformData />
-              <InfoData />
-              <footer className="flex gap-3 justify-end pt-4 pb-4">
-                <Button
-                  variant="default"
-                  type="submit"
-                  isDisabled={loading}
-                  isLoading={loading}
-                  radius="sm"
-                >
-                  {dataDefault?.id ? 'Actualizar' : 'Guardar'}
-                </Button>
-                <Button
-                  onClick={handleExit}
-                  radius="sm"
-                >
-                  Cancelar
-                </Button>
-              </footer>
-            </form>
-          </FormProvider>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </DialogHeader>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <PlatformData />
+            <InfoData />
+            <footer className="flex gap-3 justify-end pt-4 pb-4">
+              <Button
+                variant="ghost"
+                onClick={handleExit}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="default"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Procesando...' : (dataDefault?.id ? 'Actualizar' : 'Guardar')}
+              </Button>
+            </footer>
+          </form>
+        </FormProvider>
+      </DialogContent>
+    </Dialog>
   )
 }
 
@@ -118,8 +115,8 @@ const CustomToast = (props: IPropsToast) => {
   const { title, description } = props
   return (
     <div className="flex flex-col">
-      <h2 className="text-sm">{title}</h2>
-      <p className="text-tiny text-gray-200">{description}</p>
+      <h2 className="text-sm font-semibold">{title}</h2>
+      <p className="text-xs text-gray-500">{description}</p>
     </div>
   )
 }

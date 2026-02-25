@@ -1,6 +1,6 @@
 'use client'
 import { Controller, useFormContext } from 'react-hook-form'
-import { cn } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  cn 
 import { Checkbox } from '@/components/ui/checkbox'
 import { IPerson } from '@/types'
 
@@ -62,7 +62,7 @@ export const RoleData = () => {
             }}
             render={({ field: { onChange, value } }) => (
               <Input
-                radius="sm"
+                className="rounded-sm"
                 label="Contraseña"
                 labelPlacement="outside"
                 placeholder="Ingrese su contraseña"
@@ -85,7 +85,7 @@ export const RoleData = () => {
             }}
             render={({ field: { onChange, value } }) => (
               <Input
-                radius="sm"
+                className="rounded-sm"
                 label="Confirmar contraseña"
                 labelPlacement="outside"
                 placeholder="Confirme su contraseña"

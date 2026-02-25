@@ -1,7 +1,7 @@
 'use client'
 import ReactMarkdown from 'react-markdown'
 import { IEvent } from '@/types'
-import { Avatar, User } from '@nextui-org/react'
+import { Avatar } from '@/components/ui/avatar'
 import { Image } from 'next/image'
 import {
   IconCalendarClock,
@@ -111,7 +111,7 @@ export const DetailsEvent = (props: IProps) => {
                 {isMagistral ? 'Ponente magistral' : 'Ponente'}
               </h1>
               <div className="flex items-center gap-4 max-w-xl">
-                <User
+                <any
                   name={`${event?.summary?.person?.name} ${event?.summary?.person?.surName}`}
                   description={event?.summary?.person?.institution}
                   avatarProps={{

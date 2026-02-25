@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState } from 'react'
-import { Selection } from '@nextui-org/react'
+
 import { Pagination } from '@/components/ui/pagination'
 import { Image } from 'next/image'
 import { Input } from '@/components/ui/input'
@@ -37,7 +37,7 @@ export const ListEventsPage = (props: IEventsPage) => {
     updateFilters({ search: debouncedQuery })
   }, [debouncedQuery])
 
-  const handleSelectType = (key: Selection) => {
+  const handleSelectType = (key: any) => {
     const value = Object.values(key)[0]
     if (value === 'all') {
       updateFilters({ type: '' })

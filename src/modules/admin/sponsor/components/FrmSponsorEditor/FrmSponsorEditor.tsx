@@ -1,10 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState } from 'react'
-import {  } from '@nextui-org/react'
-import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import {
   Controller,
   FormProvider,
@@ -19,6 +24,7 @@ import { useFiles } from '@/hooks/admin'
 
 import { useRouter } from 'next/navigation'
 import { HeaderSection } from '@/modules/core'
+
 interface IProps {
   defaultData?: ISponsor
 }
@@ -72,75 +78,70 @@ export const FrmSponsorEditor = (props: IProps) => {
     : 'Añade un nuevo coorganizador'
 
   return (
-    <>
-      <Modal
-        isOpen
-        onOpenChange={handleOpenChange}
-        size="3xl"
-      >
-        <ModalContent>
-          <ModalHeader>
-            <main className="w-full">
-              <HeaderSection
-                title={title}
-                subtitle={subtitle}
+    <Dialog open onOpenChange={handleOpenChange}>
+      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="sr-only">{title}</DialogTitle>
+          <main className="w-full">
+            <HeaderSection
+              title={title}
+              subtitle={subtitle}
+            />
+          </main>
+        </DialogHeader>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Nombre</Label>
+              <Controller
+                control={methods.control}
+                name="name"
+                rules={{ required: 'Este campo es requerido' }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="name"
+                    placeholder="Escribe el nombre del coorganizador"
+                    className={methods.formState.errors.name ? 'border-destructive' : ''}
+                  />
+                )}
               />
-            </main>
-          </ModalHeader>
-          <ModalBody>
-            <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(onSubmit)}>
-                <Controller
-                  control={methods.control}
-                  name="name"
-                  rules={{ required: 'Este campo es requerido' }}
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      aria-label="Nombre del coorganizador"
-                      label="Nombre"
-                      labelPlacement="outside"
-                      radius="sm"
-                      placeholder="Escribe el nombre del coorganizador"
-                      value={value}
-                      onValueChange={onChange}
-                      isInvalid={methods.formState.errors.name !== undefined}
-                      errorMessage={methods.formState.errors.name?.message}
-                    />
-                  )}
-                />
-                <p className="mt-4 mb-2 text-sm">Imagen</p>
-                <style
-                  jsx
-                  global
-                >{`
-                  .filepond--action-process-item {
-                    display: none !important;
-                  }
-                `}</style>
-                <FilePond
-                  allowMultiple={false}
-                  acceptedFileTypes={['image/*']}
-                  files={files}
-                  onupdatefiles={handleUpdateFiles}
-                  labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
-                  required={defaultData?.id ? false : true}
-                />
-                <footer className="flex gap-3 justify-end pt-4 pb-4">
-                  <Button
-                    variant="default"
-                    type="submit"
-                    isDisabled={loading || loadFile}
-                    isLoading={loading || loadFile}
-                  >
-                    {defaultData?.id ? 'Actualizar' : 'Guardar'}
-                  </Button>
-                  <Button onClick={handleOpenChange}>Cancelar</Button>
-                </footer>
-              </form>
-            </FormProvider>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+              {methods.formState.errors.name && (
+                <p className="text-xs text-destructive">{methods.formState.errors.name.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label>Imagen</Label>
+              <FilePond
+                allowMultiple={false}
+                acceptedFileTypes={['image/*']}
+                files={files}
+                onupdatefiles={handleUpdateFiles}
+                labelIdle='Arrastra y suelta tu imagen o <span class="filepond--label-action"> busca </span>'
+                required={defaultData?.id ? false : true}
+              />
+            </div>
+
+            <footer className="flex gap-3 justify-end pt-4">
+              <Button
+                variant="ghost"
+                onClick={handleOpenChange}
+                type="button"
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="default"
+                type="submit"
+                disabled={loading || loadFile}
+              >
+                {loading || loadFile ? 'Procesando...' : (defaultData?.id ? 'Actualizar' : 'Guardar')}
+              </Button>
+            </footer>
+          </form>
+        </FormProvider>
+      </DialogContent>
+    </Dialog>
   )
 }

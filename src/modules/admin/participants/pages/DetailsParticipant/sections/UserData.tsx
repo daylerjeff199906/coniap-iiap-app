@@ -2,7 +2,7 @@
 'use client'
 import { useState } from 'react'
 import { IPerson, IUser } from '@/types'
-import { CheckboxGroup } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  CheckboxGroup 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
@@ -139,7 +139,7 @@ export const UserData = (props: IProps) => {
               control={methods.control}
               name="role"
               render={({ field: { value, onChange } }) => (
-                <CheckboxGroup
+                <div
                   aria-label="Roles"
                   description="Selecciona los roles que deseas asignar. Si no seleccionas ninguno, el usuario no tendrá acceso a la plataforma."
                   label="Asignar roles (Opcional)"
@@ -155,18 +155,18 @@ export const UserData = (props: IProps) => {
                       {role.label}
                     </Checkbox>
                   ))}
-                </CheckboxGroup>
+                </div>
               )}
             />
             <footer className="flex items-center justify-end gap-2 w-full">
               <Button
-                radius="sm"
+                className="rounded-sm"
                 onClick={() => methods.reset()}
               >
                 Cancelar
               </Button>
               <Button
-                radius="sm"
+                className="rounded-sm"
                 className="button-dark"
                 type="submit"
                 isLoading={loadSave}

@@ -1,6 +1,6 @@
 'use client'
 import { IUser } from '@/types'
-import { ScrollShadow, User } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  ScrollShadow 
 import Link from 'next/link'
 
 interface IProps {
@@ -29,7 +29,7 @@ export const UserRecents = (props: IProps) => {
                 key={item.id}
                 className=""
               >
-                <User
+                <any
                   name={item.userName}
                   avatarProps={{
                     src: item.photo,

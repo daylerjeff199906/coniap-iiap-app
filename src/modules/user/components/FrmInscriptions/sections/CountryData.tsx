@@ -1,6 +1,6 @@
 'use client'
 import { IPerson } from '@/types'
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  Autocomplete, AutocompleteItem 
 import { Controller, useFormContext } from 'react-hook-form'
 import countriesData from '@/utils/json/countries.json'
 
@@ -25,7 +25,7 @@ export const CountryData = () => {
               onChange(value)
             }}
             selectedKey={value || ''}
-            radius="sm"
+            className="rounded-sm"
             isInvalid={errors.location !== undefined}
             errorMessage={errors.location?.message as string}
           >

@@ -1,7 +1,7 @@
 'use client'
 import { IPerson, ISummary, ITopic } from '@/types'
 import { formatDate } from '@/utils/functions'
-import { Avatar } from '@nextui-org/react'
+import { Avatar } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { useFormContext } from 'react-hook-form'
 
@@ -37,7 +37,7 @@ export const InfoDataSummary = (props: IProps) => {
             <Badge
               color={statusApproved ? 'success' : 'warning'}
               size="sm"
-              radius="sm"
+              className="rounded-sm"
               variant="secondary"
             >
               {statusApproved ? 'Resumen Aprobado' : 'Pendiente de aprobación'}

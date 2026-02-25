@@ -1,5 +1,5 @@
 import { IPerson } from '@/types'
-import { Avatar } from '@nextui-org/react'
+import { Avatar } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'

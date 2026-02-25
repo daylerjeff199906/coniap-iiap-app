@@ -1,6 +1,6 @@
 'use client'
 import { IUserCreate } from '@/types'
-import { CheckboxGroup } from '@nextui-org/react'
+// TODO: Check these imports: // Removed NextUI import:  CheckboxGroup 
 import { Checkbox } from '@/components/ui/checkbox'
 import { useFormContext, Controller } from 'react-hook-form'
 
@@ -28,7 +28,7 @@ export const UserRoles = () => {
             },
           }}
           render={({ field: { value, onChange } }) => (
-            <CheckboxGroup
+            <div
               aria-label="Roles"
               description="Selecciona los roles que deseas asignar. Si no seleccionas ninguno, el usuario no tendrá acceso a la plataforma."
               label="Asignar roles (Opcional)"
@@ -51,7 +51,7 @@ export const UserRoles = () => {
                   {role.label}
                 </Checkbox>
               ))}
-            </CheckboxGroup>
+            </div>
           )}
         />
       </section>

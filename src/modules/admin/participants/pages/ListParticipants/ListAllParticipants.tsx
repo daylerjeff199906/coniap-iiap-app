@@ -5,7 +5,7 @@ import { HeaderSection, useFilterFromUrl } from '@/modules/core'
 import { ExportExcel, getTypePerson } from '@/modules/admin'
 import { FiltersSection, TypesSearch } from './sections'
 import { formatDate } from '@/utils/functions'
-import { Selection } from '@nextui-org/react'
+
 import { usePathname, useRouter } from 'next/navigation'
 import { columns, actions } from './columns'
 import { TableGeneral } from '@/components'
@@ -96,7 +96,7 @@ export const ListParticipants = () => {
   const dataExcel = persons && persons?.data?.length > 0 ? persons?.data : []
 
   //To type search
-  const handleTypeSearch = (val: Selection) => {
+  const handleTypeSearch = (val: any) => {
     const value = Object.values(val)[0]
     if (value === 'name') {
       updateFilter('qtype', '')

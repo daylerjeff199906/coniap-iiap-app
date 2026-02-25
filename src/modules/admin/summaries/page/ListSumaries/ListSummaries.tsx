@@ -5,7 +5,7 @@ import { TableGeneral } from '@/components'
 import { IColumns, IRows } from '@/types'
 import { useSummaries } from '@/hooks/admin'
 import { useSearchParams } from 'next/navigation'
-import { Spinner } from '@nextui-org/react'
+import { Spinner } from '@/components/ui/spinner'
 import { Badge } from '@/components/ui/badge'
 import { formatDate } from '@/utils/functions'
 import { usePathname, useRouter } from 'next/navigation'
@@ -160,7 +160,7 @@ const RenderColumnAproved = (value: boolean) => {
         color={value ? 'success' : 'warning'}
         variant="secondary"
         size="sm"
-        radius="sm"
+        className="rounded-sm"
       >
         {value ? 'Aprobado' : 'Pendiente'}
       </Badge>

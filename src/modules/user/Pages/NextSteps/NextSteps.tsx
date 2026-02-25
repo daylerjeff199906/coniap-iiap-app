@@ -1,5 +1,5 @@
 'use client'
-import { Avatar } from '@nextui-org/react'
+import { Avatar } from '@/components/ui/avatar'
 import { FrmInscriptionSteps } from '@/modules/user'
 import { useFilterFromUrl } from '@/modules/core'
 

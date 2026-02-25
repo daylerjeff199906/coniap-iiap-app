@@ -1,6 +1,6 @@
 'use client'
 import { useFilterFromUrl } from '@/modules/core'
-import { Selection } from '@nextui-org/react'
+
 import { Button } from '@/components/ui/button'
 import { Select, SelectItem } from '@/components/ui/select'
 import { IconFilter } from '@tabler/icons-react'
@@ -30,7 +30,7 @@ export const FiltersSection = (props: IProps) => {
   const selectedTypePerson = getParams('typePerson', 'all')
   const selectedStatus = getParams('status', 'all')
 
-  const handleTypePerson = (val: Selection) => {
+  const handleTypePerson = (val: any) => {
     const value = Object.values(val)[0]
     if (value === 'all') {
       updateFilter('typePerson', '')
@@ -39,7 +39,7 @@ export const FiltersSection = (props: IProps) => {
     }
   }
 
-  const handleStatus = (val: Selection) => {
+  const handleStatus = (val: any) => {
     const value = Object.values(val)[0]
     if (value === 'all') {
       updateFilter('status', '')
@@ -54,7 +54,7 @@ export const FiltersSection = (props: IProps) => {
         <Select
           aria-label="Tipo de persona"
           aria-labelledby="Tipo de persona"
-          radius="sm"
+          className="rounded-sm"
           variant="bordered"
           selectedKeys={[selectedTypePerson]}
           onSelectionChange={(value) => handleTypePerson(value)}
@@ -77,7 +77,7 @@ export const FiltersSection = (props: IProps) => {
         <Select
           aria-label="Estado"
           aria-labelledby="Estado"
-          radius="sm"
+          className="rounded-sm"
           variant="bordered"
           selectedKeys={[selectedStatus]}
           onSelectionChange={(value) => handleStatus(value)}
@@ -97,7 +97,7 @@ export const FiltersSection = (props: IProps) => {
         </Select>
       </div>
       <Button
-        radius="sm"
+        className="rounded-sm"
         className="button-dark"
         startContent={<IconFilter size={20} />}
         onClick={onChageFilter}
@@ -106,7 +106,7 @@ export const FiltersSection = (props: IProps) => {
       </Button>
       {selectedTypePerson !== 'all' || selectedStatus !== 'all' ? (
         <Button
-          radius="sm"
+          className="rounded-sm"
           onClick={onClearFilter}
           color="warning"
         >

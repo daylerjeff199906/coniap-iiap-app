@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@nextui-org/button'
+import { Button } from '@/components/ui/button'
 import { IconPlus, IconArrowNarrowLeft } from '@tabler/icons-react'
 import Link from 'next/link'
 
@@ -24,56 +24,50 @@ export const HeaderSection = (props: IProps) => {
     showBackButton,
     hrefBack,
   } = props
+
   return (
-    <>
-      <section className="flex flex-col gap-3">
-        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div className="flex gap-2">
-            {showBackButton && (
-              <div className="pt-2">
-                <Button
-                  size="sm"
-                  radius="sm"
-                  isIconOnly
-                  variant="bordered"
-                  {...(hrefBack && { as: Link, href: hrefBack })}
-                >
-                  <IconArrowNarrowLeft
-                    size={20}
-                    stroke={1.5}
-                    className="text-gray-500"
-                  />
-                </Button>
-              </div>
-            )}
-            <div>
-              <h1 className="text-xl font-bold">{title}</h1>
-              <p className="text-sm text-gray-500">{subtitle}</p>
-            </div>
+    <section className="flex flex-col gap-3 w-full">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex gap-4 items-center">
+          {showBackButton && (
+            <Button
+              size="icon"
+              variant="outline"
+              asChild
+              className="h-8 w-8"
+            >
+              <Link href={hrefBack || '#'}>
+                <IconArrowNarrowLeft
+                  size={20}
+                  stroke={1.5}
+                  className="text-gray-500"
+                />
+              </Link>
+            </Button>
+          )}
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">{title}</h1>
+            <p className="text-sm text-muted-foreground">{subtitle}</p>
           </div>
-          <div className="flex gap-2 sm:justify-end">
-            {rigthContent}
-            {isButtonVisible && (
-              <Button
-                aria-label="button"
-                radius="sm"
-                size="sm"
-                startContent={
-                  <IconPlus
-                    size={16}
-                    className="text-white"
-                  />
-                }
-                className="button-dark"
-                as={Link}
-                href={href || '#'}
-              >
+        </div>
+        <div className="flex gap-2 sm:justify-end items-center">
+          {rigthContent}
+          {isButtonVisible && (
+            <Button
+              size="sm"
+              asChild
+              className="gap-2"
+            >
+              <Link href={href || '#'}>
+                <IconPlus
+                  size={16}
+                />
                 {props.labelButton || 'Nuevo'}
-              </Button>
-            )}
-          </div>
-        </header>
-      </section>
-    </>
+              </Link>
+            </Button>
+          )}
+        </div>
+      </header>
+    </section>
   )
 }

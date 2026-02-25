@@ -1,6 +1,6 @@
 'use client'
 import { ISala } from '@/types'
-import { Avatar } from '@nextui-org/react'
+import { Avatar } from '@/components/ui/avatar'
 import { Select, SelectItem } from '@/components/ui/select'
 import { Controller, useFormContext } from 'react-hook-form'
 import socialNetworks from '@/utils/json/social_networks.json'
@@ -24,7 +24,7 @@ export const PlatformData = () => {
             label="Plataforma"
             labelPlacement="outside"
             placeholder="Plataforma"
-            radius="sm"
+            className="rounded-sm"
             defaultSelectedKeys={['1']}
             disallowEmptySelection
             selectedKeys={[String(value)]}
