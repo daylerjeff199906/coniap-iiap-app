@@ -63,13 +63,9 @@ export const FrmDetailSummary = (props: IProps) => {
               className="w-full p-5 rounded-lg border flex flex-col gap-3"
             >
               <section className="flex justify-start">
-                <Button variant="ghost" onClick={handleCancel} className="text-gray-600" />
-  <IconArrowNarrowLeft
-                      size={16
-  }
-                  className="text-gray-600"
-                >
-                  Regresar
+                <Button variant="ghost" onClick={handleCancel} className="text-gray-600" className="text-gray-600">
+  <IconArrowNarrowLeft size={16} />
+  Regresar
 </Button>
               </section>
               <InfoDataSummary defaultValues={summary} />

@@ -81,10 +81,9 @@ export const SummarySection = () => {
                   errorMessage={errors.summary?.message as string}
                   endContent={
                     <div>
-                      <Button className="rounded-sm" />
-  <IconLink size={16
-  }
-                        onClick={() => setIsOpen(true)}
+                      <Button className="rounded-sm" onClick={() =>
+  <IconLink size={16} />
+  setIsOpen(true)}
                       >
                         Seleccionar
 </Button>

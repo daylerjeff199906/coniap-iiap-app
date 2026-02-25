@@ -97,8 +97,7 @@ export const NavBarUser = () => {
         <div className="bg-[#002D61] text-white py-3 px-6 h-[72px] flex items-center justify-between shadow-lg">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex gap-2 items-center">
-              <Image src="/minamf.webp" alt="Logo" width={120} height={40} priority className="w-auto h-10" />
-              <Image src="/logo_iiap.webp" alt="Logo" width={120} height={40} priority className="w-auto h-10" />
+              <Image src="/minamf.webp" alt="Logo" width={120} height={40} priority className="w-auto h-10"><Image src="/logo_iiap.webp" alt="Logo" width={120} height={40} priority className="w-auto h-10" />
             </Link>
           </div>
 
@@ -120,8 +119,7 @@ export const NavBarUser = () => {
             {!user?.id && !loading && (
               <div className="flex gap-2 items-center">
                 <Button variant="ghost" size="sm" className="text-white hover:bg-white/10" asChild>
-                  <Link href="/login">Iniciar sesión</Link>
-                </Button>
+                  <Link href="/login">Iniciar sesión</Link></Button>
                 <Button variant="destructive" size="sm" asChild>
                   <Link href="/inscripciones">¡Participa ya!</Link>
                 </Button>

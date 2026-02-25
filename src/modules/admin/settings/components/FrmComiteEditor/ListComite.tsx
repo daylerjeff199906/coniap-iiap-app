@@ -59,41 +59,16 @@ export const ListComimte = () => {
             value={personal}
             onChange={(e) => setPersonal(e.target.value)}
           />
-          <Button type="button" onClick={handleAddAuthor} className="text-gray-600" />
-  <div>
-                <IconPlus
-                  size={16
-  </div>
-            }
-          >
-            Agregar
-</Button>
-        </section>
-        <div className="mt-1 h-full max-h-72 overflow-y-auto">
-          <Controller
-            control={control}
-            name="list"
-            render={({ field: { onChange, value } }) => (
-              <div className="space-y-2">
-                {fields.map((field, index) => (
-                  <div
-                    key={field.id}
-                    className="flex items-center  gap-1 px-2 py-1 hover:bg-gray-100 rounded-md"
-                    draggable
-                    onDragStart={() => handleDragStart(index)}
-                    onDragEnter={() => handleDragEnter(index)}
-                    onDragEnd={handleDragEnd}
-                  >
-                    <div>
-                      <Button size="icon" variant="ghost" className="cursor-move" disabled > <IconGripVertical size={16} /> </Button> </div> <Input type="text" size="sm" placeholder="Nombre del personal de comité" value={value?.[index]?.name || ''} onChange={(e) => { const newValue = [...(value || [])] newValue[index] = { ...newValue[index], name: e.target.value, } onChange(newValue) }} /> <Button type="button" size="sm" onClick={() => remove(index)} />
-  <div>
+          <Button type="button" onClick={handleAddAuthor} className="text-gray-600"><div> <IconPlus size={16 </div> } > Agregar</Button> </section> <div className="mt-1 h-full max-h-72 overflow-y-auto"> <Controller control={control} name="list" render={({ field: { onChange, value } }) => ( <div className="space-y-2"> {fields.map((field, index) => ( <div key={field.id} className="flex items-center gap-1 px-2 py-1 hover:bg-gray-100 rounded-md" draggable onDragStart={() => handleDragStart(index)} onDragEnter={() => handleDragEnter(index)} onDragEnd={handleDragEnd} > <div> <Button size="icon" variant="ghost" className="cursor-move" disabled>
+  <IconGripVertical size={16} />
+  
+</Button> </div> <Input type="text" size="sm" placeholder="Nombre del personal de comité" value={value?.[index]?.name || ''} onChange={(e) => { const newValue = [...(value || [])] newValue[index] = { ...newValue[index], name: e.target.value, } onChange(newValue) }} /> <Button type="button" size="sm" onClick={() => remove(index)}><div>
                           <IconTrash size={16
   </div>
                       }
                       variant="destructive"
                     >
-                      Quitar
-</Button>
+                      Quitar</Button>
                   </div>
                 ))}
               </div>

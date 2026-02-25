@@ -96,8 +96,9 @@ export const TableGeneral = (props: IProps) => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
-                <IconDots size={16} />
-              </Button>
+  <IconDots size={16} />
+  
+</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {options?.map((action, index) => (

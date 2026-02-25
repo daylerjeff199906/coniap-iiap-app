@@ -31,16 +31,14 @@ export const RangeDateFiltered = () => {
       <div className={cn("grid gap-2")}>
         <Popover>
           <PopoverTrigger asChild>
-            <Button
-              id="date"
+            <Button id="date"
               variant={"outline"}
               className={cn(
                 "w-[260px] justify-start text-left font-normal h-9",
                 !date && "text-muted-foreground"
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date?.from ? (
+              <CalendarIcon className="mr-2 h-4 w-4">{date?.from ? (
                 date.to ? (
                   <>
                     {format(date.from, "LLL dd, y")} -{" "}
@@ -51,8 +49,7 @@ export const RangeDateFiltered = () => {
                 )
               ) : (
                 <span>Seleccionar fechas</span>
-              )}
-            </Button>
+              )}</Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar
@@ -66,14 +63,12 @@ export const RangeDateFiltered = () => {
           </PopoverContent>
         </Popover>
       </div>
-      <Button
-        variant="outline"
+      <Button variant="outline"
         size="icon"
         className="h-9 w-9"
         onClick={resetDates}
       >
-        <Trash2 className="h-4 w-4" />
-      </Button>
+        <Trash2 className="h-4 w-4"></Button>
     </div>
   )
 }

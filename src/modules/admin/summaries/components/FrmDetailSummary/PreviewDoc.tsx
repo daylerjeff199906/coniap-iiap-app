@@ -22,18 +22,15 @@ export const PreviewDoc = () => {
               Si no se visualiza correctamente, descárgalo aquí.
             </p>
           </div>
-          <Button
-            asChild
+          <Button asChild
             size="sm"
             variant="default"
             className="gap-2"
             disabled={!value}
           >
             <Link href={value || '#'} target="_blank" download>
-              <IconDownload stroke={1.5} size={16} />
-              Descargar
-            </Link>
-          </Button>
+              <IconDownload stroke={1.5} size={16}>Descargar
+            </Link></Button>
         </section>
       )}
       <div className="rounded-xl overflow-hidden border bg-muted/30 min-h-[500px]">

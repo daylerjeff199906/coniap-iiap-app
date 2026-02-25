@@ -78,13 +78,9 @@ export const ExportExcelButton = <T extends Record<string, any>>(
 
   return (
     <>
-      <Button onClick={handleExportToExcel} />
-  <IconDownload size={16
-  }
-        className="bg-success-700 text-white hover:bg-success-600"
-        disabled={dataList?.length === 0}
-      >
-        Exportar a Excel
+      <Button onClick={handleExportToExcel} className="bg-success-700 text-white hover:bg-success-600" disabled={dataList?.length === 0}>
+  <IconDownload size={16} />
+  Exportar a Excel
 </Button>
     </>
   )

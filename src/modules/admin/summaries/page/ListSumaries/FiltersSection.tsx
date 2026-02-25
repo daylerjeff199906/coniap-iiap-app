@@ -65,15 +65,15 @@ export const FiltersSection = (props: IFilterProps) => {
     <div className="flex items-center gap-3">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="gap-2 relative">
-            <IconFilter size={18} stroke={1.5} />
-            Filtros
+          <Button variant="outline" className="gap-2 relative" stroke={1.5}>
+  <IconFilter size={18} />
+  Filtros
             {selectedFilter?.length > 0 && (
               <Badge variant="destructive" className="ml-1 h-5 w-5 rounded-full flex items-center justify-center p-0 text-[10px]">
                 {selectedFilter.length}
               </Badge>
             )}
-          </Button>
+</Button>
         </PopoverTrigger>
         <PopoverContent className="w-72 p-0" align="start">
           <div className="p-4 bg-muted/20 border-b">

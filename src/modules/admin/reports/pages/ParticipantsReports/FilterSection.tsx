@@ -86,14 +86,10 @@ export const FiltersSection = (props: IProps) => {
       </div>
 
       <div className="flex items-end h-full gap-2 pt-5">
-        <Button
-          variant="default"
-          onClick={onChageFilter}
-          className="font-bold gap-2"
-        >
-          <IconFilter size={18} />
-          Filtrar
-        </Button>
+        <Button variant="default" onClick={onChageFilter} className="font-bold gap-2">
+  <IconFilter size={18} />
+  Filtrar
+</Button>
         {(selectedTypePerson !== 'all' || selectedStatus !== 'all') && (
           <Button
             onClick={onClearFilter}

@@ -100,14 +100,12 @@ export const ProfilePopover = (props: IProps) => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 flex items-center gap-2 px-2 hover:bg-white/10">
                   <Avatar className="h-8 w-8 border">
-                    <AvatarImage src={user?.photo} alt={user?.userName} />
-                    <AvatarFallback>{getInitials(user?.userName)}</AvatarFallback>
+                    <AvatarImage src={user?.photo} alt={user?.userName}><AvatarFallback>{getInitials(user?.userName)}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col items-start text-left ml-1 hidden sm:flex">
                     <span className={`text-xs font-semibold ${!isAdmin && 'text-white'}`}>{user?.userName}</span>
                     <span className="text-[10px] text-muted-foreground line-clamp-1">{user?.email}</span>
-                  </div>
-                </Button>
+                  </div></Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 {options.map((option) => (

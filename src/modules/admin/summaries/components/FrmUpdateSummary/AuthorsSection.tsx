@@ -37,15 +37,13 @@ export const AuthorsSection = () => {
               setAuthor(value)
             }}
           />
-          <Button type="button" onClick={handleAddAuthor} className="text-gray-600" />
-  <div>
+          <Button type="button" onClick={handleAddAuthor} className="text-gray-600"><div>
                 <IconPlus
                   size={16
   </div>
             }
           >
-            Agregar
-</Button>
+            Agregar</Button>
         </section>
         <div className="mt-1">
           <Controller
@@ -71,15 +69,13 @@ export const AuthorsSection = () => {
                         ])
                       }}
                     />
-                    <Button type="button" onClick={() => remove(index)} />
-  <div>
+                    <Button type="button" onClick={() => remove(index)}><div>
                           <IconTrash size={16
   </div>
                       }
                       variant="destructive"
                     >
-                      Quitar
-</Button>
+                      Quitar</Button>
                   </div>
                 ))}
               </div>

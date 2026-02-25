@@ -55,9 +55,10 @@ export const CardRoom = (props: IProps) => {
           }}
         >
           <DropdownTrigger>
-            <Button size="sm" variant="ghost" className="text-gray-500" >
-              <IconDots size={20} />
-            </Button>
+            <Button size="sm" variant="ghost" className="text-gray-500">
+  <IconDots size={20} />
+  
+</Button>
           </DropdownTrigger>
           <DropdownMenu
             aria-label="Custom item styles"

@@ -48,14 +48,14 @@ export default function Page() {
 
   return (
     <main className="w-full">
-      <section className="container section  py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
+      <section className="container section py-10 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
         <div className="col-span-2 flex flex-col gap-2">
-          <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-            PARTICIPA DE ESTE <b>CONGRESO, </b> ¡QUÉ ESPERAS!
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl uppercase font-extrabold tracking-tight">
+            Participa de este <span className="text-primary italic">Congreso,</span> ¡Qué esperas!
           </h1>
           <section className="flex flex-col gap-3">
             <p className="sm:text-lg">
-              <b>Ten en cuenta </b> lo siguiente para participar en el congreso:
+              <b>Ten en cuenta</b> lo siguiente para participar en el congreso:
             </p>
             <ul className="text-sm list-disc flex flex-col gap-2 px-3">
               <li>
@@ -68,9 +68,9 @@ export default function Page() {
                 finalizar{' '}
                 <Link
                   href="/login"
-                  className="text-primary hover:underline"
+                  className="text-primary font-bold hover:underline"
                 >
-                  Inicia sesión {` `}
+                  Inicia sesión
                 </Link>{' '}
                 y envía tu propuesta.
               </li>
@@ -78,102 +78,119 @@ export default function Page() {
                 Si ya estás registrado,{' '}
                 <Link
                   href="/login"
-                  className="text-primary hover:underline"
+                  className="text-primary font-bold hover:underline"
                 >
-                  Inicia sesión {` `}
-                </Link>
+                  Inicia sesión
+                </Link>{' '}
                 y envía tu propuesta.
               </li>
             </ul>
             {isBeforeConference && (
-              <div>
-                <Button variant="outline" className="font-medium px-6" />
-  <IconPlayerPlayFilled size={20
-  }
-                  variant="outline"
-                  onClick={activeDriver}
-                >
-                  Ver demo
+              <div className="pt-4">
+                <Button variant="outline" className="font-bold px-8 gap-2 rounded-full border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm" onClick={activeDriver} />
+  <IconPlayerPlayFilled size={18} />
+  Ver demo
 </Button>
               </div>
             )}
           </section>
           {isBeforeConference && (
-            <Image
-              src={img_logo.src}
-              alt="logo"
-              className="w-1/3 lg:w-10/12"
-            />
-          )}
-        </div>
-        <div className="lg:col-span-3 flex flex-col gap-2">
-          <FrmInscriptions />
-          {!isBeforeConference && (
-            <div className="flex justify-center items-center h-64 order-1 sm:order-2">
+            <div className="mt-8 flex justify-center lg:justify-start">
               <Image
                 src={img_logo.src}
                 alt="logo"
-                className="h-64"
+                width={200}
+                height={200}
+                className="w-1/3 lg:w-1/2 opacity-20 grayscale"
+              />
+            </div>
+          )}
+        </div>
+        <div className="lg:col-span-3 flex flex-col gap-2">
+          <div className="p-6 bg-card border rounded-2xl shadow-xl">
+            <FrmInscriptions />
+          </div>
+          {!isBeforeConference && (
+            <div className="flex justify-center items-center h-64 order-1 sm:order-2 opacity-10">
+              <Image
+                src={img_logo.src}
+                alt="logo"
+                width={300}
+                height={300}
+                className="h-64 object-contain"
               />
             </div>
           )}
         </div>
       </section>
-      <section className="bg-gradient-to-r from-primary-900/90 to-primary-600/90  relative">
-        <div className="container sm:flex sm:items-center sm:gap-6 text-white py-6 sm:py-10 lg:py-14">
-          <div className="w.full h-full sm:min-w-[300px] lg:min-w-[420px]">
-            <Image
-              src="/logo_coniap.webp"
-              alt="logo"
-              width={360}
-              height={180}
-            />
-          </div>
-          <div className="space-y-4 sm:space-y-6 lg:space-y-8 sm:m-4 lg:m-6">
-            <div className="space-y-2">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
-                Descarga el formato de resumen
-              </h1>
-              <h3 className="text-tiny sm:text-sm lg:text-base">
-                Si participas o deseas participar como ponente, ten en cuenta
-                que debes enviar tu resumen en el formato establecido.
-                !Descárgalo aquí!
-              </h3>
-            </div>
-            <Button size="lg" asChild variant="outline" className="text-white">
-  <Link href={infoData?.format_summary || ''}>Descargar formato</Link>
-</Button>
-          </div>
-        </div>
+
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-primary-900/90 z-10" />
         <Image
           src="https://siepsi.com.co/wp-content/uploads/2021/11/ponencia.jpeg"
-          alt="inscriptions"
-          
-          className="absolute top-0 left-0 w-full h-full object-cover object-center -z-10"
+          alt="background"
+          fill
+          className="object-cover object-center"
         />
+
+        <div className="container relative z-20 sm:flex sm:items-center sm:gap-12 text-white py-12 sm:py-20 lg:py-28">
+          <div className="sm:min-w-[300px] lg:min-w-[420px] flex justify-center">
+            <Image
+              src="/logo_coniap.webp"
+              alt="CONIAP Logo"
+              width={400}
+              height={200}
+              className="drop-shadow-2xl"
+            />
+          </div>
+          <div className="space-y-6 sm:m-4 lg:m-6 max-w-2xl">
+            <div className="space-y-3 text-center sm:text-left">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+                Descarga el formato de resumen
+              </h1>
+              <p className="text-base sm:text-lg text-primary-50/80 font-medium">
+                Si participas o deseas participar como ponente, ten en cuenta
+                que debes enviar tu resumen en el formato establecido.
+                ¡Descárgalo ahora!
+              </p>
+            </div>
+            <div className="flex justify-center sm:justify-start">
+              <Button size="lg" asChild variant="secondary" className="font-bold px-10 shadow-lg hover:scale-105 transition-transform">
+                <Link href={infoData?.format_summary || ''}>Descargar formato</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
       </section>
+
       {isBeforeSummary && (
-        <article className="bg-gray-100">
-          <section className="container pt-10 sm:pt-20 w-full grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
-            <div className="lg:col-span-3 flex flex-col gap-4">
-              <div className=" col-span-2 flex flex-col gap-3">
-                <h1 className="text-2xl sm:text-3xl lg:text-5xl">
-                  PARTICIPA DE ESTE <b>CONGRESO, COMO PONENTE</b> ¡QUÉ ESPERAS!
-                </h1>
-              </div>
+        <article className="bg-muted/30 border-y py-20">
+          <section className="container w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex flex-col gap-6 order-2 lg:order-1">
+              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black uppercase tracking-tighter">
+                Participa como <span className="text-primary italic">Ponente</span>
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Envía tu propuesta y comparte tus conocimientos con la comunidad científica. El proceso es rápido y sencillo.
+              </p>
               <div className="flex items-center gap-3">
-                <Button size="lg" className="rounded-full" asChild variant="destructive" id="login-link">
-  <Link href="/login">Enviar resúmen</Link>
-</Button>
+                <Button size="lg" className="rounded-full font-bold px-10 shadow-md" asChild variant="default">
+                  <Link href="/login">Enviar resumen</Link>
+                </Button>
               </div>
             </div>
-            <div className=" col-span-2">
-              <Image
-                src={imgSpeakerInscription.src}
-                alt="speaker"
-                className="max-h-80 lg:max-h-[480px]"
-                loading="lazy"
-              />
+            <div className="flex justify-center order-1 lg:order-2">
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-primary/20 rounded-full blur-2xl group-hover:bg-primary/30 transition-all" />
+                <Image
+                  src={imgSpeakerInscription.src}
+                  alt="speaker"
+                  width={500}
+                  height={600}
+                  className="relative rounded-2xl shadow-2xl max-h-[500px] object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </section>
         </article>

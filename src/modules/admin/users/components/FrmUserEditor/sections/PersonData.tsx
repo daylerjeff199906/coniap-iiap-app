@@ -41,10 +41,9 @@ export const PersonData = () => {
             errorMessage={errors.person_detail?.message as string}
             endContent={
               <div>
-                <Button />
-  <IconLink size={16
-  }
-                  onClick={() => setIsOpen(true)}
+                <Button onClick={() =>
+  <IconLink size={16} />
+  setIsOpen(true)}
                 >
                   Seleccionar
 </Button>

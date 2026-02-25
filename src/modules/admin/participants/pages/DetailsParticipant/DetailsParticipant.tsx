@@ -24,11 +24,9 @@ export const DetailsParticipant = (props: IProps) => {
   return (
     <main className="flex flex-col gap-4 w-full p-6 border rounded-xl bg-white">
       <section>
-        <Button onClick={handleExit} variant="ghost" stroke={1.5} className="text-gray-500" />
-  <IconArrowNarrowLeft size={20
-  }
-        >
-          Atras
+        <Button onClick={handleExit} variant="ghost" stroke={1.5} className="text-gray-500">
+  <IconArrowNarrowLeft size={20} />
+  Atras
 </Button>
       </section>
       <InfoData

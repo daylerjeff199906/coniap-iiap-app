@@ -35,17 +35,12 @@ export const UtilsActions = (props: IProps) => {
 
   return (
     <section className="w-full flex flex-col gap-3">
-      <Button
-        variant="default"
-        onClick={handleAddToCalendar}
-        className="w-full font-bold gap-2"
-      >
-        <IconCalendarMonth size={20} />
-        Agregar a mi agenda
-      </Button>
+      <Button variant="default" onClick={handleAddToCalendar} className="w-full font-bold gap-2">
+  <IconCalendarMonth size={20} />
+  Agregar a mi agenda
+</Button>
       {event?.sala?.url && (
-        <Button
-          variant="outline"
+        <Button variant="outline"
           asChild
           className="w-full font-bold"
         >
@@ -56,12 +51,9 @@ export const UtilsActions = (props: IProps) => {
                 alt="Platform"
                 width={20}
                 height={20}
-                className="mr-2 h-5 w-5 object-contain"
-              />
-            )}
+                className="mr-2 h-5 w-5 object-contain">)}
             Ir a {event?.sala?.name}
-          </Link>
-        </Button>
+          </Link></Button>
       )}
     </section>
   )

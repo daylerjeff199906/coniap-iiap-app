@@ -159,10 +159,9 @@ export const FrmLogin = () => {
           />
         </section>
         <div className="flex flex-col gap-3">
-          <Button variant="default" fullWidth className="rounded-sm" type="submit" disabled={loading} > Iniciar sesión </Button> <Link href="/forgot-password" className="text-center text-xs text-primary-300 hover:underline" > ¿Olvidaste tu contraseña? </Link> </div> </form> <section className="flex items-center gap-3"> <hr className="w-full" /> <p>o</p> <hr className="w-full" /> </section> <section className="flex flex-col gap-4"> <Button fullWidth className="flex items-center justify-center space-x-2 text-white" variant="ghost" onClick={handleGoogle} disabled={loading}>
+          <Button variant="default" fullWidth className="rounded-sm" type="submit" disabled={loading} > Iniciar sesión </Button> <Link href="/forgot-password" className="text-center text-xs text-primary-300 hover:underline" > ¿Olvidaste tu contraseña? </Link> </div> </form> <section className="flex items-center gap-3"> <hr className="w-full"><p>o</p> <hr className="w-full" /> </section> <section className="flex flex-col gap-4"> <Button fullWidth className="flex items-center justify-center space-x-2 text-white" variant="ghost" onClick={handleGoogle} disabled={loading}>
   <Google width="20" height="20" fill="currentColor" />
-  Sign in with Google
-</Button>
+  Sign in with Google</Button>
         <Link
           href="/"
           className="text-center text-xs text-gray-400 hover:underline"

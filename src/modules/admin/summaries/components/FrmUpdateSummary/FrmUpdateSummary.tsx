@@ -87,13 +87,9 @@ export const FrmUpdateSummary = (props: IProps) => {
         <main className="flex flex-col sm:flex-row gap-2 f-full">
           <section className="w-full max-w-lg border-r h-full max-h-[calc(100vh-8rem)] overflow-y-auto bg-white flex flex-col gap-3 p-2 lg:p-4 border rounded-md">
             <section className="flex justify-start">
-              <Button variant="ghost" onClick={handleCancel} className="text-gray-600" />
-  <IconArrowNarrowLeft
-                    size={16
-  }
-                className="text-gray-600"
-              >
-                Regresar
+              <Button variant="ghost" onClick={handleCancel} className="text-gray-600" className="text-gray-600">
+  <IconArrowNarrowLeft size={16} />
+  Regresar
 </Button>
             </section>
             <form

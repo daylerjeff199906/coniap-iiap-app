@@ -30,20 +30,10 @@ export const HeaderSection = (props: IProps) => {
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="flex gap-4 items-center">
           {showBackButton && (
-            <Button
-              size="icon"
-              variant="outline"
-              asChild
-              className="h-8 w-8"
-            >
-              <Link href={hrefBack || '#'}>
-                <IconArrowNarrowLeft
-                  size={20}
-                  stroke={1.5}
-                  className="text-gray-500"
-                />
-              </Link>
-            </Button>
+            <Button size="icon" variant="outline" asChild className="h-8 w-8" > <Link href={hrefBack || '#'} stroke={1.5} className="text-gray-500">
+  <IconArrowNarrowLeft size={20} />
+  </Link>
+</Button>
           )}
           <div>
             <h1 className="text-xl font-bold tracking-tight">{title}</h1>
@@ -53,18 +43,11 @@ export const HeaderSection = (props: IProps) => {
         <div className="flex gap-2 sm:justify-end items-center">
           {rigthContent}
           {isButtonVisible && (
-            <Button
-              size="sm"
-              asChild
-              className="gap-2"
-            >
-              <Link href={href || '#'}>
-                <IconPlus
-                  size={16}
-                />
-                {props.labelButton || 'Nuevo'}
+            <Button size="sm" asChild className="gap-2" > <Link href={href || '#'}>
+  <IconPlus size={16} />
+  {props.labelButton || 'Nuevo'}
               </Link>
-            </Button>
+</Button>
           )}
         </div>
       </header>

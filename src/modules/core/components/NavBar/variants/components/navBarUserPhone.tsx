@@ -14,8 +14,7 @@ export const NavBarUserPhone = () => {
 
   return (
     <>
-      <Button
-        className="sticky top-4 right-4 z-50 text-white"
+      <Button className="sticky top-4 right-4 z-50 text-white"
         onClick={() => setIsActived(!isActived)}
         size="icon"
         
@@ -24,15 +23,12 @@ export const NavBarUserPhone = () => {
         {isActived ? (
           <IconX
             size={24}
-            stroke={1}
-          />
-        ) : (
+            stroke={1}>) : (
           <IconMenu
             size={24}
             stroke={1}
           />
-        )}
-      </Button>
+        )}</Button>
       <AnimatePresence mode="wait">
         {isActived && <NavSection onValueChange={() => setIsActived(false)} />}
       </AnimatePresence>

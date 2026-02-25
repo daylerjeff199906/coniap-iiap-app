@@ -31,8 +31,7 @@ export const ListSummaries = () => {
             <p className="text-muted-foreground">Debes completar tus datos para poder enviar un resumen</p>
           </div>
           <div className="flex justify-center">
-            <Button
-              asChild
+            <Button asChild
               variant="default"
               className="px-8"
             >
@@ -50,9 +49,7 @@ export const ListSummaries = () => {
           {[1, 2, 3].map((item) => (
             <Skeleton
               key={item}
-              className="w-full h-32 rounded-xl"
-            />
-          ))}
+              className="w-full h-32 rounded-xl">))}
         </div>
       ) : (
         <>
@@ -127,8 +124,7 @@ export const ListSummaries = () => {
                     >
                       <Link href={`/dashboard/files/${summary.id}`}>
                         Editar resumen
-                      </Link>
-                    </Button>
+                      </Link></Button>
                   )}
                   {summary.file ? (
                     <Link
