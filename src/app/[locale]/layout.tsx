@@ -8,7 +8,7 @@ import 'filepond/dist/filepond.min.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default async function LocaleLayout({
+export default async function RootLayout({
     children,
     params
 }: {
