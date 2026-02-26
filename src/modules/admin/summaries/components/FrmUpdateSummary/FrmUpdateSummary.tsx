@@ -118,11 +118,8 @@ export const FrmUpdateSummary = (props: IProps) => {
                       render={({ field }) => (
                         <Input
                           {...field}
-                          label="Título del tema del resumen"
                           placeholder="..."
                           className="rounded-xl"
-                          isInvalid={methods.formState.errors?.title !== undefined}
-                          errorMessage={methods.formState.errors?.title?.message}
                           disabled={loading || loadingFile}
                         />
                       )}
@@ -145,7 +142,6 @@ export const FrmUpdateSummary = (props: IProps) => {
                     </Button>
                     <Button
                       type="submit"
-                      disabled={loading || loadingFile || (summary?.id && !isDirty)}
                       className="gap-2 font-black px-8 rounded-xl shadow-lg hover:scale-105 transition-transform"
                     >
                       <IconDeviceFloppy size={20} />
