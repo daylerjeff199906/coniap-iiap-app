@@ -33,7 +33,7 @@ export function InfoSectionSplit({ content }: InfoSectionSplitProps) {
                         transition={{ duration: 0.8 }}
                         className="lg:w-1/2 flex flex-col justify-end"
                     >
-                        <div className="bg-zinc-950 p-8 md:p-12 inline-block">
+                        <div className="bg-slate-900 p-8 md:p-12 inline-block">
                             <h2 className="text-4xl md:text-7xl font-black text-white leading-none tracking-tighter uppercase truncate">
                                 {sideTitle}
                             </h2>
