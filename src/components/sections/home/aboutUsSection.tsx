@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { fetchInformation } from '@/api/fetchInformation'
+import { fetchSectionByType } from '@/api/cms'
+import { IDynamicSection, IAboutWithTabsContent } from '@/types/CMS'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
@@ -10,26 +11,17 @@ import { useTranslations } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
 import imgAboutUs from '@/assets/images/about-us.webp'
 
-interface InformationItem {
-  id: number
-  key: string
-  title: string
-  subtitle?: string
-  content: string
-  image_url?: string
-}
-
 export const AboutUsSection = () => {
-  const [data, setData] = useState<InformationItem[]>([])
+  const [section, setSection] = useState<IDynamicSection<IAboutWithTabsContent> | null>(null)
   const [loading, setLoading] = useState(true)
   const t = useTranslations('HomePage.aboutSection')
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchInformation()
+        const result = await fetchSectionByType('about', 'about_with_tabs')
         if (result) {
-          setData(result as InformationItem[])
+          setSection(result as IDynamicSection<IAboutWithTabsContent>)
         }
       } catch (error) {
         console.error('Error fetching about info:', error)
@@ -40,12 +32,11 @@ export const AboutUsSection = () => {
     loadData()
   }, [])
 
-  const intro = data.find(item => item.key === 'intro')
-  const tabs = data.filter(item => ['mission', 'vision', 'leadership'].includes(item.key))
-
   if (loading) {
     return <div className="h-[600px] flex items-center justify-center text-zinc-500">Cargando información...</div>
   }
+
+  const content = section?.content
 
   return (
     <section id="about-us" className="relative py-24 bg-white overflow-hidden">
@@ -69,7 +60,7 @@ export const AboutUsSection = () => {
               {t('title')}
             </h2>
             <p className="text-lg font-medium text-primary mb-10 italic">
-              {intro?.subtitle || 'A Legacy of Culture'}
+              {content?.intro.subtitle || 'A Legacy of Culture'}
             </p>
 
             <Link href="/about">
@@ -89,14 +80,14 @@ export const AboutUsSection = () => {
           >
             <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl group">
               <img
-                src={intro?.image_url || imgAboutUs.src}
+                src={content?.intro.image_url || imgAboutUs.src}
                 alt="About Us"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             <p className="text-zinc-600 text-lg leading-relaxed text-balance">
-              {intro?.content || 'The Apollo is an American cultural treasure. It is a vibrant non-profit organization rooted in the Harlem community that engages people from around New York, the nation, and the world.'}
+              {content?.intro.content || 'Información sobre nosotros...'}
             </p>
           </motion.div>
         </div>
@@ -120,7 +111,7 @@ export const AboutUsSection = () => {
 
           <AnimatePresence mode="wait">
             {['mission', 'vision', 'leadership'].map((key) => {
-              const item = tabs.find(t => t.key === key)
+              const tabData = content?.tabs[key as keyof typeof content.tabs]
               return (
                 <TabsContent key={key} value={key} className="mt-0 focus-visible:outline-none">
                   <motion.div
@@ -132,14 +123,14 @@ export const AboutUsSection = () => {
                   >
                     <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg order-2 md:order-1">
                       <img
-                        src={item?.image_url || 'https://images.unsplash.com/photo-1542601906990-b4d3fb75bb44?q=80&w=2070'}
-                        alt={item?.title || key}
-                        className="object-cover"
+                        src={tabData?.image_url || 'https://images.unsplash.com/photo-1542601906990-b4d3fb75bb44?q=80&w=2070'}
+                        alt={key}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="order-1 md:order-2">
                       <p className="text-xl md:text-2xl text-zinc-600 leading-relaxed italic">
-                        {item?.content || 'Building a new American canon centered on contributions to the performing arts by artists of the African diaspora.'}
+                        {tabData?.content || 'Contenido del tab...'}
                       </p>
                     </div>
                   </motion.div>

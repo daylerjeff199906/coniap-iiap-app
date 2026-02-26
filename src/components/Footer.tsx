@@ -10,28 +10,28 @@ import {
     Linkedin,
     Send,
 } from 'lucide-react'
-import { fetchInformation } from '@/api/fetchInformation'
-import { IGeneralData } from '@/types/Core/IGeneralData'
+import { fetchGlobalSettings } from '@/api/cms'
+import { IGlobalSettings } from '@/types/CMS'
 
 export function Footer() {
     const t = useTranslations('Footer')
-    const [info, setInfo] = useState<IGeneralData | null>(null)
+    const [settings, setSettings] = useState<IGlobalSettings | null>(null)
 
     useEffect(() => {
         const getData = async () => {
-            const data = await fetchInformation()
-            if (data && data.length > 0) {
-                setInfo(data[0] as IGeneralData)
+            const data = await fetchGlobalSettings()
+            if (data) {
+                setSettings(data)
             }
         }
         getData()
     }, [])
 
     const socialLinks = [
-        { icon: Facebook, href: info?.facebook_url || '#', label: 'Facebook' },
-        { icon: Instagram, href: info?.instagram_url || '#', label: 'Instagram' },
-        { icon: Youtube, href: info?.youtube_url || '#', label: 'Youtube' },
-        { icon: Linkedin, href: info?.linkedin_url || '#', label: 'Linkedin' },
+        { icon: Facebook, href: settings?.social_networks.facebook || '#', label: 'Facebook' },
+        { icon: Instagram, href: settings?.social_networks.instagram || '#', label: 'Instagram' },
+        { icon: Youtube, href: settings?.social_networks.youtube || '#', label: 'Youtube' },
+        { icon: Linkedin, href: settings?.social_networks.linkedin || '#', label: 'Linkedin' },
     ]
 
     const navLinks = [
