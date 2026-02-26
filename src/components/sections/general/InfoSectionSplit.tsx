@@ -31,13 +31,27 @@ export function InfoSectionSplit({ content }: InfoSectionSplitProps) {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="lg:w-1/3"
+                        className="lg:w-1/2 flex flex-col justify-end"
                     >
                         <div className="bg-zinc-950 p-8 md:p-12 inline-block">
-                            <h2 className="text-4xl md:text-7xl font-black text-white leading-none tracking-tighter uppercase whitespace-pre-line">
+                            <h2 className="text-4xl md:text-7xl font-black text-white leading-none tracking-tighter uppercase truncate">
                                 {sideTitle}
                             </h2>
                         </div>
+                        {content.image_url && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="pt-8 flex justify-end"
+                            >
+                                <img
+                                    src={content.image_url}
+                                    alt={mainHeading}
+                                    className="w-1/2 h-auto rounded-sm shadow-xl "
+                                />
+                            </motion.div>
+                        )}
                     </motion.div>
 
                     {/* Right Side: Content */}
@@ -46,7 +60,7 @@ export function InfoSectionSplit({ content }: InfoSectionSplitProps) {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="lg:w-2/3 space-y-12"
+                        className="lg:w-1/2 space-y-12"
                     >
                         <div className="space-y-4">
                             <p className="text-primary font-black tracking-[0.3em] uppercase text-sm">
@@ -73,21 +87,6 @@ export function InfoSectionSplit({ content }: InfoSectionSplitProps) {
                                 </p>
                             )}
                         </div>
-
-                        {content.image_url && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="pt-8"
-                            >
-                                <img
-                                    src={content.image_url}
-                                    alt={mainHeading}
-                                    className="w-full h-auto rounded-sm shadow-xl"
-                                />
-                            </motion.div>
-                        )}
                     </motion.div>
                 </div>
             </div>
