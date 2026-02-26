@@ -1,5 +1,5 @@
 'use server'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from "@/utils/supabase/supabase/client"
 import { ISponsor } from '@/types'
 
 export async function createSponsor(props: ISponsor) {

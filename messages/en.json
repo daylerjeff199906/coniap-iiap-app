@@ -1,0 +1,14 @@
+{
+    "HomePage": {
+        "title": "CREATING EMOTIONS",
+        "subtitle": "TO LAST FOREVER",
+        "description": "Let's put your uniqueness on show",
+        "nav": {
+            "about": "About us",
+            "blog": "Blog",
+            "news": "News",
+            "contact": "Contact",
+            "menu": "Menu"
+        }
+    }
+}

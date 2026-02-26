@@ -1,0 +1,14 @@
+{
+    "HomePage": {
+        "title": "CREANDO EMOCIONES",
+        "subtitle": "PARA QUE DUREN PARA SIEMPRE",
+        "description": "Pongamos tu singularidad en escena",
+        "nav": {
+            "about": "Acerca de nosotros",
+            "blog": "Blog",
+            "news": "Novedades",
+            "contact": "Contacto",
+            "menu": "Menú"
+        }
+    }
+}

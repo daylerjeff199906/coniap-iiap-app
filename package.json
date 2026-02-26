@@ -44,6 +44,7 @@
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.475.0",
     "next": "^16.1.0",
+    "next-intl": "^4.8.3",
     "react": "^19.0.0",
     "react-big-calendar": "^1.11.2",
     "react-canvas-confetti": "^2.0.7",
