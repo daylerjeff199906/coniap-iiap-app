@@ -30,9 +30,9 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                 >
-                    <h1 className="text-7xl md:text-[9rem] font-bold text-white leading-[0.85] tracking-tighter uppercase whitespace-pre-line">
+                    <h1 className="text-7xl md:text-[9rem]  text-white leading-[0.85] tracking-tighter uppercase whitespace-pre-line">
                         {t('title')} <br />
-                        <span className="text-[#009933]">
+                        <span className="text-[#17C964] font-bold ">
                             {t('subtitle')}
                         </span>
                     </h1>
