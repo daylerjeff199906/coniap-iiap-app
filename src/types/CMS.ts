@@ -63,7 +63,7 @@ export interface IBannerSectionContent {
     description: string;
     image_url: string;
     button_text: string;
-    button_link: string;
+    button_link: string | null;
     background_color: string;
     target?: string;
 }

@@ -17,9 +17,9 @@ export default async function AboutLayout({
     const defaultBanner: IBannerSectionContent = {
         title: "Sobre Nosotros",
         description: "Conoce más sobre el III Congreso Internacional sobre Amazonía Peruana.",
-        image_url: "https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/logos%2Fmeta-coniap.webp?alt=media",
+        image_url: "https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fave-america-sur-habitat-natural-scaled.webp?alt=media&token=9406c9f0-2c73-4b4a-8e5f-f13e9562239d",
         button_text: "Ver Agenda",
-        button_link: "/agenda",
+        button_link: null,
         background_color: "#0f172a"
     }
 
