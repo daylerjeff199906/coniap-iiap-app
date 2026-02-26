@@ -17,5 +17,28 @@
             "leadership": "Leadership",
             "viewMore": "View More"
         }
+    },
+    "Metadata": {
+        "title": "CONIAP | International Congress on the Peruvian Amazon",
+        "description": "III International Congress on the Peruvian Amazon carried out by the Research Institute of the Peruvian Amazon (IIAP)."
+    },
+    "Footer": {
+        "description": "III INTERNATIONAL CONGRESS ON THE PERUVIAN AMAZON",
+        "date": "From November 13 to 15, 2024",
+        "location": "Virtual",
+        "hashtag": "#CONIAP2024",
+        "copy": "© 2024 CONIAP. All rights reserved.",
+        "nav": {
+            "home": "Home",
+            "agenda": "Agenda",
+            "speakers": "Speakers",
+            "inscriptions": "Inscriptions",
+            "contact": "Contact"
+        },
+        "sections": {
+            "connect": "Connect",
+            "partners": "Partners",
+            "newsletter": "Newsletter"
+        }
     }
 }
