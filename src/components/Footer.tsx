@@ -43,7 +43,7 @@ export function Footer() {
     ]
 
     return (
-        <footer className="bg-zinc-950 text-zinc-400 py-20 px-6 overflow-hidden">
+        <footer className="bg-slate-950 text-zinc-400 py-20 px-6 overflow-hidden">
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-20">
                     {/* Brand Section */}

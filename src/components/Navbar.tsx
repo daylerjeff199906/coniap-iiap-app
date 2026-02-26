@@ -32,7 +32,7 @@ export function Navbar() {
     return (
         <>
             <nav
-                className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 transition-all duration-500 ${scrolled ? 'bg-zinc-950/95 shadow-xl backdrop-blur-md' : 'bg-transparent'
+                className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 transition-all duration-500 ${scrolled ? 'bg-slate-900/95 shadow-xl backdrop-blur-md' : 'bg-transparent'
                     }`}
             >
                 {/* Left: Nav Links (Desktop) */}
