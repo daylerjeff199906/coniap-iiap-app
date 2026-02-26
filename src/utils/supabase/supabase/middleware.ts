@@ -1,8 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function updateSession(request: NextRequest) {
-    let supabaseResponse = NextResponse.next({
+export async function updateSession(request: NextRequest, response?: NextResponse) {
+    let supabaseResponse = response || NextResponse.next({
         request,
     })
 
@@ -31,14 +31,16 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser()
 
-    if (
-        !user &&
-        !request.nextUrl.pathname.startsWith('/login') &&
-        !request.nextUrl.pathname.startsWith('/auth') &&
-        !request.nextUrl.pathname.startsWith('/signup') &&
-        !request.nextUrl.pathname.startsWith('/reset-password')
-    ) {
+    const pathname = request.nextUrl.pathname;
+    const isAuthPath = pathname.split('/').some(segment =>
+        ['login', 'auth', 'signup', 'reset-password'].includes(segment)
+    );
+
+    if (!user && !isAuthPath) {
         const url = request.nextUrl.clone()
+        // If we want to preserve the locale, we should be careful.
+        // For now, let's just let next-intl handle the locale if we redirect to a plain path,
+        // or check if there's a locale prefix.
         url.pathname = '/login'
         return NextResponse.redirect(url)
     }
