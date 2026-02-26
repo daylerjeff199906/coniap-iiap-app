@@ -21,6 +21,7 @@ export const config = {
         // Match locales
         '/(es|en)/:path*',
         // Match all except static files, api, etc.
-        '/((?!api|_next|_static|_vercel|[\\w-]+\\.\\w+).*)'
+        // Match all except static files, api, etc.
+        '/((?!api|_next|_static|_vercel|.*\\..*).*)'
     ]
 };
