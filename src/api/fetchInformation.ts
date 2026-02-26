@@ -7,14 +7,14 @@ export async function fetchInformation() {
   const supabase = createClient()
 
   const { data, error } = await supabase
-    .from(`${table}}`)
+    .from(`${table}`)
     .select('*')
     .order('created_at', { ascending: true })
 
   if (error) {
     return null
   } else {
-    data
+    return data
   }
 }
 
