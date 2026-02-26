@@ -52,7 +52,7 @@ export const AboutUsSection = () => {
       {/* Background Large Text */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none overflow-hidden opacity-[0.03]">
         <h1 className="text-[25rem] font-bold leading-none tracking-tighter text-zinc-900 translate-x-[-10%] translate-y-[-20%]">
-          ABOUT
+          {t('title')}
         </h1>
       </div>
 
