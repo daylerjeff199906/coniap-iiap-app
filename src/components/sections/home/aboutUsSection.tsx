@@ -73,7 +73,7 @@ export const AboutUsSection = () => {
             </p>
 
             <Link href="/about">
-              <Button size="lg" className="rounded-full px-8 py-7 text-lg group bg-zinc-950 hover:bg-primary transition-all duration-500">
+              <Button size="lg" className="rounded-full px-8 py-7 text-lg group bg-secondary hover:bg-primary transition-all duration-500">
                 {t('viewMore')}
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
