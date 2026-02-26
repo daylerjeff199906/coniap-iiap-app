@@ -9,6 +9,13 @@
             "news": "Novedades",
             "contact": "Contacto",
             "menu": "Menú"
+        },
+        "aboutSection": {
+            "title": "SOBRE NOSOTROS",
+            "mission": "Misión",
+            "vision": "Visión",
+            "leadership": "Liderazgo",
+            "viewMore": "Ver Más"
         }
     }
 }

@@ -1,8 +1,13 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fetchInformation } from '@/api/fetchInformation'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import { Button } from '@/components/ui/button'
+import { Link } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
+import { ArrowRight } from 'lucide-react'
 import imgAboutUs from '@/assets/images/about-us.webp'
 
 interface InformationItem {
@@ -17,6 +22,7 @@ interface InformationItem {
 export const AboutUsSection = () => {
   const [data, setData] = useState<InformationItem[]>([])
   const [loading, setLoading] = useState(true)
+  const t = useTranslations('HomePage.aboutSection')
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,7 +48,7 @@ export const AboutUsSection = () => {
   }
 
   return (
-    <section id="about" className="relative py-24 bg-white overflow-hidden">
+    <section id="about-us" className="relative py-24 bg-white overflow-hidden">
       {/* Background Large Text */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none overflow-hidden opacity-[0.03]">
         <h1 className="text-[25rem] font-bold leading-none tracking-tighter text-zinc-900 translate-x-[-10%] translate-y-[-20%]">
@@ -60,11 +66,18 @@ export const AboutUsSection = () => {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-6xl md:text-8xl font-black text-zinc-900 leading-[0.8] mb-8 uppercase tracking-tighter">
-              {intro?.title || 'SOBRE NOSOTROS'}
+              {t('title')}
             </h2>
-            <p className="text-lg font-medium text-primary mb-6 italic">
+            <p className="text-lg font-medium text-primary mb-10 italic">
               {intro?.subtitle || 'A Legacy of Culture'}
             </p>
+
+            <Link href="/about">
+              <Button size="lg" className="rounded-full px-8 py-7 text-lg group bg-zinc-950 hover:bg-primary transition-all duration-500">
+                {t('viewMore')}
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </motion.div>
 
           <motion.div
@@ -91,15 +104,18 @@ export const AboutUsSection = () => {
         {/* Tabs Section */}
         <Tabs defaultValue="mission" className="w-full">
           <TabsList className="flex w-full justify-between items-center border-b border-zinc-200 bg-transparent h-auto p-0 mb-12 rounded-none">
-            {['mission', 'vision', 'leadership'].map((key) => (
-              <TabsTrigger
-                key={key}
-                value={key}
-                className="flex-1 py-6 text-xl md:text-2xl font-bold uppercase tracking-tight text-zinc-400 data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary bg-transparent rounded-none transition-all"
-              >
-                {key === 'mission' ? 'Misión' : key === 'vision' ? 'Visión' : 'Liderazgo'}
-              </TabsTrigger>
-            ))}
+            {['mission', 'vision', 'leadership'].map((key) => {
+              const tabLabel = t(key as any)
+              return (
+                <TabsTrigger
+                  key={key}
+                  value={key}
+                  className="flex-1 py-6 text-xl md:text-2xl font-bold uppercase tracking-tight text-zinc-400 data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary bg-transparent rounded-none transition-all"
+                >
+                  {tabLabel}
+                </TabsTrigger>
+              )
+            })}
           </TabsList>
 
           <AnimatePresence mode="wait">

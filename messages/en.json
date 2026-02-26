@@ -9,6 +9,13 @@
             "news": "News",
             "contact": "Contact",
             "menu": "Menu"
+        },
+        "aboutSection": {
+            "title": "ABOUT US",
+            "mission": "Mission",
+            "vision": "Vision",
+            "leadership": "Leadership",
+            "viewMore": "View More"
         }
     }
 }
