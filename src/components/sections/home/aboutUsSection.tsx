@@ -11,7 +11,7 @@ import { useTranslations } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
 import imgAboutUs from '@/assets/images/about-us.webp'
 
-export const AboutUsSection = () => {
+export const AboutUsSection = ({ pageSlug = 'about' }: { pageSlug?: string }) => {
   const [section, setSection] = useState<IDynamicSection<IAboutWithTabsContent> | null>(null)
   const [loading, setLoading] = useState(true)
   const t = useTranslations('HomePage.aboutSection')
@@ -19,7 +19,7 @@ export const AboutUsSection = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSectionByType('about', 'about_with_tabs')
+        const result = await fetchSectionByType(pageSlug, 'about_with_tabs')
         if (result) {
           setSection(result as IDynamicSection<IAboutWithTabsContent>)
         }
@@ -30,7 +30,7 @@ export const AboutUsSection = () => {
       }
     }
     loadData()
-  }, [])
+  }, [pageSlug])
 
   if (loading) {
     return <div className="h-[600px] flex items-center justify-center text-zinc-500">Cargando información...</div>

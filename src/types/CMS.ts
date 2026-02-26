@@ -56,3 +56,32 @@ export interface IAboutWithTabsContent {
         };
     };
 }
+
+// Specific content for 'banner_section'
+export interface IBannerSectionContent {
+    title: string;
+    description: string;
+    image_url: string;
+    button_text: string;
+    button_link: string;
+    background_color: string;
+    target?: string;
+}
+
+// Specific content for 'info_section_split'
+export interface ISplitInfoSectionContent {
+    side_title: {
+        es: string;
+        en: string;
+    };
+    hashtag: string;
+    main_heading: {
+        es: string;
+        en: string;
+    };
+    description: {
+        es: string;
+        en: string;
+    };
+    image_url?: string;
+}
