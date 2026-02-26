@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { fetchSectionByType } from '@/api/cms'
 import { AboutUsSection } from '@/components/sections/home/aboutUsSection'
+import { InfoSectionSplit } from '@/components/sections/general/InfoSectionSplit'
 
 export async function generateMetadata({
     params
@@ -18,12 +19,12 @@ export async function generateMetadata({
 }
 
 export default async function AboutPage() {
-    // Other sections for the about page could be fetched and rendered here
-    // The main about content is in the AboutUsSection component which now fetches its own data
+    const splitSection = await fetchSectionByType('about', 'info_section_split')
+
     return (
-        <div className="bg-white">
+        <main className="bg-white">
+            {splitSection && <InfoSectionSplit content={splitSection.content} />}
             <AboutUsSection />
-            {/* Add more sections here if needed */}
-        </div>
+        </main>
     )
 }
