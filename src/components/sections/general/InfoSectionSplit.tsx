@@ -38,20 +38,18 @@ export function InfoSectionSplit({ content }: InfoSectionSplitProps) {
                                 {sideTitle}
                             </h2>
                         </div>
-                        {content.image_url && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="pt-8 flex justify-end"
-                            >
-                                <img
-                                    src={content.image_url}
-                                    alt={mainHeading}
-                                    className="w-1/2 h-auto rounded-sm shadow-xl "
-                                />
-                            </motion.div>
-                        )}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="pt-8 flex justify-end"
+                        >
+                            <img
+                                src={content.image_url || '/brand/imagotipo_coniap.png'}
+                                alt={mainHeading}
+                                className="h-[320px] md:h-[420px] rounded-sm shadow-xl "
+                            />
+                        </motion.div>
                     </motion.div>
 
                     {/* Right Side: Content */}

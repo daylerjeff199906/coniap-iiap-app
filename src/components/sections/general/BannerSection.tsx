@@ -38,19 +38,17 @@ export async function BannerSection({ content }: BannerSectionProps) {
                         {content.description}
                     </p>
 
-                    <div className="pt-6">
-                        {content.button_link && content.button_text && (
-                            <Link href={content.button_link} target={content.target}>
-                                <Button
-                                    size="lg"
-                                    className="rounded-full px-10 py-8 text-xl font-bold uppercase tracking-widest bg-primary hover:bg-white hover:text-primary transition-all duration-500 shadow-2xl shadow-primary/20 group"
-                                >
-                                    {content.button_text}
-                                    <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
-                                </Button>
-                            </Link>
-                        )}
-                    </div>
+                    {content.button_link && content.button_text && (
+                        <Link href={content.button_link} target={content.target} className="pt-6">
+                            <Button
+                                size="lg"
+                                className="rounded-full px-10 py-8 text-xl font-bold uppercase tracking-widest bg-primary hover:bg-white hover:text-primary transition-all duration-500 shadow-2xl shadow-primary/20 group"
+                            >
+                                {content.button_text}
+                                <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
+                            </Button>
+                        </Link>
+                    )}
                 </div>
             </div>
 

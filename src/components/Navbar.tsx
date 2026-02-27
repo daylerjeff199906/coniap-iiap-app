@@ -23,10 +23,25 @@ export function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
+    // Prevent scrolling on body when menu is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'unset'
+        }
+        return () => {
+            document.body.style.overflow = 'unset'
+        }
+    }, [isOpen])
+
     const navLinks = [
-        { href: '/about', label: t('about') },
-        { href: '/blog', label: t('blog') },
-        { href: '/news', label: t('news') },
+        { href: '/', label: t('home'), isVisible: false },
+        { href: '/events', label: t('events'), isVisible: false },
+        { href: '/speakers', label: t('speakers'), isVisible: false },
+        { href: '/about', label: t('about'), isVisible: true },
+        { href: '/blog', label: t('blog'), isVisible: false },
+        { href: '/news', label: t('news'), isVisible: true },
     ]
 
     return (
@@ -37,7 +52,7 @@ export function Navbar() {
             >
                 {/* Left: Nav Links (Desktop) */}
                 <div className="hidden md:flex items-center space-x-8">
-                    {navLinks.map((link) => (
+                    {navLinks.filter((link) => link.isVisible).map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
@@ -100,12 +115,12 @@ export function Navbar() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 1.1 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-0 z-[60] bg-zinc-950 flex flex-col p-12 overflow-hidden"
+                        className="fixed inset-0 z-[60] bg-zinc-950 flex flex-col p-12 overflow-y-auto"
                     >
                         {/* Background Decoration */}
                         <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 blur-[120px] pointer-events-none" />
 
-                        <div className="relative z-10 flex justify-between items-center mb-24">
+                        <div className="relative z-10 flex justify-between items-center mb-16 flex-shrink-0">
                             <div className="bg-primary text-white px-4 py-2 font-black text-[10px] uppercase tracking-widest rounded-sm">
                                 Explore CONIAP
                             </div>
@@ -118,13 +133,8 @@ export function Navbar() {
                             </button>
                         </div>
 
-                        <div className="relative z-10 flex flex-col space-y-4 md:space-y-8">
-                            {[
-                                { href: '/', label: 'Home' },
-                                ...navLinks,
-                                { href: '/sustainability', label: 'Sostenibilidad' },
-                                { href: '/contact', label: 'Contacto' },
-                            ].map((link, i) => (
+                        <div className="relative z-10 flex flex-col space-y-4 md:space-y-6">
+                            {navLinks?.map((link, i) => (
                                 <motion.div
                                     key={link.href}
                                     initial={{ opacity: 0, x: -30 }}
@@ -134,7 +144,7 @@ export function Navbar() {
                                     <Link
                                         href={link.href}
                                         onClick={() => setIsOpen(false)}
-                                        className="group inline-flex items-center text-5xl md:text-8xl font-black text-white/40 hover:text-white transition-all uppercase tracking-tighter"
+                                        className="group inline-flex items-center text-5xl md:text-7xl font-black text-white/40 hover:text-white transition-all uppercase tracking-tighter"
                                     >
                                         <span className="mr-6 text-xl text-primary opacity-0 group-hover:opacity-100 transition-opacity">/ 0{i + 1}</span>
                                         {link.label}

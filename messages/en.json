@@ -4,6 +4,9 @@
         "subtitle": "ON PERUVIAN AMAZON",
         "description": "Integrating science, knowledge, and dialogue for sustainable Amazonian development.",
         "nav": {
+            "home": "Home",
+            "events": "Events",
+            "speakers": "Speakers",
             "about": "About us",
             "blog": "Blog",
             "news": "News",
@@ -20,7 +23,11 @@
     },
     "Metadata": {
         "title": "CONIAP | International Congress on the Peruvian Amazon",
-        "description": "III International Congress on the Peruvian Amazon carried out by the Research Institute of the Peruvian Amazon (IIAP)."
+        "description": "III International Congress on the Peruvian Amazon carried out by the Research Institute of the Peruvian Amazon (IIAP).",
+        "about": {
+            "title": "About Us",
+            "description": "The International Congress on the Peruvian Amazon (CONIAP) is a scientific event organized by the Research Institute of the Peruvian Amazon (IIAP). It brings together researchers, academics, students, and professionals from around the world to share their knowledge and experiences on the Amazon."
+        }
     },
     "Footer": {
         "description": "III INTERNATIONAL CONGRESS ON THE PERUVIAN AMAZON",

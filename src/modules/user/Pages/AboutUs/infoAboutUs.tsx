@@ -1,6 +1,5 @@
 'use client'
 import { motion } from 'framer-motion'
-import { imgImagoTipoConiap } from '@/assets'
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -15,29 +14,6 @@ export const InfoAboutUs = (props: IProps) => {
     <>
       <section className="">
         <main className="p-4 grid grid-cols-1 sm:grid-cols-2 items-center">
-          <motion.div
-            className=""
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.2,
-              ease: [0, 0.71, 0.2, 1.01],
-              scale: {
-                type: 'spring',
-                damping: 5,
-                stiffness: 100,
-                restDelta: 0.001,
-              },
-            }}
-          >
-            <Image
-              src={imgImagoTipoConiap.src}
-              alt="CONIAP 2024"
-              width={420}
-              height={520}
-              className="w-full h-full max-h-[520px] rounded-xl"
-            />
-          </motion.div>
           <section className="w-full">
             <motion.div
               className="flex items-center gap-3 pb-3"

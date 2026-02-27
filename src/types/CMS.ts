@@ -83,5 +83,5 @@ export interface ISplitInfoSectionContent {
         es: string;
         en: string;
     };
-    image_url?: string;
+    image_url?: string | null;
 }
