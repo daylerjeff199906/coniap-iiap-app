@@ -33,22 +33,11 @@ export const ListEventsPage = (props: IEventsPage) => {
   const currentPage = getParams('page', '1')
   const debouncedQuery = useDebounce(query, 500)
 
-  useEffect(() => {
-    updateFilters({ search: debouncedQuery })
-  }, [debouncedQuery])
 
-  const handleSelectType = (key: any) => {
-    const value = Object.values(key)[0]
-    if (value === 'all') {
-      updateFilters({ type: '' })
-    } else {
-      updateFilters({ type: value })
-    }
-  }
 
   return (
     <>
-      <article className="section-home grid grid-cols-1 gap-4">
+      {/* <article className="section-home grid grid-cols-1 gap-4">
         <section className="flex flex-col gap-3 sm:flex-row sm:justify-between">
           <div className="w-full sm:flex">
             <Select aria-label="Filtrar por tipo de evento" selectedKeys={[searchType]} onSelectionChange={handleSelectType} variant="outline" className="w-full sm:max-w-xs" >
@@ -108,7 +97,7 @@ export const ListEventsPage = (props: IEventsPage) => {
             />
           </footer>
         )}
-      </article>
+      </article> */}
     </>
   )
 }
