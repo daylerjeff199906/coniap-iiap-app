@@ -17,7 +17,7 @@ export const CardList = (props: IProps) => {
   const { data } = props
   return (
     <>
-      <ScrollShadow
+      {/* <ScrollShadow
         orientation="horizontal"
         className="max-w-3xl lg:max-w-full w-full"
       >
@@ -50,7 +50,7 @@ export const CardList = (props: IProps) => {
             </div>
           ))}
         </section>
-      </ScrollShadow>
+      </ScrollShadow> */}
     </>
   )
 }

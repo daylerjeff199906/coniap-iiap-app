@@ -70,7 +70,7 @@ export const DialogStatus = (props: IProps) => {
 
   return (
     <>
-      <FormProvider {...methods}>
+      {/* <FormProvider {...methods}>
         <form
           className="flex flex-col gap-4 w-full rounded-lg border p-4 max-w-xl bg-white"
           onSubmit={methods.handleSubmit(onSubmit)}
@@ -126,7 +126,7 @@ export const DialogStatus = (props: IProps) => {
             </Button>
           </footer>
         </form>
-      </FormProvider>
+      </FormProvider> */}
     </>
   )
 }

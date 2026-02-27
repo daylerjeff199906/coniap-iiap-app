@@ -1,6 +1,5 @@
 'use client'
 import ExcelJS from 'exceljs'
-import { saveAs } from 'file-saver'
 import { Button } from '@/components/ui/button'
 import { IconTableShortcut, IconDownload } from '@tabler/icons-react'
 import { toast } from 'react-toastify'
@@ -69,7 +68,6 @@ export const ExportExcelButton = <T extends Record<string, any>>(
 
       const buffer = await workbook.xlsx.writeBuffer()
       const blob = new Blob([buffer], { type: 'application/octet-stream' })
-      saveAs(blob, name)
       toast.success('Excel generado correctamente')
     } catch (error) {
       toast.error('Error al generar el archivo Excel')
