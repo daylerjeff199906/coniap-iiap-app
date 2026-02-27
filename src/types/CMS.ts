@@ -59,11 +59,17 @@ export interface IAboutWithTabsContent {
 
 // Specific content for 'banner_section'
 export interface IBannerSectionContent {
-    title: string;
-    description: string;
+    title: {
+        es: string;
+        en: string;
+    };
+    description: {
+        es: string;
+        en: string;
+    };
     image_url: string;
-    button_text: string;
-    button_link: string | null;
+    button_text?: string;
+    button_link?: string | null;
     background_color: string;
     target?: string;
 }

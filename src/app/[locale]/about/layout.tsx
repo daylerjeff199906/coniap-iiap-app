@@ -15,8 +15,14 @@ export default async function AboutLayout({
 
     // Default banner content if not found in DB
     const defaultBanner: IBannerSectionContent = {
-        title: "Sobre Nosotros",
-        description: "Conoce más sobre el III Congreso Internacional sobre Amazonía Peruana.",
+        title: {
+            es: "Sobre Nosotros",
+            en: "About us"
+        },
+        description: {
+            es: "Conoce más sobre el III Congreso Internacional sobre Amazonía Peruana.",
+            en: "Learn more about the III International Congress on the Peruvian Amazon."
+        },
         image_url: "https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fave-america-sur-habitat-natural-scaled.webp?alt=media&token=9406c9f0-2c73-4b4a-8e5f-f13e9562239d",
         button_text: "Ver Agenda",
         button_link: null,
@@ -25,7 +31,7 @@ export default async function AboutLayout({
 
     return (
         <>
-            <BannerSection content={bannerContent || defaultBanner} />
+            <BannerSection content={bannerContent || defaultBanner} locale={params.locale} />
             {children}
         </>
     )

@@ -7,10 +7,15 @@ import { IBannerSectionContent } from '@/types/CMS'
 
 interface BannerSectionProps {
     content: IBannerSectionContent;
+    locale: string;
 }
 
-export async function BannerSection({ content }: BannerSectionProps) {
+export async function BannerSection({ content, locale }: BannerSectionProps) {
     if (!content) return null;
+
+    const currentLocale = locale as 'es' | 'en';
+    const title = content.title[currentLocale] || content.title['es'];
+    const description = content.description[currentLocale] || content.description['es'];
 
     return (
         <section
@@ -21,7 +26,7 @@ export async function BannerSection({ content }: BannerSectionProps) {
             <div className="absolute inset-0 z-0">
                 <img
                     src={content.image_url}
-                    alt={content.title}
+                    alt={title}
                     className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-zinc-950/80 transition-opacity duration-300 group-hover:bg-zinc-850/40" />
@@ -31,11 +36,11 @@ export async function BannerSection({ content }: BannerSectionProps) {
             <div className="container mx-auto px-6 relative z-10 text-center">
                 <div className="max-w-4xl mx-auto space-y-8">
                     <h1 className="text-4xl md:text-7xl font-medium text-white tracking-tighter uppercase leading-[0.9] drop-shadow-2xl">
-                        {content.title}
+                        {title}
                     </h1>
 
                     <p className="text-lg md:text-2xl text-white/70 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-                        {content.description}
+                        {description}
                     </p>
 
                     {content.button_link && content.button_text && (
