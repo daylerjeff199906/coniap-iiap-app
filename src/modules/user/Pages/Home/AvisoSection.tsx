@@ -1,5 +1,4 @@
 'use client'
-import { ModalAviso } from '@/modules/core'
 import { useState } from 'react'
 import infoData from '@/utils/json/infoConiap.json'
 import { getConferenceStatus } from '@/utils/functions'
@@ -10,12 +9,7 @@ export const AvisoSection = () => {
 
   return (
     <>
-      {isBeforeSummary && (
-        <ModalAviso
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-        />
-      )}
+
     </>
   )
 }
