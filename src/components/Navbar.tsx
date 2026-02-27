@@ -1,13 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { Link, usePathname } from '@/i18n/routing'
+import { useTranslations, useLocale } from 'next-intl'
 import { Menu, X, Mail, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export function Navbar() {
     const t = useTranslations('HomePage.nav')
+    const pathname = usePathname()
+    const currentLocale = useLocale()
     const [isOpen, setIsOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
 
@@ -83,8 +85,26 @@ export function Navbar() {
 
                     {/* Language Switcher */}
                     <div className="hidden md:flex items-center space-x-1">
-                        <Link href="/" locale="es" className="text-[10px] font-black text-white/50 hover:text-white px-2 py-1 rounded border border-white/10">ES</Link>
-                        <Link href="/" locale="en" className="text-[10px] font-black text-white/50 hover:text-white px-2 py-1 rounded border border-white/10">EN</Link>
+                        <Link
+                            href={pathname}
+                            locale="es"
+                            className={`text-[10px] font-black px-2 py-1 rounded border transition-all ${currentLocale === 'es'
+                                ? 'text-white border-white/40 bg-white/10'
+                                : 'text-white/50 border-white/10 hover:text-white'
+                                }`}
+                        >
+                            ES
+                        </Link>
+                        <Link
+                            href={pathname}
+                            locale="en"
+                            className={`text-[10px] font-black px-2 py-1 rounded border transition-all ${currentLocale === 'en'
+                                ? 'text-white border-white/40 bg-white/10'
+                                : 'text-white/50 border-white/10 hover:text-white'
+                                }`}
+                        >
+                            EN
+                        </Link>
                     </div>
 
                     <button
@@ -151,6 +171,37 @@ export function Navbar() {
                                     </Link>
                                 </motion.div>
                             ))}
+
+                            {/* Mobile Language Switcher */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: (navLinks?.length || 0) * 0.1 + 0.2 }}
+                                className="flex items-center space-x-4 pt-12"
+                            >
+                                <Link
+                                    href={pathname}
+                                    locale="es"
+                                    onClick={() => setIsOpen(false)}
+                                    className={`text-2xl font-black px-6 py-3 rounded border transition-all ${currentLocale === 'es'
+                                        ? 'text-white border-primary bg-primary/20'
+                                        : 'text-white/30 border-white/10'
+                                        }`}
+                                >
+                                    ES
+                                </Link>
+                                <Link
+                                    href={pathname}
+                                    locale="en"
+                                    onClick={() => setIsOpen(false)}
+                                    className={`text-2xl font-black px-6 py-3 rounded border transition-all ${currentLocale === 'en'
+                                        ? 'text-white border-primary bg-primary/20'
+                                        : 'text-white/30 border-white/10'
+                                        }`}
+                                >
+                                    EN
+                                </Link>
+                            </motion.div>
                         </div>
                     </motion.div>
                 )}

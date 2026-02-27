@@ -7,14 +7,15 @@ import { IDynamicSection, IAboutWithTabsContent } from '@/types/CMS'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
 import imgAboutUs from '@/assets/images/about-us.webp'
 
-export const AboutUsSection = ({ pageSlug = 'about' }: { pageSlug?: string }) => {
+export const AboutUsSection = ({ pageSlug = 'about', hiddenAction = false }: { pageSlug?: string, hiddenAction?: boolean }) => {
   const [section, setSection] = useState<IDynamicSection<IAboutWithTabsContent> | null>(null)
   const [loading, setLoading] = useState(true)
   const t = useTranslations('HomePage.aboutSection')
+  const locale = useLocale() as 'es' | 'en'
 
   useEffect(() => {
     const loadData = async () => {
@@ -36,7 +37,9 @@ export const AboutUsSection = ({ pageSlug = 'about' }: { pageSlug?: string }) =>
     return <div className="h-[600px] flex items-center justify-center text-zinc-500">Cargando información...</div>
   }
 
-  const content = section?.content
+  const content = section?.content?.[locale] || section?.content?.['es']
+  const intro = content?.intro
+  const tabs = content?.tabs
 
   return (
     <section id="about-us" className="relative py-24 bg-white overflow-hidden">
@@ -60,15 +63,19 @@ export const AboutUsSection = ({ pageSlug = 'about' }: { pageSlug?: string }) =>
               {t('title')}
             </h2>
             <p className="text-lg font-medium text-primary mb-10 italic">
-              {content?.intro.subtitle || 'A Legacy of Culture'}
+              {intro?.subtitle || 'A Legacy of Culture'}
             </p>
 
-            <Link href="/about">
-              <Button size="lg" className="rounded-full px-8 py-7 text-lg group bg-secondary hover:bg-primary transition-all duration-500">
-                {t('viewMore')}
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            {
+              !hiddenAction && (
+                <Link href="/about">
+                  <Button size="lg" className="rounded-full px-8 py-7 text-lg group bg-secondary hover:bg-primary transition-all duration-500">
+                    {t('viewMore')}
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              )
+            }
           </motion.div>
 
           <motion.div
@@ -80,14 +87,14 @@ export const AboutUsSection = ({ pageSlug = 'about' }: { pageSlug?: string }) =>
           >
             <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl group">
               <img
-                src={content?.intro.image_url || imgAboutUs.src}
+                src={intro?.image_url || imgAboutUs.src}
                 alt="About Us"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             <p className="text-zinc-600 text-lg leading-relaxed text-balance">
-              {content?.intro.content || 'Información sobre nosotros...'}
+              {intro?.content || 'Información sobre nosotros...'}
             </p>
           </motion.div>
         </div>
@@ -111,7 +118,7 @@ export const AboutUsSection = ({ pageSlug = 'about' }: { pageSlug?: string }) =>
 
           <AnimatePresence mode="wait">
             {['mission', 'vision', 'leadership'].map((key) => {
-              const tabData = content?.tabs[key as keyof typeof content.tabs]
+              const tabData = tabs?.[key as keyof typeof tabs]
               return (
                 <TabsContent key={key} value={key} className="mt-0 focus-visible:outline-none">
                   <motion.div

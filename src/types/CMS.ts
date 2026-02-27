@@ -35,7 +35,7 @@ export interface IDynamicSection<T = any> {
 }
 
 // Specific content content for 'about_with_tabs'
-export interface IAboutWithTabsContent {
+export interface IAboutInfo {
     intro: {
         subtitle: string;
         content: string;
@@ -54,6 +54,47 @@ export interface IAboutWithTabsContent {
             content: string;
             image_url: string;
         };
+    };
+}
+
+export interface IAboutWithTabsContent {
+    es: IAboutInfo;
+    en: IAboutInfo;
+}
+
+// Specific content for 'gallery_section'
+export interface IGallerySectionContent {
+    title: {
+        es: string;
+        en: string;
+    };
+    description?: {
+        es: string;
+        en: string;
+    } | null;
+    images: {
+        url: string;
+        alt: {
+            es: string;
+            en: string;
+        };
+    }[];
+}
+
+export interface IInstitutionSectionContent {
+    es: {
+        title: string;
+        subtitle: string;
+        content: string;
+        image_url: string;
+        watermark: string;
+    };
+    en: {
+        title: string;
+        subtitle: string;
+        content: string;
+        image_url: string;
+        watermark: string;
     };
 }
 
