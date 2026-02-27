@@ -1,0 +1,35 @@
+import { fetchSectionByType } from '@/api/cms'
+import { BannerSection } from '@/components/sections/general/BannerSection'
+import { IBannerSectionContent } from '@/types/CMS'
+
+export default async function EditionsLayout({
+    children,
+    params
+}: {
+    children: React.ReactNode
+    params: { locale: string }
+}) {
+    const { locale } = await params;
+    const bannerSection = await fetchSectionByType('editions', 'banner_section')
+    const bannerContent = bannerSection?.content as IBannerSectionContent
+
+    const defaultBanner: IBannerSectionContent = {
+        title: {
+            es: "Ediciones Anteriores",
+            en: "Previous Editions"
+        },
+        description: {
+            es: "Explora la historia y el legado de las ediciones pasadas del CONIAP.",
+            en: "Explore the history and legacy of previous CONIAP editions."
+        },
+        image_url: "https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fave-america-sur-habitat-natural-scaled.webp?alt=media",
+        background_color: "#0f172a"
+    }
+
+    return (
+        <>
+            <BannerSection content={bannerContent || defaultBanner} locale={locale} />
+            {children}
+        </>
+    )
+}

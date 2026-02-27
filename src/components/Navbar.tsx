@@ -39,11 +39,12 @@ export function Navbar() {
 
     const navLinks = [
         { href: '/', label: t('home'), isVisible: false },
+        { href: '/about', label: t('about'), isVisible: true },
+        { href: '/editions', label: t('editions'), isVisible: true },
         { href: '/events', label: t('events'), isVisible: false },
         { href: '/speakers', label: t('speakers'), isVisible: false },
-        { href: '/about', label: t('about'), isVisible: true },
         { href: '/blog', label: t('blog'), isVisible: false },
-        { href: '/news', label: t('news'), isVisible: true },
+        { href: '/news', label: t('news'), isVisible: false },
     ]
 
     return (

@@ -10,6 +10,7 @@
             "about": "Acerca de nosotros",
             "blog": "Blog",
             "news": "Novedades",
+            "editions": "Ediciones",
             "contact": "Contacto",
             "menu": "Menú"
         },
@@ -27,6 +28,10 @@
         "about": {
             "title": "Acerca de nosotros",
             "description": "El Congreso Internacional sobre la Amazonía Peruana (CONIAP) es un evento científico organizado por el Instituto de Investigaciones de la Amazonía Peruana (IIAP). Reúne a investigadores, académicos, estudiantes y profesionales de todo el mundo para compartir sus conocimientos y experiencias sobre la Amazonía."
+        },
+        "editions": {
+            "title": "Ediciones",
+            "description": "Explora las ediciones anteriores del Congreso Internacional sobre la Amazonía Peruana."
         }
     },
     "Footer": {
