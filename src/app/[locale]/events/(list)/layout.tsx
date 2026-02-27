@@ -7,7 +7,7 @@ export default async function EventsLayout({
     params
 }: {
     children: React.ReactNode
-    params: { locale: string }
+    params: Promise<{ locale: string }>
 }) {
     const { locale } = await params;
     const bannerSection = await fetchSectionByType('events', 'banner_section')

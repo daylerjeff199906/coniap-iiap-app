@@ -7,8 +7,10 @@ export default async function AboutLayout({
     params
 }: {
     children: React.ReactNode
-    params: { locale: string }
+    params: Promise<{ locale: string }>
 }) {
+    const { locale } = await params;
+
     // Fetch banner section content for the 'about' page
     const bannerSection = await fetchSectionByType('about', 'banner_section')
     const bannerContent = bannerSection?.content as IBannerSectionContent
@@ -31,7 +33,7 @@ export default async function AboutLayout({
 
     return (
         <>
-            <BannerSection content={bannerContent || defaultBanner} locale={params.locale} />
+            <BannerSection content={bannerContent || defaultBanner} locale={locale} />
             {children}
         </>
     )

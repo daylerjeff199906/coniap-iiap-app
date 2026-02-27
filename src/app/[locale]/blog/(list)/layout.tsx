@@ -7,7 +7,7 @@ export default async function BlogLayout({
     params
 }: {
     children: React.ReactNode
-    params: { locale: string }
+    params: Promise<{ locale: string }>
 }) {
     const { locale } = await params;
     const bannerSection = await fetchSectionByType('blog', 'banner_section')
