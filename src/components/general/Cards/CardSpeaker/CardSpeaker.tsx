@@ -1,5 +1,5 @@
 'use client'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+// import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import NextImage from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { IPerson } from '@/types'
@@ -29,14 +29,13 @@ export const CardSpeaker = (props: IProps) => {
         scale: 1.03,
       }}
     >
-      <Link href={`/ponentes/${speaker?.id}`}>
+      <Link href={`/speakers/${speaker?.id}`}>
         <Card className="w-full bg-transparent border-none shadow-none overflow-hidden cursor-pointer">
-          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">
-            <NextImage
+          <div className="relative aspect-[4/4] w-full overflow-hidden rounded-xl">
+            <img
               src={speaker?.image !== '' ? speaker?.image : urlImgeDefault}
               alt={speaker.name}
-              fill
-              className="object-cover"
+              className="object-cover w-full h-full"
             />
           </div>
           <CardContent className="bg-transparent px-0 pt-4">
@@ -47,13 +46,12 @@ export const CardSpeaker = (props: IProps) => {
                 </h3>
               </div>
               <div className="flex items-center gap-3">
-                <div className="relative w-8 h-6 overflow-hidden border rounded-sm">
+                <div className="relative w-8 h-6 min-w-8 min-h-6 overflow-hidden border rounded-sm">
                   {country?.flag && (
-                    <NextImage
+                    <img
                       src={country.flag}
                       alt={country.country}
-                      fill
-                      className="object-cover"
+                      className="object-cover w-full h-full"
                     />
                   )}
                 </div>

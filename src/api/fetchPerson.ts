@@ -184,11 +184,21 @@ export async function fetchCurrentMagistralSpeakers() {
   const supabase = createClient()
 
   // 1. Get current edition
-  const { data: edition } = await supabase
+  let { data: edition } = await supabase
     .from('editions')
     .select('id')
     .eq('is_current', true)
-    .single()
+    .maybeSingle()
+
+  if (!edition) {
+    const { data: latestEdition } = await supabase
+      .from('editions')
+      .select('id')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+    edition = latestEdition
+  }
 
   if (!edition) return []
 
@@ -196,26 +206,37 @@ export async function fetchCurrentMagistralSpeakers() {
   const { data: participants, error } = await supabase
     .from('edition_participants')
     .select(`
-      *,
-      person:person_id(*),
-      profile:profile_id(*)
+      id,
+      person:person_id(id, name, surName, image, location, institution),
+      profile:profile_id(id, first_name, last_name, avatar_url, location, institution),
+      roles:role_id!inner(slug)
     `)
     .eq('edition_id', edition.id)
-    .eq('role_id', 'speaker_mg')
+    .eq('roles.slug', 'speaker_mg')
 
   if (error) {
     console.error('Error fetching magistral speakers:', error)
     return []
   }
 
-  // 3. Map and normalize
-  return participants.map((p: any) => {
-    const rawData = p.person || p.profile
-    if (!rawData) return null
-
-    return {
-      ...rawData,
-      typePerson: 'speaker_mg'
+  // 3. Map and normalize to IPerson structure
+  return (participants || []).map((p: any) => {
+    if (p.person) {
+      return {
+        ...p.person,
+        typePerson: 'speaker_mg'
+      }
+    } else if (p.profile) {
+      return {
+        id: p.profile.id,
+        name: p.profile.first_name,
+        surName: p.profile.last_name,
+        image: p.profile.avatar_url,
+        location: p.profile.location,
+        institution: p.profile.institution,
+        typePerson: 'speaker_mg'
+      }
     }
+    return null
   }).filter(Boolean) as IPerson[]
 }
