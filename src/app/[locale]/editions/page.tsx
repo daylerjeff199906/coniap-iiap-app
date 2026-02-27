@@ -1,5 +1,7 @@
 import { fetchAllEditions } from '@/api'
+import { fetchSectionByType } from '@/api/cms'
 import { EditionScroller } from '@/components/sections'
+import { IBannerSectionContent } from '@/types/CMS'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
@@ -25,9 +27,16 @@ export default async function EditionsPage({
     const { locale } = await params;
     const editions = await fetchAllEditions()
 
+    const bannerSection = await fetchSectionByType('editions', 'banner_section')
+    const bannerContent = bannerSection?.content as IBannerSectionContent
+
     return (
         <main className="min-h-screen bg-black overflow-hidden">
-            <EditionScroller editions={editions || []} locale={locale} />
+            <EditionScroller
+                editions={editions || []}
+                bannerSection={bannerContent}
+                locale={locale}
+            />
         </main>
     )
 }

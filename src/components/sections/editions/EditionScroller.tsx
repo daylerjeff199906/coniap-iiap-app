@@ -3,15 +3,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, MousePointer2 } from 'lucide-react'
-import { IEdition } from '@/types/CMS'
+import { IEdition, IBannerSectionContent } from '@/types/CMS'
 import Link from 'next/link'
 
 interface EditionScrollerProps {
     editions: IEdition[]
+    bannerSection?: IBannerSectionContent | null
     locale: string
 }
 
-export const EditionScroller: React.FC<EditionScrollerProps> = ({ editions, locale }) => {
+export const EditionScroller: React.FC<EditionScrollerProps> = ({ editions, bannerSection, locale }) => {
     const [activeIndex, setActiveIndex] = useState(0)
     const containerRef = useRef<HTMLDivElement>(null)
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -50,16 +51,32 @@ export const EditionScroller: React.FC<EditionScrollerProps> = ({ editions, loca
         {
             id: 'intro',
             year: locale === 'es' ? 'Inicio' : 'Home',
-            title: locale === 'es' ? 'Bienvenido al Recorrido Histórico' : 'Welcome to the Historical Journey',
-            description: locale === 'es' ? 'Haz scroll para conocer nuestro legado' : 'Scroll to explore our legacy',
-            cover_url: 'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fave-america-sur-habitat-natural-scaled.webp?alt=media',
+            title: bannerSection?.title?.[locale as 'es' | 'en'] || (locale === 'es' ? 'Bienvenido al Recorrido Histórico' : 'Welcome to the Historical Journey'),
+            description: bannerSection?.description?.[locale as 'es' | 'en'] || (locale === 'es' ? 'Haz scroll para conocer nuestro legado' : 'Scroll to explore our legacy'),
+            cover_url: bannerSection?.image_url || 'https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fave-america-sur-habitat-natural-scaled.webp?alt=media',
             isIntro: true
         },
-        ...editions.map(e => ({
-            ...e,
-            isIntro: false,
-            slug: e.slug
-        }))
+        ...editions.map(e => {
+            // Format dates
+            let dateRange = '';
+            if (e.start_date && e.end_date) {
+                const start = new Date(e.start_date);
+                const end = new Date(e.end_date);
+                const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
+
+                if (start.getMonth() === end.getMonth()) {
+                    dateRange = `${start.getDate()} - ${end.getDate()} ${start.toLocaleDateString(locale === 'es' ? 'es-PE' : 'en-US', { month: 'long' })}`;
+                } else {
+                    dateRange = `${start.toLocaleDateString(locale === 'es' ? 'es-PE' : 'en-US', options)} - ${end.toLocaleDateString(locale === 'es' ? 'es-PE' : 'en-US', options)}`;
+                }
+            }
+
+            return {
+                ...e,
+                isIntro: false,
+                dateRange
+            }
+        })
     ]
 
     return (
@@ -72,7 +89,7 @@ export const EditionScroller: React.FC<EditionScrollerProps> = ({ editions, loca
             >
                 {allSlides.map((slide, index) => {
                     const isEditionSlide = !slide.isIntro;
-                    const edition = slide as IEdition;
+                    const edition = slide as any; // Cast as any to access added properties
 
                     return (
                         <section
@@ -98,15 +115,22 @@ export const EditionScroller: React.FC<EditionScrollerProps> = ({ editions, loca
                                     transition={{ duration: 0.8, delay: 0.2 }}
                                     className="space-y-6"
                                 >
-                                    <h2 className="text-6xl md:text-8xl font-semibold tracking-tighter leading-none max-w-4xl">
-                                        {slide.isIntro
-                                            ? ('title' in slide ? slide.title as string : '')
-                                            : (isEditionSlide ? (edition.name?.[locale as 'es' | 'en'] || `CONIAP ${edition.year}`) : '')}
-                                    </h2>
+                                    <div className="space-y-2">
+                                        {isEditionSlide && edition.dateRange && (
+                                            <span className="text-primary font-bold tracking-[0.3em] uppercase block">
+                                                {edition.dateRange}
+                                            </span>
+                                        )}
+                                        <h2 className="text-6xl md:text-8xl font-semibold tracking-tighter leading-none max-w-4xl">
+                                            {slide.isIntro
+                                                ? (slide as any).title
+                                                : (isEditionSlide ? (edition.name?.[locale as 'es' | 'en'] || `CONIAP ${edition.year}`) : '')}
+                                        </h2>
+                                    </div>
 
                                     <p className="text-xl md:text-2xl text-zinc-300 max-w-2xl font-light leading-relaxed">
                                         {slide.isIntro
-                                            ? ('description' in slide && typeof slide.description === 'string' ? slide.description : '')
+                                            ? (slide as any).description
                                             : (isEditionSlide ? (edition.description?.[locale as 'es' | 'en'] || '') : '')}
                                     </p>
 
