@@ -13,9 +13,19 @@ import {
 import { fetchGlobalSettings } from '@/api/cms'
 import { IGlobalSettings } from '@/types/CMS'
 
+import { usePathname } from 'next/navigation'
+
 export function Footer() {
     const t = useTranslations('Footer')
+    const pathname = usePathname()
     const [settings, setSettings] = useState<IGlobalSettings | null>(null)
+
+    // Hide footer if on editions page (any locale)
+    const isEditionsPage = pathname.includes('/editions')
+    // If the user wants to hide it strictly on the LIST page, we check that.
+    // Usually, the list page is /[locale]/editions
+
+    if (isEditionsPage) return null
 
     useEffect(() => {
         const getData = async () => {

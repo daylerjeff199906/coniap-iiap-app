@@ -1,6 +1,5 @@
-import { fetchDynamicSectionsByPage } from '@/api/cms'
-import { InfoSectionSplit, GallerySection, InstitutionSection } from '@/components/sections'
-import { AboutUsSection } from '@/components/sections/home/aboutUsSection'
+import { fetchAllEditions } from '@/api'
+import { EditionScroller } from '@/components/sections'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
@@ -18,34 +17,17 @@ export async function generateMetadata({
     }
 }
 
-export default async function EditionsPage() {
-    const sections = await fetchDynamicSectionsByPage('editions')
+export default async function EditionsPage({
+    params
+}: {
+    params: Promise<{ locale: string }>
+}) {
+    const { locale } = await params;
+    const editions = await fetchAllEditions()
 
     return (
-        <main className="bg-white">
-            {sections?.map((section) => {
-                switch (section.component_type) {
-                    case 'info_section_split':
-                        return <InfoSectionSplit key={section.id} content={section.content} />
-                    case 'about_with_tabs':
-                        return <AboutUsSection key={section.id} pageSlug="editions" hiddenAction />
-                    case 'about_institution':
-                        return <InstitutionSection key={section.id} content={section.content} />
-                    case 'gallery_section':
-                        return <GallerySection key={section.id} content={section.content} />
-                    default:
-                        return null
-                }
-            })}
-
-            {/* If no sections are found in DB, show a placeholder or empty message */}
-            {(!sections || sections.length === 0) && (
-                <div className="py-32 text-center">
-                    <h2 className="text-2xl font-bold text-zinc-400 uppercase tracking-widest">
-                        Próximamente más sobre nuestras ediciones
-                    </h2>
-                </div>
-            )}
+        <main className="min-h-screen bg-black overflow-hidden">
+            <EditionScroller editions={editions || []} locale={locale} />
         </main>
     )
 }

@@ -1,5 +1,6 @@
 export * from './home'
-export * from './general/BannerSection'
+export * from './home/aboutUsSection'
+export * from './editions/EditionScroller'
 export * from './general/InfoSectionSplit'
 export * from './general/GallerySection'
 export * from './general/InstitutionSection'

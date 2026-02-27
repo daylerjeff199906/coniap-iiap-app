@@ -133,7 +133,6 @@ export interface ISplitInfoSectionContent {
     image_url?: string | null;
 }
 
-// Specific content for 'magistral_speakers_section'
 export interface IMagistralSpeakersSectionContent {
     es: {
         title: string;
@@ -144,3 +143,24 @@ export interface IMagistralSpeakersSectionContent {
         hashtag: string;
     };
 }
+
+export interface IEdition {
+    id: string;
+    year: number;
+    slug: string;
+    name: {
+        es: string;
+        en: string;
+    };
+    description: {
+        es: string;
+        en: string;
+    };
+    cover_url: string;
+    start_date: string;
+    end_date: string;
+    is_current: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
