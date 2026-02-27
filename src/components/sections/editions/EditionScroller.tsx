@@ -150,7 +150,7 @@ export const EditionScroller: React.FC<EditionScrollerProps> = ({ editions, bann
                                         <motion.div
                                             animate={{ y: [0, 10, 0] }}
                                             transition={{ duration: 2, repeat: Infinity }}
-                                            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-400"
+                                            className="absolute -bottom-48 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-400"
                                         >
                                             <span className="text-sm uppercase tracking-widest font-medium">Scroll</span>
                                             <div className="w-[1px] h-12 bg-gradient-to-b from-zinc-400 to-transparent" />
