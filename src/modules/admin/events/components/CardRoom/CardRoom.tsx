@@ -1,6 +1,5 @@
 // TODO: Check these imports: // Removed NextUI import:  Dropdown, DropdownItem, DropdownMenu, DropdownTrigger 
 import Image from 'next/image'
-import { Link } from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import socialNetworks from '@/utils/json/social_networks.json'
@@ -34,7 +33,7 @@ export const CardRoom = (props: IProps) => {
 
   return (
     <div className="flex flex-col gap-3 p-4 bg-white rounded-lg shadow-lg relative hover:shadow-xl transition-all duration-300 hover:cursor-pointer">
-      <section className="absolute top-2 left-2">
+      {/* <section className="absolute top-2 left-2">
         <Badge
           color={room?.isActived ? 'success' : 'danger'}
           size="sm"
@@ -107,7 +106,7 @@ export const CardRoom = (props: IProps) => {
             Ver link
           </Link>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

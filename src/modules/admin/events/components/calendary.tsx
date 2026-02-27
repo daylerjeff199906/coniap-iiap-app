@@ -1,11 +1,11 @@
 'use client'
 import { useState } from 'react'
 import { IEvent } from '@/types'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
+// import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-const localizer = momentLocalizer(moment)
+// const localizer = momentLocalizer(moment)
 
 interface IProps {
   data: Array<IEvent>
@@ -44,24 +44,7 @@ export const Calendary = (props: IProps) => {
   return (
     <>
       <div className="">
-        <Calendar
-          localizer={localizer}
-          events={transformEvents(data)}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-          //   resources={resourcesMap}
-          //   resourceIdAccessor="resourceId"
-          //   resourceTitleAccessor="resourceTitle"
-          view={view as any}
-          views={['day', 'agenda', 'month', 'week']}
-        //   defaultDate={date}
-          onView={(view) => setView(view)}
-          onNavigate={(date) => setDate(date)}
-          //   defaultDate={new Date()}
-          //   min={new Date(2021, 0, 0, 8, 0, 0)}
-          //   max={new Date(2021, 0, 0, 22, 0, 0)}
-        />
+
       </div>
     </>
   )

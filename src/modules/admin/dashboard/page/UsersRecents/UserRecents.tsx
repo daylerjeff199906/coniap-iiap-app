@@ -18,30 +18,7 @@ export const UserRecents = (props: IProps) => {
         </p>
       </header>
 
-      <ScrollShadow 
-        hideScrollBar
-        className="h-[300px]"
-      >
-        <section className="flex flex-col gap-1">
-          {data.map((item) => {
-            return (
-              <div
-                key={item.id}
-                className=""
-              >
-                <any
-                  name={item.userName}
-                  avatarProps={{
-                    src: item.photo,
-                    color: 'secondary',
-                  }}
-                  description={item.email}
-                />
-              </div>
-            )
-          })}
-        </section>
-      </ScrollShadow>
+
       <footer className="flex justify-center">
         <Link
           href="/admin/users"
