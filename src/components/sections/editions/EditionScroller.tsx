@@ -99,13 +99,15 @@ export const EditionScroller: React.FC<EditionScrollerProps> = ({ editions, loca
                                     className="space-y-6"
                                 >
                                     <h2 className="text-6xl md:text-8xl font-semibold tracking-tighter leading-none max-w-4xl">
-                                        {slide.isIntro && 'title' in slide ? slide.title : (isEditionSlide ? edition.name?.[locale as 'es' | 'en'] || edition.year : `CONIAP ${slide.year}`)}
+                                        {slide.isIntro
+                                            ? ('title' in slide ? slide.title as string : '')
+                                            : (isEditionSlide ? (edition.name?.[locale as 'es' | 'en'] || `CONIAP ${edition.year}`) : '')}
                                     </h2>
 
                                     <p className="text-xl md:text-2xl text-zinc-300 max-w-2xl font-light leading-relaxed">
                                         {slide.isIntro
                                             ? ('description' in slide && typeof slide.description === 'string' ? slide.description : '')
-                                            : (isEditionSlide ? edition.description?.[locale as 'es' | 'en'] : 'Explora esta edición')}
+                                            : (isEditionSlide ? (edition.description?.[locale as 'es' | 'en'] || '') : '')}
                                     </p>
 
                                     {!slide.isIntro && (

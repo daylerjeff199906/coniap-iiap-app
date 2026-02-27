@@ -14,17 +14,26 @@ export async function fetchAllEditions() {
         console.error('Error fetching editions:', error)
         return []
     }
-
     // Normalize data if necessary (e.g., merging description_es/en into description object)
-    return (data || []).map((e: any) => ({
-        ...e,
-        name: e.name || {
-            es: e.name_es || `Edición ${e.year}`,
-            en: e.name_en || `Edition ${e.year}`
-        },
-        description: e.description || {
-            es: e.description_es || '',
-            en: e.description_en || ''
-        }
-    })) as IEdition[]
+    return (data || []).map((e) => {
+        const name = e.name && typeof e.name === 'object' && ('es' in e.name || 'en' in e.name)
+            ? e.name
+            : {
+                es: e.name || `Edición ${e.year}`,
+                en: e.name || `Edition ${e.year}`
+            };
+
+        const description = e.description && typeof e.description === 'object' && ('es' in e.description || 'en' in e.description)
+            ? e.description
+            : {
+                es: e.es || '',
+                en: e.en || ''
+            };
+
+        return {
+            ...e,
+            name,
+            description
+        };
+    }) as IEdition[]
 }
