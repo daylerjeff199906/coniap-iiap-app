@@ -132,3 +132,15 @@ export interface ISplitInfoSectionContent {
     };
     image_url?: string | null;
 }
+
+// Specific content for 'magistral_speakers_section'
+export interface IMagistralSpeakersSectionContent {
+    es: {
+        title: string;
+        hashtag: string;
+    };
+    en: {
+        title: string;
+        hashtag: string;
+    };
+}

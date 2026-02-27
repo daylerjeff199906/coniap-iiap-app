@@ -179,3 +179,43 @@ export async function fetchPersonByEmail(email: string) {
     return data
   }
 }
+
+export async function fetchCurrentMagistralSpeakers() {
+  const supabase = createClient()
+
+  // 1. Get current edition
+  const { data: edition } = await supabase
+    .from('editions')
+    .select('id')
+    .eq('is_current', true)
+    .single()
+
+  if (!edition) return []
+
+  // 2. Get participants with role 'speaker_mg'
+  const { data: participants, error } = await supabase
+    .from('edition_participants')
+    .select(`
+      *,
+      person:person_id(*),
+      profile:profile_id(*)
+    `)
+    .eq('edition_id', edition.id)
+    .eq('role_id', 'speaker_mg')
+
+  if (error) {
+    console.error('Error fetching magistral speakers:', error)
+    return []
+  }
+
+  // 3. Map and normalize
+  return participants.map((p: any) => {
+    const rawData = p.person || p.profile
+    if (!rawData) return null
+
+    return {
+      ...rawData,
+      typePerson: 'speaker_mg'
+    }
+  }).filter(Boolean) as IPerson[]
+}
