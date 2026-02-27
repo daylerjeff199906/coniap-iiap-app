@@ -1,4 +1,3 @@
-export { BannerHome } from './bannerHome'
 export { AboutUsSection } from './aboutUsSection'
 export { TimeSection } from './timeSection'
 export { TopicsSection } from './topicsSection'

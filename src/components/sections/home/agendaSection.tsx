@@ -18,7 +18,7 @@ export const AgendaSection = (props: IProps) => {
 
   return (
     <section className=" bg-white">
-      <div className="container section-home grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
+      {/* <div className="container section-home grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
         <motion.div
           className="w-ful col-span-1 sticky top-20 z-20 h-fit bg-white"
           initial={{ opacity: 0, x: -15 }}
@@ -105,7 +105,7 @@ export const AgendaSection = (props: IProps) => {
             </main>
           )}
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }
