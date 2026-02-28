@@ -69,3 +69,18 @@ export async function fetchTopic(id: number) {
     return data
   }
 }
+
+export async function fetchActiveTopics(): Promise<ITopic[] | null> {
+  const supabase = createClient()
+  const { data, error } = await supabase
+    .from('topics')
+    .select('*')
+    .eq('isActived', true)
+    .order('id', { ascending: true })
+
+  if (error) {
+    console.error('Error fetching active topics:', error)
+    return null
+  }
+  return data as ITopic[]
+}

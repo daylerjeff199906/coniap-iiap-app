@@ -5,5 +5,6 @@ export interface ITopic {
   name: string
   color: string
   description: string
+  icon?: string
   isActived: boolean
 }

@@ -59,7 +59,7 @@ export const AboutUsSection = ({ pageSlug = 'about', hiddenAction = false }: { p
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-6xl md:text-8xl font-black text-zinc-900 leading-[0.8] mb-8 uppercase tracking-tighter">
+            <h2 className="text-6xl md:text-9xl font-bold text-zinc-900 leading-[0.8] mb-8 tracking-tighter">
               {t('title')}
             </h2>
             <p className="text-lg font-medium text-primary mb-10 italic">

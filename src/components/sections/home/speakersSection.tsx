@@ -2,7 +2,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { CardSpeaker } from '@/components'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 
 import { motion } from 'framer-motion'
 
@@ -46,8 +46,8 @@ export const SpeakersSection = (props: IProps) => {
                 </h2>
               </div>
               <Button size="lg" variant="default" className="text-white" asChild>
-  <Link href="/ponentes">Ver más</Link>
-</Button>
+                <Link href="/speakers">Ver más</Link>
+              </Button>
             </motion.header>
 
             {speakersActive && (

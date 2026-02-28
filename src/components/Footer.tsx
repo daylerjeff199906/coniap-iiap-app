@@ -19,14 +19,6 @@ export function Footer() {
     const t = useTranslations('Footer')
     const pathname = usePathname()
     const [settings, setSettings] = useState<IGlobalSettings | null>(null)
-
-    // Hide footer if on editions page (any locale)
-    const isEditionsPage = pathname.includes('/editions')
-    // If the user wants to hide it strictly on the LIST page, we check that.
-    // Usually, the list page is /[locale]/editions
-
-    if (isEditionsPage) return null
-
     useEffect(() => {
         const getData = async () => {
             const data = await fetchGlobalSettings()
@@ -36,6 +28,10 @@ export function Footer() {
         }
         getData()
     }, [])
+
+    // Hide footer if on editions page (any locale)
+    const isEditionsPage = pathname.includes('/editions')
+    if (isEditionsPage) return null
 
     const socialLinks = [
         { icon: Facebook, href: settings?.social_networks.facebook || '#', label: 'Facebook' },

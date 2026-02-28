@@ -1,6 +1,6 @@
 export { AboutUsSection } from './aboutUsSection'
 export { TimeSection } from './timeSection'
-export { TopicsSection } from './topicsSection'
+export { TopicsSection } from '../general/TopicsSection'
 export { SponsorSection } from './sponsorSection'
 export { SpeakersSection } from './speakersSection'
 export { InscriptionsSection } from './inscriptionsSection'

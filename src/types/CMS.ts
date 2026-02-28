@@ -164,3 +164,16 @@ export interface IEdition {
     updated_at: string;
 }
 
+export interface ITopicsSectionContent {
+    es: {
+        hashtag: string;
+        title: string;
+        description: string;
+    };
+    en: {
+        hashtag: string;
+        title: string;
+        description: string;
+    };
+}
+

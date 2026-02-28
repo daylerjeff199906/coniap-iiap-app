@@ -3,7 +3,7 @@
 import NextImage from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { IPerson } from '@/types'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { motion } from 'framer-motion'
 import dataCountry from '@/utils/json/countries.json'
 

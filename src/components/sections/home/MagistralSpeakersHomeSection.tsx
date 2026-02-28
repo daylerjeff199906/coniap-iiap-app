@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { CardSpeaker } from '@/components'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { motion } from 'framer-motion'
 import { IPerson, IMagistralSpeakersSectionContent } from '@/types'
 import { useLocale } from 'next-intl'
@@ -40,7 +40,7 @@ export const MagistralSpeakersHomeSection = (props: IProps) => {
                     </div>
 
                     <div className="max-w-4xl mb-10">
-                        <h2 className="text-4xl md:text-7xl font-black text-zinc-950 leading-[0.95] uppercase tracking-tighter"
+                        <h2 className="text-4xl md:text-7xl text-zinc-950 leading-[0.95] tracking-tighter"
                             dangerouslySetInnerHTML={{ __html: sectionContent.title }}
                         />
                     </div>
@@ -58,7 +58,7 @@ export const MagistralSpeakersHomeSection = (props: IProps) => {
                     </Button>
                 </motion.header>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {persons && persons.length > 0 ? (
                         persons.slice(0, 8).map((speaker, index) => (
                             <motion.div
