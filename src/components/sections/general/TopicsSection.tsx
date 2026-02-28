@@ -1,32 +1,9 @@
 'use client'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ITopic, ITopicsSectionContent } from '@/types'
 import { useLocale } from 'next-intl'
-import {
-    Handshake,
-    MessageSquareText,
-    TrendingUp,
-    ShieldCheck,
-    CircleDot,
-    Briefcase
-} from 'lucide-react'
-
-const getIcon = (iconName?: string) => {
-    const iconsMap: Record<string, React.ReactNode> = {
-        'handshake': <Handshake className="w-12 h-12" />,
-        'message': <MessageSquareText className="w-12 h-12" />,
-        'growth': <TrendingUp className="w-12 h-12" />,
-        'compliance': <ShieldCheck className="w-12 h-12" />,
-        'partnership': <Handshake className="w-12 h-12" />,
-        'communication': <MessageSquareText className="w-12 h-12" />,
-        'training': <TrendingUp className="w-12 h-12" />,
-        'legal': <ShieldCheck className="w-12 h-12" />,
-    }
-
-    if (!iconName) return <Briefcase className="w-12 h-12" />
-    return iconsMap[iconName.toLowerCase()] || <Briefcase className="w-12 h-12" />
-}
+import { CircleDot } from 'lucide-react'
 
 interface IProps {
     topics: ITopic[] | undefined
@@ -61,12 +38,12 @@ export const TopicsSection = ({ topics, content }: IProps) => {
                                 </p>
                             </div>
 
-                            <h2 className="text-5xl md:text-7xl text-zinc-950 leading-[0.85] uppercase tracking-tighter mb-10">
+                            <h2 className="text-5xl md:text-7xl text-zinc-950 font-bold leading-[0.85] uppercase tracking-tighter mb-10">
                                 {sectionContent.title}
                             </h2>
 
                             <div className="relative">
-                                <p className="text-xl md:text-2xl text-zinc-600 leading-relaxed font-medium mb-4 border-l-4 border-amber-200 pl-8 max-w-4xl">
+                                <p className="text-xl text-zinc-600 leading-relaxed font-medium mb-4 border-l-4 border-amber-200 pl-8 max-w-4xl">
                                     {sectionContent.description}
                                 </p>
                             </div>
@@ -88,62 +65,72 @@ export const TopicsSection = ({ topics, content }: IProps) => {
 const TopicGridCard = ({ topic, index }: { topic: ITopic, index: number }) => {
     const [isHovered, setIsHovered] = useState(false)
 
-    // Highlight the first card to match the visual style with color variants
-    const isSpecial = index === 0
+    // Minimalist style variations: Uniform initially, custom on hover
+    const hoverColor = topic.color && topic.color !== '' ? topic.color : 'var(--primary)'
 
     return (
         <motion.div
             className={`
-                relative p-12 min-h-[360px] flex flex-col items-center justify-center text-center 
-                transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden
-                ${isSpecial
-                    ? 'bg-primary text-white shadow-2xl shadow-primary/30 rounded-tr-[80px] rounded-bl-[80px]'
-                    : 'bg-zinc-50/80 text-zinc-900 border border-zinc-100 hover:shadow-xl hover:bg-white rounded-[40px] shadow-sm'
+                relative p-10 min-h-[340px] flex flex-col items-center justify-center text-center 
+                transition-all duration-500 ease-in-out overflow-hidden border border-transparent
+                cursor-default
+                ${isHovered
+                    ? 'text-white shadow-2xl rounded-tr-[80px] rounded-bl-[80px]'
+                    : 'bg-[#f4f7e6] text-[#0a252e] rounded-2xl shadow-sm'
                 }
             `}
-            initial={{ opacity: 0, y: 30 }}
+            style={isHovered ? { backgroundColor: hoverColor } : {}}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.15 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <div className={`mb-8 p-6 rounded-full transition-transform duration-500 scale-100 group-hover:scale-110 ${isSpecial ? 'bg-white/10' : 'bg-transparent'}`}>
-                {topic.icon ? getIcon(topic.icon) : <CircleDot className="w-12 h-12" />}
-            </div>
-
-            <motion.div
-                className="relative z-10 w-full"
-                animate={{
-                    opacity: isHovered && topic.description ? 0 : 1,
-                    y: isHovered && topic.description ? -20 : 0
-                }}
-                transition={{ duration: 0.4 }}
-            >
-                <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tighter mb-2 italic`}>
-                    {topic.name}
-                </h3>
-            </motion.div>
-
-            <AnimatePresence>
-                {isHovered && topic.description && (
+            <AnimatePresence mode="wait">
+                {!isHovered ? (
                     <motion.div
-                        className="absolute inset-x-8 inset-y-12 flex items-center justify-center p-6 bg-transparent pointer-events-none"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
+                        key="initial"
+                        className="flex flex-col items-center"
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
                     >
-                        <p className={`text-lg md:text-xl font-bold italic leading-[1.3] text-balance ${isSpecial ? 'text-white/95' : 'text-zinc-700'}`}>
-                            {topic.description}
+                        <div className="w-24 h-24 relative flex items-center justify-center">
+                            <div className="text-[#0a252e]">
+                                {topic.icon ?
+                                    <div
+                                        className="w-12 h-12 [&>svg]:w-full [&>svg]:h-full"
+                                        dangerouslySetInnerHTML={{ __html: topic.icon }}
+                                    />
+                                    : <CircleDot className="w-12 h-12" />}
+                            </div>
+                        </div>
+
+                        <h3 className="text-xl font-medium tracking-tight">
+                            {topic.name}
+                        </h3>
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="hover"
+                        className="absolute inset-0 flex items-center justify-center p-8 text-center"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <p className="font-medium leading-relaxed text-balance text-white">
+                            {topic.description || topic.name}
                         </p>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* Subtle number indicator */}
-            <div className={`absolute bottom-6 right-8 text-4xl font-black opacity-10 pointer-events-none select-none ${isSpecial ? 'text-white' : 'text-zinc-950'}`}>
-                0{index + 1}
+            {/* Subtle number indicator - Minimalist */}
+            <div className={`absolute bottom-6 right-8 text-2xl font-light opacity-10 pointer-events-none select-none ${isHovered ? 'text-white' : 'text-[#0a252e]'}`}>
+                {String(index + 1).padStart(2, '0')}
             </div>
         </motion.div>
     )
