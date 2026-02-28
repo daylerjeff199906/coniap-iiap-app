@@ -8,14 +8,10 @@ import {
     MessageSquareText,
     TrendingUp,
     ShieldCheck,
-    ChevronRight,
     CircleDot,
     Briefcase
 } from 'lucide-react'
 
-// Simple helper to get an icon based on a string name
-// or fallback to a default one. In a real scenario, icons
-// could be stored in a better way.
 const getIcon = (iconName?: string) => {
     const iconsMap: Record<string, React.ReactNode> = {
         'handshake': <Handshake className="w-12 h-12" />,
@@ -70,22 +66,10 @@ export const TopicsSection = ({ topics, content }: IProps) => {
                             </h2>
 
                             <div className="relative">
-                                <p className="text-xl text-zinc-600 leading-relaxed font-medium mb-12 border-l-4 border-amber-200 pl-8">
+                                <p className="text-xl md:text-2xl text-zinc-600 leading-relaxed font-medium mb-4 border-l-4 border-amber-200 pl-8 max-w-4xl">
                                     {sectionContent.description}
                                 </p>
                             </div>
-
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: 0.3 }}
-                            >
-                                <div className="inline-flex items-center gap-2 group cursor-pointer text-zinc-950 font-bold uppercase tracking-widest text-xs py-4 px-8 border border-zinc-200 rounded-full hover:bg-zinc-950 hover:text-white transition-all duration-300">
-                                    Explorar todo
-                                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </div>
-                            </motion.div>
                         </motion.header>
                     </div>
 
