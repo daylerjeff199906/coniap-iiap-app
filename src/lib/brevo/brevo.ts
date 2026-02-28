@@ -1,25 +1,9 @@
 'use server'
-import * as Brevo from '@getbrevo/brevo'
+import { BrevoClient } from '@getbrevo/brevo'
 
-// const apiInstance = new brevo.TransactionalEmailsApi()
-const apiContact = new Brevo.ContactsApi()
-const apiCampaign = new Brevo.EmailCampaignsApi()
-const apiTransactional = new Brevo.TransactionalEmailsApi()
-
-apiContact.setApiKey(
-  Brevo.ContactsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY as string
-)
-
-apiCampaign.setApiKey(
-  Brevo.EmailCampaignsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY as string
-)
-
-apiTransactional.setApiKey(
-  Brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY as string
-)
+const client = new BrevoClient({
+  apiKey: process.env.BREVO_API_KEY as string,
+})
 
 interface IContact {
   email: string
@@ -46,7 +30,7 @@ export const addContactToList = async (props: IContact, listId: number) => {
       updateEnabled: true, // Si true, actualizará el contacto si ya existe
     }
 
-    await apiContact.createContact(contact)
+    await client.contacts.createContact(contact)
   } catch (error: any) {
     if (error.body && error.body.code === 'duplicate_parameter') {
       console.log('Contact already exists:', props.email)
@@ -62,16 +46,7 @@ export const updateCampaignContacts = async (
   contacts: IContact[]
 ) => {
   try {
-    // // 1. Eliminar todos los contactos existentes de la lista
-    // const listContacts = await apiContact.getContactsFromList(listId)
-    // const existingContacts = listContacts.contacts.map((contact) => contact.id)
-    // if (existingContacts.length > 0) {
-    //   await apiContact.deleteContactFromList(listId, {
-    //     contactIds: existingContacts,
-    //   })
-    // }
-
-    // 2. Añadir los nuevos contactos a la lista
+    // 1. Añadir los nuevos contactos a la lista
     for (const contact of contacts) {
       const newContact = {
         email: contact.email,
@@ -83,17 +58,18 @@ export const updateCampaignContacts = async (
         updateEnabled: true,
       }
 
-      await apiContact.createContact(newContact)
+      await client.contacts.createContact(newContact)
     }
 
-    // 3. Actualizar la campaña con la nueva lista de contactos
+    // 2. Actualizar la campaña con la nueva lista de contactos
     const updateCampaign = {
+      campaignId: campaignId,
       recipients: {
         listIds: [listId],
       },
     }
 
-    await apiCampaign.updateEmailCampaign(campaignId, updateCampaign)
+    await client.emailCampaigns.updateEmailCampaign(updateCampaign)
 
     console.log('Campaign updated successfully!')
   } catch (error: any) {
@@ -110,16 +86,16 @@ export const sendTemplateMessage = async (
 
     // Actualiza los atributos del contacto con los datos proporcionados
     const updateContact = {
-      email: email,
+      identifier: email,
       attributes: {
         NOMBRE: name, // Utiliza el nombre proporcionado
         APELLIDOS: surname, // Utiliza el apellido proporcionado
         SUBJECT: subject, // Utiliza el asunto proporcionado
-      },
+      }
     }
 
     // Actualiza el contacto en Brevo
-    await apiContact.updateContact(email, updateContact)
+    await client.contacts.updateContact(updateContact)
 
     // Envía el mensaje
     const sendSmtpEmail = {
@@ -132,7 +108,7 @@ export const sendTemplateMessage = async (
       },
     }
 
-    const response = await apiTransactional.sendTransacEmail(sendSmtpEmail)
+    const response = await client.transactionalEmails.sendTransacEmail(sendSmtpEmail)
     console.log('Email sent successfully:', response)
     return true
   } catch (error: any) {

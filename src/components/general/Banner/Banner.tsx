@@ -1,5 +1,5 @@
 'use client'
-import { Image } from '@nextui-org/react'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 interface IBanner {
@@ -97,9 +97,7 @@ export const Banner = () => {
         <Image
           alt={banner.title}
           src={banner.urlImage}
-          removeWrapper
-          isBlurred
-          radius="none"
+          
           className="absolute top-0 -z-20 object-cover left-0 right-0 w-full h-full"
         />
       </section>

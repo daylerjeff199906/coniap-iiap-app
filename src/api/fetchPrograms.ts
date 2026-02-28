@@ -1,5 +1,5 @@
 'use server'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from "@/utils/supabase/supabase/client"
 import { IProgram, IProgramsFilter } from '@/types'
 
 export async function fetchPrograms(

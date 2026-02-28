@@ -1,9 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { storage } from '@/firebase/firebase'
 
 import {
-  fetchAllEvents,
   createEvent,
   fetchEventById,
   updateEvent,
@@ -69,12 +67,12 @@ export function useEvents() {
   const uploadImage = async (file: File): Promise<string> => {
     setLoading(true)
     try {
-      const storageRef = ref(storage, `events/${file.name}`)
-      await uploadBytes(storageRef, file)
+      // const storageRef = ref(storage, `events/${file.name}`)
+      // await uploadBytes(storageRef, file)
 
-      const url = await getDownloadURL(storageRef)
+      // const url = await getDownloadURL(storageRef)
       setLoading(false)
-      return url
+      return ''
     } catch (e) {
       console.error('Error uploading image: ', e)
       setLoading(false)

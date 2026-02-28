@@ -1,28 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useCallback } from 'react'
-import { IconDatabaseOff } from '@tabler/icons-react'
-
+import { IconDatabaseOff, IconSearch, IconDots } from '@tabler/icons-react'
 import {
   Table,
   TableBody,
-  TableHeader,
-  TableColumn,
-  TableRow,
   TableCell,
-  getKeyValue,
-  Button,
-  Input,
-  Dropdown,
-  DropdownTrigger,
-  DropdownItem,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import {
   DropdownMenu,
-  Chip,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
   Pagination,
-} from '@nextui-org/react'
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import { IColumns, IRows, IActions } from '@/types'
-import { IconSearch, IconDots } from '@tabler/icons-react'
 import { LoadingPages } from '../..'
 import { usePathname } from 'next/navigation'
 
@@ -46,14 +52,12 @@ interface IProps {
   loading?: boolean
   selectionMode?: 'single' | 'multiple' | 'none'
   onSelectionChange?: (row: IRows) => void
-  //For the search input
   placeholderSearch?: string
   onSearch?: (value: string) => void
   searchValue?: string
   disableInputSearch?: boolean
   headerChildren?: React.ReactNode
   endInputSection?: React.ReactNode
-  //For the pagination
   onPageChange?: (page: number) => void
   page?: number
   count?: number
@@ -66,7 +70,6 @@ export const TableGeneral = (props: IProps) => {
     columns,
     rows,
     onSelectionChange,
-    selectionMode,
     onSearch,
     searchValue,
     actionsList,
@@ -83,41 +86,24 @@ export const TableGeneral = (props: IProps) => {
   } = props
 
   const pathname = usePathname()
-
   const options = [...(actionsList || []), ...optionsActions]
 
-  const renderCell = useCallback((item: IRows, columnKey: React.Key) => {
-    const value = getKeyValue(item, columnKey as string)
+  const renderCell = (item: IRows, columnKey: string) => {
+    const value = item[columnKey]
     switch (columnKey) {
       case 'actions':
         return (
-          <>
-            <Dropdown
-              size="sm"
-              radius="sm"
-              showArrow
-              classNames={{
-                content: 'bg-white border border-gray-200 shadow-lg w-[200px]',
-                base: 'text-tiny w-[200px] ',
-              }}
-            >
-              <DropdownTrigger>
-                <Button
-                  size="sm"
-                  variant="light"
-                  isIconOnly
-                >
-                  <IconDots
-                    stroke={1.5}
-                    className="text-gray-500"
-                  />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="DropdownMenu">
-                {options?.map((action, index) => (
-                  <DropdownItem
-                    key={index}
-                    as={Link}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+  <IconDots size={16} />
+  
+</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {options?.map((action, index) => (
+                <DropdownMenuItem key={index} asChild>
+                  <Link
                     href={
                       action?.key === 'external'
                         ? `${pathname}/?id?${item?.id}${action.href}`
@@ -125,157 +111,114 @@ export const TableGeneral = (props: IProps) => {
                     }
                   >
                     {action.label}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </>
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         )
       case 'status':
         return (
-          <Chip
-            color={value ? 'success' : 'danger'}
-            variant="flat"
-            radius="sm"
-            size="sm"
-          >
+          <Badge variant={value ? 'default' : 'destructive'}>
             {value ? 'Activo' : 'Inactivo'}
-          </Chip>
+          </Badge>
         )
       default:
         return value
     }
-  }, [])
-
-  const onRowAction = (key: string | number | bigint) => {
-    const item = rows.filter((row) => Number(row.key) === Number(key))
-    onSelectionChange && onSelectionChange(item[0])
   }
 
+  const totalPages = count ? Math.ceil(count / 29) : 1
+
   return (
-    <main
-      className={`flex flex-col gap-3 ${!disableWrapper && 'section-admin'}`}
-    >
-      <header className="flex flex-col sm:flex-row gap-2 items-start">
+    <main className={`flex flex-col gap-4 ${!disableWrapper && 'section-admin p-4 bg-card text-card-foreground rounded-lg border shadow-sm'}`}>
+      <header className="flex flex-col sm:flex-row gap-2 items-start justify-between">
         {!disableInputSearch && (
-          <div className="flex gap-2 w-full sm:max-w-[300px]">
-            <Input
-              aria-label="Buscar"
-              variant="bordered"
-              placeholder={placeholderSearch || 'Buscar...'}
-              radius="sm"
-              value={searchValue}
-              onValueChange={(value) => onSearch && onSearch(value)}
-              startContent={
-                <div>
-                  <IconSearch size={16} />
-                </div>
-              }
-              endContent={endInputSection}
-            />
+          <div className="flex gap-2 w-full sm:max-w-[400px] items-center">
+            <div className="relative w-full">
+              <IconSearch className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder={placeholderSearch || 'Buscar...'}
+                value={searchValue}
+                onChange={(e) => onSearch && onSearch(e.target.value)}
+                className="pl-8"
+              />
+            </div>
+            {endInputSection}
           </div>
         )}
         {headerChildren}
       </header>
-      <Table
-        aria-label="TableGeneral"
-        aria-labelledby="TableGeneral"
-        removeWrapper
-        isHeaderSticky
-        className=" rounded-xl"
-        classNames={{
-          base: 'max-h-[calc(100vh-20rem)] overflow-y-auto bg-white',
-          th: [
-            'bg-white',
-            'text-default-500',
-            'font-bold',
-            'rounded-none',
-            'shadow-none',
-          ],
-          table: ['border-divider', 'bg-white'],
-          td: [
-            'text-xs',
-            'font-medium',
-            'group-data-[first=true]:first:before:rounded-none',
-            'group-data-[first=true]:last:before:rounded-none',
-            // middle
-            'group-data-[middle=true]:before:rounded-none',
-            // last
-            'group-data-[last=true]:first:before:rounded-none',
-            'group-data-[last=true]:last:before:rounded-none',
-            'rounded-lg',
-            'hover:cursor-pointer',
-          ],
-        }}
-        selectionMode={selectionMode}
-        onRowAction={onRowAction}
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn
-              key={column.key}
-              align={column.align}
-              //   allowsSorting={column.sortable}
-            >
-              {column.label}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          emptyContent={
-            <main>
-              <div className="flex flex-col items-center justify-center gap-2">
-                <IconDatabaseOff
-                  size={40}
-                  className="text-gray-400"
-                />
-                <p className="text-sm font-medium text-gray-600">
-                  No se encontraron resultados
-                </p>
-              </div>
-            </main>
-          }
-          items={rows}
-          isLoading={loading}
-        >
-          {(item) => (
-            <TableRow key={item?.key}>
-              {(columnKey) => (
-                <TableCell width={columnKey === 'actions' ? '100px' : 'auto'}>
-                  {renderCell(item, columnKey)}
-                </TableCell>
-              )}
+
+      <div className="rounded-md border overflow-hidden">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {columns.map((column) => (
+                <TableHead key={column.key} className={column.align === 'center' ? 'text-center' : ''}>
+                  {column.label}
+                </TableHead>
+              ))}
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      <footer className="flex flex-col sm:flex-row gap-3 items-center">
-        {!disablePagination && (
-          <div className="flex justify-end gap-2">
-            {count && (
-              <Pagination
-                total={Math.ceil(count / 29)}
-                initialPage={page}
-                onChange={onPageChange}
-                showControls
-                size="sm"
-                variant="bordered"
-                color="default"
-                classNames={{
-                  item: 'text-xs w-8 h-8 radius-sm',
-                  cursor: 'text-xs',
-                }}
-              />
+          </TableHeader>
+          <TableBody>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  Cargando...
+                </TableCell>
+              </TableRow>
+            ) : rows.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
+                    <IconDatabaseOff size={40} />
+                    <p>No se encontraron resultados</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              rows.map((row) => (
+                <TableRow key={row.key} onClick={() => onSelectionChange?.(row)} className="cursor-pointer">
+                  {columns.map((column) => (
+                    <TableCell key={column.key}>
+                      {renderCell(row, column.key)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
             )}
-          </div>
+          </TableBody>
+        </Table>
+      </div>
+
+      <footer className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <p className="text-xs text-muted-foreground">
+          Total de registros: {rows?.length} {count && `de ${count}`}
+        </p>
+
+        {!disablePagination && totalPages > 1 && (
+          <Pagination>
+            <PaginationContent>
+              {page && page > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious href="#" onClick={() => onPageChange?.(page - 1)} />
+                </PaginationItem>
+              )}
+              {/* Simplificado para brevedad */}
+              <PaginationItem>
+                <span className="text-sm mx-2">Página {page} de {totalPages}</span>
+              </PaginationItem>
+              {page && page < totalPages && (
+                <PaginationItem>
+                  <PaginationNext href="#" onClick={() => onPageChange?.(page + 1)} />
+                </PaginationItem>
+              )}
+            </PaginationContent>
+          </Pagination>
         )}
-        <div>
-          <p className="text-xs text-gray-500 text-center">
-            Total de registros: {rows?.length} {count && `de ${count}`}
-          </p>
-        </div>
       </footer>
-      <LoadingPages isOpen={props?.loading ?? false} />
+      <LoadingPages isOpen={loading ?? false} />
     </main>
   )
 }

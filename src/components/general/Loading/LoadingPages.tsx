@@ -1,4 +1,4 @@
-import { Progress } from '@nextui-org/react'
+import { Progress } from '@/components/ui/progress'
 
 interface IProps {
   isOpen: boolean
@@ -6,17 +6,13 @@ interface IProps {
 
 export const LoadingPages = (props: IProps) => {
   const { isOpen } = props
+
+  if (!isOpen) return null
+
   return (
-    <>
-      {isOpen && (
-        <div className="fixed z-50 top-0 right-0 left-0 h-screen">
-          <Progress
-            aria-label="loading"
-            size="sm"
-            isIndeterminate
-          />
-        </div>
-      )}
-    </>
+    <div className="fixed inset-x-0 top-0 z-[100] h-1">
+      <Progress className="h-1 rounded-none" value={undefined} />
+      <div className="fixed inset-0 bg-background/20 backdrop-blur-[1px]" />
+    </div>
   )
 }

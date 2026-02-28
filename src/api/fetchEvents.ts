@@ -1,6 +1,6 @@
 'use server'
 import { IEventFilter, IEventRes } from '@/types'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from "@/utils/supabase/supabase/client"
 
 export async function fetchEvents(props: IEventFilter) {
   const {

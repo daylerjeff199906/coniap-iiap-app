@@ -1,4 +1,5 @@
-import { Button, Divider } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 
 interface IProps {
   title: string
@@ -33,17 +34,17 @@ export const DrawerSelect = (props: IProps) => {
         <header className="px-4 py-2">
           <h2 className="text-lg text-gray-500">{title}</h2>
         </header>
-        <Divider />
+        <Separator />
         <main className="overflow-y-auto h-[calc(100%-6rem)] p-4">
             {content}
         </main>
-        <Divider />
+        <Separator />
         <footer className="flex justify-end gap-3 p-2">
           <Button
             size="sm"
-            radius="sm"
-            onPress={() => setOpen(false)}
-            variant="bordered"
+            
+            onClick={() => setOpen(false)}
+            variant="outline"
           >
             Cancelar
           </Button>

@@ -1,9 +1,6 @@
 'use client'
 import { useState } from 'react'
 import { updateField } from '@/api'
-
-import { storage } from '@/firebase/firebase'
-
 import {
   ref,
   uploadBytes,
@@ -41,12 +38,12 @@ export function useFiles() {
     try {
       const dateNow = new Date()
       const nameFileInitial = `${dateNow.getTime()}_${file.name}`
-      const storageRef = ref(storage, `${namePath}/${nameFileInitial}`)
-      await uploadBytes(storageRef, file)
+      // const storageRef = ref(storage, `${namePath}/${nameFileInitial}`)
+      // await uploadBytes(storageRef, file)
 
-      const url = await getDownloadURL(storageRef)
+      // const url = await getDownloadURL(storageRef)
       setLoading(false)
-      return url
+      return ''
     } catch (e) {
       console.error('Error uploading archivo: ', e)
       setLoading(false)
@@ -57,8 +54,8 @@ export function useFiles() {
   const deleteImage = async (url: string) => {
     setLoading(true)
     try {
-      const storageRef = ref(storage, `${url}`)
-      await deleteObject(storageRef)
+      // const storageRef = ref(storag  e, `${url}`)
+      // await deleteObject(storageRef)
       setLoading(false)
       toast.success('Archivo eliminado correctamente')
       return true

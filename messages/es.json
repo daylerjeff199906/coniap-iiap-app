@@ -1,0 +1,56 @@
+{
+    "HomePage": {
+        "title": "CONGRESO INTERNACIONAL",
+        "subtitle": "SOBRE AMAZONÍA PERUANA",
+        "description": "Integrando ciencia, saberes y diálogo para el desarrollo sostenible amazónico.",
+        "nav": {
+            "home": "Inicio",
+            "events": "Eventos",
+            "speakers": "Ponentes",
+            "about": "Acerca de nosotros",
+            "blog": "Blog",
+            "news": "Novedades",
+            "editions": "Ediciones",
+            "contact": "Contacto",
+            "menu": "Menú"
+        },
+        "aboutSection": {
+            "title": "Sobre CONIAP",
+            "mission": "Misión",
+            "vision": "Visión",
+            "leadership": "Liderazgo",
+            "viewMore": "Ver Más"
+        }
+    },
+    "Metadata": {
+        "title": "CONIAP | Congreso Internacional de la Amazonía Peruana",
+        "description": "III Congreso Internacional sobre la Amazonía Peruana realizado por el Instituto de Investigaciones de la Amazonía Peruana (IIAP).",
+        "about": {
+            "title": "Acerca de nosotros",
+            "description": "El Congreso Internacional sobre la Amazonía Peruana (CONIAP) es un evento científico organizado por el Instituto de Investigaciones de la Amazonía Peruana (IIAP). Reúne a investigadores, académicos, estudiantes y profesionales de todo el mundo para compartir sus conocimientos y experiencias sobre la Amazonía."
+        },
+        "editions": {
+            "title": "Ediciones",
+            "description": "Explora las ediciones anteriores del Congreso Internacional sobre la Amazonía Peruana."
+        }
+    },
+    "Footer": {
+        "description": "III CONGRESO INTERNACIONAL SOBRE LA AMAZONÍA PERUANA",
+        "date": "Del 13 al 15 de Noviembre 2024",
+        "location": "Virtual",
+        "hashtag": "#CONIAP2024",
+        "copy": "© 2024 CONIAP. Todos los derechos reservados.",
+        "nav": {
+            "home": "Inicio",
+            "agenda": "Agenda",
+            "speakers": "Ponentes",
+            "inscriptions": "Inscripciones",
+            "contact": "Contacto"
+        },
+        "sections": {
+            "connect": "Conéctate",
+            "partners": "Socios",
+            "newsletter": "Boletín"
+        }
+    }
+}

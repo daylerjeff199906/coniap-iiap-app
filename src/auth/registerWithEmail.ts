@@ -2,7 +2,6 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from 'firebase/auth'
-import { auth } from '@/firebase/firebase'
 import { ICrendentials, IError } from '@/types'
 
 export async function registerAndSendEmailVerification(props: ICrendentials) {
@@ -10,17 +9,18 @@ export async function registerAndSendEmailVerification(props: ICrendentials) {
 
   try {
     // Crear usuario con correo y contraseña
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    )
+    // const userCredential = await createUserWithEmailAndPassword(
+    //   auth,
+    //   email,
+    //   password
+    // )
 
     // Enviar correo de verificación
-    await sendEmailVerification(userCredential.user)
+    // await sendEmailVerification(userCredential.user)
 
     // Devolver el usuario creado
-    return userCredential.user
+    // return userCredential.user
+    return 'Email sent'
   } catch (error) {
     const err = error as unknown as IError
     if (err.code === 'auth/email-already-in-use') {
@@ -45,14 +45,15 @@ export async function registerWithEmail(props: ICrendentials) {
   const { email, password } = props
   try {
     // Crear usuario con correo y contraseña
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    )
+    // const userCredential = await createUserWithEmailAndPassword(
+    //   auth,
+    //   email,
+    //   password
+    // )
 
     // Devolver el usuario creado
-    return userCredential.user
+    // return userCredential.user
+
   } catch (error) {
     const err = error as unknown as IError
     if (err.code === 'auth/email-already-in-use') {
