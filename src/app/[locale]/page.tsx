@@ -1,10 +1,11 @@
-import { Hero, AboutUsSection, MagistralSpeakersHomeSection, TopicsSection } from '@/components/sections/home'
+import { Hero, AboutUsSection, MagistralSpeakersHomeSection, TopicsSection, SponsorSection } from '@/components/sections/home'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { fetchSectionByType } from '@/api/cms'
 import { fetchCurrentMagistralSpeakers } from '@/api/fetchPerson'
 import { fetchActiveTopics } from '@/api/fetchTopics'
-import { IMagistralSpeakersSectionContent, ITopicsSectionContent } from '@/types'
+import { fetchCurrentEditionSponsors } from '@/api/fetchSponsors'
+import { IMagistralSpeakersSectionContent, ITopicsSectionContent, ISponsorsSectionContent } from '@/types'
 
 export async function generateMetadata({
     params
@@ -25,6 +26,8 @@ export default async function HomePage() {
     const dynamicMagistralSpeakers = await fetchCurrentMagistralSpeakers()
     const topicsSection = await fetchSectionByType('home', 'topics_section')
     const dynamicTopics = (await fetchActiveTopics()) || []
+    const sponsorsSection = await fetchSectionByType('home', 'sponsors_section')
+    const dynamicSponsors = (await fetchCurrentEditionSponsors()) || []
 
     return (
         <main className="min-h-screen bg-zinc-950">
@@ -45,7 +48,15 @@ export default async function HomePage() {
                 />
             )}
 
+            {sponsorsSection && (
+                <SponsorSection
+                    content={sponsorsSection.content as ISponsorsSectionContent}
+                    sponsors={dynamicSponsors}
+                />
+            )}
+
             {/* Add more sections here as they are developed */}
         </main>
     )
 }
+

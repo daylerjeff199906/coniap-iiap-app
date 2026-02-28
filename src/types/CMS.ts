@@ -177,3 +177,15 @@ export interface ITopicsSectionContent {
     };
 }
 
+export interface ISponsorsSectionContent {
+    es: {
+        hashtag: string;
+        title: string;
+        description: string;
+    };
+    en: {
+        hashtag: string;
+        title: string;
+        description: string;
+    };
+}
