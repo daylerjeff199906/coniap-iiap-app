@@ -1,36 +1,42 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Rocket, Loader2, ArrowRight } from 'lucide-react'
-import { ICTASectionContent, IUser } from '@/types'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Loader2, ArrowRight } from 'lucide-react'
+import { ICTASectionContent } from '@/types'
 import { Button } from '@/components/ui/button'
 import { getSecureMagicLink } from '@/lib/auth-tickets'
 import { toast } from 'react-toastify'
 import { useLocale } from 'next-intl'
+import { useAuthContext } from '@/provider/authProvider'
+import { AuthRequiredModal } from '@/components/general/Modals/AuthRequiredModal'
 
 interface CTASectionProps {
     content: ICTASectionContent
-    user: IUser | null
     currentEditionId?: string
 }
 
-export const CTAActionSection: React.FC<CTASectionProps> = ({ content, user, currentEditionId }) => {
+export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEditionId }) => {
+    const { user } = useAuthContext()
     const locale = useLocale() as 'es' | 'en'
     const [loading, setLoading] = useState(false)
+    const [showAuthModal, setShowAuthModal] = useState(false)
+
     const sectionContent = content?.[locale] || content?.['es']
 
     if (!sectionContent) return null
 
+    // Image fallback if not provided in CMS
+    const backgroundImage = sectionContent.image_url || '/brands/cta_bg.webp'
+
     const handleAction = async () => {
         if (!user || !user.id) {
-            toast.info(locale === 'es' ? 'Por favor, inicia sesión para continuar' : 'Please log in to continue')
+            setShowAuthModal(true)
             return
         }
 
         setLoading(true)
         try {
-            // Generate the secure magic link
             const baseUrl = window.location.origin
             const magicLink = await getSecureMagicLink(
                 user.id,
@@ -40,8 +46,6 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, user, cur
                 },
                 baseUrl
             )
-
-            // Redirect the user to the magic link endpoint
             window.location.href = magicLink
         } catch (error) {
             console.error('Error generating action link:', error)
@@ -50,67 +54,90 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, user, cur
         }
     }
 
+    // Split title for fancy "on" style
+    const titleParts = sectionContent.title.split(' ')
+    const mainTitle = titleParts.slice(0, -1).join(' ')
+    const lastWord = titleParts[titleParts.length - 1]
+
     return (
-        <section className="relative py-24 bg-zinc-950 overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px] -z-10" />
+        <section className="relative w-full h-[600px] md:h-[700px] flex items-center justify-center py-12 px-4 md:px-8">
+            <div className="relative w-full max-w-7xl h-full rounded-[2.5rem] overflow-hidden shadow-2xl">
 
-            <div className="container mx-auto px-6">
-                <div className="bg-zinc-900/50 border border-white/5 rounded-[3rem] p-8 md:p-16 relative overflow-hidden group">
-                    {/* Inner glow */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                {/* Full Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
+                    style={{ backgroundImage: `url(${backgroundImage})` }}
+                >
+                    <div className="absolute inset-0 bg-black/40" />
+                </div>
 
-                    <div className="relative z-10 flex flex-col items-center text-center space-y-8">
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            whileInView={{ scale: 1, opacity: 1 }}
-                            viewport={{ once: true }}
-                            className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-4"
-                        >
-                            <Rocket size={40} className="group-hover:translate-y-[-4px] group-hover:translate-x-[4px] transition-transform duration-500" />
-                        </motion.div>
+                {/* Brand Logos (Bottom Left) */}
+                <div className="absolute bottom-12 left-12 hidden md:flex items-center gap-8 opacity-70 grayscale invert brightness-0">
+                    <img src="/brands/brand_1.svg" alt="" className="h-6" />
+                    <img src="/brands/brand_2.svg" alt="" className="h-6" />
+                    <img src="/brands/brand_3.svg" alt="" className="h-6" />
+                </div>
 
-                        <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            whileInView={{ y: 0, opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="max-w-3xl"
-                        >
-                            <h2 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tighter uppercase italic mb-6">
-                                {sectionContent.title}
-                            </h2>
-                            <p className="text-xl text-zinc-400 font-light leading-relaxed">
-                                {sectionContent.description}
-                            </p>
-                        </motion.div>
+                <div className="container mx-auto h-full flex items-center justify-end">
 
-                        <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            whileInView={{ y: 0, opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                        >
-                            <Button
-                                size="lg"
-                                disabled={loading}
-                                onClick={handleAction}
-                                className="rounded-full px-12 py-8 text-xl font-black uppercase italic tracking-widest bg-primary hover:bg-white hover:text-primary transition-all duration-500 shadow-2xl shadow-primary/20 min-w-[280px]"
-                            >
-                                {loading ? (
-                                    <Loader2 className="animate-spin mr-3" />
-                                ) : (
-                                    <>
-                                        {sectionContent.button_text}
-                                        <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
-                                    </>
-                                )}
-                            </Button>
-                        </motion.div>
-                    </div>
+                    {/* Glass Card on the Right */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="w-full md:w-[500px] h-full md:h-[90%] relative z-10"
+                    >
+                        <div className="w-full h-full bg-black/20 backdrop-blur-3xl border-l border-white/10 p-10 md:p-16 flex flex-col justify-center text-white space-y-8">
+
+                            <div className="space-y-4">
+                                <h2 className="text-5xl md:text-6xl font-medium tracking-tight leading-[1.1]">
+                                    {mainTitle}{' '}
+                                    <span className="italic font-serif opacity-90">{lastWord}</span>
+                                </h2>
+
+                                <p className="text-lg text-zinc-300 font-light leading-relaxed max-w-sm">
+                                    {sectionContent.description}
+                                </p>
+                            </div>
+
+                            <div className="pt-8">
+                                <Button
+                                    size="lg"
+                                    disabled={loading}
+                                    onClick={handleAction}
+                                    className="h-16 rounded-full px-10 text-lg font-medium bg-primary hover:scale-105 transition-all duration-300 flex items-center gap-4 shadow-[0_0_30px_rgba(204,255,0,0.3)]"
+                                >
+                                    <AnimatePresence mode="wait">
+                                        <div className='flex items-center gap-4'>
+                                            {loading ? (
+                                                <Loader2 className="animate-spin" />
+                                            ) : (
+                                                <>
+                                                    <span>{sectionContent.button_text}</span>
+                                                    <div className="h-full border-l border-black/10 pl-4">
+                                                        <ArrowRight size={20} />
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    </AnimatePresence>
+                                </Button>
+                            </div>
+
+                            <div className="pt-4 border-t border-white/5 opacity-40">
+                                <p className="text-[10px] uppercase font-bold tracking-[0.2em]">
+                                    {locale === 'es' ? 'Plataforma Oficial CONIAP' : 'Official CONIAP Platform'}
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
+
+            <AuthRequiredModal
+                isOpen={showAuthModal}
+                onClose={setShowAuthModal}
+            />
         </section>
     )
 }

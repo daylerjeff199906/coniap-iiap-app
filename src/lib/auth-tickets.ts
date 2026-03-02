@@ -1,11 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
-
-// Note: Use a service role key for management tasks to bypass RLS and perform administrative actions
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-// Create a service role client
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+import { createClient } from "@/utils/supabase/supabase/client";
 
 export interface ITicketMetadata {
     targetPath: string;
@@ -28,7 +21,7 @@ export async function createAuthTicket(
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + expiresInMinutes);
 
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await createClient()
         .from('auth_tickets')
         .insert({
             profile_id: profileId,
@@ -52,7 +45,7 @@ export async function createAuthTicket(
  */
 export async function validateAndConsumeTicket(ticketId: string) {
     // Check ticket
-    const { data: ticket, error } = await supabaseAdmin
+    const { data: ticket, error } = await createClient()
         .from('auth_tickets')
         .select('*')
         .eq('id', ticketId)
@@ -72,7 +65,7 @@ export async function validateAndConsumeTicket(ticketId: string) {
 
     // Mark as used (or delete)
     // Deleting is more secure for ephemeral tokens
-    const { error: deleteError } = await supabaseAdmin
+    const { error: deleteError } = await createClient()
         .from('auth_tickets')
         .delete()
         .eq('id', ticketId);
@@ -89,7 +82,7 @@ export async function validateAndConsumeTicket(ticketId: string) {
  * Checks if a user is already registered for a specific edition.
  */
 export async function checkEditionParticipation(profileId: string, editionId: string) {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await createClient()
         .from('edition_participants')
         .select('id')
         .eq('profile_id', profileId)
@@ -108,7 +101,7 @@ export async function checkEditionParticipation(profileId: string, editionId: st
  * Gets the email of a user by their profile_id (auth.users.id)
  */
 export async function getUserEmail(profileId: string) {
-    const { data, error } = await supabaseAdmin.auth.admin.getUserById(profileId);
+    const { data, error } = await createClient().auth.admin.getUserById(profileId);
     if (error || !data.user) {
         return null;
     }
@@ -120,7 +113,7 @@ export async function getUserEmail(profileId: string) {
  * This is the "Magic" part that logs in the user via Supabase.
  */
 export async function generateSupabaseAuthLink(email: string, redirectTo: string) {
-    const { data, error } = await supabaseAdmin.auth.admin.generateLink({
+    const { data, error } = await createClient().auth.admin.generateLink({
         type: 'magiclink',
         email,
         options: { redirectTo }

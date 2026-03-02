@@ -5,8 +5,8 @@ import { Link, usePathname } from '@/i18n/routing'
 import { useTranslations, useLocale } from 'next-intl'
 import { Menu, X, Mail, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useAuth } from '@/hooks/auth/useAuth'
 import { ProfilePopover } from '@/modules/core/components'
+import { useAuthContext } from '@/provider/authProvider'
 
 export function Navbar() {
     const t = useTranslations('HomePage.nav')
@@ -14,11 +14,7 @@ export function Navbar() {
     const currentLocale = useLocale()
     const [isOpen, setIsOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
-    const { user, loading, logout, getUser } = useAuth()
-
-    useEffect(() => {
-        getUser()
-    }, [])
+    const { user, loading, logout } = useAuthContext()
 
     useEffect(() => {
         const handleScroll = () => {

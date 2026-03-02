@@ -196,11 +196,13 @@ export interface ICTASectionContent {
         description: string;
         button_text: string;
         target_path: string;
+        image_url?: string;
     };
     en: {
         title: string;
         description: string;
         button_text: string;
         target_path: string;
+        image_url?: string;
     };
 }
