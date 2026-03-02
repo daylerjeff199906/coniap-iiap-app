@@ -189,3 +189,18 @@ export interface ISponsorsSectionContent {
         description: string;
     };
 }
+
+export interface ICTASectionContent {
+    es: {
+        title: string;
+        description: string;
+        button_text: string;
+        target_path: string;
+    };
+    en: {
+        title: string;
+        description: string;
+        button_text: string;
+        target_path: string;
+    };
+}

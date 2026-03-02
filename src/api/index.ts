@@ -73,7 +73,7 @@ import {
   updateRowInformation,
 } from './fetchInformation'
 
-import { fetchAllEditions } from './fetchEditions'
+import { fetchAllEditions, fetchCurrentEdition } from './fetchEditions'
 
 export {
   //Events crud
@@ -144,4 +144,5 @@ export {
   updateRowInformation,
   //Editions
   fetchAllEditions,
+  fetchCurrentEdition,
 }
