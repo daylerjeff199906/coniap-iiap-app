@@ -123,7 +123,7 @@ export function Navbar() {
                         <ProfilePopover user={user} loading={loading} logout={logout} />
                     ) : (
                         <Link
-                            href="/login"
+                            href="/contact"
                             className="group hidden md:flex items-center bg-primary text-white p-1 pr-6 rounded-full text-[10px] font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-lg shadow-primary/20"
                         >
                             <div className="bg-white rounded-full h-8 w-8 flex items-center justify-center mr-3 text-primary transition-transform group-hover:translate-x-1">

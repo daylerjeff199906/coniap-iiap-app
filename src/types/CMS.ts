@@ -206,3 +206,32 @@ export interface ICTASectionContent {
         image_url?: string;
     };
 }
+
+export interface ICommitteeMember {
+    name: string;
+    role?: string;
+}
+
+export interface ICommitteeGroup {
+    title: {
+        es: string;
+        en: string;
+    };
+    members: ICommitteeMember[];
+}
+
+export interface ICommitteeSectionContent {
+    title: {
+        es: string;
+        en: string;
+    };
+    subtitle?: {
+        es: string;
+        en: string;
+    };
+    description?: {
+        es: string;
+        en: string;
+    };
+    committees: ICommitteeGroup[];
+}

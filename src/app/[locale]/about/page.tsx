@@ -5,8 +5,9 @@ import { AboutUsSection, TopicsSection } from '@/components/sections/home'
 import { InfoSectionSplit } from '@/components/sections/general/InfoSectionSplit'
 import { GallerySection } from '@/components/sections/general/GallerySection'
 import { InstitutionSection } from '@/components/sections/general/InstitutionSection'
+import { CommitteeSection } from '@/components/sections/general/CommitteeSection'
 import { fetchActiveTopics } from '@/api/fetchTopics'
-import { ITopicsSectionContent } from '@/types'
+import { ITopicsSectionContent, ICommitteeSectionContent } from '@/types'
 
 export async function generateMetadata({
     params
@@ -27,6 +28,7 @@ export default async function AboutPage() {
     const gallerySection = await fetchSectionByType('about', 'gallery_section')
     const institutionSection = await fetchSectionByType('about', 'about_institution')
     const topicsSection = await fetchSectionByType('about', 'topics_section')
+    const committeeSection = await fetchSectionByType('about', 'committee_section')
     const dynamicTopics = (await fetchActiveTopics()) || []
 
     return (
@@ -43,6 +45,10 @@ export default async function AboutPage() {
             )}
 
             {gallerySection && <GallerySection content={gallerySection.content} />}
+
+            {committeeSection && (
+                <CommitteeSection content={committeeSection.content as ICommitteeSectionContent} />
+            )}
         </main>
     )
 }

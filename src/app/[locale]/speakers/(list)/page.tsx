@@ -1,13 +1,9 @@
-import { fetchDynamicSectionsByPage } from '@/api/cms'
+import { UnderConstruction } from '@/components/general/UnderConstruction'
 
 export default async function SpeakersPage() {
-    const sections = await fetchDynamicSectionsByPage('speakers')
-
     return (
-        <main className="bg-white">
-            {sections?.map((section) => {
-                return null;
-            })}
+        <main className="pt-20">
+            <UnderConstruction />
         </main>
     )
 }
