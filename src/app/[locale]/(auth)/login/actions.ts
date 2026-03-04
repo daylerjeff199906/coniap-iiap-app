@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies, headers } from 'next/headers'
+import { PLATFORM_URL, getTrackingParamsString } from '@/utils/constants'
 
 type LoginResponse = {
     error?: string
@@ -50,14 +51,13 @@ export async function login(formData: FormData, locale: string = 'es'): Promise<
     }
 
 
-    // Base Platform External URL
-    const platformUrl = 'https://herp-science-platform-bio-intranet.vercel.app'
-    // Parámetros de rastreo para el flujo de la inscripción en la plataforma
-    const trackingParams = '?source=coniap&event=CONIAP_2024&edition=3&type=convocatoria'
+    // Preparar la redirección a la plataforma externa
+    // Enviamos al login de la otra plataforma con el parámetro 'next' apuntando al dashboard + tracking params
+    const nextPath = `/${locale}/dashboard${getTrackingParamsString()}`
+    const redirectUrl = `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
 
-    // Si ha completado el onboarding, redirigir al dashboard de la plataforma externa
     revalidatePath('/', 'layout')
-    return { redirectUrl: `${platformUrl}/${locale}/dashboard${trackingParams}` }
+    return { redirectUrl }
 }
 
 export async function signup(formData: FormData) {

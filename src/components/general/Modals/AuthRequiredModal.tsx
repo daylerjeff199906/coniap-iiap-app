@@ -13,6 +13,7 @@ import { Link } from '@/i18n/routing'
 import { LogIn, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useLocale } from 'next-intl'
+import { getExternalLoginUrl, PLATFORM_URL } from '@/utils/constants'
 
 interface AuthRequiredModalProps {
     isOpen: boolean
@@ -21,6 +22,7 @@ interface AuthRequiredModalProps {
 
 export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, onClose }) => {
     const locale = useLocale()
+    const externalLoginUrl = getExternalLoginUrl(locale)
 
     const t = {
         es: {
@@ -75,14 +77,14 @@ export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, on
                     </DialogHeader>
 
                     <div className="flex flex-col gap-5">
-                        <Link href="/login" onClick={() => onClose(false)} className="w-full">
+                        <a href={externalLoginUrl} onClick={() => onClose(false)} className="w-full">
                             <Button className="w-full h-16 rounded-2xl bg-primary text-black hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-bold text-xl gap-4 shadow-[0_10px_30px_rgba(var(--primary),0.3)] group">
                                 {t.login}
                                 <LogIn size={22} className="group-hover:translate-x-1 transition-transform" />
                             </Button>
-                        </Link>
+                        </a>
 
-                        <Link href="/register" onClick={() => onClose(false)} className="w-full">
+                        <a href={`${PLATFORM_URL}/${locale}/signup`} onClick={() => onClose(false)} className="w-full">
                             <Button
                                 variant="ghost"
                                 className="w-full h-16 rounded-2xl border border-white/10 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-500 font-bold text-xl group relative overflow-hidden"
@@ -90,7 +92,7 @@ export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, on
                                 <span className="relative z-10">{t.register}</span>
                                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                             </Button>
-                        </Link>
+                        </a>
                     </div>
                 </div>
 

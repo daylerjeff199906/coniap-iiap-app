@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies } from 'next/headers'
+import { PLATFORM_URL, getTrackingParamsString } from '@/utils/constants'
 
 export async function GET(
     request: Request,
@@ -39,9 +40,9 @@ export async function GET(
 
             // Si ha terminado onboarding y el destino es el dashboard
             if (next.includes('/dashboard')) {
-                const platformUrl = 'https://herp-science-platform-bio-intranet.vercel.app'
-                const trackingParams = '?source=coniap&event=CONIAP_2024&edition=3&type=convocatoria'
-                return NextResponse.redirect(`${platformUrl}/${locale}/dashboard${trackingParams}`)
+                const nextPath = `/${locale}/dashboard${getTrackingParamsString()}`
+                const redirectUrl = `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
+                return NextResponse.redirect(redirectUrl)
             }
 
             // Check if next URL already contains a locale (fallback general)
