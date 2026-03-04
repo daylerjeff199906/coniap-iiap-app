@@ -189,3 +189,49 @@ export interface ISponsorsSectionContent {
         description: string;
     };
 }
+
+export interface ICTASectionContent {
+    es: {
+        title: string;
+        description: string;
+        button_text: string;
+        target_path: string;
+        image_url?: string;
+    };
+    en: {
+        title: string;
+        description: string;
+        button_text: string;
+        target_path: string;
+        image_url?: string;
+    };
+}
+
+export interface ICommitteeMember {
+    name: string;
+    role?: string;
+}
+
+export interface ICommitteeGroup {
+    title: {
+        es: string;
+        en: string;
+    };
+    members: ICommitteeMember[];
+}
+
+export interface ICommitteeSectionContent {
+    title: {
+        es: string;
+        en: string;
+    };
+    subtitle?: {
+        es: string;
+        en: string;
+    };
+    description?: {
+        es: string;
+        en: string;
+    };
+    committees: ICommitteeGroup[];
+}

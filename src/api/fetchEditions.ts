@@ -37,3 +37,26 @@ export async function fetchAllEditions() {
         };
     }) as IEdition[]
 }
+
+export async function fetchCurrentEdition(): Promise<IEdition | null> {
+    const supabase = await createClient()
+
+    const { data, error } = await supabase
+        .from('editions')
+        .select('*')
+        .eq('is_current', true)
+        .maybeSingle()
+
+    if (error || !data) {
+        // Fallback to latest
+        const { data: latest } = await supabase
+            .from('editions')
+            .select('*')
+            .order('year', { ascending: false })
+            .limit(1)
+            .maybeSingle()
+        return latest as IEdition
+    }
+
+    return data as IEdition
+}

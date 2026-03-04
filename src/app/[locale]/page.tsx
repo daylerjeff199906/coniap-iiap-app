@@ -1,11 +1,12 @@
-import { Hero, AboutUsSection, MagistralSpeakersHomeSection, TopicsSection, SponsorSection } from '@/components/sections/home'
+import { Hero, AboutUsSection, MagistralSpeakersHomeSection, TopicsSection, SponsorSection, CTAActionSection } from '@/components/sections/home'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { fetchSectionByType } from '@/api/cms'
 import { fetchCurrentMagistralSpeakers } from '@/api/fetchPerson'
 import { fetchActiveTopics } from '@/api/fetchTopics'
 import { fetchCurrentEditionSponsors } from '@/api/fetchSponsors'
-import { IMagistralSpeakersSectionContent, ITopicsSectionContent, ISponsorsSectionContent } from '@/types'
+import { fetchCurrentEdition } from '@/api/fetchEditions'
+import { IMagistralSpeakersSectionContent, ITopicsSectionContent, ISponsorsSectionContent, ICTASectionContent } from '@/types'
 
 export async function generateMetadata({
     params
@@ -28,6 +29,8 @@ export default async function HomePage() {
     const dynamicTopics = (await fetchActiveTopics()) || []
     const sponsorsSection = await fetchSectionByType('home', 'sponsors_section')
     const dynamicSponsors = (await fetchCurrentEditionSponsors()) || []
+    const ctaSection = await fetchSectionByType('home', 'cta_action_section')
+    const currentEdition = await fetchCurrentEdition()
 
     return (
         <main className="min-h-screen bg-zinc-950">
@@ -52,6 +55,13 @@ export default async function HomePage() {
                 <SponsorSection
                     content={sponsorsSection.content as ISponsorsSectionContent}
                     sponsors={dynamicSponsors}
+                />
+            )}
+
+            {ctaSection && (
+                <CTAActionSection
+                    content={ctaSection.content as ICTASectionContent}
+                    currentEditionId={currentEdition?.id}
                 />
             )}
 

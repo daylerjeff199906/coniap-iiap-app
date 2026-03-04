@@ -1,3 +1,2 @@
-import { ModalAction } from './ModalAction/modalAction'
-
-export { ModalAction }
+export { ModalAction } from './ModalAction/modalAction'
+export { AuthRequiredModal } from './AuthRequiredModal'

@@ -52,5 +52,30 @@
             "partners": "Partners",
             "newsletter": "Newsletter"
         }
+    },
+    "Auth": {
+        "login": "Login",
+        "loginDescription": "Enter your credentials to access your account",
+        "emailPlaceholder": "mail@example.com",
+        "passwordPlaceholder": "Your password",
+        "forgotPassword": "I don't have an account",
+        "rememberMe": "Remember me",
+        "logIn": "Log In",
+        "or": "Or continue with",
+        "loginWithGoogle": "Login with Google",
+        "dontHaveAccount": "Don't have an account?",
+        "alreadyHaveAccount": "Already have an account?",
+        "signup": "Sign up",
+        "signupDescription": "Create an account to access the platform and all its content.",
+        "createAccount": "Create Account",
+        "firstNamePlaceholder": "First name",
+        "lastNamePlaceholder": "Last name",
+        "confirmPasswordPlaceholder": "Confirm Password",
+        "accountCreated": "Account Created Successfully!",
+        "checkEmailConfirm": "Check your inbox or spam folder to verify your account and continue.",
+        "emailSentNote": "If you don't find the email in the next few minutes, please check your spam or junk folder.",
+        "Errors": {
+            "invalid_credentials": "Email or password is incorrect"
+        }
     }
 }
