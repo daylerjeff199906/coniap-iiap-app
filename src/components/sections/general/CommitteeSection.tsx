@@ -24,58 +24,67 @@ export function CommitteeSection({ content }: CommitteeSectionProps) {
     const { title, subtitle, description, committees } = content
 
     return (
-        <section className="py-24 px-6 bg-zinc-950 relative overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
-
+        <section className="py-24 px-6 bg-white relative overflow-hidden">
             <div className="container mx-auto relative z-10">
-                <div className="max-w-4xl mb-20">
+                <div className="max-w-4xl mb-12">
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="space-y-4"
+                        className="space-y-6"
                     >
-                        <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">
-                            {title[locale]} <br />
-                            {subtitle && <span className="text-primary italic tracking-widest">{subtitle[locale]}</span>}
+                        {/* Header Badge */}
+                        <div className="flex items-center gap-3">
+                            <div className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]" />
+                            <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-zinc-600">
+                                {title[locale]}
+                            </span>
+                        </div>
+
+                        {/* Main Title */}
+                        <h2 className="text-4xl md:text-5xl font-medium text-zinc-900 tracking-tight leading-tight">
+                            {subtitle?.[locale].split(' ').map((word, i) => (
+                                <span key={i} className={word.toUpperCase() === 'COLUMNA' || word.toUpperCase() === 'CONIAP' ? 'font-bold' : ''}>
+                                    {word}{' '}
+                                </span>
+                            ))}
                         </h2>
+
+                        <hr className="w-1/2 border-primary/30 border-b-3" />
                         {description && (
-                            <p className="text-zinc-500 text-lg md:text-xl font-medium max-w-2xl mt-6">
+                            <p className="text-zinc-500 text-lg font-normal max-w-2xl pt-4">
                                 {description[locale]}
                             </p>
                         )}
                     </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
                     {committees.map((group, groupIndex) => (
                         <motion.div
                             key={group.title.es}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: groupIndex * 0.1 }}
-                            className="bg-white/5 rounded-[2.5rem] p-10 border border-white/10 hover:border-primary/30 transition-all duration-500 hover:bg-white/[0.07]"
+                            transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
+                            className="space-y-6"
                         >
-                            <div className="flex items-center gap-4 mb-8">
-                                <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                                    {iconMap[group.title.es] || <Users2 className="text-primary" size={24} />}
-                                </div>
-                                <h3 className="text-xl font-black text-white uppercase tracking-tight">
-                                    {group.title[locale]}
-                                </h3>
-                            </div>
+                            <h3 className="text-base font-bold text-zinc-800 uppercase tracking-wide border-l-2 border-primary/30 pl-3">
+                                {group.title[locale]}
+                            </h3>
 
-                            <ul className="space-y-3">
+                            <ul className="space-y-2.5">
                                 {group.members.map((member, i) => (
-                                    <li key={i} className="flex flex-col">
-                                        <span className="text-zinc-300 font-bold tracking-tight">
-                                            {member.name}
-                                        </span>
+                                    <li key={i} className="flex flex-col group">
+                                        <div className="flex items-start gap-2">
+                                            <div className="w-1 h-1 rounded-full bg-zinc-300 mt-1.5 shrink-0" />
+                                            <span className="text-zinc-600 text-sm font-semibold tracking-tight transition-colors group-hover:text-primary leading-tight">
+                                                {member.name}
+                                            </span>
+                                        </div>
                                         {member.role && (
-                                            <span className="text-xs font-black text-primary/60 uppercase tracking-widest">
+                                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-3 mt-0.5">
                                                 {member.role}
                                             </span>
                                         )}
@@ -89,3 +98,4 @@ export function CommitteeSection({ content }: CommitteeSectionProps) {
         </section>
     )
 }
+
