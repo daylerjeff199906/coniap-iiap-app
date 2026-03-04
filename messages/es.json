@@ -52,5 +52,30 @@
             "partners": "Socios",
             "newsletter": "Boletín"
         }
+    },
+    "Auth": {
+        "login": "Iniciar Sesión",
+        "loginDescription": "Ingresa tus credenciales para acceder a tu cuenta",
+        "emailPlaceholder": "correo@ejemplo.com",
+        "passwordPlaceholder": "Tu contraseña",
+        "forgotPassword": "Aún no tengo cuenta",
+        "rememberMe": "Recuérdame",
+        "logIn": "Ingresar al Sistema",
+        "or": "O continua con",
+        "loginWithGoogle": "Iniciar sesión con Google",
+        "dontHaveAccount": "¿No tienes cuenta?",
+        "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+        "signup": "Regístrate",
+        "signupDescription": "Crea una cuenta para acceder a la plataforma y todos los contenidos.",
+        "createAccount": "Crear Cuenta",
+        "firstNamePlaceholder": "Nombres",
+        "lastNamePlaceholder": "Apellidos",
+        "confirmPasswordPlaceholder": "Confirmar Contraseña",
+        "accountCreated": "¡Cuenta Creada Exitosamente!",
+        "checkEmailConfirm": "Revisa tu bandeja de entrada o spam para confirmar tu cuenta y continuar.",
+        "emailSentNote": "Si no encuentras el correo en los próximos minutos, por favor revisa también tu carpeta de spam o correo no deseado.",
+        "Errors": {
+            "invalid_credentials": "El correo o la contraseña son incorrectos"
+        }
     }
 }
