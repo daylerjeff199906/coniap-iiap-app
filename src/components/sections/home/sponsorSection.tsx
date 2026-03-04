@@ -1,61 +1,70 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Image } from '@nextui-org/react'
-
 import { motion } from 'framer-motion'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Autoplay } from 'swiper/modules'
+import { ISponsor, ISponsorsSectionContent } from '@/types'
+import { useLocale } from 'next-intl'
 
-// Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/autoplay'
 
-// import required modules
-import { ISponsor } from '@/types'
 
 interface IProps {
   sponsors: ISponsor[] | undefined
+  content: ISponsorsSectionContent
 }
+
 export const SponsorSection = (props: IProps) => {
-  const { sponsors } = props
+  const { sponsors, content } = props
+  const locale = useLocale() as 'es' | 'en'
+  const currentContent = content[locale]
+
+  const [emblaRef] = useEmblaCarousel({
+    loop: true,
+    align: 'start',
+  }, [Autoplay({ delay: 3000, stopOnInteraction: false })])
 
   return (
     <>
-      <section className="bg-white section-home">
-        <div className="container space-y-6 flex flex-col gap-3">
+      <section className="bg-[#f8f9fa] section-home relative overflow-hidden py-32">
+        {/* Decorative background element */}
+        <div className="absolute top-0 left-0 w-full h-full bg-grid-zinc-950/[0.02] -z-10" />
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10 -translate-x-1/2 -translate-y-1/2" />
+
+        <div className="container mx-auto px-6 relative z-10">
           <motion.header
-            initial={{ opacity: 0 }}
-            viewport={{ once: false }}
+            initial={{ opacity: 0, y: 20 }}
+            viewport={{ once: true }}
             whileInView={{
               opacity: 1,
+              y: 0,
               transition: {
-                duration: 1,
+                duration: 0.8,
               },
             }}
-            className="w-full max-w-lg"
+            className="w-full max-w-4xl mb-20"
           >
-            <div className="flex items-center gap-3 pb-3">
-              <div className="dot-custom" />
-              <p className="text-xs font-semibold uppercase">#CONIAP - 2024</p>
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-10 h-[2px] bg-primary rounded-full" />
+              <p className="text-sm font-black uppercase tracking-[0.4em] text-primary">
+                {currentContent.hashtag}
+              </p>
             </div>
-            <div className="w-full max-w-4xl">
-              <h2 className="text-3xl sm:text-[40px] pb-6 leading-tight">
-                Nuestros <b>coorganizadores</b>
+            <div className="w-full">
+              <h2 className="text-5xl md:text-7xl text-zinc-950 font-bold leading-[0.85] uppercase tracking-tighter mb-10">
+                {currentContent.title}
               </h2>
             </div>
             <div>
-              <p className="text-sm">
-                Gracias a nuestros nuestros coorganizadores por hacer posible la
-                realización de este evento.
+              <p className="text-xl text-zinc-600 leading-relaxed font-medium border-l-4 border-primary/20 pl-8">
+                {currentContent.description}
               </p>
             </div>
           </motion.header>
+
+
           <motion.div
             initial={{ opacity: 0 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             whileInView={{
               opacity: 1,
               transition: {
@@ -65,45 +74,23 @@ export const SponsorSection = (props: IProps) => {
             className="w-full"
           >
             {sponsors && (
-              <div className="">
-                <Swiper
-                  spaceBetween={10}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  breakpoints={{
-                    640: {
-                      slidesPerView: 2,
-                      spaceBetween: 20,
-                    },
-                    768: {
-                      slidesPerView: 3,
-                      spaceBetween: 40,
-                    },
-                    1024: {
-                      slidesPerView: 3,
-                    },
-                  }}
-                  autoplay={true}
-                  modules={[Pagination, Autoplay]}
-                  className="items-center flex justify-center w-full"
-                >
-                  {sponsors?.map((sponsor) => (
-                    <SwiperSlide
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex -ml-4">
+                  {sponsors.map((sponsor) => (
+                    <div
                       key={sponsor.id}
-                      className="w-auto"
+                      className="flex-[0_0_100%] min-w-0 pl-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] py-10"
                     >
-                      <div className="w-full flex flex-col gap-1 justify-center items-center">
-                        <Image
+                      <div className="group relative bg-white border border-zinc-100 p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center aspect-[5/2] w-full">
+                        <img
                           src={sponsor.image}
                           alt={sponsor.name}
-                          removeWrapper
-                          className="h-full w-full sm:w-auto sm:h-32"
+                          className="h-full w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
                         />
                       </div>
-                    </SwiperSlide>
+                    </div>
                   ))}
-                </Swiper>
+                </div>
               </div>
             )}
           </motion.div>
@@ -112,3 +99,4 @@ export const SponsorSection = (props: IProps) => {
     </>
   )
 }
+

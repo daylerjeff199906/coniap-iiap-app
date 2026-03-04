@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Button } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
 import { CardSpeaker } from '@/components'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 
 import { motion } from 'framer-motion'
 
@@ -45,16 +45,8 @@ export const SpeakersSection = (props: IProps) => {
                   <b>Magistrales</b> que provocan el <b>cambio</b>
                 </h2>
               </div>
-              <Button
-                radius="full"
-                size="lg"
-                variant="solid"
-                color="primary"
-                className="text-white"
-                as={Link}
-                href="/ponentes"
-              >
-                Ver más
+              <Button size="lg" variant="default" className="text-white" asChild>
+                <Link href="/speakers">Ver más</Link>
               </Button>
             </motion.header>
 

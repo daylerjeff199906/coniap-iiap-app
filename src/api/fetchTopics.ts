@@ -1,5 +1,5 @@
 'use server'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from "@/utils/supabase/supabase/client"
 import { ITopic } from '@/types'
 
 export async function createTopic(props: ITopic) {
@@ -68,4 +68,19 @@ export async function fetchTopic(id: number) {
   } else {
     return data
   }
+}
+
+export async function fetchActiveTopics(): Promise<ITopic[] | null> {
+  const supabase = createClient()
+  const { data, error } = await supabase
+    .from('topics')
+    .select('*')
+    .eq('isActived', true)
+    .order('id', { ascending: true })
+
+  if (error) {
+    console.error('Error fetching active topics:', error)
+    return null
+  }
+  return data as ITopic[]
 }

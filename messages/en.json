@@ -1,0 +1,81 @@
+{
+    "HomePage": {
+        "title": "INTERNATIONAL CONGRESS",
+        "subtitle": "ON PERUVIAN AMAZON",
+        "description": "Integrating science, knowledge, and dialogue for sustainable Amazonian development.",
+        "nav": {
+            "home": "Home",
+            "events": "Events",
+            "speakers": "Speakers",
+            "about": "About us",
+            "blog": "Blog",
+            "news": "News",
+            "editions": "Editions",
+            "contact": "Contact",
+            "menu": "Menu"
+        },
+        "aboutSection": {
+            "title": "About Us",
+            "mission": "Mission",
+            "vision": "Vision",
+            "leadership": "Leadership",
+            "viewMore": "View More"
+        }
+    },
+    "Metadata": {
+        "title": "CONIAP | International Congress on the Peruvian Amazon",
+        "description": "III International Congress on the Peruvian Amazon carried out by the Research Institute of the Peruvian Amazon (IIAP).",
+        "about": {
+            "title": "About Us",
+            "description": "The International Congress on the Peruvian Amazon (CONIAP) is a scientific event organized by the Research Institute of the Peruvian Amazon (IIAP). It brings together researchers, academics, students, and professionals from around the world to share their knowledge and experiences on the Amazon."
+        },
+        "editions": {
+            "title": "Editions",
+            "description": "Explore the previous editions of the International Congress on the Peruvian Amazon."
+        }
+    },
+    "Footer": {
+        "description": "III INTERNATIONAL CONGRESS ON THE PERUVIAN AMAZON",
+        "date": "From November 13 to 15, 2024",
+        "location": "Virtual",
+        "hashtag": "#CONIAP2024",
+        "copy": "© 2024 CONIAP. All rights reserved.",
+        "nav": {
+            "home": "Home",
+            "agenda": "Agenda",
+            "speakers": "Speakers",
+            "inscriptions": "Inscriptions",
+            "contact": "Contact"
+        },
+        "sections": {
+            "connect": "Connect",
+            "partners": "Partners",
+            "newsletter": "Newsletter"
+        }
+    },
+    "Auth": {
+        "login": "Login",
+        "loginDescription": "Enter your credentials to access your account",
+        "emailPlaceholder": "mail@example.com",
+        "passwordPlaceholder": "Your password",
+        "forgotPassword": "I don't have an account",
+        "rememberMe": "Remember me",
+        "logIn": "Log In",
+        "or": "Or continue with",
+        "loginWithGoogle": "Login with Google",
+        "dontHaveAccount": "Don't have an account?",
+        "alreadyHaveAccount": "Already have an account?",
+        "signup": "Sign up",
+        "signupDescription": "Create an account to access the platform and all its content.",
+        "createAccount": "Create Account",
+        "firstNamePlaceholder": "First name",
+        "lastNamePlaceholder": "Last name",
+        "confirmPasswordPlaceholder": "Confirm Password",
+        "accountCreated": "Account Created Successfully!",
+        "checkEmailConfirm": "Check your inbox or spam folder to verify your account and continue.",
+        "emailSentNote": "If you don't find the email in the next few minutes, please check your spam or junk folder.",
+        "Errors": {
+            "invalid_credentials": "Email or password is incorrect"
+        }
+    }
+}

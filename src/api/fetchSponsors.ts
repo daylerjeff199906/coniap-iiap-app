@@ -1,5 +1,5 @@
 'use server'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from "@/utils/supabase/supabase/client"
 import { ISponsor } from '@/types'
 
 export async function createSponsor(props: ISponsor) {
@@ -60,3 +60,45 @@ export async function fetchSponsor(id: string) {
     return data
   }
 }
+export async function fetchCurrentEditionSponsors() {
+  const supabase = await createClient()
+
+  // 1. Get current edition
+  let { data: edition } = await supabase
+    .from('editions')
+    .select('id')
+    .eq('is_current', true)
+    .maybeSingle()
+
+  if (!edition) {
+    const { data: latestEdition } = await supabase
+      .from('editions')
+      .select('id')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+    edition = latestEdition
+  }
+
+  if (!edition) return []
+
+  // 2. Get sponsors linked to this edition
+  const { data, error } = await supabase
+    .from('edition_sponsors')
+    .select(`
+      sponsors(*)
+    `)
+    .eq('edition_id', edition.id)
+    .order('order_index', { ascending: true })
+
+  console.log(data)
+
+  if (error) {
+    console.error('Error fetching edition sponsors:', error)
+    return []
+  }
+
+  const sponsors = data.map(item => item.sponsors) as unknown as ISponsor[]
+  return sponsors
+}
+

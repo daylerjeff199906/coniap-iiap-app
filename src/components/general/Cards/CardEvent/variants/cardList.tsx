@@ -1,7 +1,9 @@
 'use client'
 import { useState } from 'react'
 import { IEvent } from '@/types'
-import { Chip, Image, User, Link as NextLink } from '@nextui-org/react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import NextImage from 'next/image'
+import { Badge } from '@/components/ui/badge'
 import { IconClockHour12 } from '@tabler/icons-react'
 import logo from '@/assets/images/logo_coniap_simple.webp'
 import socialNetworks from '@/utils/json/social_networks.json'
@@ -25,95 +27,92 @@ export const CardListEvent = (props: IProps) => {
 
   return (
     <Link
-      className="border-none w-full min-w-full"
+      className="border-none w-full min-w-full block"
       href={`/eventos/${event.id}`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <div className="flex flex-col sm:flex-row gap-2 w-full">
+      <div className="flex flex-col sm:flex-row gap-4 w-full">
         {showImage && (
-          <div className="w-40">
-            <Image
+          <div className="w-full sm:w-40 h-32 relative flex-shrink-0">
+            <NextImage
               src={event?.banner || logo.src}
-              alt={event?.name}
-              removeWrapper
-              radius="none"
-              className="w-full h-full object-cover bg-gray-300"
+              alt={event?.name || 'evento'}
+              fill
+              className="object-cover bg-gray-300 rounded-md"
             />
           </div>
         )}
         <div className="w-full">
-          <section className="w-full ">
-            <header className="text-xs text-gray-500 flex gap-2 pb-2">
+          <section className="w-full">
+            <header className="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-2 pb-2 items-center">
               {isMagistral && (
-                <Chip
-                  color="success"
-                  size="sm"
-                  radius="full"
-                  variant="flat"
+                <Badge
+                  variant="secondary"
+                  className="bg-green-100 text-green-700 hover:bg-green-100 border-none text-[10px] rounded-full"
                 >
                   Magistral
-                </Chip>
+                </Badge>
               )}
               <div
-                className={`flex gap-2 items-center ${
-                  isHover ? 'text-primary-800 font-medium' : 'text-gray-500'
-                } ${isPassHour && 'text-gray-400 line-through'}`}
+                className={`flex gap-2 items-center ${isHover ? 'text-primary font-medium' : 'text-gray-500'
+                  } ${isPassHour && 'text-gray-400 line-through'}`}
               >
                 <IconClockHour12 size={14} />
-                <h3>
+                <h3 className="text-xs">
                   Desde las {event.timeStart} a {event.timeEnd}
                 </h3>
               </div>
               {event?.sala && (
-                <NextLink
-                  href={event?.sala?.url || '#'}
-                  target="_blank"
-                  size="sm"
-                  showAnchorIcon
-                  className="flex items-center gap-2"
-                >
-                  <Image
-                    src={socialNetworksLogo?.logo}
-                    alt="Sala"
-                    width={20}
-                    className="mr-2 flex-shrink-0"
-                  />
-                  <p className='hidden sm:flex'>Ir a {event?.sala?.name}</p>
-                </NextLink>
+                <div onClick={(e) => e.stopPropagation()}>
+                  <Link
+                    href={event?.sala?.url || '#'}
+                    target="_blank"
+                    className="flex items-center gap-2 text-primary hover:underline"
+                  >
+                    {socialNetworksLogo?.logo && (
+                      <div className="relative w-4 h-4 flex-shrink-0">
+                        <NextImage
+                          src={socialNetworksLogo.logo}
+                          alt="Sala"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    )}
+                    <p className="text-[10px] sm:text-xs">Ir a {event?.sala?.name}</p>
+                  </Link>
+                </div>
               )}
             </header>
             <main className="pb-2 w-full">
               <h1
-                className={`mb-1 ${
-                  isMagistral ? 'text-lg' : 'text-base'
-                } font-bold ${
-                  isHover ? 'text-primary-800 underline' : 'text-gray-700'
-                }`}
+                className={`mb-1 transition-colors ${isMagistral ? 'text-lg' : 'text-base'
+                  } font-bold ${isHover ? 'text-primary underline' : 'text-gray-700'
+                  }`}
               >
                 {event.name}
               </h1>
-              <p className="text-xs">{event.shortDescription}</p>
+              <p className="text-xs text-muted-foreground line-clamp-2">{event.shortDescription}</p>
             </main>
             {event?.summary?.person && (
-              <section className="w-full pt-3">
-                <User
-                  avatarProps={{
-                    src: event?.summary?.person?.image || '',
-                    alt: event?.summary?.person?.name || 'Nombre de ponente',
-                    className: `w-10 h-10 min-w-10 min-h-10 ${
-                      !isMagistral && 'hidden'
-                    }`,
-                  }}
-                  name={
-                    event?.summary?.person?.name +
-                      ' ' +
-                      event?.summary?.person?.surName || 'Nombre de ponente'
-                  }
-                  description={
-                    event?.summary?.person?.institution || 'Institucion'
-                  }
-                />
+              <section className="w-full pt-2">
+                <div className="flex items-center gap-3">
+                  {isMagistral && (
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={event?.summary?.person?.image || ''} alt={event?.summary?.person?.name} />
+                      <AvatarFallback>{event?.summary?.person?.name?.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                  )}
+                  <div className="flex flex-col">
+                    <span className="text-xs font-semibold">
+                      {event?.summary?.person?.name + ' ' + event?.summary?.person?.surName || 'Nombre de ponente'}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground line-clamp-1">
+                      {event?.summary?.person?.institution || 'Institucion'}
+                    </span>
+                  </div>
+                </div>
               </section>
             )}
           </section>

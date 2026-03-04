@@ -1,7 +1,9 @@
 'use client'
-import { Avatar, Card, CardBody, Image } from '@nextui-org/react'
+// import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import NextImage from 'next/image'
+import { Card, CardContent } from '@/components/ui/card'
 import { IPerson } from '@/types'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { motion } from 'framer-motion'
 import dataCountry from '@/utils/json/countries.json'
 
@@ -27,46 +29,42 @@ export const CardSpeaker = (props: IProps) => {
         scale: 1.03,
       }}
     >
-      <Card
-        shadow="none"
-        radius="none"
-        isPressable
-        isBlurred
-        className="w-full bg-transparent"
-        as={Link}
-        href={`/ponentes/${speaker?.id}`}
-      >
-        <Image
-          src={speaker?.image !== '' ? speaker?.image : urlImgeDefault}
-          alt="image"
-          radius="lg"
-          className="h-48 sm:h-64 w-full object-cover"
-          removeWrapper
-          isBlurred
-        />
-        <CardBody className="bg-transparent px-0">
-          <div className="flex flex-col space-y-2">
-            <div className="flex flex-col gap-1">
-              <h3 className="font-bold text-lg sm:text-xl line-clamp-1">
-                {speaker.name + ' ' + speaker.surName}
-              </h3>
-            </div>
-            <div className="flex items-center gap-3">
-              <div>
-                <Avatar
-                  src={country?.flag || ''}
-                  className="w-7 h-5 rounded-sm"
-                />
-              </div>
-              <div>
-                <p className="text-tiny sm:text-sm line-clamp-2">
-                  {speaker.institution}
-                </p>
-              </div>
-            </div>
+      <Link href={`/speakers/${speaker?.id}`}>
+        <Card className="w-full bg-transparent border-none shadow-none overflow-hidden cursor-pointer">
+          <div className="relative aspect-[4/4] w-full overflow-hidden rounded-xl">
+            <img
+              src={speaker?.image !== '' ? speaker?.image : urlImgeDefault}
+              alt={speaker.name}
+              className="object-cover w-full h-full"
+            />
           </div>
-        </CardBody>
-      </Card>
+          <CardContent className="bg-transparent px-0 pt-4">
+            <div className="flex flex-col space-y-2">
+              <div className="flex flex-col gap-1">
+                <h3 className="font-bold text-lg sm:text-xl line-clamp-1">
+                  {speaker.name + ' ' + speaker.surName}
+                </h3>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="relative w-8 h-6 min-w-8 min-h-6 overflow-hidden border rounded-sm">
+                  {country?.flag && (
+                    <img
+                      src={country.flag}
+                      alt={country.country}
+                      className="object-cover w-full h-full"
+                    />
+                  )}
+                </div>
+                <div>
+                  <p className="text-xs sm:text-sm line-clamp-2 text-muted-foreground">
+                    {speaker.institution}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
     </motion.div>
   )
 }

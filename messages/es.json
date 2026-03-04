@@ -1,0 +1,81 @@
+{
+    "HomePage": {
+        "title": "CONGRESO INTERNACIONAL",
+        "subtitle": "SOBRE AMAZONÍA PERUANA",
+        "description": "Integrando ciencia, saberes y diálogo para el desarrollo sostenible amazónico.",
+        "nav": {
+            "home": "Inicio",
+            "events": "Eventos",
+            "speakers": "Ponentes",
+            "about": "Acerca de nosotros",
+            "blog": "Blog",
+            "news": "Novedades",
+            "editions": "Ediciones",
+            "contact": "Contacto",
+            "menu": "Menú"
+        },
+        "aboutSection": {
+            "title": "Sobre CONIAP",
+            "mission": "Misión",
+            "vision": "Visión",
+            "leadership": "Liderazgo",
+            "viewMore": "Ver Más"
+        }
+    },
+    "Metadata": {
+        "title": "CONIAP | Congreso Internacional de la Amazonía Peruana",
+        "description": "III Congreso Internacional sobre la Amazonía Peruana realizado por el Instituto de Investigaciones de la Amazonía Peruana (IIAP).",
+        "about": {
+            "title": "Acerca de nosotros",
+            "description": "El Congreso Internacional sobre la Amazonía Peruana (CONIAP) es un evento científico organizado por el Instituto de Investigaciones de la Amazonía Peruana (IIAP). Reúne a investigadores, académicos, estudiantes y profesionales de todo el mundo para compartir sus conocimientos y experiencias sobre la Amazonía."
+        },
+        "editions": {
+            "title": "Ediciones",
+            "description": "Explora las ediciones anteriores del Congreso Internacional sobre la Amazonía Peruana."
+        }
+    },
+    "Footer": {
+        "description": "III CONGRESO INTERNACIONAL SOBRE LA AMAZONÍA PERUANA",
+        "date": "Del 13 al 15 de Noviembre 2024",
+        "location": "Virtual",
+        "hashtag": "#CONIAP2024",
+        "copy": "© 2024 CONIAP. Todos los derechos reservados.",
+        "nav": {
+            "home": "Inicio",
+            "agenda": "Agenda",
+            "speakers": "Ponentes",
+            "inscriptions": "Inscripciones",
+            "contact": "Contacto"
+        },
+        "sections": {
+            "connect": "Conéctate",
+            "partners": "Socios",
+            "newsletter": "Boletín"
+        }
+    },
+    "Auth": {
+        "login": "Iniciar Sesión",
+        "loginDescription": "Ingresa tus credenciales para acceder a tu cuenta",
+        "emailPlaceholder": "correo@ejemplo.com",
+        "passwordPlaceholder": "Tu contraseña",
+        "forgotPassword": "Aún no tengo cuenta",
+        "rememberMe": "Recuérdame",
+        "logIn": "Ingresar al Sistema",
+        "or": "O continua con",
+        "loginWithGoogle": "Iniciar sesión con Google",
+        "dontHaveAccount": "¿No tienes cuenta?",
+        "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+        "signup": "Regístrate",
+        "signupDescription": "Crea una cuenta para acceder a la plataforma y todos los contenidos.",
+        "createAccount": "Crear Cuenta",
+        "firstNamePlaceholder": "Nombres",
+        "lastNamePlaceholder": "Apellidos",
+        "confirmPasswordPlaceholder": "Confirmar Contraseña",
+        "accountCreated": "¡Cuenta Creada Exitosamente!",
+        "checkEmailConfirm": "Revisa tu bandeja de entrada o spam para confirmar tu cuenta y continuar.",
+        "emailSentNote": "Si no encuentras el correo en los próximos minutos, por favor revisa también tu carpeta de spam o correo no deseado.",
+        "Errors": {
+            "invalid_credentials": "El correo o la contraseña son incorrectos"
+        }
+    }
+}

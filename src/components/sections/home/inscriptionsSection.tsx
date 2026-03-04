@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
-import { Button, Image as UiImage } from '@nextui-org/react'
-import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Link } from '@/i18n/routing'
 
 import { motion } from 'framer-motion'
 
@@ -49,22 +49,15 @@ export const InscriptionsSection = () => {
                 conocimientos con la comunidad.
               </h3>
             </div>
-            <Button
-              radius="full"
-              size="lg"
-              color="danger"
-              as={Link}
-              href="/inscripciones"
-            >
-              Inscríbete ahora
+            <Button className="rounded-full" size="lg" variant="destructive" asChild>
+              <Link href="/inscripciones">Inscríbete ahora</Link>
             </Button>
           </motion.div>
         </div>
-        <UiImage
+        <img
           src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fauditorio.webp?alt=media&token=2cd62ce6-816a-4af4-974d-e0962d449911"
           alt="inscriptions"
-          removeWrapper
-          radius="none"
+
           className="absolute top-0 left-0 w-full h-full object-cover object-center -z-10"
         />
       </div>

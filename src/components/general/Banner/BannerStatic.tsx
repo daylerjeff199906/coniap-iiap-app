@@ -1,5 +1,5 @@
 'use client'
-import { Image } from '@nextui-org/react'
+import Image from 'next/image'
 // import { usePathname } from 'next/navigation'
 
 interface IBanner {
@@ -38,9 +38,7 @@ export const BannerStatic = (props: IBanner) => {
             urlImage ||
             'https://img.freepik.com/foto-gratis/trabajador-oficina-que-usa-videoconferencia-reunirse-gente-negocios-camara-web-hablando-colegas-videoconferencia-remota-tener-conversacion-internet-llamada-teleconferencia_482257-50395.jpg?t=st=1711815457~exp=1711819057~hmac=296ed2236e230cc88b8cc57763f778841f26786771322a146f0f4f75712b632f&w=1380'
           }
-          removeWrapper
-          isBlurred
-          radius="none"
+          
           className="absolute top-0 -z-20 object-cover left-0 right-0 w-full h-full"
         />
       </section>

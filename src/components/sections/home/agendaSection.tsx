@@ -1,7 +1,8 @@
 'use client'
 import { CardEvent } from '@/components'
 import { IEvent, IProgram } from '@/types'
-import { Button, Tab, Tabs } from '@nextui-org/react'
+import { Button } from '@/components/ui/button'
+import { TabsTrigger, Tabs } from '@/components/ui/tabs'
 import { motion } from 'framer-motion'
 import { formatDateToDDMMM } from '@/utils/functions'
 import Link from 'next/link'
@@ -17,7 +18,7 @@ export const AgendaSection = (props: IProps) => {
 
   return (
     <section className=" bg-white">
-      <div className="container section-home grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
+      {/* <div className="container section-home grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
         <motion.div
           className="w-ful col-span-1 sticky top-20 z-20 h-fit bg-white"
           initial={{ opacity: 0, x: -15 }}
@@ -45,20 +46,13 @@ export const AgendaSection = (props: IProps) => {
               por realizarse
             </h3>
           </div>
-          <Button
-            radius="full"
-            size="lg"
-            variant="ghost"
-            color="danger"
-            as={Link}
-            href="/agenda"
-          >
-            Ver agenda
-          </Button>
+          <Button size="lg" variant="ghost" asChild>
+  <Link href="/agenda">Ver agenda</Link>
+</Button>
         </motion.div>
         <div className="w-ful col-span-1 sm:col-span-2">
           {programs && programs?.length > 0 && (
-            <Tabs
+            <TabsTriggers
               aria-label="Options"
               variant="underlined"
               classNames={{
@@ -69,7 +63,7 @@ export const AgendaSection = (props: IProps) => {
               size="lg"
             >
               {programs?.map((program, programIndex) => (
-                <Tab
+                <TabsTrigger
                   key={programIndex}
                   title={formatDateToDDMMM(program.date as string)}
                 >
@@ -93,9 +87,9 @@ export const AgendaSection = (props: IProps) => {
                         </div>
                       ))}
                   </div>
-                </Tab>
+                </TabsTrigger>
               ))}
-            </Tabs>
+            </TabsTriggers>
           )}
           {programs && programs?.length === 0 && (
             <main className="w-full flex flex-col items-center justify-center">
@@ -111,7 +105,7 @@ export const AgendaSection = (props: IProps) => {
             </main>
           )}
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }
