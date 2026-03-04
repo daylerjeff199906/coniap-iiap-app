@@ -50,9 +50,14 @@ export async function login(formData: FormData, locale: string = 'es'): Promise<
     }
 
 
-    // Si ha completado el onboarding, redirigir al dashboard
+    // Base Platform External URL
+    const platformUrl = 'https://herp-science-platform-bio-intranet.vercel.app'
+    // Parámetros de rastreo para el flujo de la inscripción en la plataforma
+    const trackingParams = '?source=coniap&event=CONIAP_2024&edition=3&type=convocatoria'
+
+    // Si ha completado el onboarding, redirigir al dashboard de la plataforma externa
     revalidatePath('/', 'layout')
-    return { redirectUrl: `/${locale}/dashboard` }
+    return { redirectUrl: `${platformUrl}/${locale}/dashboard${trackingParams}` }
 }
 
 export async function signup(formData: FormData) {

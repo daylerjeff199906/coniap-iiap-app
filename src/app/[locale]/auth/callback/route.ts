@@ -21,7 +21,30 @@ export async function GET(
         const { error } = await supabase.auth.exchangeCodeForSession(code)
 
         if (!error) {
-            // Check if next URL already contains a locale
+            // Verificar si el usuario ha completado el onboarding
+            const { data } = await supabase.auth.getUser()
+
+            if (data?.user) {
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('onboarding_completed')
+                    .eq('id', data.user.id)
+                    .single()
+
+                // Si no ha completado el onboarding, redirigimos a la app local
+                if (!profile?.onboarding_completed) {
+                    return NextResponse.redirect(`${origin}/${locale}/onboarding`)
+                }
+            }
+
+            // Si ha terminado onboarding y el destino es el dashboard
+            if (next.includes('/dashboard')) {
+                const platformUrl = 'https://herp-science-platform-bio-intranet.vercel.app'
+                const trackingParams = '?source=coniap&event=CONIAP_2024&edition=3&type=convocatoria'
+                return NextResponse.redirect(`${platformUrl}/${locale}/dashboard${trackingParams}`)
+            }
+
+            // Check if next URL already contains a locale (fallback general)
             const nextUrl = next.startsWith(`/${locale}`) ? next : `/${locale}${next.startsWith('/') ? next : `/${next}`}`
             return NextResponse.redirect(`${origin}${nextUrl}`)
         }
