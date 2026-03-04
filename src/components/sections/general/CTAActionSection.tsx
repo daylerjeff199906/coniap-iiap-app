@@ -23,11 +23,7 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
     const [showAuthModal, setShowAuthModal] = useState(false)
 
     const sectionContent = content?.[locale] || content?.['es']
-
     if (!sectionContent) return null
-
-    // Image fallback if not provided in CMS
-    const backgroundImage = sectionContent.image_url || '/brands/cta_bg.webp'
 
     const handleAction = async () => {
         if (!user || !user.id) {
@@ -54,84 +50,114 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
         }
     }
 
-    // Split title for fancy "on" style
-    const titleParts = sectionContent.title.split(' ')
-    const mainTitle = titleParts.slice(0, -1).join(' ')
-    const lastWord = titleParts[titleParts.length - 1]
+    // Split title for typographic grid
+    const words = sectionContent.title.trim().split(/\s+/)
+    const word1 = words[0] || ''
+    const word2 = words[1] || ''
+    const word3 = words.length > 2 ? words.slice(2).join(' ') : ''
 
     return (
-        <section className="relative w-full h-[600px] md:h-[700px] flex items-center justify-center py-12 px-4 md:px-8">
-            <div className="relative w-full max-w-7xl h-full rounded-[2.5rem] overflow-hidden shadow-2xl">
+        <section className="relative w-full bg-black py-20 md:py-32 px-4 md:px-8 overflow-hidden text-white min-h-[600px] flex items-center">
+            {/* Background Grain/Subtle Effect */}
+            <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
-                {/* Full Background Image */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
-                    style={{ backgroundImage: `url(${backgroundImage})` }}
-                >
-                    <div className="absolute inset-0 bg-black/40" />
-                </div>
+            {/* Ambient Glows */}
+            <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[60%] bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
 
-                {/* Brand Logos (Bottom Left) */}
-                <div className="absolute bottom-12 left-12 hidden md:flex items-center gap-8 opacity-70 grayscale invert brightness-0">
-                    <img src="/brands/brand_1.svg" alt="" className="h-6" />
-                    <img src="/brands/brand_2.svg" alt="" className="h-6" />
-                    <img src="/brands/brand_3.svg" alt="" className="h-6" />
-                </div>
+            <div className="container mx-auto max-w-7xl relative z-10">
+                <div className="flex flex-col space-y-16 md:space-y-32">
 
-                <div className="container mx-auto h-full flex items-center justify-end">
+                    {/* Typographic Header Block */}
+                    <div className="flex flex-col gap-8 md:gap-y-16 items-start">
 
-                    {/* Glass Card on the Right */}
+                        {/* Word 1 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <h2 className="text-6xl sm:text-8xl md:text-[8vw] font-black uppercase tracking-tighter leading-none">
+                                {word1}
+                            </h2>
+                        </motion.div>
+
+                        {/* Word 2 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="md:text-right"
+                        >
+                            <h2 className="text-6xl sm:text-8xl md:text-[8vw] font-black uppercase tracking-tighter leading-none opacity-80 md:opacity-100">
+                                {word2}
+                            </h2>
+                        </motion.div>
+
+                        {/* Bottom Left: Circle + Word 3 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="flex items-center gap-4 md:gap-8"
+                        >
+                            <div className="w-12 h-12 md:w-[6vw] md:h-[6vw] bg-white rounded-full flex-shrink-0 animate-pulse shadow-[0_0_40px_rgba(255,255,255,0.2)]" />
+                            <h2 className="text-6xl sm:text-8xl md:text-[8vw] font-black uppercase tracking-tighter leading-none">
+                                {word3}
+                            </h2>
+                        </motion.div>
+                    </div>
+
+                    {/* Action Block (Now explicitly below/after the words) */}
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="w-full md:w-[500px] h-full md:h-[90%] relative z-10"
+                        transition={{ delay: 0.3 }}
+                        className="flex flex-col md:flex-row items-start md:items-end justify-between gap-12"
                     >
-                        <div className="w-full h-full bg-black/20 backdrop-blur-3xl border-l border-white/10 p-10 md:p-16 flex flex-col justify-center text-white space-y-8">
-
-                            <div className="space-y-4">
-                                <h2 className="text-5xl md:text-6xl font-medium tracking-tight leading-[1.1]">
-                                    {mainTitle}{' '}
-                                    <span className="italic font-serif opacity-90">{lastWord}</span>
-                                </h2>
-
-                                <p className="text-lg text-zinc-300 font-light leading-relaxed max-w-sm">
-                                    {sectionContent.description}
-                                </p>
-                            </div>
-
-                            <div className="pt-8">
-                                <Button
-                                    size="lg"
-                                    disabled={loading}
-                                    onClick={handleAction}
-                                    className="h-16 rounded-full px-10 text-lg font-medium bg-primary hover:scale-105 transition-all duration-300 flex items-center gap-4 shadow-[0_0_30px_rgba(204,255,0,0.3)]"
-                                >
-                                    <AnimatePresence mode="wait">
-                                        <div className='flex items-center gap-4'>
-                                            {loading ? (
-                                                <Loader2 className="animate-spin" />
-                                            ) : (
-                                                <>
-                                                    <span>{sectionContent.button_text}</span>
-                                                    <div className="h-full border-l border-black/10 pl-4">
-                                                        <ArrowRight size={20} />
-                                                    </div>
-                                                </>
-                                            )}
-                                        </div>
-                                    </AnimatePresence>
-                                </Button>
-                            </div>
-
-                            <div className="pt-4 border-t border-white/5 opacity-40">
-                                <p className="text-[10px] uppercase font-bold tracking-[0.2em]">
-                                    {locale === 'es' ? 'Plataforma Oficial CONIAP' : 'Official CONIAP Platform'}
-                                </p>
-                            </div>
+                        <div className="max-w-xl">
+                            <p className="text-xl md:text-3xl text-zinc-400 font-light leading-relaxed">
+                                {sectionContent.description}
+                            </p>
                         </div>
+
+                        <Button
+                            size="lg"
+                            disabled={loading}
+                            onClick={handleAction}
+                            className="h-16 md:h-24 w-full md:w-auto min-w-[300px] rounded-none border border-white/20 px-12 md:px-16 text-xl md:text-3xl font-black bg-transparent text-white hover:text-black transition-all duration-500 group uppercase tracking-[0.2em] relative overflow-hidden"
+                        >
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={loading ? 'loading' : 'idle'}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    className="flex items-center justify-between md:justify-center gap-8 relative z-10 w-full"
+                                >
+                                    {loading ? (
+                                        <Loader2 className="animate-spin mx-auto" size={32} />
+                                    ) : (
+                                        <>
+                                            <span className="whitespace-nowrap">{sectionContent.button_text}</span>
+                                            <ArrowRight className="group-hover:translate-x-3 transition-transform duration-500" size={36} />
+                                        </>
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
+                            <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                        </Button>
                     </motion.div>
                 </div>
+            </div>
+            {/* Official Footer */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 md:left-12 md:translate-x-0 opacity-20 pointer-events-none">
+                <p className="text-[10px] uppercase font-bold tracking-[0.5em] whitespace-nowrap">
+                    {locale === 'es' ? 'Plataforma Oficial CONIAP' : 'Official CONIAP Platform'}
+                </p>
             </div>
 
             <AuthRequiredModal

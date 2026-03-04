@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
 import { LogIn, ArrowRight } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { useLocale } from 'next-intl'
 
 interface AuthRequiredModalProps {
@@ -43,37 +44,61 @@ export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, on
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[400px] bg-[#0A0A0A] border-white/5 text-white rounded-[2.5rem] p-0 overflow-hidden shadow-2xl backdrop-blur-xl">
-                <div className="p-8 space-y-8">
-                    <DialogHeader className="flex flex-col items-center pt-4">
-                        <div className="w-16 h-16 bg-[#CCFF00]/10 rounded-2xl flex items-center justify-center text-[#CCFF00] mb-6">
-                            <LogIn size={32} />
+            <DialogContent className="sm:max-w-[440px] bg-black/90 border-white/10 text-white rounded-[3rem] p-0 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
+                <div className="relative p-10 space-y-10">
+                    {/* Background Decorative Element */}
+                    <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 blur-[80px] rounded-full pointer-events-none" />
+
+                    <DialogHeader className="flex flex-col items-center space-y-6">
+                        {/* Logo Container */}
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="relative"
+                        >
+                            <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
+                            <img
+                                src="/logo_coniap.webp"
+                                alt="CONIAP Logo"
+                                className="relative w-24 h-auto drop-shadow-2xl"
+                            />
+                        </motion.div>
+
+                        <div className="space-y-2 text-center">
+                            <DialogTitle className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
+                                {t.title}
+                            </DialogTitle>
+                            <DialogDescription className="text-zinc-400 text-lg font-light leading-relaxed max-w-[280px] mx-auto">
+                                {t.description}
+                            </DialogDescription>
                         </div>
-                        <DialogTitle className="text-3xl font-medium tracking-tight text-center">
-                            {t.title}
-                        </DialogTitle>
-                        <DialogDescription className="text-zinc-400 text-center text-base pt-2 font-light">
-                            {t.description}
-                        </DialogDescription>
                     </DialogHeader>
 
-                    <div className="flex flex-col gap-4">
-                        <Link href="/login" onClick={() => onClose(false)}>
-                            <Button className="w-full h-14 rounded-2xl bg-[#CCFF00] text-black hover:bg-white transition-all duration-300 font-medium text-lg gap-3">
+                    <div className="flex flex-col gap-5">
+                        <Link href="/login" onClick={() => onClose(false)} className="w-full">
+                            <Button className="w-full h-16 rounded-2xl bg-primary text-black hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-bold text-xl gap-4 shadow-[0_10px_30px_rgba(var(--primary),0.3)] group">
                                 {t.login}
-                                <ArrowRight size={18} />
+                                <LogIn size={22} className="group-hover:translate-x-1 transition-transform" />
                             </Button>
                         </Link>
 
-                        <Link href="/register" onClick={() => onClose(false)}>
-                            <Button variant="ghost" className="w-full h-14 rounded-2xl border border-white/5 hover:bg-white/5 text-white transition-all duration-300 font-light text-lg">
-                                {t.register}
+                        <Link href="/register" onClick={() => onClose(false)} className="w-full">
+                            <Button
+                                variant="ghost"
+                                className="w-full h-16 rounded-2xl border border-white/10 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-500 font-bold text-xl group relative overflow-hidden"
+                            >
+                                <span className="relative z-10">{t.register}</span>
+                                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                             </Button>
                         </Link>
                     </div>
                 </div>
-                <div className="bg-white/[0.02] p-4 text-center">
-                    <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">CONIAP IIAP</p>
+
+                {/* Footer Brand */}
+                <div className="bg-white/5 py-5 text-center border-t border-white/5">
+                    <p className="text-[10px] text-zinc-500 uppercase tracking-[0.4em] font-black">
+                        IIAP • CONIAP 2026
+                    </p>
                 </div>
             </DialogContent>
         </Dialog>
