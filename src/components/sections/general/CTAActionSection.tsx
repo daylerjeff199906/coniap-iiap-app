@@ -9,14 +9,17 @@ import { getSecureMagicLink } from '@/lib/auth-tickets'
 import { toast } from 'react-toastify'
 import { useLocale } from 'next-intl'
 import { useAuthContext } from '@/provider/authProvider'
+import { getConvocatoriaUrl, getExternalLoginUrl } from '@/utils/constants'
 import { AuthRequiredModal } from '@/components/general/Modals/AuthRequiredModal'
+import { IActiveCall } from '@/api/fetchCalls'
 
 interface CTASectionProps {
     content: ICTASectionContent
     currentEditionId?: string
+    activeCall?: IActiveCall
 }
 
-export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEditionId }) => {
+export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEditionId, activeCall }) => {
     const { user } = useAuthContext()
     const locale = useLocale() as 'es' | 'en'
     const [loading, setLoading] = useState(false)
@@ -24,6 +27,11 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
 
     const sectionContent = content?.[locale] || content?.['es']
     if (!sectionContent) return null
+
+    // Build the destination URL: direct link to the convocatoria page on the platform
+    const convocatoriaUrl = activeCall
+        ? getConvocatoriaUrl(locale, activeCall.id)
+        : null
 
     const handleAction = async () => {
         if (!user || !user.id) {
@@ -34,10 +42,16 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
         setLoading(true)
         try {
             const baseUrl = window.location.origin
+
+            // targetPath is the path on the EXTERNAL platform after auth
+            const targetPath = convocatoriaUrl
+                ? `/${locale}/dashboard/convocatorias/${activeCall!.id}`
+                : sectionContent.target_path
+
             const magicLink = await getSecureMagicLink(
                 user.id,
                 {
-                    targetPath: sectionContent.target_path,
+                    targetPath,
                     editionId: currentEditionId
                 },
                 baseUrl
@@ -55,6 +69,11 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
     const word1 = words[0] || ''
     const word2 = words[1] || ''
     const word3 = words.length > 2 ? words.slice(2).join(' ') : ''
+
+    // nextPath for unauthenticated users: direct to convocatoria
+    const authNextPath = convocatoriaUrl
+        ? `/${locale}/dashboard/convocatorias/${activeCall!.id}`
+        : sectionContent.target_path
 
     return (
         <section className="relative w-full bg-black py-20 md:py-32 px-4 md:px-8 overflow-hidden text-white min-h-[600px] flex items-center">
@@ -110,7 +129,7 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
                         </motion.div>
                     </div>
 
-                    {/* Action Block (Now explicitly below/after the words) */}
+                    {/* Action Block */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -124,32 +143,34 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
                             </p>
                         </div>
 
-                        <Button
-                            size="lg"
-                            disabled={loading}
-                            onClick={handleAction}
-                            className="h-16 md:h-24 w-full md:w-auto min-w-[300px] rounded-none border border-white/20 px-12 md:px-16 text-xl md:text-3xl font-black bg-transparent text-white hover:text-black transition-all duration-500 group uppercase tracking-[0.2em] relative overflow-hidden"
-                        >
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={loading ? 'loading' : 'idle'}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    className="flex items-center justify-between md:justify-center gap-8 relative z-10 w-full"
-                                >
-                                    {loading ? (
-                                        <Loader2 className="animate-spin mx-auto" size={32} />
-                                    ) : (
-                                        <>
-                                            <span className="whitespace-nowrap">{sectionContent.button_text}</span>
-                                            <ArrowRight className="group-hover:translate-x-3 transition-transform duration-500" size={36} />
-                                        </>
-                                    )}
-                                </motion.div>
-                            </AnimatePresence>
-                            <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                        </Button>
+                        {activeCall && (
+                            <Button
+                                size="lg"
+                                disabled={loading}
+                                onClick={handleAction}
+                                className="h-16 md:h-24 w-full md:w-auto min-w-[300px] rounded-none border border-white/20 px-12 md:px-16 text-xl md:text-3xl font-black bg-transparent text-white hover:text-black transition-all duration-500 group uppercase tracking-[0.2em] relative overflow-hidden"
+                            >
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={loading ? 'loading' : 'idle'}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        className="flex items-center justify-between md:justify-center gap-8 relative z-10 w-full"
+                                    >
+                                        {loading ? (
+                                            <Loader2 className="animate-spin mx-auto" size={32} />
+                                        ) : (
+                                            <>
+                                                <span className="whitespace-nowrap">{sectionContent.button_text}</span>
+                                                <ArrowRight className="group-hover:translate-x-3 transition-transform duration-500" size={36} />
+                                            </>
+                                        )}
+                                    </motion.div>
+                                </AnimatePresence>
+                                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                            </Button>
+                        )}
                     </motion.div>
                 </div>
             </div>
@@ -163,6 +184,7 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
             <AuthRequiredModal
                 isOpen={showAuthModal}
                 onClose={setShowAuthModal}
+                nextPath={authNextPath}
             />
         </section>
     )
