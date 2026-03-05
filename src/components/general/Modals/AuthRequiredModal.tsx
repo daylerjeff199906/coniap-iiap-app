@@ -13,7 +13,7 @@ import { Link } from '@/i18n/routing'
 import { LogIn, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useLocale } from 'next-intl'
-import { getExternalLoginUrl, PLATFORM_URL } from '@/utils/constants'
+import { getExternalLoginUrl, getExternalSignupUrl, PLATFORM_URL } from '@/utils/constants'
 
 interface AuthRequiredModalProps {
     isOpen: boolean
@@ -24,6 +24,7 @@ interface AuthRequiredModalProps {
 export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, onClose, nextPath }) => {
     const locale = useLocale()
     const externalLoginUrl = getExternalLoginUrl(locale, nextPath)
+    const externalSignupUrl = getExternalSignupUrl(locale, nextPath)
 
     const t = {
         es: {
@@ -85,7 +86,7 @@ export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, on
                             </Button>
                         </a>
 
-                        <a href={`${PLATFORM_URL}/${locale}/signup`} onClick={() => onClose(false)} className="w-full">
+                        <a href={externalSignupUrl} onClick={() => onClose(false)} className="w-full">
                             <Button
                                 variant="ghost"
                                 className="w-full h-16 rounded-2xl border border-white/10 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-500 font-bold text-xl group relative overflow-hidden"

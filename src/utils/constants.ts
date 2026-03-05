@@ -16,3 +16,8 @@ export const getExternalLoginUrl = (locale: string = 'es', customNextPath?: stri
     const nextPath = customNextPath || `/${locale}/dashboard${getTrackingParamsString()}`
     return `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
 }
+
+export const getExternalSignupUrl = (locale: string = 'es', customNextPath?: string) => {
+    const nextPath = customNextPath || `/${locale}/dashboard${getTrackingParamsString()}`
+    return `${PLATFORM_URL}/${locale}/signup?next=${encodeURIComponent(nextPath)}`
+}

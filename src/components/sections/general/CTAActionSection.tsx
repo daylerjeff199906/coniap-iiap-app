@@ -9,6 +9,7 @@ import { getSecureMagicLink } from '@/lib/auth-tickets'
 import { toast } from 'react-toastify'
 import { useLocale } from 'next-intl'
 import { useAuthContext } from '@/provider/authProvider'
+import { getTrackingParamsString } from '@/utils/constants'
 import { AuthRequiredModal } from '@/components/general/Modals/AuthRequiredModal'
 
 interface CTASectionProps {
@@ -35,7 +36,7 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
         setLoading(true)
         try {
             const baseUrl = window.location.origin
-            const targetPath = activeCallId ? `/dashboard/convocatorias/${activeCallId}` : sectionContent.target_path
+            const targetPath = activeCallId ? `/dashboard/convocatorias/${activeCallId}${getTrackingParamsString()}` : sectionContent.target_path
 
             const magicLink = await getSecureMagicLink(
                 user.id,
@@ -166,7 +167,7 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
             <AuthRequiredModal
                 isOpen={showAuthModal}
                 onClose={setShowAuthModal}
-                nextPath={activeCallId ? `/${locale}/dashboard/convocatorias/${activeCallId}` : sectionContent.target_path}
+                nextPath={activeCallId ? `/${locale}/dashboard/convocatorias/${activeCallId}${getTrackingParamsString()}` : sectionContent.target_path}
             />
         </section>
     )
