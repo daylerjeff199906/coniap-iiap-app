@@ -1,23 +1,27 @@
 export const PLATFORM_URL = 'https://herp-science-platform-bio-intranet.vercel.app';
 
-export const TRACKING_PARAMS = {
-    source: 'coniap',
-    event: 'CONIAP_2024',
-    edition: '3',
-    type: 'convocatoria'
-};
-
-export const getTrackingParamsString = () => {
-    const params = new URLSearchParams(TRACKING_PARAMS);
-    return `?${params.toString()}`;
-};
-
-export const getExternalLoginUrl = (locale: string = 'es', customNextPath?: string) => {
-    const nextPath = customNextPath || `/${locale}/dashboard${getTrackingParamsString()}`
-    return `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
+/**
+ * Builds the direct URL to a convocatoria page on the external platform.
+ * e.g. https://platform.com/es/dashboard/convocatorias/[callId]
+ */
+export const getConvocatoriaUrl = (locale: string, callId: string) => {
+    return `${PLATFORM_URL}/${locale}/dashboard/convocatorias/${callId}`
 }
 
-export const getExternalSignupUrl = (locale: string = 'es', customNextPath?: string) => {
-    const nextPath = customNextPath || `/${locale}/dashboard${getTrackingParamsString()}`
-    return `${PLATFORM_URL}/${locale}/signup?next=${encodeURIComponent(nextPath)}`
+/**
+ * Builds the login URL redirecting to a specific path after authentication.
+ */
+export const getExternalLoginUrl = (locale: string = 'es', nextPath?: string) => {
+    const defaultNext = `/${locale}/dashboard`
+    const next = nextPath || defaultNext
+    return `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(next)}`
+}
+
+/**
+ * Builds the signup URL redirecting to a specific path after registration.
+ */
+export const getExternalSignupUrl = (locale: string = 'es', nextPath?: string) => {
+    const defaultNext = `/${locale}/dashboard`
+    const next = nextPath || defaultNext
+    return `${PLATFORM_URL}/${locale}/signup?next=${encodeURIComponent(next)}`
 }
