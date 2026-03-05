@@ -204,10 +204,9 @@ export async function fetchCurrentMagistralSpeakers() {
 
   // 2. Get participants with role 'speaker_mg'
   const { data: participants, error } = await supabase
-    .from('edition_participants')
+    .from('event_participants')
     .select(`
       id,
-      person:person_id(id, name, surName, image, location, institution),
       profile:profile_id(id, first_name, last_name, avatar_url, location, institution),
       roles:role_id!inner(slug)
     `)
@@ -221,12 +220,7 @@ export async function fetchCurrentMagistralSpeakers() {
 
   // 3. Map and normalize to IPerson structure
   return (participants || []).map((p: any) => {
-    if (p.person) {
-      return {
-        ...p.person,
-        typePerson: 'speaker_mg'
-      }
-    } else if (p.profile) {
+    if (p.profile) {
       return {
         id: p.profile.id,
         name: p.profile.first_name,

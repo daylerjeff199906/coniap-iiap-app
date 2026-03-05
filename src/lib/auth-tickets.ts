@@ -83,7 +83,7 @@ export async function validateAndConsumeTicket(ticketId: string) {
  */
 export async function checkEditionParticipation(profileId: string, editionId: string) {
     const { data, error } = await createClient()
-        .from('edition_participants')
+        .from('event_participants')
         .select('id')
         .eq('profile_id', profileId)
         .eq('edition_id', editionId)
