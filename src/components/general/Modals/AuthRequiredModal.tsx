@@ -18,11 +18,12 @@ import { getExternalLoginUrl, PLATFORM_URL } from '@/utils/constants'
 interface AuthRequiredModalProps {
     isOpen: boolean
     onClose: (value: boolean) => void
+    nextPath?: string
 }
 
-export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, onClose }) => {
+export const AuthRequiredModal: React.FC<AuthRequiredModalProps> = ({ isOpen, onClose, nextPath }) => {
     const locale = useLocale()
-    const externalLoginUrl = getExternalLoginUrl(locale)
+    const externalLoginUrl = getExternalLoginUrl(locale, nextPath)
 
     const t = {
         es: {

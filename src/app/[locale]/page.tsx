@@ -6,6 +6,7 @@ import { fetchCurrentMagistralSpeakers } from '@/api/fetchPerson'
 import { fetchActiveTopics } from '@/api/fetchTopics'
 import { fetchCurrentEditionSponsors } from '@/api/fetchSponsors'
 import { fetchCurrentEdition } from '@/api/fetchEditions'
+import { fetchActiveCalls } from '@/api/fetchCalls'
 import { IMagistralSpeakersSectionContent, ITopicsSectionContent, ISponsorsSectionContent, ICTASectionContent } from '@/types'
 
 export async function generateMetadata({
@@ -31,6 +32,8 @@ export default async function HomePage() {
     const dynamicSponsors = (await fetchCurrentEditionSponsors()) || []
     const ctaSection = await fetchSectionByType('home', 'cta_action_section')
     const currentEdition = await fetchCurrentEdition()
+    const activeCalls = await fetchActiveCalls()
+    const activeCallId = activeCalls && activeCalls.length > 0 ? activeCalls[0].id : undefined
 
     return (
         <main className="min-h-screen bg-zinc-950">
@@ -62,6 +65,7 @@ export default async function HomePage() {
                 <CTAActionSection
                     content={ctaSection.content as ICTASectionContent}
                     currentEditionId={currentEdition?.id}
+                    activeCallId={activeCallId}
                 />
             )}
 

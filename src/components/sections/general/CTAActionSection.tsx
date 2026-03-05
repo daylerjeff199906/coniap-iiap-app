@@ -14,9 +14,10 @@ import { AuthRequiredModal } from '@/components/general/Modals/AuthRequiredModal
 interface CTASectionProps {
     content: ICTASectionContent
     currentEditionId?: string
+    activeCallId?: string
 }
 
-export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEditionId }) => {
+export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEditionId, activeCallId }) => {
     const { user } = useAuthContext()
     const locale = useLocale() as 'es' | 'en'
     const [loading, setLoading] = useState(false)
@@ -34,10 +35,12 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
         setLoading(true)
         try {
             const baseUrl = window.location.origin
+            const targetPath = activeCallId ? `/dashboard/convocatorias/${activeCallId}` : sectionContent.target_path
+
             const magicLink = await getSecureMagicLink(
                 user.id,
                 {
-                    targetPath: sectionContent.target_path,
+                    targetPath,
                     editionId: currentEditionId
                 },
                 baseUrl
@@ -163,6 +166,7 @@ export const CTAActionSection: React.FC<CTASectionProps> = ({ content, currentEd
             <AuthRequiredModal
                 isOpen={showAuthModal}
                 onClose={setShowAuthModal}
+                nextPath={activeCallId ? `/${locale}/dashboard/convocatorias/${activeCallId}` : sectionContent.target_path}
             />
         </section>
     )

@@ -12,7 +12,7 @@ export const getTrackingParamsString = () => {
     return `?${params.toString()}`;
 };
 
-export const getExternalLoginUrl = (locale: string = 'es') => {
-    const nextPath = `/${locale}/dashboard${getTrackingParamsString()}`
+export const getExternalLoginUrl = (locale: string = 'es', customNextPath?: string) => {
+    const nextPath = customNextPath || `/${locale}/dashboard${getTrackingParamsString()}`
     return `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
 }
