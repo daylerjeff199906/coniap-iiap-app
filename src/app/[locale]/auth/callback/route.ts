@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies } from 'next/headers'
-import { PLATFORM_URL, getTrackingParamsString } from '@/utils/constants'
+import { PLATFORM_URL, getExternalLoginUrl } from '@/utils/constants'
 
 export async function GET(
     request: Request,
@@ -40,8 +40,7 @@ export async function GET(
 
             // Si ha terminado onboarding y el destino es el dashboard
             if (next.includes('/dashboard')) {
-                const nextPath = `/${locale}/dashboard${getTrackingParamsString()}`
-                const redirectUrl = `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
+                const redirectUrl = getExternalLoginUrl(locale, next)
                 return NextResponse.redirect(redirectUrl)
             }
 

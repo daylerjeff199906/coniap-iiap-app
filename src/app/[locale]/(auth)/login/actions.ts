@@ -2,10 +2,9 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies, headers } from 'next/headers'
-import { PLATFORM_URL, getTrackingParamsString } from '@/utils/constants'
+import { getExternalLoginUrl } from '@/utils/constants'
 
 type LoginResponse = {
     error?: string
@@ -60,8 +59,8 @@ export async function login(formData: FormData, locale: string = 'es'): Promise<
         // 2. Si tiene el rol 'client', 'user', o si no tiene roles (por defecto lo consideramos un usuario normal)
         // lo mandamos hacia la otra plataforma
         if (roles.includes('client') || roles.includes('user') || roles.length === 0) {
-            const nextPath = `/${locale}/dashboard${getTrackingParamsString()}`
-            const redirectUrl = `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
+            const nextPath = `/${locale}/dashboard`
+            const redirectUrl = getExternalLoginUrl(locale, nextPath)
 
             revalidatePath('/', 'layout')
             return { redirectUrl }
