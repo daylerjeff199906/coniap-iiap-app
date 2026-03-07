@@ -69,12 +69,12 @@ export async function login(formData: FormData, locale: string = 'es'): Promise<
 
         // Fallback genérico para cualquier otro escenario
         revalidatePath('/', 'layout')
-        return { redirectUrl: `/${locale}/dashboard` }
+        return { redirectUrl: `/${locale}/admin` }
     }
 
     // Fallback absoluto por si data.user fuese nulo
     revalidatePath('/', 'layout')
-    return { redirectUrl: `/${locale}/dashboard` }
+    return { redirectUrl: `/${locale}/admin` }
 }
 
 export async function signup(formData: FormData) {
