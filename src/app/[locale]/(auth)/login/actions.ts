@@ -28,36 +28,53 @@ export async function login(formData: FormData, locale: string = 'es'): Promise<
         return { error: error.message }
     }
 
-    // Verificar si el usuario ha completado el onboarding
+    // Verificar el rol del usuario para redirigir basado en la estructura de user_roles y roles
     if (data.user) {
-        const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .select('onboarding_completed')
-            .eq('id', data.user.id)
-            .single()
+        // Consultar los roles del usuario asignados en user_roles
+        const { data: userRolesData, error: rolesError } = await supabase
+            .from('user_roles')
+            .select(`*, roles(*)`)
+            .eq('profile_id', data.user.id)
 
-        if (profileError) {
-            console.error('Error fetching profile:', profileError)
-            revalidatePath('/', 'layout')
-            return { redirectUrl: `/${locale}/dashboard` }
+        if (rolesError) {
+            console.error('Error fetching user roles:', rolesError)
+        }
+        // Supabase retorna las relaciones foreign keys como un objeto "roles" por cada "user_roles" encontrado.
+        const roles: string[] = userRolesData?.map((ur: any) => ur.roles).filter(Boolean) || []
+
+        // Mapa de roles internos de la aplicación y sus redirecciones
+        const roleRedirects: Record<string, string> = {
+            'admin': `/${locale}/admin`,
+            'reviewer': `/${locale}/reviewer`, // Ejemplo adicional de tu esquema
+            // Puedes agregar más roles fácilmente en el futuro...
         }
 
-
-        // Si no ha completado el onboarding, redirigir a onboarding
-        if (!profile?.onboarding_completed) {
-            revalidatePath('/', 'layout')
-            return { redirectUrl: `/${locale}/onboarding` }
+        // 1. Buscamos si el usuario tiene algún rol (ej. 'admin') que esté mapeado a la app interna
+        for (const role of roles) {
+            if (roleRedirects[role]) {
+                revalidatePath('/', 'layout')
+                return { redirectUrl: roleRedirects[role] }
+            }
         }
+
+        // 2. Si tiene el rol 'client', 'user', o si no tiene roles (por defecto lo consideramos un usuario normal)
+        // lo mandamos hacia la otra plataforma
+        if (roles.includes('client') || roles.includes('user') || roles.length === 0) {
+            const nextPath = `/${locale}/dashboard${getTrackingParamsString()}`
+            const redirectUrl = `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
+
+            revalidatePath('/', 'layout')
+            return { redirectUrl }
+        }
+
+        // Fallback genérico para cualquier otro escenario
+        revalidatePath('/', 'layout')
+        return { redirectUrl: `/${locale}/dashboard` }
     }
 
-
-    // Preparar la redirección a la plataforma externa
-    // Enviamos al login de la otra plataforma con el parámetro 'next' apuntando al dashboard + tracking params
-    const nextPath = `/${locale}/dashboard${getTrackingParamsString()}`
-    const redirectUrl = `${PLATFORM_URL}/${locale}/login?next=${encodeURIComponent(nextPath)}`
-
+    // Fallback absoluto por si data.user fuese nulo
     revalidatePath('/', 'layout')
-    return { redirectUrl }
+    return { redirectUrl: `/${locale}/dashboard` }
 }
 
 export async function signup(formData: FormData) {
