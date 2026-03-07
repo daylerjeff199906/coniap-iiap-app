@@ -3,7 +3,6 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 import { Providers } from '@/app/providers';
-import { Navbar, Footer } from '@/components';
 import 'filepond/dist/filepond.min.css';
 import { Metadata } from 'next';
 
@@ -51,11 +50,7 @@ export default async function RootLayout({
             <body className={inter.className}>
                 <NextIntlClientProvider messages={messages}>
                     <Providers>
-                        <Navbar />
-                        <main className="min-h-screen">
-                            {children}
-                        </main>
-                        <Footer />
+                        {children}
                     </Providers>
                 </NextIntlClientProvider>
             </body>
