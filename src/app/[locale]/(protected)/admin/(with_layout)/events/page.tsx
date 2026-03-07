@@ -1,4 +1,5 @@
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
+import { PageHeader } from '@/components/general/PageHeader'
 import { getEvents } from './actions'
 import { EventFilters } from './components/EventFilters'
 import { EventActionsDropdown } from './components/EventActionsDropdown'
@@ -21,7 +22,6 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination'
 import { IconDatabaseOff, IconCalendarEvent } from '@tabler/icons-react'
-import Image from 'next/image'
 
 export const metadata = {
     title: 'Eventos - Panel',
@@ -31,10 +31,10 @@ export default async function EventsPage({
     searchParams,
     params,
 }: {
-    searchParams: { page?: string, q?: string, status?: string }
-    params: { locale: string }
+    searchParams: Promise<{ page?: string, q?: string, status?: string }>
+    params: Promise<{ locale: string }>
 }) {
-    const locale = await params.locale
+    const { locale } = await params
     const sParams = await searchParams; // next15 await context
 
     const currentPage = parseInt(sParams.page || '1')
@@ -56,12 +56,13 @@ export default async function EventsPage({
     return (
         <LayoutWrapper sectionTitle="Gestión de Eventos">
             <div className="flex flex-col gap-6">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight mb-2">Eventos y Congresos</h1>
-                    <p className="text-muted-foreground text-sm">Administra los eventos, congresos o seminarios organizados.</p>
-                </div>
+                <PageHeader
+                    title="Eventos y Congresos"
+                    description="Administra los eventos, congresos o seminarios organizados."
+                    className="mb-2"
+                />
 
-                <div className="bg-card p-4 rounded-xl border shadow-sm flex flex-col gap-4">
+                <div className="flex flex-col gap-4">
                     <EventFilters />
 
                     <div className="rounded-md border overflow-hidden mt-2">

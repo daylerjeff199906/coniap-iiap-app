@@ -1,12 +1,12 @@
 'use client'
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useCallback, useState, useTransition } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { IconSearch, IconPlus } from '@tabler/icons-react'
-import Link from 'next/link'
+import { Link, useRouter, usePathname } from '@/i18n/routing'
 import { useLocale } from 'next-intl'
 
 export function EventFilters() {
@@ -21,7 +21,11 @@ export function EventFilters() {
     const createQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams.toString())
-            params.set(name, value)
+            if (value) {
+                params.set(name, value)
+            } else {
+                params.delete(name)
+            }
             params.set('page', '1') // Reset page on filter change
             return params.toString()
         },
@@ -31,12 +35,14 @@ export function EventFilters() {
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         startTransition(() => {
+            // @ts-ignore - pathname es valid en base al config de next-intl
             router.push(`${pathname}?${createQueryString('q', searchQuery)}`)
         })
     }
 
     const handleStatusChange = (val: string) => {
         startTransition(() => {
+            // @ts-ignore
             router.push(`${pathname}?${createQueryString('status', val)}`)
         })
     }
@@ -44,7 +50,7 @@ export function EventFilters() {
     return (
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div className="flex flex-1 items-center gap-2">
-                <form onSubmit={handleSearch} className="relative w-full max-w-sm">
+                <form onSubmit={handleSearch} className="relative w-full max-w-sm flex items-center">
                     <IconSearch className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                         name="q"
@@ -53,6 +59,7 @@ export function EventFilters() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
+                    <button type="submit" className="hidden" aria-hidden="true" tabIndex={-1}>Search</button>
                 </form>
                 <Select
                     defaultValue={searchParams.get('status') || 'active'}
@@ -69,7 +76,7 @@ export function EventFilters() {
                 </Select>
             </div>
             <Button asChild className="shrink-0 bg-blue-600 hover:bg-blue-700 rounded-full">
-                <Link href={`/${locale}/admin/events/create`}>
+                <Link href="/admin/events/create">
                     <IconPlus className="mr-2 h-4 w-4" /> Nuevo Evento
                 </Link>
             </Button>

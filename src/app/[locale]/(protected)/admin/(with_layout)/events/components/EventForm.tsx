@@ -1,20 +1,17 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 import { upsertEvent } from '../actions'
-import { useLocale } from 'next-intl'
-import { ChevronLeft } from 'lucide-react'
-import Link from 'next/link'
+import { useRouter } from '@/i18n/routing'
 
 export function EventForm({ eventInfo }: { eventInfo?: any }) {
-    const locale = useLocale()
     const router = useRouter()
     const [isPending, startTransition] = useTransition()
     const [error, setError] = useState<string | null>(null)
@@ -31,13 +28,13 @@ export function EventForm({ eventInfo }: { eventInfo?: any }) {
             if (result.error) {
                 setError(result.error)
             } else {
-                router.push(`/${locale}/admin/events`)
+                router.push('/admin/events')
             }
         })
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-8 max-w-3xl w-full pb-8">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full pb-8">
             <div className="flex flex-col gap-6">
                 <div>
                     <h2 className="text-xl font-bold mb-4">{isEdit ? 'Propiedades Iniciales' : 'Empieza tu nuevo Evento'}</h2>
@@ -108,31 +105,65 @@ export function EventForm({ eventInfo }: { eventInfo?: any }) {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5 bg-muted/30 border border-muted rounded-xl mt-2">
-                            <div className="grid gap-2">
-                                <Label htmlFor="status" className="font-semibold text-muted-foreground">Estado del evento</Label>
-                                <Select name="status" defaultValue={eventInfo?.status || 'draft'}>
-                                    <SelectTrigger className="rounded-xl h-11 bg-background border">
-                                        <SelectValue placeholder="Seleccione..." />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="draft">Borrador</SelectItem>
-                                        <SelectItem value="published">Publicado</SelectItem>
-                                        <SelectItem value="archived">Archivado</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                        <div className="flex flex-col gap-6 mt-4">
+                            <div className="flex flex-col gap-3">
+                                <div>
+                                    <Label className="font-semibold text-foreground text-base">Estado del Evento</Label>
+                                    <p className="text-sm text-muted-foreground mt-1">Selecciona en qué fase de publicación se encuentra el evento.</p>
+                                </div>
+                                <RadioGroup name="status" defaultValue={eventInfo?.status || 'draft'} className="grid gap-3">
+                                    <Label
+                                        htmlFor="status-draft"
+                                        className="flex items-center justify-between rounded-xl border p-4 hover:bg-muted/50 cursor-pointer [&:has([data-state=checked])]:bg-muted/20 [&:has([data-state=checked])]:border-[#0064e0] [&:has([data-state=checked])]:ring-1 ring-[#0064e0]"
+                                    >
+                                        <div className="flex flex-col gap-1">
+                                            <span className="font-medium text-[15px] text-foreground">Borrador</span>
+                                            <span className="font-normal text-[13px] text-muted-foreground">Oculto al público, ideal para configurar detalles iniciales.</span>
+                                        </div>
+                                        <RadioGroupItem id="status-draft" value="draft" />
+                                    </Label>
+
+                                    <Label
+                                        htmlFor="status-published"
+                                        className="flex items-center justify-between rounded-xl border p-4 hover:bg-muted/50 cursor-pointer [&:has([data-state=checked])]:bg-muted/20 [&:has([data-state=checked])]:border-[#0064e0] [&:has([data-state=checked])]:ring-1 ring-[#0064e0]"
+                                    >
+                                        <div className="flex flex-col gap-1">
+                                            <span className="font-medium text-[15px] text-foreground">Publicado</span>
+                                            <span className="font-normal text-[13px] text-muted-foreground">Visible para todos, listo para recibir inscripciones.</span>
+                                        </div>
+                                        <RadioGroupItem id="status-published" value="published" />
+                                    </Label>
+
+                                    <Label
+                                        htmlFor="status-archived"
+                                        className="flex items-center justify-between rounded-xl border p-4 hover:bg-muted/50 cursor-pointer [&:has([data-state=checked])]:bg-muted/20 [&:has([data-state=checked])]:border-[#0064e0] [&:has([data-state=checked])]:ring-1 ring-[#0064e0]"
+                                    >
+                                        <div className="flex flex-col gap-1">
+                                            <span className="font-medium text-[15px] text-foreground">Archivado</span>
+                                            <span className="font-normal text-[13px] text-muted-foreground">El evento ha concluido y solo está disponible de forma histórica.</span>
+                                        </div>
+                                        <RadioGroupItem id="status-archived" value="archived" />
+                                    </Label>
+                                </RadioGroup>
                             </div>
 
-                            <div className="flex flex-col justify-center gap-3 md:pl-4">
-                                <Label htmlFor="is_active" className="font-semibold text-muted-foreground">¿Está Activo (visible)?</Label>
-                                <div className="flex items-center space-x-2">
-                                    <Switch
-                                        id="is_active"
-                                        name="is_active"
-                                        defaultChecked={eventInfo ? eventInfo.is_active : true}
-                                        value="true"
-                                    />
-                                    <Label htmlFor="is_active" className="font-normal text-sm cursor-pointer">Sí, mantener activo</Label>
+                            <div className="border border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/10 rounded-xl overflow-hidden p-6 relative">
+                                <div className="flex flex-row items-center justify-between gap-6">
+                                    <div className="flex flex-col gap-1">
+                                        <h3 className="text-[15px] font-semibold text-red-900 dark:text-red-400">Visibilidad del sistema</h3>
+                                        <p className="text-[14px] text-red-700/80 dark:text-red-400/80 leading-relaxed max-w-lg">
+                                            Determina si el evento está completamente habilitado en la plataforma. Si lo desactivas, nadie podrá acceder o interactuar, sin importar el estado del mismo.
+                                        </p>
+                                    </div>
+                                    <div className="flex-shrink-0">
+                                        <Switch
+                                            id="is_active"
+                                            name="is_active"
+                                            defaultChecked={eventInfo ? eventInfo.is_active : true}
+                                            value="true"
+                                            className="data-[state=checked]:bg-red-600"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
