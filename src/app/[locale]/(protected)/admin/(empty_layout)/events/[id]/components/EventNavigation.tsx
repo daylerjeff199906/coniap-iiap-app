@@ -16,16 +16,16 @@ export function EventNavigation({ locale, eventId }: { locale: string, eventId: 
             icon: IconSettings
         },
         {
-            name: 'Convocatorias',
-            description: 'Fechas clave de envíos, revisiones y bases del evento.',
-            href: `/admin/events/${eventId}/call`,
-            icon: IconSpeakerphone
-        },
-        {
             name: 'Ediciones',
             description: 'Fechas, versiones históricas y locación principal.',
             href: `/admin/events/${eventId}/edition`,
             icon: IconCalendarEvent
+        },
+        {
+            name: 'Convocatorias',
+            description: 'Fechas clave de envíos, revisiones y bases del evento.',
+            href: `/admin/events/${eventId}/call`,
+            icon: IconSpeakerphone
         },
         {
             name: 'Participantes',
