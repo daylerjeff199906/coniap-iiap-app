@@ -44,7 +44,6 @@ export default async function EditEventLayout({
                     variant="chevron"
                 />
             </div>
-
             <div className="w-full flex flex-col lg:flex-row gap-6 lg:gap-10 min-h-[600px] items-start">
                 <EventNavigation locale={locale} eventId={id} />
                 <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 flex-1 w-full lg:min-h-[500px] lg:border-l border-muted">
