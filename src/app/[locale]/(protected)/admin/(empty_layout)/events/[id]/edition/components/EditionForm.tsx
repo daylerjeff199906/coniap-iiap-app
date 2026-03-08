@@ -8,11 +8,13 @@ import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { useRouter } from '@/i18n/routing'
 import { upsertEdition } from '../actions'
+import { ImageUpload } from '@/components/general/ImageUpload/ImageUpload'
 
 export function EditionForm({ eventId, editionInfo }: { eventId: string, editionInfo?: any }) {
     const router = useRouter()
     const [isPending, startTransition] = useTransition()
     const [error, setError] = useState<string | null>(null)
+    const [coverUrl, setCoverUrl] = useState<string>(editionInfo?.cover_url || '')
 
     const isEdit = !!editionInfo
 
@@ -143,14 +145,12 @@ export function EditionForm({ eventId, editionInfo }: { eventId: string, edition
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="cover_url" className="font-semibold text-muted-foreground">URL del Banner/Cover</Label>
-                            <Input
-                                id="cover_url"
-                                name="cover_url"
-                                type="url"
-                                placeholder="https://..."
-                                defaultValue={editionInfo?.cover_url}
-                                className="rounded-xl h-11"
+                            <Label htmlFor="cover_url" className="font-semibold text-muted-foreground underline decoration-blue-200 underline-offset-4">Banner / Cabecera del Evento</Label>
+                            <ImageUpload
+                                value={coverUrl}
+                                onChange={setCoverUrl}
+                                folder={`events/${eventId}/editions`}
+                                className="mt-1"
                             />
                         </div>
 

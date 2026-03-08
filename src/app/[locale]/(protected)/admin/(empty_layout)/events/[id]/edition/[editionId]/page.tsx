@@ -22,6 +22,7 @@ export default async function EditEditionPage({
                 title="Editar Edición"
                 description={`Modifica los datos de ${edition?.name?.es || 'esta edición'}.`}
                 backHref={`/admin/events/${eventId}/edition`}
+                variant="close"
             />
             <hr className='border' />
             <EditionForm eventId={eventId} editionInfo={edition} />

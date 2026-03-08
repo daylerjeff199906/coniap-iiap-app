@@ -41,13 +41,13 @@ export default async function EditEventLayout({
                     title={event.name}
                     description="Gestiona y administra todos los detalles y configuraciones de tu evento."
                     backHref="/admin/events"
+                    variant="chevron"
                 />
             </div>
 
             <div className="w-full flex flex-col lg:flex-row gap-6 lg:gap-10 min-h-[600px] items-start">
                 <EventNavigation locale={locale} eventId={id} />
-
-                <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 flex-1 w-full lg:min-h-[500px] lg:pl-10 lg:border-l border-muted">
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 flex-1 w-full lg:min-h-[500px] lg:border-l border-muted">
                     {children}
                 </div>
             </div>

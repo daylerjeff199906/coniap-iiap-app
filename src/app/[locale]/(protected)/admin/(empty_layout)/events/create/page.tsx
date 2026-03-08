@@ -19,6 +19,7 @@ export default async function CreateEventPage({
                     title="Crear Nuevo Evento"
                     description="Completa la información básica para iniciar tu evento."
                     backHref="/admin/events"
+                    variant="close"
                     className="mb-4"
                 />
                 <EventForm />

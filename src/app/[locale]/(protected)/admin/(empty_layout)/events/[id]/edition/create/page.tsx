@@ -18,6 +18,7 @@ export default async function CreateEditionPage({
                 title="Nueva Edición"
                 description="Agrega una nueva edición anual a este evento."
                 backHref={`/admin/events/${eventId}/edition`}
+                variant="close"
                 className="-mt-2 mb-2"
             />
             <hr className='border' />
