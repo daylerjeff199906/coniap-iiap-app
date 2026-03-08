@@ -20,6 +20,7 @@ export default async function CreateEditionPage({
                 backHref={`/admin/events/${eventId}/edition`}
                 className="-mt-2 mb-2"
             />
+            <hr className='border' />
             <EditionForm eventId={eventId} />
         </div>
     )

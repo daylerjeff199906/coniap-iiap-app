@@ -1,7 +1,6 @@
 'use client'
 
-import { Link } from '@/i18n/routing'
-import { usePathname } from 'next/navigation'
+import { Link, usePathname } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 import { IconSettings, IconUsers, IconCalendarEvent, IconSpeakerphone, IconChevronRight } from '@tabler/icons-react'
 
@@ -44,8 +43,9 @@ export function EventNavigation({ locale, eventId }: { locale: string, eventId: 
 
                 <div className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-3 pb-4 lg:pb-0 hide-scrollbar -mx-2 px-2 lg:mx-0 lg:px-0">
                     {navItems.map((item) => {
-                        const isActive = pathname.includes(item.href) ||
-                            (pathname.endsWith(eventId) && item.href.endsWith(eventId))
+                        const isActive = item.href === `/admin/events/${eventId}`
+                            ? pathname === item.href
+                            : pathname.startsWith(item.href)
                         const Icon = item.icon
                         return (
                             <Link

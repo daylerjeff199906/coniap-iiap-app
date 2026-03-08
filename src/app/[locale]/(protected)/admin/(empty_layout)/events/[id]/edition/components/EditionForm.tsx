@@ -35,7 +35,6 @@ export function EditionForm({ eventId, editionInfo }: { eventId: string, edition
         <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full pb-8">
             <div className="flex flex-col gap-6">
                 <div>
-                    <h2 className="text-xl font-bold mb-4">{isEdit ? 'Actualizar Edición' : 'Crear Nueva Edición'}</h2>
                     {error && (
                         <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-xl mb-4">
                             {error}
