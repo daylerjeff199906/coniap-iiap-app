@@ -10,19 +10,19 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { ICall } from '@/types/call'
-import { IconSpeakerphone, IconDatabaseOff, IconEdit, IconTrash } from '@tabler/icons-react'
+import { IconSpeakerphone, IconDatabaseOff } from '@tabler/icons-react'
 import { useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
+import { CallActions } from './CallActions'
 
 interface CallTableProps {
     calls: ICall[]
     eventId?: string
     showEventInfo?: boolean
-    onDelete?: (id: string, name: string) => void
 }
 
-export function CallTable({ calls, eventId, showEventInfo = true, onDelete }: CallTableProps) {
+export function CallTable({ calls, eventId, showEventInfo = true }: CallTableProps) {
     const locale = useLocale()
 
     return (
@@ -100,21 +100,11 @@ export function CallTable({ calls, eventId, showEventInfo = true, onDelete }: Ca
                                         </Badge>
                                     </TableCell>
                                     <TableCell className="text-center py-4 pr-6">
-                                        <div className="flex items-center justify-center gap-1">
-                                            <Link href={eventId ? `/admin/events/${eventId}/call/${call.id}` : `/admin/calls/${call.id}`}>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50">
-                                                    <IconEdit size={16} />
-                                                </Button>
-                                            </Link>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                className="h-8 w-8 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50"
-                                                onClick={() => onDelete?.(call.id, call.title)}
-                                            >
-                                                <IconTrash size={16} />
-                                            </Button>
-                                        </div>
+                                        <CallActions
+                                            callId={call.id}
+                                            callTitle={call.title}
+                                            eventId={eventId}
+                                        />
                                     </TableCell>
                                 </TableRow>
                             )

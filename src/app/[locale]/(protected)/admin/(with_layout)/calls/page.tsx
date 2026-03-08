@@ -1,8 +1,9 @@
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { PageHeader } from '@/components/general/PageHeader'
-import { getCalls } from './actions'
-import { CallTable } from './components/CallTable'
-import { CallFilters } from './components/CallFilters'
+import { getCalls } from '@/app/[locale]/(protected)/admin/calls/actions'
+import { CallTable } from '@/app/[locale]/(protected)/admin/calls/components/CallTable'
+import { CallFilters } from '@/app/[locale]/(protected)/admin/calls/components/CallFilters'
+import { ICall } from '@/types/call'
 
 export const metadata = {
     title: 'Convocatorias - Panel',
@@ -22,7 +23,7 @@ export default async function CallsPage({
     })
 
     // Filter by search query
-    const filteredCalls = calls.filter(c => {
+    const filteredCalls = calls.filter((c: ICall) => {
         return c.title.toLowerCase().includes(searchQuer.toLowerCase()) ||
             c.description?.toLowerCase().includes(searchQuer.toLowerCase())
     })

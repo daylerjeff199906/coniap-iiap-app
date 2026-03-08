@@ -8,6 +8,8 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { IconSearch, IconPlus } from '@tabler/icons-react'
 import { Link, useRouter, usePathname } from '@/i18n/routing'
 import { useLocale } from 'next-intl'
+import { useDebounce } from '@/hooks/core/useDebounce'
+import { useEffect } from 'react'
 
 export function EventFilters() {
     const router = useRouter()
@@ -17,6 +19,7 @@ export function EventFilters() {
     const [isPending, startTransition] = useTransition()
 
     const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
+    const debouncedSearch = useDebounce(searchQuery, 500)
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -31,6 +34,16 @@ export function EventFilters() {
         },
         [searchParams]
     )
+
+    useEffect(() => {
+        const currentQ = searchParams.get('q') || ''
+        if (debouncedSearch !== currentQ) {
+            startTransition(() => {
+                // @ts-ignore
+                router.push(`${pathname}?${createQueryString('q', debouncedSearch)}`)
+            })
+        }
+    }, [debouncedSearch, pathname, router, createQueryString, searchParams])
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

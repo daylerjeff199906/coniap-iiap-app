@@ -34,7 +34,19 @@ export async function getCalls(filters?: {
         .order('created_at', { ascending: false })
 
     if (filters?.eventId) {
-        query = query.eq('main_event_id', filters.eventId)
+        // Fetch edition IDs for this event to include edition-level calls
+        const { data: editions } = await supabase
+            .from('editions')
+            .select('id')
+            .eq('main_event_id', filters.eventId)
+
+        const editionIds = editions?.map(e => e.id) || []
+
+        if (editionIds.length > 0) {
+            query = query.or(`main_event_id.eq.${filters.eventId},edition_id.in.(${editionIds.join(',')})`)
+        } else {
+            query = query.eq('main_event_id', filters.eventId)
+        }
     }
 
     if (filters?.editionId) {
@@ -122,4 +134,56 @@ export async function deleteCall(id: string) {
 
     revalidatePath('/', 'layout')
     return { success: true }
+}
+
+export async function getParticipantRoles() {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('participant_roles')
+        .select('*')
+        .order('name->>es', { ascending: true })
+
+    if (error) {
+        console.error('Error fetching roles:', error)
+        return []
+    }
+
+    return data
+}
+
+export async function getAllEvents() {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('main_events')
+        .select('id, name')
+        .order('name', { ascending: true })
+
+    if (error) {
+        console.error('Error fetching events:', error)
+        return []
+    }
+
+    return data
+}
+
+export async function getEditionsByEvent(eventId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('editions')
+        .select('id, name, year')
+        .eq('main_event_id', eventId)
+        .order('year', { ascending: false })
+
+    if (error) {
+        console.error('Error fetching editions:', error)
+        return []
+    }
+
+    return data
 }

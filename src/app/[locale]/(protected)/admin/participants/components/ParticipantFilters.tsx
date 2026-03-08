@@ -8,6 +8,8 @@ import { IconSearch } from '@tabler/icons-react'
 import { useRouter, usePathname } from '@/i18n/routing'
 import { useLocale } from 'next-intl'
 import { IParticipantRole } from '@/types/participant'
+import { useDebounce } from '@/hooks/core/useDebounce'
+import { useEffect } from 'react'
 
 interface ParticipantFiltersProps {
     roles: IParticipantRole[]
@@ -21,6 +23,7 @@ export function ParticipantFilters({ roles }: ParticipantFiltersProps) {
     const [isPending, startTransition] = useTransition()
 
     const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
+    const debouncedSearch = useDebounce(searchQuery, 500)
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -35,6 +38,16 @@ export function ParticipantFilters({ roles }: ParticipantFiltersProps) {
         },
         [searchParams]
     )
+
+    useEffect(() => {
+        const currentQ = searchParams.get('q') || ''
+        if (debouncedSearch !== currentQ) {
+            startTransition(() => {
+                // @ts-ignore
+                router.push(`${pathname}?${createQueryString('q', debouncedSearch)}`)
+            })
+        }
+    }, [debouncedSearch, pathname, router, createQueryString, searchParams])
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
