@@ -14,6 +14,8 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { EditionActions } from './components/EditionActions'
 
+import { IEdition } from '@/types/CMS'
+
 export const metadata = {
     title: 'Ediciones - Panel',
 }
@@ -24,7 +26,7 @@ export default async function EditionsPage({
     params: Promise<{ id: string, locale: string }>
 }) {
     const { id: eventId, locale } = await params
-    const editions = await getEditions(eventId)
+    const editions = (await getEditions(eventId)) as IEdition[]
 
     return (
         <div className="flex flex-col gap-6 pt-4">
@@ -54,7 +56,7 @@ export default async function EditionsPage({
                     </TableHeader>
                     <TableBody>
                         {editions && editions.length > 0 ? (
-                            editions.map((edition: any) => {
+                            editions.map((edition) => {
                                 const imageUrl = edition.cover_url
                                 return (
                                     <TableRow key={edition.id} className="hover:bg-muted/30">
@@ -69,7 +71,9 @@ export default async function EditionsPage({
                                                 </div>
                                                 <div className="flex flex-col max-w-[280px]">
                                                     <span className="font-semibold text-[15px] truncate">{edition.name?.es}</span>
-                                                    <span className="text-[11px] text-muted-foreground/80 font-mono mt-0.5" title="Slug">/{edition.slug}</span>
+                                                    <span className="text-[11px] text-muted-foreground/80 font-mono mt-0.5 line-clamp-2" title="Descripción">{
+                                                        locale === 'es' ? edition.description?.es : edition.description?.en
+                                                    }</span>
                                                 </div>
                                             </div>
                                         </TableCell>
