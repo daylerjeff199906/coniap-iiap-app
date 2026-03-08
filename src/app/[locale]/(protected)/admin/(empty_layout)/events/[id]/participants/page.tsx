@@ -1,0 +1,43 @@
+import { getParticipants, getParticipantRoles } from '@/app/[locale]/(protected)/admin/participants/actions'
+import { ParticipantTable } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantTable'
+import { ParticipantFilters } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantFilters'
+import { IParticipant } from '@/types/participant'
+
+export const metadata = {
+    title: 'Participantes del Evento - Panel',
+}
+
+export default async function EventParticipantsPage({
+    params,
+    searchParams
+}: {
+    params: Promise<{ id: string; locale: string }>
+    searchParams: Promise<{ q?: string; role?: string }>
+}) {
+    const { id: eventId } = await params
+    const sParams = await searchParams
+    const searchQuer = sParams.q || ''
+    const roleSlug = sParams.role || ''
+
+    const participants = await getParticipants({
+        eventId,
+        roleSlug: roleSlug || undefined
+    })
+
+    const roles = await getParticipantRoles()
+
+    // Client-side filtering for search query
+    const filteredParticipants = participants.filter((p: IParticipant) => {
+        const fullName = `${p.profiles?.first_name || ''} ${p.profiles?.last_name || ''}`.toLowerCase()
+        return fullName.includes(searchQuer.toLowerCase()) || p.profiles?.email?.toLowerCase().includes(searchQuer.toLowerCase())
+    })
+
+    return (
+        <div className="flex flex-col gap-6 pt-4">
+            <div className="flex flex-col gap-2">
+                <ParticipantFilters roles={roles} />
+                <ParticipantTable participants={filteredParticipants} showEventInfo={false} />
+            </div>
+        </div>
+    )
+}
