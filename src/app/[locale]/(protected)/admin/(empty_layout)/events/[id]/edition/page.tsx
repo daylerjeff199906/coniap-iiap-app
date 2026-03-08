@@ -12,7 +12,7 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { EditionActionsDropdown } from './components/EditionActionsDropdown'
+import { EditionActions } from './components/EditionActions'
 
 export const metadata = {
     title: 'Ediciones - Panel',
@@ -98,7 +98,7 @@ export default async function EditionsPage({
                                             )}
                                         </TableCell>
                                         <TableCell className="text-center py-4 pr-6">
-                                            <EditionActionsDropdown
+                                            <EditionActions
                                                 editionId={edition.id}
                                                 eventId={eventId}
                                                 editionName={edition.name?.es || edition.slug}
