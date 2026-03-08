@@ -1,0 +1,9 @@
+packages:
+  - '.'
+
+allowBuilds:
+  '@parcel/watcher': false
+  '@swc/core': false
+  es5-ext: false
+  protobufjs: false
+  sharp: false
