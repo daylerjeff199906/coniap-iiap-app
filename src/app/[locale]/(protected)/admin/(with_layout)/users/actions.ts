@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
-import { IProfile } from '@/types/profile'
+import { IProfile, IEducation, IEmploymentHistory, ICertification, ILanguage } from '@/types/profile'
 
 export async function getProfiles(page: number = 1, pageSize: number = 30, query?: string) {
     const cookieStore = await cookies()
@@ -101,4 +101,75 @@ export async function updateAvatar(url: string, profileId?: string) {
 
     revalidatePath(`/admin/users/${targetProfileId}`)
     return { success: true }
+}
+
+export async function getProfileEducation(authId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('education')
+        .select('*')
+        .eq('user_id', authId)
+        .order('start_date', { ascending: false })
+
+    if (error) {
+        console.error('Error fetching education:', error)
+        return []
+    }
+
+    return data as IEducation[]
+}
+
+export async function getProfileExperience(authId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('employment_history')
+        .select('*')
+        .eq('user_id', authId)
+        .order('start_date', { ascending: false })
+
+    if (error) {
+        console.error('Error fetching experience:', error)
+        return []
+    }
+
+    return data as IEmploymentHistory[]
+}
+
+export async function getProfileCertifications(authId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('certifications')
+        .select('*')
+        .eq('user_id', authId)
+        .order('issue_date', { ascending: false })
+
+    if (error) {
+        console.error('Error fetching certifications:', error)
+        return []
+    }
+
+    return data as ICertification[]
+}
+
+export async function getProfileLanguages(authId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('languages')
+        .select('*')
+        .eq('user_id', authId)
+
+    if (error) {
+        console.error('Error fetching languages:', error)
+        return []
+    }
+
+    return data as ILanguage[]
 }

@@ -159,7 +159,7 @@ export function AddParticipantForm({ roles, events, initialEventId }: AddPartici
                             <Button
                                 type="button"
                                 variant="ghost"
-                                className="rounded-xl h-10 px-6 text-slate-500 font-semibold"
+                                className="rounded-xl h-10 px-6 text-slate-500 font-semibold hover:bg-slate-100"
                                 onClick={() => router.back()}
                                 disabled={isPending}
                             >
@@ -167,7 +167,7 @@ export function AddParticipantForm({ roles, events, initialEventId }: AddPartici
                             </Button>
                             <Button
                                 type="submit"
-                                className="bg-[#0064e0] hover:bg-[#0057c2] rounded-full h-10 px-8 font-bold shadow-lg shadow-blue-200/60 transition-all active:scale-95 text-sm"
+                                className="bg-slate-900 hover:bg-black rounded-xl h-10 px-8 font-bold shadow-md shadow-slate-200/60 transition-all active:scale-95 text-sm"
                                 disabled={isPending}
                             >
                                 {isPending ? (

@@ -223,20 +223,20 @@ export function AddExistingParticipantModal({ open, onOpenChange, roles, events 
                                     className="grid grid-cols-2 gap-3"
                                 >
                                     <div
-                                        className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all ${targetType === 'event' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
+                                        className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all ${targetType === 'event' ? 'border-black bg-slate-50 ring-1 ring-black' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
                                         onClick={() => setTargetType('event')}
                                     >
                                         <RadioGroupItem value="event" id="radio-event" className="sr-only" />
-                                        <IconCalendarEvent size={18} className={targetType === 'event' ? 'text-primary' : 'text-slate-400'} />
-                                        <span className={`text-xs font-bold ${targetType === 'event' ? 'text-primary' : 'text-slate-600'}`}>Global</span>
+                                        <IconCalendarEvent size={18} className={targetType === 'event' ? 'text-black' : 'text-slate-400'} />
+                                        <span className={`text-xs font-bold ${targetType === 'event' ? 'text-black' : 'text-slate-600'}`}>Global</span>
                                     </div>
                                     <div
-                                        className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all ${targetType === 'edition' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
+                                        className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all ${targetType === 'edition' ? 'border-black bg-slate-50 ring-1 ring-black' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
                                         onClick={() => setTargetType('edition')}
                                     >
                                         <RadioGroupItem value="edition" id="radio-edition" className="sr-only" />
-                                        <IconTrophy size={18} className={targetType === 'edition' ? 'text-primary' : 'text-slate-400'} />
-                                        <span className={`text-xs font-bold ${targetType === 'edition' ? 'text-primary' : 'text-slate-600'}`}>Edición</span>
+                                        <IconTrophy size={18} className={targetType === 'edition' ? 'text-black' : 'text-slate-400'} />
+                                        <span className={`text-xs font-bold ${targetType === 'edition' ? 'text-black' : 'text-slate-600'}`}>Edición</span>
                                     </div>
                                 </RadioGroup>
                             </div>
@@ -266,7 +266,7 @@ export function AddExistingParticipantModal({ open, onOpenChange, roles, events 
                                             value={editionId}
                                             disabled={!eventId || isLoadingEditions}
                                         >
-                                            <SelectTrigger className="rounded-xl h-11 bg-slate-50/50 border-slate-200">
+                                            <SelectTrigger className="rounded-xl h-11 bg-slate-50/50 border-slate-200 focus:ring-slate-400">
                                                 <SelectValue placeholder={isLoadingEditions ? "Cargando..." : "Seleccionar año"} />
                                             </SelectTrigger>
                                             <SelectContent className="rounded-xl">

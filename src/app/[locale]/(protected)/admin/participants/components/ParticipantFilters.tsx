@@ -188,31 +188,31 @@ export function ParticipantFilters({ roles, events, editions = [] }: Participant
 
 
                 <div className="flex items-center">
-                    <div className="flex items-center -space-x-[1px]">
+                    <div className="flex items-center -space-x-[1px] shadow-sm rounded-xl overflow-hidden border border-slate-200">
                         <Button
-                            className="rounded-l-xl rounded-r-none h-10 bg-[#0064e0] hover:bg-[#0057c2] text-white flex items-center gap-2 px-4 shadow-sm transition-all active:scale-95 border-r border-blue-400/30"
+                            className="rounded-none h-10 bg-white hover:bg-slate-50 text-slate-900 flex items-center gap-2 px-4 transition-all active:scale-95 border-r border-slate-200"
                             asChild
                         >
                             <Link href={createUrl}>
                                 <IconUserPlus size={18} />
-                                <span className="hidden sm:inline font-semibold">Nuevo Registro</span>
+                                <span className="hidden sm:inline font-bold">Nuevo Registro</span>
                             </Link>
                         </Button>
 
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
-                                    className="rounded-r-xl rounded-l-none h-10 w-10 bg-[#0064e0] hover:bg-[#0057c2] text-white flex items-center justify-center shadow-sm p-0 active:scale-95"
+                                    className="rounded-none h-10 w-10 bg-white hover:bg-slate-50 text-slate-900 flex items-center justify-center p-0 active:scale-95"
                                 >
                                     <IconChevronDown size={18} />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="rounded-xl p-1 w-[200px] border-slate-200">
+                            <DropdownMenuContent align="end" className="rounded-xl p-1 w-[220px] border-slate-200">
                                 <DropdownMenuItem
                                     onClick={() => setIsExistingModalOpen(true)}
                                     className="rounded-lg py-3 flex items-center gap-3 cursor-pointer"
                                 >
-                                    <div className="bg-primary/10 p-2 rounded-lg text-primary">
+                                    <div className="bg-slate-100 p-2 rounded-lg text-slate-600">
                                         <IconLink size={18} />
                                     </div>
                                     <div className="flex flex-col gap-0.5">

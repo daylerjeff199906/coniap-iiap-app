@@ -48,7 +48,7 @@ export function ProfileTable({ profiles, isLoading }: ProfileTableProps) {
                 <TableBody>
                     {profiles && profiles.length > 0 ? (
                         profiles.map((profile) => {
-                            const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Sin Nombre'
+                            const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'No asignado o sin nombre'
                             const initial = fullName.charAt(0).toUpperCase() || 'U'
 
                             return (

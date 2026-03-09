@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState, useTransition } from 'react'
-import { IProfile } from '@/types/profile'
+import { IProfile, IEducation, IEmploymentHistory, ICertification, ILanguage } from '@/types/profile'
+import { ITopic } from '@/types/ITopics'
 import { AvatarUpload } from './AvatarUpload'
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -23,7 +24,9 @@ import {
     IconArrowLeft,
     IconExternalLink,
     IconUserCircle,
-    IconLoader2
+    IconLoader2,
+    IconCake,
+    IconUser
 } from '@tabler/icons-react'
 import { Link, useRouter } from '@/i18n/routing'
 import { toast } from 'react-toastify'
@@ -31,9 +34,21 @@ import { updateProfilePersonal } from '../actions'
 
 interface ProfileDetailProps {
     profile: IProfile
+    topics?: ITopic[]
+    education?: IEducation[]
+    experience?: IEmploymentHistory[]
+    certifications?: ICertification[]
+    languages?: ILanguage[]
 }
 
-export function ProfileDetail({ profile }: ProfileDetailProps) {
+export function ProfileDetail({
+    profile,
+    topics = [],
+    education = [],
+    experience = [],
+    certifications = [],
+    languages = []
+}: ProfileDetailProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isPending, startTransition] = useTransition()
     const router = useRouter()
@@ -61,20 +76,6 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
         })
     }
 
-    // Mock/Future-ready sections for LinkedIn-style detail
-    const education = [
-        { institution: 'Universidad Nacional de la Amazonía', degree: 'Ingeniería de Sistemas', period: '2015 - 2020' },
-    ]
-    const experience = [
-        { company: 'Instituto de Investigaciones de la Amazonía (IIAP)', position: 'Analista de Datos', period: '2021 - Actualidad' },
-    ]
-    const certifications = [
-        { name: 'Data Science with Python', issuer: 'IBM / Coursera', date: '2023' },
-    ]
-    const languages = [
-        { name: 'Español', level: 'Nativo' },
-        { name: 'Inglés', level: 'Intermedio (B2)' },
-    ]
 
     return (
         <div className="max-w-5xl mx-auto space-y-6">
@@ -87,7 +88,7 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
                     </Link>
                 </Button>
 
-                <div className="flex items-center gap-2 text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
                     <IconUserCircle size={14} />
                     Detalle de Usuario
                 </div>
@@ -130,8 +131,8 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
                                         />
                                     </div>
                                 ) : (
-                                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">
-                                        {profile.first_name} {profile.last_name}
+                                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+                                        {profile.first_name || profile.last_name ? `${profile.first_name || ''} ${profile.last_name || ''}` : 'No asignado o sin nombre'}
                                     </h1>
                                 )}
                                 <p className="text-slate-500 font-medium text-lg mt-1">{profile.email}</p>
@@ -211,10 +212,20 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
                             <InfoItem icon={IconCalendar} label="Miembro desde">
                                 {new Date(profile.created_at).toLocaleDateString()}
                             </InfoItem>
+                            {profile.birth_date && (
+                                <InfoItem icon={IconCake} label="Nacimiento">
+                                    {new Date(profile.birth_date).toLocaleDateString()}
+                                </InfoItem>
+                            )}
+                            {profile.sex && (
+                                <InfoItem icon={IconUser} label="Género">
+                                    {profile.sex === 'male' ? 'Masculino' : profile.sex === 'female' ? 'Femenino' : profile.sex}
+                                </InfoItem>
+                            )}
                         </div>
 
                         <div className="mt-8">
-                            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                                 <IconEdit size={14} />
                                 Biografía Personal
                             </h3>
@@ -240,23 +251,55 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
                 <div className="lg:col-span-2 space-y-6">
                     {/* Experiencia */}
                     <LinkedInSection title="Experiencia" icon={IconBriefcase}>
-                        {experience.map((ex, idx) => (
-                            <LinkedInItem key={idx} title={ex.position} subtitle={ex.company} period={ex.period} />
-                        ))}
+                        {experience.length > 0 ? experience.map((ex: IEmploymentHistory) => {
+                            const startStr = ex.start_date ? new Date(ex.start_date).toLocaleDateString() : '?'
+                            const endStr = ex.is_current ? 'Actualidad' : (ex.end_date ? new Date(ex.end_date).toLocaleDateString() : '?')
+                            return (
+                                <LinkedInItem
+                                    key={ex.id}
+                                    title={ex.role}
+                                    subtitle={ex.organization}
+                                    period={`${startStr} - ${endStr}`}
+                                />
+                            )
+                        }) : (
+                            <p className="text-sm text-slate-400 italic">No se ha registrado experiencia laboral.</p>
+                        )}
                     </LinkedInSection>
 
                     {/* Educación */}
                     <LinkedInSection title="Educación" icon={IconSchool}>
-                        {education.map((ed, idx) => (
-                            <LinkedInItem key={idx} title={ed.degree} subtitle={ed.institution} period={ed.period} />
-                        ))}
+                        {education.length > 0 ? education.map((ed: IEducation) => {
+                            const startStr = ed.start_date ? new Date(ed.start_date).getFullYear() : '?'
+                            const endStr = ed.is_current ? 'Presente' : (ed.end_date ? new Date(ed.end_date).getFullYear() : '?')
+                            return (
+                                <LinkedInItem
+                                    key={ed.id}
+                                    title={ed.degree || ed.title}
+                                    subtitle={ed.institution}
+                                    period={`${startStr} - ${endStr}`}
+                                />
+                            )
+                        }) : (
+                            <p className="text-sm text-slate-400 italic">No se ha registrado información académica.</p>
+                        )}
                     </LinkedInSection>
 
                     {/* Actividades Profesionales / Certificaciones */}
                     <LinkedInSection title="Certificaciones" icon={IconAward}>
-                        {certifications.map((c, idx) => (
-                            <LinkedInItem key={idx} title={c.name} subtitle={c.issuer} period={c.date} />
-                        ))}
+                        {certifications.length > 0 ? certifications.map((c: ICertification) => {
+                            const dateStr = c.issue_date ? new Date(c.issue_date).toLocaleDateString() : '?'
+                            return (
+                                <LinkedInItem
+                                    key={c.id}
+                                    title={c.name}
+                                    subtitle={c.issuing_organization}
+                                    period={dateStr}
+                                />
+                            )
+                        }) : (
+                            <p className="text-sm text-slate-400 italic">No se han registrado certificaciones.</p>
+                        )}
                     </LinkedInSection>
                 </div>
 
@@ -264,29 +307,75 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
                     {/* Idiomas */}
                     <LinkedInSection title="Idiomas" icon={IconLanguage}>
                         <div className="space-y-4">
-                            {languages.map((l, idx) => (
-                                <div key={idx} className="flex items-center justify-between border-b border-slate-50 pb-2 last:border-0 last:pb-0">
-                                    <span className="font-bold text-slate-800 text-sm">{l.name}</span>
+                            {languages.length > 0 ? languages.map((l: ILanguage) => (
+                                <div key={l.id} className="flex items-center justify-between border-b border-slate-50 pb-2 last:border-0 last:pb-0">
+                                    <span className="font-bold text-slate-800 text-sm">{l.language}</span>
                                     <Badge variant="outline" className="bg-slate-100 text-slate-600 text-[10px] font-bold uppercase rounded-lg">
                                         {l.level}
                                     </Badge>
                                 </div>
-                            ))}
+                            )) : (
+                                <p className="text-xs text-slate-400 italic">No especificado</p>
+                            )}
                         </div>
                     </LinkedInSection>
 
                     {/* Intereses / Tags */}
                     <LinkedInSection title="Áreas de Interés" icon={IconCheck}>
                         <div className="flex flex-wrap gap-2">
-                            {(profile.areas_of_interest && profile.areas_of_interest.length > 0) ? profile.areas_of_interest.map((tag: string) => (
-                                <Badge key={tag} className="bg-blue-50 text-blue-700 hover:bg-blue-100 border-none rounded-xl px-3 py-1 text-[11px] font-bold lowercase">
-                                    #{tag}
-                                </Badge>
-                            )) : (
+                            {(profile.areas_of_interest && profile.areas_of_interest.length > 0) ? profile.areas_of_interest.map((tag: string) => {
+                                const topic = topics.find((t: ITopic) => t.id.toString() === tag.toString());
+                                const topicName = topic?.name || tag;
+                                return (
+                                    <Badge
+                                        key={tag}
+                                        className="rounded-xl px-3 py-1 text-[11px] font-bold lowercase border-none flex items-center gap-1.5"
+                                        style={{
+                                            backgroundColor: topic?.color ? `${topic.color}20` : '#ebf5ff',
+                                            color: topic?.color || '#3b82f6'
+                                        }}
+                                    >
+                                        #{topicName}
+                                    </Badge>
+                                )
+                            }) : (
                                 <span className="text-xs text-slate-400 italic">No especificado</span>
                             )}
                         </div>
                     </LinkedInSection>
+
+                    {/* Expertise Areas */}
+                    <LinkedInSection title="Áreas de Especialidad" icon={IconAward}>
+                        <div className="flex flex-wrap gap-2">
+                            {(profile.expertise_areas && profile.expertise_areas.length > 0) ? profile.expertise_areas.map((tag: string) => {
+                                const topic = topics.find((t: ITopic) => t.id.toString() === tag.toString());
+                                const topicName = topic?.name || tag;
+                                return (
+                                    <Badge
+                                        key={tag}
+                                        className="rounded-xl px-3 py-1 text-[11px] font-bold border-none flex items-center gap-1.5"
+                                        style={{
+                                            backgroundColor: topic?.color ? `${topic.color}15` : '#f0fdf4',
+                                            color: topic?.color || '#10b981'
+                                        }}
+                                    >
+                                        {topicName}
+                                    </Badge>
+                                )
+                            }) : (
+                                <span className="text-xs text-slate-400 italic">No especificado</span>
+                            )}
+                        </div>
+                    </LinkedInSection>
+
+                    {/* Research Interests */}
+                    {profile.research_interests && (
+                        <LinkedInSection title="Intereses de Investigación" icon={IconSchool}>
+                            <p className="text-sm text-slate-600 leading-relaxed">
+                                {profile.research_interests}
+                            </p>
+                        </LinkedInSection>
+                    )}
                 </div>
             </div>
         </div>
@@ -296,7 +385,7 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
 function InfoItem({ icon: Icon, label, children }: { icon: any, label: string, children: React.ReactNode }) {
     return (
         <div className="flex flex-col gap-1">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                 <Icon size={12} className="text-slate-400" />
                 {label}
             </span>
@@ -315,7 +404,7 @@ function LinkedInSection({ title, icon: Icon, children }: { title: string, icon:
                     <div className="w-8 h-8 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center">
                         <Icon size={18} />
                     </div>
-                    <CardTitle className="text-lg font-black text-slate-900">{title}</CardTitle>
+                    <CardTitle className="text-lg font-bold text-slate-900">{title}</CardTitle>
                 </div>
             </CardHeader>
             <CardContent>
@@ -334,7 +423,7 @@ function LinkedInItem({ title, subtitle, period }: { title: string, subtitle: st
                 <IconBuilding size={24} />
             </div>
             <div className="flex flex-col">
-                <h4 className="font-black text-slate-900 text-sm leading-tight">{title}</h4>
+                <h4 className="font-bold text-slate-900 text-sm leading-tight">{title}</h4>
                 <p className="text-slate-600 text-xs font-medium mt-0.5">{subtitle}</p>
                 <p className="text-slate-400 text-[11px] mt-1 tabular-nums">{period}</p>
             </div>
