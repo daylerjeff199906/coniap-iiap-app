@@ -23,7 +23,7 @@ import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { IParticipant } from '@/types/participant'
-import { IconDatabaseOff, IconEye, IconTrash } from '@tabler/icons-react'
+import { IconDatabaseOff, IconExternalLink, IconTrash } from '@tabler/icons-react'
 import { useLocale } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import { deleteParticipantRegistration } from '../actions'
@@ -162,9 +162,14 @@ export function ParticipantTable({ participants, showEventInfo = true }: Partici
                                                 className="h-8 w-8 rounded-xl text-muted-foreground hover:bg-slate-100 hover:text-primary"
                                                 asChild
                                             >
-                                                <Link href={`/admin/participants/${participant.id}`}>
-                                                    <IconEye size={15} />
-                                                </Link>
+                                                <a
+                                                    href={`/${locale}/admin/users/${profile?.id}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center justify-center"
+                                                >
+                                                    <IconExternalLink size={15} />
+                                                </a>
                                             </Button>
 
                                             <Button

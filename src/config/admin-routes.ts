@@ -3,6 +3,7 @@ import {
     CalendarDays,
     Megaphone,
     Users,
+    User,
     Settings,
     type LucideIcon,
     LayoutDashboard
@@ -35,6 +36,11 @@ export const getAdminRoutes = (locale: string): AdminRouteItem[] => [
         title: "Participantes",
         url: `/${locale}/admin/participants`,
         icon: Users,
+    },
+    {
+        title: "Usuarios",
+        url: `/${locale}/admin/users`,
+        icon: User,
     },
     {
         title: "Configuración",
