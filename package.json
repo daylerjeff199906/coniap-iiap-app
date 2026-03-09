@@ -66,10 +66,6 @@
     "zod": "^3.24.0",
     "@getbrevo/brevo": "^4.0.1"
   },
-  "packageManager": "pnpm@10.30.0",
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "devDependencies": {
     "@types/node": "^22",
     "@types/react": "^19.0.0",
