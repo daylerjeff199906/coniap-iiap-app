@@ -1,6 +1,4 @@
 'use client'
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-// import { auth } from '@/firebase/firebase'
 import { IPerson, IUser, IUserCreated } from '@/types'
 import { IError } from './types'
 import { toast } from 'react-toastify'
@@ -14,7 +12,7 @@ import {
 import { getErrors } from './getErrors'
 
 export const SignInWithGoogle = async (): Promise<IUser | null> => {
-  const provider = new GoogleAuthProvider()
+  // const provider = new GoogleAuthProvider()
 
   try {
     // const result = await signInWithPopup(auth, provider)
