@@ -35,8 +35,8 @@ export default async function ParticipantsPage({
         <LayoutWrapper sectionTitle="Gestión de Participantes">
             <div className="flex flex-col gap-6">
                 <PageHeader
-                    title="Participantes Globales"
-                    description="Lista maestra de todos los participantes registrados y aprobados en los diferentes eventos."
+                    title="Participantes"
+                    description="Lista maestra de todas las personas registradas en los diferentes eventos y ediciones del sistema."
                     className="mb-2"
                 />
 

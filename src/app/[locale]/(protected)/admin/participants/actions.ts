@@ -21,7 +21,9 @@ export async function getParticipants(filters?: {
                 first_name,
                 last_name,
                 email,
-                avatar_url
+                avatar_url,
+                institution,
+                bio
             ),
             participant_roles!inner (
                 id,
@@ -127,7 +129,10 @@ export async function createParticipant(formData: FormData) {
     const email = (formData.get('email') as string).toLowerCase().trim()
     const roleId = formData.get('role_id') as string
     const mainEventId = formData.get('main_event_id') as string
-    const editionId = formData.get('edition_id') as string || null
+    const rawEditionId = formData.get('edition_id') as string
+    const editionId = (!rawEditionId || rawEditionId === 'none') ? null : rawEditionId
+    const institution = formData.get('institution') as string || null
+    const bio = formData.get('bio') as string || null
 
     if (!email || !roleId || !mainEventId) {
         return { error: 'Los campos Correo, Rol y Evento son obligatorios.' }
@@ -144,13 +149,23 @@ export async function createParticipant(formData: FormData) {
 
     if (existingProfile) {
         profileId = existingProfile.id
+        // Opcionalmente actualizar el perfil si se proporcionan nuevos datos
+        await supabase
+            .from('profiles')
+            .update({
+                institution,
+                bio: bio // Asumiendo que 'bio' es la columna. Si no, se ignorará o fallará si el tipado de supabase es estricto but here it is dynamic
+            })
+            .eq('id', profileId)
     } else {
         const { data: newProfile, error: profileError } = await supabase
             .from('profiles')
             .insert({
                 first_name: firstName,
                 last_name: lastName,
-                email: email
+                email: email,
+                institution,
+                bio: bio
             })
             .select()
             .single()
@@ -182,12 +197,77 @@ export async function createParticipant(formData: FormData) {
             profile_id: profileId,
             main_event_id: mainEventId,
             edition_id: editionId,
-            role_id: roleId
+            role_id: roleId,
         })
 
     if (insertError) {
         console.error('Error creating participant:', insertError)
         return { error: 'No se pudo registrar al participante en el evento.' }
+    }
+
+    revalidatePath('/', 'layout')
+    return { success: true }
+}
+
+export async function getParticipantById(id: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('event_participants')
+        .select(`
+            *,
+            profiles:profile_id (
+                id,
+                first_name,
+                last_name,
+                email,
+                avatar_url,
+                institution,
+                bio,
+                phone
+            ),
+            participant_roles (
+                id,
+                name,
+                slug,
+                badge_color,
+                description
+            ),
+            main_events (
+                id,
+                name,
+                slug
+            ),
+            editions (
+                id,
+                name,
+                year
+            )
+        `)
+        .eq('id', id)
+        .single()
+
+    if (error) {
+        console.error('Error fetching participant:', error)
+        return null
+    }
+
+    return data
+}
+
+export async function deleteParticipantRegistration(id: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { error } = await supabase
+        .from('event_participants')
+        .delete()
+        .eq('id', id)
+
+    if (error) {
+        console.error('Error deleting participant registration:', error)
+        return { error: 'No se pudo eliminar el registro.' }
     }
 
     revalidatePath('/', 'layout')

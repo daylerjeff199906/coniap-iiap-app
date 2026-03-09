@@ -10,7 +10,9 @@ import { useLocale } from 'next-intl'
 import { IParticipantRole } from '@/types/participant'
 import { useDebounce } from '@/hooks/core/useDebounce'
 import { useEffect } from 'react'
-import { AddParticipantModal } from './AddParticipantModal'
+import { IconUserPlus } from '@tabler/icons-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 interface ParticipantFiltersProps {
     roles: IParticipantRole[]
@@ -23,6 +25,9 @@ export function ParticipantFilters({ roles, events }: ParticipantFiltersProps) {
     const searchParams = useSearchParams()
     const locale = useLocale()
     const [isPending, startTransition] = useTransition()
+
+    // Extract eventId from pathname if we are in /admin/events/[id]/participants
+    const eventIdFromPath = pathname.split('/events/')[1]?.split('/')[0]
 
     const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
     const debouncedSearch = useDebounce(searchQuery, 500)
@@ -67,6 +72,10 @@ export function ParticipantFilters({ roles, events }: ParticipantFiltersProps) {
         })
     }
 
+    const createUrl = eventIdFromPath
+        ? `/admin/participants/create?eventId=${eventIdFromPath}`
+        : '/admin/participants/create'
+
     return (
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
             <div className="flex flex-1 items-center gap-2 w-full lg:w-auto">
@@ -99,11 +108,12 @@ export function ParticipantFilters({ roles, events }: ParticipantFiltersProps) {
                 </Select>
             </div>
 
-            <AddParticipantModal
-                roles={roles}
-                events={events}
-                initialEventId={pathname.split('/events/')[1]?.split('/')[0]}
-            />
+            <Button className="rounded-xl h-10 bg-[#0064e0] hover:bg-[#0057c2] text-white flex items-center gap-2 px-4 shadow-sm transition-all active:scale-95" asChild>
+                <Link href={createUrl}>
+                    <IconUserPlus size={18} />
+                    <span className="hidden sm:inline">Añadir Participante</span>
+                </Link>
+            </Button>
         </div>
     )
 }
