@@ -128,14 +128,22 @@ export async function createParticipant(formData: FormData) {
     const lastName = formData.get('last_name') as string
     const email = (formData.get('email') as string).toLowerCase().trim()
     const roleId = formData.get('role_id') as string
+    const targetType = formData.get('target_type') as string
     const mainEventId = formData.get('main_event_id') as string
     const rawEditionId = formData.get('edition_id') as string
-    const editionId = (!rawEditionId || rawEditionId === 'none') ? null : rawEditionId
+
+    // Strict assignment rule enforcement
+    const editionId = targetType === 'edition' ? (rawEditionId === 'none' ? null : rawEditionId) : null
+
     const institution = formData.get('institution') as string || null
     const bio = formData.get('bio') as string || null
 
     if (!email || !roleId || !mainEventId) {
         return { error: 'Los campos Correo, Rol y Evento son obligatorios.' }
+    }
+
+    if (targetType === 'edition' && !editionId) {
+        return { error: 'Debes seleccionar una edición válida.' }
     }
 
     // 1. Procurar Perfil
@@ -149,13 +157,9 @@ export async function createParticipant(formData: FormData) {
 
     if (existingProfile) {
         profileId = existingProfile.id
-        // Opcionalmente actualizar el perfil si se proporcionan nuevos datos
         await supabase
             .from('profiles')
-            .update({
-                institution,
-                bio: bio // Asumiendo que 'bio' es la columna. Si no, se ignorará o fallará si el tipado de supabase es estricto but here it is dynamic
-            })
+            .update({ institution, bio })
             .eq('id', profileId)
     } else {
         const { data: newProfile, error: profileError } = await supabase
@@ -165,7 +169,7 @@ export async function createParticipant(formData: FormData) {
                 last_name: lastName,
                 email: email,
                 institution,
-                bio: bio
+                bio
             })
             .select()
             .single()
@@ -177,17 +181,17 @@ export async function createParticipant(formData: FormData) {
         profileId = newProfile.id
     }
 
-    // 2. Comprobar si ya existe el registro en el evento para este participante
+    // 2. Comprobar duplicados
     const { data: existingParticipant } = await supabase
         .from('event_participants')
         .select('id')
         .eq('profile_id', profileId)
         .eq('main_event_id', mainEventId)
-        .match(editionId ? { edition_id: editionId } : {})
+        .match(editionId ? { edition_id: editionId } : { edition_id: null })
         .maybeSingle()
 
     if (existingParticipant) {
-        return { error: 'Este participante ya está registrado en este evento/edición.' }
+        return { error: 'Este participante ya está registrado en este nivel del evento.' }
     }
 
     // 3. Crear Registro
@@ -196,7 +200,7 @@ export async function createParticipant(formData: FormData) {
         .insert({
             profile_id: profileId,
             main_event_id: mainEventId,
-            edition_id: editionId,
+            edition_id: editionId, // null si es 'event', UUID si es 'edition'
             role_id: roleId,
         })
 
