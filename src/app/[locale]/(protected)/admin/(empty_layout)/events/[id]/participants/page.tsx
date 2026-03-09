@@ -2,8 +2,6 @@ import { PageHeader } from '@/components/general/PageHeader'
 import { getParticipants, getParticipantRoles, getEventsList, getEditionsByEventList } from '@/app/[locale]/(protected)/admin/participants/actions'
 import { ParticipantTable } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantTable'
 import { ParticipantFilters } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantFilters'
-import { ParticipantTabs } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantTabs'
-import { ParticipantEditionFilter } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantEditionFilter'
 import { IParticipant } from '@/types/participant'
 import { getEventById } from '@/app/[locale]/(protected)/admin/(with_layout)/events/actions'
 
@@ -16,14 +14,14 @@ export default async function EventParticipantsPage({
     searchParams
 }: {
     params: Promise<{ id: string; locale: string }>
-    searchParams: Promise<{ q?: string; role?: string; tab?: string; editionId?: string }>
+    searchParams: Promise<{ q?: string; role?: string; scope?: string; editionId?: string }>
 }) {
-    const { id: eventId, locale } = await params
+    const { id: eventId } = await params
     const sParams = await searchParams
     const searchQuer = sParams.q || ''
     const roleSlug = sParams.role || ''
-    const activeTab = sParams.tab || 'event'
-    const editionId = sParams.editionId || 'all'
+    const scope = sParams.scope || 'all'
+    const editionId = sParams.editionId
 
     const allParticipants = await getParticipants({
         eventId,
@@ -35,26 +33,25 @@ export default async function EventParticipantsPage({
     const events = await getEventsList()
     const editions = await getEditionsByEventList(eventId)
 
-    // Filter by search query
-    const filterBySearch = (list: IParticipant[]) => {
-        return list.filter((p: IParticipant) => {
-            const fullName = `${p.profiles?.first_name || ''} ${p.profiles?.last_name || ''}`.toLowerCase()
-            return fullName.includes(searchQuer.toLowerCase()) || p.profiles?.email?.toLowerCase().includes(searchQuer.toLowerCase())
-        })
+    // Filter participants based on scope
+    let filteredList = allParticipants
+
+    if (scope === 'global') {
+        filteredList = allParticipants.filter(p => !p.edition_id)
+    } else if (scope === 'edition') {
+        const effectiveEditionId = editionId || (editions.length > 0 ? editions[0].id : null)
+        if (effectiveEditionId) {
+            filteredList = allParticipants.filter(p => p.edition_id === effectiveEditionId)
+        } else {
+            filteredList = []
+        }
     }
 
-    // Split participants
-    const eventParticipants = allParticipants.filter(p => !p.edition_id)
-    const editionParticipants = allParticipants.filter(p => p.edition_id)
-
-    // Filter edition participants further by selected edition
-    let filteredEditionParticipants = editionParticipants
-    if (editionId !== 'all') {
-        filteredEditionParticipants = editionParticipants.filter(p => p.edition_id === editionId)
-    }
-
-    const filteredEventParticipants = filterBySearch(eventParticipants)
-    const finalEditionParticipants = filterBySearch(filteredEditionParticipants)
+    // Secondary filter: Search Query
+    const finalParticipants = filteredList.filter((p: IParticipant) => {
+        const fullName = `${p.profiles?.first_name || ''} ${p.profiles?.last_name || ''}`.toLowerCase()
+        return fullName.includes(searchQuer.toLowerCase()) || p.profiles?.email?.toLowerCase().includes(searchQuer.toLowerCase())
+    })
 
     return (
         <div className="flex flex-col gap-6 pt-4">
@@ -64,33 +61,24 @@ export default async function EventParticipantsPage({
             />
 
             <div className="flex flex-col gap-4">
-                <ParticipantFilters roles={roles} events={events} />
+                <ParticipantFilters roles={roles} events={events} editions={editions as any} />
 
                 <div className="w-full">
-                    <ParticipantTabs defaultValue="event" />
-
-                    <div className="mt-4">
-                        {activeTab === 'event' && (
-                            <div className="space-y-4">
-                                <span className="text-[11px] font-bold text-muted-foreground uppercase opacity-70 ml-1">
-                                    Participantes inscritos al evento general (sin edición específica)
-                                </span>
-                                <ParticipantTable participants={filteredEventParticipants} showEventInfo={false} />
-                            </div>
-                        )}
-
-                        {activeTab === 'editions' && (
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between gap-4">
-                                    <span className="text-[11px] font-bold text-muted-foreground uppercase opacity-70 ml-1">
-                                        Filtro dinámico por edición del evento
-                                    </span>
-                                    <ParticipantEditionFilter editions={editions as any} locale={locale} />
-                                </div>
-                                <ParticipantTable participants={finalEditionParticipants} showEventInfo={true} />
-                            </div>
-                        )}
+                    <div className="flex items-center gap-2 mb-4 px-1">
+                        <div className={`h-2 w-2 rounded-full ${scope === 'all' ? 'bg-blue-500' : scope === 'global' ? 'bg-amber-500' : 'bg-emerald-500'}`} />
+                        <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                            Mostrando: {
+                                scope === 'all' ? 'Todos los registros' :
+                                    scope === 'global' ? 'Solo Evento Global' :
+                                        `Edición: ${editions.find(e => e.id === editionId)?.year || editions[0]?.year || 'Seleccionada'}`
+                            }
+                        </span>
                     </div>
+
+                    <ParticipantTable
+                        participants={finalParticipants}
+                        showEventInfo={scope !== 'global'}
+                    />
                 </div>
             </div>
         </div>

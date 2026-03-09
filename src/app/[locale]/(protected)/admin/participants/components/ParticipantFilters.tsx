@@ -10,16 +10,17 @@ import { useLocale } from 'next-intl'
 import { IParticipantRole } from '@/types/participant'
 import { useDebounce } from '@/hooks/core/useDebounce'
 import { useEffect } from 'react'
-import { IconUserPlus } from '@tabler/icons-react'
+import { IconUserPlus, IconFilter } from '@tabler/icons-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 interface ParticipantFiltersProps {
     roles: IParticipantRole[]
     events: { id: string; name: string }[]
+    editions?: { id: string; name: { es: string; en: string }; year: number }[]
 }
 
-export function ParticipantFilters({ roles, events }: ParticipantFiltersProps) {
+export function ParticipantFilters({ roles, events, editions = [] }: ParticipantFiltersProps) {
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -72,6 +73,30 @@ export function ParticipantFilters({ roles, events }: ParticipantFiltersProps) {
         })
     }
 
+    const handleScopeChange = (val: string) => {
+        startTransition(() => {
+            const params = new URLSearchParams(searchParams.toString())
+            params.set('scope', val)
+
+            if (val === 'edition' && editions.length > 0 && !params.get('editionId')) {
+                params.set('editionId', editions[0].id)
+            } else if (val !== 'edition') {
+                params.delete('editionId')
+            }
+
+            params.set('page', '1')
+            // @ts-ignore
+            router.push(`${pathname}?${params.toString()}`)
+        })
+    }
+
+    const handleEditionChange = (val: string) => {
+        startTransition(() => {
+            // @ts-ignore
+            router.push(`${pathname}?${createQueryString('editionId', val)}`)
+        })
+    }
+
     const createUrl = eventIdFromPath
         ? `/admin/participants/create?eventId=${eventIdFromPath}`
         : '/admin/participants/create'
@@ -106,7 +131,52 @@ export function ParticipantFilters({ roles, events }: ParticipantFiltersProps) {
                         ))}
                     </SelectContent>
                 </Select>
+
+                {eventIdFromPath && (
+                    <div className="flex items-center gap-1.5 p-1 bg-slate-100/50 rounded-2xl border border-slate-200/60">
+                        <div className="flex items-center gap-2 px-3">
+                            <IconFilter size={14} className="text-slate-400" />
+                            <Select
+                                defaultValue={searchParams.get('scope') || 'all'}
+                                onValueChange={handleScopeChange}
+                            >
+                                <SelectTrigger className="w-[130px] h-8 rounded-xl bg-transparent border-none shadow-none focus:ring-0 text-[13px] font-semibold">
+                                    <SelectValue placeholder="Ámbito" />
+                                </SelectTrigger>
+                                <SelectContent className="rounded-xl">
+                                    <SelectItem value="all">Ver Todo</SelectItem>
+                                    <SelectItem value="global">Evento Global</SelectItem>
+                                    <SelectItem value="edition">Por Edición</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        {searchParams.get('scope') === 'edition' && editions.length > 0 && (
+                            <>
+                                <div className="w-px h-6 bg-slate-200 mx-1" />
+                                <div className="flex items-center gap-2 px-3">
+                                    <Select
+                                        defaultValue={searchParams.get('editionId') || editions[0].id}
+                                        onValueChange={handleEditionChange}
+                                    >
+                                        <SelectTrigger className="w-[160px] h-8 rounded-xl bg-primary/5 border-none shadow-none focus:ring-0 text-[13px] font-bold text-primary">
+                                            <SelectValue placeholder="Edición" />
+                                        </SelectTrigger>
+                                        <SelectContent className="rounded-xl">
+                                            {editions.map((e) => (
+                                                <SelectItem key={e.id} value={e.id} className="rounded-lg">
+                                                    {locale === 'es' ? e.name.es : e.name.en} ({e.year})
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                )}
             </div>
+
 
             <Button className="rounded-xl h-10 bg-[#0064e0] hover:bg-[#0057c2] text-white flex items-center gap-2 px-4 shadow-sm transition-all active:scale-95" asChild>
                 <Link href={createUrl}>
