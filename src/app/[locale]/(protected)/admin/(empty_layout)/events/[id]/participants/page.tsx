@@ -1,5 +1,5 @@
 import { PageHeader } from '@/components/general/PageHeader'
-import { getParticipants, getParticipantRoles } from '@/app/[locale]/(protected)/admin/participants/actions'
+import { getParticipants, getParticipantRoles, getEventsList } from '@/app/[locale]/(protected)/admin/participants/actions'
 import { ParticipantTable } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantTable'
 import { ParticipantFilters } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantFilters'
 import { IParticipant } from '@/types/participant'
@@ -28,6 +28,7 @@ export default async function EventParticipantsPage({
 
     const roles = await getParticipantRoles()
     const event = await getEventById(eventId)
+    const events = await getEventsList()
 
     // Client-side filtering for search query
     const filteredParticipants = participants.filter((p: IParticipant) => {
@@ -42,7 +43,7 @@ export default async function EventParticipantsPage({
                 description="Gestión de participantes inscritos en este evento específico."
             />
             <div className="flex flex-col gap-2">
-                <ParticipantFilters roles={roles} />
+                <ParticipantFilters roles={roles} events={events} />
                 <ParticipantTable participants={filteredParticipants} showEventInfo={false} />
             </div>
         </div>

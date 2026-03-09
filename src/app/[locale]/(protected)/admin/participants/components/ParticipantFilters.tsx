@@ -10,12 +10,14 @@ import { useLocale } from 'next-intl'
 import { IParticipantRole } from '@/types/participant'
 import { useDebounce } from '@/hooks/core/useDebounce'
 import { useEffect } from 'react'
+import { AddParticipantModal } from './AddParticipantModal'
 
 interface ParticipantFiltersProps {
     roles: IParticipantRole[]
+    events: { id: string; name: string }[]
 }
 
-export function ParticipantFilters({ roles }: ParticipantFiltersProps) {
+export function ParticipantFilters({ roles, events }: ParticipantFiltersProps) {
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -96,6 +98,12 @@ export function ParticipantFilters({ roles }: ParticipantFiltersProps) {
                     </SelectContent>
                 </Select>
             </div>
+
+            <AddParticipantModal
+                roles={roles}
+                events={events}
+                initialEventId={pathname.split('/events/')[1]?.split('/')[0]}
+            />
         </div>
     )
 }
