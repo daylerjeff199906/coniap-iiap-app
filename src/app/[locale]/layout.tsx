@@ -3,7 +3,6 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 import { Providers } from '@/app/providers';
-import 'filepond/dist/filepond.min.css';
 import { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });

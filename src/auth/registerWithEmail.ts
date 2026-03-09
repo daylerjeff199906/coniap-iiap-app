@@ -1,7 +1,3 @@
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from 'firebase/auth'
 import { ICrendentials, IError } from '@/types'
 
 export async function registerAndSendEmailVerification(props: ICrendentials) {

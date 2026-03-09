@@ -1,13 +1,6 @@
 'use client'
 import { useState } from 'react'
 import { updateField } from '@/api'
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage'
-
 import { toast } from 'react-toastify'
 
 export function useFiles() {

@@ -7,9 +7,6 @@ import {
   updateEvent,
   fetchEvents,
 } from '@/api'
-
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-
 import { IEvent, IEventFilter, IEventRes, IRes } from '@/types'
 import { toast } from 'react-toastify'
 
