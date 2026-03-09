@@ -16,14 +16,14 @@ export async function getParticipants(filters?: {
         .from('event_participants')
         .select(`
             *,
-            profiles (
+            profiles:profile_id (
                 id,
                 first_name,
                 last_name,
                 email,
                 avatar_url
             ),
-            participant_roles (
+            participant_roles!inner (
                 id,
                 name,
                 slug,
