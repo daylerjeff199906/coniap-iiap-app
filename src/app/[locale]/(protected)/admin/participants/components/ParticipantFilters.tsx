@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useCallback, useState, useTransition } from 'react'
 import { Input } from '@/components/ui/input'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
-import { IconSearch } from '@tabler/icons-react'
+import { IconSearch, IconChevronDown } from '@tabler/icons-react'
 import { useRouter, usePathname } from '@/i18n/routing'
 import { useLocale } from 'next-intl'
 import { IParticipantRole } from '@/types/participant'
@@ -13,6 +13,12 @@ import { useEffect } from 'react'
 import { IconUserPlus, IconFilter, IconLink } from '@tabler/icons-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { AddExistingParticipantModal } from './AddExistingParticipantModal'
 
 interface ParticipantFiltersProps {
@@ -181,22 +187,42 @@ export function ParticipantFilters({ roles, events, editions = [] }: Participant
                 </div>
 
 
-                <div className="flex items-center gap-2">
-                    <Button
-                        variant="outline"
-                        onClick={() => setIsExistingModalOpen(true)}
-                        className="rounded-xl h-10 border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center gap-2 px-4 shadow-sm transition-all active:scale-95"
-                    >
-                        <IconLink size={18} className="text-primary" />
-                        <span className="hidden sm:inline font-semibold">Vincular Existente</span>
-                    </Button>
+                <div className="flex items-center">
+                    <div className="flex items-center -space-x-[1px]">
+                        <Button
+                            className="rounded-l-xl rounded-r-none h-10 bg-[#0064e0] hover:bg-[#0057c2] text-white flex items-center gap-2 px-4 shadow-sm transition-all active:scale-95 border-r border-blue-400/30"
+                            asChild
+                        >
+                            <Link href={createUrl}>
+                                <IconUserPlus size={18} />
+                                <span className="hidden sm:inline font-semibold">Nuevo Registro</span>
+                            </Link>
+                        </Button>
 
-                    <Button className="rounded-xl h-10 bg-[#0064e0] hover:bg-[#0057c2] text-white flex items-center gap-2 px-4 shadow-sm transition-all active:scale-95" asChild>
-                        <Link href={createUrl}>
-                            <IconUserPlus size={18} />
-                            <span className="hidden sm:inline">Nuevo Registro</span>
-                        </Link>
-                    </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    className="rounded-r-xl rounded-l-none h-10 w-10 bg-[#0064e0] hover:bg-[#0057c2] text-white flex items-center justify-center shadow-sm p-0 active:scale-95"
+                                >
+                                    <IconChevronDown size={18} />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="rounded-xl p-1 w-[200px] border-slate-200">
+                                <DropdownMenuItem
+                                    onClick={() => setIsExistingModalOpen(true)}
+                                    className="rounded-lg py-3 flex items-center gap-3 cursor-pointer"
+                                >
+                                    <div className="bg-primary/10 p-2 rounded-lg text-primary">
+                                        <IconLink size={18} />
+                                    </div>
+                                    <div className="flex flex-col gap-0.5">
+                                        <span className="font-bold text-sm">Vincular Existente</span>
+                                        <span className="text-[10px] text-muted-foreground">Busca en la base maestra</span>
+                                    </div>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </div>
             </div>
 

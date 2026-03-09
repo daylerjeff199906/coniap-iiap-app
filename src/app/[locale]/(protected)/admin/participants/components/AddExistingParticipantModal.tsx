@@ -128,83 +128,81 @@ export function AddExistingParticipantModal({ open, onOpenChange, roles, events 
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[480px] p-0 overflow-hidden rounded-3xl shadow-2xl border-none">
-                <DialogHeader className="bg-slate-900 text-white p-7">
-                    <DialogTitle className="text-xl font-bold flex items-center gap-2">
-                        {step === 'search' ? (
-                            <><IconSearch size={22} className="text-blue-400" /> Vincular Perfil Existente</>
-                        ) : (
-                            <><IconUserPlus size={22} className="text-emerald-400" /> Configurar Participación</>
-                        )}
+            <DialogContent className="sm:max-w-[500px] overflow-hidden rounded-2xl border-slate-200 p-0 shadow-lg">
+                <DialogHeader className="p-6 pb-2">
+                    <DialogTitle className="text-xl font-bold tracking-tight">
+                        {step === 'search' ? 'Vincular Perfil' : 'Configurar Participación'}
                     </DialogTitle>
-                    <DialogDescription className="text-slate-400 mt-1">
+                    <DialogDescription className="text-sm">
                         {step === 'search'
                             ? 'Busca a la persona en la base de datos central.'
-                            : `Asignando a ${selectedProfile?.first_name} ${selectedProfile?.last_name}.`}
+                            : `Define el rol y evento para ${selectedProfile?.first_name} ${selectedProfile?.last_name}.`}
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="p-7 bg-white">
+                <div className="px-6 py-2 space-y-4">
                     {step === 'search' ? (
                         <div className="space-y-4">
                             <div className="flex gap-2">
-                                <Input
-                                    placeholder="Nombre, apellido o email..."
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                                    className="rounded-xl h-12 bg-slate-50 border-slate-200 focus:ring-primary/20"
-                                />
+                                <div className="relative flex-1">
+                                    <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                                    <Input
+                                        placeholder="Nombre, apellido o email..."
+                                        value={query}
+                                        onChange={(e) => setQuery(e.target.value)}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                                        className="rounded-xl h-11 pl-10 bg-slate-50/50 border-slate-200"
+                                    />
+                                </div>
                                 <Button
                                     onClick={handleSearch}
                                     disabled={isSearching}
-                                    className="rounded-xl h-12 px-6 bg-slate-900 hover:bg-black text-white"
+                                    className="rounded-xl h-11 px-6 bg-slate-900 hover:bg-black text-white"
                                 >
-                                    {isSearching ? <IconLoader2 className="animate-spin" size={20} /> : 'Buscar'}
+                                    {isSearching ? <IconLoader2 className="animate-spin" size={18} /> : 'Buscar'}
                                 </Button>
                             </div>
 
-                            <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                            <div className="space-y-2 max-h-[280px] overflow-y-auto pr-1">
                                 {results.length > 0 ? (
                                     results.map((profile) => (
                                         <button
                                             key={profile.id}
                                             onClick={() => handleProfileSelect(profile)}
-                                            className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-left group"
+                                            className="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-left group"
                                         >
-                                            <Avatar className="h-11 w-11 border-2 border-white shadow-sm">
+                                            <Avatar className="h-10 w-10 border border-slate-100">
                                                 <AvatarImage src={profile.avatar_url} />
-                                                <AvatarFallback className="bg-slate-100 text-slate-500 font-bold">
+                                                <AvatarFallback className="bg-slate-100 text-slate-500 text-xs font-bold">
                                                     {profile.first_name?.[0]}{profile.last_name?.[0]}
                                                 </AvatarFallback>
                                             </Avatar>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-bold text-slate-900 truncate">
+                                                <p className="text-sm font-semibold text-slate-900 truncate">
                                                     {profile.first_name} {profile.last_name}
                                                 </p>
                                                 <p className="text-[11px] text-slate-500 truncate">{profile.email}</p>
                                             </div>
-                                            <IconArrowRight size={18} className="text-slate-300 group-hover:text-primary transition-colors" />
+                                            <IconArrowRight size={16} className="text-slate-300 group-hover:text-primary transition-colors" />
                                         </button>
                                     ))
                                 ) : query && !isSearching ? (
-                                    <div className="py-12 text-center text-slate-400">
-                                        <IconSearch size={40} className="mx-auto mb-3 opacity-20" />
-                                        <p className="text-sm font-medium">No se encontraron resultados</p>
+                                    <div className="py-10 text-center text-slate-400">
+                                        <p className="text-sm">No se encontraron resultados</p>
                                     </div>
                                 ) : (
-                                    <div className="py-12 text-center text-slate-400 italic text-xs">
-                                        Ingresa un término para comenzar la búsqueda.
+                                    <div className="py-10 text-center text-slate-300 text-xs">
+                                        Ingresa un nombre para buscar perfiles existentes.
                                     </div>
                                 )}
                             </div>
                         </div>
                     ) : (
-                        <div className="space-y-6">
+                        <div className="space-y-5 py-2">
                             <div className="space-y-2">
-                                <Label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Rol en el Evento</Label>
+                                <Label className="text-xs font-semibold text-slate-500 ml-1">Rol del Participante</Label>
                                 <Select onValueChange={setRoleId} value={roleId}>
-                                    <SelectTrigger className="rounded-xl h-11 bg-slate-50 border-slate-200">
+                                    <SelectTrigger className="rounded-xl h-11 bg-slate-50/50 border-slate-200">
                                         <SelectValue placeholder="Seleccionar rol..." />
                                     </SelectTrigger>
                                     <SelectContent className="rounded-xl">
@@ -217,34 +215,38 @@ export function AddExistingParticipantModal({ open, onOpenChange, roles, events 
                                 </Select>
                             </div>
 
-                            <div className="space-y-3">
-                                <Label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Ámbito de Participación</Label>
+                            <div className="space-y-2">
+                                <Label className="text-xs font-semibold text-slate-500 ml-1">Ámbito de Registro</Label>
                                 <RadioGroup
                                     onValueChange={(val: any) => setTargetType(val)}
                                     value={targetType}
                                     className="grid grid-cols-2 gap-3"
                                 >
-                                    <div className={`relative rounded-xl border-2 p-3 transition-all cursor-pointer ${targetType === 'event' ? 'border-primary bg-primary/5' : 'border-slate-100 opacity-60'}`} onClick={() => setTargetType('event')}>
-                                        <div className="flex items-center gap-2">
-                                            <IconCalendarEvent size={18} className={targetType === 'event' ? 'text-primary' : 'text-slate-400'} />
-                                            <span className="text-[11px] font-bold">Global</span>
-                                        </div>
+                                    <div
+                                        className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all ${targetType === 'event' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
+                                        onClick={() => setTargetType('event')}
+                                    >
+                                        <RadioGroupItem value="event" id="radio-event" className="sr-only" />
+                                        <IconCalendarEvent size={18} className={targetType === 'event' ? 'text-primary' : 'text-slate-400'} />
+                                        <span className={`text-xs font-bold ${targetType === 'event' ? 'text-primary' : 'text-slate-600'}`}>Global</span>
                                     </div>
-                                    <div className={`relative rounded-xl border-2 p-3 transition-all cursor-pointer ${targetType === 'edition' ? 'border-primary bg-primary/5' : 'border-slate-100 opacity-60'}`} onClick={() => setTargetType('edition')}>
-                                        <div className="flex items-center gap-2">
-                                            <IconTrophy size={18} className={targetType === 'edition' ? 'text-primary' : 'text-slate-400'} />
-                                            <span className="text-[11px] font-bold">Edición</span>
-                                        </div>
+                                    <div
+                                        className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all ${targetType === 'edition' ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
+                                        onClick={() => setTargetType('edition')}
+                                    >
+                                        <RadioGroupItem value="edition" id="radio-edition" className="sr-only" />
+                                        <IconTrophy size={18} className={targetType === 'edition' ? 'text-primary' : 'text-slate-400'} />
+                                        <span className={`text-xs font-bold ${targetType === 'edition' ? 'text-primary' : 'text-slate-600'}`}>Edición</span>
                                     </div>
                                 </RadioGroup>
                             </div>
 
-                            <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-4 pt-2 border-t border-slate-100">
                                 <div className="space-y-2">
-                                    <Label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Evento</Label>
+                                    <Label className="text-xs font-semibold text-slate-500 ml-1">Evento Principal</Label>
                                     <Select onValueChange={setEventId} value={eventId}>
-                                        <SelectTrigger className="rounded-xl h-11 bg-slate-50 border-slate-200">
-                                            <SelectValue placeholder="Seleccionar evento..." />
+                                        <SelectTrigger className="rounded-xl h-11 bg-slate-50/50 border-slate-200">
+                                            <SelectValue placeholder="Elegir evento..." />
                                         </SelectTrigger>
                                         <SelectContent className="rounded-xl">
                                             {events.map((event) => (
@@ -258,14 +260,14 @@ export function AddExistingParticipantModal({ open, onOpenChange, roles, events 
 
                                 {targetType === 'edition' && (
                                     <div className="space-y-2">
-                                        <Label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Edición del Evento</Label>
+                                        <Label className="text-xs font-semibold text-slate-500 ml-1">Elegir Edición</Label>
                                         <Select
                                             onValueChange={setEditionId}
                                             value={editionId}
                                             disabled={!eventId || isLoadingEditions}
                                         >
-                                            <SelectTrigger className="rounded-xl h-11 bg-slate-50 border-slate-200">
-                                                <SelectValue placeholder={isLoadingEditions ? "Cargando..." : "Elegir edición"} />
+                                            <SelectTrigger className="rounded-xl h-11 bg-slate-50/50 border-slate-200">
+                                                <SelectValue placeholder={isLoadingEditions ? "Cargando..." : "Seleccionar año"} />
                                             </SelectTrigger>
                                             <SelectContent className="rounded-xl">
                                                 {editions.map((e) => (
@@ -282,19 +284,19 @@ export function AddExistingParticipantModal({ open, onOpenChange, roles, events 
                     )}
                 </div>
 
-                <DialogFooter className="p-6 bg-slate-50 border-t border-slate-100 gap-3">
+                <DialogFooter className="p-6 bg-slate-50/80 border-t border-slate-100 flex gap-2">
                     <Button
-                        variant="ghost"
+                        variant="outline"
                         onClick={() => step === 'configure' ? setStep('search') : onOpenChange(false)}
-                        className="rounded-xl h-11 px-6 font-semibold text-slate-500"
+                        className="rounded-xl h-11 px-6 font-semibold border-slate-200 shadow-sm"
                     >
-                        {step === 'configure' ? <><IconArrowLeft size={18} className="mr-2" /> Atrás</> : 'Cancelar'}
+                        {step === 'configure' ? 'Atrás' : 'Cancelar'}
                     </Button>
                     {step === 'configure' && (
                         <Button
                             onClick={handleConfirm}
                             disabled={isPending}
-                            className="rounded-xl h-11 px-8 bg-black hover:bg-slate-800 text-white font-bold"
+                            className="rounded-xl h-11 px-8 bg-black hover:bg-slate-800 text-white font-bold shadow-sm"
                         >
                             {isPending ? <IconLoader2 className="animate-spin" size={20} /> : 'Finalizar Asignación'}
                         </Button>

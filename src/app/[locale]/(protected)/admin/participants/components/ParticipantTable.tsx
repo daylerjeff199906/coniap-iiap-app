@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import {
     Table,
     TableBody,
@@ -8,13 +9,26 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { IParticipant } from '@/types/participant'
-import { IconDatabaseOff, IconEye } from '@tabler/icons-react'
+import { IconDatabaseOff, IconEye, IconTrash } from '@tabler/icons-react'
 import { useLocale } from 'next-intl'
 import { Link } from '@/i18n/routing'
+import { deleteParticipantRegistration } from '../actions'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 interface ParticipantTableProps {
     participants: IParticipant[]
@@ -23,9 +37,45 @@ interface ParticipantTableProps {
 
 export function ParticipantTable({ participants, showEventInfo = true }: ParticipantTableProps) {
     const locale = useLocale()
+    const router = useRouter()
+    const [deleteId, setDeleteId] = useState<string | null>(null)
+    const [deleteName, setDeleteName] = useState<string>('')
+
+    const handleDelete = async () => {
+        if (!deleteId) return
+
+        const result = await deleteParticipantRegistration(deleteId)
+        if (result.success) {
+            toast.success('Participante eliminado correctamente')
+            router.refresh()
+        } else {
+            toast.error(result.error || 'Error al eliminar')
+        }
+        setDeleteId(null)
+    }
 
     return (
         <div className="rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden">
+            <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
+                <AlertDialogContent className="rounded-2xl border-slate-200">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>¿Estás completamente seguro?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Esta acción eliminará el registro de <span className="font-bold text-slate-900">"{deleteName}"</span> de este evento.
+                            No se eliminará el perfil de la base de datos, solo su participación actual.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel className="rounded-xl">Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={handleDelete}
+                            className="bg-red-600 hover:bg-red-700 text-white rounded-xl"
+                        >
+                            Quitar Participante
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
             <Table>
                 <TableHeader className="bg-muted/50">
                     <TableRow>
@@ -41,7 +91,7 @@ export function ParticipantTable({ participants, showEventInfo = true }: Partici
                         participants.map((participant) => {
                             const profile = participant.profiles
                             const role = participant.participant_roles
-                            const fullName = `${profile?.first_name || ''} ${profile?.last_name || ''}`.trim() || 'Sin nombre'
+                            const fullName = `${profile?.first_name || ''} ${profile?.last_name || ''}`.trim() || 'No asignado o sin nombre'
                             const initial = fullName.charAt(0).toUpperCase()
                             const roleName = locale === 'es' ? role?.name?.es : role?.name?.en
 
@@ -105,16 +155,30 @@ export function ParticipantTable({ participants, showEventInfo = true }: Partici
                                         })}
                                     </TableCell>
                                     <TableCell className="py-4 pr-3">
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="h-8 w-8 rounded-xl text-muted-foreground hover:bg-slate-100 hover:text-primary"
-                                            asChild
-                                        >
-                                            <Link href={`/admin/participants/${participant.id}`}>
-                                                <IconEye size={15} />
-                                            </Link>
-                                        </Button>
+                                        <div className="flex items-center gap-1 justify-end">
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 rounded-xl text-muted-foreground hover:bg-slate-100 hover:text-primary"
+                                                asChild
+                                            >
+                                                <Link href={`/admin/participants/${participant.id}`}>
+                                                    <IconEye size={15} />
+                                                </Link>
+                                            </Button>
+
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() => {
+                                                    setDeleteId(participant.id)
+                                                    setDeleteName(fullName)
+                                                }}
+                                                className="h-8 w-8 rounded-xl text-muted-foreground hover:bg-red-50 hover:text-red-600"
+                                            >
+                                                <IconTrash size={15} />
+                                            </Button>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             )
