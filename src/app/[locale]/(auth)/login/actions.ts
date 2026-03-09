@@ -29,17 +29,29 @@ export async function login(formData: FormData, locale: string = 'es'): Promise<
 
     // Verificar el rol del usuario para redirigir basado en la estructura de user_roles y roles
     if (data.user) {
-        // Consultar los roles del usuario asignados en user_roles
+        // Consultar el perfil para obtener el profile.id usando el auth_id
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('auth_id', data.user.id)
+            .single()
+
+        if (!profile) {
+            console.error('No profile found for user:', data.user.id)
+            // Proceder con fallback o error según convenga
+        }
+
+        // Consultar los roles del usuario asignados en user_roles usando el ID del perfil
         const { data: userRolesData, error: rolesError } = await supabase
             .from('user_roles')
             .select(`*, roles(*)`)
-            .eq('profile_id', data.user.id)
+            .eq('profile_id', profile?.id || '')
 
         if (rolesError) {
             console.error('Error fetching user roles:', rolesError)
         }
         // Supabase retorna las relaciones foreign keys como un objeto "roles" por cada "user_roles" encontrado.
-        const roles: string[] = userRolesData?.map((ur: any) => ur.roles).filter(Boolean) || []
+        const roles: string[] = userRolesData?.map((ur: any) => ur.roles?.name).filter(Boolean) || []
 
         // Mapa de roles internos de la aplicación y sus redirecciones
         const roleRedirects: Record<string, string> = {

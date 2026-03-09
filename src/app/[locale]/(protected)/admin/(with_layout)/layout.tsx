@@ -18,20 +18,24 @@ export default async function AdminLayout({
     let name = 'Usuario'
 
     if (user) {
-        // Intentar obtener un nombre desde el perfil (ajusta según tu esquema de profiles o meta)
-        const { data: profile } = await supabase.from('profiles').select('first_name, last_name').eq('id', user.id).single()
+        // Intentar obtener un nombre desde el perfil buscando por auth_id
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('id, first_name, last_name')
+            .eq('auth_id', user.id)
+            .single()
+
         if (profile) {
             name = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Usuario'
+
+            // Obtener roles de user_roles usando el profile.id (el nuevo UUID independiente)
+            const { data: userRolesData } = await supabase
+                .from('user_roles')
+                .select(`roles (name)`)
+                .eq('profile_id', profile.id)
+            const roles = userRolesData?.map((ur: any) => ur.roles?.name).filter(Boolean) || []
+            if (roles.length > 0) role = roles[0]
         }
-
-        // Obtener roles de user_roles
-        const { data: userRolesData } = await supabase
-            .from('user_roles')
-            .select(`roles (name)`)
-            .eq('profile_id', user.id)
-
-        const roles = userRolesData?.map((ur: any) => ur.roles?.name).filter(Boolean) || []
-        if (roles.length > 0) role = roles[0]
     }
 
     const userData = {
