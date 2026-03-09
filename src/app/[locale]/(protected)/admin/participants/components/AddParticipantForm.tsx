@@ -172,17 +172,12 @@ export function AddParticipantForm({ roles, events, initialEventId }: AddPartici
                 <div className="lg:col-span-2 flex flex-col gap-7">
 
                     {/* ── SECTION 1: Datos Personales ── */}
-                    <section className="bg-white rounded-2xl border shadow-sm overflow-hidden">
-                        <div className="flex items-center gap-3 p-6 border-b bg-slate-50/50">
-                            <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 shrink-0">
-                                <IconUser size={18} />
-                            </div>
-                            <div>
-                                <h3 className="font-bold text-[15px]">Datos Personales</h3>
-                                <p className="text-[11px] text-muted-foreground">Información básica y profesional del participante.</p>
-                            </div>
+                    <section className="">
+                        <div>
+                            <h3 className="font-bold text-[15px]">Datos Personales</h3>
+                            <p className="text-[11px] text-muted-foreground">Información básica y profesional del participante.</p>
                         </div>
-                        <div className="p-6 grid gap-5">
+                        <div className="py-6 grid gap-5">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="grid gap-1.5">
                                     <Label htmlFor="first_name" className="text-[11px] font-semibold text-muted-foreground ml-0.5 uppercase tracking-wide">Nombres</Label>
@@ -217,17 +212,12 @@ export function AddParticipantForm({ roles, events, initialEventId }: AddPartici
                     </section>
 
                     {/* ── SECTION 2: Asignación al Evento ── */}
-                    <section className="bg-white rounded-2xl border shadow-sm overflow-hidden">
-                        <div className="flex items-center gap-3 p-6 border-b bg-slate-50/50">
-                            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                                <IconTrophy size={18} />
-                            </div>
-                            <div>
-                                <h3 className="font-bold text-[15px]">Asignación al Evento</h3>
-                                <p className="text-[11px] text-muted-foreground">Configura el rol y en qué evento o edición participará esta persona.</p>
-                            </div>
+                    <section className="">
+                        <div>
+                            <h3 className="font-bold text-[15px]">Asignación al Evento</h3>
+                            <p className="text-[11px] text-muted-foreground">Configura el rol y en qué evento o edición participará esta persona.</p>
                         </div>
-                        <div className="p-6 grid gap-5">
+                        <div className="py-6 grid gap-5">
                             <div className="grid gap-1.5">
                                 <Label htmlFor="role_id" className="text-[11px] font-semibold text-muted-foreground ml-0.5 uppercase tracking-wide">
                                     Rol Designado <span className="text-[#0064e0]">*</span>
@@ -342,7 +332,6 @@ export function AddParticipantForm({ roles, events, initialEventId }: AddPartici
                                 </>
                             ) : (
                                 <>
-                                    <IconUserPlus className="mr-2 h-4 w-4" />
                                     Registrar Participante
                                 </>
                             )}
