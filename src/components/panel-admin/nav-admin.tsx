@@ -36,7 +36,13 @@ export function NavAdmin({
             <SidebarGroupLabel>{label}</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => {
-                    const isActive = pathname === item.url || pathname.startsWith(item.url + "/")
+                    // Si el item es el Dashboard (Inicio), usamos coincidencia exacta
+                    // para evitar que se ilumine cuando estamos en otros módulos.
+                    // Para los demás, usamos coincidencia por prefijo.
+                    const isDashboard = item.url.endsWith('/admin')
+                    const isActive = isDashboard
+                        ? pathname === item.url
+                        : (pathname === item.url || pathname.startsWith(item.url + "/"))
 
                     // Si el item tiene un arreglo "items" renderiza un Collapsible (desplegable)
                     if (item.items && item.items.length > 0) {
