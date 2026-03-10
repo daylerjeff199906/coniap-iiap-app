@@ -98,10 +98,22 @@ export async function checkEditionParticipation(profileId: string, editionId: st
 }
 
 /**
- * Gets the email of a user by their profile_id (auth.users.id)
+ * Gets the email of a user by their profile_id.
+ * It resolves the auth_id from the profiles table first.
  */
 export async function getUserEmail(profileId: string) {
-    const { data, error } = await createClient().auth.admin.getUserById(profileId);
+    const supabase = createClient();
+
+    // First, try to find the auth_id in the profiles table
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('auth_id')
+        .eq('id', profileId)
+        .maybeSingle();
+
+    const targetAuthId = profile?.auth_id || profileId;
+
+    const { data, error } = await supabase.auth.admin.getUserById(targetAuthId);
     if (error || !data.user) {
         return null;
     }
@@ -130,13 +142,25 @@ export async function generateSupabaseAuthLink(email: string, redirectTo: string
 /**
  * High-level utility to generate a secure magic link URL for the public site.
  * This URL will point to our Route Handler, which will then validate and log in the user.
+ * @param authUserId - The ID from Supabase Auth (user.id)
  */
 export async function getSecureMagicLink(
-    profileId: string,
+    authUserId: string,
     metadata: ITicketMetadata,
     baseUrl: string
 ) {
-    const ticketId = await createAuthTicket(profileId, metadata);
+    const supabase = createClient();
+
+    // Resolve the internal profile.id for the ticket
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('auth_id', authUserId)
+        .maybeSingle();
+
+    const profileIdForTicket = profile?.id || authUserId;
+
+    const ticketId = await createAuthTicket(profileIdForTicket, metadata);
     // Construct the full link to our API route: /api/magic-link/[ticketId]
     const absoluteUrl = new URL(`/api/magic-link/${ticketId}`, baseUrl);
     return absoluteUrl.toString();

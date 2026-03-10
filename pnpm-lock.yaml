@@ -11,9 +11,6 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.1004.0
         version: 3.1004.0
-      '@getbrevo/brevo':
-        specifier: ^4.0.1
-        version: 4.0.1
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.71.2(react@19.2.4))
@@ -640,10 +637,6 @@ packages:
 
   '@formatjs/intl-localematcher@0.8.1':
     resolution: {integrity: sha512-xwEuwQFdtSq1UKtQnyTZWC+eHdv7Uygoa+H2k/9uzBVQjDyp9r20LNDNKedWXll7FssT3GRHvqsdJGYSUWqYFA==}
-
-  '@getbrevo/brevo@4.0.1':
-    resolution: {integrity: sha512-U1xOsr5e7pfRTdngrt9VWmPV8SQD/LayTOp55/Wnb4aW33IkBWypDJ8jOpQtxn6xL4t8aBw1thRisvQY4+/Edw==}
-    engines: {node: '>=18.0.0'}
 
   '@hookform/resolvers@5.2.2':
     resolution: {integrity: sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA==}
@@ -5591,8 +5584,6 @@ snapshots:
     dependencies:
       '@formatjs/fast-memoize': 3.1.0
       tslib: 2.8.1
-
-  '@getbrevo/brevo@4.0.1': {}
 
   '@hookform/resolvers@5.2.2(react-hook-form@7.71.2(react@19.2.4))':
     dependencies:

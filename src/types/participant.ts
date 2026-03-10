@@ -16,6 +16,8 @@ export interface IParticipantProfile {
     last_name: string | null;
     email: string | null;
     avatar_url: string | null;
+    institution?: string | null;
+    presentation?: string | null;
 }
 
 export interface IParticipant {
@@ -24,6 +26,7 @@ export interface IParticipant {
     edition_id: string | null;
     profile_id: string;
     role_id: string;
+    registration_type?: string;
     created_at: string;
     // Joined data
     profiles?: IParticipantProfile;

@@ -29,7 +29,7 @@ export async function GET(
                 const { data: profile } = await supabase
                     .from('profiles')
                     .select('onboarding_completed')
-                    .eq('id', data.user.id)
+                    .eq('auth_id', data.user.id)
                     .single()
 
                 // Si no ha completado el onboarding, redirigimos a la app local
