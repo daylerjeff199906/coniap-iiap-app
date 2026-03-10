@@ -1,11 +1,5 @@
 'use client'
-import { fetchUserByEmail, fetchPersonByEmail, createUser } from '@/api'
-import { IError } from './types'
-
-import { IUser, IPerson } from '@/types'
-import { toast } from 'react-toastify'
-import { getErrors } from './getErrors'
-import { addContactToList } from '@/lib'
+import { IUser, } from '@/types'
 
 interface ILogin {
   email: string
