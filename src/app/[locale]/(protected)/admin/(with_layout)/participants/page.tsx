@@ -17,19 +17,18 @@ export default async function ParticipantsPage({
     const sParams = await searchParams
     const searchQuer = sParams.q || ''
     const roleSlug = sParams.role || ''
+    const page = parseInt(sParams.page || '1', 10)
+    const pageSize = 20
 
-    const participants = await getParticipants({
-        roleSlug: roleSlug || undefined
+    const { data: participants, count } = await getParticipants({
+        roleSlug: roleSlug || undefined,
+        q: searchQuer,
+        page,
+        pageSize
     })
 
     const roles = await getParticipantRoles()
     const events = await getEventsList()
-
-    // Client-side filtering for search query (simple implementation)
-    const filteredParticipants = participants.filter((p: IParticipant) => {
-        const fullName = `${p.profiles?.first_name || ''} ${p.profiles?.last_name || ''}`.toLowerCase()
-        return fullName.includes(searchQuer.toLowerCase()) || p.profiles?.email?.toLowerCase().includes(searchQuer.toLowerCase())
-    })
 
     return (
         <LayoutWrapper sectionTitle="Gestión de Participantes">
@@ -42,7 +41,12 @@ export default async function ParticipantsPage({
 
                 <div className="flex flex-col gap-2">
                     <ParticipantFilters roles={roles} events={events} />
-                    <ParticipantTable participants={filteredParticipants} />
+                    <ParticipantTable
+                        participants={participants}
+                        totalItems={count}
+                        currentPage={page}
+                        pageSize={pageSize}
+                    />
                 </div>
             </div>
         </LayoutWrapper>

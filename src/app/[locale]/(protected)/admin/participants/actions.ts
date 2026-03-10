@@ -8,6 +8,7 @@ export async function getParticipants(filters?: {
     eventId?: string,
     editionId?: string,
     roleSlug?: string,
+    q?: string,
     page?: number,
     pageSize?: number
 }) {
@@ -23,7 +24,7 @@ export async function getParticipants(filters?: {
         .from('event_participants')
         .select(`
             *,
-            profiles:profile_id (
+            profiles:profile_id!inner (
                 id,
                 first_name,
                 last_name,
@@ -47,7 +48,6 @@ export async function getParticipants(filters?: {
             )
         `, { count: 'exact' })
         .order('created_at', { ascending: false })
-        .range(from, to)
 
     if (filters?.eventId) {
         // Fetch edition IDs for this event first to include them in the query
@@ -73,7 +73,12 @@ export async function getParticipants(filters?: {
         query = query.eq('participant_roles.slug', filters.roleSlug)
     }
 
-    const { data, error, count } = await query
+    if (filters?.q) {
+        const q = `%${filters.q}%`
+        query = query.or(`first_name.ilike.${q},last_name.ilike.${q},email.ilike.${q}`, { foreignTable: 'profiles' })
+    }
+
+    const { data, error, count } = await query.range(from, to)
 
     if (error) {
         console.error('Error fetching participants:', error)
