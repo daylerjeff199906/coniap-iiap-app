@@ -21,6 +21,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import { DynamicTable, Column } from '@/components/general/DataTable/DynamicTable'
 import { cn } from '@/lib/utils'
+import { RoleChangeModal } from './RoleChangeModal'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -55,6 +56,18 @@ export function ParticipantTable({
     const router = useRouter()
     const [deleteId, setDeleteId] = useState<string | null>(null)
     const [deleteName, setDeleteName] = useState<string>('')
+
+    const [roleModalData, setRoleModalData] = useState<{
+        isOpen: boolean
+        participantId: string
+        participantName: string
+        currentRoleId: string
+    }>({
+        isOpen: false,
+        participantId: '',
+        participantName: '',
+        currentRoleId: ''
+    })
 
     const handleDelete = async () => {
         if (!deleteId) return
@@ -99,9 +112,18 @@ export function ParticipantTable({
                 const initial = fullName.charAt(0).toUpperCase() || 'P'
                 return (
                     <div className="flex items-center gap-3">
-                        <Avatar className="h-9 w-9 border border-slate-100 shadow-sm">
-                            <AvatarImage src={profile?.avatar_url || ''} alt={fullName} />
-                            <AvatarFallback className="bg-slate-50 text-slate-400 font-medium text-xs">
+                        <Avatar className="h-9 w-9 border border-slate-100">
+                            {profile?.avatar_url ? (
+                                <img
+                                    src={profile.avatar_url}
+                                    alt={fullName}
+                                    className="h-full w-full object-cover"
+                                    onError={(e) => {
+                                        (e.target as HTMLImageElement).style.display = 'none'
+                                    }}
+                                />
+                            ) : null}
+                            <AvatarFallback>
                                 {initial}
                             </AvatarFallback>
                         </Avatar>
@@ -125,50 +147,34 @@ export function ParticipantTable({
                 const roleName = locale === 'es' ? role?.name?.es : role?.name?.en
                 return (
                     <div className="flex items-center">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <button className="outline-none focus:outline-none ring-0 focus:ring-0">
-                                    {role ? (
-                                        <div
-                                            className="text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight border hover:bg-slate-100 transition-colors cursor-pointer group/role"
-                                            style={{
-                                                backgroundColor: role.badge_color ? `${role.badge_color}10` : '#f8fafc',
-                                                color: role.badge_color || '#64748b',
-                                                borderColor: role.badge_color ? `${role.badge_color}20` : '#e2e8f0'
-                                            }}
-                                        >
-                                            {roleName || role.slug}
-                                            <IconChevronDown size={10} className="ml-1 opacity-40 group-hover/role:opacity-100 transition-opacity" />
-                                        </div>
-                                    ) : (
-                                        <div className="bg-slate-50 text-slate-400 border border-slate-100 text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight hover:bg-slate-100 transition-colors cursor-pointer group/role">
-                                            Normal
-                                            <IconChevronDown size={10} className="ml-1 opacity-40 group-hover/role:opacity-100 transition-opacity" />
-                                        </div>
-                                    )}
-                                </button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="start" className="w-56 rounded-xl p-1 shadow-2xl border-slate-200 z-[100]">
-                                {roles.map((r) => (
-                                    <DropdownMenuItem
-                                        key={r.id}
-                                        onClick={(e) => {
-                                            e.stopPropagation()
-                                            handleRoleUpdate(participant.id, r.id)
-                                        }}
-                                        className={cn(
-                                            "text-[12px] font-medium px-3 py-2 rounded-lg cursor-pointer transition-colors",
-                                            participant.role_id === r.id ? "bg-primary/5 text-primary" : "text-slate-600 hover:bg-slate-50"
-                                        )}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: r.badge_color || '#cbd5e1' }} />
-                                            {locale === 'es' ? r.name?.es : r.name?.en}
-                                        </div>
-                                    </DropdownMenuItem>
-                                ))}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <button
+                            onClick={() => setRoleModalData({
+                                isOpen: true,
+                                participantId: participant.id,
+                                participantName: `${participant.profiles?.first_name || ''} ${participant.profiles?.last_name || ''}`,
+                                currentRoleId: participant.role_id || ''
+                            })}
+                            className="outline-none focus:outline-none ring-0 focus:ring-0 group/role"
+                        >
+                            {role ? (
+                                <div
+                                    className="text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight border hover:bg-slate-100 transition-colors cursor-pointer"
+                                    style={{
+                                        backgroundColor: role.badge_color ? `${role.badge_color}10` : '#f8fafc',
+                                        color: role.badge_color || '#64748b',
+                                        borderColor: role.badge_color ? `${role.badge_color}20` : '#e2e8f0'
+                                    }}
+                                >
+                                    {roleName || role.slug}
+                                    <IconChevronDown size={10} className="ml-1 opacity-40 group-hover/role:opacity-100 transition-opacity" />
+                                </div>
+                            ) : (
+                                <div className="bg-slate-50 text-slate-400 border border-slate-100 text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight hover:bg-slate-100 transition-colors cursor-pointer">
+                                    Normal
+                                    <IconChevronDown size={10} className="ml-1 opacity-40 group-hover/role:opacity-100 transition-opacity" />
+                                </div>
+                            )}
+                        </button>
                     </div>
                 )
             }
@@ -257,6 +263,15 @@ export function ParticipantTable({
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+
+            <RoleChangeModal
+                isOpen={roleModalData.isOpen}
+                onClose={() => setRoleModalData(prev => ({ ...prev, isOpen: false }))}
+                onConfirm={(roleId) => handleRoleUpdate(roleModalData.participantId, roleId)}
+                currentRoleId={roleModalData.currentRoleId}
+                roles={roles}
+                userName={roleModalData.participantName}
+            />
 
             <DynamicTable
                 data={participants}

@@ -52,9 +52,18 @@ export function ProfileTable({ profiles, isLoading, totalItems, currentPage, pag
 
                         return (
                             <div className="flex items-center gap-3">
-                                <Avatar className="h-10 w-10 border border-slate-100">
-                                    <AvatarImage src={profile.avatar_url || ''} alt={fullName} />
-                                    <AvatarFallback className="bg-slate-50 text-slate-400 font-medium text-xs">
+                                <Avatar className="h-10 w-10 border">
+                                    {profile.avatar_url ? (
+                                        <img
+                                            src={profile.avatar_url}
+                                            alt={fullName}
+                                            className="h-full w-full object-cover"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).style.display = 'none'
+                                            }}
+                                        />
+                                    ) : null}
+                                    <AvatarFallback>
                                         {initial}
                                     </AvatarFallback>
                                 </Avatar>
