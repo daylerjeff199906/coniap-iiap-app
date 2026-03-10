@@ -87,7 +87,7 @@ export function ProfileTable({ profiles, isLoading }: ProfileTableProps) {
                                                 </Badge>
                                             ) : (
                                                 <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-100 text-[10px] font-bold py-0 h-5">
-                                                    Fantasma
+                                                    Fake Profile
                                                 </Badge>
                                             )}
                                         </div>

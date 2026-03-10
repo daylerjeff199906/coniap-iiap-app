@@ -98,7 +98,7 @@ export function ProfileDetail({
 
             {/* main Intro Card */}
             <Card className="rounded-3xl border-none shadow-xl shadow-slate-200/50 overflow-hidden bg-white">
-                <div className="h-32 bg-gradient-to-r from-blue-600 to-indigo-700 relative" />
+                <div className="h-32 bg-gradient-to-r from-gray-400 to-gray-500 relative" />
                 <CardContent className="px-8 pb-10 pt-0 relative -mt-12 flex flex-col md:flex-row gap-8">
                     <div className="flex flex-col items-center md:items-start shrink-0">
                         <AvatarUpload
@@ -109,7 +109,7 @@ export function ProfileDetail({
                         />
                         <div className="mt-4 flex gap-2">
                             <Badge variant="outline" className={`rounded-xl border-white/20 px-3 py-1 text-[10px] font-bold ${profile.auth_id ? 'bg-emerald-500 text-white border-none' : 'bg-slate-200 text-slate-600 border-none'}`}>
-                                {profile.auth_id ? 'CUENTA ACTIVA' : 'PERFIL FANTASMA'}
+                                {profile.auth_id ? 'CUENTA ACTIVA' : 'FAKE PROFILE'}
                             </Badge>
                         </div>
                     </div>
