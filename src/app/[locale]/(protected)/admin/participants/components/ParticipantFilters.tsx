@@ -81,6 +81,21 @@ export function ParticipantFilters({ roles, events, editions = [] }: Participant
         })
     }
 
+    const handleEventChange = (val: string) => {
+        startTransition(() => {
+            const params = new URLSearchParams(searchParams.toString())
+            if (val === 'all') {
+                params.delete('eventId')
+            } else {
+                params.set('eventId', val)
+            }
+            params.delete('editionId') // Reset edition when event changes
+            params.set('page', '1')
+            // @ts-ignore
+            router.push(`${pathname}?${params.toString()}`)
+        })
+    }
+
     const handleScopeChange = (val: string) => {
         startTransition(() => {
             const params = new URLSearchParams(searchParams.toString())
@@ -100,8 +115,9 @@ export function ParticipantFilters({ roles, events, editions = [] }: Participant
 
     const handleEditionChange = (val: string) => {
         startTransition(() => {
+            const value = val === 'all' ? '' : val
             // @ts-ignore
-            router.push(`${pathname}?${createQueryString('editionId', val)}`)
+            router.push(`${pathname}?${createQueryString('editionId', value)}`)
         })
     }
 
@@ -112,7 +128,7 @@ export function ParticipantFilters({ roles, events, editions = [] }: Participant
     return (
         <>
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-4">
-                <div className="flex flex-1 items-center gap-2 w-full lg:w-auto">
+                <div className="flex flex-1 flex-wrap items-center gap-2 w-full lg:w-auto">
                     <form onSubmit={handleSearch} className="relative w-full max-w-sm flex items-center">
                         <IconSearch className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
@@ -140,6 +156,42 @@ export function ParticipantFilters({ roles, events, editions = [] }: Participant
                             ))}
                         </SelectContent>
                     </Select>
+
+                    <Select
+                        defaultValue={searchParams.get('eventId') || 'all'}
+                        onValueChange={handleEventChange}
+                    >
+                        <SelectTrigger className="w-[200px] h-10 rounded-xl">
+                            <SelectValue placeholder="Evento" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Todos los eventos</SelectItem>
+                            {events.map((event) => (
+                                <SelectItem key={event.id} value={event.id}>
+                                    {event.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+
+                    {searchParams.get('eventId') && editions.length > 0 && (
+                        <Select
+                            defaultValue={searchParams.get('editionId') || 'all'}
+                            onValueChange={handleEditionChange}
+                        >
+                            <SelectTrigger className="w-[180px] h-10 rounded-xl">
+                                <SelectValue placeholder="Edición" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Todas las ediciones</SelectItem>
+                                {editions.map((edition) => (
+                                    <SelectItem key={edition.id} value={edition.id}>
+                                        {locale === 'es' ? edition.name.es : edition.name.en} ({edition.year})
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
 
                     {eventIdFromPath && (
                         <div className="flex items-center gap-1.5 p-1 bg-slate-100/50 rounded-2xl border border-slate-200/60">
