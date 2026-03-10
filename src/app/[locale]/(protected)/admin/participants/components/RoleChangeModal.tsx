@@ -37,6 +37,13 @@ export function RoleChangeModal({
     const [selectedRoleId, setSelectedRoleId] = useState(currentRoleId)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
+    // Sync state when currentRoleId changes (when modal opens for a different user)
+    React.useEffect(() => {
+        if (isOpen) {
+            setSelectedRoleId(currentRoleId)
+        }
+    }, [currentRoleId, isOpen])
+
     const handleConfirm = async () => {
         setIsSubmitting(true)
         try {
