@@ -31,8 +31,14 @@ export default async function UserRolesPage({ params }: UserRolesPageProps) {
                     <div className="space-y-6">
                         <PageHeader
                             title="Seguridad y Roles"
-                            description={`Gestiona los accesos y roles de ${userName} en el sistema.`}
+                            description={
+                                <div className="space-y-1">
+                                    <p>Gestiona los accesos y roles de <span className="text-slate-900 font-medium">{userName}</span> en el sistema.</p>
+                                    <p className="text-slate-400 text-xs font-medium">{profile.email}</p>
+                                </div>
+                            }
                             className="mb-8"
+                            backHref={`/admin/users`}
                         />
 
                         <RolesManager

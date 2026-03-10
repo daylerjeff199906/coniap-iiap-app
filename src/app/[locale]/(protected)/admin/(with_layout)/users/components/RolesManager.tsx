@@ -11,6 +11,7 @@ import { IconUserPlus, IconShieldCheck, IconTrash, IconPlus, IconLoader2, IconAl
 import { createSupabaseAccount, assignRole, removeRole } from '../roles-actions'
 import { DynamicTable } from '@/components/general/DataTable/DynamicTable'
 import { useRouter } from '@/i18n/routing'
+import { cn } from '@/lib/utils'
 
 interface RolesManagerProps {
     profile: IProfile
@@ -71,25 +72,22 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
 
     if (!profile.auth_id) {
         return (
-            <Card className="rounded-3xl border-none shadow-2xl shadow-slate-200/50 overflow-hidden bg-white">
-                <div className="h-2 bg-gradient-to-r from-amber-400 via-orange-400 to-red-400" />
+            <Card className="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
                 <CardContent className="p-12 flex flex-col items-center text-center gap-6">
-                    <div className="w-20 h-20 rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center shadow-inner">
-                        <IconLock size={40} />
+                    <div className="w-16 h-16 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center border border-slate-100 italic">
+                        <IconLock size={32} />
                     </div>
-                    <div className="space-y-2">
-                        <CardTitle className="text-2xl font-medium text-slate-900">Sin cuenta de acceso</CardTitle>
-                        <CardDescription className="text-slate-500 text-lg max-w-sm mx-auto">
-                            Este perfil aún no está vinculado a una cuenta de Supabase Auth. Debes crearle una para gestionar sus roles.
+                    <div className="space-y-1">
+                        <CardTitle className="text-xl font-medium text-slate-900">Sin cuenta de acceso</CardTitle>
+                        <CardDescription className="text-slate-500 text-sm max-w-sm mx-auto">
+                            Este perfil aún no está vinculado a una cuenta de acceso. Debes crearle una para gestionar sus roles.
                         </CardDescription>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 w-full max-w-md flex items-center gap-4 text-left">
-                        <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0">
-                            <IconAlertCircle size={20} className="text-slate-400" />
-                        </div>
-                        <p className="text-sm text-slate-600 font-medium">
-                            Se enviará un correo de confirmación a <span className="font-medium text-slate-900">{profile.email}</span> con sus credenciales.
+                    <div className="p-4 rounded-xl bg-slate-50/50 border border-slate-100 w-full max-w-md flex items-center gap-4 text-left">
+                        <IconAlertCircle size={18} className="text-slate-400 shrink-0" />
+                        <p className="text-[13px] text-slate-600 font-medium leading-relaxed">
+                            Se enviará un correo a <span className="text-slate-900">{profile.email}</span> con las instrucciones de acceso.
                         </p>
                     </div>
 
@@ -97,10 +95,10 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                         size="lg"
                         onClick={handleCreateAccount}
                         disabled={isPending}
-                        className="rounded-2xl px-8 h-14 bg-slate-900 hover:bg-black text-white font-medium flex items-center gap-3 transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-slate-200"
+                        className="rounded-xl px-8 h-12 bg-slate-900 hover:bg-black text-white font-medium flex items-center gap-2 transition-all shadow-sm"
                     >
-                        {isPending ? <IconLoader2 className="animate-spin" /> : <IconUserPlus size={22} />}
-                        Crear Cuenta de Supabase
+                        {isPending ? <IconLoader2 className="animate-spin" size={18} /> : <IconUserPlus size={18} />}
+                        Configurar cuenta de acceso
                     </Button>
                 </CardContent>
             </Card>
@@ -111,72 +109,100 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
     const availableRoles = allRoles.filter(role => !assignedRoleIds.includes(role.id))
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {/* Account Status */}
-            <div className="flex items-center gap-4 p-6 rounded-3xl bg-emerald-50 border border-emerald-100/50 shadow-sm shadow-emerald-100/20">
-                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-emerald-500 shadow-sm">
-                    <IconShieldCheck size={24} />
-                </div>
-                <div>
-                    <h3 className="text-emerald-900 font-medium text-sm">Cuenta Vinculada</h3>
-                    <p className="text-emerald-700/70 text-xs font-medium">UID: {profile.auth_id}</p>
-                </div>
-                <Badge className="ml-auto bg-emerald-500 text-white border-none rounded-lg px-3 py-1 font-black text-[10px] uppercase">ACTIVO</Badge>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Assign Role Panel */}
-                <div className="lg:col-span-4">
-                    <Card className="rounded-3xl border-none shadow-xl shadow-slate-200/50 bg-white sticky top-24">
-                        <CardHeader>
-                            <CardTitle className="text-xl font-medium text-slate-900">Asignar Nuevo Rol</CardTitle>
-                            <CardDescription>Selecciona un rol de los disponibles para este usuario.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest pl-1">Roles Disponibles</label>
-                                <select
-                                    value={selectedRoleId}
-                                    onChange={(e) => setSelectedRoleId(e.target.value)}
-                                    className="w-full h-12 rounded-2xl border-slate-100 bg-slate-50 px-4 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all appearance-none"
-                                >
-                                    <option value="">Seleccionar rol...</option>
-                                    {availableRoles.map(role => (
-                                        <option key={role.id} value={role.id}>{role.name}</option>
-                                    ))}
-                                </select>
+        <div className="space-y-6 animate-in fade-in duration-500">
+            {/* Account Status Card - Reference: "Account Details" section */}
+            <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
+                <CardHeader className="border-b border-slate-50 px-8 py-5">
+                    <CardTitle className="text-[15px] font-medium text-slate-900">Detalles de Acceso</CardTitle>
+                    <CardDescription className="text-xs">Configuración de vinculación con la plataforma.</CardDescription>
+                </CardHeader>
+                <CardContent className="p-0">
+                    <div className="divide-y divide-slate-50">
+                        <div className="px-8 py-5 flex items-center justify-between group">
+                            <div className="space-y-0.5">
+                                <span className="text-[13px] font-medium text-slate-900">Identificador (UID)</span>
+                                <p className="text-[11px] text-slate-400 font-medium font-mono">{profile.auth_id}</p>
                             </div>
+                            <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg border border-emerald-100 text-[10px] uppercase font-medium tracking-tight">
+                                Cuenta Activa
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
 
-                            {selectedRoleId && (
-                                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 animate-in zoom-in-95 duration-200">
-                                    <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                                        {allRoles.find(r => r.id === selectedRoleId)?.description || 'Sin descripción disponible.'}
-                                    </p>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                {/* Available Roles Panel - Reference: "Enable Authentication" selection style */}
+                <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
+                    <CardHeader className="border-b border-slate-50 px-8 py-5">
+                        <CardTitle className="text-[15px] font-medium text-slate-900">Gestión de Permisos</CardTitle>
+                        <CardDescription className="text-xs">Selecciona un rol para ampliar las capacidades del usuario en la plataforma.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                        <div className="grid grid-cols-1 divide-y divide-slate-50">
+                            {availableRoles.length > 0 ? (
+                                availableRoles.map((role) => (
+                                    <div
+                                        key={role.id}
+                                        onClick={() => setSelectedRoleId(role.id)}
+                                        className={cn(
+                                            "flex items-center gap-6 px-8 py-5 cursor-pointer transition-all",
+                                            selectedRoleId === role.id ? "bg-slate-50/50" : "hover:bg-slate-50/20"
+                                        )}
+                                    >
+                                        {/* Custom Radio Button */}
+                                        <div className={cn(
+                                            "w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-all duration-200",
+                                            selectedRoleId === role.id
+                                                ? "border-slate-800 bg-slate-800"
+                                                : "border-slate-300 bg-white"
+                                        )}>
+                                            {selectedRoleId === role.id && (
+                                                <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                                            )}
+                                        </div>
+
+                                        <div className="space-y-0.5 flex-1 pr-4">
+                                            <label className="text-[13px] font-medium text-slate-900 cursor-pointer">{role.name}</label>
+                                            <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
+                                                {role.description || 'Habilita accesos específicos para este perfil en el panel administrativo.'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="p-12 text-center bg-slate-50/10 italic">
+                                    <p className="text-sm text-slate-400 font-medium">No hay más roles disponibles para asignar.</p>
                                 </div>
                             )}
-
-                            <Button
-                                className="w-full h-12 rounded-2xl bg-primary text-white font-medium flex items-center justify-center gap-2 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95"
-                                onClick={handleAssignRole}
-                                disabled={!selectedRoleId || isPending}
-                            >
-                                {isPending ? <IconLoader2 className="animate-spin" size={20} /> : <IconPlus size={20} />}
-                                Asignar Rol
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </div>
-
-                {/* Roles List */}
-                <div className="lg:col-span-8">
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between px-2">
-                            <h2 className="text-xl font-medium text-slate-900">Roles Asignados</h2>
-                            <Badge variant="outline" className="rounded-lg border-slate-100 bg-white text-slate-400 font-medium px-3 py-1">
-                                {userRoles.length} ROLES
-                            </Badge>
                         </div>
 
+                        {availableRoles.length > 0 && (
+                            <div className="px-8 py-6 border-t border-slate-50 flex justify-end bg-slate-50/20">
+                                <Button
+                                    className="h-10 px-8 rounded-xl bg-slate-900 text-white font-medium flex items-center gap-2 transition-all hover:bg-black shadow-sm disabled:opacity-50"
+                                    onClick={handleAssignRole}
+                                    disabled={!selectedRoleId || isPending}
+                                >
+                                    {isPending ? <IconLoader2 className="animate-spin" size={16} /> : <IconPlus size={16} />}
+                                    Guardar Cambios de Rol
+                                </Button>
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+
+                {/* Assigned Roles List - Reference: "Recovery Settings" style headers */}
+                <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
+                    <CardHeader className="px-8 py-5 border-b border-slate-50 bg-slate-50/10">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-[15px] font-medium text-slate-900">Roles Asignados</h2>
+                            <span className="text-[10px] font-medium text-slate-400 bg-white px-2 py-0.5 rounded-md border border-slate-100">
+                                {userRoles.length} ACTIVOS
+                            </span>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="p-0">
                         <DynamicTable
                             data={userRoles.map(ur => ({
                                 id: ur.role_id,
@@ -184,25 +210,27 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                                 description: ur.roles?.description || 'Sin descripción',
                                 assigned_at: ur.assigned_at
                             }))}
-                            emptyMessage="Este usuario no tiene roles asignados."
+                            emptyMessage="Este usuario no tiene roles asignados todavía."
+                            rowClassName="hover:bg-transparent"
                             columns={[
                                 {
                                     header: 'Rol',
-                                    headerClassName: 'pl-8',
+                                    headerClassName: 'pl-8 text-[11px] uppercase tracking-widest font-medium text-slate-400',
                                     render: (item) => (
                                         <div className="flex flex-col pl-2">
-                                            <span className="font-medium text-slate-900 group-hover:text-primary transition-colors text-[13px]">{item.name}</span>
-                                            <span className="text-[11px] text-slate-400 font-medium truncate max-w-[200px]">{item.description}</span>
+                                            <span className="font-medium text-slate-900 text-[13px]">{item.name}</span>
+                                            <span className="text-[11px] text-slate-400 font-medium">{item.description}</span>
                                         </div>
                                     )
                                 },
                                 {
-                                    header: 'Fecha de Asignación',
+                                    header: 'Alta',
+                                    headerClassName: 'text-[11px] uppercase tracking-widest font-medium text-slate-400',
                                     render: (item) => (
-                                        <div className="text-slate-500 font-medium text-xs tabular-nums">
+                                        <div className="text-slate-500 font-medium text-[12px] tabular-nums">
                                             {new Date(item.assigned_at).toLocaleDateString('es-ES', {
                                                 year: 'numeric',
-                                                month: 'long',
+                                                month: 'short',
                                                 day: 'numeric'
                                             })}
                                         </div>
@@ -210,29 +238,31 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                                 },
                                 {
                                     header: '',
-                                    className: 'w-[80px]',
+                                    className: 'w-[100px]',
                                     render: (item) => (
-                                        <div className="flex justify-end">
+                                        <div className="flex justify-end pr-6">
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
-                                                className="h-9 w-9 rounded-xl text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all"
+                                                className="h-8 w-8 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100"
                                                 onClick={(e) => {
                                                     e.stopPropagation()
                                                     handleRemoveRole(item.id)
                                                 }}
                                                 disabled={isPending}
                                             >
-                                                <IconTrash size={18} />
+                                                <IconTrash size={16} />
                                             </Button>
                                         </div>
                                     )
                                 }
                             ]}
                         />
-                    </div>
-                </div>
+                    </CardContent>
+                </Card>
             </div>
         </div>
     )
 }
+
+
