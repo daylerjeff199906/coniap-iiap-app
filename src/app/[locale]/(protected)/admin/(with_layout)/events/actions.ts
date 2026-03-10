@@ -41,7 +41,6 @@ export async function getEventById(id: string) {
     const supabase = createClient(cookieStore)
 
     const { data, error } = await supabase.from('main_events').select('*').eq('id', id).single()
-    console.log(data, error)
     if (error) {
         console.error('Error fetching event details:', error)
         return null
