@@ -12,6 +12,16 @@ import { createSupabaseAccount, assignRole, removeRole } from '../roles-actions'
 import { DynamicTable } from '@/components/general/DataTable/DynamicTable'
 import { useRouter } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 interface RolesManagerProps {
     profile: IProfile
@@ -23,6 +33,7 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
     const [isPending, startTransition] = useTransition()
     const router = useRouter()
     const [selectedRoleId, setSelectedRoleId] = useState<string>('')
+    const [roleToRemove, setRoleToRemove] = useState<string | null>(null)
 
     const handleCreateAccount = () => {
         if (!profile.email) {
@@ -57,12 +68,11 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
     }
 
     const handleRemoveRole = (roleId: string) => {
-        if (!confirm('¿Estás seguro de que deseas eliminar este rol?')) return
-
         startTransition(async () => {
             const result = await removeRole(profile.id, roleId)
             if (result.success) {
                 toast.success('Rol eliminado')
+                setRoleToRemove(null)
                 router.refresh()
             } else {
                 toast.error(result.error)
@@ -247,7 +257,7 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                                                 className="h-8 w-8 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100"
                                                 onClick={(e) => {
                                                     e.stopPropagation()
-                                                    handleRemoveRole(item.id)
+                                                    setRoleToRemove(item.id)
                                                 }}
                                                 disabled={isPending}
                                             >
@@ -261,6 +271,27 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                     </CardContent>
                 </Card>
             </div>
+
+            {/* Confirm Removal Dialog */}
+            <AlertDialog open={!!roleToRemove} onOpenChange={(open) => !open && setRoleToRemove(null)}>
+                <AlertDialogContent className="rounded-xl border-slate-200 bg-white">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-base font-medium text-slate-900">¿Confirmar eliminación?</AlertDialogTitle>
+                        <AlertDialogDescription className="text-xs text-slate-500 font-medium">
+                            Esta acción revocará los permisos asociados a este rol de forma inmediata.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="mt-4">
+                        <AlertDialogCancel className="rounded-lg h-9 text-xs font-medium border-slate-200">Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={() => roleToRemove && handleRemoveRole(roleToRemove)}
+                            className="rounded-lg h-9 text-xs font-medium bg-red-600 hover:bg-red-700 text-white border-none shadow-sm"
+                        >
+                            Revocar Accesos
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }
