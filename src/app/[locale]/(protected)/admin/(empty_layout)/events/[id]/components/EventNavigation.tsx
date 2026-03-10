@@ -28,6 +28,11 @@ export function EventNavigation({ locale, eventId }: { locale: string, eventId: 
             href: `/admin/events/${eventId}/participants`,
             icon: IconUsers
         },
+        {
+            name: 'Sponsors',
+            href: `/admin/events/${eventId}/sponsors`,
+            icon: IconSpeakerphone
+        },
     ]
 
     return (

@@ -35,15 +35,23 @@ export function AdminSidebar({ user, ...props }: React.ComponentProps<typeof Sid
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
+                        <SidebarMenuButton size="lg"
+                            className="bg-transparent hover:bg-transparent"
+                            asChild>
                             <Link href={`/${locale}/admin`}>
-                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                                    <ShieldAlert className="size-4" />
+                                <div className="flex size-12 items-center justify-center rounded-sm bg-gray-900 dark:bg-gray-800 ">
+                                    <img src="/brand/logo-iiap-bn.webp" alt="logo-iiap" className="w-full h-full object-contain p-1" />
                                 </div>
-                                <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-semibold">Panel Admin</span>
-                                    <span className="text-xs text-muted-foreground">Bizventory</span>
-                                </div>
+                                {
+                                    props.collapsible !== 'icon' && (
+                                        <div className="flex flex-col gap-0.5 leading-none">
+                                            <span className="font-semibold">Panel Admin</span>
+                                            <span className="text-xs text-muted-foreground">
+                                                Eventos IIAP
+                                            </span>
+                                        </div>
+                                    )
+                                }
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
