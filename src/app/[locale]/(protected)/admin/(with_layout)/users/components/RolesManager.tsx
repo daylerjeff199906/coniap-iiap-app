@@ -161,27 +161,30 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Account Info Cards Grid */}
             {/* Account Status Card */}
             <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden flex flex-col justify-between">
                 <div>
                     <CardHeader className="border-b border-slate-50 px-8 py-5">
                         <CardTitle className="text-[15px] font-medium text-slate-900">Estado del Acceso</CardTitle>
-                        <CardDescription className="text-xs">Información técnica de validación del sistema.</CardDescription>
+                        <CardDescription className="text-xs">Identidad verificada en el sistema.</CardDescription>
                     </CardHeader>
                     <CardContent className="p-0">
                         <div className="px-8 py-5 flex items-center justify-between">
                             <div className="space-y-0.5">
                                 <span className="text-[13px] font-medium text-slate-900">Identificador (UID)</span>
-                                <p className="text-[11px] text-slate-400 font-medium font-mono">{profile.auth_id}</p>
+                                <p className="text-[11px] text-slate-400 font-medium font-mono truncate max-w-[150px]">{profile.auth_id}</p>
                             </div>
                             <div className={cn(
-                                "flex items-center gap-2 px-3 py-1 rounded-lg border text-[10px] uppercase font-medium tracking-tight",
-                                authInfo?.is_active
-                                    ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                                    : "bg-red-50 text-red-600 border-red-100"
+                                "flex items-center gap-2 px-3 py-1 rounded-lg border text-[10px] uppercase font-medium tracking-tight h-6",
+                                isLoadingAuth
+                                    ? "bg-slate-50 text-slate-400 border-slate-100"
+                                    : (authInfo?.is_active !== false ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-red-50 text-red-600 border-red-100")
                             )}>
-                                {isLoadingAuth ? <IconLoader2 className="animate-spin" size={12} /> : (authInfo?.is_active ? 'Cuenta Activa' : 'Cuenta Suspendida')}
+                                {isLoadingAuth ? (
+                                    <IconLoader2 className="animate-spin" size={12} />
+                                ) : (
+                                    authInfo?.is_active === false ? 'Cuenta Suspendida' : 'Cuenta Activa'
+                                )}
                             </div>
                         </div>
                     </CardContent>
@@ -192,7 +195,7 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
             <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
                 <CardHeader className="border-b border-slate-50 px-8 py-5">
                     <CardTitle className="text-[15px] font-medium text-slate-900">Configuración de Recuperación</CardTitle>
-                    <CardDescription className="text-xs">Envia un correo para restablecer la contraseña del usuario.</CardDescription>
+                    <CardDescription className="text-xs">Seguridad y acceso a la cuenta.</CardDescription>
                 </CardHeader>
                 <CardContent className="px-8 py-5 space-y-4">
                     <div className="space-y-2">
@@ -200,11 +203,11 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                             <label className="text-[11px] uppercase font-medium text-slate-400 tracking-wider">Correo Electrónico</label>
                             <Button
                                 variant="link"
-                                className="p-0 h-auto text-[11px] text-slate-900 font-medium flex items-center gap-1 hover:no-underline"
+                                className="p-0 h-auto text-[11px] text-slate-900 font-medium flex items-center gap-1 hover:no-underline hover:text-indigo-600 transition-colors"
                                 onClick={handleSendResetLink}
                                 disabled={isPending}
                             >
-                                <IconMailForward size={14} />
+                                {isPending ? <IconLoader2 size={14} className="animate-spin" /> : <IconMailForward size={14} />}
                                 Enviar enlace
                             </Button>
                         </div>
@@ -212,7 +215,7 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                             <Input
                                 value={profile.email || ''}
                                 disabled
-                                className="bg-slate-50 border-slate-200 text-[13px] font-medium rounded-lg h-10 px-4"
+                                className="bg-slate-50 border-slate-200 text-[13px] font-medium rounded-lg h-10 px-4 text-slate-500"
                             />
                         </div>
                     </div>

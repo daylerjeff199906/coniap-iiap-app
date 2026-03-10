@@ -134,29 +134,23 @@ export async function removeRole(profileId: string, roleId: string) {
 
 export async function sendPasswordResetLink(email: string) {
     try {
-        const supabaseAdmin = createAdminClient()
-        // generateLink es más directo para obtener el link o enviarlo si se desea, 
-        // pero resetPasswordForEmail es lo estándar. Usamos el admin para asegurar el envío.
-        const { error } = await supabaseAdmin.auth.admin.generateLink({
-            type: 'recovery',
-            email: email,
-        })
-
-        if (error) {
-            console.error('Error generating reset link:', error)
-            return { error: 'No se pudo generar el enlace de recuperación.' }
-        }
-
-        // También podemos usar el método estándar que envía el correo directamente
         const cookieStore = await cookies()
         const supabase = createClient(cookieStore)
-        await supabase.auth.resetPasswordForEmail(email, {
+
+        // resetPasswordForEmail sends the email directly via Supabase Auth
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
             redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?next=/update-password`,
         })
 
-        return { success: true, message: 'Enlace de recuperación enviado al correo del usuario.' }
+        if (error) {
+            console.error('Error sending reset link:', error)
+            return { error: 'No se pudo enviar el enlace de recuperación. Verifica si el usuario existe.' }
+        }
+
+        return { success: true, message: 'Enlace de recuperación enviado al correo del usuario correctamente.' }
     } catch (err) {
-        return { error: 'Error al procesar la solicitud.' }
+        console.error('Unexpected error in sendPasswordResetLink:', err)
+        return { error: 'Error al procesar la solicitud de recuperación.' }
     }
 }
 
@@ -191,16 +185,19 @@ export async function getAuthUserInfo(authId: string) {
 
         if (error || !user) return null
 
+        // Si el usuario existe en Auth y está vinculado, consideramos que está activo
+        // a menos que haya un 'banned_until' futuro explícito.
         const isBanned = user.banned_until && new Date(user.banned_until) > new Date()
 
         return {
             id: user.id,
             email: user.email,
             last_sign_in_at: user.last_sign_in_at,
-            banned_until: user.banned_until,
-            is_active: !isBanned
+            is_active: !isBanned,
+            confirmed_at: user.email_confirmed_at
         }
     } catch (err) {
+        console.error('Error fetching auth user info:', err)
         return null
     }
 }
