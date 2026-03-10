@@ -157,40 +157,44 @@ export function ParticipantFilters({ roles, events, editions = [] }: Participant
                         </SelectContent>
                     </Select>
 
-                    <Select
-                        defaultValue={searchParams.get('eventId') || 'all'}
-                        onValueChange={handleEventChange}
-                    >
-                        <SelectTrigger className="w-[200px] h-10 rounded-xl">
-                            <SelectValue placeholder="Evento" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">Todos los eventos</SelectItem>
-                            {events.map((event) => (
-                                <SelectItem key={event.id} value={event.id}>
-                                    {event.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    {!eventIdFromPath && (
+                        <>
+                            <Select
+                                defaultValue={searchParams.get('eventId') || 'all'}
+                                onValueChange={handleEventChange}
+                            >
+                                <SelectTrigger className="w-[200px] h-10 rounded-xl">
+                                    <SelectValue placeholder="Evento" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">Todos los eventos</SelectItem>
+                                    {events.map((event) => (
+                                        <SelectItem key={event.id} value={event.id}>
+                                            {event.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
 
-                    {searchParams.get('eventId') && editions.length > 0 && (
-                        <Select
-                            defaultValue={searchParams.get('editionId') || 'all'}
-                            onValueChange={handleEditionChange}
-                        >
-                            <SelectTrigger className="w-[180px] h-10 rounded-xl">
-                                <SelectValue placeholder="Edición" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">Todas las ediciones</SelectItem>
-                                {editions.map((edition) => (
-                                    <SelectItem key={edition.id} value={edition.id}>
-                                        {locale === 'es' ? edition.name.es : edition.name.en} ({edition.year})
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
+                            {searchParams.get('eventId') && editions.length > 0 && (
+                                <Select
+                                    defaultValue={searchParams.get('editionId') || 'all'}
+                                    onValueChange={handleEditionChange}
+                                >
+                                    <SelectTrigger className="w-[180px] h-10 rounded-xl">
+                                        <SelectValue placeholder="Edición" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">Todas las ediciones</SelectItem>
+                                        {editions.map((edition) => (
+                                            <SelectItem key={edition.id} value={edition.id}>
+                                                {locale === 'es' ? edition.name.es : edition.name.en} ({edition.year})
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            )}
+                        </>
                     )}
 
                     {eventIdFromPath && (
