@@ -22,7 +22,7 @@ interface ProfilesPageProps {
 export default async function ProfilesPage({ searchParams }: ProfilesPageProps) {
     const { page: pageStr = '1', q: query = '' } = await searchParams
     const page = parseInt(pageStr, 10)
-    const pageSize = 30
+    const pageSize = 20
 
     const { data: profiles, count: total } = await getProfiles(page, pageSize, query)
     const totalPages = Math.ceil(total / pageSize)
@@ -50,53 +50,10 @@ export default async function ProfilesPage({ searchParams }: ProfilesPageProps) 
                     <ProfileTable
                         profiles={profiles}
                         isLoading={false}
+                        totalItems={total}
+                        currentPage={page}
+                        pageSize={pageSize}
                     />
-
-                    {total > pageSize && (
-                        <div className="mt-8 flex justify-center">
-                            <Pagination>
-                                <PaginationContent className="bg-white p-1 rounded-2xl border border-slate-100 shadow-sm shadow-slate-100/50">
-                                    <PaginationItem>
-                                        <PaginationPrevious
-                                            href={createPageUrl(Math.max(1, page - 1))}
-                                            className={page === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer hover:bg-slate-50 rounded-xl transition-all'}
-                                        />
-                                    </PaginationItem>
-
-                                    {Array.from({ length: Math.min(5, totalPages) }).map((_, i) => {
-                                        let pageNum = i + 1
-                                        if (totalPages > 5 && page > 3) {
-                                            pageNum = page - 2 + i
-                                            if (pageNum + (4 - i) > totalPages) pageNum = totalPages - 4 + i
-                                        }
-                                        if (pageNum > totalPages || pageNum < 1) return null
-
-                                        return (
-                                            <PaginationItem key={pageNum}>
-                                                <PaginationLink
-                                                    isActive={page === pageNum}
-                                                    href={createPageUrl(pageNum)}
-                                                    className={`cursor-pointer rounded-xl transition-all ${page === pageNum
-                                                            ? 'bg-primary text-primary-foreground font-black shadow-lg shadow-primary/20 hover:bg-primary'
-                                                            : 'hover:bg-slate-50 text-slate-600 font-bold'
-                                                        }`}
-                                                >
-                                                    {pageNum}
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                        )
-                                    })}
-
-                                    <PaginationItem>
-                                        <PaginationNext
-                                            href={createPageUrl(Math.min(totalPages, page + 1))}
-                                            className={page === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer hover:bg-slate-50 rounded-xl transition-all'}
-                                        />
-                                    </PaginationItem>
-                                </PaginationContent>
-                            </Pagination>
-                        </div>
-                    )}
                 </div>
             </div>
         </LayoutWrapper>

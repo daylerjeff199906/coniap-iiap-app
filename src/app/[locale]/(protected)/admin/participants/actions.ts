@@ -7,10 +7,17 @@ import { revalidatePath } from 'next/cache'
 export async function getParticipants(filters?: {
     eventId?: string,
     editionId?: string,
-    roleSlug?: string
+    roleSlug?: string,
+    page?: number,
+    pageSize?: number
 }) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
+
+    const page = filters?.page || 1
+    const pageSize = filters?.pageSize || 20
+    const from = (page - 1) * pageSize
+    const to = from + pageSize - 1
 
     let query = supabase
         .from('event_participants')
@@ -38,8 +45,9 @@ export async function getParticipants(filters?: {
                 name,
                 year
             )
-        `)
+        `, { count: 'exact' })
         .order('created_at', { ascending: false })
+        .range(from, to)
 
     if (filters?.eventId) {
         // Fetch edition IDs for this event first to include them in the query
@@ -65,14 +73,17 @@ export async function getParticipants(filters?: {
         query = query.eq('participant_roles.slug', filters.roleSlug)
     }
 
-    const { data, error } = await query
+    const { data, error, count } = await query
 
     if (error) {
         console.error('Error fetching participants:', error)
-        return []
+        return { data: [], count: 0 }
     }
 
-    return data as IParticipant[]
+    return {
+        data: data as IParticipant[],
+        count: count || 0
+    }
 }
 
 export async function getParticipantRoles() {

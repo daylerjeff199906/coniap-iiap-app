@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -15,10 +16,20 @@ import { DynamicTable } from '@/components/general/DataTable/DynamicTable'
 interface ProfileTableProps {
     profiles: IProfile[]
     isLoading: boolean
+    totalItems?: number
+    currentPage?: number
+    pageSize?: number
+    onPageChange?: (page: number) => void
 }
 
-export function ProfileTable({ profiles, isLoading }: ProfileTableProps) {
+export function ProfileTable({ profiles, isLoading, totalItems, currentPage, pageSize }: ProfileTableProps) {
     const router = useRouter()
+
+    const handlePageChange = (page: number) => {
+        const params = new URLSearchParams(window.location.search)
+        params.set('page', page.toString())
+        router.push(`?${params.toString()}`)
+    }
 
     return (
         <DynamicTable
@@ -27,9 +38,13 @@ export function ProfileTable({ profiles, isLoading }: ProfileTableProps) {
             loadingMessage="Cargando directorio de usuarios..."
             onRowClick={(profile) => router.push(`/admin/users/${profile.id}`)}
             emptyMessage="No se encontraron usuarios"
+            totalItems={totalItems}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
             columns={[
                 {
-                    header: 'Participante',
+                    header: 'Usuario',
                     className: 'min-w-[300px]',
                     render: (profile) => {
                         const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'No asignado'
@@ -61,17 +76,17 @@ export function ProfileTable({ profiles, isLoading }: ProfileTableProps) {
                     }
                 },
                 {
-                    header: 'Rol',
+                    header: 'Acceso',
                     render: (profile) => (
                         <div className="flex items-center">
                             {profile.auth_id ? (
-                                <Badge variant="outline" className="bg-blue-50/50 text-blue-500 border-none text-[10px] font-medium py-0 h-5 px-3 rounded-full hover:bg-blue-50 transition-colors uppercase tracking-tight">
+                                <div className="bg-blue-50/50 text-blue-500 border border-blue-100/50 text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight">
                                     Cuenta Activa
-                                </Badge>
+                                </div>
                             ) : (
-                                <Badge variant="outline" className="bg-amber-50/50 text-amber-500 border-none text-[10px] font-medium py-0 h-5 px-3 rounded-full hover:bg-amber-50 transition-colors uppercase tracking-tight">
+                                <div className="bg-amber-50/50 text-amber-500 border border-amber-100/50 text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight">
                                     Sin Cuenta
-                                </Badge>
+                                </div>
                             )}
                         </div>
                     )
