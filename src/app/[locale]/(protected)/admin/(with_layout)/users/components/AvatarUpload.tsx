@@ -21,13 +21,11 @@ interface AvatarUploadProps {
 
 export function AvatarUpload({ avatarUrl, firstName, lastName, profileId }: AvatarUploadProps) {
     const [isUploading, setIsUploading] = useState(false)
+    const [isDragging, setIsDragging] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [previewUrl, setPreviewUrl] = useState<string | null>(avatarUrl || null)
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (!file) return
-
+    const processFile = async (file: File) => {
         if (!file.type.startsWith('image/')) {
             toast.error('Tipo de archivo no válido')
             return
@@ -76,22 +74,43 @@ export function AvatarUpload({ avatarUrl, firstName, lastName, profileId }: Avat
         }
     }
 
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) await processFile(file)
+    }
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault()
+        if (!isUploading) setIsDragging(true)
+    }
+
+    const handleDragLeave = () => {
+        setIsDragging(false)
+    }
+
+    const handleDrop = async (e: React.DragEvent) => {
+        e.preventDefault()
+        setIsDragging(false)
+        if (isUploading) return
+
+        const file = e.dataTransfer.files?.[0]
+        if (file) await processFile(file)
+    }
+
     const handleDelete = async (e: React.MouseEvent) => {
-        e.stopPropagation() // Prevent triggering file input
+        e.stopPropagation()
         if (!previewUrl) return
 
         if (!confirm('¿Estás seguro de que deseas eliminar la foto de perfil?')) return
 
         setIsUploading(true)
         try {
-            // Delete from R2
             await fetch('/api/r2/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: previewUrl })
             })
 
-            // Update Profile to null
             const updateResult = await updateAvatar('', profileId)
             if (updateResult.error) throw new Error(updateResult.error)
 
@@ -108,36 +127,60 @@ export function AvatarUpload({ avatarUrl, firstName, lastName, profileId }: Avat
     const initials = `${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase() || 'U'
 
     return (
-        <div className="relative group min-w-[100px] min-h-[100px] h-24 w-24">
-            <Avatar className="h-24 w-24 border-2 border-slate-100 cursor-pointer shadow-sm" onClick={() => fileInputRef.current?.click()}>
+        <div
+            className="relative group min-w-[160px] min-h-[160px] h-40 w-40"
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+        >
+            <Avatar
+                className={`h-40 w-40 border-4 cursor-pointer shadow-xl transition-all duration-300 ${isDragging
+                        ? 'border-indigo-500 ring-4 ring-indigo-500/20 scale-105'
+                        : 'border-white group-hover:border-slate-100 group-hover:scale-[1.02]'
+                    }`}
+                onClick={() => fileInputRef.current?.click()}
+            >
                 <AvatarImage src={previewUrl || ''} alt="Profile" className="object-cover" />
-                <AvatarFallback className="text-xl font-bold bg-slate-50 text-slate-400">{initials}</AvatarFallback>
+                <AvatarFallback className="text-4xl font-black bg-slate-50 text-slate-400">
+                    {isDragging ? <Upload className="animate-bounce" /> : initials}
+                </AvatarFallback>
             </Avatar>
 
-            <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 gap-2 pointer-events-none">
-                <div className="flex gap-2 pointer-events-auto">
+            <div className={`absolute inset-0 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/50 gap-3 pointer-events-none ${isDragging ? '!opacity-0' : ''}`}>
+                <div className="flex gap-3 pointer-events-auto">
                     <Button
                         size="icon"
                         variant="secondary"
-                        className="h-8 w-8 rounded-full opacity-90 hover:opacity-100"
+                        className="h-10 w-10 rounded-full shadow-lg hover:scale-110 transition-transform"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={isUploading}
                     >
-                        {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Edit className="h-4 w-4" />}
+                        {isUploading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Edit className="h-5 w-5" />}
                     </Button>
                     {previewUrl && (
                         <Button
                             size="icon"
                             variant="destructive"
-                            className="h-8 w-8 rounded-full opacity-90 hover:opacity-100"
+                            className="h-10 w-10 rounded-full shadow-lg hover:scale-110 transition-transform"
                             onClick={handleDelete}
                             disabled={isUploading}
                         >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-5 w-5" />
                         </Button>
                     )}
                 </div>
+                {!isUploading && !isDragging && (
+                    <span className="text-white text-[10px] font-bold uppercase tracking-widest bg-black/20 px-2 py-1 rounded-full backdrop-blur-sm">
+                        Cambiar foto
+                    </span>
+                )}
             </div>
+
+            {isUploading && (
+                <div className="absolute inset-0 rounded-full bg-black/20 backdrop-blur-[2px] flex items-center justify-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-white" />
+                </div>
+            )}
 
             <input
                 type="file"

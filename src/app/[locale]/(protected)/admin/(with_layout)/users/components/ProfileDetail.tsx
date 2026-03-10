@@ -31,6 +31,8 @@ import {
 import { Link, useRouter } from '@/i18n/routing'
 import { toast } from 'react-toastify'
 import { updateProfilePersonal } from '../actions'
+import { CountrySelect } from '@/components/general/Form/CountrySelect'
+import countriesData from '@/utils/json/countries.json'
 
 interface ProfileDetailProps {
     profile: IProfile
@@ -178,13 +180,22 @@ export function ProfileDetail({
                             </InfoItem>
                             <InfoItem icon={IconMapPin} label="Ubicación">
                                 {isEditing ? (
-                                    <Input
+                                    <CountrySelect
                                         value={formValues.location}
-                                        onChange={(e) => setFormValues(prev => ({ ...prev, location: e.target.value }))}
-                                        className="h-9 rounded-lg text-sm"
+                                        onChange={(val) => setFormValues(prev => ({ ...prev, location: val }))}
+                                        className="h-9 rounded-lg text-xs"
                                     />
                                 ) : (
-                                    profile.location || 'No especificado'
+                                    <div className="flex items-center gap-2">
+                                        {profile.location && (
+                                            <img
+                                                src={countriesData.find(c => c.country === profile.location)?.flag}
+                                                alt={profile.location}
+                                                className="w-4 h-3 object-cover rounded-sm border border-slate-100"
+                                            />
+                                        )}
+                                        {profile.location || 'No especificado'}
+                                    </div>
                                 )}
                             </InfoItem>
                             <InfoItem icon={IconPhone} label="Teléfono">

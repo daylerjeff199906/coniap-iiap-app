@@ -34,6 +34,7 @@ import { useLocale } from 'next-intl'
 import { toast } from 'react-toastify'
 import { createParticipant, getEditionsByEventList } from '../actions'
 import { IParticipantRole } from '@/types/participant'
+import { CountrySelect } from '@/components/general/Form/CountrySelect'
 
 const formSchema = z.object({
     first_name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
@@ -48,6 +49,7 @@ const formSchema = z.object({
     main_event_id: z.string().min(1, 'Debes seleccionar un evento'),
     edition_id: z.string().optional(),
     profile_id_from_search: z.string().min(1),
+    location: z.string().optional(),
 }).refine((data) => {
     if (data.target_type === 'edition' && (!data.edition_id || data.edition_id === 'none' || data.edition_id === '')) {
         return false
@@ -90,6 +92,7 @@ export function AddParticipantForm({ roles, events, initialEventId }: AddPartici
             main_event_id: initialEventId || '',
             edition_id: '',
             profile_id_from_search: 'new',
+            location: '',
         },
     })
 
@@ -238,6 +241,24 @@ export function AddParticipantForm({ roles, events, initialEventId }: AddPartici
                                             <Input type="email" placeholder="email@dominio.com" {...field} className="rounded-xl h-11 bg-slate-50 border-slate-200 focus:bg-white transition-all shadow-none" />
                                         </FormControl>
                                         <FormDescription className="text-[10px] ml-0.5">Se usará para la vinculación de eventos.</FormDescription>
+                                        <FormMessage className="text-[10px]" />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="location"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-0.5">País de Procedencia</FormLabel>
+                                        <FormControl>
+                                            <CountrySelect
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                className="rounded-xl h-11 bg-slate-50 border-slate-200 shadow-none text-sm"
+                                            />
+                                        </FormControl>
                                         <FormMessage className="text-[10px]" />
                                     </FormItem>
                                 )}
