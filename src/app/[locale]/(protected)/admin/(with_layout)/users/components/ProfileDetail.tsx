@@ -80,7 +80,7 @@ export function ProfileDetail({
 
 
     return (
-        <div className="max-w-5xl mx-auto space-y-6">
+        <div className="max-w-7xl mx-auto space-y-6">
             {/* Header / Nav */}
             <div className="flex items-center justify-between mb-4">
                 <Button variant="ghost" className="rounded-xl flex items-center gap-2 text-slate-500" asChild>

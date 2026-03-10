@@ -102,9 +102,9 @@ export function ProfileTable({ profiles, isLoading }: ProfileTableProps) {
                             </span>
                             <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                                 <Button
-                                    variant="outline"
+                                    variant="ghost"
                                     size="icon"
-                                    className="h-8 w-8"
+                                    className="h-8 w-8 rounded-xl text-muted-foreground hover:bg-slate-100 hover:text-primary"
                                     asChild
                                 >
                                     <Link href={`/admin/users/${profile.id}`}>
@@ -112,9 +112,9 @@ export function ProfileTable({ profiles, isLoading }: ProfileTableProps) {
                                     </Link>
                                 </Button>
                                 <Button
-                                    variant="outline"
+                                    variant="ghost"
                                     size="icon"
-                                    className="h-8 w-8"
+                                    className="h-8 w-8 rounded-xl text-muted-foreground hover:bg-slate-100 hover:text-primary"
                                     asChild
                                 >
                                     <Link href={`/admin/users/${profile.id}/roles`}>

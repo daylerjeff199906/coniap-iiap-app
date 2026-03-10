@@ -28,7 +28,15 @@ export async function getUserRoles(profileId: string) {
 
     const { data, error } = await supabase
         .from('user_roles')
-        .select('*, roles(*)')
+        .select(`
+            *,
+            roles:role_id (
+                id,
+                name,
+                description,
+                created_at
+            )
+        `)
         .eq('profile_id', profileId)
 
     if (error) {
@@ -38,6 +46,7 @@ export async function getUserRoles(profileId: string) {
 
     return data
 }
+
 
 export async function createSupabaseAccount(profileId: string, email: string) {
     // This requires the admin client

@@ -4,9 +4,7 @@ import { RolesManager } from '../../components/RolesManager'
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { PageHeader } from '@/components/general/PageHeader'
 import { notFound } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { IconArrowLeft, IconShieldLock } from '@tabler/icons-react'
-import { Link } from '@/i18n/routing'
+import { UserLayout } from '../../components/UserLayout'
 
 interface UserRolesPageProps {
     params: Promise<{
@@ -16,7 +14,7 @@ interface UserRolesPageProps {
 }
 
 export default async function UserRolesPage({ params }: UserRolesPageProps) {
-    const { id, locale } = await params
+    const { id } = await params
 
     const profile = await getProfileById(id)
     if (!profile) notFound()
@@ -24,36 +22,28 @@ export default async function UserRolesPage({ params }: UserRolesPageProps) {
     const allRoles = await getRoles()
     const userRoles = await getUserRoles(id)
 
+    const userName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Usuario'
+
     return (
         <LayoutWrapper sectionTitle="Gestión de Roles">
-            <div className="max-w-5xl mx-auto space-y-8">
-                {/* Navigation */}
-                <div className="flex items-center justify-between mb-2">
-                    <Button variant="ghost" className="rounded-xl flex items-center gap-2 text-slate-500 hover:bg-slate-100" asChild>
-                        <Link href={`/admin/users/${id}`}>
-                            <IconArrowLeft size={18} />
-                            Regresar a Perfil
-                        </Link>
-                    </Button>
+            <div className="bg-slate-50/30 -mx-4 -mt-4 md:-mx-6 md:-mt-4 p-4 md:p-6 lg:p-8 min-h-[calc(100vh-64px)]">
+                <UserLayout userId={id} userName={userName}>
+                    <div className="space-y-6">
+                        <PageHeader
+                            title="Seguridad y Roles"
+                            description={`Gestiona los accesos y roles de ${userName} en el sistema.`}
+                            className="mb-8"
+                        />
 
-                    <div className="flex items-center gap-2 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                        <IconShieldLock size={14} />
-                        Seguridad & Accesos
+                        <RolesManager
+                            profile={profile}
+                            allRoles={allRoles}
+                            userRoles={userRoles}
+                        />
                     </div>
-                </div>
-
-                <PageHeader
-                    title={`Roles y Permisos`}
-                    description={`Gestiona los accesos de ${profile.first_name} ${profile.last_name} a la plataforma.`}
-                    className="mb-6"
-                />
-
-                <RolesManager
-                    profile={profile}
-                    allRoles={allRoles}
-                    userRoles={userRoles}
-                />
+                </UserLayout>
             </div>
         </LayoutWrapper>
     )
 }
+

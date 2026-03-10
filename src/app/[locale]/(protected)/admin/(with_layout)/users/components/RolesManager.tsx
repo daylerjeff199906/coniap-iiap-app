@@ -191,7 +191,7 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                                     headerClassName: 'pl-8',
                                     render: (item) => (
                                         <div className="flex flex-col pl-2">
-                                            <span className="font-medium text-sm text-slate-900 group-hover:text-primary transition-colors">{item.name}</span>
+                                            <span className="font-medium text-slate-900 group-hover:text-primary transition-colors text-[13px]">{item.name}</span>
                                             <span className="text-[11px] text-slate-400 font-medium truncate max-w-[200px]">{item.description}</span>
                                         </div>
                                     )
