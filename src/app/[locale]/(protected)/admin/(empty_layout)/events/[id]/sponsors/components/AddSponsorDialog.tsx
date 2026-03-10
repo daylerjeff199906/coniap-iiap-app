@@ -24,9 +24,10 @@ interface AddSponsorDialogProps {
     onOpenChange: (open: boolean) => void
     targetId: string
     isEdition: boolean
+    alreadyLinkedIds?: string[]
 }
 
-export function AddSponsorDialog({ open, onOpenChange, targetId, isEdition }: AddSponsorDialogProps) {
+export function AddSponsorDialog({ open, onOpenChange, targetId, isEdition, alreadyLinkedIds = [] }: AddSponsorDialogProps) {
     const [isPending, startTransition] = useTransition()
     const [allSponsors, setAllSponsors] = useState<ISponsor[]>([])
     const [searchQuery, setSearchQuery] = useState('')
@@ -40,10 +41,12 @@ export function AddSponsorDialog({ open, onOpenChange, targetId, isEdition }: Ad
         if (open) {
             startTransition(async () => {
                 const data = await getAllSponsors()
-                setAllSponsors(data)
+                // Filter out already linked sponsors
+                const filtered = data.filter(s => !alreadyLinkedIds.includes(s.id.toString()))
+                setAllSponsors(filtered)
             })
         }
-    }, [open])
+    }, [open, alreadyLinkedIds])
 
     const filteredSponsors = allSponsors.filter(s => 
         s.name.toLowerCase().includes(searchQuery.toLowerCase())

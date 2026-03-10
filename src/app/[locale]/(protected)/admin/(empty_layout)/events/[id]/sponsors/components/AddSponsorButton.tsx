@@ -9,9 +9,10 @@ interface AddSponsorButtonProps {
     targetId: string
     isEdition: boolean
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "primary"
+    alreadyLinkedIds?: string[]
 }
 
-export function AddSponsorButton({ targetId, isEdition, variant = "primary" }: AddSponsorButtonProps) {
+export function AddSponsorButton({ targetId, isEdition, variant = "primary", alreadyLinkedIds = [] }: AddSponsorButtonProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
@@ -30,6 +31,7 @@ export function AddSponsorButton({ targetId, isEdition, variant = "primary" }: A
                 onOpenChange={setIsOpen} 
                 targetId={targetId} 
                 isEdition={isEdition} 
+                alreadyLinkedIds={alreadyLinkedIds}
             />
         </>
     )

@@ -1,14 +1,15 @@
 'use client'
 
 import { ISponsor, IEventSponsor } from '@/types/ISponsors'
-import { Card } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
-import { IconTrash, IconExternalLink, IconGripVertical, IconPencil } from '@tabler/icons-react'
+import { IconTrash, IconGripVertical, IconPencil } from '@tabler/icons-react'
 import { toggleSponsorActivation, unlinkSponsor } from '../actions'
 import { useTransition, useState } from 'react'
 import { toast } from 'react-toastify'
 import { SponsorEditModal } from './SponsorEditModal'
+import { Reorder, useDragControls } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 interface SponsorCardProps {
     link: IEventSponsor
@@ -20,6 +21,7 @@ export function SponsorCard({ link, isEdition, onUnlink }: SponsorCardProps) {
     const sponsor = link.sponsors as ISponsor
     const [isPending, startTransition] = useTransition()
     const [isEditOpen, setIsEditOpen] = useState(false)
+    const dragControls = useDragControls()
 
     if (!sponsor) return null
 
@@ -37,7 +39,7 @@ export function SponsorCard({ link, isEdition, onUnlink }: SponsorCardProps) {
     const handleUnlink = () => {
         if (!confirm('¿Estás seguro de desvincular este sponsor?')) return
         startTransition(async () => {
-            const result = await unlinkSponsor(link.id, isEdition)
+            const result = await unlinkSponsor(link.id)
             if (result.error) {
                 toast.error(result.error)
             } else {
@@ -48,84 +50,88 @@ export function SponsorCard({ link, isEdition, onUnlink }: SponsorCardProps) {
     }
 
     return (
-        <Card className="group relative overflow-hidden rounded-2xl border-slate-200/60 shadow-sm transition-all hover:shadow-md dark:border-slate-800 dark:bg-slate-900/50">
-            <div className="flex flex-col sm:flex-row items-center gap-4 p-4">
-                {/* Drag Handle (Placeholder for now) */}
-                <div className="hidden sm:flex text-slate-300 cursor-grab active:cursor-grabbing">
-                    <IconGripVertical size={20} />
-                </div>
+        <Reorder.Item
+            value={link}
+            id={link.id}
+            dragListener={false}
+            dragControls={dragControls}
+            className="group relative bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-3 flex items-center gap-4 transition-all hover:border-primary/50"
+        >
+            {/* Drag Handle */}
+            <div
+                className="flex items-center justify-center p-2 text-slate-300 hover:text-slate-500 cursor-grab active:cursor-grabbing transition-colors"
+                onPointerDown={(e) => dragControls.start(e)}
+            >
+                <IconGripVertical size={20} />
+            </div>
 
-                {/* Sponsor Image 4:3 */}
-                <div className="relative w-full sm:w-32 aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 shrink-0">
-                    {sponsor.image ? (
-                        <img 
-                            src={sponsor.image} 
-                            alt={sponsor.name} 
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-400">
-                            No image
-                        </div>
-                    )}
-                </div>
+            {/* Sponsor Image 4:3 Minimal */}
+            <div className="relative w-16 h-12 aspect-[4/3] rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 shrink-0">
+                {sponsor.image ? (
+                    <img
+                        src={sponsor.image}
+                        alt={sponsor.name}
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[10px] text-slate-400">
+                        N/A
+                    </div>
+                )}
+            </div>
 
-                {/* Info */}
-                <div className="flex-1 flex flex-col gap-1 min-w-0 w-full text-center sm:text-left">
-                    <h3 className="font-bold text-slate-800 dark:text-slate-100 truncate">{sponsor.name}</h3>
-                    <p className="text-xs text-slate-500 line-clamp-1">Orden: {link.order_index}</p>
-                    
-                    <div className="flex items-center justify-center sm:justify-start gap-2 mt-1">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                            sponsor.isActived 
-                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400' 
+            {/* Info Minimal */}
+            <div className="flex-1 flex flex-col min-w-0">
+                <span className="font-bold text-slate-800 dark:text-slate-100 text-sm truncate">{sponsor.name}</span>
+                <div className="flex items-center gap-2">
+                    <span className={cn(
+                        "text-[9px] font-bold px-1.5 py-0.5 rounded-md uppercase tracking-wider",
+                        sponsor.isActived
+                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400'
                             : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
-                        }`}>
-                            {sponsor.isActived ? 'Activo' : 'Inactivo'}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-row sm:flex-col items-center gap-2 shrink-0 border-t sm:border-t-0 sm:border-l border-slate-100 dark:border-slate-800 pt-3 sm:pt-0 sm:pl-4 w-full sm:w-auto justify-center">
-                    <div className="flex items-center gap-2">
-                         <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-8 w-8 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
-                            onClick={() => setIsEditOpen(true)}
-                        >
-                            <IconPencil size={18} />
-                        </Button>
-                        <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-8 w-8 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                            onClick={handleUnlink}
-                            disabled={isPending}
-                        >
-                            <IconTrash size={18} />
-                        </Button>
-                    </div>
-                    
-                    <div className="h-4 w-px bg-slate-100 sm:hidden mx-1" />
-
-                    <div className="flex items-center gap-2">
-                        <Switch 
-                            checked={sponsor.isActived} 
-                            onCheckedChange={handleToggle}
-                            disabled={isPending}
-                            className="data-[state=checked]:bg-emerald-500"
-                        />
-                    </div>
+                    )}>
+                        {sponsor.isActived ? 'Activo' : 'Inactivo'}
+                    </span>
+                    <span className="text-[10px] text-slate-400 italic">Orden #{link.order_index}</span>
                 </div>
             </div>
 
-            <SponsorEditModal 
-                open={isEditOpen} 
-                onOpenChange={setIsEditOpen} 
-                sponsor={sponsor} 
+            {/* Minimalist Actions */}
+            <div className="flex items-center gap-1 shrink-0">
+                <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
+                    onClick={() => setIsEditOpen(true)}
+                >
+                    <IconPencil size={18} />
+                </Button>
+
+                <div className="flex items-center mx-2 h-4 w-px bg-slate-200 dark:bg-slate-800" />
+
+                <Switch
+                    checked={sponsor.isActived}
+                    onCheckedChange={handleToggle}
+                    disabled={isPending}
+                    className="scale-75 data-[state=checked]:bg-emerald-500"
+                />
+
+                <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors ml-1"
+                    onClick={handleUnlink}
+                    disabled={isPending}
+                >
+                    <IconTrash size={18} />
+                </Button>
+            </div>
+
+            <SponsorEditModal
+                open={isEditOpen}
+                onOpenChange={setIsEditOpen}
+                sponsor={sponsor}
             />
-        </Card>
+        </Reorder.Item>
     )
 }

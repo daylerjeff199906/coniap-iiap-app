@@ -9,11 +9,10 @@ export async function getSponsorsLinked(targetId: string, isEdition: boolean = f
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const table = isEdition ? 'edition_sponsors' : 'main_event_sponsors'
     const foreignKey = isEdition ? 'edition_id' : 'main_event_id'
 
     const { data, error } = await supabase
-        .from(table)
+        .from('event_sponsors')
         .select(`
             *,
             sponsors (*)
@@ -37,6 +36,7 @@ export async function getAllSponsors() {
         .from('sponsors')
         .select('*')
         .order('name', { ascending: true })
+
 
     if (error) {
         console.error('Error fetching all sponsors:', error)
@@ -77,13 +77,12 @@ export async function createAndLinkSponsor({
     }
 
     // 2. Link to target
-    const linkTable = isEdition ? 'edition_sponsors' : 'main_event_sponsors'
-    const linkData = isEdition 
+    const linkData = isEdition
         ? { edition_id: targetId, sponsor_id: newSponsor.id, order_index: orderIndex }
         : { main_event_id: targetId, sponsor_id: newSponsor.id, order_index: orderIndex }
 
     const { error: linkError } = await supabase
-        .from(linkTable)
+        .from('event_sponsors')
         .insert(linkData)
 
     if (linkError) {
@@ -109,13 +108,12 @@ export async function linkExistingSponsor({
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const linkTable = isEdition ? 'edition_sponsors' : 'main_event_sponsors'
-    const linkData = isEdition 
+    const linkData = isEdition
         ? { edition_id: targetId, sponsor_id: sponsorId, order_index: orderIndex }
         : { main_event_id: targetId, sponsor_id: sponsorId, order_index: orderIndex }
 
     const { error } = await supabase
-        .from(linkTable)
+        .from('event_sponsors')
         .insert(linkData)
 
     if (error) {
@@ -130,14 +128,12 @@ export async function linkExistingSponsor({
     return { success: true }
 }
 
-export async function unlinkSponsor(linkId: string, isEdition: boolean) {
+export async function unlinkSponsor(linkId: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const table = isEdition ? 'edition_sponsors' : 'main_event_sponsors'
-
     const { error } = await supabase
-        .from(table)
+        .from('event_sponsors')
         .delete()
         .eq('id', linkId)
 
@@ -186,20 +182,24 @@ export async function updateSponsorData(id: string | number, data: Partial<ISpon
     return { success: true }
 }
 
-export async function updateSponsorOrder(linkId: string, isEdition: boolean, newOrder: number) {
+export async function reorderSponsors(reorders: { id: string, order_index: number }[]) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const table = isEdition ? 'edition_sponsors' : 'main_event_sponsors'
+    // Perform updates in parallel
+    const updates = reorders.map(item =>
+        supabase
+            .from('event_sponsors')
+            .update({ order_index: item.order_index })
+            .eq('id', item.id)
+    )
 
-    const { error } = await supabase
-        .from(table)
-        .update({ order_index: newOrder })
-        .eq('id', linkId)
+    const results = await Promise.all(updates)
+    const errors = results.filter(r => r.error)
 
-    if (error) {
-        console.error('Error updating sponsor order:', error)
-        return { error: 'No se pudo actualizar el orden.' }
+    if (errors.length > 0) {
+        console.error('Errors reordering sponsors:', errors)
+        return { error: 'Ocurrieron errores al reordenar algunos sponsors.' }
     }
 
     revalidatePath('/', 'layout')

@@ -84,21 +84,20 @@ export async function fetchCurrentEditionSponsors() {
 
   // 2. Get sponsors linked to this edition
   const { data, error } = await supabase
-    .from('edition_sponsors')
+    .from('event_sponsors')
     .select(`
-      sponsors(*)
+      sponsors!inner(*)
     `)
     .eq('edition_id', edition.id)
+    .eq('sponsors.isActived', true)
     .order('order_index', { ascending: true })
-
-  console.log(data)
 
   if (error) {
     console.error('Error fetching edition sponsors:', error)
     return []
   }
 
-  const sponsors = data.map(item => item.sponsors) as unknown as ISponsor[]
+  const sponsors = (data || []).map(item => item.sponsors) as unknown as ISponsor[]
   return sponsors
 }
 

@@ -9,6 +9,7 @@ import {
     DialogTitle,
     DialogFooter,
 } from '@/components/ui/dialog'
+import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -52,44 +53,73 @@ export function SponsorEditModal({ open, onOpenChange, sponsor }: SponsorEditMod
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[450px] p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
-                <DialogHeader className="p-6">
-                    <DialogTitle className="text-2xl font-bold tracking-tight">Editar Sponsor</DialogTitle>
-                    <DialogDescription>
-                        Modifica los datos globales del sponsor. Estos cambios se reflejarán en todos los eventos donde esté vinculado.
-                    </DialogDescription>
-                </DialogHeader>
+            <DialogContent className="max-w-[450px] p-0 overflow-hidden border-none rounded-[32px] shadow-2xl bg-white dark:bg-slate-900">
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-8 pb-6">
+                    <DialogHeader>
+                        <DialogTitle className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                            Editar Sponsor
+                        </DialogTitle>
+                        <DialogDescription className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+                            Los cambios afectan a todas las ediciones vinculadas.
+                        </DialogDescription>
+                    </DialogHeader>
+                </div>
 
-                <form onSubmit={handleSubmit} className="p-6 pt-0 space-y-6">
-                    <div className="space-y-2">
-                        <Label className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Logotipo (4:3)</Label>
+                <form onSubmit={handleSubmit} className="p-8 pt-6 space-y-8">
+                    <div className="space-y-3">
+                        <Label className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] ml-1">
+                            LOGOTIPO (4:3)
+                        </Label>
                         <ImageUpload 
                             folder="sponsors"
                             value={formData.image}
                             onChange={(url) => setFormData(prev => ({ ...prev, image: url }))}
-                            className="rounded-2xl h-[140px]"
+                            className="rounded-3xl h-[180px] border-2 border-dashed border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-colors"
                         />
                     </div>
 
-                    <div className="space-y-2">
-                        <Label htmlFor="edit-name" className="text-[12px] font-bold text-slate-500 uppercase tracking-wider">Nombre</Label>
+                    <div className="space-y-3">
+                        <Label htmlFor="edit-name" className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] ml-1">
+                            NOMBRE COMERCIAL / SIGLAS
+                        </Label>
                         <Input 
                             id="edit-name"
-                            className="h-11 rounded-xl border-slate-200"
+                            className="h-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary/20 transition-all font-medium"
                             value={formData.name}
+                            placeholder="Nombre del patrocinador"
                             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                             required
                         />
                     </div>
 
-                    <DialogFooter className="pt-2">
+                    <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                        <div className="flex flex-col">
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Estado Activo</span>
+                            <span className="text-[11px] text-slate-500">Visible en la web pública</span>
+                        </div>
+                        <Switch 
+                            checked={formData.isActived}
+                            onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isActived: checked }))}
+                            className="data-[state=checked]:bg-emerald-500"
+                        />
+                    </div>
+
+                    <DialogFooter className="pt-2 gap-3 sm:gap-0">
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={() => onOpenChange(false)}
+                            className="rounded-full h-12 font-bold text-slate-500"
+                        >
+                            Cancelar
+                        </Button>
                         <Button 
                             variant={"primary" as any}
                             type="submit" 
-                            className="w-full h-11 rounded-full font-bold text-sm shadow-md"
+                            className="flex-1 h-12 rounded-full font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all active:scale-[0.98]"
                             disabled={isPending}
                         >
-                            {isPending ? 'Guardando...' : 'Actualizar Sponsor'}
+                            {isPending ? 'Guardando...' : 'Guardar Cambios'}
                         </Button>
                     </DialogFooter>
                 </form>
