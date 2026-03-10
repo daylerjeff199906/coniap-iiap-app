@@ -131,3 +131,76 @@ export async function removeRole(profileId: string, roleId: string) {
     revalidatePath(`/admin/users/${profileId}/roles`)
     return { success: true }
 }
+
+export async function sendPasswordResetLink(email: string) {
+    try {
+        const supabaseAdmin = createAdminClient()
+        // generateLink es más directo para obtener el link o enviarlo si se desea, 
+        // pero resetPasswordForEmail es lo estándar. Usamos el admin para asegurar el envío.
+        const { error } = await supabaseAdmin.auth.admin.generateLink({
+            type: 'recovery',
+            email: email,
+        })
+
+        if (error) {
+            console.error('Error generating reset link:', error)
+            return { error: 'No se pudo generar el enlace de recuperación.' }
+        }
+
+        // También podemos usar el método estándar que envía el correo directamente
+        const cookieStore = await cookies()
+        const supabase = createClient(cookieStore)
+        await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?next=/update-password`,
+        })
+
+        return { success: true, message: 'Enlace de recuperación enviado al correo del usuario.' }
+    } catch (err) {
+        return { error: 'Error al procesar la solicitud.' }
+    }
+}
+
+export async function toggleUserStatus(authId: string, currentIsActive: boolean) {
+    try {
+        const supabaseAdmin = createAdminClient()
+
+        // El 'ban_duration' es un string. 'none' quita el ban. '99999h' o similar banea.
+        // Supabase Admin API: updateUserById({ ban_duration: 'none' | 'hhmmss' })
+        const banValue = currentIsActive ? '100000h' : 'none'
+
+        const { error } = await supabaseAdmin.auth.admin.updateUserById(authId, {
+            ban_duration: banValue
+        })
+
+        if (error) {
+            console.error('Error updating user status:', error)
+            return { error: 'No se pudo cambiar el estado de la cuenta.' }
+        }
+
+        revalidatePath(`/admin/users`)
+        return { success: true, message: currentIsActive ? 'Cuenta desactivada correctamente.' : 'Cuenta activada correctamente.' }
+    } catch (err) {
+        return { error: 'Error al procesar la actualización de estado.' }
+    }
+}
+
+export async function getAuthUserInfo(authId: string) {
+    try {
+        const supabaseAdmin = createAdminClient()
+        const { data: { user }, error } = await supabaseAdmin.auth.admin.getUserById(authId)
+
+        if (error || !user) return null
+
+        const isBanned = user.banned_until && new Date(user.banned_until) > new Date()
+
+        return {
+            id: user.id,
+            email: user.email,
+            last_sign_in_at: user.last_sign_in_at,
+            banned_until: user.banned_until,
+            is_active: !isBanned
+        }
+    } catch (err) {
+        return null
+    }
+}

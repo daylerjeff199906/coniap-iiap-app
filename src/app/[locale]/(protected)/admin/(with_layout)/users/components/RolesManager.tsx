@@ -1,17 +1,17 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useState, useTransition, useEffect } from 'react'
 import { IProfile } from '@/types/profile'
 import { IRole, IUserRole } from '@/types/roles'
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { toast } from 'react-toastify'
-import { IconUserPlus, IconShieldCheck, IconTrash, IconPlus, IconLoader2, IconAlertCircle, IconLock } from '@tabler/icons-react'
-import { createSupabaseAccount, assignRole, removeRole } from '../roles-actions'
+import { IconUserPlus, IconShieldCheck, IconTrash, IconPlus, IconLoader2, IconAlertCircle, IconLock, IconMailForward, IconPower, IconRotate } from '@tabler/icons-react'
+import { createSupabaseAccount, assignRole, removeRole, sendPasswordResetLink, toggleUserStatus, getAuthUserInfo } from '../roles-actions'
 import { DynamicTable } from '@/components/general/DataTable/DynamicTable'
 import { useRouter } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
+import { Input } from '@/components/ui/input'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -34,6 +34,22 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
     const router = useRouter()
     const [selectedRoleId, setSelectedRoleId] = useState<string>('')
     const [roleToRemove, setRoleToRemove] = useState<string | null>(null)
+    const [authInfo, setAuthInfo] = useState<any>(null)
+    const [isLoadingAuth, setIsLoadingAuth] = useState(false)
+
+    useEffect(() => {
+        if (profile.auth_id) {
+            fetchAuthInfo()
+        }
+    }, [profile.auth_id])
+
+    const fetchAuthInfo = async () => {
+        if (!profile.auth_id) return
+        setIsLoadingAuth(true)
+        const info = await getAuthUserInfo(profile.auth_id)
+        setAuthInfo(info)
+        setIsLoadingAuth(false)
+    }
 
     const handleCreateAccount = () => {
         if (!profile.email) {
@@ -80,6 +96,31 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
         })
     }
 
+    const handleSendResetLink = () => {
+        if (!profile.email) return
+        startTransition(async () => {
+            const result = await sendPasswordResetLink(profile.email!)
+            if (result.success) {
+                toast.success(result.message)
+            } else {
+                toast.error(result.error)
+            }
+        })
+    }
+
+    const handleToggleStatus = () => {
+        if (!profile.auth_id || !authInfo) return
+        startTransition(async () => {
+            const result = await toggleUserStatus(profile.auth_id!, authInfo.is_active)
+            if (result.success) {
+                toast.success(result.message)
+                fetchAuthInfo()
+            } else {
+                toast.error(result.error)
+            }
+        })
+    }
+
     if (!profile.auth_id) {
         return (
             <Card className="overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
@@ -120,29 +161,96 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Account Status Card - Reference: "Account Details" section */}
-            <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
-                <CardHeader className="border-b border-slate-50 px-8 py-5">
-                    <CardTitle className="text-[15px] font-medium text-slate-900">Detalles de Acceso</CardTitle>
-                    <CardDescription className="text-xs">Configuración de vinculación con la plataforma.</CardDescription>
-                </CardHeader>
-                <CardContent className="p-0">
-                    <div className="divide-y divide-slate-50">
-                        <div className="px-8 py-5 flex items-center justify-between group">
+            {/* Account Info Cards Grid */}
+            {/* Account Status Card */}
+            <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden flex flex-col justify-between">
+                <div>
+                    <CardHeader className="border-b border-slate-50 px-8 py-5">
+                        <CardTitle className="text-[15px] font-medium text-slate-900">Estado del Acceso</CardTitle>
+                        <CardDescription className="text-xs">Información técnica de validación del sistema.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                        <div className="px-8 py-5 flex items-center justify-between">
                             <div className="space-y-0.5">
                                 <span className="text-[13px] font-medium text-slate-900">Identificador (UID)</span>
                                 <p className="text-[11px] text-slate-400 font-medium font-mono">{profile.auth_id}</p>
                             </div>
-                            <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg border border-emerald-100 text-[10px] uppercase font-medium tracking-tight">
-                                Cuenta Activa
+                            <div className={cn(
+                                "flex items-center gap-2 px-3 py-1 rounded-lg border text-[10px] uppercase font-medium tracking-tight",
+                                authInfo?.is_active
+                                    ? "bg-emerald-50 text-emerald-600 border-emerald-100"
+                                    : "bg-red-50 text-red-600 border-red-100"
+                            )}>
+                                {isLoadingAuth ? <IconLoader2 className="animate-spin" size={12} /> : (authInfo?.is_active ? 'Cuenta Activa' : 'Cuenta Suspendida')}
                             </div>
+                        </div>
+                    </CardContent>
+                </div>
+            </Card>
+
+            {/* Recovery Settings Card */}
+            <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
+                <CardHeader className="border-b border-slate-50 px-8 py-5">
+                    <CardTitle className="text-[15px] font-medium text-slate-900">Configuración de Recuperación</CardTitle>
+                    <CardDescription className="text-xs">Envia un correo para restablecer la contraseña del usuario.</CardDescription>
+                </CardHeader>
+                <CardContent className="px-8 py-5 space-y-4">
+                    <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                            <label className="text-[11px] uppercase font-medium text-slate-400 tracking-wider">Correo Electrónico</label>
+                            <Button
+                                variant="link"
+                                className="p-0 h-auto text-[11px] text-slate-900 font-medium flex items-center gap-1 hover:no-underline"
+                                onClick={handleSendResetLink}
+                                disabled={isPending}
+                            >
+                                <IconMailForward size={14} />
+                                Enviar enlace
+                            </Button>
+                        </div>
+                        <div className="relative">
+                            <Input
+                                value={profile.email || ''}
+                                disabled
+                                className="bg-slate-50 border-slate-200 text-[13px] font-medium rounded-lg h-10 px-4"
+                            />
                         </div>
                     </div>
                 </CardContent>
             </Card>
 
+            {/* Deactivate Account Action Section */}
+            <Card className="rounded-xl border border-red-100 shadow-sm bg-red-50/10 overflow-hidden">
+                <CardContent className="px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="space-y-1">
+                        <h3 className="text-[15px] font-medium text-slate-900">
+                            {authInfo?.is_active ? 'Desactivar Cuenta del Usuario' : 'Activar Cuenta del Usuario'}
+                        </h3>
+                        <p className="text-[11px] text-slate-500 font-medium leading-relaxed max-w-xl">
+                            {authInfo?.is_active
+                                ? 'Esto impedirá que el usuario inicie sesión en la plataforma. Podrás reactivarla en cualquier momento.'
+                                : 'Habilitará nuevamente el acceso del usuario para que pueda operar normalmente.'}
+                        </p>
+                    </div>
+                    <Button
+                        variant="outline"
+                        onClick={handleToggleStatus}
+                        disabled={isPending || isLoadingAuth}
+                        className={cn(
+                            "rounded-xl h-10 px-6 font-medium text-[12px] flex items-center gap-2 transition-all",
+                            authInfo?.is_active
+                                ? "border-red-200 text-red-600 hover:bg-red-50 hover:border-red-600"
+                                : "border-emerald-200 text-emerald-600 hover:bg-emerald-50 hover:border-emerald-600"
+                        )}
+                    >
+                        {isPending ? <IconLoader2 className="animate-spin" size={16} /> : <IconPower size={16} />}
+                        {authInfo?.is_active ? 'Desactivar Usuario' : 'Activar Usuario'}
+                    </Button>
+                </CardContent>
+            </Card>
+
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                {/* Available Roles Panel - Reference: "Enable Authentication" selection style */}
+                {/* Available Roles Panel */}
                 <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
                     <CardHeader className="border-b border-slate-50 px-8 py-5">
                         <CardTitle className="text-[15px] font-medium text-slate-900">Gestión de Permisos</CardTitle>
@@ -160,7 +268,6 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                                             selectedRoleId === role.id ? "bg-slate-50/50" : "hover:bg-slate-50/20"
                                         )}
                                     >
-                                        {/* Custom Radio Button */}
                                         <div className={cn(
                                             "w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-all duration-200",
                                             selectedRoleId === role.id
@@ -202,7 +309,7 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
                     </CardContent>
                 </Card>
 
-                {/* Assigned Roles List - Reference: "Recovery Settings" style headers */}
+                {/* Assigned Roles List */}
                 <Card className="rounded-xl border border-slate-200 shadow-sm bg-white overflow-hidden">
                     <CardHeader className="px-8 py-5 border-b border-slate-50 bg-slate-50/10">
                         <div className="flex items-center justify-between">
@@ -295,5 +402,3 @@ export function RolesManager({ profile, allRoles, userRoles }: RolesManagerProps
         </div>
     )
 }
-
-
