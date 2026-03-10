@@ -78,6 +78,7 @@ export default async function EventParticipantsPage({
 
                     <ParticipantTable
                         participants={finalParticipants}
+                        roles={roles}
                         showEventInfo={scope !== 'global'}
                         totalItems={count}
                         currentPage={page}

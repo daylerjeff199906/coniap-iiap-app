@@ -1,14 +1,6 @@
 'use client'
 
 import React from 'react'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table'
 import { IconLoader2 } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -67,26 +59,26 @@ export function DynamicTable<T extends { id: string | number }>({
         <div className="flex flex-col gap-4">
             <div className="rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden relative">
                 <div className="overflow-x-auto max-h-[600px] overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
-                    <Table className="relative border-separate border-spacing-0">
-                        <TableHeader className="sticky top-0 z-20 shadow-sm">
-                            <TableRow className="hover:bg-transparent border-b border-slate-100 bg-slate-50/80 backdrop-blur-md">
+                    <table className="relative border-separate border-spacing-0 w-full text-left">
+                        <thead className="relative z-20">
+                            <tr className="border-none bg-transparent">
                                 {columns.map((column, index) => (
-                                    <TableHead
+                                    <th
                                         key={index}
                                         className={cn(
-                                            "h-12 px-6 text-[10px] uppercase tracking-widest font-medium text-slate-400 align-middle border-b border-slate-100 first:rounded-tl-2xl last:rounded-tr-2xl",
+                                            "sticky top-0 z-20 h-12 px-6 text-[10px] uppercase tracking-widest font-medium text-slate-400 align-middle bg-slate-50/90 backdrop-blur-md border-b border-slate-100 first:rounded-tl-2xl last:rounded-tr-2xl shadow-[0_1px_0_0_rgba(0,0,0,0.05)]",
                                             column.headerClassName
                                         )}
                                     >
                                         {column.header}
-                                    </TableHead>
+                                    </th>
                                 ))}
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white">
                             {data && data.length > 0 ? (
                                 data.map((item) => (
-                                    <TableRow
+                                    <tr
                                         key={item.id}
                                         onClick={() => onRowClick && onRowClick(item)}
                                         className={cn(
@@ -101,7 +93,7 @@ export function DynamicTable<T extends { id: string | number }>({
                                                 : (column.accessorKey ? (item as any)[column.accessorKey] : null)
 
                                             return (
-                                                <TableCell
+                                                <td
                                                     key={colIndex}
                                                     className={cn(
                                                         "px-6 py-4 border-b border-slate-50 group-last:border-none",
@@ -111,22 +103,22 @@ export function DynamicTable<T extends { id: string | number }>({
                                                     <div className="relative z-10">
                                                         {content}
                                                     </div>
-                                                </TableCell>
+                                                </td>
                                             )
                                         })}
-                                    </TableRow>
+                                    </tr>
                                 ))
                             ) : (
-                                <TableRow className="hover:bg-transparent border-none">
-                                    <TableCell colSpan={columns.length} className="h-[300px] text-center">
+                                <tr className="hover:bg-transparent border-none">
+                                    <td colSpan={columns.length} className="h-[300px] text-center">
                                         <div className="flex flex-col items-center justify-center gap-2">
                                             <p className="text-sm font-medium text-slate-500">{emptyMessage}</p>
                                         </div>
-                                    </TableCell>
-                                </TableRow>
+                                    </td>
+                                </tr>
                             )}
-                        </TableBody>
-                    </Table>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

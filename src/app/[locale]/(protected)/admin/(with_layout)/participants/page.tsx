@@ -43,6 +43,7 @@ export default async function ParticipantsPage({
                     <ParticipantFilters roles={roles} events={events} />
                     <ParticipantTable
                         participants={participants}
+                        roles={roles}
                         totalItems={count}
                         currentPage={page}
                         pageSize={pageSize}

@@ -2,14 +2,6 @@
 
 import { useState } from 'react'
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table'
-import {
     AlertDialog,
     AlertDialogAction,
     AlertDialogCancel,
@@ -19,21 +11,28 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { IParticipant } from '@/types/participant'
-import { IconDatabaseOff, IconExternalLink, IconTrash } from '@tabler/icons-react'
+import { IconDatabaseOff, IconExternalLink, IconTrash, IconChevronDown } from '@tabler/icons-react'
 import { useLocale } from 'next-intl'
-import { Link } from '@/i18n/routing'
-import { deleteParticipantRegistration } from '../actions'
+import { deleteParticipantRegistration, updateParticipantRole } from '../actions'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import { DynamicTable, Column } from '@/components/general/DataTable/DynamicTable'
 import { cn } from '@/lib/utils'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+
 
 interface ParticipantTableProps {
     participants: IParticipant[]
+    roles?: any[]
     showEventInfo?: boolean
     isLoading?: boolean
     totalItems?: number
@@ -44,6 +43,7 @@ interface ParticipantTableProps {
 
 export function ParticipantTable({
     participants,
+    roles = [],
     showEventInfo = true,
     isLoading = false,
     totalItems,
@@ -79,6 +79,16 @@ export function ParticipantTable({
         router.push(`?${params.toString()}`)
     }
 
+    const handleRoleUpdate = async (participantId: string, roleId: string) => {
+        const result = await updateParticipantRole(participantId, roleId)
+        if (result.success) {
+            toast.success('Rol actualizado correctamente')
+            router.refresh()
+        } else {
+            toast.error(result.error || 'Error al actualizar el rol')
+        }
+    }
+
     const columns: Column<IParticipant>[] = [
         {
             header: 'Participante',
@@ -99,7 +109,7 @@ export function ParticipantTable({
                             <span className="font-medium text-[13px] text-slate-900 leading-none mb-1">{fullName}</span>
                             <span className="text-[11px] text-slate-400 font-medium leading-none">{profile?.email || 'Sin correo'}</span>
                             {profile?.institution && (
-                                <span className="text-[10px] text-red-400/80 font-medium mt-1 truncate max-w-[180px]">
+                                <span className="text-[10px] text-red-500/80 font-medium mt-1 truncate max-w-[180px]">
                                     {profile.institution}
                                 </span>
                             )}
@@ -115,22 +125,50 @@ export function ParticipantTable({
                 const roleName = locale === 'es' ? role?.name?.es : role?.name?.en
                 return (
                     <div className="flex items-center">
-                        {role ? (
-                            <div
-                                className="text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight border"
-                                style={{
-                                    backgroundColor: role.badge_color ? `${role.badge_color}10` : '#f8fafc',
-                                    color: role.badge_color || '#64748b',
-                                    borderColor: role.badge_color ? `${role.badge_color}20` : '#e2e8f0'
-                                }}
-                            >
-                                {roleName || role.slug}
-                            </div>
-                        ) : (
-                            <div className="bg-slate-50 text-slate-400 border border-slate-100 text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight">
-                                Normal
-                            </div>
-                        )}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button className="outline-none focus:outline-none ring-0 focus:ring-0">
+                                    {role ? (
+                                        <div
+                                            className="text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight border hover:bg-slate-100 transition-colors cursor-pointer group/role"
+                                            style={{
+                                                backgroundColor: role.badge_color ? `${role.badge_color}10` : '#f8fafc',
+                                                color: role.badge_color || '#64748b',
+                                                borderColor: role.badge_color ? `${role.badge_color}20` : '#e2e8f0'
+                                            }}
+                                        >
+                                            {roleName || role.slug}
+                                            <IconChevronDown size={10} className="ml-1 opacity-40 group-hover/role:opacity-100 transition-opacity" />
+                                        </div>
+                                    ) : (
+                                        <div className="bg-slate-50 text-slate-400 border border-slate-100 text-[10px] font-medium py-0 h-5 px-3 rounded-full flex items-center justify-center uppercase tracking-tight hover:bg-slate-100 transition-colors cursor-pointer group/role">
+                                            Normal
+                                            <IconChevronDown size={10} className="ml-1 opacity-40 group-hover/role:opacity-100 transition-opacity" />
+                                        </div>
+                                    )}
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start" className="w-56 rounded-xl p-1 shadow-2xl border-slate-200 z-[100]">
+                                {roles.map((r) => (
+                                    <DropdownMenuItem
+                                        key={r.id}
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            handleRoleUpdate(participant.id, r.id)
+                                        }}
+                                        className={cn(
+                                            "text-[12px] font-medium px-3 py-2 rounded-lg cursor-pointer transition-colors",
+                                            participant.role_id === r.id ? "bg-primary/5 text-primary" : "text-slate-600 hover:bg-slate-50"
+                                        )}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: r.badge_color || '#cbd5e1' }} />
+                                            {locale === 'es' ? r.name?.es : r.name?.en}
+                                        </div>
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 )
             }
@@ -164,11 +202,11 @@ export function ParticipantTable({
                             day: 'numeric'
                         })}
                     </span>
-                    <div className="flex items-center gap-1.5 opacity-0 group-hover/actions:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="h-7 w-7 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-primary transition-colors"
+                            className="h-7 w-7 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-primary transition-colors border border-transparent hover:border-slate-100"
                             asChild
                         >
                             <a
@@ -187,7 +225,7 @@ export function ParticipantTable({
                                 const p = participant.profiles
                                 setDeleteName(`${p?.first_name || ''} ${p?.last_name || ''}`)
                             }}
-                            className="h-7 w-7 rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors"
+                            className="h-7 w-7 rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors border border-transparent hover:border-red-100"
                         >
                             <IconTrash size={14} />
                         </Button>

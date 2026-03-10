@@ -29,6 +29,7 @@ import {
     IconUser
 } from '@tabler/icons-react'
 import { Link, useRouter } from '@/i18n/routing'
+import { useLocale } from 'next-intl'
 import { toast } from 'react-toastify'
 import { updateProfilePersonal } from '../actions'
 import { CountrySelect } from '@/components/general/Form/CountrySelect'
@@ -55,6 +56,13 @@ export function ProfileDetail({
     const [isPending, startTransition] = useTransition()
     const router = useRouter()
 
+    const [mounted, setMounted] = React.useState(false)
+    const locale = useLocale()
+
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
+
     const [formValues, setFormValues] = useState({
         first_name: profile.first_name || '',
         last_name: profile.last_name || '',
@@ -64,6 +72,18 @@ export function ProfileDetail({
         phone: profile.phone || '',
         dedication: profile.dedication || '',
     })
+
+    const formatDate = (date: any) => {
+        if (!date) return 'No especificado'
+        const d = new Date(date)
+        if (isNaN(d.getTime())) return 'Fecha inválida'
+        if (!mounted) return '...'
+        return d.toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        })
+    }
 
     const handleUpdate = async () => {
         startTransition(async () => {
@@ -221,11 +241,11 @@ export function ProfileDetail({
                                 )}
                             </InfoItem>
                             <InfoItem icon={IconCalendar} label="Miembro desde">
-                                {new Date(profile.created_at).toLocaleDateString()}
+                                {formatDate(profile.created_at)}
                             </InfoItem>
                             {profile.birth_date && (
                                 <InfoItem icon={IconCake} label="Nacimiento">
-                                    {new Date(profile.birth_date).toLocaleDateString()}
+                                    {formatDate(profile.birth_date)}
                                 </InfoItem>
                             )}
                             {profile.sex && (
@@ -263,8 +283,8 @@ export function ProfileDetail({
                     {/* Experiencia */}
                     <LinkedInSection title="Experiencia" icon={IconBriefcase}>
                         {experience.length > 0 ? experience.map((ex: IEmploymentHistory) => {
-                            const startStr = ex.start_date ? new Date(ex.start_date).toLocaleDateString() : '?'
-                            const endStr = ex.is_current ? 'Actualidad' : (ex.end_date ? new Date(ex.end_date).toLocaleDateString() : '?')
+                            const startStr = ex.start_date ? formatDate(ex.start_date) : '?'
+                            const endStr = ex.is_current ? 'Actualidad' : (ex.end_date ? formatDate(ex.end_date) : '?')
                             return (
                                 <LinkedInItem
                                     key={ex.id}
@@ -299,7 +319,7 @@ export function ProfileDetail({
                     {/* Actividades Profesionales / Certificaciones */}
                     <LinkedInSection title="Certificaciones" icon={IconAward}>
                         {certifications.length > 0 ? certifications.map((c: ICertification) => {
-                            const dateStr = c.issue_date ? new Date(c.issue_date).toLocaleDateString() : '?'
+                            const dateStr = c.issue_date ? formatDate(c.issue_date) : '?'
                             return (
                                 <LinkedInItem
                                     key={c.id}

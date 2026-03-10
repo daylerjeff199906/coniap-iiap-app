@@ -321,3 +321,21 @@ export async function deleteParticipantRegistration(id: string) {
     revalidatePath('/', 'layout')
     return { success: true }
 }
+
+export async function updateParticipantRole(id: string, roleId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { error } = await supabase
+        .from('event_participants')
+        .update({ role_id: roleId })
+        .eq('id', id)
+
+    if (error) {
+        console.error('Error updating participant role:', error)
+        return { error: 'No se pudo actualizar el rol.' }
+    }
+
+    revalidatePath('/', 'layout')
+    return { success: true }
+}
