@@ -14,7 +14,7 @@ export default async function EventParticipantsPage({
     searchParams
 }: {
     params: Promise<{ id: string; locale: string }>
-    searchParams: Promise<{ q?: string; role?: string; scope?: string; editionId?: string }>
+    searchParams: Promise<{ q?: string; role?: string; scope?: string; editionId?: string; page?: string }>
 }) {
     const { id: eventId } = await params
     const sParams = await searchParams
@@ -22,10 +22,15 @@ export default async function EventParticipantsPage({
     const roleSlug = sParams.role || ''
     const scope = sParams.scope || 'all'
     const editionId = sParams.editionId
+    const page = parseInt(sParams.page || '1', 10)
+    const pageSize = 20
 
-    const allParticipants = await getParticipants({
+    const { data: allParticipants, count } = await getParticipants({
         eventId,
-        roleSlug: roleSlug || undefined
+        roleSlug: roleSlug || undefined,
+        q: searchQuer || undefined,
+        page,
+        pageSize
     })
 
     const roles = await getParticipantRoles()
@@ -33,7 +38,7 @@ export default async function EventParticipantsPage({
     const events = await getEventsList()
     const editions = await getEditionsByEventList(eventId)
 
-    // Filter participants based on scope
+    // Filter participants based on scope (Note: Ideally this should be on server, but keeping logic for now)
     let filteredList = allParticipants
 
     if (scope === 'global') {
@@ -47,11 +52,7 @@ export default async function EventParticipantsPage({
         }
     }
 
-    // Secondary filter: Search Query
-    const finalParticipants = filteredList.filter((p: IParticipant) => {
-        const fullName = `${p.profiles?.first_name || ''} ${p.profiles?.last_name || ''}`.toLowerCase()
-        return fullName.includes(searchQuer.toLowerCase()) || p.profiles?.email?.toLowerCase().includes(searchQuer.toLowerCase())
-    })
+    const finalParticipants = filteredList
 
     return (
         <div className="flex flex-col gap-6 pt-4">
@@ -78,6 +79,9 @@ export default async function EventParticipantsPage({
                     <ParticipantTable
                         participants={finalParticipants}
                         showEventInfo={scope !== 'global'}
+                        totalItems={count}
+                        currentPage={page}
+                        pageSize={pageSize}
                     />
                 </div>
             </div>
