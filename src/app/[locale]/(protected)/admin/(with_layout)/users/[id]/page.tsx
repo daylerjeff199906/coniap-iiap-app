@@ -9,6 +9,7 @@ import { ProfileDetail } from '../components/ProfileDetail'
 import { notFound } from 'next/navigation'
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { fetchActiveTopics } from '@/api/fetchTopics'
+import { UserLayout } from '../components/UserLayout'
 
 interface ProfilePageProps {
     params: Promise<{
@@ -42,18 +43,23 @@ export default async function ProfileDetailPage({ params }: ProfilePageProps) {
         ])
     }
 
+    const userName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Usuario'
+
     return (
         <LayoutWrapper sectionTitle="Perfil de Usuario">
-            <div className="bg-slate-50/30 -mx-4 -mt-4 md:-mx-6 md:-mt-4 p-4 md:p-6 lg:p-8">
-                <ProfileDetail
-                    profile={profile}
-                    topics={topics || []}
-                    education={education}
-                    experience={experience}
-                    certifications={certifications}
-                    languages={languages}
-                />
+            <div className="bg-slate-50/30 -mx-4 -mt-4 md:-mx-6 md:-mt-4 p-4 md:p-6 lg:p-8 min-h-[calc(100vh-64px)]">
+                <UserLayout userId={id} userName={userName}>
+                    <ProfileDetail
+                        profile={profile}
+                        topics={topics || []}
+                        education={education}
+                        experience={experience}
+                        certifications={certifications}
+                        languages={languages}
+                    />
+                </UserLayout>
             </div>
         </LayoutWrapper>
     )
 }
+

@@ -134,14 +134,23 @@ export function AvatarUpload({ avatarUrl, firstName, lastName, profileId }: Avat
             onDrop={handleDrop}
         >
             <Avatar
-                className={`h-40 w-40 border-4 cursor-pointer shadow-xl transition-all duration-300 ${isDragging
-                        ? 'border-indigo-500 ring-4 ring-indigo-500/20 scale-105'
-                        : 'border-white group-hover:border-slate-100 group-hover:scale-[1.02]'
+                className={`h-40 w-40 border-4 cursor-pointer shadow-xl transition-all duration-300 relative overflow-hidden ${isDragging
+                    ? 'border-indigo-500 ring-4 ring-indigo-500/20 scale-105'
+                    : 'border-white group-hover:border-slate-100 group-hover:scale-[1.02]'
                     }`}
                 onClick={() => fileInputRef.current?.click()}
             >
-                <AvatarImage src={previewUrl || ''} alt="Profile" className="object-cover" />
-                <AvatarFallback className="text-4xl font-black bg-slate-50 text-slate-400">
+                {previewUrl ? (
+                    <img
+                        src={previewUrl}
+                        alt="Profile"
+                        className="h-full w-full object-cover"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).style.visibility = 'hidden'
+                        }}
+                    />
+                ) : null}
+                <AvatarFallback className="text-4xl font-black bg-slate-50 text-slate-400 absolute inset-0 flex items-center justify-center">
                     {isDragging ? <Upload className="animate-bounce" /> : initials}
                 </AvatarFallback>
             </Avatar>

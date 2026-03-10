@@ -7,16 +7,24 @@ import { revalidatePath } from 'next/cache'
 export async function getParticipants(filters?: {
     eventId?: string,
     editionId?: string,
-    roleSlug?: string
+    roleSlug?: string,
+    q?: string,
+    page?: number,
+    pageSize?: number
 }) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
+
+    const page = filters?.page || 1
+    const pageSize = filters?.pageSize || 20
+    const from = (page - 1) * pageSize
+    const to = from + pageSize - 1
 
     let query = supabase
         .from('event_participants')
         .select(`
             *,
-            profiles:profile_id (
+            profiles:profile_id!inner (
                 id,
                 first_name,
                 last_name,
@@ -38,7 +46,7 @@ export async function getParticipants(filters?: {
                 name,
                 year
             )
-        `)
+        `, { count: 'exact' })
         .order('created_at', { ascending: false })
 
     if (filters?.eventId) {
@@ -65,14 +73,22 @@ export async function getParticipants(filters?: {
         query = query.eq('participant_roles.slug', filters.roleSlug)
     }
 
-    const { data, error } = await query
+    if (filters?.q) {
+        const q = `%${filters.q}%`
+        query = query.or(`first_name.ilike.${q},last_name.ilike.${q},email.ilike.${q}`, { foreignTable: 'profiles' })
+    }
+
+    const { data, error, count } = await query.range(from, to)
 
     if (error) {
         console.error('Error fetching participants:', error)
-        return []
+        return { data: [], count: 0 }
     }
 
-    return data as IParticipant[]
+    return {
+        data: data as IParticipant[],
+        count: count || 0
+    }
 }
 
 export async function getParticipantRoles() {
@@ -300,6 +316,24 @@ export async function deleteParticipantRegistration(id: string) {
     if (error) {
         console.error('Error deleting participant registration:', error)
         return { error: 'No se pudo eliminar el registro.' }
+    }
+
+    revalidatePath('/', 'layout')
+    return { success: true }
+}
+
+export async function updateParticipantRole(id: string, roleId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { error } = await supabase
+        .from('event_participants')
+        .update({ role_id: roleId })
+        .eq('id', id)
+
+    if (error) {
+        console.error('Error updating participant role:', error)
+        return { error: 'No se pudo actualizar el rol.' }
     }
 
     revalidatePath('/', 'layout')
