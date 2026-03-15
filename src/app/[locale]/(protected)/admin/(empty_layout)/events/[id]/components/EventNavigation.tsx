@@ -29,6 +29,11 @@ export function EventNavigation({ locale, eventId }: { locale: string, eventId: 
             icon: IconUsers
         },
         {
+            name: 'Resúmenes',
+            href: `/admin/events/${eventId}/submissions`,
+            icon: IconSpeakerphone // usaré IconSpeakerphone por compatibilidad o puedes cambiarlo después
+        },
+        {
             name: 'Sponsors',
             href: `/admin/events/${eventId}/sponsors`,
             icon: IconSpeakerphone

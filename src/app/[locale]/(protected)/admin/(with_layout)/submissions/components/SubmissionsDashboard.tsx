@@ -5,12 +5,12 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Settings, Eye, Clock, Calendar, FileText, CheckCircle2, AlertTriangle, XCircle, ArrowRight } from 'lucide-react';
+import { Settings, Clock, Calendar, FileText, CheckCircle2, AlertTriangle, XCircle, ArrowRight } from 'lucide-react';
 import { EventSubmission, SubmissionStatus } from '@/types/submissions';
+import { Link } from '@/i18n/routing';
 
 interface SubmissionsDashboardProps {
     submissions: EventSubmission[];
-    onReviewClick: (submission: EventSubmission) => void;
 }
 
 const statusConfig: Record<SubmissionStatus, { label: string, color: string, icon: React.ReactNode }> = {
@@ -22,48 +22,14 @@ const statusConfig: Record<SubmissionStatus, { label: string, color: string, ico
     rejected: { label: 'Rechazado', color: 'bg-red-600 hover:bg-red-700', icon: <XCircle className="h-4 w-4" /> },
 };
 
-export function SubmissionsDashboard({ submissions, onReviewClick }: SubmissionsDashboardProps) {
-    const [selectedStatus, setSelectedStatus] = React.useState<string>('all');
-    const [filterQuery, setFilterQuery] = React.useState('');
+export function SubmissionsDashboard({ submissions }: SubmissionsDashboardProps) {
 
-    const filteredSubmissions = submissions.filter((sub) => {
-        const matchesStatus = selectedStatus === 'all' || sub.status === selectedStatus;
-        const matchesQuery = sub.title.toLowerCase().includes(filterQuery.toLowerCase()) || 
-                             (sub.profile?.first_name && sub.profile.first_name.toLowerCase().includes(filterQuery.toLowerCase()));
-        return matchesStatus && matchesQuery;
-    });
-
-    const statusCounts = submissions.reduce((acc, sub) => {
-        acc[sub.status] = (acc[sub.status] || 0) + 1;
-        return acc;
-    }, {} as Record<string, number>);
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div className="flex gap-2 flex-wrap">
-                    <Button variant={selectedStatus === 'all' ? 'default' : 'outline'} size="sm" onClick={() => setSelectedStatus('all')} className="rounded-full text-xs">
-                        Todos ({submissions.length})
-                    </Button>
-                    {Object.entries(statusConfig).map(([key, config]) => {
-                        const count = statusCounts[key] || 0;
-                        if (count === 0) return null;
-                        return (
-                            <Button key={key} variant={selectedStatus === key ? 'default' : 'outline'} size="sm" onClick={() => setSelectedStatus(key)} className={`rounded-full text-xs flex items-center gap-1 ${selectedStatus === key ? config.color : ''}`}>
-                                {config.icon} {config.label} ({count})
-                            </Button>
-                        );
-                    })}
-                </div>
-
-                <div className="w-full md:w-64">
-                    <input type="search" placeholder="Buscar por Título o Autor..." value={filterQuery} onChange={(e) => setFilterQuery(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" />
-                </div>
-            </div>
-
-            {filteredSubmissions.length > 0 ? (
+            {submissions.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredSubmissions.map((submission) => {
+                    {submissions.map((submission) => {
                         const config = statusConfig[submission.status];
                         return (
                             <Card key={submission.id} className="shadow hover:shadow-md transition-all border-l-4">
@@ -80,7 +46,11 @@ export function SubmissionsDashboard({ submissions, onReviewClick }: Submissions
                                             <Avatar className="h-6 w-6"><AvatarFallback className="text-xs">{submission.profile?.first_name?.[0]}{submission.profile?.last_name?.[0]}</AvatarFallback></Avatar>
                                             <p className="text-xs font-medium text-muted-foreground">{submission.profile?.first_name} {submission.profile?.last_name}</p>
                                         </div>
-                                        <Button size="sm" variant="ghost" onClick={() => onReviewClick(submission)} className="h-8 text-xs gap-1 group">Revisar <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" /></Button>
+                                        <Button size="sm" variant="ghost" className="h-8 text-xs gap-1 group" asChild>
+                                            <Link href={`/admin/submissions/${submission.id}`}>
+                                                Revisar <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                                            </Link>
+                                        </Button>
                                     </div>
                                 </CardContent>
                             </Card>
