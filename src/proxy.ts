@@ -21,8 +21,13 @@ export default async function proxy(request: NextRequest) {
                 setAll(cookiesToSet) {
                     cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
                     response = handleI18nRouting(request)
+                    const isIiapDomain = request.nextUrl.hostname.endsWith('iiap.gob.pe')
                     cookiesToSet.forEach(({ name, value, options }) =>
-                        response.cookies.set(name, value, options)
+                        response.cookies.set(name, value, {
+                            ...options,
+                            domain: isIiapDomain ? '.iiap.gob.pe' : undefined,
+                            path: '/',
+                        })
                     )
                 },
             },
@@ -48,6 +53,41 @@ export default async function proxy(request: NextRequest) {
     if (!user && isAdminRoute) {
         url.pathname = pathname.replace('/admin', '/login') || '/login'
         return NextResponse.redirect(url)
+    }
+
+    if (user && isAdminRoute) {
+        // Consultar el perfil para obtener el profile.id usando el auth_id
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+
+        if (profile) {
+            // Consultar los roles del usuario asignados en user_roles usando el ID del perfil
+            const { data: userRolesData } = await supabase
+                .from('user_roles')
+                .select(`*, roles(*)`)
+                .eq('profile_id', profile.id)
+
+            const roles: string[] = userRolesData?.map((ur: any) => ur.roles?.name).filter(Boolean) || []
+            const hasAdminRole = roles.some(r => r.toLowerCase() === 'admin')
+
+            if (!hasAdminRole) {
+                const isIiapDomain = request.nextUrl.hostname.endsWith('iiap.gob.pe')
+                const platformUrl = isIiapDomain ? 'https://auth.iiap.gob.pe' : 'http://localhost:3004'
+                const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es'
+                
+                return NextResponse.redirect(new URL(`${platformUrl}/${locale}/dashboard`, request.url))
+            }
+        } else {
+            // Fallback si no hay perfil
+            const isIiapDomain = request.nextUrl.hostname.endsWith('iiap.gob.pe')
+            const platformUrl = isIiapDomain ? 'https://auth.iiap.gob.pe' : 'http://localhost:3004'
+            const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es'
+            
+            return NextResponse.redirect(new URL(`${platformUrl}/${locale}/dashboard`, request.url))
+        }
     }
 
     return response;

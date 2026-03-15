@@ -1,4 +1,10 @@
-export const PLATFORM_URL = 'https://herp-science-platform-bio-intranet.vercel.app';
+const isProd = typeof window !== 'undefined'
+    ? window.location.hostname.includes('iiap.gob.pe')
+    : process.env.NEXT_PUBLIC_APP_URL?.includes('iiap.gob.pe');
+
+export const PLATFORM_URL = isProd 
+    ? 'https://auth.iiap.gob.pe' 
+    : 'http://localhost:3004';
 
 /**
  * Builds the direct URL to a convocatoria page on the external platform.

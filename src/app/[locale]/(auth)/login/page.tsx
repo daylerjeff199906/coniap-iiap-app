@@ -5,7 +5,7 @@ import { useForm, type ControllerRenderProps } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { login, loginWithGoogle } from './actions'
 import { PasswordInput } from '@/components'
@@ -32,6 +32,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
+    const searchParams = useSearchParams()
     const t = useTranslations('Auth')
     const locale = useLocale()
     const router = useRouter()
@@ -56,7 +57,8 @@ export default function LoginPage() {
         formData.append('password', data.password)
 
         try {
-            const result = await login(formData, locale)
+            const nextPath = searchParams.get('next') || undefined
+            const result = await login(formData, locale, nextPath)
 
             if (result?.error) {
                 setError(result.error)
