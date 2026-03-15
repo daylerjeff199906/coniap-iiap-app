@@ -187,7 +187,7 @@ export function SubmissionsFilters({ events, editions }: SubmissionsFiltersProps
                         </SelectContent>
                     </Select>
 
-                    {eventId && editions.length > 0 && (
+                    {(eventId || events.length === 0) && editions.length > 0 && (
                         <Select
                             value={editionId || 'all'}
                             onValueChange={handleEditionChange}

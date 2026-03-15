@@ -1,4 +1,4 @@
-import { getSubmissions, getEditionsList } from '@/app/[locale]/(protected)/admin/(with_layout)/submissions/actions';
+import { getSubmissions, getEditionsByEvent } from '@/app/[locale]/(protected)/admin/(with_layout)/submissions/actions';
 import { SubmissionsDashboard } from '@/app/[locale]/(protected)/admin/(with_layout)/submissions/components/SubmissionsDashboard';
 import { SubmissionsFilters } from '@/app/[locale]/(protected)/admin/(with_layout)/submissions/components/SubmissionsFilters';
 
@@ -14,8 +14,8 @@ export default async function EventSubmissionsPage({ params, searchParams }: Eve
     const status = sParams.status || '';
     const q = sParams.q || '';
 
-    const [allEditions, submissions] = await Promise.all([
-        getEditionsList(),
+    const [editions, submissions] = await Promise.all([
+        getEditionsByEvent(id),
         getSubmissions({
             eventId: id,
             editionId: editionId || undefined,
@@ -23,9 +23,6 @@ export default async function EventSubmissionsPage({ params, searchParams }: Eve
             q: q || undefined
         })
     ]);
-
-    // Filtrar ediciones por este evento
-    const editions = allEditions.filter((e: any) => e.main_event_id === id);
 
     return (
         <div className="flex flex-col gap-6 w-full pt-4">
