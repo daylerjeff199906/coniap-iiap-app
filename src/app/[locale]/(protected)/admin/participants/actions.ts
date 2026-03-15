@@ -322,6 +322,39 @@ export async function deleteParticipantRegistration(id: string) {
     return { success: true }
 }
 
+export async function getParticipantSubmissions(profileId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('event_submissions')
+        .select(`
+            *,
+            files:submission_files (
+                id,
+                file_name,
+                file_url,
+                document_type
+            ),
+            main_events (
+                name
+            ),
+            editions (
+                name,
+                year
+            )
+        `)
+        .eq('profile_id', profileId)
+        .order('created_at', { ascending: false })
+
+    if (error) {
+        console.error('Error fetching participant submissions:', error)
+        return []
+    }
+
+    return data
+}
+
 export async function updateParticipantRole(id: string, roleId: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)

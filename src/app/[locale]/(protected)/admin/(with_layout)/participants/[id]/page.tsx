@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getParticipantById } from '@/app/[locale]/(protected)/admin/participants/actions'
+import { getParticipantById, getParticipantSubmissions } from '@/app/[locale]/(protected)/admin/participants/actions'
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { ParticipantDetailView } from '@/app/[locale]/(protected)/admin/participants/components/ParticipantDetailView'
 
@@ -19,9 +19,11 @@ export default async function ParticipantDetailPage({
         notFound()
     }
 
+    const Submissions = await getParticipantSubmissions(participant.profile_id)
+
     return (
         <LayoutWrapper sectionTitle="Gestión de Participantes">
-            <ParticipantDetailView participant={participant as any} />
+            <ParticipantDetailView participant={participant as any} submissions={Submissions as any} />
         </LayoutWrapper>
     )
 }

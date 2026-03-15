@@ -1,6 +1,7 @@
 'use client'
 
 import { Badge } from '@/components/ui/badge'
+import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -70,6 +71,7 @@ interface ParticipantDetailViewProps {
             year: number
         } | null
     }
+    submissions?: any[]
 }
 
 const FUTURE_MODULES = [
@@ -99,7 +101,7 @@ const FUTURE_MODULES = [
     },
 ]
 
-export function ParticipantDetailView({ participant }: ParticipantDetailViewProps) {
+export function ParticipantDetailView({ participant, submissions }: ParticipantDetailViewProps) {
     const locale = useLocale()
     const router = useRouter()
     const [isPending, startTransition] = useTransition()
@@ -377,30 +379,71 @@ export function ParticipantDetailView({ participant }: ParticipantDetailViewProp
                         </div>
                     </section>
 
-                    {/* ── SECTION 4: Módulos Adicionales (Próximos) ── */}
-                    <section className="rounded-2xl border-2 border-dashed border-slate-200 overflow-hidden">
-                        <div className="p-5 pb-3">
-                            <div className="flex items-center justify-between mb-1">
-                                <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400 border border-slate-200 rounded-full px-2 py-0.5">Próximamente</span>
+                    {/* ── SECTION 4: Historial de Participaciones y Trabajos ── */}
+                    <section className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+                        <div className="flex items-center gap-3 p-5 border-b bg-slate-50/50">
+                            <div className="w-9 h-9 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
+                                <IconFileText size={18} />
                             </div>
-                            <h3 className="font-bold text-[14px] text-slate-500 mt-2">Módulos de Contenido de este Perfil</h3>
-                            <p className="text-[11px] text-slate-400 mt-1">
-                                Los siguientes módulos se integrarán aquí para una gestión completa del participante.
-                            </p>
+                            <div>
+                                <h3 className="font-bold text-[15px]">Historial de Trabajos y Resúmenes</h3>
+                                <p className="text-[11px] text-muted-foreground">Trabajos académicos y documentos enviados por el participante.</p>
+                            </div>
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-dashed border-slate-200 divide-x divide-dashed divide-slate-200">
-                            {FUTURE_MODULES.map((mod) => (
-                                <div key={mod.label} className="p-5 bg-white/50 flex flex-col gap-2">
-                                    <div className={`w-8 h-8 rounded-lg ${mod.bg} ${mod.color} flex items-center justify-center border ${mod.border}`}>
-                                        <mod.icon size={15} />
-                                    </div>
-                                    <p className="font-semibold text-[12px] text-slate-600">{mod.label}</p>
-                                    <p className="text-[10px] text-slate-400 leading-relaxed">{mod.description}</p>
-                                    <Button variant="outline" size="sm" className="rounded-lg text-[10px] h-7 mt-1 opacity-40 cursor-not-allowed" disabled>
-                                        Próximamente
-                                    </Button>
+                        <div className="p-5 space-y-4">
+                            {participant.registration_type === 'convocatoria' && (
+                                <Alert className="bg-emerald-50/50 border-emerald-100 flex items-start gap-2 p-3 text-xs text-emerald-800">
+                                    <IconClipboardCheck size={16} className="text-emerald-600 shrink-0 mt-0.5" />
+                                    <span>Este participante ha respondido a una convocatoria oficial para este evento.</span>
+                                </Alert>
+                            )}
+
+                            {submissions && submissions.length > 0 ? (
+                                <div className="grid gap-3">
+                                    {submissions.map((sub: any) => (
+                                        <div key={sub.id} className="border rounded-xl p-4 hover:bg-slate-50/50 transition-colors">
+                                            <div className="flex justify-between items-start gap-3">
+                                                <div>
+                                                    <h4 className="font-semibold text-sm text-slate-800 leading-snug">{sub.title}</h4>
+                                                    <p className="text-[10px] text-muted-foreground mt-1">
+                                                        {sub.main_events?.name || sub.editions?.name?.[locale] || 'Evento general'}
+                                                    </p>
+                                                </div>
+                                                <Badge className="text-[10px] px-2 py-0.5 shadow-none font-medium capitalize">
+                                                    {sub.status}
+                                                </Badge>
+                                            </div>
+                                            
+                                            {sub.files && sub.files.length > 0 && (
+                                                <div className="mt-3 pt-3 border-t border-dashed space-y-1.5">
+                                                    {sub.files.map((file: any) => (
+                                                        <div key={file.id} className="flex items-center justify-between text-xs bg-slate-50 p-2 rounded-lg">
+                                                            <div className="flex items-center gap-2">
+                                                                <IconFileText size={14} className="text-primary" />
+                                                                <span className="font-medium text-slate-700 truncate max-w-[200px]">{file.file_name}</span>
+                                                                {file.document_type && (
+                                                                    <Badge variant="outline" className="text-[9px] px-1 shadow-none text-muted-foreground">
+                                                                        {file.document_type}
+                                                                    </Badge>
+                                                                )}
+                                                            </div>
+                                                            <a href={file.file_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] text-primary hover:underline">
+                                                                <IconExternalLink size={12} /> Descargar
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            ) : (
+                                <div className="p-8 text-center border-2 border-dashed rounded-xl border-slate-200">
+                                    <IconFileText size={32} className="mx-auto text-slate-300 mb-2" />
+                                    <p className="text-sm font-medium text-slate-500">Sin trabajos adjuntos</p>
+                                    <p className="text-xs text-slate-400 mt-1">El participante no ha registrado o enviado resúmenes aún.</p>
+                                </div>
+                            )}
                         </div>
                     </section>
                 </div>

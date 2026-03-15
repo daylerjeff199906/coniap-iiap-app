@@ -6,7 +6,8 @@ import {
     User,
     Settings,
     type LucideIcon,
-    LayoutDashboard
+    LayoutDashboard,
+    FileText
 } from "lucide-react"
 
 export type AdminRouteItem = {
@@ -31,6 +32,11 @@ export const getAdminRoutes = (locale: string): AdminRouteItem[] => [
         title: "Convocatorias",
         url: `/${locale}/admin/calls`,
         icon: Megaphone,
+    },
+    {
+        title: "Trabajos",
+        url: `/${locale}/admin/submissions`,
+        icon: FileText,
     },
     {
         title: "Participantes",
