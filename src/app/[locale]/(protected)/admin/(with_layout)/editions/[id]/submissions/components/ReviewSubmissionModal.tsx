@@ -1,16 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { useForm } from 'react-hook-form';
-import { MessageSquare, Download, Calendar, Mail, FileText, Send, User } from 'lucide-react';
+import { MessageSquare, Download, Mail, FileText, Send, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback, } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { EventSubmission, SubmissionComment, SubmissionStatus } from '@/types/submissions';
+import Link from 'next/link';
 
 interface ReviewSubmissionModalProps {
     submission: EventSubmission | null;
@@ -148,9 +147,9 @@ export function ReviewSubmissionModal({ submission, isOpen, onClose, onStatusCha
                                                     <p className="text-xs text-muted-foreground">{file.document_type || 'Archivo General'}</p>
                                                 </div>
                                             </div>
-                                            <Button size="sm" variant="ghost" className="gap-1 text-primary hover:text-primary-focus" href={file.file_url} target="_blank">
+                                            <Link className="gap-1 text-primary hover:text-primary-focus" href={file.file_url} target="_blank">
                                                 <Download className="h-4 w-4" /> Descargar
-                                            </Button>
+                                            </Link>
                                         </div>
                                     ))}
                                 </div>
@@ -187,7 +186,7 @@ export function ReviewSubmissionModal({ submission, isOpen, onClose, onStatusCha
                                     <h3 className="font-semibold text-sm">Feedback / Comentarios</h3>
                                 </div>
                             </div>
-                            
+
                             {/* Chat Thread */}
                             <div className="flex-1 overflow-y-auto p-4 space-y-3">
                                 {comments.length > 0 ? (
