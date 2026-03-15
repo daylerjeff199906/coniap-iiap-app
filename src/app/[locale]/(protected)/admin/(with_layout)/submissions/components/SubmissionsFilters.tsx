@@ -170,22 +170,24 @@ export function SubmissionsFilters({ events, editions }: SubmissionsFiltersProps
                         </SelectContent>
                     </Select>
 
-                    <Select
-                        value={eventId || 'all'}
-                        onValueChange={handleEventChange}
-                    >
-                        <SelectTrigger className="w-[180px] h-10 rounded-xl text-xs">
-                            <SelectValue placeholder="Evento" />
-                        </SelectTrigger>
-                        <SelectContent className="rounded-xl">
-                            <SelectItem value="all" className="text-xs">Todos los eventos</SelectItem>
-                            {events.map((event) => (
-                                <SelectItem key={event.id} value={event.id} className="text-xs">
-                                    {event.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    {events.length > 0 && (
+                        <Select
+                            value={eventId || 'all'}
+                            onValueChange={handleEventChange}
+                        >
+                            <SelectTrigger className="w-[180px] h-10 rounded-xl text-xs">
+                                <SelectValue placeholder="Evento" />
+                            </SelectTrigger>
+                            <SelectContent className="rounded-xl">
+                                <SelectItem value="all" className="text-xs">Todos los eventos</SelectItem>
+                                {events.map((event) => (
+                                    <SelectItem key={event.id} value={event.id} className="text-xs">
+                                        {event.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
 
                     {(eventId || events.length === 0) && editions.length > 0 && (
                         <Select

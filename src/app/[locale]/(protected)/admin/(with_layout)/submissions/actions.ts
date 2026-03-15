@@ -34,9 +34,10 @@ export async function getSubmissions(filters?: {
             ),
             comments:submission_comments (
                 id,
-                comment,
+                content,  
                 created_at,
-                profile:profiles (
+                is_internal,
+                author:profiles!fk_comment_author (
                     id,
                     first_name,
                     last_name,
@@ -246,7 +247,7 @@ export async function insertDirectSubmission(data: {
                 file_url: data.fileUrl,
                 document_type: data.documentType
             });
-        
+
         if (fileError) {
             console.error('Error insert file:', fileError);
         }
