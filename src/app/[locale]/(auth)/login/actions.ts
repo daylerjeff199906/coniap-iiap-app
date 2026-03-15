@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies, headers } from 'next/headers'
-import { getExternalLoginUrl, PLATFORM_URL } from '@/utils/constants'
 
 type LoginResponse = {
     error?: string
@@ -13,6 +12,10 @@ type LoginResponse = {
 
 export async function login(formData: FormData, locale: string = 'es', nextPath?: string): Promise<LoginResponse> {
     const cookieStore = await cookies()
+    const headerList = await headers()
+    const host = headerList.get('host') || ''
+    const isProd = host.includes('iiap.gob.pe')
+    const platformUrl = isProd ? 'https://auth.iiap.gob.pe' : 'http://localhost:3004'
     const supabase = createClient(cookieStore)
 
     const email = formData.get('email') as string
@@ -72,7 +75,7 @@ export async function login(formData: FormData, locale: string = 'es', nextPath?
         // lo mandamos hacia la otra plataforma
         if (roles.includes('client') || roles.includes('user') || roles.length === 0) {
             const nextParam = nextPath ? `?next=${encodeURIComponent(nextPath)}` : ''
-            const redirectUrl = `${PLATFORM_URL}/${locale}/dashboard${nextParam}`
+            const redirectUrl = `${platformUrl}/${locale}/dashboard${nextParam}`
 
             revalidatePath('/', 'layout')
             return { redirectUrl }
