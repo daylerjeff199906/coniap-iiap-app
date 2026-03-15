@@ -21,8 +21,13 @@ export default async function proxy(request: NextRequest) {
                 setAll(cookiesToSet) {
                     cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
                     response = handleI18nRouting(request)
+                    const isIiapDomain = request.nextUrl.hostname.endsWith('iiap.gob.pe')
                     cookiesToSet.forEach(({ name, value, options }) =>
-                        response.cookies.set(name, value, options)
+                        response.cookies.set(name, value, {
+                            ...options,
+                            domain: isIiapDomain ? '.iiap.gob.pe' : undefined,
+                            path: '/',
+                        })
                     )
                 },
             },
