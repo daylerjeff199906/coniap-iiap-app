@@ -152,14 +152,19 @@ export function ReviewSubmissionClient({ submission: initialSubmission }: Review
 
                 <div className="lg:col-span-1 space-y-4">
                     <Label htmlFor="status" className="text-[10px] font-bold text-muted-foreground uppercase block mb-1.5">Cambiar Estado Técnico</Label>
-                    <select id="status" value={submission.status} onChange={handleStatusUpdate} disabled={isUpdatingStatus} className="flex h-9 w-full rounded-md border bg-white px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-primary shadow-sm">
-                        <option value="draft">Borrador</option>
-                        <option value="submitted">Presentado / Enviado</option>
+                    <select id="status" value={submission.status} onChange={handleStatusUpdate} disabled={isUpdatingStatus || submission.status === 'draft'} className="flex h-9 w-full rounded-md border bg-white px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-primary shadow-sm disabled:opacity-50">
+                        {submission.status === 'draft' && <option value="draft">Borrador</option>}
+                        {submission.status === 'submitted' && <option value="submitted" disabled>Presentado / Enviado</option>}
+                        
                         <option value="under_review">En Revisión Comité</option>
                         <option value="changes_requested">Cambios Solicitados</option>
                         <option value="approved">Aprobado</option>
                         <option value="rejected">Rechazado</option>
                     </select>
+
+                    {submission.status === 'draft' && (
+                        <p className="text-[11px] text-orange-500 font-medium mt-1">No se pueden realizar cambios en borradores.</p>
+                    )}
 
                     <div className="p-3 border-b bg-slate-50 flex items-center gap-1.5 mt-2">
                         <MessageSquare className="h-4 w-4 text-primary" />

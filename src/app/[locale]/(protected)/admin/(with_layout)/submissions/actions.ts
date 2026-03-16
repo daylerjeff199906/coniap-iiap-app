@@ -160,8 +160,8 @@ export async function addSubmissionComment(submissionId: string, profileId: stri
         .from('submission_comments')
         .insert({
             submission_id: submissionId,
-            profile_id: profileId,
-            comment,
+            author_id: profileId,
+            content: comment,
         });
 
     if (error) {
