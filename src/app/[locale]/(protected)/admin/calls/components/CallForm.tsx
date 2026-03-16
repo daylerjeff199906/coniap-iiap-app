@@ -16,6 +16,10 @@ import { Badge } from '@/components/ui/badge'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { FormSchemaBuilder } from '@/components/dynamic-form/FormSchemaBuilder'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 interface CallFormProps {
     callInfo?: ICall
@@ -64,8 +68,8 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
             start_date: new Date(formData.get('start_date') as string).toISOString(),
             end_date: new Date(formData.get('end_date') as string).toISOString(),
             max_capacity: formData.get('max_capacity') ? parseInt(formData.get('max_capacity') as string) : null,
-            auto_approve: formData.get('auto_approve') === 'true',
-            is_active: formData.get('is_active') === 'true',
+            auto_approve: !!formData.get('auto_approve'),
+            is_active: !!formData.get('is_active'),
             content: content,
             form_schema: formSchema
         }
@@ -211,11 +215,11 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="start_date" className="text-sm font-semibold text-slate-700">Apertura</Label>
-                                    <Input id="start_date" name="start_date" type="datetime-local" defaultValue={callInfo?.start_date ? new Date(callInfo.start_date).toISOString().slice(0, 16) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
+                                    <Input id="start_date" name="start_date" type="date" defaultValue={callInfo?.start_date ? new Date(callInfo.start_date).toISOString().slice(0, 10) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="end_date" className="text-sm font-semibold text-slate-700">Cierre</Label>
-                                    <Input id="end_date" name="end_date" type="datetime-local" defaultValue={callInfo?.end_date ? new Date(callInfo.end_date).toISOString().slice(0, 16) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
+                                    <Input id="end_date" name="end_date" type="date" defaultValue={callInfo?.end_date ? new Date(callInfo.end_date).toISOString().slice(0, 10) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
                                 </div>
                             </div>
                         </div>

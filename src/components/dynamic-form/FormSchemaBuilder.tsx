@@ -117,7 +117,7 @@ export function FormSchemaBuilder({ value, onChange }: FormSchemaBuilderProps) {
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-                                    <div className="md:col-span-4 space-y-1.5">
+                                    <div className="md:col-span-6 space-y-1.5">
                                         <Label className="text-[11px] font-black uppercase text-slate-400 ml-1">Etiqueta (Pregunta)</Label>
                                         <Input
                                             value={field.label}
@@ -126,8 +126,8 @@ export function FormSchemaBuilder({ value, onChange }: FormSchemaBuilderProps) {
                                             className="h-10 rounded-xl bg-white"
                                         />
                                     </div>
-                                    
-                                    <div className="md:col-span-3 space-y-1.5">
+
+                                    <div className="md:col-span-4 space-y-1.5">
                                         <Label className="text-[11px] font-black uppercase text-slate-400 ml-1">Tipo de Entrada</Label>
                                         <Select value={field.type} onValueChange={(v) => updateFormField(field.id, { type: v })}>
                                             <SelectTrigger className="h-10 rounded-xl bg-white">
@@ -142,7 +142,7 @@ export function FormSchemaBuilder({ value, onChange }: FormSchemaBuilderProps) {
                                         </Select>
                                     </div>
 
-                                    <div className="md:col-span-3 space-y-1.5">
+                                    {/* <div className="md:col-span-3 space-y-1.5">
                                         <Label className="text-[11px] font-black uppercase text-slate-400 ml-1">Identificador (ID)</Label>
                                         <Input
                                             value={field.name}
@@ -150,7 +150,7 @@ export function FormSchemaBuilder({ value, onChange }: FormSchemaBuilderProps) {
                                             placeholder="ej: tema_investigacion"
                                             className="h-10 rounded-xl bg-white font-mono text-xs"
                                         />
-                                    </div>
+                                    </div> */}
 
                                     <div className="md:col-span-2 flex items-center justify-center pt-5">
                                         <div className="flex flex-col items-center gap-1.5">
