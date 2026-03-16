@@ -82,7 +82,7 @@ export function SubmissionsTab({ submissions }: SubmissionsTabProps) {
             headerClassName: 'text-right',
             cellClassName: 'text-right',
             render: (sub) => (
-                <Link href={`/admin/submissions/${sub.id}`} className="inline-block ml-auto">
+                <Link href={`/admin/submissions/${sub.id}`} target="_blank" rel="noopener noreferrer" className="inline-block ml-auto">
                     <Button 
                         variant="ghost" 
                         size="sm" 
