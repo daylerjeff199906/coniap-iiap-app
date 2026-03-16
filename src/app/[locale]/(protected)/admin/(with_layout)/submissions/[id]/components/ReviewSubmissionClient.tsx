@@ -41,7 +41,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission }: Review
                 id: crypto.randomUUID(),
                 submission_id: submission.id,
                 profile_id: 'admin-id',
-                comment: newComment,
+                content: newComment,
                 created_at: new Date().toISOString(),
                 profile: { id: 'admin-id', first_name: 'Admin', last_name: '', email: '' } as any
             };
@@ -171,7 +171,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission }: Review
                             <div key={comment.id} className={`flex flex-col ${comment.profile_id === 'admin-id' ? 'items-end' : 'items-start'}`}>
                                 <div className={`p-2.5 rounded-lg max-w-[85%] text-xs border ${comment.profile_id === 'admin-id' ? 'bg-primary/10 border-primary/20 text-slate-800' : 'bg-slate-50 border-slate-200 text-slate-700'}`}>
                                     <p className="font-bold text-[10px] opacity-70 mb-0.5">{comment.profile_id === 'admin-id' ? 'Tú (Administrador)' : comment.profile?.first_name}</p>
-                                    <p className="leading-normal">{comment.comment}</p>
+                                    <p className="leading-normal">{comment.content as any || (comment as any).comment}</p>
                                 </div>
                             </div>
                         ))}

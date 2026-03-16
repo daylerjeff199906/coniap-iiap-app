@@ -102,7 +102,7 @@ export async function getSubmissionById(id: string) {
             ),
             comments:submission_comments (
                 id,
-                comment,
+                content,
                 created_at,
                 profile:profiles (
                     id,
