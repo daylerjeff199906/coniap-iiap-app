@@ -77,7 +77,6 @@ export default function DirectUploadPage() {
                 </div>
 
                 <div className="space-y-4">
-                    {/* GRID DE SELECTORES DE IGUAL ANCHO */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white border p-4 rounded-xl shadow-sm">
                         <div className="space-y-1.5 flex-1">
                             <Label className="text-[10px] font-bold text-muted-foreground uppercase">Evento</Label>
