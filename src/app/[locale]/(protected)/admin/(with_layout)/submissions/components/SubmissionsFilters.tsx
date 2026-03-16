@@ -5,12 +5,11 @@ import { useCallback, useState, useTransition, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { IconSearch } from '@tabler/icons-react';
-import { useRouter, usePathname } from '@/i18n/routing';
+import { useRouter, usePathname, Link } from '@/i18n/routing';
 import { useLocale } from 'next-intl';
 import { useDebounce } from '@/hooks/core/useDebounce';
 import { Button } from '@/components/ui/button';
 import { UploadCloud } from 'lucide-react';
-import Link from 'next/link';
 
 import { X } from 'lucide-react';
 

@@ -32,28 +32,28 @@ export function SubmissionsDashboard({ submissions }: SubmissionsDashboardProps)
                     {submissions.map((submission) => {
                         const config = statusConfig[submission.status];
                         return (
-                            <Card key={submission.id} className="shadow hover:shadow-md transition-all border-l-4">
-                                <CardHeader className="p-4 pb-2">
-                                    <div className="flex justify-between items-start">
-                                        <Badge className={`${config.color} text-[10px] px-2 py-0.5 rounded-full`}>{config.label}</Badge>
-                                        <div className="flex items-center text-xs text-muted-foreground gap-1"><Calendar className="h-3 w-3" />{new Date(submission.created_at).toLocaleDateString()}</div>
-                                    </div>
-                                    <CardTitle className="text-sm font-semibold mt-2 line-clamp-2">{submission.title}</CardTitle>
-                                </CardHeader>
-                                <CardContent className="p-4 pt-2">
-                                    <div className="flex items-center justify-between mt-2">
-                                        <div className="flex items-center gap-2">
-                                            <Avatar className="h-6 w-6"><AvatarFallback className="text-xs">{submission.profile?.first_name?.[0]}{submission.profile?.last_name?.[0]}</AvatarFallback></Avatar>
-                                            <p className="text-xs font-medium text-muted-foreground">{submission.profile?.first_name} {submission.profile?.last_name}</p>
+                            <Link key={submission.id} href={`/admin/submissions/${submission.id}`} className="block group">
+                                <Card className="shadow hover:shadow-md transition-all border-l-4 h-full group-hover:border-l-blue-500">
+                                    <CardHeader className="p-4 pb-2">
+                                        <div className="flex justify-between items-start">
+                                            <Badge className={`${config.color} text-[10px] px-2 py-0.5 rounded-full`}>{config.label}</Badge>
+                                            <div className="flex items-center text-xs text-muted-foreground gap-1"><Calendar className="h-3 w-3" />{new Date(submission.created_at).toLocaleDateString()}</div>
                                         </div>
-                                        <Button size="sm" variant="ghost" className="h-8 text-xs gap-1 group" asChild>
-                                            <Link href={`/admin/submissions/${submission.id}`}>
+                                        <CardTitle className="text-sm font-semibold mt-2 line-clamp-2 group-hover:text-blue-600 transition-colors">{submission.title}</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="p-4 pt-2">
+                                        <div className="flex items-center justify-between mt-2">
+                                            <div className="flex items-center gap-2">
+                                                <Avatar className="h-6 w-6"><AvatarFallback className="text-xs">{submission.profile?.first_name?.[0]}{submission.profile?.last_name?.[0]}</AvatarFallback></Avatar>
+                                                <p className="text-xs font-medium text-muted-foreground">{submission.profile?.first_name} {submission.profile?.last_name}</p>
+                                            </div>
+                                            <Button size="sm" variant="ghost" className="h-8 text-xs gap-1 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
                                                 Revisar <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                                            </Link>
-                                        </Button>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         );
                     })}
                 </div>
