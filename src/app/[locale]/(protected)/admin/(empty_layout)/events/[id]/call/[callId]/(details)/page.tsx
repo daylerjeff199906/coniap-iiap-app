@@ -1,5 +1,5 @@
 import { getSubmissions } from '@/app/[locale]/(protected)/admin/(with_layout)/submissions/actions'
-import { ParticipantsTab } from '../components/ParticipantsTab'
+import { ParticipantsTab } from './components/ParticipantsTab';
 
 export const metadata = {
     title: 'Participantes - Convocatoria',
