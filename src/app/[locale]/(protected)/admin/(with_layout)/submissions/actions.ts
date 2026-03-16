@@ -117,6 +117,9 @@ export async function getSubmissionById(id: string) {
             editions (
                 name,
                 year
+            ),
+            event_calls (
+                title
             )
         `)
         .eq('id', id)
