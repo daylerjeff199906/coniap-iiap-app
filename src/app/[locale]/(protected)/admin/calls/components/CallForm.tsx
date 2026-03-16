@@ -15,6 +15,11 @@ import { toast } from 'react-toastify'
 import { Badge } from '@/components/ui/badge'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { FormSchemaBuilder } from '@/components/dynamic-form/FormSchemaBuilder'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 interface CallFormProps {
     callInfo?: ICall
@@ -63,8 +68,8 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
             start_date: new Date(formData.get('start_date') as string).toISOString(),
             end_date: new Date(formData.get('end_date') as string).toISOString(),
             max_capacity: formData.get('max_capacity') ? parseInt(formData.get('max_capacity') as string) : null,
-            auto_approve: formData.get('auto_approve') === 'true',
-            is_active: formData.get('is_active') === 'true',
+            auto_approve: !!formData.get('auto_approve'),
+            is_active: !!formData.get('is_active'),
             content: content,
             form_schema: formSchema
         }
@@ -112,27 +117,7 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
         setContent({ ...content, blocks: newBlocks })
     }
 
-    // --- Form Builder Logic ---
-    const addFormField = () => {
-        const newField = {
-            id: Math.random().toString(36).substr(2, 9),
-            type: 'text',
-            label: '',
-            name: '',
-            placeholder: '',
-            required: false,
-            options: [] // for select/radio
-        }
-        setFormSchema([...formSchema, newField])
-    }
 
-    const updateFormField = (id: string, updates: any) => {
-        setFormSchema(formSchema.map(f => f.id === id ? { ...f, ...updates } : f))
-    }
-
-    const removeFormField = (id: string) => {
-        setFormSchema(formSchema.filter(f => f.id !== id))
-    }
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-10 pb-32 max-w-4xl mx-auto">
@@ -230,11 +215,11 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="start_date" className="text-sm font-semibold text-slate-700">Apertura</Label>
-                                    <Input id="start_date" name="start_date" type="datetime-local" defaultValue={callInfo?.start_date ? new Date(callInfo.start_date).toISOString().slice(0, 16) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
+                                    <Input id="start_date" name="start_date" type="date" defaultValue={callInfo?.start_date ? new Date(callInfo.start_date).toISOString().slice(0, 10) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="end_date" className="text-sm font-semibold text-slate-700">Cierre</Label>
-                                    <Input id="end_date" name="end_date" type="datetime-local" defaultValue={callInfo?.end_date ? new Date(callInfo.end_date).toISOString().slice(0, 16) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
+                                    <Input id="end_date" name="end_date" type="date" defaultValue={callInfo?.end_date ? new Date(callInfo.end_date).toISOString().slice(0, 10) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
                                 </div>
                             </div>
                         </div>
@@ -417,98 +402,10 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
             </section>
 
             {/* Section: Form Builder */}
-            <section className="space-y-6">
-                <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                            <IconForms size={18} />
-                        </div>
-                        <h2 className="text-lg font-bold text-slate-800 tracking-tight">Formulario de Postulación</h2>
-                    </div>
-                    <Button type="button" variant="default" size="sm" onClick={addFormField} className="bg-emerald-600 hover:bg-emerald-700 rounded-full h-8 text-[11px] font-bold uppercase shadow-md shadow-emerald-50">
-                        <IconCirclePlus size={16} className="mr-1" /> Agregar Campo
-                    </Button>
-                </div>
-
-                <div className="bg-white border rounded-3xl p-8 shadow-sm space-y-4">
-                    <AnimatePresence mode="popLayout">
-                        {formSchema.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center py-16 text-slate-400 bg-slate-50/30 rounded-2xl border-2 border-dashed">
-                                <IconForms size={32} className="mb-3 opacity-20" />
-                                <p className="text-sm font-medium">No se han definido campos adicionales</p>
-                                <p className="text-[10px] uppercase tracking-widest mt-1">Nombre, Email y Teléfono son automáticos</p>
-                            </div>
-                        ) : (
-                            formSchema.map((field, idx) => (
-                                <motion.div
-                                    key={field.id}
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.98 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="bg-slate-50/50 border rounded-2xl p-5 flex flex-col gap-4 group"
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-7 h-7 bg-white rounded-lg border flex items-center justify-center text-slate-400">
-                                                <span className="text-xs font-bold">{idx + 1}</span>
-                                            </div>
-                                            <Badge variant="outline" className="bg-white text-[10px] uppercase font-bold tracking-tighter">{field.type}</Badge>
-                                        </div>
-                                        <Button type="button" variant="ghost" size="icon" onClick={() => removeFormField(field.id)} className="h-8 w-8 text-red-400 hover:bg-red-50 hover:text-red-600 rounded-full transition-colors">
-                                            <IconTrash size={16} />
-                                        </Button>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-                                        <div className="md:col-span-4 space-y-1.5">
-                                            <Label className="text-[11px] font-black uppercase text-slate-400 ml-1">Etiqueta (Pregunta)</Label>
-                                            <Input
-                                                value={field.label}
-                                                onChange={(e) => updateFormField(field.id, { label: e.target.value })}
-                                                placeholder="Ej: ¿Cuál es su tema de investigación?"
-                                                className="h-10 rounded-xl bg-white"
-                                            />
-                                        </div>
-                                        <div className="md:col-span-3 space-y-1.5">
-                                            <Label className="text-[11px] font-black uppercase text-slate-400 ml-1">Tipo de Entrada</Label>
-                                            <Select value={field.type} onValueChange={(v) => updateFormField(field.id, { type: v })}>
-                                                <SelectTrigger className="h-10 rounded-xl bg-white">
-                                                    <SelectValue />
-                                                </SelectTrigger>
-                                                <SelectContent className="rounded-xl">
-                                                    <SelectItem value="text">Texto Corto</SelectItem>
-                                                    <SelectItem value="textarea">Texto Largo</SelectItem>
-                                                    <SelectItem value="number">Número</SelectItem>
-                                                    <SelectItem value="file">Archivo de soporte</SelectItem>
-                                                    <SelectItem value="checkbox">Opción Única (Check)</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
-                                        <div className="md:col-span-3 space-y-1.5">
-                                            <Label className="text-[11px] font-black uppercase text-slate-400 ml-1">Placeholder</Label>
-                                            <Input
-                                                value={field.placeholder}
-                                                onChange={(e) => updateFormField(field.id, { placeholder: e.target.value })}
-                                                placeholder="Texto de ayuda..."
-                                                className="h-10 rounded-xl bg-white"
-                                            />
-                                        </div>
-                                        <div className="md:col-span-2 flex items-center justify-center pt-5">
-                                            <div className="flex flex-col items-center gap-1.5">
-                                                <Label className="text-[10px] font-black uppercase text-slate-400">Requerido</Label>
-                                                <Switch
-                                                    checked={field.required}
-                                                    onCheckedChange={(val) => updateFormField(field.id, { required: val })}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))
-                        )}
-                    </AnimatePresence>
-                </div>
-            </section>
+            <FormSchemaBuilder
+                value={formSchema}
+                onChange={setFormSchema}
+            />
 
             {/* Final Publish Button Mobile/Floating (Extra) */}
             <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 md:hidden">
