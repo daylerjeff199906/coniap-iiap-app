@@ -49,15 +49,18 @@ export function CallTable({ calls, eventId, showEventInfo = true }: CallTablePro
                             return (
                                 <TableRow key={call.id} className="hover:bg-muted/30">
                                     <TableCell className="pl-6 py-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center border border-blue-100 flex-shrink-0">
+                                        <Link 
+                                            href={eventId ? `/admin/events/${eventId}/call/${call.id}` : `/admin/calls/${call.id}`}
+                                            className="flex items-center gap-3 group cursor-pointer hover:underline-offset-4"
+                                        >
+                                            <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center border border-blue-100 flex-shrink-0 group-hover:bg-blue-100 transition-colors">
                                                 <IconSpeakerphone size={20} />
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="font-semibold text-[15px] leading-tight mb-1">{call.title}</span>
+                                                <span className="font-semibold text-[15px] leading-tight mb-1 group-hover:text-blue-600 transition-colors">{call.title}</span>
                                                 <span className="text-[11px] text-muted-foreground line-clamp-1 max-w-[200px]">{call.description || 'Sin descripción'}</span>
                                             </div>
-                                        </div>
+                                        </Link>
                                     </TableCell>
                                     <TableCell className="py-4">
                                         {role ? (

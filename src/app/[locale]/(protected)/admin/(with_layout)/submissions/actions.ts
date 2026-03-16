@@ -8,6 +8,7 @@ import { revalidatePath } from 'next/cache';
 export async function getSubmissions(filters?: {
     eventId?: string;
     editionId?: string;
+    callId?: string;
     status?: string;
     q?: string;
 }) {
@@ -59,6 +60,9 @@ export async function getSubmissions(filters?: {
     }
     if (filters?.editionId && filters.editionId !== 'all') {
         query = query.eq('edition_id', filters.editionId);
+    }
+    if (filters?.callId && filters.callId !== 'all') {
+        query = query.eq('call_id', filters.callId);
     }
     if (filters?.status && filters.status !== 'all') {
         query = query.eq('status', filters.status);
