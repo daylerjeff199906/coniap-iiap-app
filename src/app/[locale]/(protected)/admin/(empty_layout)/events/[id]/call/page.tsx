@@ -2,9 +2,8 @@ import { getCalls, getEditionsByEvent } from '@/app/[locale]/(protected)/admin/c
 import { CallTable } from '@/app/[locale]/(protected)/admin/calls/components/CallTable'
 import { CallFilters } from '@/app/[locale]/(protected)/admin/calls/components/CallFilters'
 import { ICall } from '@/types/call'
-import { TabsContent } from '@/components/ui/tabs'
 import { EditionFilter } from '@/app/[locale]/(protected)/admin/calls/components/EditionFilter'
-import { CallTabs } from '@/app/[locale]/(protected)/admin/calls/components/CallTabs'
+import { CallTypeCheckbox } from '@/app/[locale]/(protected)/admin/calls/components/CallTypeCheckbox'
 
 export const metadata = {
     title: 'Convocatorias del Evento - Panel',
@@ -22,52 +21,44 @@ export default async function EventCallsPage({
     const searchQuer = sParams.q || ''
     const status = sParams.status || 'all'
     const editionId = sParams.editionId || 'all'
-    const activeTab = sParams.tab || 'event'
-
+    const activeTab = sParams.tab || 'all'
+ 
     const allCalls = await getCalls({
         eventId,
         isActive: status === 'active' ? true : status === 'inactive' ? false : undefined
     })
-
+ 
     const editions = await getEditionsByEvent(eventId)
-
-    // Filter calls
-    const eventCalls = allCalls.filter(c => !c.edition_id)
-    const editionCalls = allCalls.filter(c => c.edition_id)
-
-    const filterBySearch = (calls: ICall[]) => calls.filter((c: ICall) => {
-        return c.title.toLowerCase().includes(searchQuer.toLowerCase()) ||
+ 
+    // Filter calls in one pass
+    const filteredCalls = allCalls.filter((c: ICall) => {
+        const matchesSearch = c.title.toLowerCase().includes(searchQuer.toLowerCase()) ||
             c.description?.toLowerCase().includes(searchQuer.toLowerCase())
+            
+        if (!matchesSearch) return false
+ 
+        // Si es "event", excluir los de edición
+        if (activeTab === 'event' && c.edition_id) return false
+ 
+        // Si se seleccionó una edición específica
+        if (editionId !== 'all' && c.edition_id !== editionId) return false
+ 
+        return true
     })
-
-    const filteredEventCalls = filterBySearch(eventCalls)
-    let filteredEditionCalls = filterBySearch(editionCalls)
-
-    if (editionId !== 'all') {
-        filteredEditionCalls = filteredEditionCalls.filter(c => c.edition_id === editionId)
-    }
-
+ 
     return (
         <div className="flex flex-col gap-6 pt-4">
             <CallFilters eventId={eventId} />
-
-            <div className="w-full">
-                <CallTabs defaultValue="event" />
-
-                <div className="mt-4">
-                    {activeTab === 'event' && (
-                        <CallTable calls={filteredEventCalls} eventId={eventId} showEventInfo={false} />
-                    )}
-
-                    {activeTab === 'editions' && (
-                        <div className="space-y-4">
-                            <div className="flex justify-end pr-1">
-                                <EditionFilter editions={editions} locale={locale} />
-                            </div>
-                            <CallTable calls={filteredEditionCalls} eventId={eventId} showEventInfo={true} />
-                        </div>
+ 
+            <div className="w-full space-y-4">
+                <div className="flex justify-end gap-3 pr-1 items-center">
+                    <CallTypeCheckbox />
+                    {activeTab !== 'event' && (
+                        <EditionFilter editions={editions} locale={locale} />
                     )}
                 </div>
+ 
+                <CallTable calls={filteredCalls} eventId={eventId} showEventInfo={activeTab !== 'event'} />
             </div>
         </div>
     )
