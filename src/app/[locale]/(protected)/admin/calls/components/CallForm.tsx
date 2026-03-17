@@ -35,7 +35,7 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
     const [editions, setEditions] = useState<{ id: string, name: { es: string, en: string }, year: number }[]>([])
 
     // Form state
-    const [selectedEventId, setSelectedEventId] = useState(callInfo?.main_event_id || fixedEventId || '')
+    const [selectedEventId, setSelectedEventId] = useState(callInfo?.main_event_id || (callInfo as any)?.editions?.main_event_id || fixedEventId || '')
     const [selectedEditionId, setSelectedEditionId] = useState(callInfo?.edition_id || '')
     const [content, setContent] = useState(callInfo?.content || { time: Date.now(), blocks: [], version: "2.28.0" })
     const [formSchema, setFormSchema] = useState<any[]>(callInfo?.form_schema || [])
@@ -161,12 +161,16 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                             {!fixedEventId && events && (
                                 <div className="space-y-2">
                                     <Label className="text-sm font-semibold text-slate-700">Evento Principal</Label>
-                                    <Select value={selectedEventId} onValueChange={setSelectedEventId} required>
+                                    <Select value={selectedEventId} onValueChange={setSelectedEventId} required disabled={isEdit}>
                                         <SelectTrigger className="h-12 rounded-2xl border-slate-200 bg-slate-50/30 focus:ring-2 focus:ring-blue-100 transition-all">
                                             <SelectValue placeholder="Busca un evento..." />
                                         </SelectTrigger>
                                         <SelectContent className="rounded-2xl">
-                                            {events.map(e => <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>)}
+                                            {events.map(e => (
+                                                <SelectItem key={e.id} value={e.id}>
+                                                    {typeof e.name === 'object' && e.name ? (e.name as any)[locale] || (e.name as any)['es'] : (e.name as any)}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -182,7 +186,7 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                                         <SelectItem value="none">Sin edición específica</SelectItem>
                                         {editions.map(e => (
                                             <SelectItem key={e.id} value={e.id}>
-                                                {locale === 'es' ? e.name.es : e.name.en} ({e.year})
+                                                {typeof e.name === 'object' && e.name ? (e.name as any)[locale] || (e.name as any)['es'] : (e.name as any)} ({e.year})
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
