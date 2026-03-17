@@ -23,13 +23,13 @@ import { toast } from 'react-toastify';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-const statusConfig: Record<SubmissionStatus, { label: string; color: string; border: string; hoverColor: string; icon: any; iconColor: string }> = {
-    draft: { label: 'Borrador', color: 'bg-slate-100 text-slate-700', border: 'border-slate-200', hoverColor: 'hover:bg-slate-50', icon: Clock, iconColor: 'text-slate-500' },
-    submitted: { label: 'Presentado', color: 'bg-blue-50 text-blue-700', border: 'border-blue-200', hoverColor: 'hover:bg-blue-50', icon: FileText, iconColor: 'text-blue-500' },
-    under_review: { label: 'En Revisión Comité', color: 'bg-amber-50 text-amber-700', border: 'border-amber-200', hoverColor: 'hover:bg-amber-50', icon: MessageSquare, iconColor: 'text-amber-500' },
-    changes_requested: { label: 'Cambios Solicitados', color: 'bg-orange-50 text-orange-700', border: 'border-orange-200', hoverColor: 'hover:bg-orange-50', icon: AlertTriangle, iconColor: 'text-orange-500' },
-    approved: { label: 'Aprobado', color: 'bg-emerald-50 text-emerald-700', border: 'border-emerald-200', hoverColor: 'hover:bg-emerald-50', icon: CheckCircle2, iconColor: 'text-emerald-500' },
-    rejected: { label: 'Rechazado', color: 'bg-rose-50 text-rose-700', border: 'border-rose-200', hoverColor: 'hover:bg-rose-50', icon: XCircle, iconColor: 'text-rose-500' },
+const statusConfig: Record<SubmissionStatus, { label: string; color: string; border: string; icon: any; iconColor: string; hoverColor: string }> = {
+    draft: { label: 'Borrador', color: 'bg-slate-100 text-slate-700', border: 'border-slate-200', icon: Clock, iconColor: 'text-slate-500', hoverColor: 'hover:bg-slate-200/80' },
+    submitted: { label: 'Presentado', color: 'bg-blue-50 text-blue-700', border: 'border-blue-200', icon: FileText, iconColor: 'text-blue-500', hoverColor: 'hover:bg-blue-100/80' },
+    under_review: { label: 'En Revisión Comité', color: 'bg-amber-50 text-amber-700', border: 'border-amber-200', icon: MessageSquare, iconColor: 'text-amber-500', hoverColor: 'hover:bg-amber-100/80' },
+    changes_requested: { label: 'Cambios Solicitados', color: 'bg-orange-50 text-orange-700', border: 'border-orange-200', icon: AlertTriangle, iconColor: 'text-orange-500', hoverColor: 'hover:bg-orange-100/80' },
+    approved: { label: 'Aprobado', color: 'bg-emerald-50 text-emerald-700', border: 'border-emerald-200', icon: CheckCircle2, iconColor: 'text-emerald-500', hoverColor: 'hover:bg-emerald-100/80' },
+    rejected: { label: 'Rechazado', color: 'bg-rose-50 text-rose-700', border: 'border-rose-200', icon: XCircle, iconColor: 'text-rose-500', hoverColor: 'hover:bg-rose-100/80' },
 };
 
 const actionConfigs: Record<string, { label: string; description: string; icon: any; color: string; buttonColor: string }> = {
@@ -242,7 +242,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                         <p className="text-xs text-muted-foreground mt-0.5">ID: {submission.id}</p>
                     </div>
                 </div>
-                <Badge className={`${statusConfig[submission.status].color} ${statusConfig[submission.status].border} border px-3 py-1 text-xs rounded-full shadow-none font-medium`}>
+                <Badge className={`${statusConfig[submission.status].color} ${statusConfig[submission.status].border} ${statusConfig[submission.status].hoverColor} border px-3 py-1 text-xs rounded-full shadow-none font-medium transition-all`}>
                     {statusConfig[submission.status].label}
                 </Badge>
             </div>
@@ -280,12 +280,14 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                 <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center rounded-t-lg">
                                                     <div className="flex items-center gap-2">
                                                         <span className="font-semibold text-slate-800 text-xs">
-                                                            {isMe ? 'Tú' : (item.data.author?.first_name || item.data.profile?.first_name)} {isMe ? '' : (item.data.author?.last_name || item.data.profile?.last_name)}
+                                                            {(item.data.author?.first_name === 'Tú' || item.data.profile?.first_name === 'Tú') 
+                                                                ? 'Tú (Admin)' 
+                                                                : `${item.data.author?.first_name || item.data.profile?.first_name || ''} ${item.data.author?.last_name || item.data.profile?.last_name || ''}`} {isMe && (item.data.author?.first_name !== 'Tú' && item.data.profile?.first_name !== 'Tú') && '(Tú)'}
                                                         </span>
-                                                        {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
+                                                        {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4 hover:bg-slate-200/80 cursor-default transition-all">Admin</Badge>}
                                                         <span className="text-slate-500 font-normal text-[11px]">comentó</span>
                                                         {item.data.file?.file_name && (
-                                                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-0.5 ml-1 font-medium shadow-none">
+                                                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-0.5 ml-1 font-medium shadow-none hover:bg-slate-100/80 cursor-default transition-all">
                                                                 <FileText className="h-2.5 w-2.5" /> Sobre: {item.data.file.file_name}
                                                             </Badge>
                                                         )}
@@ -312,15 +314,15 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                             ? 'Tú (Admin)' 
                                                             : `${item.data.profile?.first_name || 'Sistema'} ${item.data.profile?.last_name || ''}`} {isMe && item.data.profile?.first_name !== 'Tú' && '(Tú)'}
                                                     </span>
-                                                    {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
+                                                    {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4 hover:bg-slate-200/80 cursor-default transition-all">Admin</Badge>}
                                                     <span>{item.data.old_status ? 'cambió el estado de' : 'creó el trabajo con estado'}</span>
                                                     {item.data.old_status && (
-                                                        <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${statusConfig[item.data.old_status].color} ${statusConfig[item.data.old_status].border} border-slate-200 shadow-none font-medium`}>
+                                                        <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${statusConfig[item.data.old_status].color} ${statusConfig[item.data.old_status].border} border-slate-200 shadow-none font-medium ${statusConfig[item.data.old_status].hoverColor} cursor-default transition-all`}>
                                                             {statusConfig[item.data.old_status].label}
                                                         </Badge>
                                                     )}
                                                     {item.data.old_status && <span>a</span>}
-                                                    <Badge className={`text-[10px] px-1.5 py-0 font-medium ${statusConfig[item.data.new_status].color} border ${statusConfig[item.data.new_status].border} shadow-none`}>
+                                                    <Badge className={`text-[10px] px-1.5 py-0 font-medium ${statusConfig[item.data.new_status].color} border ${statusConfig[item.data.new_status].border} ${statusConfig[item.data.new_status].hoverColor} cursor-default shadow-none transition-all`}>
                                                         {statusConfig[item.data.new_status].label}
                                                     </Badge>
                                                     <span className="text-[11px] text-slate-400 ml-auto flex items-center gap-1">
