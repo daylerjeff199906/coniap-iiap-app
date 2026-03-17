@@ -308,7 +308,9 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                             <div className="flex-1 ml-6 pt-2">
                                                 <div className="text-xs text-slate-600 flex flex-wrap items-center gap-1.5">
                                                     <span className="font-semibold text-slate-800">
-                                                        {isMe ? 'Tú' : (item.data.profile?.first_name || 'Sistema')} {isMe ? '' : (item.data.profile?.last_name || '')}
+                                                        {(item.data.profile?.first_name === 'Tú') 
+                                                            ? 'Tú (Admin)' 
+                                                            : `${item.data.profile?.first_name || 'Sistema'} ${item.data.profile?.last_name || ''}`} {isMe && item.data.profile?.first_name !== 'Tú' && '(Tú)'}
                                                     </span>
                                                     {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
                                                     <span>{item.data.old_status ? 'cambió el estado de' : 'creó el trabajo con estado'}</span>
