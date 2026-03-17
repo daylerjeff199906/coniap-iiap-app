@@ -188,6 +188,12 @@ export async function reviewSubmission(id: string, status: SubmissionStatus, jus
     const cookieStore = await cookies();
     const supabase = createClient(cookieStore);
 
+    const { data: sub } = await supabase
+        .from('event_submissions')
+        .select('call_id, profile_id')
+        .eq('id', id)
+        .single();
+
     const { error } = await supabase.rpc('review_submission', {
         p_submission_id: id,
         p_new_status: status,
@@ -197,6 +203,18 @@ export async function reviewSubmission(id: string, status: SubmissionStatus, jus
     if (error) {
         console.error('Error reviewing submission:', error);
         return { error: 'No se pudo actualizar el estado del trabajo.' };
+    }
+
+    if (sub?.call_id && sub?.profile_id) {
+        const { error: appError } = await supabase
+            .from('call_applications')
+            .update({ status: status as any, updated_at: new Date().toISOString() })
+            .eq('call_id', sub.call_id)
+            .eq('profile_id', sub.profile_id);
+            
+        if (appError) {
+            console.error('Error updating call_applications status:', appError);
+        }
     }
 
     revalidatePath(`/admin/submissions/${id}`);

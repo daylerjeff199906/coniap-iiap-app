@@ -111,6 +111,35 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
     const handleReview = async (action: 'approve' | 'reject' | 'request_changes' | 'comment') => {
         const text = justification.trim();
 
+        const existingProfile = comments.find(c => c.profile_id === adminId)?.author;
+        const mockAuthor = existingProfile ? {
+            ...existingProfile,
+            user_roles: existingProfile.user_roles || [{ roles: { name: 'Admin' } }]
+        } : {
+            id: adminId,
+            first_name: 'Tú',
+            last_name: '(Admin)',
+            email: '',
+            created_at: new Date().toISOString(),
+            bio: null,
+            onboarding_completed: false,
+            birth_date: null,
+            dedication: null,
+            areas_of_interest: null,
+            expertise_areas: null,
+            research_interests: null,
+            phone: null,
+            location: null,
+            institution: null,
+            updated_at: null,
+            avatar_url: null,
+            social_links: null,
+            additional_emails: null,
+            sex: null,
+            auth_id: null,
+            user_roles: [{ roles: { name: 'Admin' } }]
+        };
+
         if (action !== 'comment' && action !== 'approve' && !text) {
             toast.warning('Por favor agrega una justificación / comentario para este cambio.');
             return;
@@ -138,14 +167,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                         created_at: new Date().toISOString(),
                         file_id: selectedFileId || null,
                         file: mappedFile,
-                        author: {
-                            id: adminId,
-                            first_name: 'Tú',
-                            last_name: '(Admin)',
-                            email: '',
-                            avatar_url: null,
-                            user_roles: [{ roles: { name: 'Admin' } }]
-                        } as any
+                        author: mockAuthor
                     }]);
                     setJustification('');
                     setSelectedFileId('');
@@ -172,13 +194,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                         new_status: nextStatus as any,
                         justification: text || null,
                         created_at: new Date().toISOString(),
-                        profile: {
-                            id: adminId,
-                            first_name: 'Tú',
-                            last_name: '(Admin)',
-                            email: '',
-                            user_roles: [{ roles: { name: 'Admin' } }]
-                        } as any
+                        profile: mockAuthor
                     }]);
                     setJustification('');
                     toast.success(`Estado actualizado a ${statusConfig[nextStatus].label}`);
