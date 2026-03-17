@@ -23,13 +23,13 @@ import { toast } from 'react-toastify';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-const statusConfig: Record<SubmissionStatus, { label: string; color: string; border: string; icon: any; iconColor: string }> = {
-    draft: { label: 'Borrador', color: 'bg-slate-100 text-slate-700', border: 'border-slate-200', icon: Clock, iconColor: 'text-slate-500' },
-    submitted: { label: 'Presentado', color: 'bg-blue-50 text-blue-700', border: 'border-blue-200', icon: FileText, iconColor: 'text-blue-500' },
-    under_review: { label: 'En Revisión Comité', color: 'bg-amber-50 text-amber-700', border: 'border-amber-200', icon: MessageSquare, iconColor: 'text-amber-500' },
-    changes_requested: { label: 'Cambios Solicitados', color: 'bg-orange-50 text-orange-700', border: 'border-orange-200', icon: AlertTriangle, iconColor: 'text-orange-500' },
-    approved: { label: 'Aprobado', color: 'bg-emerald-50 text-emerald-700', border: 'border-emerald-200', icon: CheckCircle2, iconColor: 'text-emerald-500' },
-    rejected: { label: 'Rechazado', color: 'bg-rose-50 text-rose-700', border: 'border-rose-200', icon: XCircle, iconColor: 'text-rose-500' },
+const statusConfig: Record<SubmissionStatus, { label: string; color: string; border: string; hoverColor: string; icon: any; iconColor: string }> = {
+    draft: { label: 'Borrador', color: 'bg-slate-100 text-slate-700', border: 'border-slate-200', hoverColor: 'hover:bg-slate-50', icon: Clock, iconColor: 'text-slate-500' },
+    submitted: { label: 'Presentado', color: 'bg-blue-50 text-blue-700', border: 'border-blue-200', hoverColor: 'hover:bg-blue-50', icon: FileText, iconColor: 'text-blue-500' },
+    under_review: { label: 'En Revisión Comité', color: 'bg-amber-50 text-amber-700', border: 'border-amber-200', hoverColor: 'hover:bg-amber-50', icon: MessageSquare, iconColor: 'text-amber-500' },
+    changes_requested: { label: 'Cambios Solicitados', color: 'bg-orange-50 text-orange-700', border: 'border-orange-200', hoverColor: 'hover:bg-orange-50', icon: AlertTriangle, iconColor: 'text-orange-500' },
+    approved: { label: 'Aprobado', color: 'bg-emerald-50 text-emerald-700', border: 'border-emerald-200', hoverColor: 'hover:bg-emerald-50', icon: CheckCircle2, iconColor: 'text-emerald-500' },
+    rejected: { label: 'Rechazado', color: 'bg-rose-50 text-rose-700', border: 'border-rose-200', hoverColor: 'hover:bg-rose-50', icon: XCircle, iconColor: 'text-rose-500' },
 };
 
 const actionConfigs: Record<string, { label: string; description: string; icon: any; color: string; buttonColor: string }> = {
@@ -199,12 +199,12 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                     new_status: 'under_review',
                     justification: 'Reapertura de revisión para auditoría / cambios.',
                     created_at: new Date().toISOString(),
-                    profile: { 
-                        id: adminId, 
-                        first_name: 'Tú', 
-                        last_name: '(Admin)', 
-                        email: '', 
-                        user_roles: [{ roles: { name: 'Admin' } }] 
+                    profile: {
+                        id: adminId,
+                        first_name: 'Tú',
+                        last_name: '(Admin)',
+                        email: '',
+                        user_roles: [{ roles: { name: 'Admin' } }]
                     } as any
                 }]);
                 toast.success('Revisión reabierta exitosamente.');
@@ -346,7 +346,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
                                 </div>
                                 <div className="flex-1 ml-6 flex flex-col items-center justify-center p-6 border border-slate-200 rounded-lg bg-slate-50/50 space-y-3">
-                                    <Badge className={`${statusConfig[submission.status].color} ${statusConfig[submission.status].border} border px-3 py-1 text-xs rounded-full shadow-none font-medium`}>
+                                    <Badge className={`${statusConfig[submission.status].color} ${statusConfig[submission.status].border} ${statusConfig[submission.status].hoverColor} border px-3 py-1 text-xs rounded-full shadow-none font-medium`}>
                                         Revisión Finalizada: {statusConfig[submission.status].label}
                                     </Badge>
                                     <p className="text-xs text-muted-foreground text-center">
@@ -366,7 +366,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                     <div className="flex items-center justify-between pb-1 border-b border-slate-100">
                                         <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Agregar Revisión o Comentario</span>
                                         {submission.files && submission.files.length > 0 && selectedAction === 'comment' && (
-                                            <select 
+                                            <select
                                                 className="text-[11px] h-7 bg-slate-50 border rounded-md px-2 focus:outline-none focus:ring-1 focus:ring-slate-300 max-w-[150px] truncate"
                                                 value={selectedFileId}
                                                 onChange={(e) => setSelectedFileId(e.target.value)}
@@ -380,28 +380,28 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                         )}
                                     </div>
 
-                                    <Textarea 
-                                        placeholder="Escribe un comentario o la justificación para el cambio de estado opcional..." 
-                                        className="text-xs resize-none bg-slate-50/50 focus:bg-white min-h-[100px]" 
-                                        value={justification} 
-                                        onChange={e => setJustification(e.target.value)} 
+                                    <Textarea
+                                        placeholder="Escribe un comentario o la justificación para el cambio de estado opcional..."
+                                        className="text-xs resize-none bg-slate-50/50 focus:bg-white min-h-[100px]"
+                                        value={justification}
+                                        onChange={e => setJustification(e.target.value)}
                                         disabled={isSubmitting}
                                     />
 
                                     <div className="flex justify-start">
                                         <div className="flex items-center -space-x-px">
-                                            <Button 
-                                                className={`rounded-r-none px-4 flex gap-1.5 items-center font-semibold shadow-sm border ${currentAction.buttonColor} h-12`} 
-                                                disabled={isSubmitting} 
+                                            <Button
+                                                className={`rounded-r-none px-4 flex gap-1.5 items-center font-semibold shadow-sm border ${currentAction.buttonColor} h-12`}
+                                                disabled={isSubmitting}
                                                 onClick={() => handleReview(selectedAction)}
                                             >
                                                 {React.createElement(currentAction.icon, { className: "h-3.5 w-3.5" })}
                                                 {currentAction.label}
                                             </Button>
-                                            
+
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
-                                                    <Button 
+                                                    <Button
                                                         className={`rounded-l-none px-2 border-l h-11.5 ${currentAction.buttonColor === 'bg-white text-slate-700 border hover:bg-slate-50' ? 'border-slate-200' : 'border-white/20'} ${currentAction.buttonColor}`}
                                                         disabled={isSubmitting}
                                                     >
@@ -410,9 +410,9 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="start" className="w-[280px]">
                                                     {availableActions.map(([key, action]) => (
-                                                        <DropdownMenuItem 
-                                                            key={key} 
-                                                            className="flex flex-col items-start gap-0.5 p-2 rounded-md hover:bg-slate-50 cursor-pointer" 
+                                                        <DropdownMenuItem
+                                                            key={key}
+                                                            className="flex flex-col items-start gap-0.5 p-2 rounded-md hover:bg-slate-50 cursor-pointer"
                                                             onClick={() => setSelectedAction(key as any)}
                                                         >
                                                             <div className="flex items-center gap-1.5 font-bold text-[12px] text-slate-800">
