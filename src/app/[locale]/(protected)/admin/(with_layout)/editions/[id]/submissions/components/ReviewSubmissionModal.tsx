@@ -48,7 +48,7 @@ export function ReviewSubmissionModal({ submission, isOpen, onClose, onStatusCha
             id: crypto.randomUUID(),
             submission_id: submission.id,
             profile_id: 'admin-id',
-            comment: newComment,
+            content: newComment,
             created_at: new Date().toISOString(),
             profile: {
                 id: 'admin-id',
@@ -196,7 +196,7 @@ export function ReviewSubmissionModal({ submission, isOpen, onClose, onStatusCha
                                                 <p className="font-semibold mb-1 opacity-70">
                                                     {comment.profile?.first_name || 'Anónimo'}
                                                 </p>
-                                                <p className="leading-relaxed">{comment.comment}</p>
+                                                <p className="leading-relaxed">{comment.content}</p>
                                             </div>
                                             <span className="text-[10px] text-muted-foreground mt-1">
                                                 {new Date(comment.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

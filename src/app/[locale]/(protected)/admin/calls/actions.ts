@@ -75,6 +75,9 @@ export async function getCallById(id: string) {
         .from('event_calls')
         .select(`
             *,
+            editions (
+                main_event_id
+            ),
             participant_roles (
                 id,
                 name,

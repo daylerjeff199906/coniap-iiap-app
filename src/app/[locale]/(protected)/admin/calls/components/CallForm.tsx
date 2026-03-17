@@ -35,7 +35,7 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
     const [editions, setEditions] = useState<{ id: string, name: { es: string, en: string }, year: number }[]>([])
 
     // Form state
-    const [selectedEventId, setSelectedEventId] = useState(callInfo?.main_event_id || fixedEventId || '')
+    const [selectedEventId, setSelectedEventId] = useState(callInfo?.main_event_id || (callInfo as any)?.editions?.main_event_id || fixedEventId || '')
     const [selectedEditionId, setSelectedEditionId] = useState(callInfo?.edition_id || '')
     const [content, setContent] = useState(callInfo?.content || { time: Date.now(), blocks: [], version: "2.28.0" })
     const [formSchema, setFormSchema] = useState<any[]>(callInfo?.form_schema || [])
@@ -161,12 +161,16 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                             {!fixedEventId && events && (
                                 <div className="space-y-2">
                                     <Label className="text-sm font-semibold text-slate-700">Evento Principal</Label>
-                                    <Select value={selectedEventId} onValueChange={setSelectedEventId} required>
+                                    <Select value={selectedEventId} onValueChange={setSelectedEventId} required disabled={isEdit}>
                                         <SelectTrigger className="h-12 rounded-2xl border-slate-200 bg-slate-50/30 focus:ring-2 focus:ring-blue-100 transition-all">
                                             <SelectValue placeholder="Busca un evento..." />
                                         </SelectTrigger>
                                         <SelectContent className="rounded-2xl">
-                                            {events.map(e => <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>)}
+                                            {events.map(e => (
+                                                <SelectItem key={e.id} value={e.id}>
+                                                    {typeof e.name === 'object' && e.name ? (e.name as any)[locale] || (e.name as any)['es'] : (e.name as any)}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -182,13 +186,12 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                                         <SelectItem value="none">Sin edición específica</SelectItem>
                                         {editions.map(e => (
                                             <SelectItem key={e.id} value={e.id}>
-                                                {locale === 'es' ? e.name.es : e.name.en} ({e.year})
+                                                {typeof e.name === 'object' && e.name ? (e.name as any)[locale] || (e.name as any)['es'] : (e.name as any)} ({e.year})
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
                             </div>
-
                             <div className="space-y-2">
                                 <Label className="text-sm font-semibold text-slate-700">Rol del Participante</Label>
                                 <Select name="role_id" defaultValue={callInfo?.role_id} required>
@@ -204,6 +207,7 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                                     </SelectContent>
                                 </Select>
                             </div>
+
                         </div>
 
                         <div className="space-y-5">
@@ -222,6 +226,10 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                                     <Input id="end_date" name="end_date" type="date" defaultValue={callInfo?.end_date ? new Date(callInfo.end_date).toISOString().slice(0, 10) : ''} required className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" />
                                 </div>
                             </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="max_capacity" className="text-sm font-semibold text-slate-700">Cupos Máximos</Label>
+                                <Input id="max_capacity" name="max_capacity" type="number" defaultValue={callInfo?.max_capacity || ''} className="h-12 rounded-2xl border-slate-200 bg-slate-50/30" placeholder="Ilimitado" />
+                            </div>
                         </div>
                     </div>
 
@@ -230,21 +238,27 @@ export function CallForm({ callInfo, events, roles, fixedEventId, locale }: Call
                         <Textarea id="description" name="description" defaultValue={callInfo?.description || ''} className="rounded-2xl h-24 border-slate-200 bg-slate-50/30 resize-none p-4" placeholder="Esta descripción aparecerá en las tarjetas de pre-visualización..." />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
-                        <div className="space-y-2">
-                            <Label htmlFor="max_capacity" className="text-sm font-semibold text-slate-700">Cupos Máximos</Label>
-                            <Input id="max_capacity" name="max_capacity" type="number" defaultValue={callInfo?.max_capacity || ''} className="h-11 rounded-xl bg-slate-50/20" placeholder="Ilimitado" />
-                        </div>
+                    <div className="grid grid-cols-1 gap-6 pt-4 border-t border-slate-100">
                         <div className="flex flex-col justify-center gap-3">
-                            <div className="flex items-center justify-between p-3 border rounded-xl bg-slate-50/30">
-                                <Label className="text-xs font-bold text-slate-600 uppercase">Auto Aprobación</Label>
-                                <Switch name="auto_approve" defaultChecked={callInfo?.auto_approve} />
+                            <div className="flex items-start justify-between p-4 border rounded-2xl bg-slate-50/30 gap-4">
+                                <div className="flex flex-col gap-1">
+                                    <Label className="text-sm font-bold text-slate-700">Auto Aprobación</Label>
+                                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                                        Si está <b>activo</b>, las postulaciones se aprobarán automáticamente al ser enviadas. Si está <b>desactivado</b>, requerirán revisión manual.
+                                    </p>
+                                </div>
+                                <Switch name="auto_approve" defaultChecked={callInfo?.auto_approve} className="mt-1" />
                             </div>
                         </div>
                         <div className="flex flex-col justify-center gap-3">
-                            <div className="flex items-center justify-between p-3 border border-blue-100 rounded-xl bg-blue-50/30">
-                                <Label className="text-xs font-bold text-blue-700 uppercase">Publicar Ahora</Label>
-                                <Switch name="is_active" defaultChecked={callInfo ? callInfo.is_active : true} />
+                            <div className="flex items-start justify-between p-4 border border-blue-100 rounded-2xl bg-blue-50/30 gap-4">
+                                <div className="flex flex-col gap-1">
+                                    <Label className="text-sm font-bold text-blue-700">Publicar Ahora</Label>
+                                    <p className="text-[11px] text-blue-800/80 leading-relaxed">
+                                        Si está <b>activo</b>, la convocatoria es visible y abierta a los usuarios. Si está <b>desactivado</b>, será un borrador interno.
+                                    </p>
+                                </div>
+                                <Switch name="is_active" defaultChecked={callInfo ? callInfo.is_active : true} className="mt-1" />
                             </div>
                         </div>
                     </div>

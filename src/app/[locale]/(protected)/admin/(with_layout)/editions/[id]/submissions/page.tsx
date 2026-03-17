@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { useTranslations } from 'next-intl';
 import { ArrowLeft, LayoutDashboard, UploadCloud } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -31,55 +30,6 @@ export default function SubmissionsPage({ params }: SubmissionsPageProps) {
         };
         resolveParams();
     }, [params]);
-
-    React.useEffect(() => {
-        if (!id) return;
-
-        // Simular carga de Supabase de la tabla de submissions
-        setTimeout(() => {
-            const mockSubmissions: EventSubmission[] = [
-                {
-                    id: '1',
-                    profile_id: 'user-1',
-                    edition_id: id,
-                    title: 'Evaluación del impacto del cambio climático en la Amazonía Peruana',
-                    status: 'submitted',
-                    is_admin_upload: false,
-                    created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-                    updated_at: new Date().toISOString(),
-                    profile: { id: 'user-1', first_name: 'Alex', last_name: 'Gómez', email: 'agomez@iiap.gob.pe', created_at: '', bio: null, onboarding_completed: null, birth_date: null, dedication: null, areas_of_interest: null, expertise_areas: null, research_interests: null, phone: null, location: null, institution: null, updated_at: null, avatar_url: null, social_links: null, additional_emails: null, sex: null, auth_id: null },
-                    files: [{ id: 'f1', submission_id: '1', file_name: 'paper_completo.pdf', file_url: '#', document_type: 'paper', created_at: '' }],
-                    comments: [{ id: 'c1', submission_id: '1', profile_id: 'admin-id', comment: 'El resumen cumple los requisitos. Esperando revisión por comité.', created_at: new Date(Date.now() - 3600000).toISOString() }]
-                },
-                {
-                    id: '2',
-                    profile_id: 'user-2',
-                    edition_id: id,
-                    title: 'Biotecnología aplicada a la conservación de especies nativas selváticas',
-                    status: 'under_review',
-                    is_admin_upload: true,
-                    created_at: new Date(Date.now() - 86400000).toISOString(),
-                    updated_at: new Date().toISOString(),
-                    profile: { id: 'user-2', first_name: 'Liliana', last_name: 'Rojas', email: 'lrojas@iiap.gob.pe', created_at: '', bio: null, onboarding_completed: null, birth_date: null, dedication: null, areas_of_interest: null, expertise_areas: null, research_interests: null, phone: null, location: null, institution: null, updated_at: null, avatar_url: null, social_links: null, additional_emails: null, sex: null, auth_id: null },
-                    files: [{ id: 'f2', submission_id: '2', file_name: 'abstract.docx', file_url: '#', document_type: 'abstract', created_at: '' }]
-                },
-                {
-                    id: '3',
-                    profile_id: 'user-3',
-                    edition_id: id,
-                    title: 'Sistemas Agroforestales y su impacto en la economía local',
-                    status: 'approved',
-                    is_admin_upload: false,
-                    created_at: new Date(Date.now() - 86400000 * 4).toISOString(),
-                    updated_at: new Date().toISOString(),
-                    profile: { id: 'user-3', first_name: 'Marcos', last_name: 'Valle', email: 'mvalle@iiap.gob.pe', created_at: '', bio: null, onboarding_completed: null, birth_date: null, dedication: null, areas_of_interest: null, expertise_areas: null, research_interests: null, phone: null, location: null, institution: null, updated_at: null, avatar_url: null, social_links: null, additional_emails: null, sex: null, auth_id: null },
-                    files: [{ id: 'f3', submission_id: '3', file_name: 'articulo_final.pdf', file_url: '#', document_type: 'paper', created_at: '' }]
-                }
-            ];
-            setSubmissions(mockSubmissions);
-            setIsLoading(false);
-        }, 1200);
-    }, [id]);
 
     const handleOpenReview = (submission: EventSubmission) => {
         setSelectedSubmission(submission);

@@ -1,202 +1,53 @@
-'use client';
+import { getSubmissionById } from '../actions'
+import { ReviewSubmissionClient } from './components/ReviewSubmissionClient'
+import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
+import { Button } from '@/components/ui/button'
+import { Link } from '@/i18n/routing'
+import { IconDatabaseOff } from '@tabler/icons-react'
+import { createClient } from '@/utils/supabase/supabase/server'
+import { cookies } from 'next/headers'
 
-import * as React from 'react';
-import { MessageSquare, Download, Mail, FileText, Send, User, ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { EventSubmission, SubmissionComment, SubmissionStatus } from '@/types/submissions';
-import { Link } from '@/i18n/routing';
-
-const statusColors: Record<SubmissionStatus, string> = {
-    draft: 'bg-slate-500 text-white',
-    submitted: 'bg-blue-500 text-white',
-    under_review: 'bg-yellow-500 text-black',
-    changes_requested: 'bg-orange-500 text-white',
-    approved: 'bg-green-600 text-white',
-    rejected: 'bg-red-600 text-white',
-};
-
-interface ReviewSubmissionPageProps {
-    params: Promise<{ id: string }>;
+export const metadata = {
+    title: 'Revisión de Trabajo - Panel',
 }
 
-import { getSubmissionById, updateSubmissionStatus, addSubmissionComment } from '../actions';
-
-export default function ReviewSubmissionPage({ params }: ReviewSubmissionPageProps) {
-    const [id, setId] = React.useState<string | null>(null);
-    const [submission, setSubmission] = React.useState<EventSubmission | null>(null);
-    const [comments, setComments] = React.useState<SubmissionComment[]>([]);
-    const [newComment, setNewComment] = React.useState('');
-    const [isUpdatingStatus, setIsUpdatingStatus] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(true);
-
-    React.useEffect(() => {
-        const resolveParams = async () => {
-            const resolved = await params;
-            setId(resolved.id);
-        };
-        resolveParams();
-    }, [params]);
-
-    React.useEffect(() => {
-        if (!id) return;
-
-        const loadSubmission = async () => {
-            setIsLoading(true);
-            const data = await getSubmissionById(id);
-            if (data) {
-                setSubmission(data as any);
-                setComments(data.comments || []);
-            }
-            setIsLoading(false);
-        };
-        loadSubmission();
-    }, [id]);
-
-    const handleAddComment = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newComment.trim() || !id) return;
-
-        const res = await addSubmissionComment(id, 'admin-id', newComment); // TODO: usar id real de admin en auth si se requiere
-        if (res.success) {
-            const comment: SubmissionComment = {
-                id: crypto.randomUUID(),
-                submission_id: id,
-                profile_id: 'admin-id',
-                comment: newComment,
-                created_at: new Date().toISOString(),
-                profile: { id: 'admin-id', first_name: 'Admin', last_name: '', email: '' } as any
-            };
-            setComments([...comments, comment]);
-            setNewComment('');
-        }
-    };
-
-    const handleStatusUpdate = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const nextStatus = e.target.value as SubmissionStatus;
-        if (!id) return;
-
-        setIsUpdatingStatus(true);
-        const res = await updateSubmissionStatus(id, nextStatus);
-        if (res.success) {
-            if (submission) setSubmission({ ...submission, status: nextStatus });
-        }
-        setIsUpdatingStatus(false);
-    };
-
-    if (isLoading) {
-        return <div className="p-8 text-center text-sm text-muted-foreground">Cargando revisión de trabajo...</div>;
-    }
+export default async function ReviewSubmissionPage({ 
+    params 
+}: { 
+    params: Promise<{ id: string }> 
+}) {
+    const { id } = await params
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    const submission = await getSubmissionById(id)
 
     if (!submission) {
-        return <div className="p-8 text-center text-sm text-destructive">No se pudo cargar el trabajo.</div>;
+        return (
+            <LayoutWrapper sectionTitle="Revisión de Trabajo">
+                <div className="flex flex-col items-center justify-center p-20 gap-4 border border-dashed rounded-2xl bg-slate-50/50 mt-6">
+                    <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                        <IconDatabaseOff size={24} />
+                    </div>
+                    <div className="flex flex-col items-center text-center gap-1">
+                        <h3 className="font-bold text-base text-slate-800">Trabajo no encontrado</h3>
+                        <p className="text-xs text-muted-foreground max-w-xs">La postulación que intentas revisar no existe, fue eliminada o no tienes permisos de acceso.</p>
+                    </div>
+                    <Link href="/admin/submissions">
+                        <Button variant="outline" className="rounded-xl h-9 text-xs border-slate-200 mt-2">
+                            Volver al listado
+                        </Button>
+                    </Link>
+                </div>
+            </LayoutWrapper>
+        )
     }
 
     return (
-        <div className="container mx-auto p-6 space-y-6 max-w-6xl text-sm">
-            <div className="flex justify-between items-center gap-4">
-                <div className="flex items-center gap-3">
-                    <Button variant="outline" size="icon" className="rounded-full h-8 w-8" asChild>
-                        <Link href="/admin/submissions">
-                            <ArrowLeft className="h-4 w-4" />
-                        </Link>
-                    </Button>
-                    <div>
-                        <h1 className="text-xl font-bold tracking-tight text-slate-800 leading-tight">Revisión de Trabajo</h1>
-                        <p className="text-xs text-muted-foreground mt-0.5">ID: {id}</p>
-                    </div>
-                </div>
-                <Badge className={`${statusColors[submission.status]} px-2.5 py-0.5 text-xs rounded-full`}>
-                    {submission.status}
-                </Badge>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-5">
-                    <div className="space-y-4">
-                        <div>
-                            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Título del Trabajo</span>
-                            <h2 className="text-base font-semibold text-slate-900 mt-0.5 leading-snug">{submission.title}</h2>
-                        </div>
-
-                        <hr className="border-slate-100" />
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Autor / Participante</span>
-                                <div className="flex items-center gap-2.5 mt-1.5 p-2 border rounded-lg bg-slate-50/50">
-                                    <Avatar className="h-8 w-8"><AvatarFallback className="text-xs bg-primary/10 text-primary"><User className="h-4 w-4" /></AvatarFallback></Avatar>
-                                    <div className="min-w-0">
-                                        <p className="font-medium text-slate-800 text-xs truncate">{submission.profile?.first_name} {submission.profile?.last_name}</p>
-                                        <p className="text-[10px] text-muted-foreground flex items-center gap-1 truncate"><Mail className="h-3 w-3" /> {submission.profile?.email}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Institución</span>
-                                <p className="text-xs font-medium text-slate-700 mt-1.5 p-2 border rounded-lg bg-slate-50/50">{submission.profile?.institution || 'Sin institución'}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider block mb-3">Documentos y Archivos Subidos</span>
-                    {submission.files && submission.files.length > 0 ? (
-                        <div className="grid gap-2.5">
-                            {submission.files.map((file) => (
-                                <div key={file.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-slate-50/50 transition-all">
-                                    <div className="flex items-center gap-3 min-w-0">
-                                        <div className="p-1.5 bg-primary/10 rounded-md text-primary"><FileText className="h-4 w-4" /></div>
-                                        <div className="min-w-0">
-                                            <p className="text-xs font-medium text-slate-800 truncate max-w-[280px]">{file.file_name}</p>
-                                            <Badge variant="outline" className="text-[9px] px-1 shadow-none text-muted-foreground mt-0.5 capitalize">{file.document_type || 'General'}</Badge>
-                                        </div>
-                                    </div>
-                                    <a href={file.file_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline shrink-0">
-                                        <Download className="h-3.5 w-3.5" /> Descargar
-                                    </a>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (<p className="text-xs text-muted-foreground border border-dashed rounded-lg p-4 text-center">No hay archivos cargados.</p>)}
-
-                </div>
-
-                <div className="lg:col-span-1 space-y-4">
-                    <Label htmlFor="status" className="text-[10px] font-bold text-muted-foreground uppercase block mb-1.5">Cambiar Estado Técnico</Label>
-                    <select id="status" value={submission.status} onChange={handleStatusUpdate} disabled={isUpdatingStatus} className="flex h-9 w-full rounded-md border bg-white px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-primary shadow-sm">
-                        <option value="draft">Borrador</option>
-                        <option value="submitted">Presentado / Enviado</option>
-                        <option value="under_review">En Revisión Comité</option>
-                        <option value="changes_requested">Cambios Solicitados</option>
-                        <option value="approved">Aprobado</option>
-                        <option value="rejected">Rechazado</option>
-                    </select>
-
-                    <div className="p-3 border-b bg-slate-50 flex items-center gap-1.5">
-                        <MessageSquare className="h-4 w-4 text-primary" />
-                        <h3 className="font-semibold text-xs text-slate-700">Hilo de Feedback Técnico</h3>
-                    </div>
-
-                    <div className="flex-1 overflow-y-auto p-3 space-y-3">
-                        {comments.map((comment) => (
-                            <div key={comment.id} className={`flex flex-col ${comment.profile_id === 'admin-id' ? 'items-end' : 'items-start'}`}>
-                                <div className={`p-2.5 rounded-lg max-w-[85%] text-xs border ${comment.profile_id === 'admin-id' ? 'bg-primary/10 border-primary/20 text-slate-800' : 'bg-slate-50 border-slate-200 text-slate-700'}`}>
-                                    <p className="font-bold text-[10px] opacity-70 mb-0.5">{comment.profile_id === 'admin-id' ? 'Tú (Administrador)' : comment.profile?.first_name}</p>
-                                    <p className="leading-normal">{comment.comment}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <form onSubmit={handleAddComment} className="p-3 border-t bg-slate-50/50 flex gap-1.5 items-center">
-                        <Input placeholder="Escribe un comentario..." className="text-xs h-8 flex-1 bg-white" value={newComment} onChange={(e) => setNewComment(e.target.value)} />
-                        <Button type="submit" size="icon" className="h-8 w-8 shrink-0"><Send className="h-3.5 w-3.5" /></Button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    );
+        <LayoutWrapper sectionTitle="Revisión de Trabajo">
+            <ReviewSubmissionClient submission={submission as any} adminId={user?.id || ''} />
+        </LayoutWrapper>
+    )
 }
+

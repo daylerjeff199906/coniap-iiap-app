@@ -47,7 +47,7 @@ export function ReviewSubmissionModal({ submission, isOpen, onClose, onStatusCha
             id: crypto.randomUUID(),
             submission_id: submission.id,
             profile_id: 'admin-id',
-            comment: newComment,
+            content: newComment,
             created_at: new Date().toISOString(),
             profile: { id: 'admin-id', first_name: 'Administrador', last_name: 'Principal', email: 'admin@iiap.gob.pe', created_at: '', bio: null, onboarding_completed: null, birth_date: null, dedication: null, areas_of_interest: null, expertise_areas: null, research_interests: null, phone: null, location: null, institution: null, updated_at: null, avatar_url: null, social_links: null, additional_emails: null, sex: null, auth_id: null }
         };
@@ -142,7 +142,7 @@ export function ReviewSubmissionModal({ submission, isOpen, onClose, onStatusCha
                                     <div key={comment.id} className={`flex flex-col ${comment.profile_id === 'admin-id' ? 'items-end' : 'items-start'}`}>
                                         <div className={`p-2 rounded-lg max-w-[85%] text-xs border ${comment.profile_id === 'admin-id' ? 'bg-primary/10' : 'bg-muted/60'}`}>
                                             <p className="font-semibold mb-1">{comment.profile?.first_name}</p>
-                                            <p>{comment.comment}</p>
+                                            <p>{comment.content}</p>
                                         </div>
                                     </div>
                                 ))}

@@ -8,6 +8,7 @@ import { revalidatePath } from 'next/cache';
 export async function getSubmissions(filters?: {
     eventId?: string;
     editionId?: string;
+    callId?: string;
     status?: string;
     q?: string;
 }) {
@@ -60,6 +61,9 @@ export async function getSubmissions(filters?: {
     if (filters?.editionId && filters.editionId !== 'all') {
         query = query.eq('edition_id', filters.editionId);
     }
+    if (filters?.callId && filters.callId !== 'all') {
+        query = query.eq('call_id', filters.callId);
+    }
     if (filters?.status && filters.status !== 'all') {
         query = query.eq('status', filters.status);
     }
@@ -98,7 +102,7 @@ export async function getSubmissionById(id: string) {
             ),
             comments:submission_comments (
                 id,
-                comment,
+                content,
                 created_at,
                 profile:profiles (
                     id,
@@ -113,6 +117,9 @@ export async function getSubmissionById(id: string) {
             editions (
                 name,
                 year
+            ),
+            event_calls (
+                title
             )
         `)
         .eq('id', id)
@@ -153,8 +160,8 @@ export async function addSubmissionComment(submissionId: string, profileId: stri
         .from('submission_comments')
         .insert({
             submission_id: submissionId,
-            profile_id: profileId,
-            comment,
+            author_id: profileId,
+            content: comment,
         });
 
     if (error) {

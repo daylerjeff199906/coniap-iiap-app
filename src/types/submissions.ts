@@ -43,7 +43,7 @@ export interface SubmissionComment {
   id: string;
   submission_id: string;
   profile_id: string;
-  comment: string;
+  content: string;
   created_at: string;
   profile?: IProfile;
 }

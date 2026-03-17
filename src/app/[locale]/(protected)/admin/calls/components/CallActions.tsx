@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { IconEdit, IconTrash } from '@tabler/icons-react'
+import { IconEdit, IconTrash, IconEye } from '@tabler/icons-react'
 import { useRouter, Link } from '@/i18n/routing'
 import { deleteCall } from '../actions'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -10,9 +10,9 @@ import { Input } from '@/components/ui/input'
 import { toast } from 'react-toastify'
 
 interface CallActionsProps {
-    callId: string
-    callTitle: string
-    eventId?: string
+    callId: string;
+    callTitle: string;
+    eventId?: string;
 }
 
 export function CallActions({ callId, callTitle, eventId }: CallActionsProps) {
@@ -41,6 +41,17 @@ export function CallActions({ callId, callTitle, eventId }: CallActionsProps) {
         <>
             <div className="flex items-center justify-center gap-1">
                 <Link href={eventId ? `/admin/events/${eventId}/call/${callId}` : `/admin/calls/${callId}`}>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-lg text-slate-500 hover:text-[#0064e0] hover:bg-blue-50 transition-colors"
+                        title="Ver detalles"
+                    >
+                        <IconEye className="h-[1.1rem] w-[1.1rem]" />
+                    </Button>
+                </Link>
+
+                <Link href={eventId ? `/admin/events/${eventId}/call/${callId}/edit` : `/admin/calls/${callId}/edit`}>
                     <Button
                         variant="ghost"
                         size="icon"
