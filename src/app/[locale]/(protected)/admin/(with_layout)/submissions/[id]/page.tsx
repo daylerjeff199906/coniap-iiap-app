@@ -4,6 +4,8 @@ import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
 import { IconDatabaseOff } from '@tabler/icons-react'
+import { createClient } from '@/utils/supabase/supabase/server'
+import { cookies } from 'next/headers'
 
 export const metadata = {
     title: 'Revisión de Trabajo - Panel',
@@ -15,6 +17,10 @@ export default async function ReviewSubmissionPage({
     params: Promise<{ id: string }> 
 }) {
     const { id } = await params
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+    const { data: { user } } = await supabase.auth.getUser()
+    
     const submission = await getSubmissionById(id)
 
     if (!submission) {
@@ -40,7 +46,8 @@ export default async function ReviewSubmissionPage({
 
     return (
         <LayoutWrapper sectionTitle="Revisión de Trabajo">
-            <ReviewSubmissionClient submission={submission as any} />
+            <ReviewSubmissionClient submission={submission as any} adminId={user?.id || ''} />
         </LayoutWrapper>
     )
 }
+

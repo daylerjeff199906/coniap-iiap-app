@@ -1,12 +1,19 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Settings, Eye, Clock, Calendar, FileText, CheckCircle2, AlertTriangle, XCircle, ArrowRight } from 'lucide-react';
+import { Settings, Eye, Clock, Calendar, FileText, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
 import { EventSubmission, SubmissionStatus } from '@/types/submissions';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 
 interface SubmissionsDashboardProps {
     submissions: EventSubmission[];
@@ -82,52 +89,78 @@ export function SubmissionsDashboard({ submissions, onReviewClick }: Submissions
             </div>
 
             {filteredSubmissions.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredSubmissions.map((submission) => {
-                        const config = statusConfig[submission.status];
+                <div className="rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden">
+                    <Table>
+                        <TableHeader className="bg-muted/50">
+                            <TableRow>
+                                <TableHead className="pl-6 h-12">Título del Trabajo</TableHead>
+                                <TableHead className="h-12">Autor</TableHead>
+                                <TableHead className="h-12">Estado</TableHead>
+                                <TableHead className="h-12">Fecha</TableHead>
+                                <TableHead className="text-center w-[120px] h-12 pr-6">Acciones</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {filteredSubmissions.map((submission) => {
+                                const config = statusConfig[submission.status];
 
-                        return (
-                            <Card key={submission.id} className="shadow hover:shadow-md transition-all border-l-4" style={{ borderColor: config.color.includes('bg-') ? 'currentColor' : undefined }}>
-                                <CardHeader className="p-4 pb-2">
-                                    <div className="flex justify-between items-start">
-                                        <Badge className={`${config.color} text-[10px] px-2 py-0.5 rounded-full`}>
-                                            {config.label}
-                                        </Badge>
-                                        <div className="flex items-center text-xs text-muted-foreground gap-1">
-                                            <Calendar className="h-3 w-3" />
-                                            {new Date(submission.created_at).toLocaleDateString()}
-                                        </div>
-                                    </div>
-                                    <CardTitle className="text-sm font-semibold mt-2 line-clamp-2">
-                                        {submission.title}
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="p-4 pt-2">
-                                    <div className="flex items-center justify-between mt-2">
-                                        <div className="flex items-center gap-2">
-                                            <Avatar className="h-6 w-6">
-                                                <AvatarFallback className="text-xs bg-primary/10 text-primary">
-                                                    {submission.profile?.first_name?.[0]}{submission.profile?.last_name?.[0]}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <p className="text-xs font-medium text-muted-foreground">
-                                                {submission.profile?.first_name} {submission.profile?.last_name}
-                                            </p>
-                                        </div>
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            onClick={() => onReviewClick(submission)}
-                                            className="h-8 text-xs gap-1 group"
-                                        >
-                                            Revisar
-                                            <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                                        </Button>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        );
-                    })}
+                                return (
+                                    <TableRow 
+                                        key={submission.id} 
+                                        className="hover:bg-muted/30 cursor-pointer"
+                                        onClick={() => onReviewClick(submission)}
+                                    >
+                                        <TableCell className="pl-6 py-4">
+                                            <div className="flex flex-col">
+                                                <span className="font-semibold text-[15px] leading-tight mb-1 group-hover:text-blue-600 transition-colors line-clamp-2 max-w-[400px]">
+                                                    {submission.title}
+                                                </span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="py-4">
+                                            <div className="flex items-center gap-2">
+                                                <Avatar className="h-6 w-6">
+                                                    <AvatarFallback className="text-xs bg-primary/10 text-primary">
+                                                        {submission.profile?.first_name?.[0]}{submission.profile?.last_name?.[0]}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <p className="text-xs font-medium text-muted-foreground">
+                                                    {submission.profile?.first_name} {submission.profile?.last_name}
+                                                </p>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="py-4">
+                                            <Badge className={`${config.color} text-[10px] px-2 py-0.5 rounded-full inline-flex items-center gap-1`}>
+                                                {config.label}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell className="py-4 text-xs text-muted-foreground">
+                                            <div className="flex items-center gap-1">
+                                                <Calendar className="h-3 w-3" />
+                                                {new Date(submission.created_at).toLocaleDateString()}
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-center py-4 pr-6">
+                                            <div 
+                                                className="flex items-center justify-center gap-1"
+                                                onClick={(e) => e.stopPropagation()} // Prevent row click
+                                            >
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-9 w-9 rounded-lg text-slate-500 hover:text-[#0064e0] hover:bg-blue-50 transition-colors"
+                                                    title="Revisar"
+                                                    onClick={() => onReviewClick(submission)}
+                                                >
+                                                    <Eye className="h-[1.1rem] w-[1.1rem]" />
+                                                </Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center p-12 border border-dashed rounded-lg bg-muted/20">
@@ -138,3 +171,4 @@ export function SubmissionsDashboard({ submissions, onReviewClick }: Submissions
         </div>
     );
 }
+

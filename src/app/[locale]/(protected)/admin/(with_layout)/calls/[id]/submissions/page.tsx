@@ -1,11 +1,11 @@
 import { getSubmissions } from '@/app/[locale]/(protected)/admin/(with_layout)/submissions/actions'
-import { ParticipantsTab } from '@/app/[locale]/(protected)/admin/(empty_layout)/events/[id]/call/[callId]/(details)/components/ParticipantsTab'
+import { SubmissionsTab } from '@/app/[locale]/(protected)/admin/(empty_layout)/events/[id]/call/[callId]/(details)/components/SubmissionsTab'
 
 export const metadata = {
-    title: 'Participantes - Convocatoria',
+    title: 'Resúmenes y Archivos - Convocatoria',
 }
 
-export default async function IndexCallDetailsPage({
+export default async function SubmissionsPage({
     params
 }: {
     params: Promise<{ id: string; locale: string }>
@@ -15,7 +15,7 @@ export default async function IndexCallDetailsPage({
 
     return (
         <div className="w-full">
-            <ParticipantsTab submissions={submissions} />
+            <SubmissionsTab submissions={submissions} />
         </div>
     )
 }

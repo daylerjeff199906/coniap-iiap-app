@@ -23,9 +23,10 @@ const statusColors: Record<SubmissionStatus, string> = {
 
 interface ReviewSubmissionClientProps {
     submission: EventSubmission;
+    adminId: string;
 }
 
-export function ReviewSubmissionClient({ submission: initialSubmission }: ReviewSubmissionClientProps) {
+export function ReviewSubmissionClient({ submission: initialSubmission, adminId }: ReviewSubmissionClientProps) {
     const [submission, setSubmission] = React.useState<EventSubmission | any>(initialSubmission);
     const [comments, setComments] = React.useState<SubmissionComment[]>(initialSubmission.comments || []);
     const [newComment, setNewComment] = React.useState('');
@@ -35,15 +36,15 @@ export function ReviewSubmissionClient({ submission: initialSubmission }: Review
         e.preventDefault();
         if (!newComment.trim()) return;
 
-        const res = await addSubmissionComment(submission.id, 'admin-id', newComment); // TODO: usar id real de admin en auth si se requiere
+        const res = await addSubmissionComment(submission.id, adminId, newComment);
         if (res.success) {
             const comment: SubmissionComment = {
                 id: crypto.randomUUID(),
                 submission_id: submission.id,
-                profile_id: 'admin-id',
+                profile_id: adminId,
                 content: newComment,
                 created_at: new Date().toISOString(),
-                profile: { id: 'admin-id', first_name: 'Admin', last_name: '', email: '' } as any
+                profile: { id: adminId, first_name: 'Tú', last_name: '(Admin)', email: '' } as any
             };
             setComments([...comments, comment]);
             setNewComment('');
@@ -173,9 +174,9 @@ export function ReviewSubmissionClient({ submission: initialSubmission }: Review
 
                     <div className="flex-1 overflow-y-auto p-3 space-y-3 max-h-[400px]">
                         {comments.map((comment) => (
-                            <div key={comment.id} className={`flex flex-col ${comment.profile_id === 'admin-id' ? 'items-end' : 'items-start'}`}>
-                                <div className={`p-2.5 rounded-lg max-w-[85%] text-xs border ${comment.profile_id === 'admin-id' ? 'bg-primary/10 border-primary/20 text-slate-800' : 'bg-slate-50 border-slate-200 text-slate-700'}`}>
-                                    <p className="font-bold text-[10px] opacity-70 mb-0.5">{comment.profile_id === 'admin-id' ? 'Tú (Administrador)' : comment.profile?.first_name}</p>
+                            <div key={comment.id} className={`flex flex-col ${comment.profile_id === adminId ? 'items-end' : 'items-start'}`}>
+                                <div className={`p-2.5 rounded-lg max-w-[85%] text-xs border ${comment.profile_id === adminId ? 'bg-primary/10 border-primary/20 text-slate-800' : 'bg-slate-50 border-slate-200 text-slate-700'}`}>
+                                    <p className="font-bold text-[10px] opacity-70 mb-0.5">{comment.profile_id === adminId ? 'Tú (Administrador)' : comment.profile?.first_name}</p>
                                     <p className="leading-normal">{comment.content as any || (comment as any).comment}</p>
                                 </div>
                             </div>
