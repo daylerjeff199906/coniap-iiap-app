@@ -57,9 +57,16 @@ export function DirectUploadForm() {
         if (!searchQuery) return;
         setIsSearching(true);
         const results = await searchUsersForDirectUpload(searchQuery, selectedEventId, selectedEditionId);
-        setSearchResults((results as UserProfile[]) || []);
+        
+        // Filtrar duplicados por ID
+        const uniqueResults = (results as UserProfile[]).filter(
+            (user, index, self) => index === self.findIndex((u) => u.id === user.id)
+        );
+
+        setSearchResults(uniqueResults || []);
         setIsSearching(false);
     };
+
 
     const handleSelectUser = (user: UserProfile) => {
         setSelectedUser(user);
@@ -74,7 +81,22 @@ export function DirectUploadForm() {
         loadEvents();
     }, []);
 
+    // Debounce para búsqueda automática
     React.useEffect(() => {
+        if (!searchQuery.trim() || !selectedEventId || selectedUser) {
+            setSearchResults([]);
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            handleSearchUser();
+        }, 400); // 400ms de retraso
+
+        return () => clearTimeout(timer);
+    }, [searchQuery, selectedEventId, selectedUser]);
+
+    React.useEffect(() => {
+
         if (!selectedEventId) {
             setEditions([]);
             setSelectedEditionId('');
@@ -178,21 +200,22 @@ export function DirectUploadForm() {
                 <div>
                     <h2 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Paso 2: Buscar Participante</h2>
                     <div className="space-y-3">
-                        <div className="flex gap-2">
-                            <div className="relative flex-1">
-                                <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
-                                <Input
-                                    placeholder="Buscar por Nombre o Email..."
-                                    className="pl-8 h-8 text-xs bg-white"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    disabled={!selectedEventId || selectedUser !== null}
-                                />
-                            </div>
-                            <Button size="sm" className="h-8 text-xs" onClick={handleSearchUser} disabled={!selectedEventId || !searchQuery || isSearching || selectedUser !== null}>
-                                {isSearching ? '...' : 'Buscar'}
-                            </Button>
+                        <div className="relative">
+                            <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400/80" />
+                            <Input
+                                placeholder="Escribe para buscar participante..."
+                                className="pl-8 h-8 text-[11px] bg-white border-slate-200 placeholder:text-slate-400 font-normal shadow-none h-8"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                disabled={!selectedEventId || selectedUser !== null}
+                            />
+                            {isSearching && (
+                                <div className="absolute right-2.5 top-2.5">
+                                    <div className="animate-spin h-3 w-3 border-2 border-primary border-t-transparent rounded-full" />
+                                </div>
+                            )}
                         </div>
+
 
                         {!selectedEventId && (
                             <p className="text-[10px] text-amber-600 font-medium bg-amber-50 p-1.5 rounded-md border border-amber-200">
@@ -201,25 +224,30 @@ export function DirectUploadForm() {
                         )}
 
                         {searchResults.length > 0 && (
-                            <div className="border rounded-md bg-white overflow-hidden max-h-48 overflow-y-auto mt-2">
-                                <Table className="text-[11px]">
-                                    <TableHeader className="bg-slate-50">
-                                        <TableRow className="h-7">
-                                            <TableHead className="px-2 h-7 font-bold">Nombre</TableHead>
-                                            <TableHead className="px-2 h-7 font-bold">Correo</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {searchResults.map((user) => (
-                                            <TableRow key={user.id} className="cursor-pointer h-8 hover:bg-slate-50" onClick={() => handleSelectUser(user)}>
-                                                <TableCell className="px-2 py-1 font-medium text-slate-800">{user.first_name} {user.last_name}</TableCell>
-                                                <TableCell className="px-2 py-1 text-muted-foreground text-[10px]">{user.email}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                            <div className="border border-slate-200 rounded-lg bg-white overflow-hidden mt-2 shadow-sm">
+                                <div className="grid grid-cols-2 bg-slate-100 text-[10px] uppercase font-bold text-slate-500 border-b border-slate-200 px-3 py-1.5">
+                                    <div>Nombre</div>
+                                    <div>Correo</div>
+                                </div>
+                                <div className="divide-y divide-slate-100 max-h-48 overflow-y-auto">
+                                    {searchResults.map((user) => (
+                                        <div 
+                                            key={user.id} 
+                                            className="grid grid-cols-2 items-center px-3 py-2 text-[11px] cursor-pointer hover:bg-slate-50 transition-colors"
+                                            onClick={() => handleSelectUser(user)}
+                                        >
+                                            <div className="font-semibold text-slate-800 truncate pr-2">
+                                                {user.first_name} {user.last_name}
+                                            </div>
+                                            <div className="text-muted-foreground truncate text-[10px]">
+                                                {user.email}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
+
 
                         {selectedUser && (
                             <div className="flex items-center justify-between p-2 bg-primary/5 border border-primary/10 rounded-lg mt-1">

@@ -302,7 +302,7 @@ export async function insertDirectSubmission(data: {
         .insert({
             profile_id: data.userId,
             title: data.title,
-            main_event_id: data.mainEventId || null,
+            main_event_id: data.editionId ? null : (data.mainEventId || null),
             edition_id: data.editionId || null,
             call_id: data.callId || null,
             status: 'submitted',
@@ -311,10 +311,12 @@ export async function insertDirectSubmission(data: {
         .select('id')
         .single();
 
+
     if (error) {
         console.error('Error insertDirectSubmission:', error);
         return { error: error.message };
     }
+
 
     // Si está ligado a una convocatoria, registrar/actualizar la solicitud (call_applications)
     if (data.callId) {
