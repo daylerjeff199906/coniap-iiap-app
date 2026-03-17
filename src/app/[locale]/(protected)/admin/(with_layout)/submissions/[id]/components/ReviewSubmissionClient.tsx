@@ -250,7 +250,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                 </span>
                                             </div>
                                             {item.data.justification && (
-                                                <div className="mt-1.5 p-3 border border-slate-100 bg-slate-50/50 rounded-md text-xs text-slate-700 border-l-4 border-l-slate-400 whitespace-pre-wrap">
+                                                <div className="mt-1.5 p-3 border border-slate-100 bg-slate-50/50 rounded-sm text-xs text-slate-700 border-l-4 border-l-slate-200 whitespace-pre-wrap">
                                                     <p className="font-semibold text-[10px] text-slate-500 mb-1">Justificación/Comentario:</p>
                                                     {item.data.justification}
                                                 </div>
