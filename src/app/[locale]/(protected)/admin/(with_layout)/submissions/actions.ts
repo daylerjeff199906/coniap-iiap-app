@@ -316,6 +316,32 @@ export async function insertDirectSubmission(data: {
         return { error: error.message };
     }
 
+    // Si está ligado a una convocatoria, registrar/actualizar la solicitud (call_applications)
+    if (data.callId) {
+        const { data: existingApp } = await supabase
+            .from('call_applications')
+            .select('id')
+            .eq('call_id', data.callId)
+            .eq('profile_id', data.userId)
+            .maybeSingle();
+
+        if (!existingApp) {
+            await supabase
+                .from('call_applications')
+                .insert({
+                    call_id: data.callId,
+                    profile_id: data.userId,
+                    status: 'submitted' as any, // 'submitted' o equivalente en application_status
+                    submitted_at: new Date().toISOString()
+                });
+        } else {
+            await supabase
+                .from('call_applications')
+                .update({ status: 'submitted' as any, updated_at: new Date().toISOString(), submitted_at: new Date().toISOString() })
+                .eq('id', existingApp.id);
+        }
+    }
+
     if (data.fileUrl) {
         const { error: fileError } = await supabase
             .from('submission_files')
@@ -334,6 +360,67 @@ export async function insertDirectSubmission(data: {
     revalidatePath('/admin/submissions');
     return { success: true, id: res.id };
 }
+
+export async function searchUsersForDirectUpload(queryText: string, eventId?: string, editionId?: string) {
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+
+    // Si no hay evento ni edición seleccionados, buscar todos los perfiles en general
+    if ((!eventId || eventId === 'none') && (!editionId || editionId === 'none')) {
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('id, first_name, last_name, email')
+            .or(`first_name.ilike.%${queryText}%,last_name.ilike.%${queryText}%,email.ilike.%${queryText}%`)
+            .limit(10);
+
+        if (error) {
+            console.error('Error searching profiles:', error);
+            return [];
+        }
+        return data || [];
+    }
+
+    // Buscar entre los participantes del evento/edición
+    let query = supabase
+        .from('event_participants')
+        .select(`
+            profile_id,
+            profiles:profile_id!inner (
+                id,
+                first_name,
+                last_name,
+                email
+            )
+        `)
+        .limit(10);
+
+    if (editionId && editionId !== 'none') {
+        query = query.eq('edition_id', editionId);
+    } else if (eventId && eventId !== 'none') {
+        query = query.eq('main_event_id', eventId);
+    }
+
+    if (queryText) {
+        const q = `%${queryText}%`;
+        query = query.or(`first_name.ilike.${q},last_name.ilike.${q},email.ilike.${q}`, { foreignTable: 'profiles' });
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+        console.error('Error searching event participants:', error);
+        return [];
+    }
+
+    // Transformar el resultado para que coincida con la estructura de un Perfil
+    return (data as any[]).map((item) => ({
+        id: item.profiles.id,
+        first_name: item.profiles.first_name,
+        last_name: item.profiles.last_name,
+        email: item.profiles.email
+    }));
+}
+
 
 export async function getCallsList(eventId?: string, editionId?: string) {
     const cookieStore = await cookies();

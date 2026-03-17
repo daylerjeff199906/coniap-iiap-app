@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-import { searchProfiles, insertDirectSubmission } from '../actions';
+import { searchUsersForDirectUpload, insertDirectSubmission } from '../actions';
 import { toast } from 'react-toastify';
 
 const uploadSchema = z.object({
@@ -27,6 +27,14 @@ interface AdminDirectUploadProps {
     callId?: string;
     onSuccess?: () => void;
 }
+
+interface UserProfile {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+}
+
 import {
     Select,
     SelectContent,
@@ -38,7 +46,7 @@ import {
 export function AdminDirectUpload({ mainEventId, editionId, callId, onSuccess }: AdminDirectUploadProps) {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [isSearching, setIsSearching] = React.useState(false);
-    const [searchResults, setSearchResults] = React.useState<any[]>([]);
+    const [searchResults, setSearchResults] = React.useState<UserProfile[]>([]);
     const [selectedUser, setSelectedUser] = React.useState<{ id: string, name: string, email: string } | null>(null);
 
     const [fileToUpload, setFileToUpload] = React.useState<File | null>(null);
@@ -55,16 +63,18 @@ export function AdminDirectUpload({ mainEventId, editionId, callId, onSuccess }:
     const handleSearchUser = async () => {
         if (!searchQuery) return;
         setIsSearching(true);
-        const results = await searchProfiles(searchQuery);
-        setSearchResults(results || []);
+        const results = await searchUsersForDirectUpload(searchQuery, mainEventId, editionId);
+        setSearchResults((results as UserProfile[]) || []);
         setIsSearching(false);
     };
 
-    const handleSelectUser = (user: any) => {
+
+    const handleSelectUser = (user: UserProfile) => {
         setSelectedUser({ id: user.id, name: `${user.first_name} ${user.last_name}`, email: user.email });
         setValue('userId', user.id);
         setSearchResults([]);
     };
+
 
     const onSubmit = async (data: UploadFormValues) => {
         setIsPending(true);
@@ -74,7 +84,7 @@ export function AdminDirectUpload({ mainEventId, editionId, callId, onSuccess }:
             if (fileToUpload) {
                 const formData = new FormData();
                 formData.append('file', fileToUpload);
-                formData.append('folder', 'submissions');
+                formData.append('folder', 'applications');
 
                 const response = await fetch('/api/r2/upload', {
                     method: 'POST',
@@ -99,16 +109,19 @@ export function AdminDirectUpload({ mainEventId, editionId, callId, onSuccess }:
             });
 
             if ('success' in res && res.success) {
+                const successRes = res as { success: boolean; id: string };
                 setSimulationLog([
                     "✅ ¡Subida manual registrada con éxito!",
                     `🎉 El trabajo de '${selectedUser?.name || 'Usuario'}' ha sido insertado correctamente.`,
-                    `ID del Trabajo: ${(res as any).id}`,
+                    `ID del Trabajo: ${successRes.id}`,
                     fileUrl ? `📄 Archivo cargado: ${fileToUpload?.name}` : "⚠️ Sin archivo adjunto"
                 ]);
                 if (onSuccess) onSuccess();
             } else {
-                toast.error(('error' in res ? res.error : '') || 'Error al registrar el envío');
+                const errorRes = res as { error?: string };
+                toast.error(errorRes.error || 'Error al registrar el envío');
             }
+
         } catch (error: any) {
             console.error(error);
             toast.error(error.message || 'Error en la subida');
