@@ -280,8 +280,8 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                 <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center rounded-t-lg">
                                                     <div className="flex items-center gap-2">
                                                         <span className="font-semibold text-slate-800 text-xs">
-                                                            {(item.data.author?.first_name === 'Tú' || item.data.profile?.first_name === 'Tú') 
-                                                                ? 'Tú (Admin)' 
+                                                            {(item.data.author?.first_name === 'Tú' || item.data.profile?.first_name === 'Tú')
+                                                                ? 'Tú (Admin)'
                                                                 : `${item.data.author?.first_name || item.data.profile?.first_name || ''} ${item.data.author?.last_name || item.data.profile?.last_name || ''}`} {isMe && (item.data.author?.first_name !== 'Tú' && item.data.profile?.first_name !== 'Tú') && '(Tú)'}
                                                         </span>
                                                         {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4 hover:bg-slate-200/80 cursor-default transition-all">Admin</Badge>}
@@ -310,8 +310,8 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                             <div className="flex-1 ml-6 pt-2">
                                                 <div className="text-xs text-slate-600 flex flex-wrap items-center gap-1.5">
                                                     <span className="font-semibold text-slate-800">
-                                                        {(item.data.profile?.first_name === 'Tú') 
-                                                            ? 'Tú (Admin)' 
+                                                        {(item.data.profile?.first_name === 'Tú')
+                                                            ? 'Tú (Admin)'
                                                             : `${item.data.profile?.first_name || 'Sistema'} ${item.data.profile?.last_name || ''}`} {isMe && item.data.profile?.first_name !== 'Tú' && '(Tú)'}
                                                     </span>
                                                     {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4 hover:bg-slate-200/80 cursor-default transition-all">Admin</Badge>}
