@@ -104,11 +104,20 @@ export async function getSubmissionById(id: string) {
                 id,
                 content,
                 created_at,
-                profile:profiles (
+                file_id,
+                file:submission_files!fk_comment_file (
+                    file_name
+                ),
+                author:profiles!fk_comment_author (
                     id,
                     first_name,
                     last_name,
-                    email
+                    email,
+                    user_roles (
+                        roles:role_id (
+                            name
+                        )
+                    )
                 )
             ),
             history:submission_history (
@@ -122,7 +131,12 @@ export async function getSubmissionById(id: string) {
                     first_name,
                     last_name,
                     email,
-                    avatar_url
+                    avatar_url,
+                    user_roles (
+                        roles:role_id (
+                            name
+                        )
+                    )
                 )
             ),
             main_events (
@@ -186,7 +200,7 @@ export async function reviewSubmission(id: string, status: SubmissionStatus, jus
     return { success: true };
 }
 
-export async function addSubmissionComment(submissionId: string, profileId: string, comment: string) {
+export async function addSubmissionComment(submissionId: string, profileId: string, comment: string, fileId?: string) {
     const cookieStore = await cookies();
     const supabase = createClient(cookieStore);
 
@@ -196,6 +210,7 @@ export async function addSubmissionComment(submissionId: string, profileId: stri
             submission_id: submissionId,
             author_id: profileId,
             content: comment,
+            file_id: fileId || null
         });
 
     if (error) {

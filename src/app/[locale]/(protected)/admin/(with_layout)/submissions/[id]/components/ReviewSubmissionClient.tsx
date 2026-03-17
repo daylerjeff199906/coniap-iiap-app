@@ -76,6 +76,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
     const [justification, setJustification] = React.useState('');
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [selectedAction, setSelectedAction] = React.useState<'comment' | 'approve' | 'request_changes' | 'reject'>('comment');
+    const [selectedFileId, setSelectedFileId] = React.useState<string>('');
 
     // Merge comments and history for Timeline
     const timeline = React.useMemo(() => {
@@ -112,17 +113,31 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
         setIsSubmitting(true);
         try {
             if (action === 'comment') {
-                const res = await addSubmissionComment(submission.id, adminId, text);
+                const res = await addSubmissionComment(submission.id, adminId, text, selectedFileId || undefined);
                 if (res.success) {
+                    const mappedFile = selectedFileId && submission.files 
+                        ? { file_name: submission.files.find(f => f.id === selectedFileId)?.file_name || '' } 
+                        : undefined;
+
                     setComments(prev => [...prev, {
                         id: crypto.randomUUID(),
                         submission_id: submission.id,
                         profile_id: adminId,
                         content: text,
                         created_at: new Date().toISOString(),
-                        profile: initialSubmission.profile
+                        file_id: selectedFileId || null,
+                        file: mappedFile,
+                        author: {
+                            id: adminId,
+                            first_name: 'Tú',
+                            last_name: '(Admin)',
+                            email: '',
+                            avatar_url: null,
+                            user_roles: [{ roles: { name: 'Admin' } }]
+                        } as any
                     }]);
                     setJustification('');
+                    setSelectedFileId('');
                     toast.success('Comentario agregado');
                 } else {
                     toast.error(res.error || 'Error al agregar comentario');
@@ -145,7 +160,13 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                         new_status: nextStatus as any,
                         justification: text || null,
                         created_at: new Date().toISOString(),
-                        profile: { id: adminId, first_name: 'Tú', last_name: '(Admin)', email: '' } as any
+                        profile: { 
+                            id: adminId, 
+                            first_name: 'Tú', 
+                            last_name: '(Admin)', 
+                            email: '',
+                            user_roles: [{ roles: { name: 'Admin' } }]
+                        } as any
                     }]);
                     setJustification('');
                     toast.success(`Estado actualizado a ${statusConfig[nextStatus].label}`);
@@ -201,7 +222,13 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
 
                     {/* Timeline Frame */}
                     <div className="space-y-6 relative before:absolute before:inset-0 before:left-2 before:border-l-1 before:border-slate-200 before:pointer-events-none">
-                        {timeline.map((item) => (
+                        {timeline.map((item) => {
+                            const roles = item.type === 'comment'
+                                ? item.data.author?.user_roles?.map((r: any) => r.roles?.name) || []
+                                : item.data.profile?.user_roles?.map((r: any) => r.roles?.name) || [];
+                            const isAdmin = roles.some((r: any) => r?.toLowerCase().includes('admin'));
+
+                            return (
                             <div key={item.id} className="relative flex gap-4 items-start">
                                 {item.type === 'comment' ? (
                                     <>
@@ -212,9 +239,15 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                             <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center rounded-t-lg">
                                                 <div className="flex items-center gap-2">
                                                     <span className="font-semibold text-slate-800 text-xs">
-                                                        {item.data.profile?.first_name} {item.data.profile?.last_name}
+                                                        {item.data.author?.first_name || item.data.profile?.first_name} {item.data.author?.last_name || item.data.profile?.last_name}
                                                     </span>
+                                                    {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
                                                     <span className="text-slate-500 font-normal text-[11px]">comentó</span>
+                                                    {item.data.file?.file_name && (
+                                                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-0.5 ml-1 font-medium shadow-none">
+                                                            <FileText className="h-2.5 w-2.5" /> Sobre: {item.data.file.file_name}
+                                                        </Badge>
+                                                    )}
                                                 </div>
                                                 <span className="text-[11px] text-slate-400 flex items-center gap-1">
                                                     <Clock className="h-3 w-3" />
@@ -233,7 +266,10 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                         </div>
                                         <div className="flex-1 ml-6 pt-2">
                                             <div className="text-xs text-slate-600 flex flex-wrap items-center gap-1.5">
-                                                <span className="font-semibold text-slate-800">{item.data.profile?.first_name || 'Sistema'} {item.data.profile?.last_name || ''}</span>
+                                                <span className="font-semibold text-slate-800">
+                                                    {item.data.profile?.first_name || 'Sistema'} {item.data.profile?.last_name || ''}
+                                                </span>
+                                                {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
                                                 <span>{item.data.old_status ? 'cambió el estado de' : 'creó el trabajo con estado'}</span>
                                                 {item.data.old_status && (
                                                     <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${statusConfig[item.data.old_status].color} ${statusConfig[item.data.old_status].border} border-slate-200 shadow-none font-medium`}>
@@ -259,7 +295,8 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                     </>
                                 )}
                             </div>
-                        ))}
+                            );
+                        })}
 
                         {/* Action Frame connected inside the Timeline flow alignment frame grid */}
                         <div className="relative flex gap-4 items-start pt-1">
@@ -267,8 +304,21 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                 <Avatar className="h-5 w-5"><AvatarFallback className="bg-slate-100"><User className="h-3 w-3 text-slate-500" /></AvatarFallback></Avatar>
                             </div>
                             <div className="flex-1 ml-6 bg-white border border-slate-200 rounded-lg shadow-sm p-4 space-y-4">
-                                <div className="flex items-center gap-2 pb-1 border-b border-slate-100">
+                                <div className="flex items-center justify-between pb-1 border-b border-slate-100">
                                     <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Agregar Revisión o Comentario</span>
+                                    {submission.files && submission.files.length > 0 && selectedAction === 'comment' && (
+                                        <select 
+                                            className="text-[11px] h-7 bg-slate-50 border rounded-md px-2 focus:outline-none focus:ring-1 focus:ring-slate-300 max-w-[150px] truncate"
+                                            value={selectedFileId}
+                                            onChange={(e) => setSelectedFileId(e.target.value)}
+                                            disabled={isSubmitting}
+                                        >
+                                            <option value="">Sobre: General</option>
+                                            {submission.files.map((file) => (
+                                                <option key={file.id} value={file.id}>📄 {file.file_name}</option>
+                                            ))}
+                                        </select>
+                                    )}
                                 </div>
 
                                 <Textarea
