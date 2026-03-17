@@ -353,7 +353,21 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                         })}
 
                         {/* Connected Action Frame connected inside the Timeline flow alignment frame grid */}
-                        {submission.status === 'approved' || submission.status === 'rejected' ? (
+                        {submission.status === 'draft' ? (
+                            <div className="relative flex gap-4 items-start pt-1">
+                                <div className="absolute left-2 w-6 h-6 bg-white border border-slate-300 rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1.5 flex-none">
+                                    <Clock className="h-3 w-3 text-slate-400" />
+                                </div>
+                                <div className="flex-1 ml-6 flex flex-col items-center justify-center p-6 border border-dashed border-slate-200 rounded-lg bg-slate-50/30 space-y-2">
+                                    <Badge className="bg-slate-100 text-slate-600 border-slate-200 border px-3 py-1 text-xs rounded-full shadow-none font-medium">
+                                        Trabajo en Borrador
+                                    </Badge>
+                                    <p className="text-xs text-muted-foreground text-center max-w-xs">
+                                        El participante aún no ha enviado este trabajo. Las acciones de revisión y los comentarios estarán disponibles una vez que sea presentado.
+                                    </p>
+                                </div>
+                            </div>
+                        ) : submission.status === 'approved' || submission.status === 'rejected' ? (
                             <div className="relative flex gap-4 items-start pt-1">
                                 <div className="absolute left-2 w-6 h-6 bg-white border border-slate-300 rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1.5 flex-none">
                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
