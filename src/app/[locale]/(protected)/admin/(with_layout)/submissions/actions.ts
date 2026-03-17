@@ -111,6 +111,20 @@ export async function getSubmissionById(id: string) {
                     email
                 )
             ),
+            history:submission_history (
+                id,
+                old_status,
+                new_status,
+                justification,
+                created_at,
+                profile:profiles!fk_history_profile (
+                    id,
+                    first_name,
+                    last_name,
+                    email,
+                    avatar_url
+                )
+            ),
             main_events (
                 name
             ),
@@ -145,6 +159,26 @@ export async function updateSubmissionStatus(id: string, status: SubmissionStatu
     if (error) {
         console.error('Error updating submission status:', error);
         return { error: 'No se pudo actualizar el estado.' };
+    }
+
+    revalidatePath(`/admin/submissions/${id}`);
+    revalidatePath(`/admin/submissions`);
+    return { success: true };
+}
+
+export async function reviewSubmission(id: string, status: SubmissionStatus, justification?: string) {
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+
+    const { error } = await supabase.rpc('review_submission', {
+        p_submission_id: id,
+        p_new_status: status,
+        p_justification: justification || null
+    });
+
+    if (error) {
+        console.error('Error reviewing submission:', error);
+        return { error: 'No se pudo actualizar el estado del trabajo.' };
     }
 
     revalidatePath(`/admin/submissions/${id}`);
