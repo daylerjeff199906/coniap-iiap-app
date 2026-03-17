@@ -115,8 +115,8 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
             if (action === 'comment') {
                 const res = await addSubmissionComment(submission.id, adminId, text, selectedFileId || undefined);
                 if (res.success) {
-                    const mappedFile = selectedFileId && submission.files 
-                        ? { file_name: submission.files.find(f => f.id === selectedFileId)?.file_name || '' } 
+                    const mappedFile = selectedFileId && submission.files
+                        ? { file_name: submission.files.find(f => f.id === selectedFileId)?.file_name || '' }
                         : undefined;
 
                     setComments(prev => [...prev, {
@@ -160,10 +160,10 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                         new_status: nextStatus as any,
                         justification: text || null,
                         created_at: new Date().toISOString(),
-                        profile: { 
-                            id: adminId, 
-                            first_name: 'Tú', 
-                            last_name: '(Admin)', 
+                        profile: {
+                            id: adminId,
+                            first_name: 'Tú',
+                            last_name: '(Admin)',
                             email: '',
                             user_roles: [{ roles: { name: 'Admin' } }]
                         } as any
@@ -229,72 +229,72 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                             const isAdmin = roles.some((r: any) => r?.toLowerCase().includes('admin'));
 
                             return (
-                            <div key={item.id} className="relative flex gap-4 items-start">
-                                {item.type === 'comment' ? (
-                                    <>
-                                        <div className="absolute left-2 w-6 h-6 bg-white border border-slate-300 rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1.5 flex-none">
-                                            <MessageSquare className="h-3 w-3 text-slate-400" />
-                                        </div>
-                                        <div className="flex-1 ml-6 bg-white border border-slate-200 rounded-lg shadow-sm">
-                                            <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center rounded-t-lg">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="font-semibold text-slate-800 text-xs">
-                                                        {item.data.author?.first_name || item.data.profile?.first_name} {item.data.author?.last_name || item.data.profile?.last_name}
+                                <div key={item.id} className="relative flex gap-4 items-start">
+                                    {item.type === 'comment' ? (
+                                        <>
+                                            <div className="absolute left-2 w-6 h-6 bg-white border border-slate-300 rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1.5 flex-none">
+                                                <MessageSquare className="h-3 w-3 text-slate-400" />
+                                            </div>
+                                            <div className="flex-1 ml-6 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                                <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center rounded-t-lg">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="font-semibold text-slate-800 text-xs">
+                                                            {item.data.author?.first_name || item.data.profile?.first_name} {item.data.author?.last_name || item.data.profile?.last_name}
+                                                        </span>
+                                                        {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
+                                                        <span className="text-slate-500 font-normal text-[11px]">comentó</span>
+                                                        {item.data.file?.file_name && (
+                                                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-0.5 ml-1 font-medium shadow-none">
+                                                                <FileText className="h-2.5 w-2.5" /> Sobre: {item.data.file.file_name}
+                                                            </Badge>
+                                                        )}
+                                                    </div>
+                                                    <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                                                        <Clock className="h-3 w-3" />
+                                                        {formatDistanceToNow(new Date(item.data.created_at), { addSuffix: true, locale: es })}
+                                                    </span>
+                                                </div>
+                                                <div className="p-4 text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
+                                                    {item.data.content}
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className={`absolute left-2 w-6 h-6 ${statusConfig[item.data.new_status].color} border border-transparent rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1 flex-none`}>
+                                                {React.createElement(statusConfig[item.data.new_status].icon, { className: `h-3 w-3 ${statusConfig[item.data.new_status].iconColor}` })}
+                                            </div>
+                                            <div className="flex-1 ml-6 pt-2">
+                                                <div className="text-xs text-slate-600 flex flex-wrap items-center gap-1.5">
+                                                    <span className="font-semibold text-slate-800">
+                                                        {item.data.profile?.first_name || 'Sistema'} {item.data.profile?.last_name || ''}
                                                     </span>
                                                     {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
-                                                    <span className="text-slate-500 font-normal text-[11px]">comentó</span>
-                                                    {item.data.file?.file_name && (
-                                                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-slate-50 border-slate-200 text-slate-500 flex items-center gap-0.5 ml-1 font-medium shadow-none">
-                                                            <FileText className="h-2.5 w-2.5" /> Sobre: {item.data.file.file_name}
+                                                    <span>{item.data.old_status ? 'cambió el estado de' : 'creó el trabajo con estado'}</span>
+                                                    {item.data.old_status && (
+                                                        <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${statusConfig[item.data.old_status].color} ${statusConfig[item.data.old_status].border} border-slate-200 shadow-none font-medium`}>
+                                                            {statusConfig[item.data.old_status].label}
                                                         </Badge>
                                                     )}
-                                                </div>
-                                                <span className="text-[11px] text-slate-400 flex items-center gap-1">
-                                                    <Clock className="h-3 w-3" />
-                                                    {formatDistanceToNow(new Date(item.data.created_at), { addSuffix: true, locale: es })}
-                                                </span>
-                                            </div>
-                                            <div className="p-4 text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
-                                                {item.data.content}
-                                            </div>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className={`absolute left-2 w-6 h-6 ${statusConfig[item.data.new_status].color} border border-transparent rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1 flex-none`}>
-                                            {React.createElement(statusConfig[item.data.new_status].icon, { className: `h-3 w-3 ${statusConfig[item.data.new_status].iconColor}` })}
-                                        </div>
-                                        <div className="flex-1 ml-6 pt-2">
-                                            <div className="text-xs text-slate-600 flex flex-wrap items-center gap-1.5">
-                                                <span className="font-semibold text-slate-800">
-                                                    {item.data.profile?.first_name || 'Sistema'} {item.data.profile?.last_name || ''}
-                                                </span>
-                                                {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
-                                                <span>{item.data.old_status ? 'cambió el estado de' : 'creó el trabajo con estado'}</span>
-                                                {item.data.old_status && (
-                                                    <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${statusConfig[item.data.old_status].color} ${statusConfig[item.data.old_status].border} border-slate-200 shadow-none font-medium`}>
-                                                        {statusConfig[item.data.old_status].label}
+                                                    {item.data.old_status && <span>a</span>}
+                                                    <Badge className={`text-[10px] px-1.5 py-0 font-medium ${statusConfig[item.data.new_status].color} border ${statusConfig[item.data.new_status].border} shadow-none`}>
+                                                        {statusConfig[item.data.new_status].label}
                                                     </Badge>
-                                                )}
-                                                {item.data.old_status && <span>a</span>}
-                                                <Badge className={`text-[10px] px-1.5 py-0 font-medium ${statusConfig[item.data.new_status].color} border ${statusConfig[item.data.new_status].border} shadow-none`}>
-                                                    {statusConfig[item.data.new_status].label}
-                                                </Badge>
-                                                <span className="text-[11px] text-slate-400 ml-auto flex items-center gap-1">
-                                                    <Clock className="h-3 w-3" />
-                                                    {formatDistanceToNow(new Date(item.data.created_at), { addSuffix: true, locale: es })}
-                                                </span>
-                                            </div>
-                                            {item.data.justification && (
-                                                <div className="mt-1.5 p-3 border border-slate-100 bg-slate-50/50 rounded-sm text-xs text-slate-700 border-l-4 border-l-slate-200 whitespace-pre-wrap">
-                                                    <p className="font-semibold text-[10px] text-slate-500 mb-1">Justificación/Comentario:</p>
-                                                    {item.data.justification}
+                                                    <span className="text-[11px] text-slate-400 ml-auto flex items-center gap-1">
+                                                        <Clock className="h-3 w-3" />
+                                                        {formatDistanceToNow(new Date(item.data.created_at), { addSuffix: true, locale: es })}
+                                                    </span>
                                                 </div>
-                                            )}
-                                        </div>
-                                    </>
-                                )}
-                            </div>
+                                                {item.data.justification && (
+                                                    <div className="mt-1.5 p-3 border border-slate-100 bg-slate-50/50 rounded-sm text-xs text-slate-700 border-l-4 border-l-slate-200 whitespace-pre-wrap">
+                                                        <p className="font-semibold text-[10px] text-slate-500 mb-1">Justificación/Comentario:</p>
+                                                        {item.data.justification}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
                             );
                         })}
 
@@ -307,7 +307,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                 <div className="flex items-center justify-between pb-1 border-b border-slate-100">
                                     <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Agregar Revisión o Comentario</span>
                                     {submission.files && submission.files.length > 0 && selectedAction === 'comment' && (
-                                        <select 
+                                        <select
                                             className="text-[11px] h-7 bg-slate-50 border rounded-md px-2 focus:outline-none focus:ring-1 focus:ring-slate-300 max-w-[150px] truncate"
                                             value={selectedFileId}
                                             onChange={(e) => setSelectedFileId(e.target.value)}
@@ -414,7 +414,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                             <div className="p-1.5 bg-primary/10 rounded-md text-primary"><FileText className="h-4 w-4" /></div>
                                             <div className="min-w-0">
                                                 <p className="text-xs font-medium text-slate-800 truncate max-w-[130px]">{file.file_name}</p>
-                                                <Badge variant="outline" className="text-[9px] px-1 shadow-none text-muted-foreground mt-0.5 capitalize font-medium">{file.document_type || 'General'}</Badge>
+                                                <Badge variant="outline" className="text-[9px] px-1 shadow-none text-muted-foreground mt-0.5 capitalize font-medium h-5">{file.document_type || 'General'}</Badge>
                                             </div>
                                         </div>
                                         <a href={file.file_url} target="_blank" rel="noopener noreferrer" className="p-1.5 hover:bg-slate-100 rounded-md text-slate-500 hover:text-primary transition-colors">
