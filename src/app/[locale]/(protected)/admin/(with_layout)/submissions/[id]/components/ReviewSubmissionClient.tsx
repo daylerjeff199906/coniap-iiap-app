@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {
     MessageSquare, Download, Mail, FileText, Send, User, ArrowLeft,
-    CheckCircle2, XCircle, AlertTriangle, Clock, ChevronDown
+    CheckCircle2, XCircle, AlertTriangle, Clock, ChevronDown, RefreshCw
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -94,7 +94,11 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                 data: h
             }))
         ];
-        return items.sort((a, b) => a.date.getTime() - b.date.getTime());
+        return items.sort((a, b) => {
+            const diff = a.date.getTime() - b.date.getTime();
+            if (diff !== 0) return diff;
+            return a.id.localeCompare(b.id);
+        });
     }, [comments, history]);
 
     const handleReview = async (action: 'approve' | 'reject' | 'request_changes' | 'comment') => {
@@ -181,6 +185,39 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
         }
     };
 
+    const handleReopen = async () => {
+        setIsSubmitting(true);
+        try {
+            const res = await reviewSubmission(submission.id, 'under_review', 'Reapertura de revisión para auditoría / cambios.');
+            if (res.success) {
+                setSubmission(prev => ({ ...prev, status: 'under_review' }));
+                setHistory(prev => [...prev, {
+                    id: crypto.randomUUID(),
+                    submission_id: submission.id,
+                    changed_by: adminId,
+                    old_status: submission.status,
+                    new_status: 'under_review',
+                    justification: 'Reapertura de revisión para auditoría / cambios.',
+                    created_at: new Date().toISOString(),
+                    profile: { 
+                        id: adminId, 
+                        first_name: 'Tú', 
+                        last_name: '(Admin)', 
+                        email: '', 
+                        user_roles: [{ roles: { name: 'Admin' } }] 
+                    } as any
+                }]);
+                toast.success('Revisión reabierta exitosamente.');
+            } else {
+                toast.error(res.error || 'Error al reabrir la revisión');
+            }
+        } catch (error) {
+            toast.error('Error al reabrir la revisión');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     const currentAction = actionConfigs[selectedAction];
 
     const availableActions = Object.entries(actionConfigs).filter(([key]) => {
@@ -228,6 +265,10 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                 : item.data.profile?.user_roles?.map((r: any) => r.roles?.name) || [];
                             const isAdmin = roles.some((r: any) => r?.toLowerCase().includes('admin'));
 
+                            const isCommentMe = item.type === 'comment' && (item.data.profile_id === adminId || item.data.author?.id === adminId);
+                            const isHistoryMe = item.type === 'history' && (item.data.profile?.id === adminId || item.data.changed_by === adminId);
+                            const isMe = isCommentMe || isHistoryMe;
+
                             return (
                                 <div key={item.id} className="relative flex gap-4 items-start">
                                     {item.type === 'comment' ? (
@@ -239,7 +280,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                 <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center rounded-t-lg">
                                                     <div className="flex items-center gap-2">
                                                         <span className="font-semibold text-slate-800 text-xs">
-                                                            {item.data.author?.first_name || item.data.profile?.first_name} {item.data.author?.last_name || item.data.profile?.last_name}
+                                                            {isMe ? 'Tú' : (item.data.author?.first_name || item.data.profile?.first_name)} {isMe ? '' : (item.data.author?.last_name || item.data.profile?.last_name)}
                                                         </span>
                                                         {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
                                                         <span className="text-slate-500 font-normal text-[11px]">comentó</span>
@@ -267,7 +308,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                             <div className="flex-1 ml-6 pt-2">
                                                 <div className="text-xs text-slate-600 flex flex-wrap items-center gap-1.5">
                                                     <span className="font-semibold text-slate-800">
-                                                        {item.data.profile?.first_name || 'Sistema'} {item.data.profile?.last_name || ''}
+                                                        {isMe ? 'Tú' : (item.data.profile?.first_name || 'Sistema')} {isMe ? '' : (item.data.profile?.last_name || '')}
                                                     </span>
                                                     {isAdmin && <Badge className="text-[9px] px-1 py-0 bg-slate-100 text-slate-600 shadow-none font-medium h-4">Admin</Badge>}
                                                     <span>{item.data.old_status ? 'cambió el estado de' : 'creó el trabajo con estado'}</span>
@@ -298,79 +339,98 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                             );
                         })}
 
-                        {/* Action Frame connected inside the Timeline flow alignment frame grid */}
-                        <div className="relative flex gap-4 items-start pt-1">
-                            <div className="absolute left-2 w-6 h-6 bg-white border border-slate-300 rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1.5 flex-none">
-                                <Avatar className="h-5 w-5"><AvatarFallback className="bg-slate-100"><User className="h-3 w-3 text-slate-500" /></AvatarFallback></Avatar>
-                            </div>
-                            <div className="flex-1 ml-6 bg-white border border-slate-200 rounded-lg shadow-sm p-4 space-y-4">
-                                <div className="flex items-center justify-between pb-1 border-b border-slate-100">
-                                    <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Agregar Revisión o Comentario</span>
-                                    {submission.files && submission.files.length > 0 && selectedAction === 'comment' && (
-                                        <select
-                                            className="text-[11px] h-7 bg-slate-50 border rounded-md px-2 focus:outline-none focus:ring-1 focus:ring-slate-300 max-w-[150px] truncate"
-                                            value={selectedFileId}
-                                            onChange={(e) => setSelectedFileId(e.target.value)}
-                                            disabled={isSubmitting}
-                                        >
-                                            <option value="">Sobre: General</option>
-                                            {submission.files.map((file) => (
-                                                <option key={file.id} value={file.id}>📄 {file.file_name}</option>
-                                            ))}
-                                        </select>
-                                    )}
+                        {/* Connected Action Frame connected inside the Timeline flow alignment frame grid */}
+                        {submission.status === 'approved' || submission.status === 'rejected' ? (
+                            <div className="relative flex gap-4 items-start pt-1">
+                                <div className="absolute left-2 w-6 h-6 bg-white border border-slate-300 rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1.5 flex-none">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
                                 </div>
-
-                                <Textarea
-                                    placeholder="Escribe un comentario o la justificación para el cambio de estado opcional..."
-                                    className="text-xs resize-none bg-slate-50/50 focus:bg-white min-h-[100px]"
-                                    value={justification}
-                                    onChange={e => setJustification(e.target.value)}
-                                    disabled={isSubmitting}
-                                />
-
-                                <div className="flex justify-start">
-                                    <div className="flex items-center -space-x-px">
-                                        <Button
-                                            className={`rounded-r-none px-4 flex gap-1.5 items-center font-semibold shadow-sm border ${currentAction.buttonColor} h-12`}
-                                            disabled={isSubmitting}
-                                            onClick={() => handleReview(selectedAction)}
-                                        >
-                                            {React.createElement(currentAction.icon, { className: "h-3.5 w-3.5" })}
-                                            {currentAction.label}
-                                        </Button>
-
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    className={`rounded-l-none px-2 border-l h-11.5 ${currentAction.buttonColor === 'bg-white text-slate-700 border hover:bg-slate-50' ? 'border-slate-200' : 'border-white/20'} ${currentAction.buttonColor}`}
-                                                    disabled={isSubmitting}
-                                                >
-                                                    <ChevronDown className="h-3.5 w-3.5" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="start" className="w-[280px]">
-                                                {availableActions.map(([key, action]) => (
-                                                    <DropdownMenuItem
-                                                        key={key}
-                                                        className="flex flex-col items-start gap-0.5 p-2 rounded-md hover:bg-slate-50 cursor-pointer"
-                                                        onClick={() => setSelectedAction(key as any)}
-                                                    >
-                                                        <div className="flex items-center gap-1.5 font-bold text-[12px] text-slate-800">
-                                                            {React.createElement(action.icon, { className: `h-3.5 w-3.5 ${action.color}` })}
-                                                            {action.label}
-                                                        </div>
-                                                        <p className="text-[10px] text-muted-foreground leading-snug">
-                                                            {action.description}
-                                                        </p>
-                                                    </DropdownMenuItem>
+                                <div className="flex-1 ml-6 flex flex-col items-center justify-center p-6 border border-slate-200 rounded-lg bg-slate-50/50 space-y-3">
+                                    <Badge className={`${statusConfig[submission.status].color} ${statusConfig[submission.status].border} border px-3 py-1 text-xs rounded-full shadow-none font-medium`}>
+                                        Revisión Finalizada: {statusConfig[submission.status].label}
+                                    </Badge>
+                                    <p className="text-xs text-muted-foreground text-center">
+                                        Este trabajo ha sido {submission.status === 'approved' ? 'aprobado' : 'rechazado'}. No se pueden agregar más comentarios o revisiones.
+                                    </p>
+                                    <Button size="sm" variant="outline" className="flex items-center gap-1.5 text-xs font-semibold h-9" onClick={() => handleReopen()} disabled={isSubmitting}>
+                                        <RefreshCw className="h-3.5 w-3.5" /> Reabrir Revisión
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="relative flex gap-4 items-start pt-1">
+                                <div className="absolute left-2 w-6 h-6 bg-white border border-slate-300 rounded-full flex items-center justify-center -translate-x-1/2 z-10 mt-1.5 flex-none">
+                                    <Avatar className="h-5 w-5"><AvatarFallback className="bg-slate-100"><User className="h-3 w-3 text-slate-500" /></AvatarFallback></Avatar>
+                                </div>
+                                <div className="flex-1 ml-6 bg-white border border-slate-200 rounded-lg shadow-sm p-4 space-y-4">
+                                    <div className="flex items-center justify-between pb-1 border-b border-slate-100">
+                                        <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Agregar Revisión o Comentario</span>
+                                        {submission.files && submission.files.length > 0 && selectedAction === 'comment' && (
+                                            <select 
+                                                className="text-[11px] h-7 bg-slate-50 border rounded-md px-2 focus:outline-none focus:ring-1 focus:ring-slate-300 max-w-[150px] truncate"
+                                                value={selectedFileId}
+                                                onChange={(e) => setSelectedFileId(e.target.value)}
+                                                disabled={isSubmitting}
+                                            >
+                                                <option value="">Sobre: General</option>
+                                                {submission.files.map((file) => (
+                                                    <option key={file.id} value={file.id}>📄 {file.file_name}</option>
                                                 ))}
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
+                                            </select>
+                                        )}
+                                    </div>
+
+                                    <Textarea 
+                                        placeholder="Escribe un comentario o la justificación para el cambio de estado opcional..." 
+                                        className="text-xs resize-none bg-slate-50/50 focus:bg-white min-h-[100px]" 
+                                        value={justification} 
+                                        onChange={e => setJustification(e.target.value)} 
+                                        disabled={isSubmitting}
+                                    />
+
+                                    <div className="flex justify-start">
+                                        <div className="flex items-center -space-x-px">
+                                            <Button 
+                                                className={`rounded-r-none px-4 flex gap-1.5 items-center font-semibold shadow-sm border ${currentAction.buttonColor} h-12`} 
+                                                disabled={isSubmitting} 
+                                                onClick={() => handleReview(selectedAction)}
+                                            >
+                                                {React.createElement(currentAction.icon, { className: "h-3.5 w-3.5" })}
+                                                {currentAction.label}
+                                            </Button>
+                                            
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button 
+                                                        className={`rounded-l-none px-2 border-l h-11.5 ${currentAction.buttonColor === 'bg-white text-slate-700 border hover:bg-slate-50' ? 'border-slate-200' : 'border-white/20'} ${currentAction.buttonColor}`}
+                                                        disabled={isSubmitting}
+                                                    >
+                                                        <ChevronDown className="h-3.5 w-3.5" />
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent align="start" className="w-[280px]">
+                                                    {availableActions.map(([key, action]) => (
+                                                        <DropdownMenuItem 
+                                                            key={key} 
+                                                            className="flex flex-col items-start gap-0.5 p-2 rounded-md hover:bg-slate-50 cursor-pointer" 
+                                                            onClick={() => setSelectedAction(key as any)}
+                                                        >
+                                                            <div className="flex items-center gap-1.5 font-bold text-[12px] text-slate-800">
+                                                                {React.createElement(action.icon, { className: `h-3.5 w-3.5 ${action.color}` })}
+                                                                {action.label}
+                                                            </div>
+                                                            <p className="text-[10px] text-muted-foreground leading-snug">
+                                                                {action.description}
+                                                            </p>
+                                                        </DropdownMenuItem>
+                                                    ))}
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
 
