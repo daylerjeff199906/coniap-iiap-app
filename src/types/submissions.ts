@@ -26,6 +26,20 @@ export interface EventSubmission {
   profile?: IProfile;
   files?: SubmissionFile[];
   comments?: SubmissionComment[];
+  history?: SubmissionHistory[];
+}
+
+export interface SubmissionHistory {
+  id: string;
+  submission_id: string;
+  changed_by?: string | null;
+  old_status?: SubmissionStatus | null;
+  new_status: SubmissionStatus;
+  justification?: string | null;
+  created_at: string;
+  
+  // Relation
+  profile?: IProfile & { user_roles?: Array<{ roles: { name: string } }> };
 }
 
 export interface SubmissionFile {
@@ -45,5 +59,9 @@ export interface SubmissionComment {
   profile_id: string;
   content: string;
   created_at: string;
-  profile?: IProfile;
+  file_id?: string | null;
+  
+  file?: { file_name: string };
+  author?: IProfile & { user_roles?: Array<{ roles: { name: string } }> };
+  profile?: IProfile & { user_roles?: Array<{ roles: { name: string } }> };
 }

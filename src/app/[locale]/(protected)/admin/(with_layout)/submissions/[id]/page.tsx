@@ -3,6 +3,7 @@ import { ReviewSubmissionClient } from './components/ReviewSubmissionClient'
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
+import { EventSubmission } from '@/types/submissions'
 import { IconDatabaseOff } from '@tabler/icons-react'
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies } from 'next/headers'
@@ -46,7 +47,7 @@ export default async function ReviewSubmissionPage({
 
     return (
         <LayoutWrapper sectionTitle="Revisión de Trabajo">
-            <ReviewSubmissionClient submission={submission as any} adminId={user?.id || ''} />
+            <ReviewSubmissionClient submission={submission as EventSubmission} adminId={user?.id || ''} />
         </LayoutWrapper>
     )
 }

@@ -5,6 +5,8 @@ import { cookies } from 'next/headers';
 import { SubmissionStatus } from '@/types/submissions';
 import { revalidatePath } from 'next/cache';
 
+import { unstable_noStore as noStore } from 'next/cache';
+
 export async function getSubmissions(filters?: {
     eventId?: string;
     editionId?: string;
@@ -12,6 +14,7 @@ export async function getSubmissions(filters?: {
     status?: string;
     q?: string;
 }) {
+    noStore();
     const cookieStore = await cookies();
     const supabase = createClient(cookieStore);
 
@@ -79,6 +82,7 @@ export async function getSubmissions(filters?: {
 }
 
 export async function getSubmissionById(id: string) {
+    noStore();
     const cookieStore = await cookies();
     const supabase = createClient(cookieStore);
 
@@ -104,11 +108,39 @@ export async function getSubmissionById(id: string) {
                 id,
                 content,
                 created_at,
-                profile:profiles (
+                file_id,
+                file:submission_files!fk_comment_file (
+                    file_name
+                ),
+                author:profiles!fk_comment_author (
                     id,
                     first_name,
                     last_name,
-                    email
+                    email,
+                    user_roles (
+                        roles:role_id (
+                            name
+                        )
+                    )
+                )
+            ),
+            history:submission_history (
+                id,
+                old_status,
+                new_status,
+                justification,
+                created_at,
+                profile:profiles!fk_history_profile (
+                    id,
+                    first_name,
+                    last_name,
+                    email,
+                    avatar_url,
+                    user_roles (
+                        roles:role_id (
+                            name
+                        )
+                    )
                 )
             ),
             main_events (
@@ -152,7 +184,45 @@ export async function updateSubmissionStatus(id: string, status: SubmissionStatu
     return { success: true };
 }
 
-export async function addSubmissionComment(submissionId: string, profileId: string, comment: string) {
+export async function reviewSubmission(id: string, status: SubmissionStatus, justification?: string) {
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: sub } = await supabase
+        .from('event_submissions')
+        .select('call_id, profile_id')
+        .eq('id', id)
+        .single();
+
+    const { error } = await supabase.rpc('review_submission', {
+        p_submission_id: id,
+        p_new_status: status,
+        p_justification: justification || null
+    });
+
+    if (error) {
+        console.error('Error reviewing submission:', error);
+        return { error: 'No se pudo actualizar el estado del trabajo.' };
+    }
+
+    if (sub?.call_id && sub?.profile_id) {
+        const { error: appError } = await supabase
+            .from('call_applications')
+            .update({ status: status as any, updated_at: new Date().toISOString() })
+            .eq('call_id', sub.call_id)
+            .eq('profile_id', sub.profile_id);
+            
+        if (appError) {
+            console.error('Error updating call_applications status:', appError);
+        }
+    }
+
+    revalidatePath(`/admin/submissions/${id}`);
+    revalidatePath(`/admin/submissions`);
+    return { success: true };
+}
+
+export async function addSubmissionComment(submissionId: string, profileId: string, comment: string, fileId?: string) {
     const cookieStore = await cookies();
     const supabase = createClient(cookieStore);
 
@@ -162,6 +232,7 @@ export async function addSubmissionComment(submissionId: string, profileId: stri
             submission_id: submissionId,
             author_id: profileId,
             content: comment,
+            file_id: fileId || null
         });
 
     if (error) {
