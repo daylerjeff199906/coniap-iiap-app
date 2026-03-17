@@ -5,6 +5,8 @@ import { cookies } from 'next/headers';
 import { SubmissionStatus } from '@/types/submissions';
 import { revalidatePath } from 'next/cache';
 
+import { unstable_noStore as noStore } from 'next/cache';
+
 export async function getSubmissions(filters?: {
     eventId?: string;
     editionId?: string;
@@ -12,6 +14,7 @@ export async function getSubmissions(filters?: {
     status?: string;
     q?: string;
 }) {
+    noStore();
     const cookieStore = await cookies();
     const supabase = createClient(cookieStore);
 
@@ -79,6 +82,7 @@ export async function getSubmissions(filters?: {
 }
 
 export async function getSubmissionById(id: string) {
+    noStore();
     const cookieStore = await cookies();
     const supabase = createClient(cookieStore);
 

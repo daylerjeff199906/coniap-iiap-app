@@ -60,6 +60,13 @@ const actionConfigs: Record<string, { label: string; description: string; icon: 
         icon: XCircle,
         color: 'text-rose-500',
         buttonColor: 'bg-rose-600 hover:bg-rose-700 text-white'
+    },
+    draft: {
+        label: 'Regresar a Borrador',
+        description: 'Permite al participante editar sus documentos y volver a presentar el trabajo.',
+        icon: Clock,
+        color: 'text-slate-500',
+        buttonColor: 'bg-indigo-600 hover:bg-indigo-700 text-white'
     }
 };
 
@@ -150,7 +157,8 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                 const mapStatus: Record<string, SubmissionStatus> = {
                     approve: 'approved',
                     reject: 'rejected',
-                    request_changes: 'changes_requested'
+                    request_changes: 'changes_requested',
+                    draft: 'draft'
                 };
                 const nextStatus = mapStatus[action];
                 const res = await reviewSubmission(submission.id, nextStatus, text || undefined);
@@ -224,6 +232,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
         if (key === 'approve' && submission.status === 'approved') return false;
         if (key === 'request_changes' && submission.status === 'changes_requested') return false;
         if (key === 'reject' && submission.status === 'rejected') return false;
+        if (key === 'draft' && submission.status === 'draft') return false;
         return true;
     });
 
