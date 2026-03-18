@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import {
     IconUser,
     IconShieldLock,
+    IconFileText,
 } from '@tabler/icons-react'
 
 interface UserLayoutProps {
@@ -25,12 +26,19 @@ export function UserLayout({ userId, userName, children }: UserLayoutProps) {
             active: pathname === `/admin/users/${userId}`
         },
         {
+            label: 'Participaciones',
+            href: `/admin/users/${userId}/participations`,
+            icon: IconFileText,
+            active: pathname.includes('/participations')
+        },
+        {
             label: 'Roles y Permisos',
             href: `/admin/users/${userId}/roles`,
             icon: IconShieldLock,
             active: pathname.includes('/roles')
         }
     ]
+
 
     return (
         <div className="container mx-auto">
