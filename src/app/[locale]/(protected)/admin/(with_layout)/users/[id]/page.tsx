@@ -10,8 +10,10 @@ import { notFound } from 'next/navigation'
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { fetchActiveTopics } from '@/api/fetchTopics'
 import { UserLayout } from '../components/UserLayout'
+import { IEducation, IEmploymentHistory, ICertification, ILanguage } from '@/types/profile'
 
 interface ProfilePageProps {
+
     params: Promise<{
         id: string
         locale: string
@@ -29,10 +31,10 @@ export default async function ProfileDetailPage({ params }: ProfilePageProps) {
     const topics = await fetchActiveTopics()
 
     // Fetch professional/academic data if auth_id exists
-    let education: any[] = []
-    let experience: any[] = []
-    let certifications: any[] = []
-    let languages: any[] = []
+    let education: IEducation[] = []
+    let experience: IEmploymentHistory[] = []
+    let certifications: ICertification[] = []
+    let languages: ILanguage[] = []
 
     if (profile.auth_id) {
         [education, experience, certifications, languages] = await Promise.all([
@@ -42,6 +44,7 @@ export default async function ProfileDetailPage({ params }: ProfilePageProps) {
             getProfileLanguages(profile.auth_id)
         ])
     }
+
 
     const userName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Usuario'
 

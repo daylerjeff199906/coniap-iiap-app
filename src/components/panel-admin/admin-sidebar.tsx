@@ -19,16 +19,17 @@ import { useLocale } from "next-intl"
 import Link from "next/link"
 import { NavUser } from "@/components/nav-user"
 
-export function AdminSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & {
+export function AdminSidebar({ user, locale, ...props }: React.ComponentProps<typeof Sidebar> & {
     user: {
         name: string
         email: string
         avatar: string
         role: string
     }
+    locale: string
 }) {
-    const locale = useLocale()
     const routes = getAdminRoutes(locale)
+
 
     return (
         <Sidebar collapsible="icon" {...props}>
