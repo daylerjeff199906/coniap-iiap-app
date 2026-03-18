@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
-import { IconSettings, IconUsers, IconCalendarEvent, IconSpeakerphone, IconFileText, IconAward } from '@tabler/icons-react'
+import { IconSettings, IconUsers, IconCalendarEvent, IconSpeakerphone, IconFileText, IconAward, IconClock } from '@tabler/icons-react'
 
 export function EventNavigation({ locale, eventId }: { locale: string, eventId: string }) {
     const pathname = usePathname()
@@ -22,6 +22,11 @@ export function EventNavigation({ locale, eventId }: { locale: string, eventId: 
             name: 'Convocatorias',
             href: `/admin/events/${eventId}/call`,
             icon: IconSpeakerphone
+        },
+        {
+            name: 'Actividades',
+            href: `/admin/events/${eventId}/activities`,
+            icon: IconClock
         },
         {
             name: 'Participantes',
