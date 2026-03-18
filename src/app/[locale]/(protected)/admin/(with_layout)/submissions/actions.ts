@@ -460,3 +460,52 @@ export async function searchProfiles(queryText: string) {
     }
     return data;
 }
+
+export async function addSubmissionFile(data: {
+
+    submissionId: string;
+    fileName: string;
+    fileUrl: string;
+    documentType: string;
+}) {
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: res, error } = await supabase
+        .from('submission_files')
+        .insert({
+            submission_id: data.submissionId,
+            file_name: data.fileName,
+            file_url: data.fileUrl,
+            document_type: data.documentType
+        })
+        .select('*')
+        .single();
+
+    if (error) {
+        console.error('Error adding submission file:', error);
+        return { error: 'No se pudo agregar el archivo.' };
+    }
+
+    revalidatePath(`/admin/submissions/${data.submissionId}`);
+    return { success: true, data: res };
+}
+
+export async function deleteSubmissionFile(fileId: string, submissionId: string) {
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+
+    const { error } = await supabase
+        .from('submission_files')
+        .delete()
+        .eq('id', fileId);
+
+    if (error) {
+        console.error('Error deleting submission file:', error);
+        return { error: 'No se pudo eliminar el archivo.' };
+    }
+
+    revalidatePath(`/admin/submissions/${submissionId}`);
+    return { success: true };
+}
+

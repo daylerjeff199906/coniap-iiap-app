@@ -3,13 +3,14 @@
 import * as React from 'react';
 import {
     MessageSquare, Download, Mail, FileText, Send, User, ArrowLeft,
-    CheckCircle2, XCircle, AlertTriangle, Clock, ChevronDown, RefreshCw
+    CheckCircle2, XCircle, AlertTriangle, Clock, ChevronDown, RefreshCw, Trash, Plus, Link2, UploadCloud
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -18,10 +19,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EventSubmission, SubmissionComment, SubmissionStatus, SubmissionHistory } from '@/types/submissions';
 import { Link } from '@/i18n/routing';
-import { reviewSubmission, addSubmissionComment } from '../../actions';
+import { reviewSubmission, addSubmissionComment, addSubmissionFile, deleteSubmissionFile } from '../../actions';
 import { toast } from 'react-toastify';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+
 
 const statusConfig: Record<SubmissionStatus, { label: string; color: string; border: string; icon: any; iconColor: string; hoverColor: string }> = {
     draft: { label: 'Borrador', color: 'bg-slate-100 text-slate-700', border: 'border-slate-200', icon: Clock, iconColor: 'text-slate-500', hoverColor: 'hover:bg-slate-200/80' },
@@ -84,6 +88,85 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [selectedAction, setSelectedAction] = React.useState<'comment' | 'approve' | 'request_changes' | 'reject'>('comment');
     const [selectedFileId, setSelectedFileId] = React.useState<string>('');
+
+    // File Management State for Admin Uploads
+    const [isAddingFile, setIsAddingFile] = React.useState(false);
+    const [newFileType, setNewFileType] = React.useState<'file' | 'link'>('file');
+    const [newFileDocType, setNewFileDocType] = React.useState('abstract');
+    const [newFile, setNewFile] = React.useState<File | null>(null);
+    const [newLinkUrl, setNewLinkUrl] = React.useState('');
+    const [isUpdatingFile, setIsUpdatingFile] = React.useState(false);
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+    const handleDeleteFile = async (fileId: string) => {
+        if (!confirm('¿Estás seguro de eliminar este documento de la subida?')) return;
+        setIsUpdatingFile(true);
+        try {
+            const res = await deleteSubmissionFile(fileId, submission.id);
+            if (res.success) {
+                setSubmission(prev => ({
+                    ...prev,
+                    files: prev.files?.filter(f => f.id !== fileId) || []
+                }));
+                toast.success('Archivo eliminado correctamente');
+            } else {
+                toast.error(res.error || 'Error al eliminar');
+            }
+        } catch (error) { toast.error('Error al procesar la eliminación'); }
+        setIsUpdatingFile(false);
+    };
+
+    const handleAddFile = async () => {
+        if (newFileType === 'file' && !newFile) {
+            toast.warning('Por favor selecciona un archivo');
+            return;
+        }
+        if (newFileType === 'link' && !newLinkUrl.trim()) {
+            toast.warning('Por favor ingresa un link o URL');
+            return;
+        }
+
+        setIsUpdatingFile(true);
+        try {
+            let fileUrl = '';
+            let fileName = 'Link Asociado';
+
+            if (newFileType === 'file' && newFile) {
+                const formData = new FormData();
+                formData.append('file', newFile);
+                formData.append('folder', 'applications');
+                const response = await fetch('/api/r2/upload', { method: 'POST', body: formData });
+                if (!response.ok) throw new Error('Error al cargar archivo');
+                const upData = await response.json();
+                fileUrl = upData.url;
+                fileName = newFile.name;
+            } else if (newFileType === 'link') {
+                fileUrl = newLinkUrl;
+            }
+
+            const res = await addSubmissionFile({
+                submissionId: submission.id,
+                fileName,
+                fileUrl,
+                documentType: newFileDocType
+            });
+
+            if (res.success && res.data) {
+                setSubmission(prev => ({
+                    ...prev,
+                    files: [...(prev.files || []), res.data as any]
+                }));
+                setIsAddingFile(false);
+                setNewFile(null);
+                setNewLinkUrl('');
+                toast.success('Archivo agregado correctamente');
+            } else {
+                toast.error(res.error || 'Error al agregar archivo');
+            }
+        } catch (e: any) { toast.error(e.message || 'Error en la subida'); }
+        setIsUpdatingFile(false);
+    };
+
 
     // Merge comments and history for Timeline
     const timeline = React.useMemo(() => {
@@ -506,30 +589,98 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
 
                     {/* Files */}
                     <Card className="shadow-none border-slate-200">
-                        <CardHeader className="p-4 bg-slate-50/50 border-b">
+                        <CardHeader className="p-4 bg-slate-50/50 border-b flex flex-row items-center justify-between">
                             <CardTitle className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Documentos Subidos</CardTitle>
+                            {submission.is_admin_upload && !isAddingFile && (
+                                <Button variant="ghost" size="sm" className="h-6 text-[10px] text-primary px-2 hover:bg-primary/5" onClick={() => setIsAddingFile(true)}>
+                                    <Plus className="h-2.5 w-2.5 mr-1" /> Agregar
+                                </Button>
+                            )}
                         </CardHeader>
                         <CardContent className="p-3 space-y-2">
                             {submission.files && submission.files.length > 0 ? (
                                 submission.files.map((file) => (
                                     <div key={file.id} className="flex items-center justify-between p-2.5 border rounded-lg hover:bg-slate-50/50 transition-all">
-                                        <div className="flex items-center gap-2 min-w-0">
-                                            <div className="p-1.5 bg-primary/10 rounded-md text-primary"><FileText className="h-4 w-4" /></div>
+                                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                                            <div className="p-1.5 bg-primary/10 rounded-md text-primary flex-none"><FileText className="h-4 w-4" /></div>
                                             <div className="min-w-0">
-                                                <p className="text-xs font-medium text-slate-800 truncate max-w-[130px]">{file.file_name}</p>
+                                                <p className="text-xs font-medium text-slate-800 truncate max-w-[130px]" title={file.file_name}>{file.file_name}</p>
                                                 <Badge variant="outline" className="text-[9px] px-1 shadow-none text-muted-foreground mt-0.5 capitalize font-medium h-5">{file.document_type || 'General'}</Badge>
                                             </div>
                                         </div>
-                                        <a href={file.file_url} target="_blank" rel="noopener noreferrer" className="p-1.5 hover:bg-slate-100 rounded-md text-slate-500 hover:text-primary transition-colors">
-                                            <Download className="h-4 w-4" />
-                                        </a>
+                                        <div className="flex items-center gap-0.5">
+                                            <a href={file.file_url} target="_blank" rel="noopener noreferrer" className="p-1.5 hover:bg-slate-100 rounded-md text-slate-500 hover:text-primary transition-colors">
+                                                <Download className="h-4 w-4" />
+                                            </a>
+                                            {submission.is_admin_upload && (
+                                                <Button variant="ghost" size="icon" className="h-7 w-7 text-rose-500 hover:text-rose-600 hover:bg-rose-50 rounded-md" onClick={() => handleDeleteFile(file.id)} disabled={isUpdatingFile}>
+                                                    <Trash className="h-3.5 w-3.5" />
+                                                </Button>
+                                            )}
+                                        </div>
                                     </div>
                                 ))
                             ) : (
                                 <p className="text-[11px] text-muted-foreground text-center py-2">No hay archivos cargados.</p>
                             )}
+
+                            {isAddingFile && (
+                                <div className="border border-slate-200 rounded-lg p-3 space-y-2.5 bg-slate-50/50 mt-1">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-[10px] font-bold text-slate-700 uppercase">Nuevo Soporte</span>
+                                        <Button variant="ghost" size="sm" onClick={() => setIsAddingFile(false)} className="h-5 text-[9px] px-1.5">Cancelar</Button>
+                                    </div>
+
+                                    <div className="flex gap-1.5">
+                                        <Button type="button" variant={newFileType === 'file' ? 'default' : 'outline'} size="sm" className="text-[10px] h-6 px-2" onClick={() => setNewFileType('file')}>
+                                            <UploadCloud className="h-2.5 w-2.5 mr-0.5" /> Archivo
+                                        </Button>
+                                        <Button type="button" variant={newFileType === 'link' ? 'default' : 'outline'} size="sm" className="text-[10px] h-6 px-2" onClick={() => setNewFileType('link')}>
+                                            <Link2 className="h-2.5 w-2.5 mr-0.5" /> Link
+                                        </Button>
+                                    </div>
+
+                                    <div className="grid gap-1">
+                                        <Label className="text-[10px] font-medium text-slate-600">Tipo de Documento</Label>
+                                        <Select value={newFileDocType} onValueChange={setNewFileDocType}>
+                                            <SelectTrigger className="h-7 text-[10px] bg-white">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="abstract" className="text-xs">Abstract / Resumen</SelectItem>
+                                                <SelectItem value="paper" className="text-xs">Paper Completo / Artículo</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    {newFileType === 'file' ? (
+                                        <div className="grid gap-1">
+                                            <div
+                                                className={`border border-dashed rounded-md p-2 flex flex-col items-center justify-center gap-1 cursor-pointer bg-white hover:bg-slate-50 ${newFile ? 'border-primary' : 'border-slate-200'}`}
+                                                onClick={() => fileInputRef.current?.click()}
+                                            >
+                                                <UploadCloud className={`h-3.5 w-3.5 ${newFile ? 'text-primary' : 'text-slate-400'}`} />
+                                                <span className="text-[9px] font-medium text-slate-600 text-center truncate w-full max-w-[140px]">
+                                                    {newFile ? newFile.name : 'Subir archivo'}
+                                                </span>
+                                            </div>
+                                            <input type="file" className="hidden" ref={fileInputRef} onChange={(e) => setNewFile(e.target.files?.[0] || null)} />
+                                        </div>
+                                    ) : (
+                                        <div className="grid gap-1">
+                                            <Label htmlFor="link" className="text-[10px] font-medium text-slate-600">Link / URL de Referencia</Label>
+                                            <Input id="link" placeholder="https://..." value={newLinkUrl} onChange={e => setNewLinkUrl(e.target.value)} className="h-7 text-[10px] bg-white" />
+                                        </div>
+                                    )}
+
+                                    <Button className="w-full text-[10px] h-7" onClick={handleAddFile} disabled={isUpdatingFile}>
+                                        {isUpdatingFile ? 'Guardando...' : 'Agregar'}
+                                    </Button>
+                                </div>
+                            )}
                         </CardContent>
                     </Card>
+
                 </div>
             </div>
         </div>
