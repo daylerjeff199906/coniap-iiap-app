@@ -2,17 +2,7 @@ import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { PageHeader } from '@/components/general/PageHeader'
 import { getEvents } from './actions'
 import { EventFilters } from './components/EventFilters'
-import { EventActionsDropdown } from './components/EventActionsDropdown'
-
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
+import { EventsTable, MainEvent } from './components/EventsTable'
 import {
     Pagination,
     PaginationContent,
@@ -21,7 +11,6 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination'
-import { IconDatabaseOff, IconCalendarEvent } from '@tabler/icons-react'
 
 export const metadata = {
     title: 'Eventos - Panel',
@@ -42,7 +31,8 @@ export default async function EventsPage({
     const statusVal = sParams.status || 'active'
     const limit = 10
 
-    const { data: events, count } = await getEvents(currentPage, searchQuer, statusVal, limit)
+    const { data, count } = await getEvents(currentPage, searchQuer, statusVal, limit)
+    const events = (data || []) as MainEvent[]
     const totalPages = Math.ceil(count / limit)
 
     const createPageURL = (pageNumber: number) => {
@@ -65,71 +55,7 @@ export default async function EventsPage({
                 <div className="flex flex-col gap-4">
                     <EventFilters />
 
-                    <div className="rounded-md border overflow-hidden mt-2">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Evento</TableHead>
-                                    <TableHead>Creación</TableHead>
-                                    <TableHead>Estado</TableHead>
-                                    <TableHead className="text-center w-[100px]">Acciones</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {events && events.length > 0 ? (
-                                    events.map((event: any) => {
-                                        const imageUrl = event.logo_url || event.cover_url
-                                        return (
-                                            <TableRow key={event.id}>
-                                                <TableCell>
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="h-12 w-12 flex-shrink-0 flex items-center justify-center bg-blue-50 text-blue-500 rounded-lg overflow-hidden border">
-                                                            {imageUrl ? (
-                                                                <img src={imageUrl} alt={event.name} className="h-full w-full object-cover" />
-                                                            ) : (
-                                                                <IconCalendarEvent size={24} />
-                                                            )}
-                                                        </div>
-                                                        <div className="flex flex-col max-w-[300px] md:max-w-md">
-                                                            <span className="font-semibold text-[15px] truncate">{event.name}</span>
-                                                            <span className="text-xs text-muted-foreground truncate" title={event.short_description}>
-                                                                {event.short_description || 'Sin descripción'}
-                                                            </span>
-                                                            <span className="text-[11px] text-muted-foreground/80 font-mono mt-0.5" title="Slug">/{event.slug}</span>
-                                                        </div>
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
-                                                    {new Date(event.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
-                                                        year: 'numeric',
-                                                        month: 'short',
-                                                        day: 'numeric'
-                                                    })}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Badge variant={event.is_active ? 'default' : 'secondary'}>
-                                                        {event.is_active ? 'Activo' : 'Inactivo'}
-                                                    </Badge>
-                                                </TableCell>
-                                                <TableCell className="text-center">
-                                                    <EventActionsDropdown eventId={event.id} eventName={event.name} />
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    })
-                                ) : (
-                                    <TableRow>
-                                        <TableCell colSpan={4} className="h-32 text-center">
-                                            <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
-                                                <IconDatabaseOff size={32} />
-                                                <p>No se encontraron eventos.</p>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </div>
+                    <EventsTable events={events} locale={locale} />
 
                     {/* Pagination */}
                     {totalPages > 1 && (
