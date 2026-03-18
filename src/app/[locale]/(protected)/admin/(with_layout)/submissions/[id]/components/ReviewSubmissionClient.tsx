@@ -1,5 +1,4 @@
 'use client';
-
 import * as React from 'react';
 import {
     MessageSquare, Download, Mail, FileText, Send, User, ArrowLeft,
