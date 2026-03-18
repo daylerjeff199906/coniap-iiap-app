@@ -25,6 +25,17 @@ import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 
 
 const statusConfig: Record<SubmissionStatus, { label: string; color: string; border: string; icon: any; iconColor: string; hoverColor: string }> = {
@@ -97,16 +108,17 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
     const [newLinkUrl, setNewLinkUrl] = React.useState('');
     const [isUpdatingFile, setIsUpdatingFile] = React.useState(false);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
+    const [fileToDeleteId, setFileToDeleteId] = React.useState<string | null>(null);
 
-    const handleDeleteFile = async (fileId: string) => {
-        if (!confirm('¿Estás seguro de eliminar este documento de la subida?')) return;
+    const handleDeleteFile = async () => {
+        if (!fileToDeleteId) return;
         setIsUpdatingFile(true);
         try {
-            const res = await deleteSubmissionFile(fileId, submission.id);
+            const res = await deleteSubmissionFile(fileToDeleteId, submission.id);
             if (res.success) {
                 setSubmission(prev => ({
                     ...prev,
-                    files: prev.files?.filter(f => f.id !== fileId) || []
+                    files: prev.files?.filter(f => f.id !== fileToDeleteId) || []
                 }));
                 toast.success('Archivo eliminado correctamente');
             } else {
@@ -114,7 +126,9 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
             }
         } catch (error) { toast.error('Error al procesar la eliminación'); }
         setIsUpdatingFile(false);
+        setFileToDeleteId(null);
     };
+
 
     const handleAddFile = async () => {
         if (newFileType === 'file' && !newFile) {
@@ -400,10 +414,11 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                             </Badge>
                                                         )}
                                                     </div>
-                                                    <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                                                    <span className="text-[11px] text-slate-400 flex items-center gap-1" suppressHydrationWarning>
                                                         <Clock className="h-3 w-3" />
                                                         {formatDistanceToNow(new Date(item.data.created_at), { addSuffix: true, locale: es })}
                                                     </span>
+
                                                 </div>
                                                 <div className="p-4 text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
                                                     {item.data.content}
@@ -433,10 +448,11 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                     <Badge className={`text-[10px] px-1.5 py-0 font-medium ${statusConfig[item.data.new_status].color} border ${statusConfig[item.data.new_status].border} ${statusConfig[item.data.new_status].hoverColor} cursor-default shadow-none transition-all`}>
                                                         {statusConfig[item.data.new_status].label}
                                                     </Badge>
-                                                    <span className="text-[11px] text-slate-400 ml-auto flex items-center gap-1">
+                                                    <span className="text-[11px] text-slate-400 ml-auto flex items-center gap-1" suppressHydrationWarning>
                                                         <Clock className="h-3 w-3" />
                                                         {formatDistanceToNow(new Date(item.data.created_at), { addSuffix: true, locale: es })}
                                                     </span>
+
                                                 </div>
                                                 {item.data.justification && (
                                                     <div className="mt-1.5 p-3 border border-slate-100 bg-slate-50/50 rounded-sm text-xs text-slate-700 border-l-4 border-l-slate-200 whitespace-pre-wrap">
@@ -613,10 +629,11 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
                                                 <Download className="h-4 w-4" />
                                             </a>
                                             {submission.is_admin_upload && (
-                                                <Button variant="ghost" size="icon" className="h-7 w-7 text-rose-500 hover:text-rose-600 hover:bg-rose-50 rounded-md" onClick={() => handleDeleteFile(file.id)} disabled={isUpdatingFile}>
+                                                <Button variant="ghost" size="icon" className="h-7 w-7 text-rose-500 hover:text-rose-600 hover:bg-rose-50 rounded-md" onClick={() => setFileToDeleteId(file.id)} disabled={isUpdatingFile}>
                                                     <Trash className="h-3.5 w-3.5" />
                                                 </Button>
                                             )}
+
                                         </div>
                                     </div>
                                 ))
@@ -683,6 +700,24 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
 
                 </div>
             </div>
+            {/* Modal de Confirmación para eliminar */}
+            <AlertDialog open={!!fileToDeleteId} onOpenChange={(open) => !open && setFileToDeleteId(null)}>
+                <AlertDialogContent className="rounded-2xl max-w-sm">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-sm font-bold text-slate-800">¿Eliminar documento?</AlertDialogTitle>
+                        <AlertDialogDescription className="text-xs text-slate-500">
+                            Esta acción no se puede deshacer. Se removerá el archivo de este trabajo permanentemente de los registros.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="gap-2">
+                        <AlertDialogCancel className="h-8 text-xs rounded-xl">Cancelar</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDeleteFile} className="h-8 text-xs rounded-xl bg-rose-600 hover:bg-rose-700 text-white">
+                            Confirmar Eliminar
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }
+
