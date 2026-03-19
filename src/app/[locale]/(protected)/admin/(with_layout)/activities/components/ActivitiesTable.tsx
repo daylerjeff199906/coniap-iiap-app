@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useTransition } from 'react'
 import { Badge } from '@/components/ui/badge'
 import {
     Table,
@@ -9,76 +10,177 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { IconClock, IconDatabaseOff } from '@tabler/icons-react'
-import { ActivityItem } from '../actions'
+import { IconClock, IconDatabaseOff, IconEdit, IconTrash } from '@tabler/icons-react'
+import { ActivityItem, deleteActivity } from '../actions'
+import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel } from '@/components/ui/alert-dialog'
+import { Input } from '@/components/ui/input'
+import { toast } from 'react-toastify'
+import { Link } from '@/i18n/routing'
 
 interface ActivitiesTableProps {
     activities: ActivityItem[]
 }
 
 export function ActivitiesTable({ activities }: ActivitiesTableProps) {
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+    const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null)
+    const [deleteText, setDeleteText] = useState('')
+    const [isPending, startTransition] = useTransition()
+
+    const handleDeleteClick = (activity: ActivityItem) => {
+        setSelectedActivity(activity)
+        setIsDeleteOpen(true)
+        setDeleteText('')
+    }
+
+    const handleDeleteConfirm = () => {
+        if (!selectedActivity || deleteText !== 'DELETE') return
+        startTransition(async () => {
+            const result = await deleteActivity(selectedActivity.id)
+            if (result.error) {
+                toast.error(result.error)
+            } else {
+                toast.success('Actividad eliminada')
+                setIsDeleteOpen(false)
+            }
+        })
+    }
+
     return (
-        <div className="rounded-md border overflow-hidden mt-2">
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Nombre</TableHead>
-                        <TableHead>Fecha</TableHead>
-                        <TableHead>Hora</TableHead>
-                        <TableHead>Estado</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {activities && activities.length > 0 ? (
-                        activities.map((activity) => {
-                            return (
-                                <TableRow
-                                    key={activity.id}
-                                    className="cursor-pointer hover:bg-muted transition-colors"
-                                >
-                                    <TableCell>
-                                        <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 flex-shrink-0 flex items-center justify-center bg-violet-50 text-violet-500 rounded-lg overflow-hidden border">
-                                                <IconClock size={20} />
-                                            </div>
-                                            <div className="flex flex-col max-w-[300px] md:max-w-md">
-                                                <span className="font-semibold text-[15px] truncate">{activity.name}</span>
-                                                {activity.shortDescription && (
-                                                    <span className="text-xs text-muted-foreground truncate" title={activity.shortDescription}>
-                                                        {activity.shortDescription}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
-                                        {activity.date ? new Date(activity.date).toLocaleDateString() : 'Sin fecha'}
-                                    </TableCell>
-                                    <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
-                                        {activity.timeStart && activity.timeEnd 
-                                            ? `${activity.timeStart} - ${activity.timeEnd}` 
-                                            : activity.timeStart || 'Sin hora'}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge variant={activity.isActived ? 'default' : 'secondary'}>
-                                            {activity.isActived ? 'Activo' : 'Inactivo'}
-                                        </Badge>
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        })
-                    ) : (
+        <TooltipProvider delayDuration={200}>
+            <div className="rounded-2xl border overflow-hidden mt-2 bg-card">
+                <Table>
+                    <TableHeader className="bg-muted/30">
                         <TableRow>
-                            <TableCell colSpan={4} className="h-32 text-center">
-                                <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
-                                    <IconDatabaseOff size={32} />
-                                    <p>No se encontraron actividades.</p>
-                                </div>
-                            </TableCell>
+                            <TableHead className="font-semibold text-foreground">Nombre</TableHead>
+                            <TableHead className="font-semibold text-foreground">Fecha</TableHead>
+                            <TableHead className="font-semibold text-foreground">Hora</TableHead>
+                            <TableHead className="font-semibold text-foreground">Estado</TableHead>
+                            <TableHead className="text-center w-24 font-semibold text-foreground">Acciones</TableHead>
                         </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-        </div>
+                    </TableHeader>
+                    <TableBody>
+                        {activities && activities.length > 0 ? (
+                            activities.map((activity) => {
+                                return (
+                                    <TableRow
+                                        key={activity.id}
+                                        className="cursor-pointer hover:bg-muted/30 transition-colors"
+                                    >
+                                        <TableCell>
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-10 w-10 flex-shrink-0 flex items-center justify-center bg-violet-50 text-violet-500 rounded-xl overflow-hidden border">
+                                                    <IconClock size={20} />
+                                                </div>
+                                                <div className="flex flex-col max-w-[300px] md:max-w-md">
+                                                    <span className="font-semibold text-[15px] truncate">{activity.name}</span>
+                                                    {activity.shortDescription && (
+                                                        <span className="text-xs text-muted-foreground truncate" title={activity.shortDescription}>
+                                                            {activity.shortDescription}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
+                                            {activity.date ? new Date(activity.date).toLocaleDateString() : 'Sin fecha'}
+                                        </TableCell>
+                                        <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
+                                            {activity.timeStart && activity.timeEnd 
+                                                ? `${activity.timeStart} - ${activity.timeEnd}` 
+                                                : activity.timeStart || 'Sin hora'}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge variant={activity.isActived ? 'default' : 'secondary'} className="rounded-full">
+                                                {activity.isActived ? 'Activo' : 'Inactivo'}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell className="text-center">
+                                            <div className="flex items-center justify-center gap-1">
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <Button 
+                                                            variant="ghost" 
+                                                            size="icon" 
+                                                            className="h-8 w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                                                            asChild
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        >
+                                                            <Link href={`/admin/activities/${activity.id}`}>
+                                                                <IconEdit className="h-4 w-4" />
+                                                            </Link>
+                                                        </Button>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent><p>Editar actividad</p></TooltipContent>
+                                                </Tooltip>
+
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <Button 
+                                                            variant="ghost" 
+                                                            size="icon" 
+                                                            className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                                            onClick={(e) => { e.stopPropagation(); handleDeleteClick(activity); }}
+                                                        >
+                                                            <IconTrash className="h-4 w-4" />
+                                                        </Button>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent><p>Eliminar actividad</p></TooltipContent>
+                                                </Tooltip>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={5} className="h-32 text-center">
+                                    <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
+                                        <IconDatabaseOff size={32} />
+                                        <p>No se encontraron actividades.</p>
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+
+                {/* Delete AlertDialog */}
+                <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+                    <AlertDialogContent className="rounded-2xl">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>¿Eliminar actividad?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Esta acción no se puede deshacer. Se eliminará permanentemente la actividad <strong>{selectedActivity?.name}</strong>.
+                                <br /><br />
+                                Escribe <strong>DELETE</strong> para confirmar.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <div className="my-2">
+                            <Input
+                                placeholder="DELETE"
+                                value={deleteText}
+                                onChange={(e) => setDeleteText(e.target.value)}
+                                disabled={isPending}
+                                className="rounded-xl h-11"
+                            />
+                        </div>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel disabled={isPending} className="rounded-xl">Cancelar</AlertDialogCancel>
+                            <Button
+                                variant="destructive"
+                                onClick={handleDeleteConfirm}
+                                disabled={deleteText !== 'DELETE' || isPending}
+                                className="rounded-xl"
+                            >
+                                {isPending ? 'Eliminando...' : 'Eliminar'}
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </div>
+        </TooltipProvider>
     )
 }

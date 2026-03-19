@@ -2,6 +2,8 @@
 
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
+import { activitySchema, ActivityFormInput } from './schema'
 
 export interface ActivityItem {
     id: string
@@ -38,11 +40,8 @@ export async function getActivities(
     }
 
     if (options?.edition_id) {
-        // If a specific edition is selected, query ONLY for that edition
         query = query.eq('edition_id', options.edition_id)
     } else if (options?.main_event_id) {
-        // If searching by main event, we want activities directly linked to it, 
-        // OR activities linked to ANY of its editions.
         const { data: edData } = await supabase
             .from('editions')
             .select('id')
@@ -70,4 +69,96 @@ export async function getActivities(
     }
 
     return { data: (data || []) as ActivityItem[], count: count || 0 }
+}
+
+export async function deleteActivity(id: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { error } = await supabase.from('events').delete().eq('id', id)
+
+    if (error) {
+        console.error('Error deleting activity:', error)
+        return { error: 'No se pudo eliminar la actividad' }
+    }
+
+    revalidatePath('/', 'layout')
+    return { success: true }
+}
+
+export async function upsertActivity(data: ActivityFormInput, activityId?: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'No autorizado' }
+
+    // Validate using Zod
+    const validation = activitySchema.safeParse(data)
+    if (!validation.success) {
+        const formattedErrors = validation.error.flatten().fieldErrors
+        return { error: 'Datos inválidos', validationErrors: formattedErrors }
+    }
+
+    const validData = validation.data
+
+    const payload = {
+        name: validData.name,
+        date: validData.date || null,
+        timeStart: validData.timeStart || null,
+        timeEnd: validData.timeEnd || null,
+        shortDescription: validData.shortDescription || null,
+        sala: validData.sala || null,
+        isActived: validData.isActived,
+        main_event_id: validData.main_event_id || null,
+        edition_id: validData.edition_id || null,
+        customContent: validData.customContent || null,
+    }
+
+    if (activityId) {
+        const { error } = await supabase.from('events').update(payload).eq('id', activityId)
+        if (error) return { error: error.message }
+    } else {
+        const { error } = await supabase.from('events').insert([payload])
+        if (error) return { error: error.message }
+    }
+
+    revalidatePath('/', 'layout')
+    return { success: true }
+}
+
+export async function getActivityById(id: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase.from('events').select('*').eq('id', id).single()
+    if (error) {
+        console.error('Error fetching activity details:', error)
+        return null
+    }
+
+    return data as ActivityItem
+}
+
+export async function getMainEventsList() {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase.from('main_events').select('id, name')
+    if (error) return []
+    return data
+}
+
+export async function getEditionsList(mainEventId?: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    let query = supabase.from('editions').select('id, name, main_event_id')
+    if (mainEventId) {
+        query = query.eq('main_event_id', mainEventId)
+    }
+
+    const { data, error } = await query
+    if (error) return []
+    return data
 }
