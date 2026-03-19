@@ -3,25 +3,28 @@
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
-import { activitySchema, ActivityFormInput } from './schema'
+import { ActivityFormInput, activitySchema } from './schema'
 
 export interface ActivityItem {
     id: string
     created_at: string
-    isActived: boolean
-    name?: string | null
-    timeStart?: string | null
-    timeEnd?: string | null
-    date?: string | null
-    shortDescription?: string | null
-    banner?: string | null
-    customContent?: string | null
-    program_id?: number | null
-    summary_id?: number | null
-    sala?: number | null
+    is_active: boolean
+    title?: string | null
+    start_time?: string | null
+    end_time?: string | null
+    session_date?: string | null
+    short_description?: string | null
+    banner_url?: string | null
+    custom_content?: string | null
+    room_id?: number | null
     main_event_id?: string | null
     edition_id?: string | null
     submission_id?: string | null
+    session_type?: 'keynote' | 'presentation' | 'panel' | 'workshop' | 'networking' | 'break' | 'other' | null
+    is_online: boolean
+    stream_platform?: string | null
+    stream_url?: string | null
+    stream_password?: string | null
 }
 
 export async function getActivities(
@@ -33,10 +36,10 @@ export async function getActivities(
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    let query = supabase.from('events').select('*', { count: 'exact' })
+    let query = supabase.from('event_sessions').select('*', { count: 'exact' })
 
     if (search) {
-        query = query.ilike('name', `%${search}%`)
+        query = query.ilike('title', `%${search}%`)
     }
 
     if (options?.edition_id) {
@@ -59,7 +62,9 @@ export async function getActivities(
     const from = (page - 1) * limit
     const to = from + limit - 1
 
-    query = query.range(from, to).order('date', { ascending: false }).order('timeStart', { ascending: true })
+    query = query.range(from, to)
+        .order('session_date', { ascending: false })
+        .order('start_time', { ascending: true })
 
     const { data, count, error } = await query
 
@@ -75,7 +80,7 @@ export async function deleteActivity(id: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const { error } = await supabase.from('events').delete().eq('id', id)
+    const { error } = await supabase.from('event_sessions').delete().eq('id', id)
 
     if (error) {
         console.error('Error deleting activity:', error)
@@ -103,23 +108,28 @@ export async function upsertActivity(data: ActivityFormInput, activityId?: strin
     const validData = validation.data
 
     const payload = {
-        name: validData.name,
-        date: validData.date || null,
-        timeStart: validData.timeStart || null,
-        timeEnd: validData.timeEnd || null,
-        shortDescription: validData.shortDescription || null,
-        sala: validData.sala || null,
-        isActived: validData.isActived,
+        title: validData.title,
+        session_date: validData.session_date || null,
+        start_time: validData.start_time || null,
+        end_time: validData.end_time || null,
+        short_description: validData.short_description || null,
+        room_id: validData.room_id || null,
+        is_active: validData.is_active,
         main_event_id: validData.main_event_id || null,
         edition_id: validData.edition_id || null,
-        customContent: validData.customContent || null,
+        custom_content: validData.custom_content || null,
+        session_type: validData.session_type,
+        is_online: validData.is_online,
+        stream_platform: validData.stream_platform || null,
+        stream_url: validData.stream_url || null,
+        stream_password: validData.stream_password || null,
     }
 
     if (activityId) {
-        const { error } = await supabase.from('events').update(payload).eq('id', activityId)
+        const { error } = await supabase.from('event_sessions').update(payload).eq('id', activityId)
         if (error) return { error: error.message }
     } else {
-        const { error } = await supabase.from('events').insert([payload])
+        const { error } = await supabase.from('event_sessions').insert([payload])
         if (error) return { error: error.message }
     }
 
@@ -131,7 +141,7 @@ export async function getActivityById(id: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const { data, error } = await supabase.from('events').select('*').eq('id', id).single()
+    const { data, error } = await supabase.from('event_sessions').select('*').eq('id', id).single()
     if (error) {
         console.error('Error fetching activity details:', error)
         return null

@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { IconClock, IconDatabaseOff, IconEdit, IconTrash } from '@tabler/icons-react'
+import { IconClock, IconDatabaseOff, IconEdit, IconTrash, IconVideo } from '@tabler/icons-react'
 import { ActivityItem, deleteActivity } from '../actions'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -21,6 +21,16 @@ import { Link } from '@/i18n/routing'
 
 interface ActivitiesTableProps {
     activities: ActivityItem[]
+}
+
+const sessionTypeLabels: Record<string, string> = {
+    keynote: 'Charla Magistral',
+    presentation: 'Plan de Paper',
+    panel: 'Panel',
+    workshop: 'Taller',
+    networking: 'Networking',
+    break: 'Break',
+    other: 'Otro'
 }
 
 export function ActivitiesTable({ activities }: ActivitiesTableProps) {
@@ -42,7 +52,7 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
             if (result.error) {
                 toast.error(result.error)
             } else {
-                toast.success('Actividad eliminada')
+                toast.success('Sesión eliminada')
                 setIsDeleteOpen(false)
             }
         })
@@ -54,7 +64,7 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
                 <Table>
                     <TableHeader className="bg-muted/30">
                         <TableRow>
-                            <TableHead className="font-semibold text-foreground">Nombre</TableHead>
+                            <TableHead className="font-semibold text-foreground">Título / Tipo</TableHead>
                             <TableHead className="font-semibold text-foreground">Fecha</TableHead>
                             <TableHead className="font-semibold text-foreground">Hora</TableHead>
                             <TableHead className="font-semibold text-foreground">Estado</TableHead>
@@ -75,26 +85,34 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
                                                     <IconClock size={20} />
                                                 </div>
                                                 <div className="flex flex-col max-w-[300px] md:max-w-md">
-                                                    <span className="font-semibold text-[15px] truncate">{activity.name}</span>
-                                                    {activity.shortDescription && (
-                                                        <span className="text-xs text-muted-foreground truncate" title={activity.shortDescription}>
-                                                            {activity.shortDescription}
-                                                        </span>
-                                                    )}
+                                                    <span className="font-semibold text-[15px] truncate flex items-center gap-1.5">
+                                                        {activity.title}
+                                                        {activity.is_online && (
+                                                            <Tooltip>
+                                                                <TooltipTrigger>
+                                                                    <IconVideo className="h-3.5 w-3.5 text-emerald-500" />
+                                                                </TooltipTrigger>
+                                                                <TooltipContent className="text-xs">En Línea</TooltipContent>
+                                                            </Tooltip>
+                                                        )}
+                                                    </span>
+                                                    <span className="text-xs text-muted-foreground truncate">
+                                                        {activity.session_type ? sessionTypeLabels[activity.session_type] : 'Presentación'}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
-                                            {activity.date ? new Date(activity.date).toLocaleDateString() : 'Sin fecha'}
+                                            {activity.session_date ? new Date(activity.session_date).toLocaleDateString() : 'Sin fecha'}
                                         </TableCell>
                                         <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
-                                            {activity.timeStart && activity.timeEnd 
-                                                ? `${activity.timeStart} - ${activity.timeEnd}` 
-                                                : activity.timeStart || 'Sin hora'}
+                                            {activity.start_time && activity.end_time 
+                                                ? `${activity.start_time} - ${activity.end_time}` 
+                                                : activity.start_time || 'Sin hora'}
                                         </TableCell>
                                         <TableCell>
-                                            <Badge variant={activity.isActived ? 'default' : 'secondary'} className="rounded-full">
-                                                {activity.isActived ? 'Activo' : 'Inactivo'}
+                                            <Badge variant={activity.is_active ? 'default' : 'secondary'} className="rounded-full">
+                                                {activity.is_active ? 'Activo' : 'Inactivo'}
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="text-center">
@@ -113,7 +131,7 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
                                                             </Link>
                                                         </Button>
                                                     </TooltipTrigger>
-                                                    <TooltipContent><p>Editar actividad</p></TooltipContent>
+                                                    <TooltipContent><p>Editar sesión</p></TooltipContent>
                                                 </Tooltip>
 
                                                 <Tooltip>
@@ -127,7 +145,7 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
                                                             <IconTrash className="h-4 w-4" />
                                                         </Button>
                                                     </TooltipTrigger>
-                                                    <TooltipContent><p>Eliminar actividad</p></TooltipContent>
+                                                    <TooltipContent><p>Eliminar sesión</p></TooltipContent>
                                                 </Tooltip>
                                             </div>
                                         </TableCell>
@@ -139,7 +157,7 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
                                 <TableCell colSpan={5} className="h-32 text-center">
                                     <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
                                         <IconDatabaseOff size={32} />
-                                        <p>No se encontraron actividades.</p>
+                                        <p>No se encontraron sesiones.</p>
                                     </div>
                                 </TableCell>
                             </TableRow>
@@ -151,9 +169,9 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
                 <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
                     <AlertDialogContent className="rounded-2xl">
                         <AlertDialogHeader>
-                            <AlertDialogTitle>¿Eliminar actividad?</AlertDialogTitle>
+                            <AlertDialogTitle>¿Eliminar sesión?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                Esta acción no se puede deshacer. Se eliminará permanentemente la actividad <strong>{selectedActivity?.name}</strong>.
+                                Esta acción no se puede deshacer. Se eliminará permanentemente la sesión <strong>{selectedActivity?.title}</strong>.
                                 <br /><br />
                                 Escribe <strong>DELETE</strong> para confirmar.
                             </AlertDialogDescription>

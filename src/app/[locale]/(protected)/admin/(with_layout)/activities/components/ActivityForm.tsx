@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -34,6 +35,16 @@ interface LocalizedString {
     es?: string
 }
 
+const sessionTypeLabels: Record<string, string> = {
+    keynote: 'Charla Magistral',
+    presentation: 'Presentación de Paper / Trabajo',
+    panel: 'Panel de Discusión',
+    workshop: 'Taller Práctico',
+    networking: 'Evento Social / Networking',
+    break: 'Coffee Break / Almuerzo',
+    other: 'Otro'
+}
+
 export function ActivityForm({ activity }: ActivityFormProps) {
     const router = useRouter()
     const locale = useLocale() as 'en' | 'es'
@@ -47,16 +58,21 @@ export function ActivityForm({ activity }: ActivityFormProps) {
     const form = useForm<ActivityFormInput>({
         resolver: zodResolver(activitySchema),
         defaultValues: {
-            name: activity?.name || '',
-            date: activity?.date || '',
-            timeStart: activity?.timeStart || '',
-            timeEnd: activity?.timeEnd || '',
-            shortDescription: activity?.shortDescription || '',
-            sala: activity?.sala || null,
-            isActived: activity ? activity.isActived : true,
+            title: activity?.title || '',
+            session_date: activity?.session_date || '',
+            start_time: activity?.start_time || '',
+            end_time: activity?.end_time || '',
+            short_description: activity?.short_description || '',
+            room_id: activity?.room_id || null,
+            is_active: activity ? activity.is_active : true,
             main_event_id: activity?.main_event_id || '',
             edition_id: activity?.edition_id || '',
-            customContent: activity?.customContent || '',
+            custom_content: activity?.custom_content || '',
+            session_type: activity?.session_type || 'presentation',
+            is_online: activity?.is_online ?? false,
+            stream_platform: activity?.stream_platform || '',
+            stream_url: activity?.stream_url || '',
+            stream_password: activity?.stream_password || '',
         },
     })
 
@@ -73,6 +89,7 @@ export function ActivityForm({ activity }: ActivityFormProps) {
     }, [])
 
     const watchMainEvent = form.watch('main_event_id')
+    const watchIsOnline = form.watch('is_online')
 
     useEffect(() => {
         if (watchMainEvent) {
@@ -93,7 +110,7 @@ export function ActivityForm({ activity }: ActivityFormProps) {
             if (result.error) {
                 toast.error(typeof result.error === 'string' ? result.error : 'Error al guardar los datos')
             } else {
-                toast.success(isEdit ? 'Actividad actualizada' : 'Actividad creada con éxito')
+                toast.success(isEdit ? 'Sesión actualizada' : 'Sesión creada con éxito')
                 router.push('/admin/activities')
             }
         })
@@ -108,8 +125,8 @@ export function ActivityForm({ activity }: ActivityFormProps) {
     return (
         <div className="flex flex-col gap-6 max-w-5xl mx-auto pb-10 w-full">
             <PageHeader
-                title={isEdit ? 'Editar Actividad' : 'Nueva Actividad'}
-                description={isEdit ? 'Actualiza los detalles de la sesión.' : 'Configura una nueva sesión para tus eventos.'}
+                title={isEdit ? 'Editar Sesión' : 'Nueva Sesión de Evento'}
+                description={isEdit ? 'Actualiza los detalles de la sesión.' : 'Configura una nueva sesión y agenda para tus eventos.'}
                 backHref="/admin/activities"
                 variant="chevron"
             />
@@ -120,19 +137,49 @@ export function ActivityForm({ activity }: ActivityFormProps) {
                         <CardContent className="p-6 space-y-5">
                             <h3 className="text-base font-semibold text-foreground">Información Básica</h3>
 
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="text-muted-foreground font-medium">Nombre de la Actividad</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Ej: Conferencia Magistral sobre IA..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <FormField
+                                    control={form.control}
+                                    name="title"
+                                    render={({ field }) => (
+                                        <FormItem className="md:col-span-2">
+                                            <FormLabel className="text-muted-foreground font-medium">Título de la Sesión</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Ej: Conferencia Magistral sobre IA..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name="session_type"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-muted-foreground font-medium">Tipo de Sesión</FormLabel>
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                value={field.value || 'presentation'}
+                                            >
+                                                <FormControl>
+                                                    <SelectTrigger className="h-11 rounded-xl">
+                                                        <SelectValue placeholder="Selecciona el tipo" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent className="rounded-xl">
+                                                    {Object.entries(sessionTypeLabels).map(([key, label]) => (
+                                                        <SelectItem key={key} value={key}>
+                                                            {label}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <FormField
@@ -202,7 +249,7 @@ export function ActivityForm({ activity }: ActivityFormProps) {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                                 <FormField
                                     control={form.control}
-                                    name="date"
+                                    name="session_date"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-muted-foreground font-medium">Fecha</FormLabel>
@@ -216,7 +263,7 @@ export function ActivityForm({ activity }: ActivityFormProps) {
 
                                 <FormField
                                     control={form.control}
-                                    name="timeStart"
+                                    name="start_time"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-muted-foreground font-medium">Hora Inicio</FormLabel>
@@ -230,7 +277,7 @@ export function ActivityForm({ activity }: ActivityFormProps) {
 
                                 <FormField
                                     control={form.control}
-                                    name="timeEnd"
+                                    name="end_time"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-muted-foreground font-medium">Hora Fin</FormLabel>
@@ -246,7 +293,7 @@ export function ActivityForm({ activity }: ActivityFormProps) {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <FormField
                                     control={form.control}
-                                    name="sala"
+                                    name="room_id"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-muted-foreground font-medium">Sala / Aula (Número)</FormLabel>
@@ -267,7 +314,7 @@ export function ActivityForm({ activity }: ActivityFormProps) {
 
                                 <FormField
                                     control={form.control}
-                                    name="isActived"
+                                    name="is_active"
                                     render={({ field }) => (
                                         <FormItem className="flex flex-row items-center justify-between rounded-xl border p-4 shadow-sm h-11 self-end bg-muted/20">
                                             <div className="space-y-0.5">
@@ -288,11 +335,80 @@ export function ActivityForm({ activity }: ActivityFormProps) {
 
                     <Card className="rounded-2xl border-none shadow-sm bg-card">
                         <CardContent className="p-6 space-y-5">
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-base font-semibold text-foreground">Soporte Virtual / Streaming</h3>
+                                <FormField
+                                    control={form.control}
+                                    name="is_online"
+                                    render={({ field }) => (
+                                        <FormItem className="flex items-center gap-2 space-y-0">
+                                            <FormLabel className="text-sm text-muted-foreground mr-1">Transmisión en Vivo</FormLabel>
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+                            {watchIsOnline && (
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2 animate-in fade-in-50 duration-200">
+                                    <FormField
+                                        control={form.control}
+                                        name="stream_platform"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-muted-foreground font-medium">Plataforma</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Ej: Zoom, YouTube..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="stream_url"
+                                        render={({ field }) => (
+                                            <FormItem className="md:col-span-1">
+                                                <FormLabel className="text-muted-foreground font-medium">URL de Transmisión</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="https://..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="stream_password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-muted-foreground font-medium">Contraseña / Clave (Opcional)</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Clave de acceso..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+
+                    <Card className="rounded-2xl border-none shadow-sm bg-card">
+                        <CardContent className="p-6 space-y-5">
                             <h3 className="text-base font-semibold text-foreground">Detalles Extra</h3>
 
                             <FormField
                                 control={form.control}
-                                name="shortDescription"
+                                name="short_description"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-muted-foreground font-medium">Descripción Breve</FormLabel>
@@ -307,12 +423,12 @@ export function ActivityForm({ activity }: ActivityFormProps) {
                     </Card>
 
                     <div className="flex items-center justify-end gap-3 mt-4">
-                        <Button type="button" variant="outline" className="rounded-xl h-11 px-6" onClick={() => router.push('/admin/activities')} disabled={isPending}>
+                        <Button type="button" className="rounded-xl h-11 px-6 bg-secondary text-secondary-foreground hover:bg-secondary/80 border" onClick={() => router.push('/admin/activities')} disabled={isPending}>
                             Cancelar
                         </Button>
                         <Button type="submit" className="bg-[#0064e0] hover:bg-[#0057c2] text-white font-medium rounded-xl h-11 px-6 shadow-sm flex items-center gap-2" disabled={isPending}>
                             <IconDeviceFloppy className="h-5 w-5" />
-                            {isPending ? 'Guardando...' : (isEdit ? 'Guardar Cambios' : 'Crear Actividad')}
+                            {isPending ? 'Guardando...' : (isEdit ? 'Guardar Cambios' : 'Crear Sesion')}
                         </Button>
                     </div>
                 </form>
