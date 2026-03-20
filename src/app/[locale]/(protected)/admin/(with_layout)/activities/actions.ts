@@ -17,6 +17,7 @@ export interface ActivityItem {
     banner_url?: string | null
     custom_content?: string | null
     room_id?: number | null
+    address?: string | null
     main_event_id?: string | null
     edition_id?: string | null
     submission_id?: string | null
@@ -113,7 +114,7 @@ export async function upsertActivity(data: ActivityFormInput, activityId?: strin
         start_time: validData.start_time || null,
         end_time: validData.end_time || null,
         short_description: validData.short_description || null,
-        room_id: validData.room_id || null,
+        address: validData.address || null,
         is_active: validData.is_active,
         main_event_id: validData.main_event_id || null,
         edition_id: validData.edition_id || null,
@@ -123,7 +124,10 @@ export async function upsertActivity(data: ActivityFormInput, activityId?: strin
         stream_platform: validData.stream_platform || null,
         stream_url: validData.stream_url || null,
         stream_password: validData.stream_password || null,
+        banner_url: validData.banner_url || null,
+        submission_id: validData.submission_id || null,
     }
+
 
     if (activityId) {
         const { error } = await supabase.from('event_sessions').update(payload).eq('id', activityId)

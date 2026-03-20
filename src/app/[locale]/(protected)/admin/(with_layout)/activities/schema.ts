@@ -16,7 +16,7 @@ export const activitySchema = z.object({
     start_time: z.string().nullable().optional().or(z.literal('')),
     end_time: z.string().nullable().optional().or(z.literal('')),
     short_description: z.string().nullable().optional(),
-    room_id: z.coerce.number().nullable().optional(),
+    address: z.string().nullable().optional(),
     is_active: z.boolean(),
     main_event_id: z.string().nullable().optional().or(z.literal('')),
     edition_id: z.string().nullable().optional().or(z.literal('')),
@@ -26,6 +26,9 @@ export const activitySchema = z.object({
     stream_platform: z.string().nullable().optional(),
     stream_url: z.string().url('URL inválida').nullable().optional().or(z.literal('')),
     stream_password: z.string().nullable().optional(),
+    banner_url: z.string().url('URL inválida').nullable().optional().or(z.literal('')),
+    submission_id: z.string().nullable().optional().or(z.literal('')),
 })
+
 
 export type ActivityFormInput = z.infer<typeof activitySchema>

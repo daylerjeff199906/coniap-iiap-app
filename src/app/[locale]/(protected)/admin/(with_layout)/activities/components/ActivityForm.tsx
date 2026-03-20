@@ -23,8 +23,12 @@ import { toast } from 'react-toastify'
 import { useRouter } from '@/i18n/routing'
 import { PageHeader } from '@/components/general/PageHeader/PageHeader'
 import { Card, CardContent } from '@/components/ui/card'
-import { IconDeviceFloppy } from '@tabler/icons-react'
+import { IconDeviceFloppy, IconClock, IconVideo, IconCalendar, IconMapPin } from '@tabler/icons-react'
 import { useLocale } from 'next-intl'
+import { BannerUploadModal } from './BannerUploadModal'
+import { cn } from '@/lib/utils'
+import { Badge } from '@/components/ui/badge'
+
 
 interface ActivityFormProps {
     activity?: ActivityItem
@@ -66,7 +70,7 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
             start_time: activity?.start_time || '',
             end_time: activity?.end_time || '',
             short_description: activity?.short_description || '',
-            room_id: activity?.room_id || null,
+            address: activity?.address || '',
             is_active: activity ? activity.is_active : true,
             main_event_id: activity?.main_event_id || defaultMainEventId || '',
             edition_id: activity?.edition_id || defaultEditionId || '',
@@ -76,8 +80,11 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
             stream_platform: activity?.stream_platform || '',
             stream_url: activity?.stream_url || '',
             stream_password: activity?.stream_password || '',
+            banner_url: activity?.banner_url || '',
+            submission_id: activity?.submission_id || '',
         },
     })
+
 
     useEffect(() => {
         async function loadData() {
@@ -93,6 +100,7 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
 
     const watchMainEvent = form.watch('main_event_id')
     const watchIsOnline = form.watch('is_online')
+
 
     useEffect(() => {
         if (watchMainEvent) {
@@ -127,242 +135,23 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
     }
 
     return (
-        <div className="flex flex-col gap-6 max-w-5xl mx-auto pb-10 w-full">
+        <div className="w-full relative">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <Card className="rounded-2xl border-none shadow-sm bg-card">
-                        <CardContent className="p-6 space-y-5">
-                            <h3 className="text-base font-semibold text-foreground">Información Básica</h3>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full min-h-[calc(100vh-130px)]">
+                    <div className="flex-1 space-y-6 pb-20 max-w-5xl mx-auto w-full">
+                        <Card className="rounded-2xl border-none shadow-sm bg-card">
+                            <CardContent className="p-6 space-y-5">
+                                <h3 className="text-base font-semibold text-foreground">Información Básica</h3>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <FormField
-                                    control={form.control}
-                                    name="title"
-                                    render={({ field }) => (
-                                        <FormItem className="md:col-span-2">
-                                            <FormLabel className="text-muted-foreground font-medium">Título de la Sesión</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Ej: Conferencia Magistral sobre IA..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                <FormField
-                                    control={form.control}
-                                    name="session_type"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-muted-foreground font-medium">Tipo de Sesión</FormLabel>
-                                            <Select
-                                                onValueChange={field.onChange}
-                                                value={field.value || 'presentation'}
-                                            >
-                                                <FormControl>
-                                                    <SelectTrigger className="h-11 rounded-xl">
-                                                        <SelectValue placeholder="Selecciona el tipo" />
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent className="rounded-xl">
-                                                    {Object.entries(sessionTypeLabels).map(([key, label]) => (
-                                                        <SelectItem key={key} value={key}>
-                                                            {label}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <FormField
-                                    control={form.control}
-                                    name="main_event_id"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-muted-foreground font-medium">Evento Principal</FormLabel>
-                                            <Select
-                                                onValueChange={field.onChange}
-                                                value={field.value || ''}
-                                                disabled={!!defaultMainEventId}
-                                            >
-                                                <FormControl>
-                                                    <SelectTrigger className="h-11 rounded-xl">
-                                                        <SelectValue placeholder="Selecciona un evento" />
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent className="rounded-xl">
-                                                    {eventsList.map(event => (
-                                                        <SelectItem key={event.id} value={event.id}>
-                                                            {getLocalizedName(event.name)}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-
-                                <FormField
-                                    control={form.control}
-                                    name="edition_id"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-muted-foreground font-medium">Edición (Opcional)</FormLabel>
-                                            <Select
-                                                onValueChange={field.onChange}
-                                                value={field.value || ''}
-                                                disabled={!watchMainEvent}
-                                            >
-                                                <FormControl>
-                                                    <SelectTrigger className="h-11 rounded-xl">
-                                                        <SelectValue placeholder={watchMainEvent ? "Selecciona una edición" : "Selecciona un evento primero"} />
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent className="rounded-xl">
-                                                    {filteredEditions.map(edition => (
-                                                        <SelectItem key={edition.id} value={edition.id}>
-                                                            {getLocalizedName(edition.name)}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="rounded-2xl border-none shadow-sm bg-card">
-                        <CardContent className="p-6 space-y-5">
-                            <h3 className="text-base font-semibold text-foreground">Fecha y Ubicación</h3>
-
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <FormField
-                                    control={form.control}
-                                    name="session_date"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-muted-foreground font-medium">Fecha</FormLabel>
-                                            <FormControl>
-                                                <Input type="date" className="h-11 rounded-xl" {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                <FormField
-                                    control={form.control}
-                                    name="start_time"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-muted-foreground font-medium">Hora Inicio</FormLabel>
-                                            <FormControl>
-                                                <Input type="time" className="h-11 rounded-xl" {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                <FormField
-                                    control={form.control}
-                                    name="end_time"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-muted-foreground font-medium">Hora Fin</FormLabel>
-                                            <FormControl>
-                                                <Input type="time" className="h-11 rounded-xl" {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <FormField
-                                    control={form.control}
-                                    name="room_id"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-muted-foreground font-medium">Sala / Aula (Número)</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    type="number"
-                                                    placeholder="Ej: 1"
-                                                    className="h-11 rounded-xl"
-                                                    {...field}
-                                                    value={field.value === null ? '' : field.value}
-                                                    onChange={e => field.onChange(e.target.value === '' ? null : Number(e.target.value))}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                <FormField
-                                    control={form.control}
-                                    name="is_active"
-                                    render={({ field }) => (
-                                        <FormItem className="flex flex-row items-center justify-between rounded-xl border p-4 shadow-sm h-11 self-end bg-muted/20">
-                                            <div className="space-y-0.5">
-                                                <FormLabel className="text-sm font-semibold text-foreground">Habilitado</FormLabel>
-                                            </div>
-                                            <FormControl>
-                                                <Switch
-                                                    checked={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="rounded-2xl border-none shadow-sm bg-card">
-                        <CardContent className="p-6 space-y-5">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-base font-semibold text-foreground">Soporte Virtual / Streaming</h3>
-                                <FormField
-                                    control={form.control}
-                                    name="is_online"
-                                    render={({ field }) => (
-                                        <FormItem className="flex items-center gap-2 space-y-0">
-                                            <FormLabel className="text-sm text-muted-foreground mr-1">Transmisión en Vivo</FormLabel>
-                                            <FormControl>
-                                                <Switch
-                                                    checked={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-
-                            {watchIsOnline && (
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2 animate-in fade-in-50 duration-200">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                                     <FormField
                                         control={form.control}
-                                        name="stream_platform"
+                                        name="title"
                                         render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="text-muted-foreground font-medium">Plataforma</FormLabel>
+                                            <FormItem className="md:col-span-2">
+                                                <FormLabel className="text-muted-foreground font-medium">Título de la Sesión</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="Ej: Zoom, YouTube..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                    <Input placeholder="Ej: Conferencia Magistral sobre IA..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -371,12 +160,156 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
 
                                     <FormField
                                         control={form.control}
-                                        name="stream_url"
+                                        name="session_type"
                                         render={({ field }) => (
-                                            <FormItem className="md:col-span-1">
-                                                <FormLabel className="text-muted-foreground font-medium">URL de Transmisión</FormLabel>
+                                            <FormItem>
+                                                <FormLabel className="text-muted-foreground font-medium">Tipo de Sesión</FormLabel>
+                                                <Select
+                                                    onValueChange={field.onChange}
+                                                    value={field.value || 'presentation'}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger className="h-11 rounded-xl">
+                                                            <SelectValue placeholder="Selecciona el tipo" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent className="rounded-xl">
+                                                        {Object.entries(sessionTypeLabels).map(([key, label]) => (
+                                                            <SelectItem key={key} value={key}>
+                                                                {label}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <div className="col-span-1 md:col-span-3">
+                                        <FormField
+                                            control={form.control}
+                                            name="short_description"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-muted-foreground font-medium">Descripción Breve</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea placeholder="Breve resumen de la sesión..." className="resize-none rounded-xl h-24" {...field} value={field.value || ''} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <FormField
+                                        control={form.control}
+                                        name="main_event_id"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-muted-foreground font-medium">Evento Principal</FormLabel>
+                                                <Select
+                                                    onValueChange={field.onChange}
+                                                    value={field.value || ''}
+                                                    disabled={!!defaultMainEventId}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger className="h-11 rounded-xl">
+                                                            <SelectValue placeholder="Selecciona un evento" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent className="rounded-xl">
+                                                        {eventsList.map(event => (
+                                                            <SelectItem key={event.id} value={event.id}>
+                                                                {getLocalizedName(event.name)}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="edition_id"
+                                        render={({ field }) => (
+                                            <FormItem className="col-span-1 md:col-span-3">
+                                                <FormLabel className="text-muted-foreground font-medium">Edición (Opcional)</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="https://..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-1">
+                                                        {filteredEditions.map(edition => {
+                                                            const isSelected = field.value === edition.id;
+                                                            return (
+                                                                <div
+                                                                    key={edition.id}
+                                                                    className={cn(
+                                                                        "p-3 border rounded-xl cursor-pointer hover:border-[#0064e0] transition-all flex flex-col justify-center items-center text-center gap-1 bg-background",
+                                                                        isSelected ? "border-2 border-[#0064e0] bg-blue-50/10 shadow-sm" : "border-slate-200"
+                                                                    )}
+                                                                    onClick={() => field.onChange(edition.id)}
+                                                                >
+                                                                    <span className={cn("text-xs font-semibold leading-tight", isSelected ? "text-[#0064e0]" : "text-foreground")}>
+                                                                        {getLocalizedName(edition.name)}
+                                                                    </span>
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                </FormControl>
+                                                {filteredEditions.length === 0 && (
+                                                    <p className="text-xs text-muted-foreground mt-1">
+                                                        {watchMainEvent ? "Sin ediciones para este evento" : "Selecciona un evento primero"}
+                                                    </p>
+                                                )}
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Multimedia Banner Card */}
+                        <Card className="rounded-2xl border-none shadow-sm bg-card">
+                            <CardContent className="p-6 space-y-5">
+                                <h3 className="text-base font-semibold text-foreground">Multimedia</h3>
+                                <FormField
+                                    control={form.control}
+                                    name="banner_url"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-muted-foreground font-medium">Banner de la Sesión</FormLabel>
+                                            <FormControl>
+                                                <BannerUploadModal
+                                                    value={field.value || ''}
+                                                    onChange={field.onChange}
+                                                    folder="sessions"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </CardContent>
+                        </Card>
+
+                        <Card className="rounded-2xl border-none shadow-sm bg-card">
+                            <CardContent className="p-6 space-y-5">
+                                <h3 className="text-base font-semibold text-foreground">Fecha y Ubicación</h3>
+
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                    <FormField
+                                        control={form.control}
+                                        name="session_date"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-muted-foreground font-medium">Fecha</FormLabel>
+                                                <FormControl>
+                                                    <Input type="date" className="h-11 rounded-xl" {...field} value={field.value || ''} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -385,50 +318,170 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
 
                                     <FormField
                                         control={form.control}
-                                        name="stream_password"
+                                        name="start_time"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="text-muted-foreground font-medium">Contraseña / Clave (Opcional)</FormLabel>
+                                                <FormLabel className="text-muted-foreground font-medium">Hora Inicio</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="Clave de acceso..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                    <Input type="time" className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="end_time"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-muted-foreground font-medium">Hora Fin</FormLabel>
+                                                <FormControl>
+                                                    <Input type="time" className="h-11 rounded-xl" {...field} value={field.value || ''} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
                                         )}
                                     />
                                 </div>
-                            )}
-                        </CardContent>
-                    </Card>
 
-                    <Card className="rounded-2xl border-none shadow-sm bg-card">
-                        <CardContent className="p-6 space-y-5">
-                            <h3 className="text-base font-semibold text-foreground">Detalles Extra</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <FormField
+                                        control={form.control}
+                                        name="address"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-muted-foreground font-medium">Ubicación / Dirección</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder="Ej: Auditorio Principal o Calle s/n"
+                                                        className="h-11 rounded-xl"
+                                                        {...field}
+                                                        value={field.value || ''}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </CardContent>
+                        </Card>
 
-                            <FormField
-                                control={form.control}
-                                name="short_description"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="text-muted-foreground font-medium">Descripción Breve</FormLabel>
-                                        <FormControl>
-                                            <Textarea placeholder="Breve resumen de la sesión..." className="resize-none rounded-xl h-24" {...field} value={field.value || ''} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
+                        <Card className="rounded-2xl border-none shadow-sm bg-card">
+                            <CardContent className="p-6 space-y-5">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-base font-semibold text-foreground">Soporte Virtual / Streaming</h3>
+                                    <FormField
+                                        control={form.control}
+                                        name="is_online"
+                                        render={({ field }) => (
+                                            <FormItem className="flex items-center gap-2 space-y-0">
+                                                <FormLabel className="text-sm text-muted-foreground mr-1">Transmisión en Vivo</FormLabel>
+                                                <FormControl>
+                                                    <Switch
+                                                        checked={field.value}
+                                                        onCheckedChange={field.onChange}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+
+                                {watchIsOnline && (
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2 animate-in fade-in-50 duration-200">
+                                        <FormField
+                                            control={form.control}
+                                            name="stream_platform"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-muted-foreground font-medium">Plataforma</FormLabel>
+                                                    <Select onValueChange={field.onChange} value={field.value || ''}>
+                                                        <FormControl>
+                                                            <SelectTrigger className="h-11 rounded-xl">
+                                                                <SelectValue placeholder="Selecciona" />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent className="rounded-xl">
+                                                            <SelectItem value="zoom">Zoom</SelectItem>
+                                                            <SelectItem value="meet">Google Meet</SelectItem>
+                                                            <SelectItem value="teams">Microsoft Teams</SelectItem>
+                                                            <SelectItem value="youtube">YouTube</SelectItem>
+                                                            <SelectItem value="other">Otro</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="stream_url"
+                                            render={({ field }) => (
+                                                <FormItem className="md:col-span-1">
+                                                    <FormLabel className="text-muted-foreground font-medium">URL de Transmisión</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="https://..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="stream_password"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-muted-foreground font-medium">Contraseña / Clave (Opcional)</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="Clave de acceso..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
                                 )}
-                            />
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                        <Card className="rounded-2xl border-none shadow-sm bg-card mt-6">
+                            <CardContent className="p-6 flex items-center justify-between gap-4">
+                                <div className="space-y-0.5">
+                                    <h3 className="text-base font-semibold text-foreground">Estado de la Sesión</h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        Habilita o deshabilita la sesión para que sea visible en el cronograma del evento.
+                                    </p>
+                                </div>
+                                <FormField
+                                    control={form.control}
+                                    name="is_active"
+                                    render={({ field }) => (
+                                        <FormItem className="flex items-center space-y-0">
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </CardContent>
+                        </Card>
+                    </div>
 
-                    <div className="flex items-center justify-end gap-3 mt-4">
+                    {/* STICKY FOOTER */}
+                    <div className="sticky bottom-0 -mb-10 left-0 right-0 bg-background/90 backdrop-blur-md border-t p-4 flex justify-end gap-3 z-50 rounded-b-2xl">
                         <Button type="button" className="rounded-xl h-11 px-6 bg-secondary text-secondary-foreground hover:bg-secondary/80 border" onClick={() => router.push(backHref || '/admin/activities')} disabled={isPending}>
                             Cancelar
                         </Button>
 
                         <Button type="submit" className="bg-[#0064e0] hover:bg-[#0057c2] text-white font-medium rounded-xl h-11 px-6 shadow-sm flex items-center gap-2" disabled={isPending}>
                             <IconDeviceFloppy className="h-5 w-5" />
-                            {isPending ? 'Guardando...' : (isEdit ? 'Guardar Cambios' : 'Crear Sesion')}
+                            {isPending ? 'Guardando...' : (isEdit ? 'Guardar Cambios' : 'Crear Sesión')}
                         </Button>
                     </div>
                 </form>
