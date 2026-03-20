@@ -27,6 +27,8 @@ export interface ActivityItem {
     stream_platform?: string | null
     stream_url?: string | null
     stream_password?: string | null
+    main_events?: { name: any } | null
+    editions?: { name: any } | null
 }
 
 export async function getActivities(
@@ -38,7 +40,7 @@ export async function getActivities(
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    let query = supabase.from('event_sessions').select('*', { count: 'exact' })
+    let query = supabase.from('event_sessions').select('*, main_events:main_event_id ( name ), editions:edition_id ( name )', { count: 'exact' })
 
     if (search) {
         query = query.ilike('title', `%${search}%`)
