@@ -24,7 +24,7 @@ export default async function EventsPage({
     params: Promise<{ locale: string }>
 }) {
     const { locale } = await params
-    const sParams = await searchParams; // next15 await context
+    const sParams = await searchParams;
 
     const currentPage = parseInt(sParams.page || '1')
     const searchQuer = sParams.q || ''

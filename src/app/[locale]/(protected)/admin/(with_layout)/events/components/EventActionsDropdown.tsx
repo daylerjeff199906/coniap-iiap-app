@@ -11,17 +11,28 @@ import {
     AlertDialogCancel,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { IconEdit, IconTrash } from '@tabler/icons-react'
+import {
+    IconEdit,
+    IconTrash,
+    IconDotsVertical,
+    IconCalendarEvent,
+    IconSpeakerphone,
+    IconClock,
+    IconUsers,
+    IconFileText,
+    IconAward
+} from '@tabler/icons-react'
 import Link from 'next/link'
 import { useLocale } from 'next-intl'
 import { Input } from '@/components/ui/input'
 import { deleteEvent } from '../actions'
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 interface EventActionsProps {
     eventId: string
@@ -43,70 +54,79 @@ export function EventActionsDropdown({ eventId, eventName }: EventActionsProps) 
         })
     }
 
+    const items = [
+        { name: 'Editar', href: `/${locale}/admin/events/${eventId}`, icon: IconEdit },
+        { name: 'Ediciones', href: `/${locale}/admin/events/${eventId}/edition`, icon: IconCalendarEvent },
+        { name: 'Convocatorias', href: `/${locale}/admin/events/${eventId}/call`, icon: IconSpeakerphone },
+        { name: 'Actividades', href: `/${locale}/admin/events/${eventId}/activities`, icon: IconClock },
+        { name: 'Participantes', href: `/${locale}/admin/events/${eventId}/participants`, icon: IconUsers },
+        { name: 'Resúmenes', href: `/${locale}/admin/events/${eventId}/submissions`, icon: IconFileText },
+        { name: 'Sponsors', href: `/${locale}/admin/events/${eventId}/sponsors`, icon: IconAward },
+    ]
+
     return (
-        <TooltipProvider delayDuration={200}>
-            <div className="flex items-center justify-center gap-1">
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50" asChild>
-                            <Link href={`/${locale}/admin/events/${eventId}`}>
-                                <IconEdit className="h-4 w-4" />
+        <>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 dropdown-trigger">
+                        <IconDotsVertical className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-52">
+                    {items.map((item) => (
+                        <DropdownMenuItem key={item.name} asChild>
+                            <Link href={item.href} className="flex items-center gap-2 w-full cursor-pointer">
+                                <item.icon className="h-4 w-4 text-muted-foreground" />
+                                <span>{item.name}</span>
                             </Link>
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        <p>Editar evento</p>
-                    </TooltipContent>
-                </Tooltip>
+                        </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                        className="text-red-600 focus:text-red-600 cursor-pointer flex items-center gap-2 w-full"
+                        onSelect={(e) => {
+                            e.preventDefault()
+                            setIsDeleteDialogOpen(true)
+                        }}
+                    >
+                        <IconTrash className="h-4 w-4" />
+                        <span>Eliminar</span>
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
 
-                <Tooltip>
-                    <TooltipTrigger asChild>
+            <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>¿Eliminar el evento?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Esta acción no se puede deshacer. Se eliminará permanentemente el evento <strong>{eventName}</strong> y todos sus datos asociados (convocatorias, participantes).
+                            <br /><br />
+                            Escribe <strong>DELETE</strong> para confirmar.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <div className="my-2">
+                        <Input
+                            placeholder="DELETE"
+                            value={deleteText}
+                            onChange={(e) => setDeleteText(e.target.value)}
+                            disabled={isPending}
+                        />
+                    </div>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel disabled={isPending}>Cancelar</AlertDialogCancel>
                         <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-50"
-                            onClick={() => setIsDeleteDialogOpen(true)}
+                            variant="destructive"
+                            onClick={handleDelete}
+                            disabled={deleteText !== 'DELETE' || isPending}
                         >
-                            <IconTrash className="h-4 w-4" />
+                            {isPending ? 'Eliminando...' : 'Eliminar'}
                         </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        <p>Eliminar evento</p>
-                    </TooltipContent>
-                </Tooltip>
-
-                <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>¿Eliminar el evento?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                Esta acción no se puede deshacer. Se eliminará permanentemente el evento <strong>{eventName}</strong> y todos sus datos asociados (convocatorias, participantes).
-                                <br /><br />
-                                Escribe <strong>DELETE</strong> para confirmar.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <div className="my-2">
-                            <Input
-                                placeholder="DELETE"
-                                value={deleteText}
-                                onChange={(e) => setDeleteText(e.target.value)}
-                                disabled={isPending}
-                            />
-                        </div>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel disabled={isPending}>Cancelar</AlertDialogCancel>
-                            <Button
-                                variant="destructive"
-                                onClick={handleDelete}
-                                disabled={deleteText !== 'DELETE' || isPending}
-                            >
-                                {isPending ? 'Eliminando...' : 'Eliminar'}
-                            </Button>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
-            </div>
-        </TooltipProvider>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+        </>
     )
 }
+
 
