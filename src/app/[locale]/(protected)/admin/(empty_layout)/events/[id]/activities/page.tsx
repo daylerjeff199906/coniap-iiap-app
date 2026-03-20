@@ -15,6 +15,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
 import { IconFileSpreadsheet, IconPlus } from '@tabler/icons-react'
+import { BulkUploadModal } from '@/app/[locale]/(protected)/admin/(with_layout)/activities/components/BulkUploadModal'
 
 export const metadata = {
     title: 'Actividades - Detalles',
@@ -64,9 +65,7 @@ export default async function EventActivitiesPage({
                     description="Administra los talleres, conferencias y sesiones de este evento."
                 />
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" className="rounded-xl flex items-center gap-2 h-10">
-                        <IconFileSpreadsheet className="h-4 w-4" /> Carga Masiva
-                    </Button>
+                    <BulkUploadModal eventId={eventId} editionId={filterEdition} />
                     <Button asChild className="rounded-xl flex items-center gap-2 h-10 bg-[#0064e0] hover:bg-[#0057c2] text-white">
                         <Link href={`/admin/events/${eventId}/activities/create${filterEdition ? `?editionId=${filterEdition}` : ''}`}>
                             <IconPlus className="h-4 w-4" /> Nueva Actividad

@@ -1,5 +1,9 @@
 'use client'
 
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { IconLayoutGrid, IconLayoutList, IconCalendarEvent } from '@tabler/icons-react'
+import { ActivitiesAgendaView } from './ActivitiesAgendaView'
+import { ActivitiesScheduleView } from './ActivitiesScheduleView'
 import { useState, useTransition } from 'react'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -37,6 +41,7 @@ const sessionTypeLabels: Record<string, string> = {
 export function ActivitiesTable({ activities, eventId }: ActivitiesTableProps) {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false)
     const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null)
+    const [view, setView] = useState<'table' | 'agenda' | 'schedule'>('table')
     const [deleteText, setDeleteText] = useState('')
     const [isPending, startTransition] = useTransition()
 
@@ -62,7 +67,19 @@ export function ActivitiesTable({ activities, eventId }: ActivitiesTableProps) {
 
     return (
         <TooltipProvider delayDuration={200}>
-            <div className="rounded-2xl border overflow-hidden mt-2 bg-card">
+            <div className="space-y-4">
+                <div className="flex justify-end mt-2">
+                    <Tabs value={view} onValueChange={(v: any) => setView(v)} className="w-auto">
+                        <TabsList className="rounded-xl h-10 bg-muted/50 p-1">
+                            <TabsTrigger value="table" className="rounded-lg text-xs gap-1 py-1.5"><IconLayoutList size={14}/> Tabla</TabsTrigger>
+                            <TabsTrigger value="agenda" className="rounded-lg text-xs gap-1 py-1.5"><IconLayoutGrid size={14}/> Agenda</TabsTrigger>
+                            <TabsTrigger value="schedule" className="rounded-lg text-xs gap-1 py-1.5"><IconCalendarEvent size={14}/> Horario</TabsTrigger>
+                        </TabsList>
+                    </Tabs>
+                </div>
+
+                {view === 'table' && (
+                    <div className="rounded-2xl border overflow-hidden bg-card">
                 <Table>
                     <TableHeader className="bg-muted/30">
                         <TableRow>
