@@ -7,7 +7,8 @@ import {
     Settings,
     type LucideIcon,
     LayoutDashboard,
-    FileText
+    FileText,
+    Clock
 } from "lucide-react"
 
 export type AdminRouteItem = {
@@ -27,6 +28,11 @@ export const getAdminRoutes = (locale: string): AdminRouteItem[] => [
         title: "Eventos",
         url: `/${locale}/admin/events`,
         icon: CalendarDays,
+    },
+    {
+        title: "Actividades",
+        url: `/${locale}/admin/activities`,
+        icon: Clock,
     },
     {
         title: "Convocatorias",

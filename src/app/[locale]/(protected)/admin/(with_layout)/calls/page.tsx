@@ -1,5 +1,3 @@
-import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
-import { PageHeader } from '@/components/general/PageHeader'
 import { getCalls } from '@/app/[locale]/(protected)/admin/calls/actions'
 import { CallTable } from '@/app/[locale]/(protected)/admin/calls/components/CallTable'
 import { CallFilters } from '@/app/[locale]/(protected)/admin/calls/components/CallFilters'
@@ -29,19 +27,10 @@ export default async function CallsPage({
     })
 
     return (
-        <LayoutWrapper sectionTitle="Gestión de Convocatorias">
-            <div className="flex flex-col gap-6">
-                <PageHeader
-                    title="Convocatorias y Llamados"
-                    description="Administra todas las convocatorias vigentes para ponentes, participantes y aliados."
-                    className="mb-2"
-                />
-
-                <div className="flex flex-col gap-2">
-                    <CallFilters />
-                    <CallTable calls={filteredCalls} />
-                </div>
-            </div>
-        </LayoutWrapper>
+        <div className="flex flex-col gap-2">
+            <CallFilters />
+            <CallTable calls={filteredCalls} />
+        </div>
     )
 }
+

@@ -1,6 +1,5 @@
-import { getEvents } from './actions'
-import { EventFilters } from './components/EventFilters'
-import { EventsTable, MainEvent } from './components/EventsTable'
+import { getActivities } from './actions'
+import { ActivitiesTable } from './components/ActivitiesTable'
 import {
     Pagination,
     PaginationContent,
@@ -10,49 +9,47 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination'
 
+import { ActivitiesFilters } from './components/ActivitiesFilters'
 
 export const metadata = {
-    title: 'Eventos - Panel',
+    title: 'Actividades - Panel',
 }
 
-export default async function EventsPage({
+export default async function ActivitiesPage({
     searchParams,
     params,
 }: {
-    searchParams: Promise<{ page?: string, q?: string, status?: string }>
+    searchParams: Promise<{ page?: string; q?: string }>
     params: Promise<{ locale: string }>
 }) {
     const { locale } = await params
-    const sParams = await searchParams;
+    const sParams = await searchParams
 
     const currentPage = parseInt(sParams.page || '1')
-    const searchQuer = sParams.q || ''
-    const statusVal = sParams.status || 'active'
-    const limit = 10
+    const searchQuery = sParams.q || ''
+    const limit = 20
 
-    const { data, count } = await getEvents(currentPage, searchQuer, statusVal, limit)
-    const events = (data || []) as MainEvent[]
+    const { data: activities, count } = await getActivities(currentPage, searchQuery, limit)
     const totalPages = Math.ceil(count / limit)
 
     const createPageURL = (pageNumber: number) => {
         const params = new URLSearchParams()
-        if (searchQuer) params.set('q', searchQuer)
-        params.set('status', statusVal)
+        if (searchQuery) params.set('q', searchQuery)
         params.set('page', pageNumber.toString())
-        return `/${locale}/admin/events?${params.toString()}`
+        return `/${locale}/admin/activities?${params.toString()}`
     }
 
     return (
         <div className="flex flex-col gap-4">
-            <EventFilters />
-
-            <EventsTable events={events} locale={locale} />
+            <ActivitiesFilters />
+            
+            <ActivitiesTable activities={activities} />
 
             {/* Pagination */}
             {totalPages > 1 && (
                 <div className="flex items-center justify-between mt-4">
                     <p className="text-sm text-muted-foreground">
-                        Mostrando {events.length} de {count}
+                        Mostrando {activities.length} de {count}
                     </p>
                     <Pagination className="justify-end relative mr-0 flex-1 w-auto">
                         <PaginationContent>
