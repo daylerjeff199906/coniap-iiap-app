@@ -1,5 +1,3 @@
-import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
-import { PageHeader } from '@/components/general/PageHeader'
 import { getActivities } from './actions'
 import { ActivitiesTable } from './components/ActivitiesTable'
 import {
@@ -42,59 +40,50 @@ export default async function ActivitiesPage({
     }
 
     return (
-        <LayoutWrapper sectionTitle="Gestión de Actividades">
-            <div className="flex flex-col gap-6">
-                <PageHeader
-                    title="Sesiones y Actividades"
-                    description="Administra todas las sesiones que se llevan a cabo dentro de tus eventos."
-                    className="mb-2"
-                />
+        <div className="flex flex-col gap-4">
+            <ActivitiesFilters />
+            
+            <ActivitiesTable activities={activities} />
 
-                <div className="flex flex-col gap-4">
-                    <ActivitiesFilters />
-                    
-                    <ActivitiesTable activities={activities} />
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="flex items-center justify-between mt-4">
+                    <p className="text-sm text-muted-foreground">
+                        Mostrando {activities.length} de {count}
+                    </p>
+                    <Pagination className="justify-end relative mr-0 flex-1 w-auto">
+                        <PaginationContent>
+                            <PaginationItem>
+                                {currentPage > 1 ? (
+                                    <PaginationPrevious href={createPageURL(currentPage - 1)} />
+                                ) : (
+                                    <PaginationPrevious href="#" className="pointer-events-none opacity-50" />
+                                )}
+                            </PaginationItem>
 
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                        <div className="flex items-center justify-between mt-4">
-                            <p className="text-sm text-muted-foreground">
-                                Mostrando {activities.length} de {count}
-                            </p>
-                            <Pagination className="justify-end relative mr-0 flex-1 w-auto">
-                                <PaginationContent>
-                                    <PaginationItem>
-                                        {currentPage > 1 ? (
-                                            <PaginationPrevious href={createPageURL(currentPage - 1)} />
-                                        ) : (
-                                            <PaginationPrevious href="#" className="pointer-events-none opacity-50" />
-                                        )}
-                                    </PaginationItem>
+                            {[...Array(totalPages)].map((_, i) => (
+                                <PaginationItem key={i + 1}>
+                                    <PaginationLink
+                                        href={createPageURL(i + 1)}
+                                        isActive={currentPage === i + 1}
+                                    >
+                                        {i + 1}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            ))}
 
-                                    {[...Array(totalPages)].map((_, i) => (
-                                        <PaginationItem key={i + 1}>
-                                            <PaginationLink
-                                                href={createPageURL(i + 1)}
-                                                isActive={currentPage === i + 1}
-                                            >
-                                                {i + 1}
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                    ))}
-
-                                    <PaginationItem>
-                                        {currentPage < totalPages ? (
-                                            <PaginationNext href={createPageURL(currentPage + 1)} />
-                                        ) : (
-                                            <PaginationNext href="#" className="pointer-events-none opacity-50" />
-                                        )}
-                                    </PaginationItem>
-                                </PaginationContent>
-                            </Pagination>
-                        </div>
-                    )}
+                            <PaginationItem>
+                                {currentPage < totalPages ? (
+                                    <PaginationNext href={createPageURL(currentPage + 1)} />
+                                ) : (
+                                    <PaginationNext href="#" className="pointer-events-none opacity-50" />
+                                )}
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
                 </div>
-            </div>
-        </LayoutWrapper>
+            )}
+        </div>
     )
 }
+
