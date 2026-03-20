@@ -121,9 +121,9 @@ export async function upsertActivity(data: ActivityFormInput, activityId?: strin
         custom_content: validData.custom_content || null,
         session_type: validData.session_type,
         is_online: validData.is_online,
-        stream_platform: validData.stream_platform || null,
-        stream_url: validData.stream_url || null,
-        stream_password: validData.stream_password || null,
+        stream_platform: validData.streams && validData.streams.length > 0 ? validData.streams[0].platform : null,
+        stream_url: validData.streams ? JSON.stringify(validData.streams) : null,
+        stream_password: validData.streams && validData.streams.length > 0 ? validData.streams[0].password || null : null,
         banner_url: validData.banner_url || null,
         submission_id: validData.submission_id || null,
     }

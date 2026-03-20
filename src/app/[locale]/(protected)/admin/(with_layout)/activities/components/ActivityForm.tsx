@@ -1,6 +1,6 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
@@ -23,7 +23,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from '@/i18n/routing'
 import { PageHeader } from '@/components/general/PageHeader/PageHeader'
 import { Card, CardContent } from '@/components/ui/card'
-import { IconDeviceFloppy, IconClock, IconVideo, IconCalendar, IconMapPin } from '@tabler/icons-react'
+import { IconDeviceFloppy, IconClock, IconVideo, IconCalendar, IconMapPin, IconPlus, IconTrash } from '@tabler/icons-react'
 import { useLocale } from 'next-intl'
 import { BannerUploadModal } from './BannerUploadModal'
 import { cn } from '@/lib/utils'
@@ -62,6 +62,24 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
 
     const isEdit = !!activity
 
+    const parsedStreams = (() => {
+        if (activity?.stream_url) {
+            try {
+                const parsed = JSON.parse(activity.stream_url)
+                if (Array.isArray(parsed)) return parsed
+            } catch (e) {
+                if (activity.stream_platform || activity.stream_url) {
+                    return [{
+                        platform: activity.stream_platform || 'other',
+                        url: activity.stream_url || '',
+                        password: activity.stream_password || ''
+                    }]
+                }
+            }
+        }
+        return []
+    })()
+
     const form = useForm<ActivityFormInput>({
         resolver: zodResolver(activitySchema),
         defaultValues: {
@@ -77,12 +95,15 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
             custom_content: activity?.custom_content || '',
             session_type: activity?.session_type || 'presentation',
             is_online: activity?.is_online ?? false,
-            stream_platform: activity?.stream_platform || '',
-            stream_url: activity?.stream_url || '',
-            stream_password: activity?.stream_password || '',
+            streams: parsedStreams,
             banner_url: activity?.banner_url || '',
             submission_id: activity?.submission_id || '',
         },
+    })
+
+    const { fields, append, remove } = useFieldArray({
+        control: form.control,
+        name: "streams"
     })
 
 
@@ -390,59 +411,91 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                 </div>
 
                                 {watchIsOnline && (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2 animate-in fade-in-50 duration-200">
-                                        <FormField
-                                            control={form.control}
-                                            name="stream_platform"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className="text-muted-foreground font-medium">Plataforma</FormLabel>
-                                                    <Select onValueChange={field.onChange} value={field.value || ''}>
-                                                        <FormControl>
-                                                            <SelectTrigger className="h-11 rounded-xl">
-                                                                <SelectValue placeholder="Selecciona" />
-                                                            </SelectTrigger>
-                                                        </FormControl>
-                                                        <SelectContent className="rounded-xl">
-                                                            <SelectItem value="zoom">Zoom</SelectItem>
-                                                            <SelectItem value="meet">Google Meet</SelectItem>
-                                                            <SelectItem value="teams">Microsoft Teams</SelectItem>
-                                                            <SelectItem value="youtube">YouTube</SelectItem>
-                                                            <SelectItem value="other">Otro</SelectItem>
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
+                                    <div className="space-y-4 pt-2 animate-in fade-in-50 duration-200">
+                                        {fields.map((field, index) => (
+                                            <div key={field.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end border p-4 rounded-xl relative bg-muted/30">
+                                                <div className="md:col-span-3">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name={`streams.${index}.platform`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel className="text-muted-foreground font-medium">Plataforma</FormLabel>
+                                                                <Select onValueChange={field.onChange} value={field.value || ''}>
+                                                                    <FormControl>
+                                                                        <SelectTrigger className="h-11 rounded-xl">
+                                                                            <SelectValue placeholder="Selecciona" />
+                                                                        </SelectTrigger>
+                                                                    </FormControl>
+                                                                    <SelectContent className="rounded-xl">
+                                                                        <SelectItem value="zoom">Zoom</SelectItem>
+                                                                        <SelectItem value="meet">Google Meet</SelectItem>
+                                                                        <SelectItem value="teams">Microsoft Teams</SelectItem>
+                                                                        <SelectItem value="youtube">YouTube</SelectItem>
+                                                                        <SelectItem value="other">Otro</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </div>
 
-                                        <FormField
-                                            control={form.control}
-                                            name="stream_url"
-                                            render={({ field }) => (
-                                                <FormItem className="md:col-span-1">
-                                                    <FormLabel className="text-muted-foreground font-medium">URL de Transmisión</FormLabel>
-                                                    <FormControl>
-                                                        <Input placeholder="https://..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
+                                                <div className="md:col-span-5">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name={`streams.${index}.url`}
+                                                        render={({ field }) => (
+                                                            <FormItem className="mb-0">
+                                                                <FormLabel className="text-muted-foreground font-medium">URL de Transmisión</FormLabel>
+                                                                <FormControl>
+                                                                    <Input placeholder="https://..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </div>
 
-                                        <FormField
-                                            control={form.control}
-                                            name="stream_password"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className="text-muted-foreground font-medium">Contraseña / Clave (Opcional)</FormLabel>
-                                                    <FormControl>
-                                                        <Input placeholder="Clave de acceso..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
+                                                <div className="md:col-span-3">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name={`streams.${index}.password`}
+                                                        render={({ field }) => (
+                                                            <FormItem className="mb-0">
+                                                                <FormLabel className="text-muted-foreground font-medium">Contraseña (Opcional)</FormLabel>
+                                                                <FormControl>
+                                                                    <Input placeholder="Clave..." className="h-11 rounded-xl" {...field} value={field.value || ''} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </div>
+
+                                                <div className="md:col-span-1 flex justify-end">
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="text-destructive h-11 w-11 rounded-xl hover:bg-destructive/10"
+                                                        onClick={() => remove(index)}
+                                                    >
+                                                        <IconTrash className="h-5 w-5" />
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border-dashed"
+                                            onClick={() => append({ platform: 'zoom', url: '', password: '' })}
+                                        >
+                                            <IconPlus className="h-5 w-5" />
+                                            Agregar Plataforma de Transmisión
+                                        </Button>
                                     </div>
                                 )}
                             </CardContent>
@@ -475,7 +528,7 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
 
                     {/* STICKY FOOTER */}
                     <div className="sticky bottom-0 -mb-10 left-0 right-0 bg-background/90 backdrop-blur-md border-t p-4 flex justify-end gap-3 z-50 rounded-b-2xl">
-                        <Button type="button" className="rounded-xl h-11 px-6 bg-secondary text-secondary-foreground hover:bg-secondary/80 border" onClick={() => router.push(backHref || '/admin/activities')} disabled={isPending}>
+                        <Button type="button" className="rounded-xl h-11 px-6" variant='ghost' onClick={() => router.push(backHref || '/admin/activities')} disabled={isPending}>
                             Cancelar
                         </Button>
 

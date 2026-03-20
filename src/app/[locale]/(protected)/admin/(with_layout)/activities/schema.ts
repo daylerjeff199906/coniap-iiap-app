@@ -23,9 +23,11 @@ export const activitySchema = z.object({
     custom_content: z.string().nullable().optional(),
     session_type: sessionTypeEnum,
     is_online: z.boolean(),
-    stream_platform: z.string().nullable().optional(),
-    stream_url: z.string().url('URL inválida').nullable().optional().or(z.literal('')),
-    stream_password: z.string().nullable().optional(),
+    streams: z.array(z.object({
+        platform: z.string().min(1, 'Requerido'),
+        url: z.string().url('URL inválida').nullable().optional().or(z.literal('')),
+        password: z.string().nullable().optional(),
+    })).optional(),
     banner_url: z.string().url('URL inválida').nullable().optional().or(z.literal('')),
     submission_id: z.string().nullable().optional().or(z.literal('')),
 })
