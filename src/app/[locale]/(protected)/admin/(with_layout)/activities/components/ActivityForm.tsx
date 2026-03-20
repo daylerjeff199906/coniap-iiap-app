@@ -21,13 +21,11 @@ import { upsertActivity, getMainEventsList, getEditionsList, ActivityItem } from
 import { ActivityFormInput, activitySchema } from '../schema'
 import { toast } from 'react-toastify'
 import { useRouter } from '@/i18n/routing'
-import { PageHeader } from '@/components/general/PageHeader/PageHeader'
 import { Card, CardContent } from '@/components/ui/card'
 import { IconDeviceFloppy, IconClock, IconVideo, IconCalendar, IconMapPin, IconPlus, IconTrash } from '@tabler/icons-react'
 import { useLocale } from 'next-intl'
 import { BannerUploadModal } from './BannerUploadModal'
 import { cn } from '@/lib/utils'
-import { Badge } from '@/components/ui/badge'
 
 
 interface ActivityFormProps {
@@ -366,26 +364,28 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                     />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <FormField
-                                        control={form.control}
-                                        name="address"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="text-muted-foreground font-medium">Ubicación / Dirección</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        placeholder="Ej: Auditorio Principal o Calle s/n"
-                                                        className="h-11 rounded-xl"
-                                                        {...field}
-                                                        value={field.value || ''}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
+                                {!watchIsOnline && (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                        <FormField
+                                            control={form.control}
+                                            name="address"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-muted-foreground font-medium">Ubicación / Dirección</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="Ej: Auditorio Principal o Calle s/n"
+                                                            className="h-11 rounded-xl"
+                                                            {...field}
+                                                            value={field.value || ''}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
 
@@ -486,7 +486,7 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                                 </div>
                                             </div>
                                         ))}
-                                        
+
                                         <Button
                                             type="button"
                                             variant="outline"

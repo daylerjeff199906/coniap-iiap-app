@@ -27,7 +27,7 @@ export const activitySchema = z.object({
         platform: z.string().min(1, 'Requerido'),
         url: z.string().url('URL inválida').nullable().optional().or(z.literal('')),
         password: z.string().nullable().optional(),
-    })).optional(),
+    })),
     banner_url: z.string().url('URL inválida').nullable().optional().or(z.literal('')),
     submission_id: z.string().nullable().optional().or(z.literal('')),
 })
