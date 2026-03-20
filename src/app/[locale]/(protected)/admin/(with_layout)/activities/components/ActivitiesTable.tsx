@@ -21,6 +21,7 @@ import { Link } from '@/i18n/routing'
 
 interface ActivitiesTableProps {
     activities: ActivityItem[]
+    eventId?: string
 }
 
 const sessionTypeLabels: Record<string, string> = {
@@ -33,11 +34,12 @@ const sessionTypeLabels: Record<string, string> = {
     other: 'Otro'
 }
 
-export function ActivitiesTable({ activities }: ActivitiesTableProps) {
+export function ActivitiesTable({ activities, eventId }: ActivitiesTableProps) {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false)
     const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null)
     const [deleteText, setDeleteText] = useState('')
     const [isPending, startTransition] = useTransition()
+
 
     const handleDeleteClick = (activity: ActivityItem) => {
         setSelectedActivity(activity)
@@ -126,7 +128,7 @@ export function ActivitiesTable({ activities }: ActivitiesTableProps) {
                                                             asChild
                                                             onClick={(e) => e.stopPropagation()}
                                                         >
-                                                            <Link href={`/admin/activities/${activity.id}`}>
+                                                            <Link href={eventId ? `/admin/events/${eventId}/activities/${activity.id}` : `/admin/activities/${activity.id}`}>
                                                                 <IconEdit className="h-4 w-4" />
                                                             </Link>
                                                         </Button>

@@ -28,6 +28,9 @@ import { useLocale } from 'next-intl'
 
 interface ActivityFormProps {
     activity?: ActivityItem
+    defaultMainEventId?: string
+    defaultEditionId?: string
+    backHref?: string
 }
 
 interface LocalizedString {
@@ -45,7 +48,7 @@ const sessionTypeLabels: Record<string, string> = {
     other: 'Otro'
 }
 
-export function ActivityForm({ activity }: ActivityFormProps) {
+export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, backHref }: ActivityFormProps) {
     const router = useRouter()
     const locale = useLocale() as 'en' | 'es'
     const [isPending, startTransition] = useTransition()
@@ -65,8 +68,8 @@ export function ActivityForm({ activity }: ActivityFormProps) {
             short_description: activity?.short_description || '',
             room_id: activity?.room_id || null,
             is_active: activity ? activity.is_active : true,
-            main_event_id: activity?.main_event_id || '',
-            edition_id: activity?.edition_id || '',
+            main_event_id: activity?.main_event_id || defaultMainEventId || '',
+            edition_id: activity?.edition_id || defaultEditionId || '',
             custom_content: activity?.custom_content || '',
             session_type: activity?.session_type || 'presentation',
             is_online: activity?.is_online ?? false,
@@ -111,10 +114,11 @@ export function ActivityForm({ activity }: ActivityFormProps) {
                 toast.error(typeof result.error === 'string' ? result.error : 'Error al guardar los datos')
             } else {
                 toast.success(isEdit ? 'Sesión actualizada' : 'Sesión creada con éxito')
-                router.push('/admin/activities')
+                router.push(backHref || '/admin/activities')
             }
         })
     }
+
 
     const getLocalizedName = (name: string | LocalizedString | undefined) => {
         if (!name) return ''
@@ -423,9 +427,10 @@ export function ActivityForm({ activity }: ActivityFormProps) {
                     </Card>
 
                     <div className="flex items-center justify-end gap-3 mt-4">
-                        <Button type="button" className="rounded-xl h-11 px-6 bg-secondary text-secondary-foreground hover:bg-secondary/80 border" onClick={() => router.push('/admin/activities')} disabled={isPending}>
+                        <Button type="button" className="rounded-xl h-11 px-6 bg-secondary text-secondary-foreground hover:bg-secondary/80 border" onClick={() => router.push(backHref || '/admin/activities')} disabled={isPending}>
                             Cancelar
                         </Button>
+
                         <Button type="submit" className="bg-[#0064e0] hover:bg-[#0057c2] text-white font-medium rounded-xl h-11 px-6 shadow-sm flex items-center gap-2" disabled={isPending}>
                             <IconDeviceFloppy className="h-5 w-5" />
                             {isPending ? 'Guardando...' : (isEdit ? 'Guardar Cambios' : 'Crear Sesion')}

@@ -12,6 +12,10 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination'
 
+import { Button } from '@/components/ui/button'
+import { Link } from '@/i18n/routing'
+import { IconFileSpreadsheet, IconPlus } from '@tabler/icons-react'
+
 export const metadata = {
     title: 'Actividades - Detalles',
 }
@@ -59,17 +63,29 @@ export default async function EventActivitiesPage({
                     title="Cronograma de Actividades"
                     description="Administra los talleres, conferencias y sesiones de este evento."
                 />
+                <div className="flex items-center gap-2">
+                    <Button variant="outline" className="rounded-xl flex items-center gap-2 h-10">
+                        <IconFileSpreadsheet className="h-4 w-4" /> Carga Masiva
+                    </Button>
+                    <Button asChild className="rounded-xl flex items-center gap-2 h-10 bg-[#0064e0] hover:bg-[#0057c2] text-white">
+                        <Link href={`/admin/events/${eventId}/activities/create${filterEdition ? `?editionId=${filterEdition}` : ''}`}>
+                            <IconPlus className="h-4 w-4" /> Nueva Actividad
+                        </Link>
+                    </Button>
+                </div>
             </div>
 
-            <DetailActivitiesFilters 
-                editions={editions as any[]} 
-                locale={locale} 
-                eventId={eventId} 
+
+            <DetailActivitiesFilters
+                editions={editions}
+                locale={locale}
+                eventId={eventId}
             />
 
             <div className="mt-2">
-                <ActivitiesTable activities={activities} />
+                <ActivitiesTable activities={activities} eventId={eventId} />
             </div>
+
 
             {/* Pagination */}
             {totalPages > 1 && (
