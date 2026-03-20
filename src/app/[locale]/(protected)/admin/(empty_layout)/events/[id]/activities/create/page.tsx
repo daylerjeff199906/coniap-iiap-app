@@ -1,3 +1,4 @@
+import { PageHeader } from '@/components/general/PageHeader'
 import { ActivityForm } from "../../../../../(with_layout)/activities/components/ActivityForm"
 
 export const metadata = {
@@ -16,7 +17,14 @@ export default async function CreateActivityPage({
     const editionId = sParams.editionId || ''
 
     return (
-        <div className="pt-4">
+        <div className="pt-4 flex flex-col gap-2">
+            <PageHeader
+                title="Nueva Sesión de Evento"
+                description="Configura una nueva sesión para este evento."
+                backHref={`/admin/events/${id}/activities`}
+                variant="close"
+                className="mb-4 max-w-5xl mx-auto w-full px-4"
+            />
             <ActivityForm 
                 defaultMainEventId={id} 
                 defaultEditionId={editionId} 
@@ -25,3 +33,4 @@ export default async function CreateActivityPage({
         </div>
     )
 }
+

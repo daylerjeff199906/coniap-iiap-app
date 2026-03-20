@@ -128,13 +128,6 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
 
     return (
         <div className="flex flex-col gap-6 max-w-5xl mx-auto pb-10 w-full">
-            <PageHeader
-                title={isEdit ? 'Editar Sesión' : 'Nueva Sesión de Evento'}
-                description={isEdit ? 'Actualiza los detalles de la sesión.' : 'Configura una nueva sesión y agenda para tus eventos.'}
-                backHref="/admin/activities"
-                variant="chevron"
-            />
-
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <Card className="rounded-2xl border-none shadow-sm bg-card">
@@ -195,6 +188,7 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                             <Select
                                                 onValueChange={field.onChange}
                                                 value={field.value || ''}
+                                                disabled={!!defaultMainEventId}
                                             >
                                                 <FormControl>
                                                     <SelectTrigger className="h-11 rounded-xl">
@@ -213,6 +207,7 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                         </FormItem>
                                     )}
                                 />
+
 
                                 <FormField
                                     control={form.control}
