@@ -26,6 +26,7 @@ import { IconDeviceFloppy, IconClock, IconVideo, IconCalendar, IconMapPin, IconP
 import { useLocale } from 'next-intl'
 import { BannerUploadModal } from './BannerUploadModal'
 import { cn } from '@/lib/utils'
+import { Badge } from '@/components/ui/badge'
 
 
 interface ActivityFormProps {
@@ -119,6 +120,17 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
 
     const watchMainEvent = form.watch('main_event_id')
     const watchIsOnline = form.watch('is_online')
+    const watchStartTime = form.watch('start_time')
+
+    const applyDuration = (minutes: number) => {
+        if (!watchStartTime) return
+        const [hours, mins] = watchStartTime.split(':').map(Number)
+        const date = new Date()
+        date.setHours(hours, mins + minutes, 0)
+        const endHours = String(date.getHours()).padStart(2, '0')
+        const endMins = String(date.getMinutes()).padStart(2, '0')
+        form.setValue('end_time', `${endHours}:${endMins}`)
+    }
 
 
     useEffect(() => {
@@ -135,13 +147,14 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
     }, [watchMainEvent, editionsList, form])
 
     function onSubmit(data: ActivityFormInput) {
+        const redirectUrl = backHref || '/admin/activities'
+        
         startTransition(async () => {
-            const result = await upsertActivity(data, activity?.id)
+            const result = await upsertActivity(data, activity?.id, redirectUrl)
             if (result.error) {
                 toast.error(typeof result.error === 'string' ? result.error : 'Error al guardar los datos')
             } else {
                 toast.success(isEdit ? 'Sesión actualizada' : 'Sesión creada con éxito')
-                router.push(backHref || '/admin/activities')
             }
         })
     }
@@ -223,34 +236,38 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <FormField
-                                        control={form.control}
-                                        name="main_event_id"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="text-muted-foreground font-medium">Evento Principal</FormLabel>
-                                                <Select
-                                                    onValueChange={field.onChange}
-                                                    value={field.value || ''}
-                                                    disabled={!!defaultMainEventId}
-                                                >
-                                                    <FormControl>
-                                                        <SelectTrigger className="h-11 rounded-xl">
-                                                            <SelectValue placeholder="Selecciona un evento" />
-                                                        </SelectTrigger>
-                                                    </FormControl>
-                                                    <SelectContent className="rounded-xl">
-                                                        {eventsList.map(event => (
-                                                            <SelectItem key={event.id} value={event.id}>
-                                                                {getLocalizedName(event.name)}
-                                                            </SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
+                                    {
+                                        !defaultMainEventId && (
+                                            <FormField
+                                                control={form.control}
+                                                name="main_event_id"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel className="text-muted-foreground font-medium">Evento Principal</FormLabel>
+                                                        <Select
+                                                            onValueChange={field.onChange}
+                                                            value={field.value || ''}
+                                                            disabled={!!defaultMainEventId}
+                                                        >
+                                                            <FormControl>
+                                                                <SelectTrigger className="h-11 rounded-xl">
+                                                                    <SelectValue placeholder="Selecciona un evento" />
+                                                                </SelectTrigger>
+                                                            </FormControl>
+                                                            <SelectContent className="rounded-xl">
+                                                                {eventsList.map(event => (
+                                                                    <SelectItem key={event.id} value={event.id}>
+                                                                        {getLocalizedName(event.name)}
+                                                                    </SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        )
+                                    }
 
                                     <FormField
                                         control={form.control}
@@ -258,6 +275,9 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                         render={({ field }) => (
                                             <FormItem className="col-span-1 md:col-span-3">
                                                 <FormLabel className="text-muted-foreground font-medium">Edición (Opcional)</FormLabel>
+                                                <FormDescription>
+                                                    Si no se selecciona una edición, se mostrará en todas las ediciones.
+                                                </FormDescription>
                                                 <FormControl>
                                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-1">
                                                         {filteredEditions.map(edition => {
@@ -266,14 +286,21 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                                                 <div
                                                                     key={edition.id}
                                                                     className={cn(
-                                                                        "p-3 border rounded-xl cursor-pointer hover:border-[#0064e0] transition-all flex flex-col justify-center items-center text-center gap-1 bg-background",
-                                                                        isSelected ? "border-2 border-[#0064e0] bg-blue-50/10 shadow-sm" : "border-slate-200"
+                                                                        "p-3 border rounded-lg cursor-pointer hover:border-[#0064e0] transition-all flex flex-col justify-center items-start text-center gap-2 bg-background min-h-20",
+                                                                        isSelected ? "border-2 border-[#0064e0] bg-blue-50/10" : "border-slate-200"
                                                                     )}
-                                                                    onClick={() => field.onChange(edition.id)}
+                                                                    onClick={() => field.onChange(isSelected ? '' : edition.id)}
                                                                 >
+                                                                    <Badge
+                                                                        variant={isSelected ? "default" : "outline"}
+                                                                        className="text-[10px]"
+                                                                    >
+                                                                        Evento
+                                                                    </Badge>
                                                                     <span className={cn("text-xs font-semibold leading-tight", isSelected ? "text-[#0064e0]" : "text-foreground")}>
                                                                         {getLocalizedName(edition.name)}
                                                                     </span>
+
                                                                 </div>
                                                             )
                                                         })}
@@ -358,6 +385,18 @@ export function ActivityForm({ activity, defaultMainEventId, defaultEditionId, b
                                                 <FormControl>
                                                     <Input type="time" className="h-11 rounded-xl" {...field} value={field.value || ''} />
                                                 </FormControl>
+                                                <div className="flex flex-wrap gap-1 mt-1.5">
+                                                    {[{ label: '20m', v: 20 }, { label: '30m', v: 30 }, { label: '45m', v: 45 }, { label: '1h', v: 60 }].map(preset => (
+                                                        <Badge 
+                                                            key={preset.label} 
+                                                            variant="secondary" 
+                                                            onClick={() => applyDuration(preset.v)} 
+                                                            className="cursor-pointer text-[10px] px-2 py-0.5 rounded-md hover:bg-violet-50 hover:text-violet-600 transition-colors"
+                                                        >
+                                                            +{preset.label}
+                                                        </Badge>
+                                                    ))}
+                                                </div>
                                                 <FormMessage />
                                             </FormItem>
                                         )}

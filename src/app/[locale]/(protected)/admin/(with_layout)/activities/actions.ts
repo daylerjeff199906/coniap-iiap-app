@@ -3,6 +3,7 @@
 import { createClient } from '@/utils/supabase/supabase/server'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { ActivityFormInput, activitySchema } from './schema'
 
 export interface ActivityItem {
@@ -29,9 +30,9 @@ export interface ActivityItem {
 }
 
 export async function getActivities(
-    page = 1, 
-    search = '', 
-    limit = 20, 
+    page = 1,
+    search = '',
+    limit = 20,
     options?: { main_event_id?: string; edition_id?: string }
 ) {
     const cookieStore = await cookies()
@@ -50,7 +51,7 @@ export async function getActivities(
             .from('editions')
             .select('id')
             .eq('main_event_id', options.main_event_id)
-            
+
         const editionIds = (edData || []).map(e => e.id)
 
         if (editionIds.length > 0) {
@@ -92,7 +93,7 @@ export async function deleteActivity(id: string) {
     return { success: true }
 }
 
-export async function upsertActivity(data: ActivityFormInput, activityId?: string) {
+export async function upsertActivity(data: ActivityFormInput, activityId?: string, redirectPath?: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
@@ -116,8 +117,8 @@ export async function upsertActivity(data: ActivityFormInput, activityId?: strin
         short_description: validData.short_description || null,
         address: validData.address || null,
         is_active: validData.is_active,
-        main_event_id: validData.main_event_id || null,
-        edition_id: validData.edition_id || null,
+        main_event_id: validData.edition_id && validData.edition_id.trim() !== '' ? null : (validData.main_event_id || null),
+        edition_id: validData.edition_id && validData.edition_id.trim() !== '' ? validData.edition_id : null,
         custom_content: validData.custom_content || null,
         session_type: validData.session_type,
         is_online: validData.is_online,
@@ -131,13 +132,17 @@ export async function upsertActivity(data: ActivityFormInput, activityId?: strin
 
     if (activityId) {
         const { error } = await supabase.from('event_sessions').update(payload).eq('id', activityId)
+        console.log('Error: ', error)
         if (error) return { error: error.message }
     } else {
         const { error } = await supabase.from('event_sessions').insert([payload])
+        console.log('Error: ', error)
         if (error) return { error: error.message }
     }
 
+
     revalidatePath('/', 'layout')
+    if (redirectPath) redirect(redirectPath)
     return { success: true }
 }
 

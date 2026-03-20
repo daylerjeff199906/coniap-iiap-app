@@ -83,8 +83,16 @@ export function ActivitiesTable({ activities, eventId }: ActivitiesTableProps) {
                                     >
                                         <TableCell>
                                             <div className="flex items-center gap-3">
-                                                <div className="h-10 w-10 flex-shrink-0 flex items-center justify-center bg-violet-50 text-violet-500 rounded-xl overflow-hidden border">
-                                                    <IconClock size={20} />
+                                                <div className="h-11 w-11 flex-shrink-0 flex items-center justify-center bg-muted text-muted-foreground rounded-sm overflow-hidden border relative">
+                                                    {activity.banner_url ? (
+                                                        <img
+                                                            src={activity.banner_url}
+                                                            alt={activity.title || 'Session'}
+                                                            className="h-full w-full object-cover"
+                                                        />
+                                                    ) : (
+                                                        <IconClock size={20} className="text-violet-500" />
+                                                    )}
                                                 </div>
                                                 <div className="flex flex-col max-w-[300px] md:max-w-md">
                                                     <span className="font-semibold text-[15px] truncate flex items-center gap-1.5">
@@ -108,8 +116,8 @@ export function ActivitiesTable({ activities, eventId }: ActivitiesTableProps) {
                                             {activity.session_date ? new Date(activity.session_date).toLocaleDateString() : 'Sin fecha'}
                                         </TableCell>
                                         <TableCell className="text-muted-foreground whitespace-nowrap text-sm">
-                                            {activity.start_time && activity.end_time 
-                                                ? `${activity.start_time} - ${activity.end_time}` 
+                                            {activity.start_time && activity.end_time
+                                                ? `${activity.start_time} - ${activity.end_time}`
                                                 : activity.start_time || 'Sin hora'}
                                         </TableCell>
                                         <TableCell>
@@ -121,9 +129,9 @@ export function ActivitiesTable({ activities, eventId }: ActivitiesTableProps) {
                                             <div className="flex items-center justify-center gap-1">
                                                 <Tooltip>
                                                     <TooltipTrigger asChild>
-                                                        <Button 
-                                                            variant="ghost" 
-                                                            size="icon" 
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="icon"
                                                             className="h-8 w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                                                             asChild
                                                             onClick={(e) => e.stopPropagation()}
@@ -138,9 +146,9 @@ export function ActivitiesTable({ activities, eventId }: ActivitiesTableProps) {
 
                                                 <Tooltip>
                                                     <TooltipTrigger asChild>
-                                                        <Button 
-                                                            variant="ghost" 
-                                                            size="icon" 
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="icon"
                                                             className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-50"
                                                             onClick={(e) => { e.stopPropagation(); handleDeleteClick(activity); }}
                                                         >
