@@ -1,4 +1,3 @@
-import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { PageHeader } from '@/components/general/PageHeader'
 import { SubmissionsFilters } from './components/SubmissionsFilters'
 import { SubmissionsDashboard } from './components/SubmissionsDashboard'
@@ -39,23 +38,21 @@ export default async function SubmissionsPage({
         : allEditions
 
     return (
-        <LayoutWrapper sectionTitle="Gestión de Trabajos">
-            <div className="flex flex-col gap-6">
-                <PageHeader
-                    title="Administrador General de Trabajos"
-                    description="Revisa y gestiona postulaciones a través de todos los eventos y ediciones."
-                    className="mb-2"
-                />
+        <div className="flex flex-col gap-6">
+            <PageHeader
+                title="Administrador General de Trabajos"
+                description="Revisa y gestiona postulaciones a través de todos los eventos y ediciones."
+                className="mb-2"
+            />
 
-                <div className="flex flex-col gap-4">
-                    <SubmissionsFilters
-                        events={events as any}
-                        editions={filteredEditions as any}
-                    />
-                    <SubmissionsDashboard submissions={submissions as EventSubmission[]} />
-                </div>
+            <div className="flex flex-col gap-4">
+                <SubmissionsFilters
+                    events={events as any}
+                    editions={filteredEditions as any}
+                />
+                <SubmissionsDashboard submissions={submissions as EventSubmission[]} />
             </div>
-        </LayoutWrapper>
+        </div>
     )
 }
 
