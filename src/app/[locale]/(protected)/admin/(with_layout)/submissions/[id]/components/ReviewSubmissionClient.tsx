@@ -349,7 +349,7 @@ export function ReviewSubmissionClient({ submission: initialSubmission, adminId 
     });
 
     return (
-        <div className="container mx-auto p-6 space-y-6 max-w-7xl text-sm leading-6">
+        <div className="container mx-auto p-6 space-y-6 text-sm leading-6">
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
                 <div className="flex items-center gap-3">
