@@ -1,7 +1,7 @@
 import { PageHeader } from '@/components/general/PageHeader'
-import { SubmissionsFilters } from './components/SubmissionsFilters'
-import { SubmissionsDashboard } from './components/SubmissionsDashboard'
-import { getSubmissions, getEventsList, getEditionsList } from './actions'
+import { SubmissionsFilters } from '../components/SubmissionsFilters'
+import { SubmissionsDashboard } from '../components/SubmissionsDashboard'
+import { getSubmissions, getEventsList, getEditionsList } from '../actions'
 import { EventSubmission } from '@/types/submissions'
 
 export const metadata = {
