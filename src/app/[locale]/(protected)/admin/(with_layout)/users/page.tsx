@@ -3,8 +3,6 @@ import { getRolesWithPermissions, getPermissions } from './roles-permissions-act
 import { ProfileTable } from './components/ProfileTable'
 import { ProfileFilters } from './components/ProfileFilters'
 import { RolesPermissionsManager } from './components/RolesPermissionsManager'
-import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
-import { PageHeader } from '@/components/general/PageHeader'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from 'next/link'
 
@@ -49,57 +47,47 @@ export default async function ProfilesPage({ params, searchParams }: ProfilesPag
     }
 
     return (
-        <LayoutWrapper sectionTitle="Gestión de Usuarios">
-            <div className="flex flex-col gap-6">
-                <PageHeader
-                    title="Control de Accesos y Usuarios"
-                    description="Administra los usuarios registrados y define los roles y permisos de acceso a los módulos institucionales."
-                    className="mb-2"
+        <Tabs value={tab} className="w-full">
+            <TabsList className="grid w-fit grid-cols-2 h-10 bg-slate-100 rounded-xl p-1 gap-1 border border-slate-200">
+                <TabsTrigger
+                    value="users"
+                    className="rounded-lg text-xs font-semibold data-[state=active]:bg-white data-[state=active]:shadow-sm text-slate-600 data-[state=active]:text-slate-900 px-4 transition-all"
+                    asChild
+                >
+                    <Link href={`/${locale}/admin/users?tab=users`}>
+                        Usuarios
+                    </Link>
+                </TabsTrigger>
+                <TabsTrigger
+                    value="roles"
+                    className="rounded-lg text-xs font-semibold data-[state=active]:bg-white data-[state=active]:shadow-sm text-slate-600 data-[state=active]:text-slate-900 px-4 transition-all"
+                    asChild
+                >
+                    <Link href={`/${locale}/admin/users?tab=roles`}>
+                        Roles y Permisos
+                    </Link>
+                </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="users" className="mt-6 flex flex-col gap-4">
+                <ProfileFilters query={query} />
+
+                <ProfileTable
+                    profiles={profiles}
+                    isLoading={false}
+                    totalItems={total}
+                    currentPage={page}
+                    pageSize={pageSize}
                 />
+            </TabsContent>
 
-                <Tabs value={tab} className="w-full">
-                    <TabsList className="grid w-fit grid-cols-2 h-10 bg-slate-100 rounded-xl p-1 gap-1 border border-slate-200">
-                        <TabsTrigger
-                            value="users"
-                            className="rounded-lg text-xs font-semibold data-[state=active]:bg-white data-[state=active]:shadow-sm text-slate-600 data-[state=active]:text-slate-900 px-4 transition-all"
-                            asChild
-                        >
-                            <Link href={`/${locale}/admin/users?tab=users`}>
-                                Usuarios
-                            </Link>
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="roles"
-                            className="rounded-lg text-xs font-semibold data-[state=active]:bg-white data-[state=active]:shadow-sm text-slate-600 data-[state=active]:text-slate-900 px-4 transition-all"
-                            asChild
-                        >
-                            <Link href={`/${locale}/admin/users?tab=roles`}>
-                                Roles y Permisos
-                            </Link>
-                        </TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="users" className="mt-6 flex flex-col gap-4">
-                        <ProfileFilters query={query} />
-
-                        <ProfileTable
-                            profiles={profiles}
-                            isLoading={false}
-                            totalItems={total}
-                            currentPage={page}
-                            pageSize={pageSize}
-                        />
-                    </TabsContent>
-
-                    <TabsContent value="roles" className="mt-6">
-                        <RolesPermissionsManager
-                            roles={rolesWithPerms}
-                            allPermissions={allPermissions}
-                        />
-                    </TabsContent>
-                </Tabs>
-            </div>
-        </LayoutWrapper>
+            <TabsContent value="roles" className="mt-6">
+                <RolesPermissionsManager
+                    roles={rolesWithPerms}
+                    allPermissions={allPermissions}
+                />
+            </TabsContent>
+        </Tabs>
     )
 }
 
