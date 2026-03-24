@@ -7,14 +7,6 @@ import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { PageHeader } from '@/components/general/PageHeader'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from 'next/link'
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious
-} from '@/components/ui/pagination'
 
 interface ProfilesPageProps {
     params: Promise<{ locale: string }>
