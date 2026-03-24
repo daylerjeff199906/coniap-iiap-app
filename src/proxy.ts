@@ -67,7 +67,7 @@ export default async function proxy(request: NextRequest) {
             // Consultar los roles del usuario asignados en user_roles usando el ID del perfil
             const { data: userRolesData } = await supabase
                 .from('user_roles')
-                .select(`*, roles(*)`)
+                .select(`*, roles:role_id(*)`)
                 .eq('profile_id', profile.id)
 
             const roles: string[] = userRolesData?.map((ur: any) => ur.roles?.name).filter(Boolean) || []

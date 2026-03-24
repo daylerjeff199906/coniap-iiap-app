@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/sidebar"
 import { NavAdmin } from "./nav-admin"
 import { getAdminRoutes } from "@/config/admin-routes"
-import { useLocale } from "next-intl"
 import Link from "next/link"
 import { NavUser } from "@/components/nav-user"
 
