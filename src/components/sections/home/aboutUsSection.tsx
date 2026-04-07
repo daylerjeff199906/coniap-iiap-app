@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
 import { useTranslations, useLocale } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
-import imgAboutUs from '@/assets/images/about-us.webp'
 
 export const AboutUsSection = ({ pageSlug = 'about', hiddenAction = false }: { pageSlug?: string, hiddenAction?: boolean }) => {
   const [section, setSection] = useState<IDynamicSection<IAboutWithTabsContent> | null>(null)
@@ -87,7 +86,7 @@ export const AboutUsSection = ({ pageSlug = 'about', hiddenAction = false }: { p
           >
             <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl group">
               <img
-                src={intro?.image_url || imgAboutUs.src}
+                src={intro?.image_url || '/images/about_us.webp'}
                 alt="About Us"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -130,7 +129,7 @@ export const AboutUsSection = ({ pageSlug = 'about', hiddenAction = false }: { p
                   >
                     <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg order-2 md:order-1">
                       <img
-                        src={tabData?.image_url || 'https://images.unsplash.com/photo-1542601906990-b4d3fb75bb44?q=80&w=2070'}
+                        src={tabData?.image_url || '/banner_coniap_simple.webp'}
                         alt={key}
                         className="w-full h-full object-cover"
                       />

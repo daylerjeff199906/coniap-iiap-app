@@ -1,21 +1,15 @@
 "use client"
 
 import * as React from "react"
-import { ShieldAlert } from "lucide-react"
-
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
-    SidebarMenu,
-    SidebarMenuItem,
-    SidebarMenuButton,
     SidebarRail,
 } from "@/components/ui/sidebar"
 import { NavAdmin } from "./nav-admin"
 import { getAdminRoutes } from "@/config/admin-routes"
-import Link from "next/link"
 import { NavUser } from "@/components/nav-user"
 
 export function AdminSidebar({ user, locale, ...props }: React.ComponentProps<typeof Sidebar> & {
@@ -31,34 +25,24 @@ export function AdminSidebar({ user, locale, ...props }: React.ComponentProps<ty
 
 
     return (
-        <Sidebar collapsible="icon" {...props}>
+        <Sidebar collapsible="icon" className="dark" {...props}>
             <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton size="lg"
-                            className="bg-transparent hover:bg-transparent"
-                            asChild>
-                            <Link href={`/${locale}/admin`}>
-                                <div className="flex size-12 items-center justify-center rounded-sm bg-gray-900 dark:bg-gray-800 ">
-                                    <img src="/brand/logo-iiap-bn.webp" alt="logo-iiap" className="w-full h-full object-contain p-1" />
-                                </div>
-                                {
-                                    props.collapsible !== 'icon' && (
-                                        <div className="flex flex-col gap-0.5 leading-none">
-                                            <span className="font-semibold">Panel Admin</span>
-                                            <span className="text-xs text-muted-foreground">
-                                                Eventos IIAP
-                                            </span>
-                                        </div>
-                                    )
-                                }
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
+                <div className="flex items-center gap-2 px-2 py-4">
+                    <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-primary-foreground">
+                        <img src="/brand/logo-iiap.webp" alt="IIAP" className="size-6 object-contain" />
+                    </div>
+                    <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+                        <span className="truncate font-bold text-white uppercase tracking-tighter">
+                            IIAP PLATFORM
+                        </span>
+                        <span className="truncate text-[10px] text-[#718e9a] font-medium uppercase">
+                            ADMIN CONSOLE
+                        </span>
+                    </div>
+                </div>
             </SidebarHeader>
             <SidebarContent>
-                <NavAdmin items={routes} label="Módulos Principales" />
+                <NavAdmin items={routes} label="MÓDULOS DE DATOS" />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />

@@ -32,20 +32,18 @@ export default async function CallDetailsLayout({
     const participantsCount = uniqueProfilesMap.size
 
     return (
-        <LayoutWrapper sectionTitle='Detalles de Convocatoria'>
-            <div className="flex flex-col gap-6 pt-4 max-w-7xl mx-auto w-full px-4 sm:px-6">
-                <CallDetailsHeader call={call as any} />
+        <div className="flex flex-col gap-6 pt-4 w-full px-4 sm:px-6 animate-in fade-in duration-500">
+            <CallDetailsHeader call={call as any} />
 
-                <CallDetailsNavigation 
-                    callId={callId} 
-                    participantsCount={participantsCount} 
-                    submissionsCount={submissions.length} 
-                />
+            <CallDetailsNavigation
+                callId={callId}
+                participantsCount={participantsCount}
+                submissionsCount={submissions.length}
+            />
 
-                <div className="mt-4">
-                    {children}
-                </div>
+            <div className="mt-4">
+                {children}
             </div>
-        </LayoutWrapper>
+        </div>
     )
 }

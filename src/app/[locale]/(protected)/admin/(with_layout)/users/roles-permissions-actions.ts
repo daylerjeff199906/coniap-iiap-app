@@ -183,3 +183,21 @@ export async function removePermissionFromRole(roleId: string, permissionId: str
     revalidatePath(`/admin/users`)
     return { success: true }
 }
+
+export async function deletePermission(permissionId: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { error } = await supabase
+        .from('permissions')
+        .delete()
+        .eq('id', permissionId)
+
+    if (error) {
+        console.error('Error deleting permission:', error)
+        return { error: 'No se pudo eliminar el módulo/acción. Asegúrate de que no esté asignado a ningún rol.' }
+    }
+
+    revalidatePath(`/admin/users`)
+    return { success: true }
+}

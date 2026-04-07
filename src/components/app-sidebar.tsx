@@ -17,14 +17,18 @@ import {
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar"
+import Link from "next/link"
+import { getAdminRoutes } from "@/config/admin-routes"
 
 // This is sample data.
 const data = {
@@ -156,11 +160,25 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ locale, ...props }: { locale: string } & React.ComponentProps<typeof Sidebar>) {
+  const routes = getAdminRoutes(locale)
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      {/* <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
+      </SidebarHeader> */}
+      <SidebarHeader>
+        <SidebarMenu>
+          <div className="flex items-center gap-2 px-2 py-4">
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-[#ffffff] text-primary-foreground">
+              <img src="/brands/logo-iiap.webp" alt="IIAP" className="size-6 object-contain" />
+            </div>
+            <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+              <span className="truncate font-bold text-white uppercase tracking-tighter">IIAP Platform</span>
+              <span className="truncate text-[10px] text-[#718e9a] font-medium uppercase">Admin Console</span>
+            </div>
+          </div>
+        </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
