@@ -19,7 +19,7 @@ export function Hero() {
                     playsInline
                     className="w-full h-full object-cover scale-105"
                 >
-                    <source src="https://firebasestorage.googleapis.com/v0/b/coniap-iiap.appspot.com/o/banners%2Fbg-home.mp4?alt=media&token=a15b38ba-d052-42d8-96e5-69411348b070" type="video/mp4" />
+                    <source src="https://pub-9387880748914fbb97055b584ecff0a0.r2.dev/videp_banner_coniap.mp4" type="video/mp4" />
                 </video>
             </div>
 
