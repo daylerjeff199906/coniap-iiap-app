@@ -25,11 +25,11 @@ export function AdminSidebar({ user, locale, ...props }: React.ComponentProps<ty
 
 
     return (
-        <Sidebar collapsible="icon" {...props}>
+        <Sidebar collapsible="icon" className="dark" {...props}>
             <SidebarHeader>
                 <div className="flex items-center gap-2 px-2 py-4">
                     <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-primary-foreground">
-                        <img src="/brands/logo-iiap.webp" alt="IIAP" className="size-6 object-contain" />
+                        <img src="/brand/logo-iiap.webp" alt="IIAP" className="size-6 object-contain" />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                         <span className="truncate font-bold text-white uppercase tracking-tighter">
