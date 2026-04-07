@@ -3,6 +3,7 @@
 import { ChevronRight, type LucideIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 import {
     Collapsible,
@@ -33,7 +34,9 @@ export function NavAdmin({
 
     return (
         <SidebarGroup>
-            <SidebarGroupLabel>{label}</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-[#718e9a] font-bold text-[10px] uppercase tracking-widest px-2 mb-2">
+                {label}
+            </SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => {
                     // Si el item es el Dashboard (Inicio), usamos coincidencia exacta
@@ -55,11 +58,20 @@ export function NavAdmin({
                             >
                                 <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton tooltip={item.title} isActive={isActive}>
-                                            {item.icon && <item.icon />}
-                                            <span>{item.title}</span>
-                                            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                                        </SidebarMenuButton>
+                                    <SidebarMenuButton
+                                        tooltip={item.title}
+                                        isActive={isActive}
+                                        className={cn(
+                                            "transition-all duration-200 py-5",
+                                            isActive
+                                                ? "bg-sidebar-accent text-sidebar-accent-foreground rounded-lg shadow-sm"
+                                                : "text-[#8199a3] hover:text-white hover:bg-sidebar-accent/50"
+                                        )}
+                                    >
+                                        {item.icon && <item.icon className={cn("size-5", isActive ? "text-sidebar-accent-foreground" : "text-[#8199a3]")} />}
+                                        <span className={cn("text-sm", isActive ? "font-bold" : "font-medium")}>{item.title}</span>
+                                        <ChevronRight className={cn("ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90", isActive ? "text-sidebar-accent-foreground" : "text-[#718e9a]")} />
+                                    </SidebarMenuButton>
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
                                         <SidebarMenuSub>
@@ -67,7 +79,10 @@ export function NavAdmin({
                                                 const isSubActive = pathname === subItem.url
                                                 return (
                                                     <SidebarMenuSubItem key={subItem.title}>
-                                                        <SidebarMenuSubButton asChild isActive={isSubActive}>
+                                                        <SidebarMenuSubButton asChild isActive={isSubActive} className={cn(
+                                                            "transition-colors duration-200",
+                                                            isSubActive ? "text-sidebar-accent-foreground font-bold" : "text-[#8199a3] hover:text-white"
+                                                        )}>
                                                             <Link href={subItem.url}>
                                                                 <span>{subItem.title}</span>
                                                             </Link>
@@ -85,10 +100,20 @@ export function NavAdmin({
                     // Si el item no tiene "items", renderizamos un link directo
                     return (
                         <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton asChild tooltip={item.title} isActive={isActive}>
+                            <SidebarMenuButton
+                                asChild
+                                tooltip={item.title}
+                                isActive={isActive}
+                                className={cn(
+                                    "transition-all duration-200 py-5",
+                                    isActive
+                                        ? "bg-sidebar-accent text-sidebar-accent-foreground rounded-lg shadow-sm"
+                                        : "text-[#8199a3] hover:text-white hover:bg-sidebar-accent/50"
+                                )}
+                            >
                                 <Link href={item.url}>
-                                    {item.icon && <item.icon />}
-                                    <span>{item.title}</span>
+                                    {item.icon && <item.icon className={cn("size-5", isActive ? "text-sidebar-accent-foreground" : "text-[#8199a3]")} />}
+                                    <span className={cn("text-sm", isActive ? "font-bold" : "font-medium")}>{item.title}</span>
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

@@ -61,17 +61,17 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-9 w-9 rounded-full shadow-sm">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">
+                <AvatarFallback className="rounded-full bg-[#5DA230] text-white text-xs font-bold ring-2 ring-background">
                   {user.name.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate text-xs">{user.email}</span>
-                <span className="truncate text-xs text-muted-foreground font-mono font-bold mt-0.5">{user.role}</span>
+              <div className="grid flex-1 text-left text-sm leading-tight ml-1">
+                <span className="truncate font-bold text-white uppercase tracking-tight">{user.name}</span>
+                <span className="truncate text-[10px] text-[#718e9a] font-medium leading-none">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronsUpDown className="ml-auto size-4 text-[#718e9a]" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
