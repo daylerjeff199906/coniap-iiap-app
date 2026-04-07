@@ -1,12 +1,21 @@
 'use client'
 
 import React, { useState, useTransition } from 'react'
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { toast } from 'react-toastify'
 import { IconShieldCheck, IconPlus, IconTrash, IconLoader2, IconCircleCheck, IconLock } from '@tabler/icons-react'
-import { createRole, deleteRole, assignPermissionToRole, removePermissionFromRole, createPermission, IRoleWithPermissions, IPermission } from '../roles-permissions-actions'
+import { 
+    createRole, 
+    deleteRole, 
+    assignPermissionToRole, 
+    removePermissionFromRole, 
+    createPermission, 
+    IRoleWithPermissions, 
+    IPermission,
+    deletePermission 
+} from '../roles-permissions-actions'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import {
@@ -19,6 +28,15 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogFooter,
+} from "@/components/ui/dialog"
 import { useRouter } from '@/i18n/routing'
 
 interface RolesPermissionsManagerProps {
@@ -41,6 +59,7 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
     const [isCreatingPerm, setIsCreatingPerm] = useState(false)
 
     const [roleToDelete, setRoleToDelete] = useState<string | null>(null)
+    const [permToDelete, setPermToDelete] = useState<string | null>(null)
 
     const selectedRole = roles.find(r => r.id === selectedRoleId)
 
@@ -56,7 +75,6 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
                 setNewRoleDesc('')
                 setIsCreatingRole(false)
                 router.refresh()
-                // Update selected role if it is first one
                 if (!selectedRoleId && result.data?.id) setSelectedRoleId(result.data.id)
             } else {
                 toast.error(result.error)
@@ -120,6 +138,19 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
         })
     }
 
+    const handleDeletePermission = async (permId: string) => {
+        startTransition(async () => {
+            const result = await deletePermission(permId)
+            if (result.success) {
+                toast.success('Módulo/Acción eliminado')
+                setPermToDelete(null)
+                router.refresh()
+            } else {
+                toast.error(result.error)
+            }
+        })
+    }
+
     // Group permissions by module_name
     const groupedPermissions: Record<string, IPermission[]> = {}
     allPermissions.forEach(p => {
@@ -138,63 +169,57 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
                     <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                         Define los perfiles administrativos y operativos. Cada rol agrupa un conjunto de permisos que determinan el acceso a los módulos del sistema.
                     </p>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="mt-6 rounded-lg text-xs font-semibold px-4 h-9 border-slate-200 hover:bg-slate-50 flex items-center gap-2"
-                        onClick={() => setIsCreatingRole(!isCreatingRole)}
-                    >
-                        <IconPlus size={16} />
-                        <span>Añadir Nuevo Rol</span>
-                    </Button>
+                    <Dialog open={isCreatingRole} onOpenChange={setIsCreatingRole}>
+                        <DialogTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="mt-6 rounded-lg text-xs font-semibold px-4 h-9 border-slate-200 hover:bg-slate-50 flex items-center gap-2"
+                            >
+                                <IconPlus size={16} />
+                                <span>Añadir Nuevo Rol</span>
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px] rounded-2xl">
+                            <DialogHeader>
+                                <DialogTitle className="text-sm font-semibold">Nuevo Perfil Organizacional</DialogTitle>
+                                <DialogDescription className="text-xs">Identifica el rol por su nombre y añade una descripción breve.</DialogDescription>
+                            </DialogHeader>
+                            <form onSubmit={handleCreateRole} className="space-y-4 py-4">
+                                <div className="space-y-1.5">
+                                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Nombre del Rol</label>
+                                    <Input
+                                        placeholder="Ej: Administrador, Editor, Lector"
+                                        value={newRoleName}
+                                        onChange={e => setNewRoleName(e.target.value)}
+                                        className="h-9 text-sm rounded-lg border-slate-200"
+                                        required
+                                    />
+                                </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Descripción</label>
+                                    <Input
+                                        placeholder="Propósito de este rol"
+                                        value={newRoleDesc}
+                                        onChange={e => setNewRoleDesc(e.target.value)}
+                                        className="h-9 text-sm rounded-lg border-slate-200"
+                                    />
+                                </div>
+                                <DialogFooter className="pt-2">
+                                    <Button
+                                        type="submit"
+                                        className="h-9 text-[11px] font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm w-full"
+                                        disabled={isPending || !newRoleName.trim()}
+                                    >
+                                        {isPending ? <IconLoader2 className="animate-spin" size={14} /> : 'Guardar Perfil'}
+                                    </Button>
+                                </DialogFooter>
+                            </form>
+                        </DialogContent>
+                    </Dialog>
                 </div>
 
                 <div className="flex-1 min-w-0">
-                    {isCreatingRole && (
-                        <Card className="mb-6 rounded-xl border border-slate-200 shadow-sm bg-slate-50/30 overflow-hidden">
-                            <form onSubmit={handleCreateRole} className="p-5 space-y-4">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div className="space-y-1.5">
-                                        <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Nombre del Rol</label>
-                                        <Input
-                                            placeholder="Ej: Administrador, Editor, Lector"
-                                            value={newRoleName}
-                                            onChange={e => setNewRoleName(e.target.value)}
-                                            className="h-9 text-sm rounded-lg border-slate-200 bg-white"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Descripción</label>
-                                        <Input
-                                            placeholder="Breve descripción del propósito"
-                                            value={newRoleDesc}
-                                            onChange={e => setNewRoleDesc(e.target.value)}
-                                            className="h-9 text-sm rounded-lg border-slate-200 bg-white"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="flex justify-end gap-3 pt-2 border-t border-slate-100">
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        className="h-8 text-[11px] font-semibold rounded-lg text-slate-500"
-                                        onClick={() => setIsCreatingRole(false)}
-                                    >
-                                        Cancelar
-                                    </Button>
-                                    <Button
-                                        type="submit"
-                                        className="h-8 text-[11px] font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm"
-                                        disabled={isPending || !newRoleName.trim()}
-                                    >
-                                        {isPending ? <IconLoader2 className="animate-spin" size={14} /> : 'Confirmar Registro'}
-                                    </Button>
-                                </div>
-                            </form>
-                        </Card>
-                    )}
-
                     {roles.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {roles.map((role) => (
@@ -262,15 +287,66 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
                         </div>
                     )}
 
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="mt-4 rounded-lg text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 px-0 h-auto flex items-center gap-2"
-                        onClick={() => setIsCreatingPerm(!isCreatingPerm)}
-                    >
-                        <IconPlus size={14} />
-                        <span>Registrar Nuevo Módulo/Acción</span>
-                    </Button>
+                    <Dialog open={isCreatingPerm} onOpenChange={setIsCreatingPerm}>
+                        <DialogTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="mt-4 rounded-lg text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 px-0 h-auto flex items-center gap-2"
+                            >
+                                <IconPlus size={14} />
+                                <span>Registrar Nuevo Módulo/Acción</span>
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md rounded-2xl">
+                            <DialogHeader>
+                                <DialogTitle className="text-sm font-semibold">Nuevo Módulo / Acción</DialogTitle>
+                                <DialogDescription className="text-xs">Añade módulos al sistema que luego podrás asignar a roles.</DialogDescription>
+                            </DialogHeader>
+                            <form onSubmit={handleCreatePermission} className="space-y-4 py-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
+                                        <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Módulo</label>
+                                        <Input
+                                            placeholder="Ej: taxonomía"
+                                            value={newPermModule}
+                                            onChange={e => setNewPermModule(e.target.value)}
+                                            className="h-9 text-sm rounded-lg border-slate-200"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Acción</label>
+                                        <Input
+                                            placeholder="Ej: create, read"
+                                            value={newPermAction}
+                                            onChange={e => setNewPermAction(e.target.value)}
+                                            className="h-9 text-sm rounded-lg border-slate-200"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Descripción</label>
+                                    <Input
+                                        placeholder="Descripción técnica del permiso"
+                                        value={newPermDesc}
+                                        onChange={e => setNewPermDesc(e.target.value)}
+                                        className="h-9 text-sm rounded-lg border-slate-200"
+                                    />
+                                </div>
+                                <DialogFooter>
+                                    <Button
+                                        type="submit"
+                                        className="h-9 text-[11px] font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm w-full"
+                                        disabled={isPending || !newPermModule.trim() || !newPermAction.trim()}
+                                    >
+                                        {isPending ? <IconLoader2 className="animate-spin" size={14} /> : 'Registrar Módulo'}
+                                    </Button>
+                                </DialogFooter>
+                            </form>
+                        </DialogContent>
+                    </Dialog>
                 </div>
 
                 <div className="flex-1 min-w-0">
@@ -282,61 +358,6 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
                         </div>
                     ) : (
                         <div className="space-y-8">
-                            {isCreatingPerm && (
-                                <Card className="rounded-xl border border-slate-200 shadow-sm bg-slate-50/30 overflow-hidden mb-8">
-                                    <form onSubmit={handleCreatePermission} className="p-5 space-y-4">
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div className="space-y-1.5">
-                                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Módulo</label>
-                                                <Input
-                                                    placeholder="Ej: taxonomía, geografía"
-                                                    value={newPermModule}
-                                                    onChange={e => setNewPermModule(e.target.value)}
-                                                    className="h-9 text-sm rounded-lg border-slate-200 bg-white"
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="space-y-1.5">
-                                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Acción</label>
-                                                <Input
-                                                    placeholder="Ej: read, create, delete"
-                                                    value={newPermAction}
-                                                    onChange={e => setNewPermAction(e.target.value)}
-                                                    className="h-9 text-sm rounded-lg border-slate-200 bg-white"
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="space-y-1.5 sm:col-span-2">
-                                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Descripción</label>
-                                                <Input
-                                                    placeholder="¿Qué permite esta acción?"
-                                                    value={newPermDesc}
-                                                    onChange={e => setNewPermDesc(e.target.value)}
-                                                    className="h-9 text-sm rounded-lg border-slate-200 bg-white"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="flex justify-end gap-3 pt-2 border-t border-slate-100">
-                                            <Button
-                                                type="button"
-                                                variant="ghost"
-                                                className="h-8 text-[11px] font-semibold rounded-lg text-slate-500"
-                                                onClick={() => setIsCreatingPerm(false)}
-                                            >
-                                                Cancelar
-                                            </Button>
-                                            <Button
-                                                type="submit"
-                                                className="h-8 text-[11px] font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm"
-                                                disabled={isPending || !newPermModule.trim() || !newPermAction.trim()}
-                                            >
-                                                {isPending ? <IconLoader2 className="animate-spin" size={14} /> : 'Registrar Permiso'}
-                                            </Button>
-                                        </div>
-                                    </form>
-                                </Card>
-                            )}
-
                             <div className="space-y-10">
                                 {Object.entries(groupedPermissions).map(([moduleName, perms]) => (
                                     <div key={moduleName} className="space-y-4">
@@ -369,7 +390,18 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
                                                                 <span className="text-xs font-bold text-slate-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase tracking-tighter">
                                                                     {perm.action}
                                                                 </span>
-                                                                {hasPermission && <IconCircleCheck size={14} className="text-indigo-600" />}
+                                                                <div className="flex items-center gap-1.5">
+                                                                    {hasPermission && <IconCircleCheck size={14} className="text-indigo-600" />}
+                                                                    <button
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation()
+                                                                            setPermToDelete(perm.id)
+                                                                        }}
+                                                                        className="text-slate-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                                                                    >
+                                                                        <IconTrash size={12} />
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                             {perm.description && (
                                                                 <p className="text-[10px] text-slate-400 mt-1 leading-normal group-hover:text-slate-500">{perm.description}</p>
@@ -387,11 +419,11 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
                 </div>
             </section>
 
-            {/* Confirm Removal Dialog */}
+            {/* Confirm Removal Role Dialog */}
             <AlertDialog open={!!roleToDelete} onOpenChange={(open) => !open && setRoleToDelete(null)}>
                 <AlertDialogContent className="rounded-2xl border-slate-200 bg-white shadow-2xl p-6">
                     <AlertDialogHeader>
-                        <AlertDialogTitle className="text-base font-semibold text-slate-900">¿Confirmar eliminación?</AlertDialogTitle>
+                        <AlertDialogTitle className="text-base font-semibold text-slate-900">¿Confirmar eliminación de Rol?</AlertDialogTitle>
                         <AlertDialogDescription className="text-sm text-slate-500 mt-2 leading-relaxed">
                             Se eliminará el rol de forma permanente. Los usuarios asignados a este perfil perderán sus privilegios asociados de inmediato.
                         </AlertDialogDescription>
@@ -403,6 +435,27 @@ export function RolesPermissionsManager({ roles, allPermissions }: RolesPermissi
                             className="rounded-xl h-10 text-xs font-semibold bg-red-600 hover:bg-red-700 text-white border-none shadow-md w-full sm:w-auto"
                         >
                             Eliminar Rol Permanente
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+
+            {/* Confirm Removal Permission Dialog */}
+            <AlertDialog open={!!permToDelete} onOpenChange={(open) => !open && setPermToDelete(null)}>
+                <AlertDialogContent className="rounded-2xl border-slate-200 bg-white shadow-2xl p-6">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-base font-semibold text-slate-900">¿Eliminar Módulo/Acción?</AlertDialogTitle>
+                        <AlertDialogDescription className="text-sm text-slate-500 mt-2 leading-relaxed">
+                            Esta acción eliminará el registro de la matriz. Solo se podrá completar si no hay roles que dependan actualmente de este permiso.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="mt-6 gap-3">
+                        <AlertDialogCancel className="rounded-xl h-10 text-xs font-semibold border-slate-200 w-full sm:w-auto hover:bg-slate-50">Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={() => permToDelete && handleDeletePermission(permToDelete)}
+                            className="rounded-xl h-10 text-xs font-semibold bg-red-600 hover:bg-red-700 text-white border-none shadow-md w-full sm:w-auto"
+                        >
+                            Eliminar Permanentemente
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

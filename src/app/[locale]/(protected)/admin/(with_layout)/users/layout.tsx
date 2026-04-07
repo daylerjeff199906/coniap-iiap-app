@@ -13,7 +13,10 @@ export default function UsersLayout({
     params: any
 }) {
     const pathname = usePathname()
-    const isRolesTab = pathname.includes('/roles') && !pathname.includes('/users/') // Global roles tab
+    // Identificar si estamos exactamente en la gestión global de roles
+    // pathname en next-intl no incluye el locale prefix usualmente
+    const isRolesTab = pathname === '/admin/users/roles' || pathname.endsWith('/users/roles')
+    && !pathname.match(/\/users\/[^\/]+\/roles/) // No es un rol de un usuario específico
 
     return (
         <LayoutWrapper sectionTitle="Usuarios y Accesos">

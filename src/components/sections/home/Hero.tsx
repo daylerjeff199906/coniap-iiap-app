@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useTranslations } from 'next-intl'
 import { motion } from 'framer-motion'
 import { Play } from 'lucide-react'
@@ -7,20 +8,32 @@ import { Play } from 'lucide-react'
 export function Hero() {
     const t = useTranslations('HomePage')
 
+    const [videoError, setVideoError] = React.useState(false)
+
     return (
         <section className="relative h-screen w-full flex flex-col items-center justify-center text-center px-4 overflow-hidden bg-zinc-950">
             {/* Cinematic Background Video */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-black/50 z-10" />
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover scale-105"
-                >
-                    <source src="https://pub-9387880748914fbb97055b584ecff0a0.r2.dev/videp_banner_coniap.mp4" type="video/mp4" />
-                </video>
+                {!videoError ? (
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster="/images/banner-fallback.webp"
+                        className="w-full h-full object-cover scale-105"
+                        onError={() => setVideoError(true)}
+                    >
+                        <source src="https://pub-9387880748914fbb97055b584ecff0a0.r2.dev/videp_banner_coniap.mp4" type="video/mp4" />
+                    </video>
+                ) : (
+                    <img 
+                        src="/images/banner-fallback.webp" 
+                        alt="Background Fallback" 
+                        className="w-full h-full object-cover scale-105"
+                    />
+                )}
             </div>
 
             {/* Hero Content */}
