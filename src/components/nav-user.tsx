@@ -27,7 +27,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-import { signout } from "@/app/[locale]/(auth)/login/actions"
+import { signout } from "@/lib/auth-actions"
 import { useTransition } from "react"
 
 export function NavUser({
