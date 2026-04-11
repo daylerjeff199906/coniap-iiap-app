@@ -40,23 +40,23 @@ export default async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone()
     const pathname = url.pathname
 
-    // Determinamos patrones de ruta ignorando prefijos de idioma explícitos
-    const isLoginPage = /^\/(es|en)\/login(?:\/|$)/.test(pathname) || /^\/login(?:\/|$)/.test(pathname)
-    const isAdminRoute = /^\/(es|en)\/admin(?:\/|$)/.test(pathname) || /^\/admin(?:\/|$)/.test(pathname)
+    const isDev = request.nextUrl.hostname === 'localhost' || request.nextUrl.hostname === '127.0.0.1';
+    const loginBaseUrl = isDev ? 'http://localhost:3003' : 'https://auth.iiap.gob.pe';
 
-    // Redirecciones seguras para usuarios autenticados y no autenticados
-    if (user && isLoginPage) {
-        const locale = pathname.split('/')[1];
-        const isLocalePrefixed = ['es', 'en'].includes(locale);
-        url.pathname = isLocalePrefixed ? `/${locale}/admin` : '/admin';
-        return NextResponse.redirect(url)
+    // Determinamos patrones de ruta ignorando prefijos de idioma explícitos
+    const isLoginPage = /^\/(es|en)\/login(?:\/|$)/.test(pathname) || /^\/login(?:\/|$)/.test(pathname);
+    const isAdminRoute = /^\/(es|en)\/admin(?:\/|$)/.test(pathname) || /^\/admin(?:\/|$)/.test(pathname);
+
+    // Si intenta ir a login localmente, redirigir al centralizado
+    if (isLoginPage) {
+        const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es';
+        return NextResponse.redirect(new URL(`${loginBaseUrl}/${locale}/login`, request.url));
     }
 
+    // Redirecciones seguras para usuarios no autenticados en rutas protegidas
     if (!user && isAdminRoute) {
-        const locale = pathname.split('/')[1];
-        const isLocalePrefixed = ['es', 'en'].includes(locale);
-        url.pathname = isLocalePrefixed ? `/${locale}/login` : '/login';
-        return NextResponse.redirect(url)
+        const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es';
+        return NextResponse.redirect(new URL(`${loginBaseUrl}/${locale}/login`, request.url));
     }
 
     if (user && isAdminRoute) {
@@ -75,36 +75,19 @@ export default async function proxy(request: NextRequest) {
                 .eq('profile_id', profile.id)
 
             const roles: string[] = userRolesData?.map((ur: any) => ur.roles?.name).filter(Boolean) || []
-            const hasAdminRole = roles.some(r => r.toLowerCase() === 'admin')
+            const hasAdminRole = roles.map(r => r.toLowerCase()).includes('admin')
 
             if (!hasAdminRole) {
-                const isIiapDomain = request.nextUrl.hostname.endsWith('iiap.gob.pe')
-                const platformUrl = isIiapDomain ? 'https://auth.iiap.gob.pe' : 'http://localhost:3004'
-                const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es'
-                
-                return NextResponse.redirect(new URL(`${platformUrl}/${locale}/dashboard`, request.url))
+                const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es';
+                return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
             }
         } else {
-            // Fallback si no hay perfil
-            const isIiapDomain = request.nextUrl.hostname.endsWith('iiap.gob.pe')
-            const platformUrl = isIiapDomain ? 'https://auth.iiap.gob.pe' : 'http://localhost:3004'
-            const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es'
-            
-            return NextResponse.redirect(new URL(`${platformUrl}/${locale}/dashboard`, request.url))
+            // Fallback si no hay perfil en este sistema
+            const locale = pathname.split('/')[1] === 'en' ? 'en' : 'es';
+            return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
         }
     }
 
     return response;
 }
 
-export const config = {
-    // Match only internationalized pathnames
-    matcher: [
-        // Match root
-        '/',
-        // Match locales
-        '/(es|en)/:path*',
-        // Match all except static files, api, etc.
-        '/((?!api|_next|_static|_vercel|.*\\..*).*)'
-    ]
-};
