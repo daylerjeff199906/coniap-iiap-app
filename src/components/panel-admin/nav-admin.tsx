@@ -3,6 +3,7 @@
 import { ChevronRight, type LucideIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 import {
     Collapsible,
@@ -55,10 +56,23 @@ export function NavAdmin({
                             >
                                 <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton tooltip={item.title} isActive={isActive}>
+                                        <SidebarMenuButton 
+                                            tooltip={item.title} 
+                                            isActive={isActive}
+                                            className={cn(
+                                                "transition-colors duration-200 justify-start",
+                                                "data-[active=true]:bg-[#0c364e]! data-[active=true]:text-white! font-medium",
+                                                "text-white hover:bg-white/10 hover:text-white",
+                                                "[&>svg]:transition-colors [&>svg]:duration-200",
+                                                isActive ? "[&>svg]:text-[#84cc16]!" : "[&>svg]:text-[#06b6d4]!"
+                                            )}
+                                        >
                                             {item.icon && <item.icon />}
                                             <span>{item.title}</span>
-                                            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                                            <ChevronRight className={cn(
+                                                "ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90",
+                                                isActive ? "text-[#84cc16]!" : "text-white/50"
+                                            )} />
                                         </SidebarMenuButton>
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
@@ -67,7 +81,15 @@ export function NavAdmin({
                                                 const isSubActive = pathname === subItem.url
                                                 return (
                                                     <SidebarMenuSubItem key={subItem.title}>
-                                                        <SidebarMenuSubButton asChild isActive={isSubActive}>
+                                                        <SidebarMenuSubButton 
+                                                            asChild 
+                                                            isActive={isSubActive}
+                                                            className={cn(
+                                                                "transition-colors duration-200",
+                                                                "data-[active=true]:bg-[#0c364e]! data-[active=true]:text-white! font-medium",
+                                                                "text-white hover:bg-white/10 hover:text-white"
+                                                            )}
+                                                        >
                                                             <Link href={subItem.url}>
                                                                 <span>{subItem.title}</span>
                                                             </Link>
@@ -85,7 +107,18 @@ export function NavAdmin({
                     // Si el item no tiene "items", renderizamos un link directo
                     return (
                         <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton asChild tooltip={item.title} isActive={isActive}>
+                            <SidebarMenuButton 
+                                asChild 
+                                tooltip={item.title} 
+                                isActive={isActive}
+                                className={cn(
+                                    "transition-colors duration-200 justify-start",
+                                    "data-[active=true]:bg-[#0c364e]! data-[active=true]:text-white! font-medium",
+                                    "text-white hover:bg-white/10 hover:text-white",
+                                    "[&>svg]:transition-colors [&>svg]:duration-200",
+                                    isActive ? "[&>svg]:text-[#84cc16]!" : "[&>svg]:text-[#06b6d4]!"
+                                )}
+                            >
                                 <Link href={item.url}>
                                     {item.icon && <item.icon />}
                                     <span>{item.title}</span>
