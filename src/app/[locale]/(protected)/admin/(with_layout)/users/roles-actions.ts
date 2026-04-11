@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/supabase/server'
 import { createAdminClient } from '@/utils/supabase/admin'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
+import { IUserRole } from '@/types/roles'
 
 export async function getRoles() {
     const cookieStore = await cookies()
@@ -30,6 +31,7 @@ export async function getUserRoles(profileId: string) {
         .from('user_roles')
         .select(`
             id,
+            profile_id,
             role_id,
             module_id,
             assigned_at,
@@ -50,7 +52,12 @@ export async function getUserRoles(profileId: string) {
         return []
     }
 
-    return data
+    // Supabase can return arrays for joined objects if the relationship isn't clear
+    return (data as any[]).map(ur => ({
+        ...ur,
+        roles: Array.isArray(ur.roles) ? ur.roles[0] : ur.roles,
+        modules: Array.isArray(ur.modules) ? ur.modules[0] : ur.modules
+    })) as IUserRole[]
 }
 
 export async function getUsersWithRoles(query?: string) {
@@ -92,7 +99,14 @@ export async function getUsersWithRoles(query?: string) {
         return []
     }
 
-    return data
+    return (data as any[]).map(profile => ({
+        ...profile,
+        user_roles: (profile.user_roles || []).map((ur: any) => ({
+            ...ur,
+            roles: Array.isArray(ur.roles) ? ur.roles[0] : ur.roles,
+            modules: Array.isArray(ur.modules) ? ur.modules[0] : ur.modules
+        }))
+    }))
 }
 
 
