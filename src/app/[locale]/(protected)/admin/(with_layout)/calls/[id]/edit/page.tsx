@@ -1,4 +1,5 @@
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
+import { PageHeader } from '@/components/general/PageHeader'
 import { CallForm } from '@/app/[locale]/(protected)/admin/calls/components/CallForm'
 import { getCallById, getAllEvents, getParticipantRoles } from '@/app/[locale]/(protected)/admin/calls/actions'
 import { notFound } from 'next/navigation'
@@ -20,7 +21,7 @@ export default async function EditCallPage({
     const roles = await getParticipantRoles()
 
     return (
-        <LayoutWrapper sectionTitle="Editar Convocatoria">
+        <div className="flex flex-col gap-6 animate-in fade-in duration-500">
             <div className="max-w-5xl mx-auto w-full">
                 <CallForm
                     callInfo={call}
@@ -29,6 +30,6 @@ export default async function EditCallPage({
                     locale={locale}
                 />
             </div>
-        </LayoutWrapper>
+        </div>
     )
 }

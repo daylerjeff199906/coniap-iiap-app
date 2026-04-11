@@ -8,16 +8,16 @@ export const metadata = {
 
 export default async function CreateActivityPage() {
     return (
-        <LayoutWrapper sectionTitle="Nueva Actividad">
-            <PageHeader
+        <div className="flex flex-col gap-4 animate-in fade-in duration-500">
+             <PageHeader
                 title="Nueva Sesión de Evento"
                 description="Configura una nueva sesión y agenda para tus eventos."
                 backHref="/admin/activities"
                 variant="chevron"
-                className="mb-6 max-w-5xl mx-auto w-full"
+                className="mb-2"
             />
             <ActivityForm />
-        </LayoutWrapper>
+        </div>
     )
 }
 

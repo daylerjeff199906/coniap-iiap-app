@@ -21,16 +21,16 @@ export default async function EditActivityPage({ params }: EditActivityPageProps
     }
 
     return (
-        <LayoutWrapper sectionTitle="Editar Actividad">
+        <div className="flex flex-col gap-4 animate-in fade-in duration-500">
             <PageHeader
                 title="Editar Sesión"
-                description="Actualiza los detalles de la sesión."
+                description={`Actualizando detalles de la sesión ${activity.title}`}
                 backHref="/admin/activities"
                 variant="chevron"
-                className="mb-6 max-w-5xl mx-auto w-full"
+                className="mb-2"
             />
             <ActivityForm activity={activity} />
-        </LayoutWrapper>
+        </div>
     )
 }
 
