@@ -59,9 +59,12 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
         name: '',
         code: '',
         description: '',
-        url: '',
-        icon_name: '',
-        color_class: 'bg-indigo-600'
+        url_prod: '',
+        url_local: '',
+        path: '/',
+        icon_name: 'IconApps',
+        color_class: 'bg-indigo-600',
+        is_active: true
     })
 
     const handleOpenDialog = (module?: IModule) => {
@@ -71,9 +74,12 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
                 name: module.name,
                 code: module.code,
                 description: module.description || '',
-                url: module.url,
+                url_prod: module.url_prod,
+                url_local: module.url_local || '',
+                path: module.path || '/',
                 icon_name: module.icon_name,
-                color_class: module.color_class
+                color_class: module.color_class,
+                is_active: module.is_active
             })
         } else {
             setModuleToEdit(null)
@@ -81,9 +87,12 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
                 name: '',
                 code: '',
                 description: '',
-                url: '',
+                url_prod: '',
+                url_local: '',
+                path: '/',
                 icon_name: 'IconApps',
-                color_class: 'bg-indigo-600'
+                color_class: 'bg-indigo-600',
+                is_active: true
             })
         }
         setIsDialogOpen(true)
@@ -91,7 +100,10 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!formData.name || !formData.code || !formData.url) return
+        if (!formData.name || !formData.code || !formData.url_prod || !formData.path || !formData.icon_name || !formData.color_class) {
+            toast.error('Por favor completa todos los campos requeridos.')
+            return
+        }
 
         startTransition(async () => {
             let result;
@@ -102,7 +114,7 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
             }
 
             if (result.success) {
-                toast.success(moduleToEdit ? 'Módulo actualizado' : 'Módulo creado')
+                toast.success(moduleToEdit ? 'Módulo actualizado correctamente' : 'Módulo creado exitosamente')
                 setIsDialogOpen(false)
                 router.refresh()
             } else {
@@ -115,7 +127,7 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
         startTransition(async () => {
             const result = await deleteModule(id)
             if (result.success) {
-                toast.success('Módulo eliminado')
+                toast.success('Módulo eliminado permanentemente')
                 setModuleToDelete(null)
                 router.refresh()
             } else {
@@ -188,11 +200,21 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
                                     </p>
                                     <div className="mt-4 flex items-center justify-between">
                                         <div className="flex items-center gap-2 text-[11px] font-medium text-slate-400 uppercase tracking-tighter">
-                                            <IconExternalLink size={14} className="text-slate-300" />
-                                            {m.url}
-                                        </div>
-                                    </div>
-                                </div>
+                                             <IconExternalLink size={14} className="text-slate-300" />
+                                             {m.url_prod}
+                                         </div>
+                                         {m.url_local && (
+                                             <div className="flex items-center gap-2 text-[11px] font-medium text-indigo-400/60 uppercase tracking-tighter">
+                                                 <IconSettings size={14} className="text-indigo-200" />
+                                                 Local: {m.url_local}
+                                             </div>
+                                         )}
+                                         <div className="flex items-center gap-2 text-[11px] font-medium text-slate-300 uppercase tracking-tighter">
+                                             <IconClick size={14} className="text-slate-200" />
+                                             Ruta: {m.path}
+                                         </div>
+                                     </div>
+                                 </div>
                             </div>
                         ))
                     ) : (
@@ -219,7 +241,7 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
 
             {/* Dialog Form */}
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="sm:max-w-lg rounded-3xl border-none p-0 overflow-hidden shadow-2xl">
+                <DialogContent className="sm:max-w-2xl rounded-3xl border-none p-0 overflow-hidden shadow-2xl">
                     <DialogHeader className="p-8 pb-0">
                         <DialogTitle className="text-xl font-semibold text-slate-900 tracking-tight">
                             {moduleToEdit ? 'Editar Configuración' : 'Nuevo Registro de Módulo'}
@@ -228,19 +250,19 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
                     </DialogHeader>
 
                     <form onSubmit={handleSubmit} className="p-8 pt-6 space-y-6">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                             <div className="space-y-2">
                                 <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Nombre Público</label>
                                 <Input
                                     placeholder="Ej: Dashboard principal"
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                    className="h-11 rounded-xl border-slate-200 focus:ring-indigo-500"
+                                    className="h-11 rounded-xl border-slate-200 focus:ring-indigo-500 font-medium"
                                     required
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Código Identificador</label>
+                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Código (Slug)</label>
                                 <Input
                                     placeholder="Ej: dashboard-v1"
                                     value={formData.code}
@@ -252,63 +274,95 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Ruta URL de Destino</label>
-                            <Input
-                                placeholder="/admin/dashboard"
-                                value={formData.url}
-                                onChange={e => setFormData({ ...formData, url: e.target.value })}
-                                className="h-11 rounded-xl border-slate-200 focus:ring-indigo-500"
-                                required
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Breve Descripción</label>
-                            <Textarea
-                                placeholder="Describe el propósito de este módulo..."
-                                value={formData.description || ''}
-                                onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                className="rounded-xl border-slate-200 focus:ring-indigo-500 min-h-[80px] resize-none"
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Color Temático</label>
-                                <div className="flex flex-wrap gap-2">
-                                    {['bg-indigo-600', 'bg-emerald-600', 'bg-rose-600', 'bg-amber-600', 'bg-slate-900', 'bg-violet-600'].map(c => (
-                                        <button
-                                            key={c}
-                                            type="button"
-                                            onClick={() => setFormData({ ...formData, color_class: c })}
-                                            className={cn(
-                                                "w-8 h-8 rounded-full border-2 transition-all",
-                                                c,
-                                                formData.color_class === c ? "border-slate-400 scale-110 shadow-lg" : "border-transparent opacity-80"
-                                            )}
-                                        />
-                                    ))}
-                                </div>
+                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">URL Producción</label>
+                                <Input
+                                    placeholder="https://app.iiap.gob.pe"
+                                    value={formData.url_prod}
+                                    onChange={e => setFormData({ ...formData, url_prod: e.target.value })}
+                                    className="h-11 rounded-xl border-slate-200 focus:ring-indigo-500"
+                                    required
+                                />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Estado Operativo</label>
+                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">URL Local (Opcional)</label>
+                                <Input
+                                    placeholder="http://localhost:3000"
+                                    value={formData.url_local || ''}
+                                    onChange={e => setFormData({ ...formData, url_local: e.target.value })}
+                                    className="h-11 rounded-xl border-slate-200 focus:ring-indigo-500 font-mono"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Ruta Interna (Path)</label>
+                                <Input
+                                    placeholder="Ej: /dashboard"
+                                    value={formData.path}
+                                    onChange={e => setFormData({ ...formData, path: e.target.value })}
+                                    className="h-11 rounded-xl border-slate-200 focus:ring-indigo-500 font-mono"
+                                    required
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Icono (Tabler)</label>
+                                <Input
+                                    placeholder="Ej: IconApps"
+                                    value={formData.icon_name}
+                                    onChange={e => setFormData({ ...formData, icon_name: e.target.value })}
+                                    className="h-11 rounded-xl border-slate-200 focus:ring-indigo-500"
+                                    required
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Estado</label>
                                 <div className="flex items-center gap-4 h-11">
                                     <Button
                                         type="button"
                                         variant="outline"
                                         onClick={() => setFormData({ ...formData, is_active: !formData.is_active })}
                                         className={cn(
-                                            "w-full h-full rounded-xl font-semibold text-xs flex items-center justify-center gap-2",
+                                            "w-full h-full rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 tracking-widest transition-all shadow-sm uppercase",
                                             formData.is_active !== false
                                                 ? "bg-emerald-50 text-emerald-600 border-emerald-200"
                                                 : "bg-red-50 text-red-600 border-red-200"
                                         )}
                                     >
                                         <div className={cn("w-2 h-2 rounded-full", formData.is_active !== false ? "bg-emerald-600" : "bg-red-600")} />
-                                        {formData.is_active !== false ? 'ACTIVADO' : 'SUSPENDIDO'}
+                                        {formData.is_active !== false ? 'Activo' : 'Inactivo'}
                                     </Button>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Propuesta de Valor / Descripción</label>
+                            <Textarea
+                                placeholder="Describe el propósito de este módulo..."
+                                value={formData.description || ''}
+                                onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                className="rounded-xl border-slate-200 focus:ring-indigo-500 min-h-[80px] resize-none font-medium italic text-slate-500 pt-3"
+                            />
+                        </div>
+
+                        <div className="space-y-3">
+                            <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Color de Identidad</label>
+                            <div className="flex flex-wrap gap-3">
+                                {['bg-indigo-600', 'bg-emerald-600', 'bg-rose-600', 'bg-amber-600', 'bg-slate-900', 'bg-violet-600', 'bg-sky-600', 'bg-teal-600'].map(c => (
+                                    <button
+                                        key={c}
+                                        type="button"
+                                        onClick={() => setFormData({ ...formData, color_class: c })}
+                                        className={cn(
+                                            "w-9 h-9 rounded-xl border-2 transition-all shadow-sm",
+                                            c,
+                                            formData.color_class === c ? "border-slate-400 scale-110 shadow-lg ring-4 ring-slate-100" : "border-transparent opacity-70 hover:opacity-100"
+                                        )}
+                                    />
+                                ))}
                             </div>
                         </div>
 

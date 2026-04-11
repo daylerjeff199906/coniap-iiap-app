@@ -29,12 +29,18 @@ export async function getUserRoles(profileId: string) {
     const { data, error } = await supabase
         .from('user_roles')
         .select(`
-            *,
+            id,
+            role_id,
+            module_id,
+            assigned_at,
             roles:role_id (
                 id,
                 name,
-                description,
-                created_at
+                description
+            ),
+            modules:module_id (
+                id,
+                name
             )
         `)
         .eq('profile_id', profileId)

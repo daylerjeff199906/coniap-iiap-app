@@ -10,7 +10,9 @@ export interface IModule {
     code: string
     name: string
     description: string | null
-    url: string
+    url_prod: string
+    url_local: string | null
+    path: string
     icon_name: string
     color_class: string
     is_active: boolean

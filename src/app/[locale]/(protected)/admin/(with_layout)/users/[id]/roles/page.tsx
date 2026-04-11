@@ -1,5 +1,6 @@
 import { getProfileById } from '../../actions'
 import { getRoles, getUserRoles } from '../../roles-actions'
+import { getModules } from '../../roles-permissions-actions'
 import { RolesManager } from '../../components/RolesManager'
 import { LayoutWrapper } from '@/components/panel-admin/layout-wrapper'
 import { PageHeader } from '@/components/general/PageHeader'
@@ -21,6 +22,7 @@ export default async function UserRolesPage({ params }: UserRolesPageProps) {
 
     const allRoles = await getRoles()
     const userRoles = await getUserRoles(id)
+    const allModules = await getModules()
 
     const userName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Usuario'
 
@@ -43,6 +45,7 @@ export default async function UserRolesPage({ params }: UserRolesPageProps) {
                         profile={profile}
                         allRoles={allRoles}
                         userRoles={userRoles}
+                        allModules={allModules}
                     />
                 </div>
             </UserLayout>
