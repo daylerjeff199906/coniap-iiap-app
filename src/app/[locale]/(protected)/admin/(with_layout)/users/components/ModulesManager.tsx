@@ -16,7 +16,8 @@ import {
     IconCircleCheck,
     IconAlertCircle,
     IconLayoutGrid,
-    IconExternalLink
+    IconExternalLink,
+    IconInfoCircle
 } from '@tabler/icons-react'
 import { createModule, updateModule, deleteModule, IModule } from '../roles-permissions-actions'
 import { cn } from '@/lib/utils'
@@ -122,40 +123,51 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
             }
         })
     }
-
     return (
-        <div className="space-y-8 animate-in fade-in duration-700">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
-                <div className="space-y-1">
-                    <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">Módulos del Sistema</h2>
-                    <p className="text-sm text-slate-500 italic">Arquitectura central: gestiona las aplicaciones y secciones operativas.</p>
+        <div className="space-y-12 animate-in fade-in duration-700">
+            {/* Main Section: System Modules */}
+            <section className="space-y-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
+                    <div className="space-y-1">
+                        <h2 className="text-xl font-semibold text-slate-900 tracking-tight">Módulos del Sistema</h2>
+                        <p className="text-sm text-slate-500">Gestiona las aplicaciones y secciones centrales de la plataforma.</p>
+                    </div>
+                    <Button
+                        onClick={() => handleOpenDialog()}
+                        className="h-9 px-4 rounded-md bg-slate-900 hover:bg-black text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
+                    >
+                        <IconPlus size={16} />
+                        <span>Registrar Módulo</span>
+                    </Button>
                 </div>
-                <Button
-                    onClick={() => handleOpenDialog()}
-                    className="h-9 px-5 rounded-md bg-slate-900 hover:bg-black text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
-                >
-                    <IconPlus size={16} />
-                    <span>Nuevo Módulo</span>
-                </Button>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {modules.length > 0 ? (
-                    modules.map((m) => (
-                        <Card key={m.id} className="group relative overflow-hidden border border-slate-200 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-50/50 transition-all duration-300 rounded-2xl bg-white">
-                            <CardHeader className="p-6 pb-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {modules.length > 0 ? (
+                        modules.map((m) => (
+                            <div key={m.id} className="group p-6 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-all">
                                 <div className="flex items-start justify-between">
-                                    <div className={cn(
-                                        "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-100 group-hover:scale-110 transition-transform duration-500",
-                                        m.color_class || 'bg-slate-900'
-                                    )}>
-                                        <IconSettings size={24} stroke={1.5} />
+                                    <div className="flex items-center gap-4">
+                                        <div className={cn(
+                                            "w-10 h-10 rounded-lg flex items-center justify-center text-white",
+                                            m.color_class || 'bg-slate-900'
+                                        )}>
+                                            <IconLayoutGrid size={22} stroke={1.5} />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <div className="flex items-center gap-2">
+                                                <h3 className="font-semibold text-slate-900 text-[15px] uppercase tracking-tight">{m.name}</h3>
+                                                {!m.is_active && (
+                                                    <span className="text-[9px] font-bold bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded border border-slate-200 uppercase tracking-tighter">Inactivo</span>
+                                                )}
+                                            </div>
+                                            <p className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">{m.code}</p>
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="flex items-center gap-1">
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            className="h-8 w-8 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50"
+                                            className="h-8 w-8 rounded-md text-slate-400 hover:text-slate-900 hover:bg-slate-50"
                                             onClick={() => handleOpenDialog(m)}
                                         >
                                             <IconEdit size={16} />
@@ -163,78 +175,45 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            className="h-8 w-8 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50"
+                                            className="h-8 w-8 rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50"
                                             onClick={() => setModuleToDelete(m.id)}
                                         >
                                             <IconTrash size={16} />
                                         </Button>
                                     </div>
                                 </div>
-                                <div className="mt-4 space-y-1">
-                                    <div className="flex items-center gap-2">
-                                        <h3 className="font-semibold text-slate-900 text-lg group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{m.name}</h3>
-                                        {!m.is_active && (
-                                            <span className="text-[10px] font-semibold bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded border border-slate-200 uppercase tracking-tighter italic">Inactivo</span>
-                                        )}
+                                <div className="mt-4 pt-4 border-t border-slate-50">
+                                    <p className="text-[13px] text-slate-500 line-clamp-2 h-10 leading-relaxed italic">
+                                        {m.description || 'Sin descripción detallada para este módulo operacional.'}
+                                    </p>
+                                    <div className="mt-4 flex items-center justify-between">
+                                        <div className="flex items-center gap-2 text-[11px] font-medium text-slate-400 uppercase tracking-tighter">
+                                            <IconExternalLink size={14} className="text-slate-300" />
+                                            {m.url}
+                                        </div>
                                     </div>
-                                    <p className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">{m.code}</p>
                                 </div>
-                            </CardHeader>
-                            <CardContent className="p-6 pt-0 space-y-6">
-                                <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-2 h-10 italic">
-                                    {m.description || 'Sin descripción detallada para este módulo operacional.'}
-                                </p>
-
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-50">
-                                    <div className="flex items-center gap-1.5">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-tighter">{m.url}</span>
-                                    </div>
-                                    <IconExternalLink size={14} className="text-slate-300" />
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ))
-                ) : (
-                    <div className="col-span-full py-20 flex flex-col items-center justify-center border-2 border-dashed border-slate-100 rounded-3xl bg-slate-50/30 text-center">
-                        <div className="w-16 h-16 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-slate-300 mb-4">
-                            <IconLayoutGrid size={32} stroke={1} />
+                            </div>
+                        ))
+                    ) : (
+                        <div className="col-span-full py-16 text-center border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/20">
+                            <h3 className="text-slate-900 font-semibold text-sm">No hay módulos registrados</h3>
+                            <p className="text-slate-500 text-xs mt-1 italic">Define el primer pilar de tu ecosistema para comenzar.</p>
                         </div>
-                        <h3 className="text-slate-900 font-semibold text-lg">No hay módulos registrados</h3>
-                        <p className="text-slate-500 text-sm max-w-xs mt-2 italic">Define el primer pilar de tu ecosistema administrativo para comenzar a gestionar permisos.</p>
-                    </div>
-                )}
-            </div>
-
-            {/* Steps / Guide Section */}
-            <div className="mt-12 p-8 rounded-3xl bg-indigo-50/30 border border-indigo-100/50 flex flex-col md:flex-row gap-10">
-                <div className="flex-1 space-y-4">
-                    <h4 className="text-indigo-900 font-semibold text-lg flex items-center gap-2">
-                        <IconClick size={20} />
-                        Cómo funciona la Arquitectura
-                    </h4>
-                    <ul className="space-y-4">
-                        {[
-                            { title: '1. Registro del Módulo', desc: 'Define la unidad de negocio o sección del sistema (ej: "Inventario", "Finanzas").' },
-                            { title: '2. Definición de Permisos', desc: 'Una vez creado el módulo, ve a la sección de Roles para definir acciones específicas (read, write).' },
-                            { title: '3. Asignación a Perfiles', desc: 'Asocia grupos de permisos a Roles para dar acceso estructurado a tus usuarios.' }
-                        ].map((step, i) => (
-                            <li key={i} className="flex gap-4">
-                                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-white text-indigo-600 border border-indigo-100 flex items-center justify-center text-[10px] font-semibold">{i + 1}</span>
-                                <div>
-                                    <p className="text-[13px] font-semibold text-indigo-900">{step.title}</p>
-                                    <p className="text-xs text-indigo-700/70">{step.desc}</p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    )}
                 </div>
-                <div className="w-full md:w-80 p-6 rounded-2xl bg-white border border-indigo-100 shadow-sm flex flex-col justify-center">
-                    <IconAlertCircle className="text-amber-500 mb-3" size={24} />
-                    <h5 className="text-[13px] font-semibold text-slate-900">Nota de Seguridad</h5>
-                    <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
-                        Los cambios en el código (slug) del módulo pueden afectar las validaciones de acceso en el frontend. Procede con cautela al editar módulos en producción.
-                    </p>
+            </section>
+
+            {/* Sub-Section: Technical Info */}
+            <div className="border-t border-slate-100 pt-10">
+                <div className="p-6 rounded-xl bg-slate-50/50 border border-slate-100 flex items-start gap-4">
+                    <IconInfoCircle className="text-slate-400 mt-1 shrink-0" size={20} />
+                    <div className="space-y-1">
+                        <h5 className="text-[13px] font-semibold text-slate-900">Nota sobre la arquitectura de Módulos</h5>
+                        <p className="text-[12px] text-slate-500 leading-relaxed italic">
+                            Los módulos representan secciones aisladas del sistema. Al registrar un módulo, este queda disponible en la matriz de permisos para definir acciones granulares y asignar roles específicos a nivel de módulo.
+                        </p>
+                    </div>
                 </div>
             </div>
 

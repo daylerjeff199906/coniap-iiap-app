@@ -60,8 +60,14 @@ export async function getUsersWithRoles(query?: string) {
             email,
             avatar_url,
             user_roles (
+                id,
                 role_id,
+                module_id,
                 roles:role_id (
+                    id,
+                    name
+                ),
+                modules:module_id (
                     id,
                     name
                 )
@@ -128,36 +134,53 @@ export async function createSupabaseAccount(profileId: string, email: string) {
     }
 }
 
-export async function assignRole(profileId: string, roleId: string, assignedBy?: string) {
+export async function assignRole(profileId: string, roleId: string, assignedBy?: string, moduleId?: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
+
+    // Get current user for assignedBy if not provided
+    let finalAssignedBy = assignedBy
+    if (!finalAssignedBy) {
+        const { data: { user } } = await supabase.auth.getUser()
+        finalAssignedBy = user?.id
+    }
 
     const { error } = await supabase
         .from('user_roles')
         .insert({
             profile_id: profileId,
             role_id: roleId,
-            assigned_by: assignedBy
+            assigned_by: finalAssignedBy,
+            module_id: moduleId || null
         })
 
     if (error) {
         console.error('Error assigning role:', error)
-        return { error: 'No se pudo asignar el rol.' }
+        return { error: 'No se pudo asignar el rol. Tal vez ya existe esta combinación.' }
     }
 
     revalidatePath(`/admin/users/${profileId}/roles`)
+    revalidatePath(`/admin/users/roles`)
     return { success: true }
 }
 
-export async function removeRole(profileId: string, roleId: string) {
+export async function removeRole(profileId: string, roleId: string, moduleId?: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const { error } = await supabase
+    let query = supabase
         .from('user_roles')
         .delete()
         .eq('profile_id', profileId)
         .eq('role_id', roleId)
+
+    if (moduleId) {
+        query = query.eq('module_id', moduleId)
+    } else {
+        query = query.is('module_id', null)
+    }
+
+    const { error } = await query
 
     if (error) {
         console.error('Error removing role:', error)
@@ -165,6 +188,7 @@ export async function removeRole(profileId: string, roleId: string) {
     }
 
     revalidatePath(`/admin/users/${profileId}/roles`)
+    revalidatePath(`/admin/users/roles`)
     return { success: true }
 }
 

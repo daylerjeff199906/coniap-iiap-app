@@ -44,7 +44,7 @@ export default async function GlobalRolesPage() {
                 </div>
 
                 <TabsContent value="users" className="focus-visible:outline-none focus-visible:ring-0 w-full">
-                    <GlobalUserRoleAssigner allRoles={allRoles} />
+                    <GlobalUserRoleAssigner allRoles={allRoles} allModules={allModules} />
                 </TabsContent>
 
                 <TabsContent value="modules" className="focus-visible:outline-none focus-visible:ring-0 w-full">

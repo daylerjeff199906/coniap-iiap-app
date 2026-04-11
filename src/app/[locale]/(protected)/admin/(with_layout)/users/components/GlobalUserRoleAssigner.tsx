@@ -24,19 +24,34 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
+import { IModule } from '../roles-permissions-actions'
 import { getUser } from '@/utils/functions'
 
 interface GlobalUserRoleAssignerProps {
     allRoles: IRole[]
+    allModules: IModule[]
 }
 
-export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps) {
+export function GlobalUserRoleAssigner({ allRoles, allModules }: GlobalUserRoleAssignerProps) {
     const [isPending, startTransition] = useTransition()
     const router = useRouter()
     const [searchQuery, setSearchQuery] = useState('')
     const [users, setUsers] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null)
+
+    // Assignment State
+    const [isAssignDialogOpen, setIsAssignDialogOpen] = useState(false)
+    const [selectedUser, setSelectedUser] = useState<any | null>(null)
+    const [assignmentRole, setAssignmentRole] = useState<string>('')
+    const [assignmentModule, setAssignmentModule] = useState<string>('global')
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -63,11 +78,27 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
         setIsLoading(false)
     }
 
-    const handleAssign = (profileId: string, roleId: string) => {
+    const openAssignDialog = (user: any) => {
+        setSelectedUser(user)
+        setAssignmentRole('')
+        setAssignmentModule('global')
+        setIsAssignDialogOpen(true)
+    }
+
+    const handleConfirmAssign = () => {
+        if (!selectedUser || !assignmentRole) return
+
         startTransition(async () => {
-            const result = await assignRole(profileId, roleId)
+            const result = await assignRole(
+                selectedUser.id,
+                assignmentRole,
+                undefined, // handled by server action
+                assignmentModule === 'global' ? undefined : assignmentModule
+            )
+
             if (result.success) {
-                toast.success('Rol asignado')
+                toast.success('Rol asignado correctamente')
+                setIsAssignDialogOpen(false)
                 fetchUsers()
                 router.refresh()
             } else {
@@ -76,9 +107,9 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
         })
     }
 
-    const handleRemove = (profileId: string, roleId: string) => {
+    const handleRemove = (profileId: string, roleId: string, moduleId?: string) => {
         startTransition(async () => {
-            const result = await removeRole(profileId, roleId)
+            const result = await removeRole(profileId, roleId, moduleId)
             if (result.success) {
                 toast.success('Rol removido')
                 fetchUsers()
@@ -131,20 +162,25 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
                                             <IconUser size={20} />
                                         </AvatarFallback>
                                     </Avatar>
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-[13px] font-medium text-slate-600 truncate max-w-[200px]">{user.email}</span>
-                                        {
-                                            user.email === currentUserEmail && (
-                                                <span className="text-[9px] font-bold text-slate-400 border border-slate-200 px-1.5 py-0.5 rounded uppercase tracking-tighter bg-white">YOU</span>
-                                            )
-                                        }
+                                    <div className="flex flex-col min-w-0">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-[13px] font-semibold text-slate-900 truncate">
+                                                {user.first_name} {user.last_name}
+                                            </span>
+                                            {
+                                                user.email === currentUserEmail && (
+                                                    <span className="text-[9px] font-bold text-slate-400 border border-slate-200 px-1.5 py-0.5 rounded uppercase tracking-tighter bg-white">YOU</span>
+                                                )
+                                            }
+                                        </div>
+                                        <span className="text-[11px] text-slate-400 truncate">{user.email}</span>
                                     </div>
                                 </div>
 
                                 <div className="col-span-3">
-                                    <div className="flex items-center gap-2 text-[13px] text-slate-500">
+                                    <div className="flex items-center gap-2 text-[12px] font-medium text-slate-500 uppercase tracking-tighter">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                         <span>Active</span>
-                                        <IconCircleCheck size={14} className="text-slate-300" />
                                     </div>
                                 </div>
 
@@ -153,46 +189,40 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
                                         {user.user_roles?.length > 0 ? (
                                             user.user_roles.map((ur: any) => (
                                                 <div
-                                                    key={ur.role_id}
-                                                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium text-slate-700 bg-slate-100 border border-slate-200"
+                                                    key={ur.id}
+                                                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold text-slate-600 bg-slate-50 border border-slate-200 uppercase tracking-tight"
                                                 >
-                                                    {ur.roles?.name}
+                                                    <span>{ur.roles?.name}</span>
+                                                    {ur.modules && (
+                                                        <span className="text-[9px] text-slate-400 border-l border-slate-200 pl-1.5">
+                                                            {ur.modules.name}
+                                                        </span>
+                                                    )}
                                                     <button
-                                                        onClick={() => handleRemove(user.id, ur.role_id)}
-                                                        className="hover:text-red-600 transition-colors"
+                                                        onClick={() => handleRemove(user.id, ur.role_id, ur.module_id)}
+                                                        className="hover:text-red-600 transition-colors ml-1 border-l border-slate-200 pl-1"
                                                         disabled={isPending}
                                                     >
-                                                        <IconX size={12} />
+                                                        <IconX size={10} />
                                                     </button>
                                                 </div>
                                             ))
                                         ) : (
-                                            <Select onValueChange={(roleId) => handleAssign(user.id, roleId)}>
-                                                <SelectTrigger className="h-8 w-fit min-w-[140px] rounded border-slate-200 bg-white text-[11px] text-slate-500">
-                                                    <SelectValue placeholder="Asignar rol..." />
-                                                </SelectTrigger>
-                                                <SelectContent className="rounded-md">
-                                                    {allRoles.map(r => (
-                                                        <SelectItem key={r.id} value={r.id} className="text-xs">{r.name}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
+                                            <button 
+                                                onClick={() => openAssignDialog(user)}
+                                                className="h-8 px-3 rounded border-slate-200 bg-white text-[10px] font-bold text-slate-400 hover:border-slate-400 hover:text-slate-600 transition-all uppercase tracking-widest"
+                                            >
+                                                Asignar Rol
+                                            </button>
                                         )}
 
                                         {user.user_roles?.length > 0 && (
-                                            <Select onValueChange={(roleId) => handleAssign(user.id, roleId)}>
-                                                <SelectTrigger className="h-6 w-6 rounded-full border-dashed border-slate-300 flex items-center justify-center p-0 hover:border-indigo-400 transition-colors">
-                                                    <IconUserPlus size={12} className="text-slate-400" />
-                                                </SelectTrigger>
-                                                <SelectContent className="rounded-md">
-                                                    {allRoles
-                                                        .filter(r => !user.user_roles?.some((ur: any) => ur.role_id === r.id))
-                                                        .map(r => (
-                                                            <SelectItem key={r.id} value={r.id} className="text-xs">{r.name}</SelectItem>
-                                                        ))
-                                                    }
-                                                </SelectContent>
-                                            </Select>
+                                            <button
+                                                onClick={() => openAssignDialog(user)}
+                                                className="h-6 w-6 rounded-full border-dashed border-slate-300 flex items-center justify-center p-0 hover:border-slate-500 transition-colors"
+                                            >
+                                                <IconUserPlus size={12} className="text-slate-400" />
+                                            </button>
                                         )}
                                     </div>
                                 </div>
@@ -212,6 +242,64 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
                     </span>
                 </div>
             </div>
+
+            {/* Assignment Dialog */}
+            <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
+                <DialogContent className="sm:max-w-[400px] rounded-2xl border-none p-0 overflow-hidden shadow-2xl">
+                    <DialogHeader className="p-6 pb-0">
+                        <DialogTitle className="text-lg font-bold text-slate-900 uppercase tracking-tight">Asignación de Acceso</DialogTitle>
+                        <DialogDescription className="text-xs italic text-slate-500">
+                            Configura el alcance del nuevo rol para {selectedUser?.email}.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="p-6 space-y-6">
+                        <div className="space-y-4">
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] pl-1">Seleccionar Perfil</label>
+                                <Select value={assignmentRole} onValueChange={setAssignmentRole}>
+                                    <SelectTrigger className="h-10 rounded-xl border-slate-200 bg-slate-50/50 text-slate-700">
+                                        <SelectValue placeholder="Busca un rol..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-slate-100">
+                                        {allRoles.map(r => (
+                                            <SelectItem key={r.id} value={r.id} className="text-xs">{r.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] pl-1">Alcance del Acceso (Opcional)</label>
+                                <Select value={assignmentModule} onValueChange={setAssignmentModule}>
+                                    <SelectTrigger className="h-10 rounded-xl border-slate-200 bg-white text-slate-700">
+                                        <SelectValue placeholder="Acceso Global" />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-slate-100">
+                                        <SelectItem value="global" className="text-xs font-bold text-indigo-600">Acceso Global del Sistema</SelectItem>
+                                        {allModules.map(m => (
+                                            <SelectItem key={m.id} value={m.id} className="text-xs">{m.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <p className="text-[10px] text-slate-400 italic mt-1 leading-tight">
+                                    {assignmentModule === 'global' 
+                                        ? 'Este rol se aplicará a toda la organización.' 
+                                        : `Este rol solo será válido dentro del módulo "${allModules.find(m => m.id === assignmentModule)?.name}".`}
+                                </p>
+                            </div>
+                        </div>
+
+                        <Button
+                            className="w-full h-11 bg-slate-900 hover:bg-black text-white font-bold text-xs uppercase tracking-widest rounded-xl shadow-lg transition-all"
+                            onClick={handleConfirmAssign}
+                            disabled={isPending || !assignmentRole}
+                        >
+                            {isPending ? <IconLoader2 className="animate-spin" size={18} /> : 'Confirmar Asignación'}
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }
