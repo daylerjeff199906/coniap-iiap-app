@@ -12,11 +12,11 @@ export default async function GlobalRolesPage() {
     const allRoles = await getRoles()
 
     return (
-        <div className="w-full px-6 lg:px-10 py-10 space-y-10 animate-in fade-in duration-700">
+        <div className="w-full space-y-10 animate-in fade-in duration-700">
             {/* Header style from image 2 */}
             <header className="space-y-1">
-                <h1 className="text-[32px] font-semibold text-slate-900 tracking-tight">Seguridad y Accesos</h1>
-                <p className="text-slate-500 text-sm">Gestiona la arquitectura de permisos, módulos y miembros del sistema.</p>
+                <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">Estructura de Seguridad</h1>
+                <p className="text-slate-500 text-sm">Configuración de accesos, ecosistema de módulos y gestión de equipo.</p>
             </header>
 
             <Tabs defaultValue="users" className="w-full space-y-8">

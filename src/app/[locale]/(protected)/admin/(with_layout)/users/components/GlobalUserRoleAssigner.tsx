@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useTransition, useEffect } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from 'react-toastify'
@@ -8,13 +8,13 @@ import {
     IconSearch,
     IconLoader2,
     IconUserPlus,
-    IconFileText,
-    IconX
+    IconX,
+    IconCircleCheck,
+    IconUser
 } from '@tabler/icons-react'
 import { assignRole, removeRole } from '../roles-actions'
 import { getUsersWithRoles } from '../roles-actions'
 import { IRole } from '@/types/roles'
-import { cn } from '@/lib/utils'
 import { useRouter } from '@/i18n/routing'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -24,6 +24,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { getUser } from '@/utils/functions'
 
 interface GlobalUserRoleAssignerProps {
     allRoles: IRole[]
@@ -35,6 +36,7 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
     const [searchQuery, setSearchQuery] = useState('')
     const [users, setUsers] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null)
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -43,6 +45,16 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
 
         return () => clearTimeout(delayDebounceFn)
     }, [searchQuery])
+
+    useEffect(() => {
+        const fetchCurrentUserEmail = async () => {
+            const data = await getUser()
+            if (data?.user?.email) {
+                setCurrentUserEmail(data.user.email)
+            }
+        }
+        fetchCurrentUserEmail()
+    }, [])
 
     const fetchUsers = async () => {
         setIsLoading(true)
@@ -77,6 +89,7 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
         })
     }
 
+
     return (
         <div className="w-full space-y-8 animate-in fade-in duration-700">
             <div className="flex flex-col gap-6">
@@ -84,22 +97,11 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
                     <div className="relative w-full md:w-64">
                         <IconSearch size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                         <Input
-                            placeholder="Filter members..."
+                            placeholder="Buscar usuarios..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="pl-9 h-9 border-slate-200 rounded-md bg-white text-sm focus-visible:ring-indigo-500 shadow-sm"
                         />
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="h-9 px-4 gap-2 border-slate-200 text-slate-600 text-[13px] font-medium rounded-md hover:bg-slate-50 shadow-sm transition-all">
-                            <IconFileText size={16} />
-                            Docs
-                        </Button>
-                        <Button size="sm" className="h-9 px-4 gap-2 bg-[#50e3c2] hover:bg-[#45d1b1] text-indigo-950 text-[13px] font-semibold rounded-md transition-all border-none shadow-sm active:scale-95">
-                            <IconUserPlus size={16} />
-                            Invite members
-                        </Button>
                     </div>
                 </div>
             </div>
@@ -131,10 +133,14 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
                                     </Avatar>
                                     <div className="flex items-center gap-2">
                                         <span className="text-[13px] font-medium text-slate-600 truncate max-w-[200px]">{user.email}</span>
-                                        <span className="text-[9px] font-bold text-slate-400 border border-slate-200 px-1.5 py-0.5 rounded uppercase tracking-tighter bg-white">YOU</span>
+                                        {
+                                            user.email === currentUserEmail && (
+                                                <span className="text-[9px] font-bold text-slate-400 border border-slate-200 px-1.5 py-0.5 rounded uppercase tracking-tighter bg-white">YOU</span>
+                                            )
+                                        }
                                     </div>
                                 </div>
-                                
+
                                 <div className="col-span-3">
                                     <div className="flex items-center gap-2 text-[13px] text-slate-500">
                                         <span>Active</span>
@@ -189,10 +195,6 @@ export function GlobalUserRoleAssigner({ allRoles }: GlobalUserRoleAssignerProps
                                             </Select>
                                         )}
                                     </div>
-
-                                    <Button variant="outline" size="sm" className="h-8 px-3 rounded-md border-slate-200 text-slate-500 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                                        Abandonar equipo
-                                    </Button>
                                 </div>
                             </div>
                         ))
