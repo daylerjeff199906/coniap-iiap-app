@@ -1,10 +1,7 @@
 "use client"
 
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   ShieldCheck,
 } from "lucide-react"
@@ -59,7 +56,7 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-[#0c364e] data-[state=open]:text-white text-[#7fa2b6] hover:bg-[#0c364e]/30 hover:text-white"
             >
               <Avatar className="h-9 w-9 rounded-full shadow-sm">
                 <AvatarImage src={user.avatar} alt={user.name} />

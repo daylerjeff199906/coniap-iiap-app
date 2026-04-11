@@ -46,12 +46,16 @@ export default async function proxy(request: NextRequest) {
 
     // Redirecciones seguras para usuarios autenticados y no autenticados
     if (user && isLoginPage) {
-        url.pathname = pathname.replace('/login', '/admin') || '/admin'
+        const locale = pathname.split('/')[1];
+        const isLocalePrefixed = ['es', 'en'].includes(locale);
+        url.pathname = isLocalePrefixed ? `/${locale}/admin` : '/admin';
         return NextResponse.redirect(url)
     }
 
     if (!user && isAdminRoute) {
-        url.pathname = pathname.replace('/admin', '/login') || '/login'
+        const locale = pathname.split('/')[1];
+        const isLocalePrefixed = ['es', 'en'].includes(locale);
+        url.pathname = isLocalePrefixed ? `/${locale}/login` : '/login';
         return NextResponse.redirect(url)
     }
 

@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/supabase/server'
 import { createAdminClient } from '@/utils/supabase/admin'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
+import { IUserRole } from '@/types/roles'
 
 export async function getRoles() {
     const cookieStore = await cookies()
@@ -29,12 +30,19 @@ export async function getUserRoles(profileId: string) {
     const { data, error } = await supabase
         .from('user_roles')
         .select(`
-            *,
+            id,
+            profile_id,
+            role_id,
+            module_id,
+            assigned_at,
             roles:role_id (
                 id,
                 name,
-                description,
-                created_at
+                description
+            ),
+            modules:module_id (
+                id,
+                name
             )
         `)
         .eq('profile_id', profileId)
@@ -44,7 +52,61 @@ export async function getUserRoles(profileId: string) {
         return []
     }
 
-    return data
+    // Supabase can return arrays for joined objects if the relationship isn't clear
+    return (data as any[]).map(ur => ({
+        ...ur,
+        roles: Array.isArray(ur.roles) ? ur.roles[0] : ur.roles,
+        modules: Array.isArray(ur.modules) ? ur.modules[0] : ur.modules
+    })) as IUserRole[]
+}
+
+export async function getUsersWithRoles(query?: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    let supabaseQuery = supabase
+        .from('profiles')
+        .select(`
+            id,
+            first_name,
+            last_name,
+            email,
+            avatar_url,
+            user_roles (
+                id,
+                role_id,
+                module_id,
+                roles:role_id (
+                    id,
+                    name
+                ),
+                modules:module_id (
+                    id,
+                    name
+                )
+            )
+        `)
+
+    if (query) {
+        supabaseQuery = supabaseQuery.or(`first_name.ilike.%${query}%,last_name.ilike.%${query}%,email.ilike.%${query}%`)
+    }
+
+    const { data, error } = await supabaseQuery
+        .limit(50) // Limit for performance in global view
+
+    if (error) {
+        console.error('Error fetching users with roles:', error)
+        return []
+    }
+
+    return (data as any[]).map(profile => ({
+        ...profile,
+        user_roles: (profile.user_roles || []).map((ur: any) => ({
+            ...ur,
+            roles: Array.isArray(ur.roles) ? ur.roles[0] : ur.roles,
+            modules: Array.isArray(ur.modules) ? ur.modules[0] : ur.modules
+        }))
+    }))
 }
 
 
@@ -92,36 +154,53 @@ export async function createSupabaseAccount(profileId: string, email: string) {
     }
 }
 
-export async function assignRole(profileId: string, roleId: string, assignedBy?: string) {
+export async function assignRole(profileId: string, roleId: string, assignedBy?: string, moduleId?: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
+
+    // Get current user for assignedBy if not provided
+    let finalAssignedBy = assignedBy
+    if (!finalAssignedBy) {
+        const { data: { user } } = await supabase.auth.getUser()
+        finalAssignedBy = user?.id
+    }
 
     const { error } = await supabase
         .from('user_roles')
         .insert({
             profile_id: profileId,
             role_id: roleId,
-            assigned_by: assignedBy
+            assigned_by: finalAssignedBy,
+            module_id: moduleId || null
         })
 
     if (error) {
         console.error('Error assigning role:', error)
-        return { error: 'No se pudo asignar el rol.' }
+        return { error: 'No se pudo asignar el rol. Tal vez ya existe esta combinación.' }
     }
 
     revalidatePath(`/admin/users/${profileId}/roles`)
+    revalidatePath(`/admin/users/roles`)
     return { success: true }
 }
 
-export async function removeRole(profileId: string, roleId: string) {
+export async function removeRole(profileId: string, roleId: string, moduleId?: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    const { error } = await supabase
+    let query = supabase
         .from('user_roles')
         .delete()
         .eq('profile_id', profileId)
         .eq('role_id', roleId)
+
+    if (moduleId) {
+        query = query.eq('module_id', moduleId)
+    } else {
+        query = query.is('module_id', null)
+    }
+
+    const { error } = await query
 
     if (error) {
         console.error('Error removing role:', error)
@@ -129,6 +208,7 @@ export async function removeRole(profileId: string, roleId: string) {
     }
 
     revalidatePath(`/admin/users/${profileId}/roles`)
+    revalidatePath(`/admin/users/roles`)
     return { success: true }
 }
 

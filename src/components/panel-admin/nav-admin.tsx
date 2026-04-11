@@ -58,20 +58,20 @@ export function NavAdmin({
                             >
                                 <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
-                                    <SidebarMenuButton
-                                        tooltip={item.title}
-                                        isActive={isActive}
-                                        className={cn(
-                                            "transition-all duration-200 py-2 px-3",
-                                            isActive
-                                                ? "!bg-[#00274D] !text-[#A3E635] rounded-lg shadow-sm"
-                                                : "text-[#8199a3] hover:text-white hover:!bg-[#00274D]/50"
-                                        )}
-                                    >
-                                        {item.icon && <item.icon className={cn("size-5", isActive ? "!text-[#A3E635]" : "text-[#8199a3]")} />}
-                                        <span className={cn("text-sm", isActive ? "font-bold" : "font-medium")}>{item.title}</span>
-                                        <ChevronRight className={cn("ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90", isActive ? "!text-[#A3E635]" : "text-[#718e9a]")} />
-                                    </SidebarMenuButton>
+                                        <SidebarMenuButton
+                                            tooltip={item.title}
+                                            isActive={isActive}
+                                            className={cn(
+                                                "transition-all duration-200 py-2 px-3",
+                                                isActive
+                                                    ? "!bg-[#00274D] !text-[#A3E635] rounded-lg shadow-sm"
+                                                    : "text-[#8199a3] hover:text-white hover:!bg-[#00274D]/50"
+                                            )}
+                                        >
+                                            {item.icon && <item.icon className={cn("size-5", isActive ? "!text-[#A3E635]" : "text-[#8199a3]")} />}
+                                            <span className={cn("text-sm", isActive ? "font-bold" : "font-medium")}>{item.title}</span>
+                                            <ChevronRight className={cn("ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90", isActive ? "!text-[#A3E635]" : "text-[#718e9a]")} />
+                                        </SidebarMenuButton>
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
                                         <SidebarMenuSub>
