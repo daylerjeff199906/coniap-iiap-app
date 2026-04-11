@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useTransition } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { toast } from 'react-toastify'
@@ -12,11 +11,9 @@ import {
     IconLoader2,
     IconCircleCheck,
     IconLock,
-    IconHierarchy2,
     IconKey,
     IconInfoCircle,
-    IconChevronRight,
-    IconUserShield
+    IconX
 } from '@tabler/icons-react'
 import {
     createRole,
@@ -48,7 +45,6 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-    DialogFooter,
 } from "@/components/ui/dialog"
 import {
     Select,
@@ -184,82 +180,55 @@ export function RolesPermissionsManager({ roles, allPermissions, modules }: Role
     })
 
     return (
-        <div className="flex flex-col gap-12 animate-in fade-in duration-700">
-            {/* Instruction Header */}
-            <div className="bg-slate-900 rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl">
-                <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div className="space-y-2 text-center md:text-left">
-                        <h2 className="text-xl font-semibold tracking-tight">Arquitectura de Seguridad y Roles</h2>
-                        <p className="text-slate-400 text-sm max-w-2xl leading-relaxed">
-                            Configura la matriz de acceso de tu organización. Los roles definen grupos de capacidades, mientras que los permisos especifican acciones granulares sobre los módulos operativos del sistema.
-                        </p>
-                    </div>
-                </div>
-                <div className="absolute -right-20 -top-20 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl" />
-            </div>
-
-            {/* Steps Guide */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[
-                    { label: 'Definir Roles', desc: 'Crea perfiles como "Administrador" o "Científico".', icon: IconHierarchy2, color: 'text-blue-500' },
-                    { label: 'Configurar Matriz', desc: 'Asocia permisos específicos a cada rol seleccionado.', icon: IconKey, color: 'text-indigo-500' },
-                    { label: 'Validar Acceso', desc: 'Los cambios se aplican en tiempo real a los usuarios.', icon: IconCircleCheck, color: 'text-emerald-500' }
-                ].map((step, idx) => (
-                    <div key={idx} className="p-5 rounded-2xl border border-slate-100 bg-white/50 backdrop-blur-sm flex items-start gap-4">
-                        <div className={cn("w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 border border-slate-100", step.color)}>
-                            <step.icon size={20} />
-                        </div>
-                        <div>
-                            <h4 className="text-sm font-semibold text-slate-900">{step.label}</h4>
-                            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">{step.desc}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
+        <div className="space-y-10 animate-in fade-in duration-700">
+            <header className="space-y-1 px-2">
+                <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">Roles y Permisos</h2>
+                <p className="text-sm text-slate-500 italic">Configura perfiles organizacionales y su matriz de acceso granular.</p>
+            </header>
 
             {/* Roles Selection Section */}
             <section className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between px-2">
                     <div className="space-y-1">
                         <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-widest flex items-center gap-2">
                             Perfiles Organizacionales
-                            <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full border border-indigo-100">{roles.length}</span>
+                            <span className="text-[10px] bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-200">{roles.length}</span>
                         </h3>
-                        <p className="text-xs text-slate-500 italic">Selecciona un perfil para editar su matriz de permisos asociada.</p>
+                        <p className="text-xs text-slate-500 italic">Selecciona un perfil para configurar su acceso.</p>
                     </div>
                     <Dialog open={isCreatingRole} onOpenChange={setIsCreatingRole}>
                         <DialogTrigger asChild>
-                            <Button className="h-10 px-5 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-semibold transition-all shadow-md flex items-center gap-2">
+                            <Button className="h-9 px-4 rounded-md bg-slate-900 hover:bg-black text-white text-xs font-semibold flex items-center gap-2">
                                 <IconPlus size={16} />
                                 Nuevo Rol
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="rounded-3xl border-none shadow-2xl p-0 overflow-hidden">
-                            <DialogHeader className="p-8 pb-0">
+                        <DialogContent className="rounded-xl border-none shadow-2xl p-0 overflow-hidden">
+                            <DialogHeader className="p-6 pb-2">
                                 <DialogTitle className="text-lg font-semibold text-slate-900">Crear Nuevo Perfil</DialogTitle>
-                                <DialogDescription className="text-sm italic">Define un nuevo rol operativo para la plataforma.</DialogDescription>
+                                <DialogDescription className="text-sm italic">Define un nuevo rol operativo.</DialogDescription>
                             </DialogHeader>
-                            <form onSubmit={handleCreateRole} className="p-8 space-y-6">
-                                <div className="space-y-2">
-                                    <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Nombre del Rol</label>
+                            <form onSubmit={handleCreateRole} className="p-6 space-y-4">
+                                <div className="space-y-1.5">
+                                    <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Nombre</label>
                                     <Input
                                         placeholder="Ej: Editor Senior"
                                         value={newRoleName}
                                         onChange={e => setNewRoleName(e.target.value)}
-                                        className="h-11 rounded-xl border-slate-200"
+                                        className="h-10 rounded-md border-slate-200"
                                         required
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest pl-1">Propósito / Descripción</label>
+                                <div className="space-y-1.5">
+                                    <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Descripción</label>
                                     <Input
-                                        placeholder="Breve explicación de sus responsabilidades"
+                                        placeholder="Propósito de este rol"
                                         value={newRoleDesc}
                                         onChange={e => setNewRoleDesc(e.target.value)}
-                                        className="h-11 rounded-xl border-slate-200"
+                                        className="h-10 rounded-md border-slate-200"
                                     />
                                 </div>
-                                <Button type="submit" className="w-full h-12 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-100" disabled={isPending}>
+                                <Button type="submit" className="w-full h-11 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md" disabled={isPending}>
                                     {isPending ? <IconLoader2 className="animate-spin" size={18} /> : 'Registrar Perfil'}
                                 </Button>
                             </form>
@@ -267,104 +236,106 @@ export function RolesPermissionsManager({ roles, allPermissions, modules }: Role
                     </Dialog>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-2">
                     {roles.length > 0 ? (
                         roles.map((role) => (
                             <div
                                 key={role.id}
                                 onClick={() => setSelectedRoleId(role.id)}
                                 className={cn(
-                                    "p-5 rounded-2xl border transition-all cursor-pointer relative group flex flex-col justify-between h-36",
+                                    "p-4 rounded-xl border transition-all cursor-pointer relative group flex flex-col justify-between h-32",
                                     selectedRoleId === role.id
-                                        ? "border-indigo-500 bg-indigo-50/20 ring-1 ring-indigo-500/30 shadow-xl shadow-indigo-100/50"
-                                        : "border-slate-100 bg-white hover:border-indigo-200 hover:bg-slate-50/50"
+                                        ? "border-slate-900 bg-slate-900 text-white ring-1 ring-slate-900"
+                                        : "border-slate-100 bg-white hover:border-slate-300"
                                 )}
                             >
-                                <div className="space-y-2">
+                                <div className="space-y-1">
                                     <div className="flex items-center justify-between">
-                                        <h4 className={cn("text-xs font-semibold uppercase tracking-wide", selectedRoleId === role.id ? "text-indigo-900" : "text-slate-900")}>
+                                        <h4 className="text-xs font-semibold uppercase tracking-wide truncate pr-6">
                                             {role.name}
                                         </h4>
-                                        {selectedRoleId === role.id && <IconCircleCheck size={18} className="text-indigo-500" stroke={2} />}
+                                        {selectedRoleId === role.id && <IconCircleCheck size={16} className="text-indigo-400 shrink-0" />}
                                     </div>
-                                    <p className="text-[10px] text-slate-400 line-clamp-2 leading-relaxed italic group-hover:text-slate-500">{role.description || 'Sin descripción detallada.'}</p>
+                                    <p className={cn("text-[10px] line-clamp-2 leading-relaxed italic", selectedRoleId === role.id ? "text-slate-400" : "text-slate-400")}>
+                                        {role.description || 'Sin descripción detallada.'}
+                                    </p>
                                 </div>
-                                <div className="flex items-center justify-between pt-3">
-                                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-tighter bg-slate-50 px-2 py-0.5 rounded border border-slate-100">
-                                        {role.permissions?.length || 0} CAPACIDADES
+                                
+                                <div className="flex items-center justify-between pt-2">
+                                    <span className={cn("text-[9px] font-semibold uppercase px-2 py-0.5 rounded border tracking-tighter", 
+                                        selectedRoleId === role.id ? "bg-white/10 border-white/20 text-white" : "bg-slate-50 border-slate-100 text-slate-400")}>
+                                        {role.permissions?.length || 0} PERMISOS
                                     </span>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-7 w-7 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-all"
+                                    <button
                                         onClick={(e) => {
                                             e.stopPropagation()
                                             setRoleToDelete(role.id)
                                         }}
+                                        className={cn("p-1 rounded transition-colors opacity-0 group-hover:opacity-100", 
+                                            selectedRoleId === role.id ? "hover:bg-red-500/20 text-slate-400" : "hover:bg-red-50 text-slate-300 hover:text-red-500")}
                                         disabled={isPending}
                                     >
                                         <IconTrash size={14} />
-                                    </Button>
+                                    </button>
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <div className="col-span-full py-12 text-center border-2 border-dashed border-slate-100 rounded-3xl bg-slate-50/20 italic">
-                            <p className="text-sm text-slate-400 font-medium">No hay roles definidos para gestionar.</p>
+                        <div className="col-span-full py-10 text-center border-2 border-dashed border-slate-100 rounded-xl bg-slate-50/20 italic">
+                            <p className="text-xs text-slate-400">No hay roles definidos.</p>
                         </div>
                     )}
                 </div>
             </section>
 
             {/* Matriz de Permisos Section */}
-            <section className="space-y-8 bg-white rounded-[32px] border border-slate-100 p-8 shadow-sm">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-50 pb-6">
+            <section className="space-y-6 pt-6 border-t border-slate-100">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
                     <div className="space-y-1">
                         <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-widest flex items-center gap-2">
-                            Matriz de Permisos Granulares
-                            {selectedRole && <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full border border-slate-200">EDITANDO: {selectedRole.name}</span>}
+                            Matriz de Permisos
+                            {selectedRole && <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 uppercase tracking-tighter">{selectedRole.name}</span>}
                         </h3>
-                        <p className="text-xs text-slate-500 italic">Activa o desactiva las acciones específicas que este rol puede ejecutar en cada módulo.</p>
+                        <p className="text-xs text-slate-500 italic">Configura acciones específicas para este perfil.</p>
                     </div>
 
                     <Dialog open={isCreatingPerm} onOpenChange={setIsCreatingPerm}>
                         <DialogTrigger asChild>
-                            <Button variant="outline" className="h-10 px-5 rounded-xl border-slate-200 text-xs font-semibold hover:bg-slate-50 flex items-center gap-2">
-                                <IconKey size={16} className="text-indigo-600" />
-                                Registrar Acción de Sistema
+                            <Button variant="outline" size="sm" className="h-9 px-4 rounded-md border-slate-200 text-xs font-semibold hover:bg-slate-50 flex items-center gap-2">
+                                <IconKey size={16} className="text-slate-500" />
+                                Nueva Acción
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="rounded-3xl border-none shadow-2xl p-0 overflow-hidden">
-                            <DialogHeader className="p-8 pb-0">
+                        <DialogContent className="rounded-xl border-none shadow-2xl p-0 overflow-hidden">
+                            <DialogHeader className="p-6 pb-2">
                                 <DialogTitle className="text-lg font-semibold text-slate-900">Nueva Acción de Módulo</DialogTitle>
-                                <DialogDescription className="text-sm italic">Define una capacidad técnica que luego podrá ser asignada a roles.</DialogDescription>
+                                <DialogDescription className="text-sm italic">Define una capacidad técnica.</DialogDescription>
                             </DialogHeader>
-                            <form onSubmit={handleCreatePermission} className="p-8 space-y-6">
-                                <div className="space-y-2">
-                                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest pl-1">Seleccionar Módulo</label>
+                            <form onSubmit={handleCreatePermission} className="p-6 space-y-4">
+                                <div className="space-y-1.5">
+                                    <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Módulo</label>
                                     <Select value={newPermModuleId} onValueChange={setNewPermModuleId}>
-                                        <SelectTrigger className="h-11 rounded-xl border-slate-200">
+                                        <SelectTrigger className="h-10 rounded-md border-slate-200">
                                             <SelectValue placeholder="Busca un módulo..." />
                                         </SelectTrigger>
-                                        <SelectContent className="rounded-2xl">
+                                        <SelectContent className="rounded-lg">
                                             {modules.map(m => (
-                                                <SelectItem key={m.id} value={m.id} className="rounded-xl">{m.name}</SelectItem>
+                                                <SelectItem key={m.id} value={m.id}>{m.name}</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest pl-1">Nombre de la Acción (Slug)</label>
+                                <div className="space-y-1.5">
+                                    <label className="text-[11px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Slug (Identificador)</label>
                                     <Input
-                                        placeholder="Ej: create, download_report, admin_all"
+                                        placeholder="Ej: create, view_all"
                                         value={newPermAction}
                                         onChange={e => setNewPermAction(e.target.value)}
-                                        className="h-11 font-mono rounded-xl border-slate-200"
+                                        className="h-10 font-mono rounded-md border-slate-200"
                                         required
                                     />
-                                    <p className="text-[10px] text-slate-400 italic">Este identificador se usa en las validaciones de código (if hasPermission("action")).</p>
                                 </div>
-                                <Button type="submit" className="w-full h-12 bg-slate-900 hover:bg-black text-white font-semibold rounded-xl shadow-lg" disabled={isPending || !newPermModuleId}>
+                                <Button type="submit" className="w-full h-11 bg-slate-900 hover:bg-black text-white font-semibold rounded-md shadow-lg" disabled={isPending || !newPermModuleId}>
                                     {isPending ? <IconLoader2 className="animate-spin" size={18} /> : 'Registrar Acción'}
                                 </Button>
                             </form>
@@ -373,29 +344,28 @@ export function RolesPermissionsManager({ roles, allPermissions, modules }: Role
                 </div>
 
                 {!selectedRole ? (
-                    <div className="flex flex-col items-center justify-center py-24 text-center">
-                        <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center text-slate-200 mb-6 group-hover:scale-110 transition-transform">
-                            <IconLock size={40} stroke={1.5} />
+                    <div className="flex flex-col items-center justify-center py-20 text-center px-4">
+                        <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-200 mb-4">
+                            <IconLock size={32} stroke={1.5} />
                         </div>
-                        <h4 className="text-slate-900 font-semibold mb-2">Editor Bloqueado</h4>
-                        <p className="text-slate-500 text-xs max-w-sm italic">Debes seleccionar un perfil organizacional de la lista superior para poder configurar su matriz de privilegios operativa.</p>
+                        <h4 className="text-slate-900 text-sm font-semibold mb-1">Selecciona un perfil</h4>
+                        <p className="text-slate-400 text-xs italic max-w-xs">Haz clic en un rol superior para editar sus permisos asociados.</p>
                     </div>
                 ) : (
-                    <div className="space-y-12">
+                    <div className="space-y-10 px-2 divide-y divide-slate-50">
                         {Object.keys(groupedPermissions).length > 0 ? (
                             Object.entries(groupedPermissions).map(([moduleName, { module, perms }]) => (
-                                <div key={moduleName} className="space-y-6">
+                                <div key={moduleName} className="pt-8 first:pt-0 space-y-4">
                                     <div className="flex items-center gap-3">
-                                        <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center text-white shadow-sm", module?.color_class || 'bg-slate-900')}>
-                                            <IconShieldCheck size={18} />
+                                        <div className={cn("w-7 h-7 rounded bg-slate-900 flex items-center justify-center text-white shrink-0", module?.color_class)}>
+                                            <IconShieldCheck size={14} />
                                         </div>
                                         <div className="flex flex-col">
-                                            <h5 className="text-xs font-semibold text-slate-900 uppercase tracking-tight">{moduleName}</h5>
-                                            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-tighter">{module?.code}</span>
+                                            <h5 className="text-[11px] font-bold text-slate-900 uppercase tracking-widest">{moduleName}</h5>
+                                            <span className="text-[9px] font-mono text-slate-400 uppercase">{module?.code}</span>
                                         </div>
-                                        <div className="h-px flex-1 bg-slate-50 ml-2" />
                                     </div>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                         {perms.map((perm) => {
                                             const hasPermission = selectedRole.permissions?.some(p => p.id === perm.id) || false
                                             return (
@@ -403,30 +373,29 @@ export function RolesPermissionsManager({ roles, allPermissions, modules }: Role
                                                     key={perm.id}
                                                     onClick={() => handleTogglePermission(perm.id, hasPermission)}
                                                     className={cn(
-                                                        "flex items-start gap-4 p-4 rounded-2xl border transition-all cursor-pointer group relative",
+                                                        "flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer relative group",
                                                         hasPermission
-                                                            ? "border-indigo-100 bg-indigo-50/10 shadow-sm"
-                                                            : "border-slate-100 bg-white hover:border-slate-200 hover:bg-slate-50/50"
+                                                            ? "border-slate-200 bg-slate-50/50"
+                                                            : "border-slate-100 bg-white hover:border-slate-200"
                                                     )}
                                                 >
                                                     <Checkbox
                                                         checked={hasPermission}
-                                                        className="rounded-lg border-slate-300 text-indigo-600 focus:ring-indigo-500 mt-0.5"
+                                                        className="rounded-sm border-slate-300 text-indigo-600 h-4 w-4"
                                                     />
                                                     <div className="flex-1 min-w-0 pr-4">
-                                                        <span className={cn("text-xs font-semibold tracking-tight uppercase", hasPermission ? "text-indigo-900" : "text-slate-600")}>
+                                                        <span className={cn("text-[11px] font-semibold tracking-tight uppercase", hasPermission ? "text-slate-900" : "text-slate-500")}>
                                                             {perm.action}
                                                         </span>
-                                                        <p className="text-[9px] text-slate-400 mt-1 uppercase italic leading-tight">Acción de {moduleName}</p>
                                                     </div>
                                                     <button
                                                         onClick={(e) => {
                                                             e.stopPropagation()
                                                             setPermToDelete(perm.id)
                                                         }}
-                                                        className="absolute top-3 right-3 text-slate-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                                                        className="absolute top-1/2 -translate-y-1/2 right-2 text-slate-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 p-1"
                                                     >
-                                                        <IconTrash size={12} />
+                                                        <IconX size={12} />
                                                     </button>
                                                 </div>
                                             )
@@ -435,53 +404,50 @@ export function RolesPermissionsManager({ roles, allPermissions, modules }: Role
                                 </div>
                             ))
                         ) : (
-                            <div className="py-20 flex flex-col items-center justify-center border-2 border-dashed border-slate-50 rounded-3xl bg-slate-50/10 text-center">
-                                <IconInfoCircle className="text-slate-300 mb-4" size={32} />
-                                <h5 className="text-slate-900 font-semibold mb-1">Sin Acciones Registradas</h5>
-                                <p className="text-slate-400 text-xs italic max-w-xs">Registra acciones granulares para tus módulos para comenzar a poblar la matriz de seguridad.</p>
+                            <div className="py-12 text-center text-slate-300 italic text-xs">
+                                Sin acciones registradas en este módulo.
                             </div>
                         )}
                     </div>
                 )}
             </section>
 
-            {/* Role Removal Confirmation */}
+            {/* Modals for deletion */}
             <AlertDialog open={!!roleToDelete} onOpenChange={o => !o && setRoleToDelete(null)}>
-                <AlertDialogContent className="rounded-3xl border-none shadow-2xl p-8">
+                <AlertDialogContent className="rounded-xl border-none p-6">
                     <AlertDialogHeader>
-                        <AlertDialogTitle className="text-xl font-semibold text-slate-900">¿Revocar perfil permanentemente?</AlertDialogTitle>
-                        <AlertDialogDescription className="text-sm text-slate-500 mt-2 leading-relaxed italic">
-                            Esta acción eliminará el rol de la base de datos. Todos los usuarios que dependen de este perfil perderán sus privilegios de forma inmediata y no podrán acceder a las secciones protegidas.
+                        <AlertDialogTitle className="text-lg font-semibold text-slate-900">¿Eliminar perfil?</AlertDialogTitle>
+                        <AlertDialogDescription className="text-sm text-slate-500 italic">
+                            Esta acción revocará el acceso a todos los usuarios asignados a este rol.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter className="mt-8 gap-3 sm:gap-4">
-                        <AlertDialogCancel className="h-11 rounded-xl text-[13px] font-semibold border-slate-200 hover:bg-slate-50 w-full sm:w-auto">Cancelar</AlertDialogCancel>
+                    <AlertDialogFooter className="mt-6 gap-2">
+                        <AlertDialogCancel className="h-9 rounded-md text-xs font-medium border-slate-200">Cancelar</AlertDialogCancel>
                         <AlertDialogAction
                             onClick={() => roleToDelete && handleDeleteRole(roleToDelete)}
-                            className="h-11 rounded-xl text-[13px] font-semibold bg-red-600 hover:bg-red-700 text-white border-none shadow-lg shadow-red-100 w-full sm:w-auto"
+                            className="h-9 rounded-md text-xs font-medium bg-red-600 hover:bg-red-700 text-white border-none"
                         >
-                            Confirmar Baja de Rol
+                            Eliminar permanente
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
 
-            {/* Permission Removal Confirmation */}
             <AlertDialog open={!!permToDelete} onOpenChange={o => !o && setPermToDelete(null)}>
-                <AlertDialogContent className="rounded-3xl border-none shadow-2xl p-8">
+                <AlertDialogContent className="rounded-xl border-none p-6">
                     <AlertDialogHeader>
-                        <AlertDialogTitle className="text-xl font-semibold text-slate-900">¿Eliminar capacidad del sistema?</AlertDialogTitle>
-                        <AlertDialogDescription className="text-sm text-slate-500 mt-2 leading-relaxed italic">
-                            Si eliminas esta acción, se borrará de todos los roles que la tengan asignada. Las validaciones de seguridad en el código que dependan de este slug podrian fallar.
+                        <AlertDialogTitle className="text-lg font-semibold text-slate-900">¿Eliminar acción?</AlertDialogTitle>
+                        <AlertDialogDescription className="text-sm text-slate-500 italic">
+                            Se borrará de todos los roles asociados.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter className="mt-8 gap-3 sm:gap-4">
-                        <AlertDialogCancel className="h-11 rounded-xl text-[13px] font-semibold border-slate-200 hover:bg-slate-50 w-full sm:w-auto">Cancelar</AlertDialogCancel>
+                    <AlertDialogFooter className="mt-6 gap-2">
+                        <AlertDialogCancel className="h-9 rounded-md text-xs font-medium border-slate-200">Cancelar</AlertDialogCancel>
                         <AlertDialogAction
                             onClick={() => permToDelete && handleDeletePermission(permToDelete)}
-                            className="h-11 rounded-xl text-[13px] font-semibold bg-red-600 hover:bg-red-700 text-white border-none shadow-lg shadow-red-100 w-full sm:w-auto"
+                            className="h-9 rounded-md text-xs font-medium bg-red-600 hover:bg-red-700 text-white border-none"
                         >
-                            Eliminar Acción Permanente
+                            Confirmar baja
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

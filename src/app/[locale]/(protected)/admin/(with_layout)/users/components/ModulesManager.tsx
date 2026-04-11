@@ -124,22 +124,20 @@ export function ModulesManager({ modules }: ModulesManagerProps) {
     }
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-100">
-                <div className="space-y-2">
-                    <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">Ecosistema de Módulos</h1>
-                    <p className="text-sm text-slate-500 max-w-2xl leading-relaxed">
-                        Gestiona las aplicaciones y secciones centrales del sistema. Cada módulo agrupa funcionalidades específicas que pueden ser restringidas por permisos.
-                    </p>
+        <div className="space-y-8 animate-in fade-in duration-700">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
+                <div className="space-y-1">
+                    <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">Módulos del Sistema</h2>
+                    <p className="text-sm text-slate-500 italic">Arquitectura central: gestiona las aplicaciones y secciones operativas.</p>
                 </div>
                 <Button
                     onClick={() => handleOpenDialog()}
-                    className="h-11 px-6 rounded-xl bg-slate-900 hover:bg-black text-white font-semibold flex items-center gap-2 transition-all shadow-md active:scale-95"
+                    className="h-9 px-5 rounded-md bg-slate-900 hover:bg-black text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
                 >
-                    <IconPlus size={18} />
-                    <span>Registrar Módulo</span>
+                    <IconPlus size={16} />
+                    <span>Nuevo Módulo</span>
                 </Button>
-            </header>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {modules.length > 0 ? (
