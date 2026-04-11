@@ -91,3 +91,14 @@ export default async function proxy(request: NextRequest) {
     return response;
 }
 
+export const config = {
+    // Match only internationalized pathnames
+    matcher: [
+        // Match root
+        '/',
+        // Match locales
+        '/(es|en)/:path*',
+        // Match all except static files, api, etc.
+        '/((?!api|_next|_static|_vercel|.*\\..*).*)'
+    ]
+};
