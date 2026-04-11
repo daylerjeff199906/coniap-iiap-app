@@ -47,6 +47,42 @@ export async function getUserRoles(profileId: string) {
     return data
 }
 
+export async function getUsersWithRoles(query?: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    let supabaseQuery = supabase
+        .from('profiles')
+        .select(`
+            id,
+            first_name,
+            last_name,
+            email,
+            avatar_url,
+            user_roles (
+                role_id,
+                roles:role_id (
+                    id,
+                    name
+                )
+            )
+        `)
+
+    if (query) {
+        supabaseQuery = supabaseQuery.or(`first_name.ilike.%${query}%,last_name.ilike.%${query}%,email.ilike.%${query}%`)
+    }
+
+    const { data, error } = await supabaseQuery
+        .limit(50) // Limit for performance in global view
+
+    if (error) {
+        console.error('Error fetching users with roles:', error)
+        return []
+    }
+
+    return data
+}
+
 
 export async function createSupabaseAccount(profileId: string, email: string) {
     // This requires the admin client

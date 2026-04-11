@@ -5,12 +5,24 @@ import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 
 // interfaces for strong typing
+export interface IModule {
+    id: string
+    code: string
+    name: string
+    description: string | null
+    url: string
+    icon_name: string
+    color_class: string
+    is_active: boolean
+    created_at: string
+}
+
 export interface IPermission {
     id: string
-    module_name: string
+    module_id: string
     action: string
-    description: string | null
     created_at: string
+    module?: IModule // Joined module info
 }
 
 export interface IRoleWithPermissions {
@@ -20,6 +32,84 @@ export interface IRoleWithPermissions {
     created_at: string
     permissions?: IPermission[]
 }
+
+// --- MODULES ACTIONS ---
+
+export async function getModules() {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('modules')
+        .select('*')
+        .order('name', { ascending: true })
+
+    if (error) {
+        console.error('Error fetching modules:', error)
+        return []
+    }
+
+    return data as IModule[]
+}
+
+export async function createModule(moduleData: Partial<IModule>) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('modules')
+        .insert(moduleData)
+        .select()
+        .single()
+
+    if (error) {
+        console.error('Error creating module:', error)
+        return { error: 'No se pudo crear el módulo.' }
+    }
+
+    revalidatePath(`/admin/users`)
+    return { success: true, data }
+}
+
+export async function updateModule(id: string, moduleData: Partial<IModule>) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('modules')
+        .update(moduleData)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) {
+        console.error('Error updating module:', error)
+        return { error: 'No se pudo actualizar el módulo.' }
+    }
+
+    revalidatePath(`/admin/users`)
+    return { success: true, data }
+}
+
+export async function deleteModule(id: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { error } = await supabase
+        .from('modules')
+        .delete()
+        .eq('id', id)
+
+    if (error) {
+        console.error('Error deleting module:', error)
+        return { error: 'No se pudo eliminar el módulo. Asegúrate de que no tenga permisos asociados.' }
+    }
+
+    revalidatePath(`/admin/users`)
+    return { success: true }
+}
+
+// --- ROLES & PERMISSIONS ACTIONS ---
 
 export async function getRolesWithPermissions() {
     const cookieStore = await cookies()
@@ -43,10 +133,16 @@ export async function getRolesWithPermissions() {
             role_id,
             permission:permission_id (
                 id,
-                module_name,
+                module_id,
                 action,
-                description,
-                created_at
+                created_at,
+                module:module_id (
+                    id,
+                    name,
+                    code,
+                    icon_name,
+                    color_class
+                )
             )
         `)
 
@@ -91,6 +187,26 @@ export async function createRole(name: string, description?: string) {
     return { success: true, data }
 }
 
+export async function updateRole(id: string, name: string, description?: string) {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+
+    const { data, error } = await supabase
+        .from('roles')
+        .update({ name, description })
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) {
+        console.error('Error updating role:', error)
+        return { error: 'No se pudo actualizar el rol.' }
+    }
+
+    revalidatePath(`/admin/users`)
+    return { success: true, data }
+}
+
 export async function deleteRole(roleId: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
@@ -115,8 +231,11 @@ export async function getPermissions() {
 
     const { data, error } = await supabase
         .from('permissions')
-        .select('*')
-        .order('module_name', { ascending: true })
+        .select(`
+            *,
+            module:module_id (*)
+        `)
+        .order('action', { ascending: true })
 
     if (error) {
         console.error('Error fetching permissions:', error)
@@ -126,13 +245,13 @@ export async function getPermissions() {
     return data as IPermission[]
 }
 
-export async function createPermission(moduleName: string, action: string, description?: string) {
+export async function createPermission(moduleId: string, action: string) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
     const { data, error } = await supabase
         .from('permissions')
-        .insert({ module_name: moduleName, action, description })
+        .insert({ module_id: moduleId, action })
         .select()
         .single()
 
@@ -195,7 +314,7 @@ export async function deletePermission(permissionId: string) {
 
     if (error) {
         console.error('Error deleting permission:', error)
-        return { error: 'No se pudo eliminar el módulo/acción. Asegúrate de que no esté asignado a ningún rol.' }
+        return { error: 'No se pudo eliminar el permiso. Asegúrate de que no esté asignado a ningún rol.' }
     }
 
     revalidatePath(`/admin/users`)
